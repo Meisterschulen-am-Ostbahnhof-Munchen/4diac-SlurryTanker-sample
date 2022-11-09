@@ -11,12 +11,6 @@
 | Einfülldom öffnen/schließen |   |   |   |   |
 | Heckschieber öffnen/schließen |   |   |   |   |
 | Seitenschieber öffnen/schließen |   |   |   |   |
-| 
-Schneidwerk ein/aus
-
-( EXACUT )
-
- |   |   |   |   |
 | Automatik ein |   |   |   |   |
 | Automatik aus |   |   |   |   |
 | Licht |   |   |   |   |
