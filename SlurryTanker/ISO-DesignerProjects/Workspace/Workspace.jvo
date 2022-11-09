@@ -1,0 +1,16 @@
+[5_6_1]
+ptn_Child1=ChildFrames
+[5_6_1.ChildFrames]
+ptn_Child1=Document-0
+ptn_Child2=Document-1
+ptn_Child3=Document-2
+ptn_Child4=Document-3
+[5_6_1.ChildFrames.Document-1]
+ptn_Child1=ViewFrame-0
+[5_6_1.ChildFrames.Document-1.ViewFrame-0]
+DocPathName=.\DefaultPool\DataMask_1000.jvi
+WindowPlacement=MCAAAAAAAAAAAAAABAAAAAAAPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPDAAAAAAAJBAAAAAANGEAAAAAPDEAAAAA
+ActiveTab=0
+ViewScrollHoriz=93
+ViewScrollVert=0
+IsActiveChildFrame=True

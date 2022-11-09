@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<JetView-ObjectTemplates Version="2.0">
+	<NumberRange MinUserValue="0" MaxUserValue="65534" NULL="65535"/>
+	<Templates>
+		<Template TypeName="WorkingSet" StartID="0" MaxID="65534" FmtStr="WorkingSet_%ld" Hidden="0" ReadOnly="0"/>
+		<Template TypeName="DataMask" StartID="1000" MaxID="65534" FmtStr="DataMask_%ld" Hidden="0" ReadOnly="0"/>
+		<Template TypeName="AlarmMask" StartID="2000" MaxID="65534" FmtStr="AlarmMask_%ld" Hidden="0" ReadOnly="0"/>
+		<Template TypeName="Container" StartID="3000" MaxID="65534" FmtStr="Container_%ld" Hidden="0" ReadOnly="0"/>
+		<Template TypeName="SoftKeyMask" StartID="4000" MaxID="65534" FmtStr="SoftKeyMask_%ld" Hidden="0" ReadOnly="0"/>
+		<Template TypeName="SoftKey" StartID="5000" MaxID="65534" FmtStr="SoftKey_%ld" Hidden="0" ReadOnly="0"/>
+		<Template TypeName="KeyGroup" StartID="35000" MaxID="65534" FmtStr="KeyGroup_%ld" Hidden="0" ReadOnly="0"/>
+		<Template TypeName="Button" StartID="6000" MaxID="65534" FmtStr="Button_%ld" Hidden="0" ReadOnly="0"/>
+		<Template TypeName="InputBoolean" StartID="7000" MaxID="65534" FmtStr="InputBoolean_%ld" Hidden="0" ReadOnly="0"/>
+		<Template TypeName="InputString" StartID="8000" MaxID="65534" FmtStr="InputString_%ld" Hidden="0" ReadOnly="0"/>
+		<Template TypeName="InputNumber" StartID="9000" MaxID="65534" FmtStr="InputNumber_%ld" Hidden="0" ReadOnly="0"/>
+		<Template TypeName="InputList" StartID="10000" MaxID="65534" FmtStr="InputList_%ld" Hidden="0" ReadOnly="0"/>
+		<Template TypeName="OutputString" StartID="11000" MaxID="65534" FmtStr="OutputString_%ld" Hidden="0" ReadOnly="0"/>
+		<Template TypeName="OutputNumber" StartID="12000" MaxID="65534" FmtStr="OutputNumber_%ld" Hidden="0" ReadOnly="0"/>
+		<Template TypeName="OutputList" StartID="37000" MaxID="65534" FmtStr="OutputList_%ld" Hidden="0" ReadOnly="0"/>
+		<Template TypeName="Line" StartID="13000" MaxID="65534" FmtStr="Line_%ld" Hidden="0" ReadOnly="0"/>
+		<Template TypeName="Rectangle" StartID="14000" MaxID="65534" FmtStr="Rectangle_%ld" Hidden="0" ReadOnly="0"/>
+		<Template TypeName="Ellipse" StartID="15000" MaxID="65534" FmtStr="Ellipse_%ld" Hidden="0" ReadOnly="0"/>
+		<Template TypeName="Polygon" StartID="16000" MaxID="65534" FmtStr="Polygon_%ld" Hidden="0" ReadOnly="0"/>
+		<Template TypeName="Meter" StartID="17000" MaxID="65534" FmtStr="Meter_%ld" Hidden="0" ReadOnly="0"/>
+		<Template TypeName="LinearBargraph" StartID="18000" MaxID="65534" FmtStr="LinearBargraph_%ld" Hidden="0" ReadOnly="0"/>
+		<Template TypeName="ArchedBargraph" StartID="19000" MaxID="65534" FmtStr="ArchedBargraph_%ld" Hidden="0" ReadOnly="0"/>
+		<Template TypeName="PictureGraphic" StartID="20000" MaxID="65534" FmtStr="PictureGraphic_%ld" Hidden="0" ReadOnly="0"/>
+		<Template TypeName="GraphicsContext" StartID="36000" MaxID="65534" FmtStr="GraphicsContext_%ld" Hidden="0" ReadOnly="0"/>
+		<Template TypeName="NumberVariable" StartID="21000" MaxID="65534" FmtStr="NumberVariable_%ld" Hidden="0" ReadOnly="0"/>
+		<Template TypeName="StringVariable" StartID="22000" MaxID="65534" FmtStr="StringVariable_%ld" Hidden="0" ReadOnly="0"/>
+		<Template TypeName="FontAttributes" StartID="23000" MaxID="65534" FmtStr="FontAttributes_%ld" Hidden="0" ReadOnly="0"/>
+		<Template TypeName="LineAttributes" StartID="24000" MaxID="65534" FmtStr="LineAttributes_%ld" Hidden="0" ReadOnly="0"/>
+		<Template TypeName="FillAttributes" StartID="25000" MaxID="65534" FmtStr="FillAttributes_%ld" Hidden="0" ReadOnly="0"/>
+		<Template TypeName="InputAttributes" StartID="26000" MaxID="65534" FmtStr="InputAttributes_%ld" Hidden="0" ReadOnly="0"/>
+		<Template TypeName="ExtendedInputAttributes" StartID="38000" MaxID="65534" FmtStr="ExtendedInputAttributes_%ld" Hidden="0" ReadOnly="0"/>
+		<Template TypeName="ObjectPointer" StartID="27000" MaxID="65534" FmtStr="ObjectPointer_%ld" Hidden="0" ReadOnly="0"/>
+		<Template TypeName="Macro" StartID="0" MaxID="65534" FmtStr="Macro_%ld" Hidden="0" ReadOnly="1"/>
+		<Template TypeName="AuxFunction2" StartID="31000" MaxID="65534" FmtStr="AuxFunction2_%ld" Hidden="0" ReadOnly="0"/>
+		<Template TypeName="AuxInput2" StartID="32000" MaxID="65534" FmtStr="AuxInput2_%ld" Hidden="0" ReadOnly="0"/>
+		<Template TypeName="AuxObjectPointer" StartID="33000" MaxID="65534" FmtStr="AuxObjectPointer_%ld" Hidden="0" ReadOnly="0"/>
+		<Template TypeName="ColorMap" StartID="39000" MaxID="65534" FmtStr="ColorMap_%ld" Hidden="0" ReadOnly="0"/>
+		<Template TypeName="WindowMask" StartID="34000" MaxID="65534" FmtStr="WindowMask_%ld" Hidden="0" ReadOnly="0"/>
+		<Template TypeName="ObjectLabelReferenceList" StartID="40000" MaxID="65534" FmtStr="ObjectLabelReferenceList_%ld" Hidden="0" ReadOnly="0"/>
+		<Template TypeName="ExternalObjectDefinition" StartID="41000" MaxID="65534" FmtStr="ExternalObjectDefinition_%ld" Hidden="0" ReadOnly="0"/>
+		<Template TypeName="ExternalReferenceName" StartID="42000" MaxID="65534" FmtStr="ExternalReferenceName_%ld" Hidden="0" ReadOnly="0"/>
+		<Template TypeName="ExternalObjectPointer" StartID="43000" MaxID="65534" FmtStr="ExternalObjectPointer_%ld" Hidden="0" ReadOnly="0"/>
+		<Template TypeName="Animation" StartID="44000" MaxID="65534" FmtStr="Animation_%ld" Hidden="0" ReadOnly="0"/>
+		<Template TypeName="ScaledGraphic" StartID="48000" MaxID="65534" FmtStr="ScaledGraphic_%ld" Hidden="0" ReadOnly="0"/>
+		<Template TypeName="GraphicData" StartID="46000" MaxID="65534" FmtStr="GraphicData_%ld" Hidden="0" ReadOnly="0"/>
+		<Template TypeName="ColorPalette" StartID="45000" MaxID="65534" FmtStr="ColorPalette_%ld" Hidden="0" ReadOnly="0"/>
+		<Template TypeName="WorkingSetSpecialControls" StartID="47000" MaxID="65534" FmtStr="WorkingSetSpecialControls_%ld" Hidden="0" ReadOnly="0"/>
+		<Template TypeName="IDsForTemporaryUse" StartID="64000" MaxID="65534" FmtStr="IDsForTemporaryUse_%ld" Hidden="1" ReadOnly="0"/>
+		<Template TypeName="Proxy" StartID="4194304" MaxID="65534" FmtStr="Proxy_%ld" Hidden="1" ReadOnly="0"/>
+	</Templates>
+</JetView-ObjectTemplates>
