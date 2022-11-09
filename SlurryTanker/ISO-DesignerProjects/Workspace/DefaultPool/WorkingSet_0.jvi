@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<JetView-Document Version="1" ObjectPoolVersion="3.0" ProductVersion="5.6.0.5206">
+<JetView-Document Version="1" ObjectPoolVersion="3.0" ProductVersion="5.6.1.5243">
 	<PropertySheets>
 		<PropertySheet Name="General">
 			<Property Name="ObjectID">
@@ -11,7 +11,7 @@
 				</Value>
 			</Property>
 			<Property Name="BackColor">
-				<Value>13421772</Value>
+				<Value>16777215</Value>
 			</Property>
 			<Property Name="MaskType">
 				<Value>3</Value>
@@ -71,7 +71,7 @@
 				<Value>en;de</Value>
 			</Property>
 			<Property Name="Width">
-				<Value>160</Value>
+				<Value>80</Value>
 			</Property>
 			<Property Name="Height">
 				<Value>80</Value>
@@ -124,4 +124,32 @@
 			</Property>
 		</PropertySheet>
 	</PropertySheets>
+	<Components>
+		<Component ID="842748075" Class="CImage" Name="Image">
+			<PropertySheets>
+				<PropertySheet Name="General">
+					<Property Name="ZOrder">
+						<Value>0</Value>
+					</Property>
+				</PropertySheet>
+				<PropertySheet Name="Proxy">
+					<Property Name="Top">
+						<Value>0</Value>
+					</Property>
+					<Property Name="Left">
+						<Value>0</Value>
+					</Property>
+					<Property Name="Transform">
+						<Value>(1.0000000000000000)(0.0000000000000000)(0.0000000000000000)(0.0000000000000000)(1.0000000000000000)(0.0000000000000000)</Value>
+					</Property>
+					<Property Name="ReferencedObjectForMask">
+						<Value>-1</Value>
+					</Property>
+				</PropertySheet>
+			</PropertySheets>
+			<Objects>
+				<Object JVS-ID="20000"/>
+			</Objects>
+		</Component>
+	</Components>
 </JetView-Document>

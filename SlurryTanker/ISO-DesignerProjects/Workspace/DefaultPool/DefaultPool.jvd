@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<JVS-ISO-Device-Manager Version="1.0" ProductVersion="5.6.0.5206">
+<JVS-ISO-Device-Manager Version="1.0" ProductVersion="5.6.1.5243">
 	<Property Name="NextISODeviceID">
 		<Value>
 			<![CDATA[2]]>
@@ -32,7 +32,7 @@
 			</Propertysheet>
 			<Propertysheet Name="SoftKeyMaskProperties">
 				<Property Name="Orientation">
-					<Value>3</Value>
+					<Value>6</Value>
 				</Property>
 				<Property Name="Order">
 					<Value>1</Value>
@@ -44,7 +44,7 @@
 					<Value>6</Value>
 				</Property>
 				<Property Name="KeyWidth">
-					<Value>160</Value>
+					<Value>80</Value>
 				</Property>
 				<Property Name="KeyHeight">
 					<Value>80</Value>
@@ -62,7 +62,7 @@
 					<Value>480</Value>
 				</Property>
 				<Property Name="Background-Color">
-					<Value>#CCCCCC</Value>
+					<Value>#FFFFFF</Value>
 				</Property>
 			</Propertysheet>
 		</Propertysheet>

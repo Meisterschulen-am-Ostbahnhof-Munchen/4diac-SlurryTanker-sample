@@ -3,7 +3,7 @@
 	<PropertySheets>
 		<PropertySheet Name="General">
 			<Property Name="ObjectID">
-				<Value>1000</Value>
+				<Value>4001</Value>
 			</Property>
 			<Property Name="Titel">
 				<Value>
@@ -11,10 +11,10 @@
 				</Value>
 			</Property>
 			<Property Name="BackColor">
-				<Value>16777215</Value>
+				<Value>13421772</Value>
 			</Property>
 			<Property Name="MaskType">
-				<Value>1</Value>
+				<Value>2</Value>
 			</Property>
 			<Property Name="RelatedObjectPool">
 				<Value>.\DefaultPool.jop</Value>
@@ -71,7 +71,7 @@
 				<Value>en;de</Value>
 			</Property>
 			<Property Name="Width">
-				<Value>480</Value>
+				<Value>640</Value>
 			</Property>
 			<Property Name="Height">
 				<Value>480</Value>
@@ -105,10 +105,10 @@
 				<Value>1</Value>
 			</Property>
 			<Property Name="VerticalSpacing">
-				<Value>80</Value>
+				<Value>12</Value>
 			</Property>
 			<Property Name="HorizontalSpacing">
-				<Value>80</Value>
+				<Value>12</Value>
 			</Property>
 			<Property Name="GridColor">
 				<Value>8421504</Value>
