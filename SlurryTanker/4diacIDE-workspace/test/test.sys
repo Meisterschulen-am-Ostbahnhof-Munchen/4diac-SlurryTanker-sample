@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<System Name="test" Comment="">
+	<VersionInfo Version="1.0" Author="franz" Date="2022-11-09">
+	</VersionInfo>
+	<Application Name="testApp" Comment="">
+		<SubAppNetwork>
+		</SubAppNetwork>
+	</Application>
+	<Device Name="FORTE_PC" Type="FORTE_PC" Comment="" x="4066.666666666667" y="1253.3333333333335">
+		<Parameter Name="MGR_ID" Value="&quot;localhost:61499&quot;"/>
+		<Attribute Name="Profile" Type="STRING" Value="HOLOBLOC"/>
+		<Attribute Name="Color" Type="STRING" Value="255,190,111"/>
+		<Resource Name="EMB_RES" Type="EMB_RES" Comment="" x="0.0" y="0.0">
+			<FBNetwork>
+			</FBNetwork>
+		</Resource>
+	</Device>
+	<Segment Name="Ethernet" Type="Ethernet" Comment="" x="5380.0" y="633.3333333333334" dx1="2000.0">
+		<Attribute Name="Color" Type="STRING" Value="140,181,218"/>
+	</Segment>
+	<Link SegmentName="Ethernet" CommResource="FORTE_PC" Comment="">
+	</Link>
+</System>

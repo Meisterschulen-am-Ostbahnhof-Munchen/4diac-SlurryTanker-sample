@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="UT_ButtonMapping_DOWN" Comment="Service Interface Function Block Type">
+	<Identification Standard=" ISO 11783-6" Classification="Button – ISO 11783-6 – B.7" Function="All Inputs" Type="UT according to ISO 11783-6">
+	</Identification>
+	<VersionInfo Version="1.0" Author="Jose Cabral" Date="2018-12-05">
+	</VersionInfo>
+	<VersionInfo Organization="Unknown" Version="1.0_DOWN" Author="Franz Höpfinger" Date="2022-08-04">
+	</VersionInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="Event" Comment="Service Initialization">
+				<With Var="QI"/>
+				<With Var="u8SAMember"/>
+				<With Var="u16ObjId_1"/>
+				<With Var="DigitalInput_I1"/>
+				<With Var="DigitalInput_I2"/>
+				<With Var="DigitalInput_I3"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="Event" Comment="Initialization Confirm">
+				<With Var="QO"/>
+			</Event>
+			<Event Name="IND" Type="Event" Comment="Indication from Resource">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
+			<VarDeclaration Name="u8SAMember" Type="USINT" Comment="Dummy !, set to 255 if in doubt. 0 deactivates FB." InitialValue="255"/>
+			<VarDeclaration Name="u16ObjId_1" Type="UINT" Comment="Object ID of Input 1" InitialValue="6000"/>
+			<VarDeclaration Name="DigitalInput_I1" Type="WSTRING" Comment="Identifier for Input 1" InitialValue="&quot;Button_6000_DOWN&quot;"/>
+			<VarDeclaration Name="DigitalInput_I2" Type="WSTRING" Comment="Identifier for Input 2" InitialValue="&quot;Button_6001_DOWN&quot;"/>
+			<VarDeclaration Name="DigitalInput_I3" Type="WSTRING" Comment="Identifier for Input 3" InitialValue="&quot;Button_6002_DOWN&quot;"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
+			<VarDeclaration Name="STATUS" Type="WSTRING" Comment="Service Status"/>
+		</OutputVars>
+	</InterfaceList>
+</FBType>
