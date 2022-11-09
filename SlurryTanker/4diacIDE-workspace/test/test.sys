@@ -6,6 +6,64 @@
 		<SubAppNetwork>
 		</SubAppNetwork>
 	</Application>
+	<Application Name="mapping_DataPanel" Comment="">
+		<SubAppNetwork>
+			<FB Name="E_FWD" Type="E_FWD" Comment="" x="533.3333333333334" y="266.6666666666667">
+			</FB>
+			<FB Name="DataPanel_xDB_16_DO_SAE_J1939" Type="DataPanel_xDB_16_DO_SAE_J1939" Comment="" x="2933.3333333333335" y="800.0">
+				<Parameter Name="QI" Value="TRUE"/>
+				<Parameter Name="u8SAMember" Value="224"/>
+				<Parameter Name="u16ObjId" Value="65535"/>
+				<Parameter Name="DigitalOutput_1A" Value="&quot;DigitalOutput_1A&quot;"/>
+				<Parameter Name="DigitalOutput_1B" Value="&quot;DigitalOutput_1B&quot;"/>
+				<Parameter Name="DigitalOutput_2A" Value="&quot;DigitalOutput_2A&quot;"/>
+				<Parameter Name="DigitalOutput_2B" Value="&quot;DigitalOutput_2B&quot;"/>
+				<Parameter Name="DigitalOutput_3A" Value="&quot;DigitalOutput_3A&quot;"/>
+				<Parameter Name="DigitalOutput_3B" Value="&quot;DigitalOutput_3B&quot;"/>
+				<Parameter Name="DigitalOutput_4A" Value="&quot;DigitalOutput_4A&quot;"/>
+				<Parameter Name="DigitalOutput_4B" Value="&quot;DigitalOutput_4B&quot;"/>
+				<Parameter Name="DigitalOutput_5A" Value="&quot;DigitalOutput_5A&quot;"/>
+				<Parameter Name="DigitalOutput_5B" Value="&quot;DigitalOutput_5B&quot;"/>
+				<Parameter Name="DigitalOutput_6A" Value="&quot;DigitalOutput_6A&quot;"/>
+				<Parameter Name="DigitalOutput_6B" Value="&quot;DigitalOutput_6B&quot;"/>
+				<Parameter Name="DigitalOutput_7A" Value="&quot;DigitalOutput_7A&quot;"/>
+				<Parameter Name="DigitalOutput_7B" Value="&quot;DigitalOutput_7B&quot;"/>
+				<Parameter Name="DigitalOutput_8A" Value="&quot;DigitalOutput_8A&quot;"/>
+				<Parameter Name="DigitalOutput_8B" Value="&quot;DigitalOutput_8B&quot;"/>
+			</FB>
+			<EventConnections>
+				<Connection Source="E_FWD.CNF" Destination="DataPanel_xDB_16_DO_SAE_J1939.INIT" Comment="" dx1="1020.0"/>
+			</EventConnections>
+		</SubAppNetwork>
+	</Application>
+	<Application Name="mapping_Softkeys" Comment="">
+		<SubAppNetwork>
+			<FB Name="UT_SoftkeyMapping" Type="UT_SoftkeyMapping" Comment="" x="2133.3333333333335" y="933.3333333333334">
+				<Parameter Name="QI" Value="TRUE"/>
+				<Parameter Name="u8SAMember" Value="255"/>
+				<Parameter Name="u16ObjId_1" Value="5000"/>
+				<Parameter Name="DigitalInput_1" Value="&quot;SoftKey_5000&quot;"/>
+				<Parameter Name="u16ObjId_2" Value="5001"/>
+				<Parameter Name="DigitalInput_2" Value="&quot;SoftKey_5001&quot;"/>
+				<Parameter Name="u16ObjId_3" Value="5002"/>
+				<Parameter Name="DigitalInput_3" Value="&quot;SoftKey_5002&quot;"/>
+				<Parameter Name="u16ObjId_4" Value="5003"/>
+				<Parameter Name="DigitalInput_4" Value="&quot;SoftKey_5003&quot;"/>
+				<Parameter Name="u16ObjId_5" Value="5004"/>
+				<Parameter Name="DigitalInput_5" Value="&quot;SoftKey_5004&quot;"/>
+				<Parameter Name="u16ObjId_6" Value="5005"/>
+				<Parameter Name="DigitalInput_6" Value="&quot;SoftKey_5005&quot;"/>
+				<Parameter Name="u16ObjId_7" Value="5006"/>
+				<Parameter Name="DigitalInput_7" Value="&quot;SoftKey_5006&quot;"/>
+				<Parameter Name="u16ObjId_8" Value="5007"/>
+				<Parameter Name="DigitalInput_8" Value="&quot;SoftKey_5007&quot;"/>
+			</FB>
+		</SubAppNetwork>
+	</Application>
+	<Application Name="Auseinanderklappen" Comment="">
+		<SubAppNetwork>
+		</SubAppNetwork>
+	</Application>
 	<Device Name="FORTE_PC" Type="FORTE_PC" Comment="" x="4066.666666666667" y="1253.3333333333335">
 		<Parameter Name="MGR_ID" Value="&quot;localhost:61499&quot;"/>
 		<Attribute Name="Profile" Type="STRING" Value="HOLOBLOC"/>
