@@ -87,43 +87,37 @@
 	</Application>
 	<Application Name="Klappen" Comment="">
 		<SubAppNetwork>
-			<FB Name="SoftKey_Auseinanderklappen" Type="IX" Comment="" x="-781.25" y="1268.75">
+			<FB Name="SoftKey_Auseinanderklappen" Type="IX" Comment="" x="-781.25" y="2025.0">
 				<Parameter Name="QI" Value="TRUE"/>
 			</FB>
-			<FB Name="DigitalOutput_3A" Type="QX" Comment="" x="2243.75" y="343.75">
+			<FB Name="DigitalOutput_3A" Type="QX" Comment="" x="2243.75" y="175.0">
 				<Parameter Name="QI" Value="TRUE"/>
 			</FB>
-			<FB Name="DigitalOutput_3B" Type="QX" Comment="" x="2243.75" y="1475.0">
+			<FB Name="DigitalOutput_3B" Type="QX" Comment="" x="2243.75" y="1137.5">
 				<Parameter Name="QI" Value="TRUE"/>
 			</FB>
-			<FB Name="SoftKey_Zusammenklappen" Type="IX" Comment="" x="-700.0" y="175.0">
+			<FB Name="SoftKey_Zusammenklappen" Type="IX" Comment="" x="-700.0" y="931.25">
 				<Parameter Name="QI" Value="TRUE"/>
 			</FB>
-			<FB Name="E_FWD_Klappen" Type="E_FWD" Comment="" x="-2187.5" y="175.0">
+			<FB Name="E_FWD_Klappen" Type="E_FWD" Comment="" x="-2187.5" y="931.25">
 			</FB>
-			<FB Name="OR_3B" Type="OR_2" Comment="" x="1018.75" y="1743.75">
-			</FB>
-			<FB Name="OR_3A" Type="OR_2" Comment="" x="1018.75" y="650.0">
+			<FB Name="OR_3A_3B" Type="OR_2" Comment="" x="1018.75" y="1406.25">
 			</FB>
 			<EventConnections>
-				<Connection Source="SoftKey_Auseinanderklappen.INITO" Destination="DigitalOutput_3B.INIT" Comment="" dx1="643.75" dx2="693.75" dy="950.0"/>
-				<Connection Source="SoftKey_Zusammenklappen.INITO" Destination="DigitalOutput_3A.INIT" Comment="" dx1="562.5"/>
 				<Connection Source="E_FWD_Klappen.CNF" Destination="SoftKey_Zusammenklappen.INIT" Comment=""/>
 				<Connection Source="E_FWD_Klappen.CNF" Destination="SoftKey_Auseinanderklappen.INIT" Comment="" dx1="200.0"/>
-				<Connection Source="SoftKey_Auseinanderklappen.IND" Destination="OR_3A.REQ" Comment="" dx1="768.75"/>
-				<Connection Source="SoftKey_Zusammenklappen.IND" Destination="OR_3A.REQ" Comment="" dx1="687.5"/>
-				<Connection Source="SoftKey_Auseinanderklappen.IND" Destination="OR_3B.REQ" Comment="" dx1="768.75"/>
-				<Connection Source="SoftKey_Zusammenklappen.IND" Destination="OR_3B.REQ" Comment="" dx1="687.5"/>
-				<Connection Source="OR_3B.CNF" Destination="DigitalOutput_3B.REQ" Comment="" dx1="131.25"/>
-				<Connection Source="OR_3A.CNF" Destination="DigitalOutput_3A.REQ" Comment="" dx1="68.75"/>
+				<Connection Source="SoftKey_Auseinanderklappen.IND" Destination="OR_3A_3B.REQ" Comment="" dx1="643.75"/>
+				<Connection Source="SoftKey_Zusammenklappen.IND" Destination="OR_3A_3B.REQ" Comment="" dx1="562.5"/>
+				<Connection Source="OR_3A_3B.CNF" Destination="DigitalOutput_3A.REQ" Comment="" dx1="68.75"/>
+				<Connection Source="OR_3A_3B.CNF" Destination="DigitalOutput_3B.REQ" Comment="" dx1="68.75"/>
+				<Connection Source="SoftKey_Zusammenklappen.INITO" Destination="DigitalOutput_3A.INIT" Comment="" dx1="562.5"/>
+				<Connection Source="SoftKey_Auseinanderklappen.INITO" Destination="DigitalOutput_3B.INIT" Comment="" dx1="768.75" dx2="568.75" dy="-143.75"/>
 			</EventConnections>
 			<DataConnections>
-				<Connection Source="OR_3B.OUT" Destination="DigitalOutput_3B.OUT" Comment="" dx1="400.0"/>
-				<Connection Source="OR_3A.OUT" Destination="DigitalOutput_3A.OUT" Comment="" dx1="68.75"/>
-				<Connection Source="SoftKey_Zusammenklappen.IN" Destination="OR_3A.IN1" Comment="" dx1="393.75"/>
-				<Connection Source="SoftKey_Auseinanderklappen.IN" Destination="OR_3B.IN1" Comment="" dx1="393.75"/>
-				<Connection Source="SoftKey_Zusammenklappen.IN" Destination="OR_3B.IN2" Comment="" dx1="625.0"/>
-				<Connection Source="SoftKey_Auseinanderklappen.IN" Destination="OR_3A.IN2" Comment="" dx1="831.25"/>
+				<Connection Source="OR_3A_3B.OUT" Destination="DigitalOutput_3A.OUT" Comment="" dx1="131.25"/>
+				<Connection Source="SoftKey_Zusammenklappen.IN" Destination="OR_3A_3B.IN1" Comment="" dx1="393.75"/>
+				<Connection Source="SoftKey_Auseinanderklappen.IN" Destination="OR_3A_3B.IN2" Comment="" dx1="706.25"/>
+				<Connection Source="OR_3A_3B.OUT" Destination="DigitalOutput_3B.OUT" Comment="" dx1="400.0"/>
 			</DataConnections>
 		</SubAppNetwork>
 	</Application>
@@ -159,28 +153,28 @@
 		<Attribute Name="Color" Type="STRING" Value="255,190,111"/>
 		<Resource Name="EMB_RES" Type="EMB_RES" Comment="" x="0.0" y="0.0">
 			<FBNetwork>
-				<FB Name="SoftKey_Auseinanderklappen" Type="IX" Comment="" x="1175.0" y="481.25">
+				<FB Name="SoftKey_Auseinanderklappen" Type="IX" Comment="" x="2881.25" y="1043.75">
 					<Parameter Name="QI" Value="TRUE"/>
 				</FB>
-				<FB Name="DigitalOutput_3A" Type="QX" Comment="" x="9181.25" y="-112.5">
+				<FB Name="DigitalOutput_3A" Type="QX" Comment="" x="8031.25" y="-112.5">
 					<Parameter Name="QI" Value="TRUE"/>
 				</FB>
-				<FB Name="DigitalOutput_3B" Type="QX" Comment="" x="9181.25" y="-1075.0">
+				<FB Name="DigitalOutput_3B" Type="QX" Comment="" x="8031.25" y="-1075.0">
 					<Parameter Name="QI" Value="TRUE"/>
 				</FB>
-				<FB Name="DigitalOutput_2A" Type="QX" Comment="" x="9181.25" y="2775.0">
+				<FB Name="DigitalOutput_2A" Type="QX" Comment="" x="8031.25" y="2537.5">
 					<Parameter Name="QI" Value="TRUE"/>
 				</FB>
-				<FB Name="E_FWD_Vorsteuerventil" Type="E_FWD" Comment="" x="6600.0" y="2343.75">
+				<FB Name="E_FWD_Vorsteuerventil" Type="E_FWD" Comment="" x="5450.0" y="718.75">
 				</FB>
-				<FB Name="OR_2B" Type="OR_8" Comment="" x="6625.0" y="956.25">
+				<FB Name="OR_2B" Type="OR_8" Comment="" x="5475.0" y="1256.25">
 				</FB>
-				<FB Name="OR_2A" Type="OR_8" Comment="" x="6675.0" y="2881.25">
+				<FB Name="OR_2A" Type="OR_8" Comment="" x="5475.0" y="2643.75">
 				</FB>
-				<FB Name="DigitalOutput_2B" Type="QX" Comment="" x="9181.25" y="850.0">
+				<FB Name="DigitalOutput_2B" Type="QX" Comment="" x="8031.25" y="1150.0">
 					<Parameter Name="QI" Value="TRUE"/>
 				</FB>
-				<FB Name="DataPanel_xDB_16_DO_SAE_J1939" Type="DataPanel_xDB_16_DO_SAE_J1939" Comment="" x="9181.25" y="4268.75">
+				<FB Name="DataPanel_xDB_16_DO_SAE_J1939" Type="DataPanel_xDB_16_DO_SAE_J1939" Comment="" x="8031.25" y="4031.25">
 					<Parameter Name="QI" Value="TRUE"/>
 					<Parameter Name="u8SAMember" Value="224"/>
 					<Parameter Name="u16ObjId" Value="65535"/>
@@ -201,13 +195,13 @@
 					<Parameter Name="DigitalOutput_8A" Value="&quot;DigitalOutput_8A&quot;"/>
 					<Parameter Name="DigitalOutput_8B" Value="&quot;DigitalOutput_8B&quot;"/>
 				</FB>
-				<FB Name="UT_SoftkeyMapping_2" Type="UT_SoftkeyMapping" Comment="" x="6700.0" y="4268.75">
+				<FB Name="UT_SoftkeyMapping_2" Type="UT_SoftkeyMapping" Comment="" x="5550.0" y="4031.25">
 					<Parameter Name="QI" Value="TRUE"/>
 					<Parameter Name="u8SAMember" Value="255"/>
 					<Parameter Name="u16ObjId_1" Value="5016"/>
 					<Parameter Name="DigitalInput_1" Value="&quot;SoftKey_Licht&quot;"/>
 				</FB>
-				<FB Name="UT_SoftkeyMapping" Type="UT_SoftkeyMapping" Comment="" x="1537.5" y="4268.75">
+				<FB Name="UT_SoftkeyMapping" Type="UT_SoftkeyMapping" Comment="" x="387.5" y="4031.25">
 					<Parameter Name="QI" Value="TRUE"/>
 					<Parameter Name="u8SAMember" Value="255"/>
 					<Parameter Name="u16ObjId_1" Value="5000"/>
@@ -227,7 +221,7 @@
 					<Parameter Name="u16ObjId_8" Value="5007"/>
 					<Parameter Name="DigitalInput_8" Value="&quot;SoftKey_5007&quot;"/>
 				</FB>
-				<FB Name="UT_SoftkeyMapping_1" Type="UT_SoftkeyMapping" Comment="" x="4368.75" y="4268.75">
+				<FB Name="UT_SoftkeyMapping_1" Type="UT_SoftkeyMapping" Comment="" x="3218.75" y="4031.25">
 					<Parameter Name="QI" Value="TRUE"/>
 					<Parameter Name="u8SAMember" Value="255"/>
 					<Parameter Name="u16ObjId_1" Value="5008"/>
@@ -247,14 +241,12 @@
 					<Parameter Name="u16ObjId_8" Value="5015"/>
 					<Parameter Name="DigitalInput_8" Value="&quot;SoftKey_5015&quot;"/>
 				</FB>
-				<FB Name="SoftKey_Zusammenklappen" Type="IX" Comment="" x="1175.0" y="1575.0">
+				<FB Name="SoftKey_Zusammenklappen" Type="IX" Comment="" x="2881.25" y="2431.25">
 					<Parameter Name="QI" Value="TRUE"/>
 				</FB>
-				<FB Name="E_FWD_Klappen" Type="E_FWD" Comment="" x="-968.75" y="1575.0">
+				<FB Name="E_FWD_Klappen" Type="E_FWD" Comment="" x="-6.25" y="2431.25">
 				</FB>
-				<FB Name="OR_3A" Type="OR_2" Comment="" x="4206.25" y="156.25">
-				</FB>
-				<FB Name="OR_3B" Type="OR_2" Comment="" x="4206.25" y="-806.25">
+				<FB Name="OR_3A_3B" Type="OR_2" Comment="" x="5487.5" y="-6.25">
 				</FB>
 				<EventConnections>
 					<Connection Source="OR_2A.CNF" Destination="DigitalOutput_2A.REQ" Comment=""/>
@@ -262,35 +254,31 @@
 					<Connection Source="UT_SoftkeyMapping.INITO" Destination="UT_SoftkeyMapping_1.INIT" Comment=""/>
 					<Connection Source="UT_SoftkeyMapping_1.INITO" Destination="UT_SoftkeyMapping_2.INIT" Comment=""/>
 					<Connection Source="START.COLD" Destination="UT_SoftkeyMapping.INIT" Comment=""/>
-					<Connection Source="E_FWD_Vorsteuerventil.CNF" Destination="DigitalOutput_2A.INIT" Comment="" dx1="725.0"/>
-					<Connection Source="E_FWD_Vorsteuerventil.CNF" Destination="DigitalOutput_2B.INIT" Comment="" dx1="725.0"/>
-					<Connection Source="START.COLD" Destination="E_FWD_Vorsteuerventil.REQ" Comment="" dx1="1218.75"/>
-					<Connection Source="SoftKey_Auseinanderklappen.IND" Destination="OR_2B.REQ" Comment="" dx1="3612.5"/>
-					<Connection Source="SoftKey_Auseinanderklappen.INITO" Destination="DigitalOutput_3B.INIT" Comment="" dx1="781.25" dx2="1343.75" dy="-1537.5"/>
-					<Connection Source="SoftKey_Zusammenklappen.INITO" Destination="DigitalOutput_3A.INIT" Comment="" dx1="843.75" dx2="1343.75" dy="-1668.75"/>
+					<Connection Source="E_FWD_Vorsteuerventil.CNF" Destination="DigitalOutput_2A.INIT" Comment="" dx1="787.5"/>
+					<Connection Source="E_FWD_Vorsteuerventil.CNF" Destination="DigitalOutput_2B.INIT" Comment="" dx1="787.5"/>
+					<Connection Source="START.COLD" Destination="E_FWD_Vorsteuerventil.REQ" Comment="" dx1="68.75" dx2="781.25" dy="-250.0"/>
+					<Connection Source="SoftKey_Auseinanderklappen.IND" Destination="OR_2B.REQ" Comment=""/>
 					<Connection Source="E_FWD_Klappen.CNF" Destination="SoftKey_Zusammenklappen.INIT" Comment=""/>
-					<Connection Source="E_FWD_Klappen.CNF" Destination="SoftKey_Auseinanderklappen.INIT" Comment="" dx1="200.0"/>
+					<Connection Source="E_FWD_Klappen.CNF" Destination="SoftKey_Auseinanderklappen.INIT" Comment="" dx1="1025.0"/>
 					<Connection Source="START.COLD" Destination="E_FWD_Klappen.REQ" Comment="" dx1="68.75"/>
-					<Connection Source="SoftKey_Auseinanderklappen.IND" Destination="OR_3A.REQ" Comment="" dx1="906.25"/>
-					<Connection Source="SoftKey_Zusammenklappen.IND" Destination="OR_3A.REQ" Comment="" dx1="906.25"/>
-					<Connection Source="SoftKey_Auseinanderklappen.IND" Destination="OR_3B.REQ" Comment="" dx1="906.25"/>
-					<Connection Source="SoftKey_Zusammenklappen.IND" Destination="OR_3B.REQ" Comment="" dx1="906.25"/>
+					<Connection Source="SoftKey_Auseinanderklappen.IND" Destination="OR_3A_3B.REQ" Comment="" dx1="818.75"/>
+					<Connection Source="SoftKey_Zusammenklappen.IND" Destination="OR_3A_3B.REQ" Comment="" dx1="818.75"/>
 					<Connection Source="UT_SoftkeyMapping_2.INITO" Destination="DataPanel_xDB_16_DO_SAE_J1939.INIT" Comment=""/>
-					<Connection Source="OR_3B.CNF" Destination="DigitalOutput_3B.REQ" Comment="" dx1="2275.0"/>
-					<Connection Source="OR_3A.CNF" Destination="DigitalOutput_3A.REQ" Comment="" dx1="2275.0"/>
-					<Connection Source="SoftKey_Zusammenklappen.IND" Destination="OR_2A.REQ" Comment="" dx1="2281.25"/>
+					<Connection Source="OR_3A_3B.CNF" Destination="DigitalOutput_3A.REQ" Comment=""/>
+					<Connection Source="SoftKey_Zusammenklappen.IND" Destination="OR_2A.REQ" Comment=""/>
+					<Connection Source="OR_3A_3B.CNF" Destination="DigitalOutput_3B.REQ" Comment="" dx1="800.0"/>
+					<Connection Source="SoftKey_Zusammenklappen.INITO" Destination="DigitalOutput_3A.INIT" Comment="" dx1="1006.25" dx2="1156.25" dy="-1962.5"/>
+					<Connection Source="SoftKey_Auseinanderklappen.INITO" Destination="DigitalOutput_3B.INIT" Comment="" dx1="756.25" dx2="1343.75" dy="-1300.0"/>
 				</EventConnections>
 				<DataConnections>
-					<Connection Source="OR_2A.OUT" Destination="DigitalOutput_2A.OUT" Comment="" dx1="700.0"/>
-					<Connection Source="OR_2B.OUT" Destination="DigitalOutput_2B.OUT" Comment="" dx1="812.5"/>
-					<Connection Source="SoftKey_Auseinanderklappen.IN" Destination="OR_2B.IN1" Comment="" dx1="2218.75"/>
-					<Connection Source="OR_3A.OUT" Destination="DigitalOutput_3A.OUT" Comment="" dx1="2275.0"/>
-					<Connection Source="OR_3B.OUT" Destination="DigitalOutput_3B.OUT" Comment="" dx1="2275.0"/>
-					<Connection Source="SoftKey_Zusammenklappen.IN" Destination="OR_3A.IN1" Comment="" dx1="1031.25"/>
-					<Connection Source="SoftKey_Auseinanderklappen.IN" Destination="OR_3B.IN1" Comment="" dx1="968.75"/>
-					<Connection Source="SoftKey_Zusammenklappen.IN" Destination="OR_3B.IN2" Comment="" dx1="1031.25"/>
-					<Connection Source="SoftKey_Auseinanderklappen.IN" Destination="OR_3A.IN2" Comment="" dx1="968.75"/>
-					<Connection Source="SoftKey_Zusammenklappen.IN" Destination="OR_2A.IN1" Comment="" dx1="1031.25"/>
+					<Connection Source="OR_2A.OUT" Destination="DigitalOutput_2A.OUT" Comment="" dx1="750.0"/>
+					<Connection Source="OR_2B.OUT" Destination="DigitalOutput_2B.OUT" Comment="" dx1="750.0"/>
+					<Connection Source="SoftKey_Auseinanderklappen.IN" Destination="OR_2B.IN1" Comment="" dx1="943.75"/>
+					<Connection Source="OR_3A_3B.OUT" Destination="DigitalOutput_3A.OUT" Comment="" dx1="862.5"/>
+					<Connection Source="SoftKey_Zusammenklappen.IN" Destination="OR_3A_3B.IN1" Comment="" dx1="881.25"/>
+					<Connection Source="SoftKey_Auseinanderklappen.IN" Destination="OR_3A_3B.IN2" Comment="" dx1="943.75"/>
+					<Connection Source="SoftKey_Zusammenklappen.IN" Destination="OR_2A.IN1" Comment="" dx1="881.25"/>
+					<Connection Source="OR_3A_3B.OUT" Destination="DigitalOutput_3B.OUT" Comment="" dx1="862.5"/>
 				</DataConnections>
 			</FBNetwork>
 		</Resource>
@@ -309,8 +297,7 @@
 	<Mapping From="mapping_Softkeys.UT_SoftkeyMapping_1" To="FORTE_PC.EMB_RES.UT_SoftkeyMapping_1"/>
 	<Mapping From="Klappen.SoftKey_Zusammenklappen" To="FORTE_PC.EMB_RES.SoftKey_Zusammenklappen"/>
 	<Mapping From="Klappen.E_FWD_Klappen" To="FORTE_PC.EMB_RES.E_FWD_Klappen"/>
-	<Mapping From="Klappen.OR_3A" To="FORTE_PC.EMB_RES.OR_3A"/>
-	<Mapping From="Klappen.OR_3B" To="FORTE_PC.EMB_RES.OR_3B"/>
+	<Mapping From="Klappen.OR_3A_3B" To="FORTE_PC.EMB_RES.OR_3A_3B"/>
 	<Segment Name="Ethernet" Type="Ethernet" Comment="" x="5375.0" y="631.25" dx1="2000.0">
 		<Attribute Name="Color" Type="STRING" Value="140,181,218"/>
 	</Segment>
