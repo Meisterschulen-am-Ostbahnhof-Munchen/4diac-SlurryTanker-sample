@@ -31,4 +31,21 @@
 	<Logging FileLogging="0"/>
 	<ThreadPrio UI="251" MacroTask="248" VariableChangeTask="248" ImageCacheMgrTask="255" JetVMControlTask="249" JetVMCommandWorkerTask="246" JVMPrioInterpreter="247" JVMPrioTimeBase="101" JVMPrioSysIdle="253"/>
 	<Simulation Enabled="1" ConfigFile=".\Simulations\ISO-VT 480x480\ISO-VT 480x480.xml"/>
+	<DisplaySettings>
+		<Orientation>6</Orientation>
+		<Order>1</Order>
+		<NavigationKeys>0</NavigationKeys>
+		<NoOfSoftKeysPerLine>6</NoOfSoftKeysPerLine>
+		<KeyWidth>80</KeyWidth>
+		<KeyHeight>80</KeyHeight>
+		<PageWidth>640</PageWidth>
+		<PageHeight>480</PageHeight>
+		<MaskWidth>480</MaskWidth>
+		<MaskHeight>480</MaskHeight>
+		<Background-Color>#FFFFFF</Background-Color>
+		<MagnificationAspectRatioMode>1</MagnificationAspectRatioMode>
+		<HighlightFocusedItem>1</HighlightFocusedItem>
+		<KeyCodes/>
+		<HideSoftKeyMasksInRuntime>0</HideSoftKeyMasksInRuntime>
+	</DisplaySettings>
 </JVER-Project>
