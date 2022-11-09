@@ -44,12 +44,14 @@
 			<ECTransition Source="S3" Destination="S4" Condition="CLK" Comment="" x="1731.25" y="1825.0"/>
 			<ECTransition Source="S4" Destination="S1" Condition="CLK" Comment="" x="1000.0" y="1500.0"/>
 		</ECC>
-		<Algorithm Name="TOGGLE" Comment="">
-			<ST><![CDATA[ALGORITHM TOGGLE
-Q := NOT Q;
-END_ALGORITHM
-
-]]></ST>
-		</Algorithm>
+    <Algorithm Comment="new algorithm" Name="OFF">
+      <ST Text="DO0 := FALSE; DO1 := FALSE;"/>
+    </Algorithm>
+        <Algorithm Comment="new algorithm" Name="K1">
+      <ST Text="DO0 := TRUE; DO1 := FALSE;"/>
+    </Algorithm>
+        <Algorithm Comment="new algorithm" Name="K2">
+      <ST Text="DO0 := FALSE; DO1 := TRUE;"/>
+    </Algorithm>
 	</BasicFB>
 </FBType>
