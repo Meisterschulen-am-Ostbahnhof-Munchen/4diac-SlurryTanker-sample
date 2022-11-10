@@ -1,0 +1,187 @@
+﻿<?xml version="1.0" standalone="yes"?>
+<ISO-639-1-Code-Languages>
+    <Language Name="Abkhazian" Code="ab" UserDefined="false" />
+    <Language Name="Afar" Code="aa" UserDefined="false" />
+    <Language Name="Afrikaans" Code="af" UserDefined="false" />
+    <Language Name="Akan" Code="ak" UserDefined="false" />
+    <Language Name="Albanian" Code="sq" UserDefined="false" />
+    <Language Name="Amharic" Code="am" UserDefined="false" />
+    <Language Name="Arabic" Code="ar" UserDefined="false" />
+    <Language Name="Aragonese" Code="an" UserDefined="false" />
+    <Language Name="Armenian" Code="hy" UserDefined="false" />
+    <Language Name="Assamese" Code="as" UserDefined="false" />
+    <Language Name="Avaric" Code="av" UserDefined="false" />
+    <Language Name="Avestan" Code="ae" UserDefined="false" />
+    <Language Name="Aymara" Code="ay" UserDefined="false" />
+    <Language Name="Azerbaijani" Code="az" UserDefined="false" />
+    <Language Name="Bambara" Code="bm" UserDefined="false" />
+    <Language Name="Bashkir" Code="ba" UserDefined="false" />
+    <Language Name="Basque" Code="eu" UserDefined="false" />
+    <Language Name="Belarusian" Code="be" UserDefined="false" />
+    <Language Name="Bengali" Code="bn" UserDefined="false" />
+    <Language Name="Bihari languages" Code="bh" UserDefined="false" />
+    <Language Name="Bislama" Code="bi" UserDefined="false" />
+    <Language Name="Bosnian" Code="bs" UserDefined="false" />
+    <Language Name="Breton" Code="br" UserDefined="false" />
+    <Language Name="Bulgarian" Code="bg" UserDefined="false" />
+    <Language Name="Burmese" Code="my" UserDefined="false" />
+    <Language Name="Catalan/Valencian" Code="ca" UserDefined="false" />
+    <Language Name="Central Khmer" Code="km" UserDefined="false" />
+    <Language Name="Chamorro" Code="ch" UserDefined="false" />
+    <Language Name="Chechen" Code="ce" UserDefined="false" />
+    <Language Name="Chichewa" Code="ny" UserDefined="false" />
+    <Language Name="Chinese" Code="zh" UserDefined="false" />
+    <Language Name="Church Slavic/Old Slavonic/Church Slavonic/Old Bulgarian/Old Church Slavonic" Code="cu" UserDefined="false" />
+    <Language Name="Chuvash" Code="cv" UserDefined="false" />
+    <Language Name="Cornish" Code="kw" UserDefined="false" />
+    <Language Name="Corsican" Code="co" UserDefined="false" />
+    <Language Name="Cree" Code="cr" UserDefined="false" />
+    <Language Name="Croatian" Code="hr" UserDefined="false" />
+    <Language Name="Czech" Code="cs" UserDefined="false" />
+    <Language Name="Danish" Code="da" UserDefined="false" />
+    <Language Name="Divehi/Dhivehi/Maldivian" Code="dv" UserDefined="false" />
+    <Language Name="Dutch/Flemish" Code="nl" UserDefined="false" />
+    <Language Name="Dzongkha" Code="dz" UserDefined="false" />
+    <Language Name="English" Code="en" UserDefined="false" />
+    <Language Name="Esperanto" Code="eo" UserDefined="false" />
+    <Language Name="Estonian" Code="et" UserDefined="false" />
+    <Language Name="Ewe" Code="ee" UserDefined="false" />
+    <Language Name="Faroese" Code="fo" UserDefined="false" />
+    <Language Name="Fijian" Code="fj" UserDefined="false" />
+    <Language Name="Finnish" Code="fi" UserDefined="false" />
+    <Language Name="French" Code="fr" UserDefined="false" />
+    <Language Name="Fulah" Code="ff" UserDefined="false" />
+    <Language Name="Gaelic/Scottish Gaelic" Code="gd" UserDefined="false" />
+    <Language Name="Galician" Code="gl" UserDefined="false" />
+    <Language Name="Ganda" Code="lg" UserDefined="false" />
+    <Language Name="Georgian" Code="ka" UserDefined="false" />
+    <Language Name="German" Code="de" UserDefined="false" />
+    <Language Name="Greek, Modern (1453-)" Code="el" UserDefined="false" />
+    <Language Name="Guarani" Code="gn" UserDefined="false" />
+    <Language Name="Gujarati" Code="gu" UserDefined="false" />
+    <Language Name="Haitian/Haitian Creole" Code="ht" UserDefined="false" />
+    <Language Name="Hausa" Code="ha" UserDefined="false" />
+    <Language Name="Hebrew" Code="he" UserDefined="false" />
+    <Language Name="Herero" Code="hz" UserDefined="false" />
+    <Language Name="Hindi" Code="hi" UserDefined="false" />
+    <Language Name="Hiri Motu" Code="ho" UserDefined="false" />
+    <Language Name="Hungarian" Code="hu" UserDefined="false" />
+    <Language Name="Icelandic" Code="is" UserDefined="false" />
+    <Language Name="Ido" Code="io" UserDefined="false" />
+    <Language Name="Igbo" Code="ig" UserDefined="false" />
+    <Language Name="Indonesian" Code="id" UserDefined="false" />
+    <Language Name="Interlingua (International Auxiliary Language Association)" Code="ia" UserDefined="false" />
+    <Language Name="Interlingue/Occidental" Code="ie" UserDefined="false" />
+    <Language Name="Inuktitut" Code="iu" UserDefined="false" />
+    <Language Name="Inupiaq" Code="ik" UserDefined="false" />
+    <Language Name="Irish" Code="ga" UserDefined="false" />
+    <Language Name="Italian" Code="it" UserDefined="false" />
+    <Language Name="Japanese" Code="ja" UserDefined="false" />
+    <Language Name="Javanese" Code="jv" UserDefined="false" />
+    <Language Name="Kalaallisut/Greenlandic" Code="kl" UserDefined="false" />
+    <Language Name="Kannada" Code="kn" UserDefined="false" />
+    <Language Name="Kanuri" Code="kr" UserDefined="false" />
+    <Language Name="Kashmiri" Code="ks" UserDefined="false" />
+    <Language Name="Kazakh" Code="kk" UserDefined="false" />
+    <Language Name="Kikuyu/Gikuyu" Code="ki" UserDefined="false" />
+    <Language Name="Kinyarwanda" Code="rw" UserDefined="false" />
+    <Language Name="Kirghiz/Kyrgyz" Code="ky" UserDefined="false" />
+    <Language Name="Komi" Code="kv" UserDefined="false" />
+    <Language Name="Kongo" Code="kg" UserDefined="false" />
+    <Language Name="Korean" Code="ko" UserDefined="false" />
+    <Language Name="Kuanyama/Kwanyama" Code="kj" UserDefined="false" />
+    <Language Name="Kurdish" Code="ku" UserDefined="false" />
+    <Language Name="Lao" Code="lo" UserDefined="false" />
+    <Language Name="Latin" Code="la" UserDefined="false" />
+    <Language Name="Latvian" Code="lv" UserDefined="false" />
+    <Language Name="Limburgan/Limburger/Limburgish" Code="li" UserDefined="false" />
+    <Language Name="Lingala" Code="ln" UserDefined="false" />
+    <Language Name="Lithuanian" Code="lt" UserDefined="false" />
+    <Language Name="Luba-Katanga" Code="lu" UserDefined="false" />
+    <Language Name="Luxembourgish/Letzeburgesch" Code="lb" UserDefined="false" />
+    <Language Name="Macedonian" Code="mk" UserDefined="false" />
+    <Language Name="Malagasy" Code="mg" UserDefined="false" />
+    <Language Name="Malay" Code="ms" UserDefined="false" />
+    <Language Name="Malayalam" Code="ml" UserDefined="false" />
+    <Language Name="Maltese" Code="mt" UserDefined="false" />
+    <Language Name="Manx" Code="gv" UserDefined="false" />
+    <Language Name="Maori" Code="mi" UserDefined="false" />
+    <Language Name="Marathi" Code="mr" UserDefined="false" />
+    <Language Name="Marshallese" Code="mh" UserDefined="false" />
+    <Language Name="Mongolian" Code="mn" UserDefined="false" />
+    <Language Name="Nauru" Code="na" UserDefined="false" />
+    <Language Name="Navajo/Navaho" Code="nv" UserDefined="false" />
+    <Language Name="Ndebele, North/North Ndebele" Code="nd" UserDefined="false" />
+    <Language Name="Ndebele, South/South Ndebele" Code="nr" UserDefined="false" />
+    <Language Name="Ndonga" Code="ng" UserDefined="false" />
+    <Language Name="Nepali" Code="ne" UserDefined="false" />
+    <Language Name="Northern Sami" Code="se" UserDefined="false" />
+    <Language Name="Norwegian" Code="no" UserDefined="false" />
+    <Language Name="Norwegian Bokmål/Bokmål, Norwegian" Code="nb" UserDefined="false" />
+    <Language Name="Norwegian Nynorsk/Nynorsk, Norwegian" Code="nn" UserDefined="false" />
+    <Language Name="Occitan (post 1500)/Provençal" Code="oc" UserDefined="false" />
+    <Language Name="Ojibwa" Code="oj" UserDefined="false" />
+    <Language Name="Oriya" Code="or" UserDefined="false" />
+    <Language Name="Oromo" Code="om" UserDefined="false" />
+    <Language Name="Ossetian/Ossetic" Code="os" UserDefined="false" />
+    <Language Name="Pali" Code="pi" UserDefined="false" />
+    <Language Name="Panjabi/Punjabi" Code="pa" UserDefined="false" />
+    <Language Name="Persian" Code="fa" UserDefined="false" />
+    <Language Name="Polish" Code="pl" UserDefined="false" />
+    <Language Name="Portuguese" Code="pt" UserDefined="false" />
+    <Language Name="Pushto/Pashto" Code="ps" UserDefined="false" />
+    <Language Name="Quechua" Code="qu" UserDefined="false" />
+    <Language Name="Romanian/Moldavian/Moldovan" Code="ro" UserDefined="false" />
+    <Language Name="Romansh" Code="rm" UserDefined="false" />
+    <Language Name="Rundi" Code="rn" UserDefined="false" />
+    <Language Name="Russian" Code="ru" UserDefined="false" />
+    <Language Name="Samoan" Code="sm" UserDefined="false" />
+    <Language Name="Sango" Code="sg" UserDefined="false" />
+    <Language Name="Sanskrit" Code="sa" UserDefined="false" />
+    <Language Name="Sardinian" Code="sc" UserDefined="false" />
+    <Language Name="Serbian" Code="sr" UserDefined="false" />
+    <Language Name="Shona" Code="sn" UserDefined="false" />
+    <Language Name="Sichuan Yi/Nuosu" Code="ii" UserDefined="false" />
+    <Language Name="Sindhi" Code="sd" UserDefined="false" />
+    <Language Name="Sinhala/Sinhalese" Code="si" UserDefined="false" />
+    <Language Name="Slovak" Code="sk" UserDefined="false" />
+    <Language Name="Slovenian" Code="sl" UserDefined="false" />
+    <Language Name="Somali" Code="so" UserDefined="false" />
+    <Language Name="Sotho, Southern" Code="st" UserDefined="false" />
+    <Language Name="Spanish/Castilian" Code="es" UserDefined="false" />
+    <Language Name="Sundanese" Code="su" UserDefined="false" />
+    <Language Name="Swahili" Code="sw" UserDefined="false" />
+    <Language Name="Swati" Code="ss" UserDefined="false" />
+    <Language Name="Swedish" Code="sv" UserDefined="false" />
+    <Language Name="Tagalog" Code="tl" UserDefined="false" />
+    <Language Name="Tahitian" Code="ty" UserDefined="false" />
+    <Language Name="Tajik" Code="tg" UserDefined="false" />
+    <Language Name="Tamil" Code="ta" UserDefined="false" />
+    <Language Name="Tatar" Code="tt" UserDefined="false" />
+    <Language Name="Telugu" Code="te" UserDefined="false" />
+    <Language Name="Thai" Code="th" UserDefined="false" />
+    <Language Name="Tibetan" Code="bo" UserDefined="false" />
+    <Language Name="Tigrinya" Code="ti" UserDefined="false" />
+    <Language Name="Tonga (Tonga Islands)" Code="to" UserDefined="false" />
+    <Language Name="Tsonga" Code="ts" UserDefined="false" />
+    <Language Name="Tswana" Code="tn" UserDefined="false" />
+    <Language Name="Turkish" Code="tr" UserDefined="false" />
+    <Language Name="Turkmen" Code="tk" UserDefined="false" />
+    <Language Name="Twi" Code="tw" UserDefined="false" />
+    <Language Name="Uighur/Uyghur" Code="ug" UserDefined="false" />
+    <Language Name="Ukrainian" Code="uk" UserDefined="false" />
+    <Language Name="Urdu" Code="ur" UserDefined="false" />
+    <Language Name="Uzbek" Code="uz" UserDefined="false" />
+    <Language Name="Venda" Code="ve" UserDefined="false" />
+    <Language Name="Vietnamese" Code="vi" UserDefined="false" />
+    <Language Name="Volapük" Code="vo" UserDefined="false" />
+    <Language Name="Walloon" Code="wa" UserDefined="false" />
+    <Language Name="Welsh" Code="cy" UserDefined="false" />
+    <Language Name="Western Frisian" Code="fy" UserDefined="false" />
+    <Language Name="Wolof" Code="wo" UserDefined="false" />
+    <Language Name="Xhosa" Code="xh" UserDefined="false" />
+    <Language Name="Yiddish" Code="yi" UserDefined="false" />
+    <Language Name="Yoruba" Code="yo" UserDefined="false" />
+    <Language Name="Zhuang/Chuang" Code="za" UserDefined="false" />
+    <Language Name="Zulu" Code="zu" UserDefined="false" />
+</ISO-639-1-Code-Languages>

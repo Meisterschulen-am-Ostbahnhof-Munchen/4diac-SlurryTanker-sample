@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<JVER-Project Version="1.22">
+	<Controller UseThisController="0" IP-Address="192.168.0.0" ControllerType="9" Interface="3" InterfaceNo="1" PortSend="0" PortReceive="0" Timeout="2000" Baudrate="9600" ForceOldProtocol="0" AccessDelayOnFirstPageLoad="500"/>
+	<DynIO EnableEventsDuringOnLoad="0" EnableEditWriteOnKillFocus="1" EnableEditWriteOnReturn="1" EnableEditMoveFocusOnReturn="1" EnableListboxWriteOnKillFocus="1" EnableListboxWriteOnReturn="1" EnableListboxWriteOnSelChanged="0"/>
+	<General ShowInvalidNavigation="0" EnableShutdownWithKeybord="1" EnableLogging="0" ShowInvalidImages="0" SupressSplashScreen="0" DisableWinStartKey="1" DisableAltTabKey="1" DisableAltESCKey="1" ExitUserLevel="255" DisableAltF4Key="1" DisableCtrlF4Key="1" DisableCtrlEscKey="1" DisableAltSpaceKey="1" GestureSwipeMinDistance="1" ImagePreCachingEnabled="1" ImageGCUpperMemBoundary="90" ImageGCLowerMemBoundary="70" ImageGCRemoveTimespan="1800" ImageGCCheckInterval="5000"/>
+	<Components>
+		<Edit-Text EnableUndoRedo="0"/>
+		<XY-Graph MinRefreshInterval="1000"/>
+		<Grid EnableSelection="0" EnableColumnResize="0" EnableRowResize="0" EnableTitelTips="0" AutoCloseEditorTimeout="10000" RefreshInterval="250"/>
+		<Combobox DropdownOnDownArrowKey="0"/>
+		<AlarmService SortAlarmsDESC="1" RefreshInterval="500"/>
+		<Slider IntervalDoChange="250"/>
+	</Components>
+	<RotaryEncoder InputTimeout="2500" FocusTimeout="2500" InputBackColor="RGB(255,255,100)" InputFrameColor="RGB(0,0,255)" ConfirmWriteTag="0"/>
+	<LED-Driver LEDDriverDisabled="1" LEDDriverUseController="" LEDDriverStartRegister="1000" LEDDriverLEDCount="8" LEDDriverPollFrequency="100" LEDDriverOnComError="255">
+		<LEDs>
+			<LED Number="0" Source="0"/>
+			<LED Number="1" Source="0"/>
+			<LED Number="2" Source="0"/>
+			<LED Number="3" Source="0"/>
+			<LED Number="4" Source="0"/>
+			<LED Number="5" Source="0"/>
+			<LED Number="6" Source="0"/>
+			<LED Number="7" Source="0"/>
+		</LEDs>
+	</LED-Driver>
+	<WindowSettings>
+		<Layout SetBorderType="1" EnableTitleBar="1" EnableSystemMenu="1" EnableMinButton="0" EnableMaxButton="0" EnableStatusBar="1" EnableScrollBars="0"/>
+		<Behavior EnableOnlyFullScreen="0" EnableAlwaysOnTop="0" EnableMovableWindow="1" EnableResizableWindow="0" EnableCenterWindowAtStart="0" EnableFullScreenAtStart="0"/>
+	</WindowSettings>
+	<Logging FileLogging="0"/>
+	<ThreadPrio UI="251" MacroTask="248" VariableChangeTask="248" ImageCacheMgrTask="255" JetVMControlTask="249" JetVMCommandWorkerTask="246" JVMPrioInterpreter="247" JVMPrioTimeBase="101" JVMPrioSysIdle="253"/>
+	<Simulation Enabled="1" ConfigFile=".\Simulations\ISO-VT 480x480\ISO-VT 480x480.xml"/>
+	<DisplaySettings>
+		<Orientation>6</Orientation>
+		<Order>1</Order>
+		<NavigationKeys>0</NavigationKeys>
+		<NoOfSoftKeysPerLine>6</NoOfSoftKeysPerLine>
+		<KeyWidth>80</KeyWidth>
+		<KeyHeight>80</KeyHeight>
+		<PageWidth>640</PageWidth>
+		<PageHeight>480</PageHeight>
+		<MaskWidth>480</MaskWidth>
+		<MaskHeight>480</MaskHeight>
+		<Background-Color>#FFFFFF</Background-Color>
+		<MagnificationAspectRatioMode>1</MagnificationAspectRatioMode>
+		<HighlightFocusedItem>1</HighlightFocusedItem>
+		<KeyCodes/>
+		<HideSoftKeyMasksInRuntime>0</HideSoftKeyMasksInRuntime>
+	</DisplaySettings>
+</JVER-Project>

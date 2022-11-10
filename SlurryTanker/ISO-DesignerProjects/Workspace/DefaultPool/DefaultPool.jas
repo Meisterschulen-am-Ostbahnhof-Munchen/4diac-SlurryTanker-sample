@@ -1,0 +1,296 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<EventHandling ProductVersion="5.6.0.5206">
+  <EventService FixListSize="0" ListSize="0" LogEvents="0" LogFilePath="./EventLog.log" FixFileSize="0" MaxFileSize="0" UseWriteBuffer="0" WriteBufferSize="0" MultipleLogFiles="0" UseTimeInterval="0" TimeInterval="0" FontGeneral="-1" FontColumnHeader="-1" FontRowHeader="-1">
+    <EventControl Id="0" Inactive="True" Type="History" Size="0,0">
+      <Column HAlign="Left" Width="50" Type="Number" Activated="True">
+        <Header>
+          <String Value="No" />
+        </Header>
+      </Column>
+      <Column HAlign="Left" Width="50" Type="CategoryName" Activated="True">
+        <Header>
+          <String Value="Category" />
+        </Header>
+      </Column>
+      <Column HAlign="Left" Width="50" Type="EventName" Activated="True">
+        <Header>
+          <String Value="Event" />
+        </Header>
+      </Column>
+      <Column HAlign="Left" Width="50" Type="TriggerName" Activated="True">
+        <Header>
+          <String Value="Trigger" />
+        </Header>
+      </Column>
+      <Column HAlign="Left" Width="50" Type="EventPriority" Activated="False">
+        <Header>
+          <String Value="Event priority" />
+        </Header>
+      </Column>
+      <Column HAlign="Left" Width="50" Type="Time" Activated="True">
+        <Header>
+          <String Value="Time" />
+        </Header>
+      </Column>
+      <Column HAlign="Left" Width="50" Type="Date" Activated="False">
+        <Header>
+          <String Value="Date" />
+        </Header>
+      </Column>
+      <Column HAlign="Left" Width="50" Type="DateTime" Activated="False">
+        <Header>
+          <String Value="Date-Time" />
+        </Header>
+      </Column>
+      <Column HAlign="Left" Width="50" Type="SourceValue" Activated="False">
+        <Header>
+          <String Value="Sourcevalue" />
+        </Header>
+      </Column>
+      <Column HAlign="Left" Width="50" Type="TriggerValue" Activated="False">
+        <Header>
+          <String Value="Triggervalue" />
+        </Header>
+      </Column>
+      <Column HAlign="Left" Width="50" Type="ResetValue" Activated="False">
+        <Header>
+          <String Value="Resetvalue" />
+        </Header>
+      </Column>
+      <Column HAlign="Left" Width="50" Type="Comparer" Activated="False">
+        <Header>
+          <String Value="Comparer" />
+        </Header>
+      </Column>
+      <Column HAlign="Left" Width="50" Type="Description" Activated="False">
+        <Header>
+          <String Value="Description" />
+        </Header>
+      </Column>
+      <Column HAlign="Left" Width="50" Type="User" Activated="False">
+        <Header>
+          <String Value="Active user" />
+        </Header>
+      </Column>
+      <Column HAlign="Left" Width="50" Type="AckInfo" Activated="False">
+        <Header>
+          <String Value="Ack.-info" />
+        </Header>
+      </Column>
+      <Column HAlign="Left" Width="50" Type="State" Activated="True">
+        <Header>
+          <String Value="State" />
+        </Header>
+      </Column>
+      <EventFilter UseOnlyPriorityFilter="False" SelectedPriorities="" />
+    </EventControl>
+    <Root Name="Root" Id="{3ecf1e55-13c0-4cb4-8414-57f17ff2998d}">
+      <Category Name="Alarm" Id="{c1387b1b-6b3e-4dc6-8b76-202a05782959}">
+        <Priority Name="Alarm Priority" Id="1">
+          <Description>Highest Priority for Alarms</Description>
+        </Priority>
+      </Category>
+      <Category Name="Warning" Id="{9e1502e0-22fe-4e7e-9c9e-162aaa14f2db}">
+        <Priority Name="Warning Priority" Id="128">
+          <Description>Highest Priority for Warnings</Description>
+        </Priority>
+      </Category>
+      <Category Name="Information" Id="{3a01b81d-0331-4ba6-9943-7a6046521810}">
+        <Priority Name="Info Priority" Id="256">
+          <Description>Highest Priority for Informations</Description>
+        </Priority>
+      </Category>
+      <PriorityList>
+        <Priority Name="Alarm Priority" Id="1">
+          <Description>Highest Priority for Alarms</Description>
+        </Priority>
+        <Priority Name="Warning Priority" Id="128">
+          <Description>Highest Priority for Warnings</Description>
+        </Priority>
+        <Priority Name="Info Priority" Id="256">
+          <Description>Highest Priority for Informations</Description>
+        </Priority>
+      </PriorityList>
+    </Root>
+  </EventService>
+  <EventControlList />
+  <ModalEventDialog>
+    <EventControl Id="0" Inactive="False" Type="History" Size="320,240">
+      <Column HAlign="Left" Width="50" Type="Number" Activated="True">
+        <Header>
+          <String Value="No" />
+        </Header>
+      </Column>
+      <Column HAlign="Left" Width="50" Type="CategoryName" Activated="True">
+        <Header>
+          <String Value="Category" />
+        </Header>
+      </Column>
+      <Column HAlign="Left" Width="50" Type="EventName" Activated="True">
+        <Header>
+          <String Value="Event" />
+        </Header>
+      </Column>
+      <Column HAlign="Left" Width="50" Type="TriggerName" Activated="True">
+        <Header>
+          <String Value="Trigger" />
+        </Header>
+      </Column>
+      <Column HAlign="Left" Width="50" Type="EventPriority" Activated="False">
+        <Header>
+          <String Value="Event priority" />
+        </Header>
+      </Column>
+      <Column HAlign="Left" Width="50" Type="Time" Activated="True">
+        <Header>
+          <String Value="Time" />
+        </Header>
+      </Column>
+      <Column HAlign="Left" Width="50" Type="Date" Activated="False">
+        <Header>
+          <String Value="Date" />
+        </Header>
+      </Column>
+      <Column HAlign="Left" Width="50" Type="DateTime" Activated="False">
+        <Header>
+          <String Value="Date-Time" />
+        </Header>
+      </Column>
+      <Column HAlign="Left" Width="50" Type="SourceValue" Activated="False">
+        <Header>
+          <String Value="Sourcevalue" />
+        </Header>
+      </Column>
+      <Column HAlign="Left" Width="50" Type="TriggerValue" Activated="False">
+        <Header>
+          <String Value="Triggervalue" />
+        </Header>
+      </Column>
+      <Column HAlign="Left" Width="50" Type="ResetValue" Activated="False">
+        <Header>
+          <String Value="Resetvalue" />
+        </Header>
+      </Column>
+      <Column HAlign="Left" Width="50" Type="Comparer" Activated="False">
+        <Header>
+          <String Value="Comparer" />
+        </Header>
+      </Column>
+      <Column HAlign="Left" Width="50" Type="Description" Activated="False">
+        <Header>
+          <String Value="Description" />
+        </Header>
+      </Column>
+      <Column HAlign="Left" Width="50" Type="User" Activated="False">
+        <Header>
+          <String Value="Active user" />
+        </Header>
+      </Column>
+      <Column HAlign="Left" Width="50" Type="AckInfo" Activated="False">
+        <Header>
+          <String Value="Ack.-info" />
+        </Header>
+      </Column>
+      <Column HAlign="Left" Width="50" Type="State" Activated="True">
+        <Header>
+          <String Value="State" />
+        </Header>
+      </Column>
+      <EventFilter UseOnlyPriorityFilter="False" SelectedPriorities="">
+        <Root Name="Root" Id="{a6536d2c-e1c4-4378-889d-86b11984028e}">
+          <PriorityList />
+        </Root>
+      </EventFilter>
+    </EventControl>
+  </ModalEventDialog>
+  <NonModalEventDialog>
+    <EventControl Id="0" Inactive="False" Type="History" Size="320,240">
+      <Column HAlign="Left" Width="50" Type="Number" Activated="True">
+        <Header>
+          <String Value="No" />
+        </Header>
+      </Column>
+      <Column HAlign="Left" Width="50" Type="CategoryName" Activated="True">
+        <Header>
+          <String Value="Category" />
+        </Header>
+      </Column>
+      <Column HAlign="Left" Width="50" Type="EventName" Activated="True">
+        <Header>
+          <String Value="Event" />
+        </Header>
+      </Column>
+      <Column HAlign="Left" Width="50" Type="TriggerName" Activated="True">
+        <Header>
+          <String Value="Trigger" />
+        </Header>
+      </Column>
+      <Column HAlign="Left" Width="50" Type="EventPriority" Activated="False">
+        <Header>
+          <String Value="Event priority" />
+        </Header>
+      </Column>
+      <Column HAlign="Left" Width="50" Type="Time" Activated="True">
+        <Header>
+          <String Value="Time" />
+        </Header>
+      </Column>
+      <Column HAlign="Left" Width="50" Type="Date" Activated="False">
+        <Header>
+          <String Value="Date" />
+        </Header>
+      </Column>
+      <Column HAlign="Left" Width="50" Type="DateTime" Activated="False">
+        <Header>
+          <String Value="Date-Time" />
+        </Header>
+      </Column>
+      <Column HAlign="Left" Width="50" Type="SourceValue" Activated="False">
+        <Header>
+          <String Value="Sourcevalue" />
+        </Header>
+      </Column>
+      <Column HAlign="Left" Width="50" Type="TriggerValue" Activated="False">
+        <Header>
+          <String Value="Triggervalue" />
+        </Header>
+      </Column>
+      <Column HAlign="Left" Width="50" Type="ResetValue" Activated="False">
+        <Header>
+          <String Value="Resetvalue" />
+        </Header>
+      </Column>
+      <Column HAlign="Left" Width="50" Type="Comparer" Activated="False">
+        <Header>
+          <String Value="Comparer" />
+        </Header>
+      </Column>
+      <Column HAlign="Left" Width="50" Type="Description" Activated="False">
+        <Header>
+          <String Value="Description" />
+        </Header>
+      </Column>
+      <Column HAlign="Left" Width="50" Type="User" Activated="False">
+        <Header>
+          <String Value="Active user" />
+        </Header>
+      </Column>
+      <Column HAlign="Left" Width="50" Type="AckInfo" Activated="False">
+        <Header>
+          <String Value="Ack.-info" />
+        </Header>
+      </Column>
+      <Column HAlign="Left" Width="50" Type="State" Activated="True">
+        <Header>
+          <String Value="State" />
+        </Header>
+      </Column>
+      <EventFilter UseOnlyPriorityFilter="False" SelectedPriorities="">
+        <Root Name="Root" Id="{f14c80d7-7ded-4770-b74f-9c630f985358}">
+          <PriorityList />
+        </Root>
+      </EventFilter>
+    </EventControl>
+  </NonModalEventDialog>
+  <EventInformationDialog Size="320,240" />
+</EventHandling>

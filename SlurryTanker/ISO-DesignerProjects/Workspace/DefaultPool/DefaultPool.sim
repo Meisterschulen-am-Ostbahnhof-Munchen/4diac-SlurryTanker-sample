@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<JetViewSoft-SimulationSettings Version="1.0" ProductVersion="5.6.0.5206">
+	<Selections>
+		<Selection DisplayName="Device 480x480" SimulatedDisplay="Device 480x480"/>
+	</Selections>
+</JetViewSoft-SimulationSettings>
