@@ -54,5 +54,7 @@ const unsigned long ISO_OP_MEMORY_CLASS isoOP_DefaultPool_Offset[] = {
 	  8849,  // Knickdeichsel_senken_20012_Offset
 	  9392,  // lightbulb_20013_Offset
 	  9891,  // trash_icon_20014_Offset
-	 10820,  // FontAttributes_23000_Offset
+	 10820,  // Logos_Large_Icons_icon_20015_Offset
+	 11349,  // FontAttributes_23000_Offset
+	 11357,  // AuxFunction2_31000_Offset
 };  // isoOP_DefaultPool_Offset

@@ -51,14 +51,16 @@
 #define Knickdeichsel_senken_20012_Offset                    8849
 #define lightbulb_20013_Offset                               9392
 #define trash_icon_20014_Offset                              9891
-#define FontAttributes_23000_Offset                         10820
+#define Logos_Large_Icons_icon_20015_Offset                 10820
+#define FontAttributes_23000_Offset                         11349
+#define AuxFunction2_31000_Offset                           11357
 
 #define ISO_OP_MEMORY_CLASS
 
-#define ISO_OP_DefaultPool_Size  10828
+#define ISO_OP_DefaultPool_Size  11369
 extern const unsigned char ISO_OP_MEMORY_CLASS isoOP_DefaultPool[];
 
-#define ISO_OP_DefaultPool_ObjectNumber     51
+#define ISO_OP_DefaultPool_ObjectNumber     53
 extern const unsigned long ISO_OP_MEMORY_CLASS isoOP_DefaultPool_Offset[];
 extern const unsigned long ISO_OP_MEMORY_CLASS isoOP_DefaultPool_Offset_Id[];
 #define ISO_OP_DefaultPool_Scale_Offset      1
