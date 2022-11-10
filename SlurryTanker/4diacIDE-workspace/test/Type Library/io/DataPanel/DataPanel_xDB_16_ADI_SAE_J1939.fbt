@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="DataPanel_xDB_16_ADI_SAE_J1939" Comment="Service Interface Function Block Type">
+	<Identification Standard="SAE J1939" Function="All Inputs" Type="DP-34044-2-000">
+	</Identification>
+	<VersionInfo Version="1.0" Author="Jose Cabral" Date="2018-12-05">
+	</VersionInfo>
+	<VersionInfo Organization="Unknown" Version="1.0" Author="Franz Höpfinger" Date="2022-08-04">
+	</VersionInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="Event" Comment="Service Initialization">
+				<With Var="DigitalInput_1A"/>
+				<With Var="DigitalInput_1B"/>
+				<With Var="DigitalInput_2A"/>
+				<With Var="DigitalInput_2B"/>
+				<With Var="DigitalInput_3A"/>
+				<With Var="DigitalInput_3B"/>
+				<With Var="DigitalInput_4A"/>
+				<With Var="DigitalInput_4B"/>
+				<With Var="DigitalInput_5A"/>
+				<With Var="DigitalInput_5B"/>
+				<With Var="DigitalInput_6A"/>
+				<With Var="DigitalInput_6B"/>
+				<With Var="DigitalInput_7A"/>
+				<With Var="DigitalInput_7B"/>
+				<With Var="DigitalInput_8A"/>
+				<With Var="DigitalInput_8B"/>
+				<With Var="QI"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="Event" Comment="Initialization Confirm">
+				<With Var="QO"/>
+			</Event>
+			<Event Name="IND" Type="Event" Comment="Indication from Resource">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
+			<VarDeclaration Name="DigitalInput_1A" Type="WSTRING" Comment=""/>
+			<VarDeclaration Name="DigitalInput_1B" Type="WSTRING" Comment=""/>
+			<VarDeclaration Name="DigitalInput_2A" Type="WSTRING" Comment=""/>
+			<VarDeclaration Name="DigitalInput_2B" Type="WSTRING" Comment=""/>
+			<VarDeclaration Name="DigitalInput_3A" Type="WSTRING" Comment=""/>
+			<VarDeclaration Name="DigitalInput_3B" Type="WSTRING" Comment=""/>
+			<VarDeclaration Name="DigitalInput_4A" Type="WSTRING" Comment=""/>
+			<VarDeclaration Name="DigitalInput_4B" Type="WSTRING" Comment=""/>
+			<VarDeclaration Name="DigitalInput_5A" Type="WSTRING" Comment=""/>
+			<VarDeclaration Name="DigitalInput_5B" Type="WSTRING" Comment=""/>
+			<VarDeclaration Name="DigitalInput_6A" Type="WSTRING" Comment=""/>
+			<VarDeclaration Name="DigitalInput_6B" Type="WSTRING" Comment=""/>
+			<VarDeclaration Name="DigitalInput_7A" Type="WSTRING" Comment=""/>
+			<VarDeclaration Name="DigitalInput_7B" Type="WSTRING" Comment=""/>
+			<VarDeclaration Name="DigitalInput_8A" Type="WSTRING" Comment=""/>
+			<VarDeclaration Name="DigitalInput_8B" Type="WSTRING" Comment=""/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
+			<VarDeclaration Name="STATUS" Type="WSTRING" Comment="Service Status"/>
+		</OutputVars>
+	</InterfaceList>
+</FBType>

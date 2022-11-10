@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="E_FWD" Comment="Service Interface Function Block Type">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2022-07-29">
+	</VersionInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event" Comment="Service Request">
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+			</Event>
+		</EventOutputs>
+	</InterfaceList>
+</FBType>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="Q_NumericValue" Comment="Command change numeric value ( Part 6 - F.22 )">
+	<Identification Standard="ISO 11783-6" Description="   This command is used to change the value of an object. It applies only to objects&#10;   that have a numeric value attribute.&#10;&#10;   \retval      iso_s16&#10;                 - #E_NO_ERR          - OK&#10;                 - #E_OVERFLOW        - buffer overflow&#10;                 - #E_NOACT           - Command not possible in current state&#10;                 - #E_NO_INSTANCE     - No VT client available" >
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2022-07-08">
+	</VersionInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="Event" Comment="Service Initialization">
+				<With Var="u16ObjId"/>
+			</Event>
+			<Event Name="REQ" Type="Event" Comment="Service Request">
+				<With Var="u32NewValue"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="Event" Comment="Initialization Confirm">
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+				<With Var="STATUS"/>
+				<With Var="u32OldValue"/>
+				<With Var="result"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID"/>
+			<VarDeclaration Name="u32NewValue" Type="UDINT" Comment="New value of ID"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="STATUS" Type="WSTRING" Comment="Service Status"/>
+			<VarDeclaration Name="u32OldValue" Type="UDINT" Comment="Old value of ID"/>
+			<VarDeclaration Name="result" Type="INT" Comment="retval see description"/>
+		</OutputVars>
+	</InterfaceList>
+</FBType>
