@@ -318,37 +318,41 @@
 			</FB>
 			<FB Name="E_FWD_Heckschieber" Type="E_FWD" Comment="" x="2812.5" y="175.0">
 			</FB>
-			<FB Name="AND_2_Heckschieber" Type="AND_2" Comment="" x="11681.25" y="1187.5">
+			<FB Name="AND_2_Heckschieber" Type="AND_2" Comment="" x="11681.25" y="1831.25">
 			</FB>
-			<FB Name="E_SWITCH__Heckschieber" Type="E_SWITCH" Comment="" x="6118.75" y="1675.0">
+			<FB Name="E_SWITCH_Heckschieber" Type="E_SWITCH" Comment="" x="6118.75" y="1675.0">
 			</FB>
-			<FB Name="E_SR__Heckschieber" Type="E_SR" Comment="" x="7718.75" y="1137.5">
+			<FB Name="E_SR_Heckschieber" Type="E_SR" Comment="" x="7718.75" y="1137.5">
 			</FB>
 			<FB Name="E_FWD_Automatik_ein_UP" Type="E_FWD" Comment="" x="6118.75" y="1137.5">
 			</FB>
 			<FB Name="GreenWhiteBackground_Heckschieber" Type="GreenWhiteBackground" Comment="" x="9375.0" y="175.0">
 				<Parameter Name="u16ObjId" Value="5002"/>
 			</FB>
+			<FB Name="E_F_TRIG_Heckschieber" Type="E_F_TRIG" Comment="" x="11531.25" y="1187.5">
+			</FB>
 			<EventConnections>
 				<Connection Source="E_FWD_Heckschieber.CNF" Destination="SoftKey_Heckschieber_UP.INIT" Comment=""/>
 				<Connection Source="E_IMPULSE_Heckschieber.CNF" Destination="DigitalOutput_6B.REQ" Comment="" dx1="593.75"/>
 				<Connection Source="E_IMPULSE_Heckschieber.CNF" Destination="AND_2_Heckschieber.REQ" Comment="" dx1="593.75"/>
-				<Connection Source="E_SWITCH__Heckschieber.EO0" Destination="E_SR__Heckschieber.S" Comment="" dx1="500.0"/>
-				<Connection Source="E_SWITCH__Heckschieber.EO1" Destination="E_SR__Heckschieber.R" Comment="" dx1="562.5"/>
-				<Connection Source="SoftKey_Heckschieber_UP.IND" Destination="E_SWITCH__Heckschieber.EI" Comment="" dx1="493.75"/>
-				<Connection Source="E_FWD_Automatik_ein_UP.CNF" Destination="E_SR__Heckschieber.S" Comment=""/>
-				<Connection Source="E_SR__Heckschieber.EO" Destination="AND_2_Heckschieber.REQ" Comment="" dx1="562.5" dx2="593.75" dy="393.75"/>
-				<Connection Source="E_SR__Heckschieber.EO" Destination="E_IMPULSE_Heckschieber.REQ" Comment=""/>
+				<Connection Source="E_SWITCH_Heckschieber.EO0" Destination="E_SR_Heckschieber.S" Comment="" dx1="500.0"/>
+				<Connection Source="E_SWITCH_Heckschieber.EO1" Destination="E_SR_Heckschieber.R" Comment="" dx1="562.5"/>
+				<Connection Source="SoftKey_Heckschieber_UP.IND" Destination="E_SWITCH_Heckschieber.EI" Comment="" dx1="493.75"/>
+				<Connection Source="E_FWD_Automatik_ein_UP.CNF" Destination="E_SR_Heckschieber.S" Comment=""/>
+				<Connection Source="E_SR_Heckschieber.EO" Destination="AND_2_Heckschieber.REQ" Comment="" dx1="562.5"/>
+				<Connection Source="E_SR_Heckschieber.EO" Destination="E_IMPULSE_Heckschieber.REQ" Comment=""/>
 				<Connection Source="SoftKey_Heckschieber_UP.INITO" Destination="GreenWhiteBackground_Heckschieber.INIT" Comment=""/>
 				<Connection Source="GreenWhiteBackground_Heckschieber.INITO" Destination="DigitalOutput_6B.INIT" Comment=""/>
-				<Connection Source="E_SR__Heckschieber.EO" Destination="GreenWhiteBackground_Heckschieber.REQ" Comment="" dx1="562.5"/>
+				<Connection Source="E_SR_Heckschieber.EO" Destination="GreenWhiteBackground_Heckschieber.REQ" Comment="" dx1="562.5"/>
+				<Connection Source="E_IMPULSE_Heckschieber.CNF" Destination="E_F_TRIG_Heckschieber.EI" Comment="" dx1="593.75"/>
 			</EventConnections>
 			<DataConnections>
-				<Connection Source="E_IMPULSE_Heckschieber.QO" Destination="AND_2_Heckschieber.IN1" Comment="" dx1="593.75"/>
+				<Connection Source="E_IMPULSE_Heckschieber.QO" Destination="AND_2_Heckschieber.IN1" Comment="" dx1="656.25"/>
 				<Connection Source="E_IMPULSE_Heckschieber.QO" Destination="DigitalOutput_6B.OUT" Comment="" dx1="656.25"/>
-				<Connection Source="E_SR__Heckschieber.Q" Destination="E_SWITCH__Heckschieber.G" Comment="" dx1="500.0" dx2="437.5" dy="681.25"/>
-				<Connection Source="E_SR__Heckschieber.Q" Destination="AND_2_Heckschieber.IN2" Comment="" dx1="500.0" dx2="531.25" dy="131.25"/>
-				<Connection Source="E_SR__Heckschieber.Q" Destination="GreenWhiteBackground_Heckschieber.DI1" Comment="" dx1="500.0"/>
+				<Connection Source="E_SR_Heckschieber.Q" Destination="E_SWITCH_Heckschieber.G" Comment="" dx1="500.0" dx2="437.5" dy="681.25"/>
+				<Connection Source="E_SR_Heckschieber.Q" Destination="AND_2_Heckschieber.IN2" Comment="" dx1="500.0"/>
+				<Connection Source="E_SR_Heckschieber.Q" Destination="GreenWhiteBackground_Heckschieber.DI1" Comment="" dx1="500.0"/>
+				<Connection Source="E_IMPULSE_Heckschieber.QO" Destination="E_F_TRIG_Heckschieber.QI" Comment="" dx1="518.75"/>
 			</DataConnections>
 		</SubAppNetwork>
 	</Application>
@@ -395,32 +399,40 @@
 		<SubAppNetwork>
 			<FB Name="E_FWD_Schneidwerk" Type="E_FWD" Comment="" x="312.5" y="-162.5">
 			</FB>
-			<FB Name="DigitalOutput_1A" Type="QX" Comment="" x="5175.0" y="-1075.0">
+			<FB Name="DigitalOutput_1A" Type="QX" Comment="" x="7125.0" y="-112.5">
 				<Parameter Name="QI" Value="TRUE"/>
 			</FB>
 			<FB Name="SoftKey_Schneidwerk_UP" Type="IX" Comment="" x="1918.75" y="-162.5">
 				<Parameter Name="QI" Value="TRUE"/>
 			</FB>
-			<FB Name="DigitalOutput_1B" Type="QX" Comment="" x="5175.0" y="850.0">
+			<FB Name="DigitalOutput_1B" Type="QX" Comment="" x="7125.0" y="-1075.0">
 				<Parameter Name="QI" Value="TRUE"/>
 			</FB>
-			<FB Name="E_T_FF_Schneidwerk" Type="E_T_FF" Comment="" x="3518.75" y="50.0">
-			</FB>
-			<FB Name="GreenWhiteBackground_Schneidwerk" Type="GreenWhiteBackground" Comment="" x="5175.0" y="-112.5">
+			<FB Name="GreenWhiteBackground_Schneidwerk" Type="GreenWhiteBackground" Comment="" x="7125.0" y="850.0">
 				<Parameter Name="u16ObjId" Value="5007"/>
+			</FB>
+			<FB Name="E_SR_Schneidwerk" Type="E_SR" Comment="" x="5568.75" y="50.0">
+			</FB>
+			<FB Name="E_SWITCH_Schneidwerk" Type="E_SWITCH" Comment="" x="3662.5" y="50.0">
+			</FB>
+			<FB Name="E_FWD_Automatik_ein_Schneidwerk" Type="E_FWD" Comment="" x="3518.75" y="-487.5">
 			</FB>
 			<EventConnections>
 				<Connection Source="E_FWD_Schneidwerk.CNF" Destination="SoftKey_Schneidwerk_UP.INIT" Comment=""/>
 				<Connection Source="E_FWD_Schneidwerk.CNF" Destination="DigitalOutput_1B.INIT" Comment="" dx1="400.0"/>
-				<Connection Source="SoftKey_Schneidwerk_UP.IND" Destination="E_T_FF_Schneidwerk.CLK" Comment=""/>
-				<Connection Source="E_T_FF_Schneidwerk.EO" Destination="DigitalOutput_1A.REQ" Comment="" dx1="400.0"/>
-				<Connection Source="E_T_FF_Schneidwerk.EO" Destination="GreenWhiteBackground_Schneidwerk.REQ" Comment="" dx1="400.0"/>
-				<Connection Source="SoftKey_Schneidwerk_UP.INITO" Destination="GreenWhiteBackground_Schneidwerk.INIT" Comment="" dx1="443.75" dx2="568.75" dy="606.25"/>
-				<Connection Source="SoftKey_Schneidwerk_UP.INITO" Destination="DigitalOutput_1A.INIT" Comment="" dx1="443.75"/>
+				<Connection Source="SoftKey_Schneidwerk_UP.INITO" Destination="GreenWhiteBackground_Schneidwerk.INIT" Comment="" dx1="443.75"/>
+				<Connection Source="SoftKey_Schneidwerk_UP.INITO" Destination="DigitalOutput_1A.INIT" Comment="" dx1="443.75" dx2="693.75" dy="-575.0"/>
+				<Connection Source="E_FWD_Automatik_ein_Schneidwerk.CNF" Destination="E_SR_Schneidwerk.S" Comment="" dx1="1100.0"/>
+				<Connection Source="E_SWITCH_Schneidwerk.EO1" Destination="E_SR_Schneidwerk.R" Comment=""/>
+				<Connection Source="E_SWITCH_Schneidwerk.EO0" Destination="E_SR_Schneidwerk.S" Comment=""/>
+				<Connection Source="E_SR_Schneidwerk.EO" Destination="GreenWhiteBackground_Schneidwerk.REQ" Comment="" dx1="462.5"/>
+				<Connection Source="E_SR_Schneidwerk.EO" Destination="DigitalOutput_1A.REQ" Comment="" dx1="462.5"/>
+				<Connection Source="SoftKey_Schneidwerk_UP.IND" Destination="E_SWITCH_Schneidwerk.EI" Comment=""/>
 			</EventConnections>
 			<DataConnections>
-				<Connection Source="E_T_FF_Schneidwerk.Q" Destination="DigitalOutput_1A.OUT" Comment="" dx1="462.5"/>
-				<Connection Source="E_T_FF_Schneidwerk.Q" Destination="GreenWhiteBackground_Schneidwerk.DI1" Comment="" dx1="543.75"/>
+				<Connection Source="E_SR_Schneidwerk.Q" Destination="E_SWITCH_Schneidwerk.G" Comment="" dx1="400.0" dx2="518.75" dy="168.75"/>
+				<Connection Source="E_SR_Schneidwerk.Q" Destination="DigitalOutput_1A.OUT" Comment="" dx1="481.25"/>
+				<Connection Source="E_SR_Schneidwerk.Q" Destination="GreenWhiteBackground_Schneidwerk.DI1" Comment="" dx1="400.0"/>
 			</DataConnections>
 		</SubAppNetwork>
 	</Application>
@@ -496,31 +508,35 @@
 		<SubAppNetwork>
 			<FB Name="E_FWD_Automatik" Type="E_FWD" Comment="" x="312.5" y="1425.0">
 			</FB>
-			<FB Name="SoftKey_Automatik_ein_UP" Type="IX" Comment="" x="1918.75" y="2493.75">
+			<FB Name="SoftKey_Automatik_ein_UP" Type="IX" Comment="" x="1918.75" y="3562.5">
 				<Parameter Name="QI" Value="TRUE"/>
 			</FB>
-			<FB Name="SoftKey_Automatik_aus_UP" Type="IX" Comment="" x="1918.75" y="4631.25">
+			<FB Name="SoftKey_Automatik_aus_UP" Type="IX" Comment="" x="1918.75" y="2493.75">
 				<Parameter Name="QI" Value="TRUE"/>
 			</FB>
-			<FB Name="SoftKey_Automatik_aus_DOWN" Type="IX" Comment="" x="1818.75" y="3562.5">
+			<FB Name="SoftKey_Automatik_aus_DOWN" Type="IX" Comment="" x="1818.75" y="1425.0">
 				<Parameter Name="QI" Value="TRUE"/>
 			</FB>
-			<FB Name="SoftKey_Automatik_ein_DOWN" Type="IX" Comment="" x="1818.75" y="1425.0">
+			<FB Name="SoftKey_Automatik_ein_DOWN" Type="IX" Comment="" x="1818.75" y="4631.25">
 				<Parameter Name="QI" Value="TRUE"/>
 			</FB>
-			<FB Name="E_SR_Verteiler_senken" Type="E_SR" Comment="" x="3618.75" y="1637.5">
+			<FB Name="E_SR_Verteiler_senken" Type="E_SR" Comment="" x="3618.75" y="4843.75">
 			</FB>
-			<FB Name="E_SR_Verteiler_heben" Type="E_SR" Comment="" x="3618.75" y="3775.0">
+			<FB Name="E_SR_Verteiler_heben" Type="E_SR" Comment="" x="3618.75" y="1637.5">
+			</FB>
+			<FB Name="E_REND_Automatik_ein" Type="E_REND" Comment="" x="3618.75" y="3668.75">
 			</FB>
 			<EventConnections>
 				<Connection Source="E_FWD_Automatik.CNF" Destination="SoftKey_Automatik_ein_UP.INIT" Comment="" dx1="300.0"/>
 				<Connection Source="E_FWD_Automatik.CNF" Destination="SoftKey_Automatik_aus_UP.INIT" Comment="" dx1="300.0"/>
-				<Connection Source="E_FWD_Automatik.CNF" Destination="SoftKey_Automatik_aus_DOWN.INIT" Comment="" dx1="300.0"/>
-				<Connection Source="E_FWD_Automatik.CNF" Destination="SoftKey_Automatik_ein_DOWN.INIT" Comment=""/>
+				<Connection Source="E_FWD_Automatik.CNF" Destination="SoftKey_Automatik_aus_DOWN.INIT" Comment=""/>
+				<Connection Source="E_FWD_Automatik.CNF" Destination="SoftKey_Automatik_ein_DOWN.INIT" Comment="" dx1="300.0"/>
 				<Connection Source="SoftKey_Automatik_ein_DOWN.IND" Destination="E_SR_Verteiler_senken.S" Comment=""/>
 				<Connection Source="SoftKey_Automatik_ein_UP.IND" Destination="E_SR_Verteiler_senken.R" Comment="" dx1="543.75"/>
 				<Connection Source="SoftKey_Automatik_aus_DOWN.IND" Destination="E_SR_Verteiler_heben.S" Comment=""/>
 				<Connection Source="SoftKey_Automatik_aus_UP.IND" Destination="E_SR_Verteiler_heben.R" Comment="" dx1="543.75"/>
+				<Connection Source="SoftKey_Automatik_ein_DOWN.IND" Destination="E_REND_Automatik_ein.R" Comment="" dx1="706.25"/>
+				<Connection Source="SoftKey_Automatik_ein_UP.IND" Destination="E_REND_Automatik_ein.EI2" Comment=""/>
 			</EventConnections>
 		</SubAppNetwork>
 	</Application>
@@ -531,24 +547,24 @@
 		<Attribute Name="FBType" Type="STRING" Value="GEN_E_MUX, F_LT, E_CTD, E_STOPWATCH, F_LIMIT, UT_AuxiliaryInputMapping, UT_ButtonMapping_UP, F_TIME_IN_S_TO_UDINT, F_TAN, COLOR_BLACK, F_ACOS, QD, COLOR_WHITE, COLOR_OLIVE, E_MERGE, DataPanel_xDB0808_DIO_SAE_J1939, EMB_RES, COLOR_CYAN, ID, E_DEMUX, GEN_SUBL, QW, QX, F_MUL, IW, IX, Q_ChangePolygonScale, F_LE, GEN_SUBSCRIBE, F_ATAN, GEN_AND, F_SIN, F_LN, GEN_CLIENT, F_NOT, COLOR_MAROON, GEN_SERVER, GEN_PUBL, Q_SelectActiveWorkingSet, E_IMPULSE, RMT_RES, COLOR_RED, UT_ButtonMapping_HOLD, GEN_OR, E_D_FF, E_CYCLE, UT_ButtonMapping, E_R_TRIG, COLOR_TEAL, COLOR_BLUE, Q_ActiveMask, F_GE, E_F_TRIG, GreenWhiteBackground, E_RS, F_MUX_2, DEV_MGR, E_SPLIT, E_FWD, E_CTUD, UT_SoftkeyMapping_UP, F_EQ, E_T_FF, E_RDELAY, UT_ButtonMapping_DOWN, F_MOD, E_RTimeOut, F_NE, CbVtStatus, Q_ObjEnableDisable, F_TIME_IN_NS_TO_UDINT, FB_RANDOM, F_EXP, E_SELECT, GEN_PUBLISH, F_TIME_IN_MS_TO_UDINT, E_CTUD_UDINT, Q_CtrlAudioSignal, E_TRAIN, OUT_ANY_CONSOLE, F_SUB, Q_ChangeObjectLabel, F_GT, COLOR_YELLOW, GEN_E_DEMUX, F_LOG, F_SQRT, DataPanel_xDB_16_DO_SAE_J1939, E_SR, COLOR_NAVY, GEN_XOR, Q_ChildLocation, F_MIN, E_SWITCH, E_RESTART, E_PERMIT, UT_SoftkeyMapping_HOLD, F_SEL, Q_ChangePolygonPoint, UT_SoftkeyMapping, F_MAX, E_TimeOut, COLOR_SILVER, Q_BackgroundColour, COLOR_MAGENTA, UT_SoftkeyMapping_DOWN, Q_Attribute, COLOR_LIME, COLOR_GREEN, COLOR_GREY, COLOR_PURPLE, F_ABS, E_DELAY, GEN_ADD, F_COS, Q_ObjHideShow, Q_StringValue, F_TIME_IN_US_TO_UDINT, E_CTU, Q_NumericValue, Q_ChildPosition, E_REND, F_ASIN, F_DIV" Comment="created during deployment"/>
 		<Resource Name="EMB_RES" Type="EMB_RES" Comment="" x="0.0" y="0.0">
 			<FBNetwork>
-				<FB Name="SoftKey_Auseinanderklappen" Type="IX" Comment="" x="37312.5" y="4500.0">
+				<FB Name="SoftKey_Auseinanderklappen" Type="IX" Comment="" x="38725.0" y="18575.0">
 					<Parameter Name="QI" Value="TRUE"/>
 				</FB>
-				<FB Name="DigitalOutput_3A" Type="QX" Comment="" x="41331.25" y="-1075.0">
+				<FB Name="DigitalOutput_3A" Type="QX" Comment="" x="48012.5" y="17618.75">
 					<Parameter Name="QI" Value="TRUE"/>
 				</FB>
-				<FB Name="DigitalOutput_3B" Type="QX" Comment="" x="41331.25" y="-112.5">
+				<FB Name="DigitalOutput_3B" Type="QX" Comment="" x="48012.5" y="16656.25">
 					<Parameter Name="QI" Value="TRUE"/>
 				</FB>
-				<FB Name="DigitalOutput_2A" Type="QX" Comment="" x="41331.25" y="850.0">
+				<FB Name="DigitalOutput_2A" Type="QX" Comment="" x="48012.5" y="15587.5">
 					<Parameter Name="QI" Value="TRUE"/>
 				</FB>
-				<FB Name="E_FWD_Vorsteuerventil" Type="E_FWD" Comment="" x="39525.0" y="17487.5">
+				<FB Name="E_FWD_Vorsteuerventil" Type="E_FWD" Comment="" x="45968.75" y="21256.25">
 				</FB>
-				<FB Name="DigitalOutput_2B" Type="QX" Comment="" x="41331.25" y="1993.75">
+				<FB Name="DigitalOutput_2B" Type="QX" Comment="" x="48012.5" y="6250.0">
 					<Parameter Name="QI" Value="TRUE"/>
 				</FB>
-				<FB Name="DataPanel_xDB_16_DO_SAE_J1939" Type="DataPanel_xDB_16_DO_SAE_J1939" Comment="" x="2100.0" y="9856.25">
+				<FB Name="DataPanel_xDB_16_DO_SAE_J1939" Type="DataPanel_xDB_16_DO_SAE_J1939" Comment="" x="8918.75" y="12031.25">
 					<Parameter Name="QI" Value="TRUE"/>
 					<Parameter Name="u8SAMember" Value="224"/>
 					<Parameter Name="u16ObjId" Value="65535"/>
@@ -569,7 +585,7 @@
 					<Parameter Name="DigitalOutput_8A" Value="&quot;DigitalOutput_8A&quot;"/>
 					<Parameter Name="DigitalOutput_8B" Value="&quot;DigitalOutput_8B&quot;"/>
 				</FB>
-				<FB Name="UT_SoftkeyMapping" Type="UT_SoftkeyMapping" Comment="" x="5825.0" y="9856.25">
+				<FB Name="UT_SoftkeyMapping" Type="UT_SoftkeyMapping" Comment="" x="12650.0" y="12031.25">
 					<Parameter Name="QI" Value="TRUE"/>
 					<Parameter Name="u8SAMember" Value="255"/>
 					<Parameter Name="u16ObjId_1" Value="5003"/>
@@ -585,52 +601,52 @@
 					<Parameter Name="u16ObjId_6" Value="5011"/>
 					<Parameter Name="DigitalInput_6" Value="&quot;SoftKey_Knickdeichsel_heben&quot;"/>
 				</FB>
-				<FB Name="SoftKey_Zusammenklappen" Type="IX" Comment="" x="37418.75" y="3406.25">
+				<FB Name="SoftKey_Zusammenklappen" Type="IX" Comment="" x="43550.0" y="16775.0">
 					<Parameter Name="QI" Value="TRUE"/>
 				</FB>
-				<FB Name="E_FWD_Klappen" Type="E_FWD" Comment="" x="35268.75" y="3406.25">
+				<FB Name="E_FWD_Klappen" Type="E_FWD" Comment="" x="36693.75" y="18575.0">
 				</FB>
-				<FB Name="SoftKey_Verteiler_heben" Type="IX" Comment="" x="28687.5" y="16725.0">
+				<FB Name="SoftKey_Verteiler_heben" Type="IX" Comment="" x="34775.0" y="7293.75">
 					<Parameter Name="QI" Value="TRUE"/>
 				</FB>
-				<FB Name="DigitalOutput_4B" Type="QX" Comment="" x="39556.25" y="12093.75">
+				<FB Name="DigitalOutput_4B" Type="QX" Comment="" x="40843.75" y="9325.0">
 					<Parameter Name="QI" Value="TRUE"/>
 				</FB>
-				<FB Name="E_FWD_Verteiler" Type="E_FWD" Comment="" x="26793.75" y="15631.25">
+				<FB Name="E_FWD_Verteiler" Type="E_FWD" Comment="" x="32556.25" y="7293.75">
 				</FB>
-				<FB Name="DigitalOutput_4A" Type="QX" Comment="" x="34756.25" y="11568.75">
+				<FB Name="DigitalOutput_4A" Type="QX" Comment="" x="40843.75" y="8362.5">
 					<Parameter Name="QI" Value="TRUE"/>
 				</FB>
-				<FB Name="SoftKey_Verteiler_senken" Type="IX" Comment="" x="28637.5" y="15631.25">
+				<FB Name="SoftKey_Verteiler_senken" Type="IX" Comment="" x="34725.0" y="6193.75">
 					<Parameter Name="QI" Value="TRUE"/>
 				</FB>
-				<FB Name="OR_4A_4B" Type="OR_2" Comment="" x="32356.25" y="11837.5">
+				<FB Name="OR_4A_4B" Type="OR_2" Comment="" x="38443.75" y="9431.25">
 					<Attribute Name="PinComment" Type="STRING" Value="IN1:Verteiler_heben"/>
 					<Attribute Name="PinComment" Type="STRING" Value="IN2:Verteiler_senken"/>
 				</FB>
-				<FB Name="OR_3A_3B" Type="OR_2" Comment="" x="39393.75" y="156.25">
+				<FB Name="OR_3A_3B" Type="OR_2" Comment="" x="45606.25" y="17731.25">
 					<Attribute Name="PinComment" Type="STRING" Value="IN1:Auseinanderklappen"/>
 					<Attribute Name="PinComment" Type="STRING" Value="IN2:Zusammenklappen"/>
 				</FB>
-				<FB Name="OR_5A_5B" Type="OR_2" Comment="" x="28506.25" y="6312.5">
+				<FB Name="OR_5A_5B" Type="OR_2" Comment="" x="34593.75" y="1068.75">
 					<Attribute Name="PinComment" Type="STRING" Value="IN1:Knickdeichsel_heben"/>
 					<Attribute Name="PinComment" Type="STRING" Value="IN2:Knickdeichsel_senken"/>
 				</FB>
-				<FB Name="DigitalOutput_5B" Type="QX" Comment="" x="32150.0" y="5637.5">
+				<FB Name="DigitalOutput_5B" Type="QX" Comment="" x="36681.25" y="0.0">
 					<Parameter Name="QI" Value="TRUE"/>
 				</FB>
-				<FB Name="E_FWD_Knickdeichsel" Type="E_FWD" Comment="" x="24687.5" y="4681.25">
+				<FB Name="E_FWD_Knickdeichsel" Type="E_FWD" Comment="" x="22793.75" y="1968.75">
 				</FB>
-				<FB Name="SoftKey_Knickdeichsel_senken" Type="IX" Comment="" x="26481.25" y="4681.25">
+				<FB Name="SoftKey_Knickdeichsel_senken" Type="IX" Comment="" x="29762.5" y="1968.75">
 					<Parameter Name="QI" Value="TRUE"/>
 				</FB>
-				<FB Name="DigitalOutput_5A" Type="QX" Comment="" x="30593.75" y="6043.75">
+				<FB Name="DigitalOutput_5A" Type="QX" Comment="" x="36681.25" y="962.5">
 					<Parameter Name="QI" Value="TRUE"/>
 				</FB>
-				<FB Name="SoftKey_Knickdeichsel_heben" Type="IX" Comment="" x="26531.25" y="5837.5">
+				<FB Name="SoftKey_Knickdeichsel_heben" Type="IX" Comment="" x="24893.75" y="593.75">
 					<Parameter Name="QI" Value="TRUE"/>
 				</FB>
-				<FB Name="UT_SoftkeyMapping_UP" Type="UT_SoftkeyMapping_UP" Comment="" x="8806.25" y="9856.25">
+				<FB Name="UT_SoftkeyMapping_UP" Type="UT_SoftkeyMapping_UP" Comment="" x="15637.5" y="12031.25">
 					<Parameter Name="QI" Value="TRUE"/>
 					<Parameter Name="u8SAMember" Value="255"/>
 					<Parameter Name="u16ObjId_1" Value="5000"/>
@@ -650,102 +666,100 @@
 					<Parameter Name="u16ObjId_8" Value="5016"/>
 					<Parameter Name="DigitalInput_8" Value="&quot;SoftKey_Licht_UP&quot;"/>
 				</FB>
-				<FB Name="E_T_FF_Dom" Type="E_T_FF" Comment="" x="24637.5" y="8393.75">
+				<FB Name="E_T_FF_Dom" Type="E_T_FF" Comment="" x="30006.25" y="3675.0">
 				</FB>
-				<FB Name="SoftKey_Dom_UP" Type="IX" Comment="" x="22387.5" y="8087.5">
+				<FB Name="SoftKey_Dom_UP" Type="IX" Comment="" x="27525.0" y="3462.5">
 					<Parameter Name="QI" Value="TRUE"/>
 				</FB>
-				<FB Name="E_FWD_Dom" Type="E_FWD" Comment="" x="20125.0" y="8087.5">
+				<FB Name="E_FWD_Dom" Type="E_FWD" Comment="" x="24987.5" y="3462.5">
 				</FB>
-				<FB Name="DigitalOutput_6A" Type="QX" Comment="" x="30593.75" y="7481.25">
+				<FB Name="DigitalOutput_6A" Type="QX" Comment="" x="36681.25" y="3150.0">
 					<Parameter Name="QI" Value="TRUE"/>
 				</FB>
-				<FB Name="E_IMPULSE_Dom" Type="E_IMPULSE" Comment="" x="28712.5" y="7750.0">
+				<FB Name="E_IMPULSE_Dom" Type="E_IMPULSE" Comment="" x="34800.0" y="3556.25">
 					<Parameter Name="TM" Value="T#1s"/>
 				</FB>
-				<FB Name="AND_2_Dom" Type="AND_2" Comment="" x="37525.0" y="7175.0">
+				<FB Name="AND_2_Dom" Type="AND_2" Comment="" x="43700.0" y="3606.25">
 				</FB>
-				<FB Name="DigitalOutput_6B" Type="QX" Comment="" x="30593.75" y="9556.25">
+				<FB Name="DigitalOutput_6B" Type="QX" Comment="" x="27006.25" y="11118.75">
 					<Parameter Name="QI" Value="TRUE"/>
 				</FB>
-				<FB Name="AND_2_Heckschieber" Type="AND_2" Comment="" x="35168.75" y="9025.0">
+				<FB Name="AND_2_Heckschieber" Type="AND_2" Comment="" x="43700.0" y="15556.25">
 				</FB>
-				<FB Name="E_FWD_Heckschieber" Type="E_FWD" Comment="" x="14262.5" y="9556.25">
+				<FB Name="E_FWD_Heckschieber" Type="E_FWD" Comment="" x="15337.5" y="17837.5">
 				</FB>
-				<FB Name="E_IMPULSE_Heckschieber" Type="E_IMPULSE" Comment="" x="28712.5" y="9025.0">
+				<FB Name="E_IMPULSE_Heckschieber" Type="E_IMPULSE" Comment="" x="-3206.25" y="11381.25">
 					<Parameter Name="TM" Value="T#1s"/>
 				</FB>
-				<FB Name="SoftKey_Heckschieber_UP" Type="IX" Comment="" x="16043.75" y="9556.25">
+				<FB Name="SoftKey_Heckschieber_UP" Type="IX" Comment="" x="18612.5" y="17837.5">
 					<Parameter Name="QI" Value="TRUE"/>
 				</FB>
-				<FB Name="DigitalOutput_7A" Type="QX" Comment="" x="22018.75" y="1418.75">
+				<FB Name="DigitalOutput_7A" Type="QX" Comment="" x="27006.25" y="20200.0">
 					<Parameter Name="QI" Value="TRUE"/>
 				</FB>
-				<FB Name="E_T_FF_Seitenschieber" Type="E_T_FF" Comment="" x="17956.25" y="1118.75">
+				<FB Name="E_T_FF_Seitenschieber" Type="E_T_FF" Comment="" x="22693.75" y="20725.0">
 				</FB>
-				<FB Name="SoftKey_Seitenschieber_UP" Type="IX" Comment="" x="15956.25" y="125.0">
+				<FB Name="SoftKey_Seitenschieber_UP" Type="IX" Comment="" x="20937.5" y="20512.5">
 					<Parameter Name="QI" Value="TRUE"/>
 				</FB>
-				<FB Name="AND_2_Seitenschieber" Type="AND_2" Comment="" x="35168.75" y="1118.75">
+				<FB Name="AND_2_Seitenschieber" Type="AND_2" Comment="" x="41312.5" y="20662.5">
 				</FB>
-				<FB Name="E_IMPULSE_Seitenschieber" Type="E_IMPULSE" Comment="" x="20037.5" y="1687.5">
+				<FB Name="E_IMPULSE_Seitenschieber" Type="E_IMPULSE" Comment="" x="24893.75" y="20606.25">
 					<Parameter Name="TM" Value="T#1s"/>
 				</FB>
-				<FB Name="E_FWD_Seitenschieber" Type="E_FWD" Comment="" x="14200.0" y="-881.25">
+				<FB Name="E_FWD_Seitenschieber" Type="E_FWD" Comment="" x="18537.5" y="20512.5">
 				</FB>
-				<FB Name="SoftKey_Schneidwerk_UP" Type="IX" Comment="" x="14100.0" y="5662.5">
+				<FB Name="SoftKey_Schneidwerk_UP" Type="IX" Comment="" x="700.0" y="6556.25">
 					<Parameter Name="QI" Value="TRUE"/>
 				</FB>
-				<FB Name="DigitalOutput_1A" Type="QX" Comment="" x="19762.5" y="3706.25">
+				<FB Name="DigitalOutput_1A" Type="QX" Comment="" x="22943.75" y="1006.25">
 					<Parameter Name="QI" Value="TRUE"/>
 				</FB>
-				<FB Name="E_FWD_Schneidwerk" Type="E_FWD" Comment="" x="11700.0" y="4993.75">
+				<FB Name="E_FWD_Schneidwerk" Type="E_FWD" Comment="" x="-1087.5" y="6556.25">
 				</FB>
-				<FB Name="DigitalOutput_1B" Type="QX" Comment="" x="14100.0" y="4031.25">
+				<FB Name="DigitalOutput_1B" Type="QX" Comment="" x="22943.75" y="-918.75">
 					<Parameter Name="QI" Value="TRUE"/>
 				</FB>
-				<FB Name="E_T_FF_Schneidwerk" Type="E_T_FF" Comment="" x="16150.0" y="5875.0">
-				</FB>
-				<FB Name="SoftKey_Licht_UP" Type="IX" Comment="" x="-106.25" y="15931.25">
+				<FB Name="SoftKey_Licht_UP" Type="IX" Comment="" x="9193.75" y="-50.0">
 					<Parameter Name="QI" Value="TRUE"/>
 				</FB>
-				<FB Name="E_T_FF_Licht" Type="E_T_FF" Comment="" x="2468.75" y="16400.0">
+				<FB Name="E_T_FF_Licht" Type="E_T_FF" Comment="" x="12431.25" y="162.5">
 				</FB>
-				<FB Name="DigitalOutput_8A" Type="QX" Comment="" x="11981.25" y="15931.25">
+				<FB Name="DigitalOutput_8A" Type="QX" Comment="" x="22943.75" y="43.75">
 					<Parameter Name="QI" Value="TRUE"/>
 				</FB>
-				<FB Name="E_FWD_Licht" Type="E_FWD" Comment="" x="-1768.75" y="15931.25">
+				<FB Name="E_FWD_Licht" Type="E_FWD" Comment="" x="6331.25" y="-50.0">
 				</FB>
-				<FB Name="SoftKey_Abscheider_UP" Type="IX" Comment="" x="-1912.5" y="-275.0">
+				<FB Name="SoftKey_Abscheider_UP" Type="IX" Comment="" x="6306.25" y="5031.25">
 					<Parameter Name="QI" Value="TRUE"/>
 				</FB>
-				<FB Name="E_FWD_Abscheider" Type="E_FWD" Comment="" x="-3468.75" y="-581.25">
+				<FB Name="E_FWD_Abscheider" Type="E_FWD" Comment="" x="4356.25" y="7087.5">
 				</FB>
-				<FB Name="E_IMPULSE_Abscheider" Type="E_IMPULSE" Comment="" x="8625.0" y="2831.25">
+				<FB Name="E_IMPULSE_Abscheider" Type="E_IMPULSE" Comment="" x="18618.75" y="4531.25">
 					<Parameter Name="TM" Value="T#1s"/>
 				</FB>
-				<FB Name="AND_2_Abscheider" Type="AND_2" Comment="" x="35168.75" y="2262.5">
+				<FB Name="AND_2_Abscheider" Type="AND_2" Comment="" x="41312.5" y="4587.5">
 				</FB>
-				<FB Name="DigitalOutput_7B" Type="QX" Comment="" x="11981.25" y="2562.5">
+				<FB Name="DigitalOutput_7B" Type="QX" Comment="" x="20937.5" y="3900.0">
 					<Parameter Name="QI" Value="TRUE"/>
 				</FB>
-				<FB Name="E_T_FF_Abscheider" Type="E_T_FF" Comment="" x="-156.25" y="2262.5">
+				<FB Name="E_T_FF_Abscheider" Type="E_T_FF" Comment="" x="9293.75" y="5243.75">
 				</FB>
-				<FB Name="OR_2B" Type="OR_5" Comment="" x="39350.0" y="2262.5">
+				<FB Name="OR_2B" Type="OR_5" Comment="" x="45537.5" y="6356.25">
 					<Attribute Name="PinComment" Type="STRING" Value="IN1:Auseinanderklappen"/>
 					<Attribute Name="PinComment" Type="STRING" Value="IN2:Verteiler_senken"/>
 					<Attribute Name="PinComment" Type="STRING" Value="IN3:Knickdeichsel_heben"/>
 					<Attribute Name="PinComment" Type="STRING" Value="IN4:Heckschieber"/>
 					<Attribute Name="PinComment" Type="STRING" Value="IN5:Abscheider"/>
 				</FB>
-				<FB Name="OR_2A" Type="OR_5" Comment="" x="39300.0" y="1118.75">
+				<FB Name="OR_2A" Type="OR_5" Comment="" x="45525.0" y="15700.0">
 					<Attribute Name="PinComment" Type="STRING" Value="IN1:Zusammenklappen"/>
 					<Attribute Name="PinComment" Type="STRING" Value="IN2:Verteiler_heben"/>
 					<Attribute Name="PinComment" Type="STRING" Value="IN3:Knickdeichsel_senken"/>
 					<Attribute Name="PinComment" Type="STRING" Value="IN4:Dom"/>
 					<Attribute Name="PinComment" Type="STRING" Value="IN5:Seitenschieber"/>
 				</FB>
-				<FB Name="UT_SoftkeyMapping_DOWN" Type="UT_SoftkeyMapping_DOWN" Comment="" x="11981.25" y="9856.25">
+				<FB Name="UT_SoftkeyMapping_DOWN" Type="UT_SoftkeyMapping_DOWN" Comment="" x="18818.75" y="12031.25">
 					<Parameter Name="QI" Value="TRUE"/>
 					<Parameter Name="u8SAMember" Value="255"/>
 					<Parameter Name="u16ObjId_1" Value="5000"/>
@@ -753,257 +767,277 @@
 					<Parameter Name="u16ObjId_7" Value="5006"/>
 					<Parameter Name="DigitalInput_7" Value="&quot;SoftKey_Automatik_aus_DOWN&quot;"/>
 				</FB>
-				<FB Name="OR_2_Verteiler_senken" Type="OR_2" Comment="" x="30343.75" y="11037.5">
+				<FB Name="OR_2_Verteiler_senken" Type="OR_2" Comment="" x="36431.25" y="6412.5">
 				</FB>
-				<FB Name="OR_2_Verteiler_heben" Type="OR_2" Comment="" x="30393.75" y="12656.25">
+				<FB Name="OR_2_Verteiler_heben" Type="OR_2" Comment="" x="36481.25" y="15750.0">
 				</FB>
-				<FB Name="E_SR_Verteiler_senken" Type="E_SR" Comment="" x="26818.75" y="14256.25">
+				<FB Name="E_SR_Verteiler_senken" Type="E_SR" Comment="" x="32581.25" y="14343.75">
 				</FB>
-				<FB Name="SoftKey_Automatik_aus_UP" Type="IX" Comment="" x="24525.0" y="12550.0">
+				<FB Name="SoftKey_Automatik_aus_UP" Type="IX" Comment="" x="29962.5" y="15825.0">
 					<Parameter Name="QI" Value="TRUE"/>
 				</FB>
-				<FB Name="SoftKey_Automatik_ein_DOWN" Type="IX" Comment="" x="24425.0" y="14887.5">
+				<FB Name="SoftKey_Automatik_ein_DOWN" Type="IX" Comment="" x="-1350.0" y="16350.0">
 					<Parameter Name="QI" Value="TRUE"/>
 				</FB>
-				<FB Name="E_FWD_Automatik" Type="E_FWD" Comment="" x="14262.5" y="12550.0">
+				<FB Name="E_FWD_Automatik" Type="E_FWD" Comment="" x="-3043.75" y="16350.0">
 				</FB>
-				<FB Name="SoftKey_Automatik_ein_UP" Type="IX" Comment="" x="16006.25" y="14150.0">
+				<FB Name="SoftKey_Automatik_ein_UP" Type="IX" Comment="" x="-1250.0" y="14237.5">
 					<Parameter Name="QI" Value="TRUE"/>
 				</FB>
-				<FB Name="SoftKey_Automatik_aus_DOWN" Type="IX" Comment="" x="24425.0" y="13618.75">
+				<FB Name="SoftKey_Automatik_aus_DOWN" Type="IX" Comment="" x="29862.5" y="14756.25">
 					<Parameter Name="QI" Value="TRUE"/>
 				</FB>
-				<FB Name="E_SR_Verteiler_heben" Type="E_SR" Comment="" x="26818.75" y="12656.25">
+				<FB Name="E_SR_Verteiler_heben" Type="E_SR" Comment="" x="32581.25" y="15931.25">
 				</FB>
-				<FB Name="E_SR__Heckschieber" Type="E_SR" Comment="" x="20075.0" y="10187.5">
+				<FB Name="E_SR_Heckschieber" Type="E_SR" Comment="" x="22893.75" y="17231.25">
 				</FB>
-				<FB Name="E_SWITCH__Heckschieber" Type="E_SWITCH" Comment="" x="17887.5" y="10187.5">
+				<FB Name="E_SWITCH_Heckschieber" Type="E_SWITCH" Comment="" x="21018.75" y="18050.0">
 				</FB>
-				<FB Name="E_FWD_Automatik_ein_UP" Type="E_FWD" Comment="" x="17906.25" y="14662.5">
+				<FB Name="E_FWD_Automatik_ein_UP" Type="E_FWD" Comment="" x="21087.5" y="14243.75">
 				</FB>
-				<FB Name="GreenWhiteBackground_Licht" Type="GreenWhiteBackground" Comment="" x="5650.0" y="16237.5">
+				<FB Name="GreenWhiteBackground_Licht" Type="GreenWhiteBackground" Comment="" x="15612.5" y="-475.0">
 					<Parameter Name="u16ObjId" Value="5016"/>
 				</FB>
-				<FB Name="GreenWhiteBackground_Abscheider" Type="GreenWhiteBackground" Comment="" x="2100.0" y="25.0">
+				<FB Name="GreenWhiteBackground_Abscheider" Type="GreenWhiteBackground" Comment="" x="12231.25" y="4837.5">
 					<Parameter Name="u16ObjId" Value="5015"/>
 				</FB>
-				<FB Name="GreenWhiteBackground_Verteiler_heben" Type="GreenWhiteBackground" Comment="" x="34756.25" y="13081.25">
+				<FB Name="GreenWhiteBackground_Verteiler_heben" Type="GreenWhiteBackground" Comment="" x="38287.5" y="10181.25">
 					<Parameter Name="u16ObjId" Value="5010"/>
 				</FB>
-				<FB Name="GreenWhiteBackground_Verteiler_senken" Type="GreenWhiteBackground" Comment="" x="32150.0" y="10631.25">
+				<FB Name="GreenWhiteBackground_Verteiler_senken" Type="GreenWhiteBackground" Comment="" x="38237.5" y="5775.0">
 					<Parameter Name="u16ObjId" Value="5004"/>
 				</FB>
-				<FB Name="GreenWhiteBackground_Dom" Type="GreenWhiteBackground" Comment="" x="26481.25" y="8087.5">
+				<FB Name="GreenWhiteBackground_Dom" Type="GreenWhiteBackground" Comment="" x="32050.0" y="2918.75">
 					<Parameter Name="u16ObjId" Value="5001"/>
 				</FB>
-				<FB Name="GreenWhiteBackground_Heckschieber" Type="GreenWhiteBackground" Comment="" x="22018.75" y="9556.25">
+				<FB Name="GreenWhiteBackground_Heckschieber" Type="GreenWhiteBackground" Comment="" x="24556.25" y="17131.25">
 					<Parameter Name="u16ObjId" Value="5002"/>
 				</FB>
-				<FB Name="GreenWhiteBackground_Zusammenklappen" Type="GreenWhiteBackground" Comment="" x="1418.75" y="2018.75">
+				<FB Name="GreenWhiteBackground_Zusammenklappen" Type="GreenWhiteBackground" Comment="" x="45456.25" y="16768.75">
 					<Parameter Name="u16ObjId" Value="5009"/>
 				</FB>
-				<FB Name="GreenWhiteBackground_Auseinanderklappen" Type="GreenWhiteBackground" Comment="" x="1275.0" y="175.0">
+				<FB Name="GreenWhiteBackground_Auseinanderklappen" Type="GreenWhiteBackground" Comment="" x="40843.75" y="18150.0">
 					<Parameter Name="u16ObjId" Value="5003"/>
 				</FB>
-				<FB Name="GreenWhiteBackground_Knickdeichsel_senken" Type="GreenWhiteBackground" Comment="" x="4175.0" y="3375.0">
+				<FB Name="GreenWhiteBackground_Knickdeichsel_senken" Type="GreenWhiteBackground" Comment="" x="31918.75" y="1543.75">
 					<Parameter Name="u16ObjId" Value="5005"/>
 				</FB>
-				<FB Name="GreenWhiteBackground_Knickdeichsel_heben" Type="GreenWhiteBackground" Comment="" x="4225.0" y="1531.25">
+				<FB Name="GreenWhiteBackground_Knickdeichsel_heben" Type="GreenWhiteBackground" Comment="" x="27006.25" y="-1006.25">
 					<Parameter Name="u16ObjId" Value="5011"/>
 				</FB>
-				<FB Name="GreenWhiteBackground_Schneidwerk" Type="GreenWhiteBackground" Comment="" x="7250.0" y="250.0">
+				<FB Name="GreenWhiteBackground_Schneidwerk" Type="GreenWhiteBackground" Comment="" x="5912.5" y="481.25">
 					<Parameter Name="u16ObjId" Value="5007"/>
 				</FB>
-				<FB Name="GreenWhiteBackground_Seitenschieber" Type="GreenWhiteBackground" Comment="" x="8887.5" y="4768.75">
+				<FB Name="GreenWhiteBackground_Seitenschieber" Type="GreenWhiteBackground" Comment="" x="24500.0" y="19643.75">
 					<Parameter Name="u16ObjId" Value="5008"/>
 				</FB>
+				<FB Name="E_REND_Automatik_ein" Type="E_REND" Comment="" x="768.75" y="14031.25">
+				</FB>
+				<FB Name="E_F_TRIG_Heckschieber" Type="E_F_TRIG" Comment="" x="-1225.0" y="11293.75">
+				</FB>
+				<FB Name="E_SR_Schneidwerk" Type="E_SR" Comment="" x="4356.25" y="3012.5">
+				</FB>
+				<FB Name="E_SWITCH_Schneidwerk" Type="E_SWITCH" Comment="" x="2450.0" y="6768.75">
+				</FB>
+				<FB Name="E_FWD_Automatik_ein_Schneidwerk" Type="E_FWD" Comment="" x="2300.0" y="14031.25">
+				</FB>
 				<EventConnections>
-					<Connection Source="E_FWD_Vorsteuerventil.CNF" Destination="DigitalOutput_2A.INIT" Comment="" dx1="600.0"/>
-					<Connection Source="E_FWD_Vorsteuerventil.CNF" Destination="DigitalOutput_2B.INIT" Comment="" dx1="600.0"/>
-					<Connection Source="START.COLD" Destination="E_FWD_Vorsteuerventil.REQ" Comment="" dx1="4731.25" dx2="13737.5" dy="6125.0"/>
-					<Connection Source="E_FWD_Klappen.CNF" Destination="SoftKey_Zusammenklappen.INIT" Comment=""/>
-					<Connection Source="E_FWD_Klappen.CNF" Destination="SoftKey_Auseinanderklappen.INIT" Comment="" dx1="837.5"/>
-					<Connection Source="START.COLD" Destination="E_FWD_Klappen.REQ" Comment="" dx1="14112.5"/>
-					<Connection Source="E_FWD_Verteiler.CNF" Destination="SoftKey_Verteiler_heben.INIT" Comment="" dx1="637.5"/>
-					<Connection Source="E_FWD_Verteiler.CNF" Destination="SoftKey_Verteiler_senken.INIT" Comment=""/>
-					<Connection Source="OR_4A_4B.CNF" Destination="DigitalOutput_4B.REQ" Comment="" dx1="700.0"/>
-					<Connection Source="OR_4A_4B.CNF" Destination="DigitalOutput_4A.REQ" Comment="" dx1="700.0"/>
-					<Connection Source="START.COLD" Destination="E_FWD_Verteiler.REQ" Comment="" dx1="17381.25"/>
-					<Connection Source="SoftKey_Auseinanderklappen.IND" Destination="OR_3A_3B.REQ" Comment="" dx1="706.25"/>
-					<Connection Source="SoftKey_Zusammenklappen.IND" Destination="OR_3A_3B.REQ" Comment="" dx1="600.0"/>
-					<Connection Source="OR_3A_3B.CNF" Destination="DigitalOutput_3A.REQ" Comment="" dx1="75.0"/>
-					<Connection Source="OR_3A_3B.CNF" Destination="DigitalOutput_3B.REQ" Comment="" dx1="75.0"/>
+					<Connection Source="E_FWD_Vorsteuerventil.CNF" Destination="DigitalOutput_2A.INIT" Comment="" dx1="893.75"/>
+					<Connection Source="E_FWD_Vorsteuerventil.CNF" Destination="DigitalOutput_2B.INIT" Comment="" dx1="893.75"/>
+					<Connection Source="START.COLD" Destination="E_FWD_Vorsteuerventil.REQ" Comment="" dx1="25106.25"/>
+					<Connection Source="E_FWD_Klappen.CNF" Destination="SoftKey_Zusammenklappen.INIT" Comment="" dx1="331.25"/>
+					<Connection Source="E_FWD_Klappen.CNF" Destination="SoftKey_Auseinanderklappen.INIT" Comment=""/>
+					<Connection Source="START.COLD" Destination="E_FWD_Klappen.REQ" Comment="" dx1="20943.75"/>
+					<Connection Source="E_FWD_Verteiler.CNF" Destination="SoftKey_Verteiler_heben.INIT" Comment=""/>
+					<Connection Source="E_FWD_Verteiler.CNF" Destination="SoftKey_Verteiler_senken.INIT" Comment="" dx1="956.25"/>
+					<Connection Source="OR_4A_4B.CNF" Destination="DigitalOutput_4B.REQ" Comment=""/>
+					<Connection Source="OR_4A_4B.CNF" Destination="DigitalOutput_4A.REQ" Comment="" dx1="637.5"/>
+					<Connection Source="START.COLD" Destination="E_FWD_Verteiler.REQ" Comment="" dx1="68.75"/>
+					<Connection Source="SoftKey_Auseinanderklappen.IND" Destination="OR_3A_3B.REQ" Comment="" dx1="768.75"/>
+					<Connection Source="SoftKey_Zusammenklappen.IND" Destination="OR_3A_3B.REQ" Comment="" dx1="618.75"/>
+					<Connection Source="OR_3A_3B.CNF" Destination="DigitalOutput_3A.REQ" Comment="" dx1="637.5"/>
+					<Connection Source="OR_3A_3B.CNF" Destination="DigitalOutput_3B.REQ" Comment="" dx1="668.75"/>
 					<Connection Source="OR_5A_5B.CNF" Destination="DigitalOutput_5B.REQ" Comment="" dx1="125.0"/>
 					<Connection Source="E_FWD_Knickdeichsel.CNF" Destination="SoftKey_Knickdeichsel_senken.INIT" Comment=""/>
-					<Connection Source="SoftKey_Knickdeichsel_senken.IND" Destination="OR_5A_5B.REQ" Comment="" dx1="806.25"/>
-					<Connection Source="OR_5A_5B.CNF" Destination="DigitalOutput_5A.REQ" Comment="" dx1="125.0"/>
-					<Connection Source="E_FWD_Knickdeichsel.CNF" Destination="SoftKey_Knickdeichsel_heben.INIT" Comment="" dx1="587.5"/>
-					<Connection Source="SoftKey_Knickdeichsel_heben.IND" Destination="OR_5A_5B.REQ" Comment="" dx1="756.25"/>
-					<Connection Source="START.COLD" Destination="E_FWD_Knickdeichsel.REQ" Comment="" dx1="17381.25" dx2="956.25" dy="-2362.5"/>
+					<Connection Source="SoftKey_Knickdeichsel_senken.IND" Destination="OR_5A_5B.REQ" Comment="" dx1="3550.0"/>
+					<Connection Source="OR_5A_5B.CNF" Destination="DigitalOutput_5A.REQ" Comment=""/>
+					<Connection Source="E_FWD_Knickdeichsel.CNF" Destination="SoftKey_Knickdeichsel_heben.INIT" Comment="" dx1="500.0"/>
+					<Connection Source="SoftKey_Knickdeichsel_heben.IND" Destination="OR_5A_5B.REQ" Comment="" dx1="762.5" dx2="556.25" dy="-2062.5"/>
+					<Connection Source="START.COLD" Destination="E_FWD_Knickdeichsel.REQ" Comment="" dx1="68.75" dx2="475.0" dy="-13900.0"/>
 					<Connection Source="DataPanel_xDB_16_DO_SAE_J1939.INITO" Destination="UT_SoftkeyMapping.INIT" Comment=""/>
-					<Connection Source="START.COLD" Destination="DataPanel_xDB_16_DO_SAE_J1939.INIT" Comment="" dx1="4731.25"/>
-					<Connection Source="SoftKey_Dom_UP.IND" Destination="E_T_FF_Dom.CLK" Comment="" dx1="625.0"/>
+					<Connection Source="START.COLD" Destination="DataPanel_xDB_16_DO_SAE_J1939.INIT" Comment="" dx1="68.75"/>
+					<Connection Source="SoftKey_Dom_UP.IND" Destination="E_T_FF_Dom.CLK" Comment=""/>
 					<Connection Source="E_FWD_Dom.CNF" Destination="SoftKey_Dom_UP.INIT" Comment=""/>
-					<Connection Source="START.COLD" Destination="E_FWD_Dom.REQ" Comment="" dx1="17381.25" dx2="1056.25" dy="-2362.5"/>
+					<Connection Source="START.COLD" Destination="E_FWD_Dom.REQ" Comment="" dx1="68.75" dx2="20943.75" dy="-13900.0"/>
 					<Connection Source="E_IMPULSE_Dom.CNF" Destination="DigitalOutput_6A.REQ" Comment="" dx1="475.0"/>
-					<Connection Source="E_IMPULSE_Dom.CNF" Destination="AND_2_Dom.REQ" Comment="" dx1="475.0"/>
-					<Connection Source="E_IMPULSE_Heckschieber.CNF" Destination="DigitalOutput_6B.REQ" Comment="" dx1="537.5"/>
-					<Connection Source="E_IMPULSE_Heckschieber.CNF" Destination="AND_2_Heckschieber.REQ" Comment=""/>
+					<Connection Source="E_IMPULSE_Dom.CNF" Destination="AND_2_Dom.REQ" Comment="" dx1="475.0" dx2="837.5" dy="-656.25"/>
+					<Connection Source="E_IMPULSE_Heckschieber.CNF" Destination="DigitalOutput_6B.REQ" Comment="" dx1="443.75" dx2="562.5" dy="-3275.0"/>
+					<Connection Source="E_IMPULSE_Heckschieber.CNF" Destination="AND_2_Heckschieber.REQ" Comment="" dx1="443.75" dx2="775.0" dy="-3275.0"/>
 					<Connection Source="E_FWD_Heckschieber.CNF" Destination="SoftKey_Heckschieber_UP.INIT" Comment=""/>
-					<Connection Source="START.COLD" Destination="E_FWD_Heckschieber.REQ" Comment=""/>
+					<Connection Source="START.COLD" Destination="E_FWD_Heckschieber.REQ" Comment="" dx1="17812.5"/>
 					<Connection Source="UT_SoftkeyMapping.INITO" Destination="UT_SoftkeyMapping_UP.INIT" Comment=""/>
-					<Connection Source="SoftKey_Seitenschieber_UP.IND" Destination="E_T_FF_Seitenschieber.CLK" Comment="" dx1="593.75"/>
-					<Connection Source="E_T_FF_Seitenschieber.EO" Destination="AND_2_Seitenschieber.REQ" Comment=""/>
-					<Connection Source="E_IMPULSE_Seitenschieber.CNF" Destination="DigitalOutput_7A.REQ" Comment="" dx1="637.5"/>
-					<Connection Source="E_IMPULSE_Seitenschieber.CNF" Destination="AND_2_Seitenschieber.REQ" Comment="" dx1="637.5" dx2="11437.5" dy="418.75"/>
-					<Connection Source="E_FWD_Seitenschieber.CNF" Destination="SoftKey_Seitenschieber_UP.INIT" Comment="" dx1="550.0"/>
-					<Connection Source="START.COLD" Destination="E_FWD_Seitenschieber.REQ" Comment="" dx1="68.75"/>
-					<Connection Source="E_FWD_Schneidwerk.CNF" Destination="SoftKey_Schneidwerk_UP.INIT" Comment="" dx1="1193.75"/>
-					<Connection Source="START.COLD" Destination="E_FWD_Schneidwerk.REQ" Comment="" dx1="14112.5"/>
-					<Connection Source="E_FWD_Schneidwerk.CNF" Destination="DigitalOutput_1B.INIT" Comment="" dx1="1193.75"/>
-					<Connection Source="SoftKey_Schneidwerk_UP.IND" Destination="E_T_FF_Schneidwerk.CLK" Comment=""/>
-					<Connection Source="E_T_FF_Schneidwerk.EO" Destination="DigitalOutput_1A.REQ" Comment="" dx1="556.25"/>
-					<Connection Source="SoftKey_Licht_UP.IND" Destination="E_T_FF_Licht.CLK" Comment="" dx1="143.75"/>
-					<Connection Source="E_T_FF_Licht.EO" Destination="DigitalOutput_8A.REQ" Comment="" dx1="912.5" dx2="1843.75" dy="525.0"/>
+					<Connection Source="SoftKey_Seitenschieber_UP.IND" Destination="E_T_FF_Seitenschieber.CLK" Comment=""/>
+					<Connection Source="E_T_FF_Seitenschieber.EO" Destination="AND_2_Seitenschieber.REQ" Comment="" dx1="606.25" dx2="1162.5" dy="-1331.25"/>
+					<Connection Source="E_IMPULSE_Seitenschieber.CNF" Destination="DigitalOutput_7A.REQ" Comment="" dx1="768.75"/>
+					<Connection Source="E_IMPULSE_Seitenschieber.CNF" Destination="AND_2_Seitenschieber.REQ" Comment="" dx1="768.75" dx2="1162.5" dy="-1212.5"/>
+					<Connection Source="E_FWD_Seitenschieber.CNF" Destination="SoftKey_Seitenschieber_UP.INIT" Comment=""/>
+					<Connection Source="START.COLD" Destination="E_FWD_Seitenschieber.REQ" Comment="" dx1="20943.75"/>
+					<Connection Source="E_FWD_Schneidwerk.CNF" Destination="SoftKey_Schneidwerk_UP.INIT" Comment=""/>
+					<Connection Source="START.COLD" Destination="E_FWD_Schneidwerk.REQ" Comment="" dx1="68.75" dx2="956.25" dy="-13900.0"/>
+					<Connection Source="E_FWD_Schneidwerk.CNF" Destination="DigitalOutput_1B.INIT" Comment="" dx1="575.0"/>
+					<Connection Source="SoftKey_Licht_UP.IND" Destination="E_T_FF_Licht.CLK" Comment=""/>
+					<Connection Source="E_T_FF_Licht.EO" Destination="DigitalOutput_8A.REQ" Comment="" dx1="850.0"/>
 					<Connection Source="E_FWD_Licht.CNF" Destination="SoftKey_Licht_UP.INIT" Comment=""/>
-					<Connection Source="START.COLD" Destination="E_FWD_Licht.REQ" Comment="" dx1="1368.75"/>
-					<Connection Source="E_FWD_Abscheider.CNF" Destination="SoftKey_Abscheider_UP.INIT" Comment="" dx1="350.0"/>
-					<Connection Source="E_IMPULSE_Abscheider.CNF" Destination="AND_2_Abscheider.REQ" Comment="" dx1="862.5" dx2="21762.5" dy="418.75"/>
-					<Connection Source="SoftKey_Abscheider_UP.INITO" Destination="DigitalOutput_7B.INIT" Comment="" dx1="11331.25"/>
-					<Connection Source="E_IMPULSE_Abscheider.CNF" Destination="DigitalOutput_7B.REQ" Comment="" dx1="862.5"/>
-					<Connection Source="SoftKey_Abscheider_UP.IND" Destination="E_T_FF_Abscheider.CLK" Comment="" dx1="393.75"/>
-					<Connection Source="E_T_FF_Abscheider.EO" Destination="AND_2_Abscheider.REQ" Comment=""/>
-					<Connection Source="START.COLD" Destination="E_FWD_Abscheider.REQ" Comment="" dx1="68.75"/>
-					<Connection Source="OR_2B.CNF" Destination="DigitalOutput_2B.REQ" Comment="" dx1="131.25"/>
-					<Connection Source="SoftKey_Auseinanderklappen.IND" Destination="OR_2B.REQ" Comment="" dx1="706.25"/>
-					<Connection Source="SoftKey_Knickdeichsel_heben.IND" Destination="OR_2B.REQ" Comment="" dx1="756.25" dx2="612.5" dy="806.25"/>
-					<Connection Source="AND_2_Heckschieber.CNF" Destination="OR_2B.REQ" Comment="" dx1="3056.25"/>
-					<Connection Source="AND_2_Abscheider.CNF" Destination="OR_2B.REQ" Comment=""/>
-					<Connection Source="OR_2A.CNF" Destination="DigitalOutput_2A.REQ" Comment="" dx1="131.25"/>
-					<Connection Source="SoftKey_Zusammenklappen.IND" Destination="OR_2A.REQ" Comment="" dx1="600.0"/>
-					<Connection Source="SoftKey_Knickdeichsel_senken.IND" Destination="OR_2A.REQ" Comment="" dx1="806.25" dx2="562.5" dy="425.0"/>
-					<Connection Source="AND_2_Dom.CNF" Destination="OR_2A.REQ" Comment="" dx1="700.0"/>
-					<Connection Source="AND_2_Seitenschieber.CNF" Destination="OR_2A.REQ" Comment=""/>
+					<Connection Source="START.COLD" Destination="E_FWD_Licht.REQ" Comment="" dx1="68.75" dx2="2287.5" dy="-13900.0"/>
+					<Connection Source="E_FWD_Abscheider.CNF" Destination="SoftKey_Abscheider_UP.INIT" Comment="" dx1="343.75"/>
+					<Connection Source="E_IMPULSE_Abscheider.CNF" Destination="AND_2_Abscheider.REQ" Comment="" dx1="20818.75"/>
+					<Connection Source="SoftKey_Abscheider_UP.INITO" Destination="DigitalOutput_7B.INIT" Comment="" dx1="550.0" dx2="693.75" dy="-1456.25"/>
+					<Connection Source="E_IMPULSE_Abscheider.CNF" Destination="DigitalOutput_7B.REQ" Comment="" dx1="912.5"/>
+					<Connection Source="SoftKey_Abscheider_UP.IND" Destination="E_T_FF_Abscheider.CLK" Comment=""/>
+					<Connection Source="E_T_FF_Abscheider.EO" Destination="AND_2_Abscheider.REQ" Comment="" dx1="843.75" dx2="1156.25" dy="-656.25"/>
+					<Connection Source="START.COLD" Destination="E_FWD_Abscheider.REQ" Comment="" dx1="68.75" dx2="312.5" dy="-13900.0"/>
+					<Connection Source="OR_2B.CNF" Destination="DigitalOutput_2B.REQ" Comment=""/>
+					<Connection Source="SoftKey_Auseinanderklappen.IND" Destination="OR_2B.REQ" Comment="" dx1="5318.75"/>
+					<Connection Source="SoftKey_Knickdeichsel_heben.IND" Destination="OR_2B.REQ" Comment="" dx1="762.5" dx2="775.0" dy="-1125.0"/>
+					<Connection Source="AND_2_Heckschieber.CNF" Destination="OR_2B.REQ" Comment="" dx1="543.75"/>
+					<Connection Source="AND_2_Abscheider.CNF" Destination="OR_2B.REQ" Comment="" dx1="2931.25"/>
+					<Connection Source="OR_2A.CNF" Destination="DigitalOutput_2A.REQ" Comment="" dx1="625.0"/>
+					<Connection Source="SoftKey_Zusammenklappen.IND" Destination="OR_2A.REQ" Comment="" dx1="618.75"/>
+					<Connection Source="SoftKey_Knickdeichsel_senken.IND" Destination="OR_2A.REQ" Comment="" dx1="14406.25"/>
+					<Connection Source="AND_2_Dom.CNF" Destination="OR_2A.REQ" Comment="" dx1="668.75"/>
+					<Connection Source="AND_2_Seitenschieber.CNF" Destination="OR_2A.REQ" Comment="" dx1="3062.5"/>
 					<Connection Source="UT_SoftkeyMapping_UP.INITO" Destination="UT_SoftkeyMapping_DOWN.INIT" Comment=""/>
-					<Connection Source="OR_2_Verteiler_senken.CNF" Destination="OR_4A_4B.REQ" Comment="" dx1="650.0"/>
-					<Connection Source="OR_2_Verteiler_heben.CNF" Destination="OR_4A_4B.REQ" Comment="" dx1="600.0"/>
+					<Connection Source="OR_2_Verteiler_senken.CNF" Destination="OR_4A_4B.REQ" Comment="" dx1="706.25"/>
+					<Connection Source="OR_2_Verteiler_heben.CNF" Destination="OR_4A_4B.REQ" Comment="" dx1="662.5"/>
 					<Connection Source="SoftKey_Verteiler_heben.IND" Destination="OR_2_Verteiler_heben.REQ" Comment="" dx1="743.75"/>
-					<Connection Source="SoftKey_Verteiler_senken.IND" Destination="OR_2_Verteiler_senken.REQ" Comment="" dx1="606.25"/>
-					<Connection Source="OR_2_Verteiler_heben.CNF" Destination="OR_2A.REQ" Comment="" dx1="7881.25"/>
-					<Connection Source="OR_2_Verteiler_senken.CNF" Destination="OR_2B.REQ" Comment="" dx1="650.0" dx2="612.5" dy="-656.25"/>
-					<Connection Source="SoftKey_Automatik_ein_DOWN.IND" Destination="E_SR_Verteiler_senken.S" Comment="" dx1="643.75"/>
-					<Connection Source="E_FWD_Automatik.CNF" Destination="SoftKey_Automatik_aus_UP.INIT" Comment=""/>
-					<Connection Source="E_FWD_Automatik.CNF" Destination="SoftKey_Automatik_ein_DOWN.INIT" Comment="" dx1="487.5"/>
+					<Connection Source="SoftKey_Verteiler_senken.IND" Destination="OR_2_Verteiler_senken.REQ" Comment="" dx1="518.75"/>
+					<Connection Source="OR_2_Verteiler_heben.CNF" Destination="OR_2A.REQ" Comment="" dx1="662.5" dx2="631.25" dy="-443.75"/>
+					<Connection Source="OR_2_Verteiler_senken.CNF" Destination="OR_2B.REQ" Comment="" dx1="7862.5"/>
+					<Connection Source="SoftKey_Automatik_ein_DOWN.IND" Destination="E_SR_Verteiler_senken.S" Comment="" dx1="31856.25"/>
+					<Connection Source="E_FWD_Automatik.CNF" Destination="SoftKey_Automatik_aus_UP.INIT" Comment="" dx1="487.5"/>
+					<Connection Source="E_FWD_Automatik.CNF" Destination="SoftKey_Automatik_ein_DOWN.INIT" Comment=""/>
 					<Connection Source="E_FWD_Automatik.CNF" Destination="SoftKey_Automatik_ein_UP.INIT" Comment="" dx1="487.5"/>
 					<Connection Source="SoftKey_Automatik_ein_UP.IND" Destination="E_SR_Verteiler_senken.R" Comment=""/>
-					<Connection Source="E_FWD_Automatik.CNF" Destination="SoftKey_Automatik_aus_DOWN.INIT" Comment="" dx1="8956.25"/>
-					<Connection Source="SoftKey_Automatik_aus_DOWN.IND" Destination="E_SR_Verteiler_heben.S" Comment="" dx1="643.75"/>
+					<Connection Source="E_FWD_Automatik.CNF" Destination="SoftKey_Automatik_aus_DOWN.INIT" Comment="" dx1="487.5" dx2="787.5" dy="-475.0"/>
+					<Connection Source="SoftKey_Automatik_aus_DOWN.IND" Destination="E_SR_Verteiler_heben.S" Comment="" dx1="706.25"/>
 					<Connection Source="SoftKey_Automatik_aus_UP.IND" Destination="E_SR_Verteiler_heben.R" Comment=""/>
-					<Connection Source="START.COLD" Destination="E_FWD_Automatik.REQ" Comment="" dx1="17381.25"/>
-					<Connection Source="E_SR_Verteiler_senken.EO" Destination="OR_2_Verteiler_senken.REQ" Comment="" dx1="2681.25"/>
-					<Connection Source="E_SR_Verteiler_heben.EO" Destination="OR_2_Verteiler_heben.REQ" Comment=""/>
-					<Connection Source="SoftKey_Heckschieber_UP.IND" Destination="E_SWITCH__Heckschieber.EI" Comment="" dx1="506.25"/>
-					<Connection Source="E_SWITCH__Heckschieber.EO0" Destination="E_SR__Heckschieber.S" Comment=""/>
-					<Connection Source="E_SWITCH__Heckschieber.EO1" Destination="E_SR__Heckschieber.R" Comment=""/>
-					<Connection Source="E_FWD_Automatik_ein_UP.CNF" Destination="E_SR__Heckschieber.S" Comment="" dx1="650.0"/>
-					<Connection Source="SoftKey_Automatik_ein_UP.IND" Destination="E_FWD_Automatik_ein_UP.REQ" Comment="" dx1="543.75"/>
-					<Connection Source="E_SR__Heckschieber.EO" Destination="AND_2_Heckschieber.REQ" Comment="" dx1="13525.0"/>
-					<Connection Source="E_SR__Heckschieber.EO" Destination="E_IMPULSE_Heckschieber.REQ" Comment="" dx1="787.5"/>
-					<Connection Source="E_T_FF_Seitenschieber.EO" Destination="E_IMPULSE_Seitenschieber.REQ" Comment="" dx1="675.0"/>
-					<Connection Source="E_T_FF_Abscheider.EO" Destination="E_IMPULSE_Abscheider.REQ" Comment="" dx1="6606.25"/>
-					<Connection Source="E_T_FF_Licht.EO" Destination="GreenWhiteBackground_Licht.REQ" Comment="" dx1="912.5"/>
-					<Connection Source="SoftKey_Licht_UP.INITO" Destination="GreenWhiteBackground_Licht.INIT" Comment="" dx1="3268.75"/>
-					<Connection Source="SoftKey_Licht_UP.INITO" Destination="DigitalOutput_8A.INIT" Comment=""/>
-					<Connection Source="E_FWD_Abscheider.CNF" Destination="GreenWhiteBackground_Abscheider.INIT" Comment="" dx1="3712.5"/>
-					<Connection Source="E_T_FF_Abscheider.EO" Destination="GreenWhiteBackground_Abscheider.REQ" Comment="" dx1="350.0"/>
-					<Connection Source="OR_2_Verteiler_heben.CNF" Destination="GreenWhiteBackground_Verteiler_heben.REQ" Comment="" dx1="3268.75"/>
-					<Connection Source="OR_2_Verteiler_senken.CNF" Destination="GreenWhiteBackground_Verteiler_senken.REQ" Comment="" dx1="650.0"/>
-					<Connection Source="SoftKey_Verteiler_senken.INITO" Destination="GreenWhiteBackground_Verteiler_senken.INIT" Comment="" dx1="543.75"/>
-					<Connection Source="SoftKey_Verteiler_heben.INITO" Destination="GreenWhiteBackground_Verteiler_heben.INIT" Comment="" dx1="868.75"/>
-					<Connection Source="GreenWhiteBackground_Verteiler_heben.INITO" Destination="DigitalOutput_4B.INIT" Comment="" dx1="3031.25"/>
+					<Connection Source="START.COLD" Destination="E_FWD_Automatik.REQ" Comment="" dx1="68.75"/>
+					<Connection Source="E_SR_Verteiler_senken.EO" Destination="OR_2_Verteiler_senken.REQ" Comment="" dx1="3062.5"/>
+					<Connection Source="E_SR_Verteiler_heben.EO" Destination="OR_2_Verteiler_heben.REQ" Comment="" dx1="981.25"/>
+					<Connection Source="SoftKey_Heckschieber_UP.IND" Destination="E_SWITCH_Heckschieber.EI" Comment=""/>
+					<Connection Source="E_SWITCH_Heckschieber.EO0" Destination="E_SR_Heckschieber.S" Comment="" dx1="562.5"/>
+					<Connection Source="E_SWITCH_Heckschieber.EO1" Destination="E_SR_Heckschieber.R" Comment="" dx1="625.0"/>
+					<Connection Source="E_FWD_Automatik_ein_UP.CNF" Destination="E_SR_Heckschieber.S" Comment="" dx1="650.0"/>
+					<Connection Source="SoftKey_Automatik_ein_UP.IND" Destination="E_FWD_Automatik_ein_UP.REQ" Comment="" dx1="20775.0"/>
+					<Connection Source="E_SR_Heckschieber.EO" Destination="AND_2_Heckschieber.REQ" Comment="" dx1="450.0" dx2="775.0" dy="-550.0"/>
+					<Connection Source="E_SR_Heckschieber.EO" Destination="E_IMPULSE_Heckschieber.REQ" Comment="" dx1="450.0" dx2="631.25" dy="-5456.25"/>
+					<Connection Source="E_T_FF_Seitenschieber.EO" Destination="E_IMPULSE_Seitenschieber.REQ" Comment="" dx1="606.25"/>
+					<Connection Source="E_T_FF_Abscheider.EO" Destination="E_IMPULSE_Abscheider.REQ" Comment="" dx1="843.75"/>
+					<Connection Source="E_T_FF_Licht.EO" Destination="GreenWhiteBackground_Licht.REQ" Comment="" dx1="850.0"/>
+					<Connection Source="SoftKey_Licht_UP.INITO" Destination="GreenWhiteBackground_Licht.INIT" Comment="" dx1="793.75" dx2="1768.75" dy="-675.0"/>
+					<Connection Source="SoftKey_Licht_UP.INITO" Destination="DigitalOutput_8A.INIT" Comment="" dx1="793.75" dx2="687.5" dy="-675.0"/>
+					<Connection Source="E_FWD_Abscheider.CNF" Destination="GreenWhiteBackground_Abscheider.INIT" Comment="" dx1="5893.75"/>
+					<Connection Source="E_T_FF_Abscheider.EO" Destination="GreenWhiteBackground_Abscheider.REQ" Comment="" dx1="843.75"/>
+					<Connection Source="OR_2_Verteiler_heben.CNF" Destination="GreenWhiteBackground_Verteiler_heben.REQ" Comment="" dx1="662.5"/>
+					<Connection Source="OR_2_Verteiler_senken.CNF" Destination="GreenWhiteBackground_Verteiler_senken.REQ" Comment="" dx1="706.25"/>
+					<Connection Source="SoftKey_Verteiler_senken.INITO" Destination="GreenWhiteBackground_Verteiler_senken.INIT" Comment="" dx1="543.75" dx2="687.5" dy="-106.25"/>
+					<Connection Source="SoftKey_Verteiler_heben.INITO" Destination="GreenWhiteBackground_Verteiler_heben.INIT" Comment="" dx1="556.25" dx2="737.5" dy="-1131.25"/>
+					<Connection Source="GreenWhiteBackground_Verteiler_heben.INITO" Destination="DigitalOutput_4B.INIT" Comment="" dx1="725.0"/>
 					<Connection Source="GreenWhiteBackground_Verteiler_senken.INITO" Destination="DigitalOutput_4A.INIT" Comment="" dx1="650.0"/>
-					<Connection Source="E_T_FF_Dom.EO" Destination="GreenWhiteBackground_Dom.REQ" Comment="" dx1="587.5"/>
-					<Connection Source="SoftKey_Dom_UP.INITO" Destination="GreenWhiteBackground_Dom.INIT" Comment=""/>
-					<Connection Source="GreenWhiteBackground_Dom.INITO" Destination="DigitalOutput_6A.INIT" Comment="" dx1="2218.75"/>
-					<Connection Source="E_T_FF_Dom.EO" Destination="E_IMPULSE_Dom.REQ" Comment="" dx1="587.5"/>
-					<Connection Source="SoftKey_Heckschieber_UP.INITO" Destination="GreenWhiteBackground_Heckschieber.INIT" Comment=""/>
-					<Connection Source="GreenWhiteBackground_Heckschieber.INITO" Destination="DigitalOutput_6B.INIT" Comment=""/>
-					<Connection Source="E_SR__Heckschieber.EO" Destination="GreenWhiteBackground_Heckschieber.REQ" Comment="" dx1="787.5"/>
-					<Connection Source="SoftKey_Zusammenklappen.INITO" Destination="GreenWhiteBackground_Zusammenklappen.INIT" Comment=""/>
-					<Connection Source="GreenWhiteBackground_Zusammenklappen.INITO" Destination="DigitalOutput_3B.INIT" Comment=""/>
-					<Connection Source="SoftKey_Auseinanderklappen.INITO" Destination="GreenWhiteBackground_Auseinanderklappen.INIT" Comment=""/>
-					<Connection Source="GreenWhiteBackground_Auseinanderklappen.INITO" Destination="DigitalOutput_3A.INIT" Comment=""/>
-					<Connection Source="SoftKey_Auseinanderklappen.IND" Destination="GreenWhiteBackground_Auseinanderklappen.REQ" Comment=""/>
-					<Connection Source="SoftKey_Zusammenklappen.IND" Destination="GreenWhiteBackground_Zusammenklappen.REQ" Comment=""/>
-					<Connection Source="SoftKey_Knickdeichsel_senken.INITO" Destination="GreenWhiteBackground_Knickdeichsel_senken.INIT" Comment=""/>
-					<Connection Source="SoftKey_Knickdeichsel_senken.IND" Destination="GreenWhiteBackground_Knickdeichsel_senken.REQ" Comment=""/>
-					<Connection Source="GreenWhiteBackground_Knickdeichsel_senken.INITO" Destination="DigitalOutput_5A.INIT" Comment=""/>
-					<Connection Source="SoftKey_Knickdeichsel_heben.INITO" Destination="GreenWhiteBackground_Knickdeichsel_heben.INIT" Comment=""/>
-					<Connection Source="SoftKey_Knickdeichsel_heben.IND" Destination="GreenWhiteBackground_Knickdeichsel_heben.REQ" Comment=""/>
-					<Connection Source="GreenWhiteBackground_Knickdeichsel_heben.INITO" Destination="DigitalOutput_5B.INIT" Comment=""/>
-					<Connection Source="SoftKey_Schneidwerk_UP.INITO" Destination="DigitalOutput_1A.INIT" Comment=""/>
-					<Connection Source="SoftKey_Schneidwerk_UP.INITO" Destination="GreenWhiteBackground_Schneidwerk.INIT" Comment=""/>
-					<Connection Source="E_T_FF_Schneidwerk.EO" Destination="GreenWhiteBackground_Schneidwerk.REQ" Comment=""/>
-					<Connection Source="SoftKey_Seitenschieber_UP.INITO" Destination="GreenWhiteBackground_Seitenschieber.INIT" Comment=""/>
-					<Connection Source="E_T_FF_Seitenschieber.EO" Destination="GreenWhiteBackground_Seitenschieber.REQ" Comment=""/>
-					<Connection Source="GreenWhiteBackground_Seitenschieber.INITO" Destination="DigitalOutput_7A.INIT" Comment=""/>
+					<Connection Source="E_T_FF_Dom.EO" Destination="GreenWhiteBackground_Dom.REQ" Comment="" dx1="718.75"/>
+					<Connection Source="SoftKey_Dom_UP.INITO" Destination="GreenWhiteBackground_Dom.INIT" Comment="" dx1="818.75" dx2="818.75" dy="-37.5"/>
+					<Connection Source="GreenWhiteBackground_Dom.INITO" Destination="DigitalOutput_6A.INIT" Comment="" dx1="2731.25"/>
+					<Connection Source="E_T_FF_Dom.EO" Destination="E_IMPULSE_Dom.REQ" Comment="" dx1="718.75"/>
+					<Connection Source="SoftKey_Heckschieber_UP.INITO" Destination="GreenWhiteBackground_Heckschieber.INIT" Comment="" dx1="912.5" dx2="687.5" dy="-93.75"/>
+					<Connection Source="GreenWhiteBackground_Heckschieber.INITO" Destination="DigitalOutput_6B.INIT" Comment="" dx1="556.25"/>
+					<Connection Source="E_SR_Heckschieber.EO" Destination="GreenWhiteBackground_Heckschieber.REQ" Comment=""/>
+					<Connection Source="SoftKey_Zusammenklappen.INITO" Destination="GreenWhiteBackground_Zusammenklappen.INIT" Comment="" dx1="612.5"/>
+					<Connection Source="GreenWhiteBackground_Zusammenklappen.INITO" Destination="DigitalOutput_3B.INIT" Comment="" dx1="600.0"/>
+					<Connection Source="SoftKey_Auseinanderklappen.INITO" Destination="GreenWhiteBackground_Auseinanderklappen.INIT" Comment="" dx1="706.25"/>
+					<Connection Source="GreenWhiteBackground_Auseinanderklappen.INITO" Destination="DigitalOutput_3A.INIT" Comment="" dx1="5462.5"/>
+					<Connection Source="SoftKey_Auseinanderklappen.IND" Destination="GreenWhiteBackground_Auseinanderklappen.REQ" Comment="" dx1="768.75"/>
+					<Connection Source="SoftKey_Zusammenklappen.IND" Destination="GreenWhiteBackground_Zusammenklappen.REQ" Comment="" dx1="618.75"/>
+					<Connection Source="SoftKey_Knickdeichsel_senken.INITO" Destination="GreenWhiteBackground_Knickdeichsel_senken.INIT" Comment="" dx1="743.75"/>
+					<Connection Source="SoftKey_Knickdeichsel_senken.IND" Destination="GreenWhiteBackground_Knickdeichsel_senken.REQ" Comment="" dx1="806.25"/>
+					<Connection Source="GreenWhiteBackground_Knickdeichsel_senken.INITO" Destination="DigitalOutput_5A.INIT" Comment="" dx1="2931.25"/>
+					<Connection Source="SoftKey_Knickdeichsel_heben.INITO" Destination="GreenWhiteBackground_Knickdeichsel_heben.INIT" Comment="" dx1="700.0"/>
+					<Connection Source="SoftKey_Knickdeichsel_heben.IND" Destination="GreenWhiteBackground_Knickdeichsel_heben.REQ" Comment="" dx1="762.5"/>
+					<Connection Source="GreenWhiteBackground_Knickdeichsel_heben.INITO" Destination="DigitalOutput_5B.INIT" Comment="" dx1="7718.75"/>
+					<Connection Source="SoftKey_Schneidwerk_UP.INITO" Destination="DigitalOutput_1A.INIT" Comment="" dx1="437.5" dx2="625.0" dy="-7343.75"/>
+					<Connection Source="SoftKey_Schneidwerk_UP.INITO" Destination="GreenWhiteBackground_Schneidwerk.INIT" Comment="" dx1="437.5" dx2="631.25" dy="-7343.75"/>
+					<Connection Source="SoftKey_Seitenschieber_UP.INITO" Destination="GreenWhiteBackground_Seitenschieber.INIT" Comment="" dx1="593.75" dx2="687.5" dy="-37.5"/>
+					<Connection Source="E_T_FF_Seitenschieber.EO" Destination="GreenWhiteBackground_Seitenschieber.REQ" Comment="" dx1="606.25"/>
+					<Connection Source="GreenWhiteBackground_Seitenschieber.INITO" Destination="DigitalOutput_7A.INIT" Comment="" dx1="550.0"/>
+					<Connection Source="SoftKey_Automatik_ein_UP.IND" Destination="E_REND_Automatik_ein.EI2" Comment="" dx1="537.5"/>
+					<Connection Source="SoftKey_Automatik_ein_DOWN.IND" Destination="E_REND_Automatik_ein.R" Comment="" dx1="700.0"/>
+					<Connection Source="E_IMPULSE_Heckschieber.CNF" Destination="E_F_TRIG_Heckschieber.EI" Comment="" dx1="443.75"/>
+					<Connection Source="E_F_TRIG_Heckschieber.EO" Destination="E_REND_Automatik_ein.EI1" Comment="" dx1="562.5"/>
+					<Connection Source="E_SR_Schneidwerk.EO" Destination="GreenWhiteBackground_Schneidwerk.REQ" Comment="" dx1="456.25"/>
+					<Connection Source="E_SR_Schneidwerk.EO" Destination="DigitalOutput_1A.REQ" Comment="" dx1="456.25"/>
+					<Connection Source="SoftKey_Schneidwerk_UP.IND" Destination="E_SWITCH_Schneidwerk.EI" Comment=""/>
+					<Connection Source="E_SWITCH_Schneidwerk.EO0" Destination="E_SR_Schneidwerk.S" Comment="" dx1="800.0"/>
+					<Connection Source="E_SWITCH_Schneidwerk.EO1" Destination="E_SR_Schneidwerk.R" Comment="" dx1="862.5"/>
+					<Connection Source="E_FWD_Automatik_ein_Schneidwerk.CNF" Destination="E_SR_Schneidwerk.S" Comment="" dx1="1100.0"/>
+					<Connection Source="E_REND_Automatik_ein.EO" Destination="E_FWD_Automatik_ein_Schneidwerk.REQ" Comment=""/>
 				</EventConnections>
 				<DataConnections>
-					<Connection Source="OR_4A_4B.OUT" Destination="DigitalOutput_4B.OUT" Comment="" dx1="637.5"/>
-					<Connection Source="OR_4A_4B.OUT" Destination="DigitalOutput_4A.OUT" Comment="" dx1="681.25"/>
-					<Connection Source="SoftKey_Auseinanderklappen.IN" Destination="OR_3A_3B.IN1" Comment="" dx1="768.75"/>
-					<Connection Source="SoftKey_Zusammenklappen.IN" Destination="OR_3A_3B.IN2" Comment="" dx1="725.0"/>
-					<Connection Source="OR_3A_3B.OUT" Destination="DigitalOutput_3A.OUT" Comment="" dx1="137.5"/>
-					<Connection Source="OR_3A_3B.OUT" Destination="DigitalOutput_3B.OUT" Comment="" dx1="400.0"/>
-					<Connection Source="OR_5A_5B.OUT" Destination="DigitalOutput_5B.OUT" Comment="" dx1="250.0" dx2="693.75" dy="193.75"/>
-					<Connection Source="SoftKey_Knickdeichsel_senken.IN" Destination="OR_5A_5B.IN2" Comment="" dx1="931.25"/>
-					<Connection Source="OR_5A_5B.OUT" Destination="DigitalOutput_5A.OUT" Comment="" dx1="425.0"/>
-					<Connection Source="SoftKey_Knickdeichsel_heben.IN" Destination="OR_5A_5B.IN1" Comment="" dx1="468.75"/>
-					<Connection Source="E_IMPULSE_Dom.QO" Destination="DigitalOutput_6A.OUT" Comment="" dx1="600.0"/>
-					<Connection Source="E_IMPULSE_Dom.QO" Destination="AND_2_Dom.IN1" Comment="" dx1="600.0" dx2="906.25" dy="193.75"/>
-					<Connection Source="E_T_FF_Dom.Q" Destination="AND_2_Dom.IN2" Comment="" dx1="587.5" dx2="843.75" dy="156.25"/>
-					<Connection Source="E_IMPULSE_Heckschieber.QO" Destination="AND_2_Heckschieber.IN1" Comment="" dx1="4700.0"/>
-					<Connection Source="E_IMPULSE_Heckschieber.QO" Destination="DigitalOutput_6B.OUT" Comment="" dx1="475.0"/>
-					<Connection Source="E_T_FF_Seitenschieber.Q" Destination="AND_2_Seitenschieber.IN2" Comment="" dx1="612.5" dx2="1043.75" dy="900.0"/>
-					<Connection Source="E_IMPULSE_Seitenschieber.QO" Destination="AND_2_Seitenschieber.IN1" Comment="" dx1="575.0" dx2="1106.25" dy="262.5"/>
-					<Connection Source="E_IMPULSE_Seitenschieber.QO" Destination="DigitalOutput_7A.OUT" Comment="" dx1="531.25"/>
-					<Connection Source="E_T_FF_Schneidwerk.Q" Destination="DigitalOutput_1A.OUT" Comment="" dx1="618.75" dx2="693.75" dy="-687.5"/>
-					<Connection Source="E_T_FF_Licht.Q" Destination="DigitalOutput_8A.OUT" Comment="" dx1="850.0" dx2="1781.25" dy="368.75"/>
-					<Connection Source="E_IMPULSE_Abscheider.QO" Destination="AND_2_Abscheider.IN1" Comment="" dx1="800.0" dx2="1106.25" dy="262.5"/>
-					<Connection Source="E_IMPULSE_Abscheider.QO" Destination="DigitalOutput_7B.OUT" Comment="" dx1="1268.75"/>
-					<Connection Source="E_T_FF_Abscheider.Q" Destination="AND_2_Abscheider.IN2" Comment="" dx1="412.5" dx2="1043.75" dy="900.0"/>
-					<Connection Source="OR_2B.OUT" Destination="DigitalOutput_2B.OUT" Comment="" dx1="400.0"/>
-					<Connection Source="SoftKey_Auseinanderklappen.IN" Destination="OR_2B.IN1" Comment="" dx1="768.75"/>
-					<Connection Source="SoftKey_Knickdeichsel_heben.IN" Destination="OR_2B.IN3" Comment="" dx1="693.75" dx2="237.5" dy="437.5"/>
-					<Connection Source="AND_2_Heckschieber.OUT" Destination="OR_2B.IN4" Comment="" dx1="937.5" dx2="112.5" dy="-100.0"/>
-					<Connection Source="AND_2_Abscheider.OUT" Destination="OR_2B.IN5" Comment="" dx1="937.5"/>
-					<Connection Source="OR_2A.OUT" Destination="DigitalOutput_2A.OUT" Comment="" dx1="400.0"/>
-					<Connection Source="SoftKey_Zusammenklappen.IN" Destination="OR_2A.IN1" Comment="" dx1="725.0"/>
-					<Connection Source="SoftKey_Knickdeichsel_senken.IN" Destination="OR_2A.IN3" Comment="" dx1="11725.0"/>
-					<Connection Source="AND_2_Dom.OUT" Destination="OR_2A.IN4" Comment="" dx1="1012.5"/>
-					<Connection Source="AND_2_Seitenschieber.OUT" Destination="OR_2A.IN5" Comment="" dx1="937.5"/>
-					<Connection Source="OR_2_Verteiler_senken.OUT" Destination="OR_4A_4B.IN2" Comment="" dx1="775.0"/>
-					<Connection Source="OR_2_Verteiler_heben.OUT" Destination="OR_4A_4B.IN1" Comment="" dx1="662.5"/>
-					<Connection Source="SoftKey_Verteiler_heben.IN" Destination="OR_2_Verteiler_heben.IN1" Comment="" dx1="806.25"/>
-					<Connection Source="SoftKey_Verteiler_senken.IN" Destination="OR_2_Verteiler_senken.IN1" Comment="" dx1="668.75"/>
-					<Connection Source="OR_2_Verteiler_senken.OUT" Destination="OR_2B.IN2" Comment="" dx1="8368.75"/>
-					<Connection Source="OR_2_Verteiler_heben.OUT" Destination="OR_2A.IN2" Comment="" dx1="662.5" dx2="312.5" dy="-100.0"/>
-					<Connection Source="E_SR_Verteiler_heben.Q" Destination="OR_2_Verteiler_heben.IN2" Comment="" dx1="662.5"/>
-					<Connection Source="E_SR_Verteiler_senken.Q" Destination="OR_2_Verteiler_senken.IN2" Comment="" dx1="662.5" dx2="256.25" dy="-212.5"/>
-					<Connection Source="E_SR__Heckschieber.Q" Destination="AND_2_Heckschieber.IN2" Comment="" dx1="850.0" dx2="1043.75" dy="-206.25"/>
-					<Connection Source="E_SR__Heckschieber.Q" Destination="E_SWITCH__Heckschieber.G" Comment="" dx1="850.0" dx2="493.75" dy="168.75"/>
-					<Connection Source="E_T_FF_Licht.Q" Destination="GreenWhiteBackground_Licht.DI1" Comment="" dx1="1306.25"/>
-					<Connection Source="E_T_FF_Abscheider.Q" Destination="GreenWhiteBackground_Abscheider.DI1" Comment="" dx1="412.5"/>
-					<Connection Source="OR_2_Verteiler_heben.OUT" Destination="GreenWhiteBackground_Verteiler_heben.DI1" Comment="" dx1="662.5" dx2="693.75" dy="-100.0"/>
-					<Connection Source="OR_2_Verteiler_senken.OUT" Destination="GreenWhiteBackground_Verteiler_senken.DI1" Comment="" dx1="775.0"/>
-					<Connection Source="E_T_FF_Dom.Q" Destination="GreenWhiteBackground_Dom.DI1" Comment="" dx1="587.5"/>
-					<Connection Source="E_SR__Heckschieber.Q" Destination="GreenWhiteBackground_Heckschieber.DI1" Comment="" dx1="850.0"/>
-					<Connection Source="SoftKey_Zusammenklappen.IN" Destination="GreenWhiteBackground_Zusammenklappen.DI1" Comment=""/>
-					<Connection Source="SoftKey_Auseinanderklappen.IN" Destination="GreenWhiteBackground_Auseinanderklappen.DI1" Comment=""/>
-					<Connection Source="SoftKey_Knickdeichsel_senken.IN" Destination="GreenWhiteBackground_Knickdeichsel_senken.DI1" Comment=""/>
-					<Connection Source="SoftKey_Knickdeichsel_heben.IN" Destination="GreenWhiteBackground_Knickdeichsel_heben.DI1" Comment=""/>
-					<Connection Source="E_T_FF_Schneidwerk.Q" Destination="GreenWhiteBackground_Schneidwerk.DI1" Comment=""/>
-					<Connection Source="E_T_FF_Seitenschieber.Q" Destination="GreenWhiteBackground_Seitenschieber.DI1" Comment=""/>
+					<Connection Source="OR_4A_4B.OUT" Destination="DigitalOutput_4B.OUT" Comment="" dx1="700.0"/>
+					<Connection Source="OR_4A_4B.OUT" Destination="DigitalOutput_4A.OUT" Comment="" dx1="700.0"/>
+					<Connection Source="SoftKey_Auseinanderklappen.IN" Destination="OR_3A_3B.IN1" Comment="" dx1="5568.75"/>
+					<Connection Source="SoftKey_Zusammenklappen.IN" Destination="OR_3A_3B.IN2" Comment="" dx1="868.75"/>
+					<Connection Source="OR_3A_3B.OUT" Destination="DigitalOutput_3A.OUT" Comment="" dx1="731.25"/>
+					<Connection Source="OR_3A_3B.OUT" Destination="DigitalOutput_3B.OUT" Comment="" dx1="731.25"/>
+					<Connection Source="OR_5A_5B.OUT" Destination="DigitalOutput_5B.OUT" Comment="" dx1="187.5"/>
+					<Connection Source="SoftKey_Knickdeichsel_senken.IN" Destination="OR_5A_5B.IN2" Comment="" dx1="3612.5"/>
+					<Connection Source="OR_5A_5B.OUT" Destination="DigitalOutput_5A.OUT" Comment="" dx1="187.5"/>
+					<Connection Source="SoftKey_Knickdeichsel_heben.IN" Destination="OR_5A_5B.IN1" Comment="" dx1="4331.25"/>
+					<Connection Source="E_IMPULSE_Dom.QO" Destination="DigitalOutput_6A.OUT" Comment="" dx1="475.0"/>
+					<Connection Source="E_IMPULSE_Dom.QO" Destination="AND_2_Dom.IN1" Comment="" dx1="4087.5"/>
+					<Connection Source="E_T_FF_Dom.Q" Destination="AND_2_Dom.IN2" Comment="" dx1="12287.5"/>
+					<Connection Source="E_IMPULSE_Heckschieber.QO" Destination="AND_2_Heckschieber.IN1" Comment="" dx1="28800.0" dx2="843.75" dy="-743.75"/>
+					<Connection Source="E_IMPULSE_Heckschieber.QO" Destination="DigitalOutput_6B.OUT" Comment="" dx1="14662.5"/>
+					<Connection Source="E_T_FF_Seitenschieber.Q" Destination="AND_2_Seitenschieber.IN2" Comment="" dx1="16887.5"/>
+					<Connection Source="E_IMPULSE_Seitenschieber.QO" Destination="AND_2_Seitenschieber.IN1" Comment="" dx1="7850.0"/>
+					<Connection Source="E_IMPULSE_Seitenschieber.QO" Destination="DigitalOutput_7A.OUT" Comment="" dx1="706.25"/>
+					<Connection Source="E_T_FF_Licht.Q" Destination="DigitalOutput_8A.OUT" Comment="" dx1="9256.25"/>
+					<Connection Source="E_IMPULSE_Abscheider.QO" Destination="AND_2_Abscheider.IN1" Comment="" dx1="10987.5"/>
+					<Connection Source="E_IMPULSE_Abscheider.QO" Destination="DigitalOutput_7B.OUT" Comment="" dx1="975.0"/>
+					<Connection Source="E_T_FF_Abscheider.Q" Destination="AND_2_Abscheider.IN2" Comment="" dx1="30287.5"/>
+					<Connection Source="OR_2B.OUT" Destination="DigitalOutput_2B.OUT" Comment="" dx1="687.5"/>
+					<Connection Source="SoftKey_Auseinanderklappen.IN" Destination="OR_2B.IN1" Comment="" dx1="5568.75"/>
+					<Connection Source="SoftKey_Knickdeichsel_heben.IN" Destination="OR_2B.IN3" Comment="" dx1="8481.25" dx2="400.0" dy="-1493.75"/>
+					<Connection Source="AND_2_Heckschieber.OUT" Destination="OR_2B.IN4" Comment="" dx1="918.75"/>
+					<Connection Source="AND_2_Abscheider.OUT" Destination="OR_2B.IN5" Comment="" dx1="2993.75"/>
+					<Connection Source="OR_2A.OUT" Destination="DigitalOutput_2A.OUT" Comment="" dx1="650.0"/>
+					<Connection Source="SoftKey_Zusammenklappen.IN" Destination="OR_2A.IN1" Comment="" dx1="868.75"/>
+					<Connection Source="SoftKey_Knickdeichsel_senken.IN" Destination="OR_2A.IN3" Comment="" dx1="14593.75"/>
+					<Connection Source="AND_2_Dom.OUT" Destination="OR_2A.IN4" Comment="" dx1="731.25"/>
+					<Connection Source="AND_2_Seitenschieber.OUT" Destination="OR_2A.IN5" Comment="" dx1="3250.0"/>
+					<Connection Source="OR_2_Verteiler_senken.OUT" Destination="OR_4A_4B.IN2" Comment="" dx1="831.25"/>
+					<Connection Source="OR_2_Verteiler_heben.OUT" Destination="OR_4A_4B.IN1" Comment="" dx1="725.0"/>
+					<Connection Source="SoftKey_Verteiler_heben.IN" Destination="OR_2_Verteiler_heben.IN1" Comment="" dx1="493.75"/>
+					<Connection Source="SoftKey_Verteiler_senken.IN" Destination="OR_2_Verteiler_senken.IN1" Comment="" dx1="543.75"/>
+					<Connection Source="OR_2_Verteiler_senken.OUT" Destination="OR_2B.IN2" Comment="" dx1="4168.75"/>
+					<Connection Source="OR_2_Verteiler_heben.OUT" Destination="OR_2A.IN2" Comment="" dx1="4150.0"/>
+					<Connection Source="E_SR_Verteiler_heben.Q" Destination="OR_2_Verteiler_heben.IN2" Comment="" dx1="2937.5"/>
+					<Connection Source="E_SR_Verteiler_senken.Q" Destination="OR_2_Verteiler_senken.IN2" Comment="" dx1="3125.0"/>
+					<Connection Source="E_SR_Heckschieber.Q" Destination="AND_2_Heckschieber.IN2" Comment="" dx1="575.0" dx2="718.75" dy="-812.5"/>
+					<Connection Source="E_SR_Heckschieber.Q" Destination="E_SWITCH_Heckschieber.G" Comment="" dx1="575.0" dx2="712.5" dy="237.5"/>
+					<Connection Source="E_T_FF_Licht.Q" Destination="GreenWhiteBackground_Licht.DI1" Comment="" dx1="912.5"/>
+					<Connection Source="E_T_FF_Abscheider.Q" Destination="GreenWhiteBackground_Abscheider.DI1" Comment="" dx1="968.75"/>
+					<Connection Source="OR_2_Verteiler_heben.OUT" Destination="GreenWhiteBackground_Verteiler_heben.DI1" Comment="" dx1="725.0"/>
+					<Connection Source="OR_2_Verteiler_senken.OUT" Destination="GreenWhiteBackground_Verteiler_senken.DI1" Comment="" dx1="831.25"/>
+					<Connection Source="E_T_FF_Dom.Q" Destination="GreenWhiteBackground_Dom.DI1" Comment="" dx1="781.25"/>
+					<Connection Source="E_SR_Heckschieber.Q" Destination="GreenWhiteBackground_Heckschieber.DI1" Comment="" dx1="575.0"/>
+					<Connection Source="SoftKey_Zusammenklappen.IN" Destination="GreenWhiteBackground_Zusammenklappen.DI1" Comment="" dx1="868.75"/>
+					<Connection Source="SoftKey_Auseinanderklappen.IN" Destination="GreenWhiteBackground_Auseinanderklappen.DI1" Comment="" dx1="831.25"/>
+					<Connection Source="SoftKey_Knickdeichsel_senken.IN" Destination="GreenWhiteBackground_Knickdeichsel_senken.DI1" Comment="" dx1="868.75"/>
+					<Connection Source="SoftKey_Knickdeichsel_heben.IN" Destination="GreenWhiteBackground_Knickdeichsel_heben.DI1" Comment="" dx1="825.0"/>
+					<Connection Source="E_T_FF_Seitenschieber.Q" Destination="GreenWhiteBackground_Seitenschieber.DI1" Comment="" dx1="668.75"/>
+					<Connection Source="E_IMPULSE_Heckschieber.QO" Destination="E_F_TRIG_Heckschieber.QI" Comment="" dx1="443.75"/>
+					<Connection Source="E_SR_Schneidwerk.Q" Destination="DigitalOutput_1A.OUT" Comment="" dx1="17425.0"/>
+					<Connection Source="E_SR_Schneidwerk.Q" Destination="GreenWhiteBackground_Schneidwerk.DI1" Comment="" dx1="393.75"/>
+					<Connection Source="E_SR_Schneidwerk.Q" Destination="E_SWITCH_Schneidwerk.G" Comment="" dx1="393.75" dx2="525.0" dy="-3406.25"/>
 				</DataConnections>
 			</FBNetwork>
 		</Resource>
@@ -1053,7 +1087,6 @@
 	<Mapping From="Schneidwerk.DigitalOutput_1A" To="FORTE_PC.EMB_RES.DigitalOutput_1A"/>
 	<Mapping From="Schneidwerk.E_FWD_Schneidwerk" To="FORTE_PC.EMB_RES.E_FWD_Schneidwerk"/>
 	<Mapping From="Schneidwerk.DigitalOutput_1B" To="FORTE_PC.EMB_RES.DigitalOutput_1B"/>
-	<Mapping From="Schneidwerk.E_T_FF_Schneidwerk" To="FORTE_PC.EMB_RES.E_T_FF_Schneidwerk"/>
 	<Mapping From="Licht.SoftKey_Licht_UP" To="FORTE_PC.EMB_RES.SoftKey_Licht_UP"/>
 	<Mapping From="Licht.E_T_FF_Licht" To="FORTE_PC.EMB_RES.E_T_FF_Licht"/>
 	<Mapping From="Licht.DigitalOutput_8A" To="FORTE_PC.EMB_RES.DigitalOutput_8A"/>
@@ -1076,8 +1109,8 @@
 	<Mapping From="Automatik.SoftKey_Automatik_ein_UP" To="FORTE_PC.EMB_RES.SoftKey_Automatik_ein_UP"/>
 	<Mapping From="Automatik.SoftKey_Automatik_aus_DOWN" To="FORTE_PC.EMB_RES.SoftKey_Automatik_aus_DOWN"/>
 	<Mapping From="Automatik.E_SR_Verteiler_heben" To="FORTE_PC.EMB_RES.E_SR_Verteiler_heben"/>
-	<Mapping From="Heckschieber.E_SR__Heckschieber" To="FORTE_PC.EMB_RES.E_SR__Heckschieber"/>
-	<Mapping From="Heckschieber.E_SWITCH__Heckschieber" To="FORTE_PC.EMB_RES.E_SWITCH__Heckschieber"/>
+	<Mapping From="Heckschieber.E_SR_Heckschieber" To="FORTE_PC.EMB_RES.E_SR_Heckschieber"/>
+	<Mapping From="Heckschieber.E_SWITCH_Heckschieber" To="FORTE_PC.EMB_RES.E_SWITCH_Heckschieber"/>
 	<Mapping From="Heckschieber.E_FWD_Automatik_ein_UP" To="FORTE_PC.EMB_RES.E_FWD_Automatik_ein_UP"/>
 	<Mapping From="Licht.GreenWhiteBackground_Licht" To="FORTE_PC.EMB_RES.GreenWhiteBackground_Licht"/>
 	<Mapping From="Abscheider.GreenWhiteBackground_Abscheider" To="FORTE_PC.EMB_RES.GreenWhiteBackground_Abscheider"/>
@@ -1091,6 +1124,11 @@
 	<Mapping From="Knickdeichsel.GreenWhiteBackground_Knickdeichsel_heben" To="FORTE_PC.EMB_RES.GreenWhiteBackground_Knickdeichsel_heben"/>
 	<Mapping From="Schneidwerk.GreenWhiteBackground_Schneidwerk" To="FORTE_PC.EMB_RES.GreenWhiteBackground_Schneidwerk"/>
 	<Mapping From="Seitenschieber.GreenWhiteBackground_Seitenschieber" To="FORTE_PC.EMB_RES.GreenWhiteBackground_Seitenschieber"/>
+	<Mapping From="Automatik.E_REND_Automatik_ein" To="FORTE_PC.EMB_RES.E_REND_Automatik_ein"/>
+	<Mapping From="Heckschieber.E_F_TRIG_Heckschieber" To="FORTE_PC.EMB_RES.E_F_TRIG_Heckschieber"/>
+	<Mapping From="Schneidwerk.E_SR_Schneidwerk" To="FORTE_PC.EMB_RES.E_SR_Schneidwerk"/>
+	<Mapping From="Schneidwerk.E_SWITCH_Schneidwerk" To="FORTE_PC.EMB_RES.E_SWITCH_Schneidwerk"/>
+	<Mapping From="Schneidwerk.E_FWD_Automatik_ein_Schneidwerk" To="FORTE_PC.EMB_RES.E_FWD_Automatik_ein_Schneidwerk"/>
 	<Segment Name="Ethernet" Type="Ethernet" Comment="" x="5375.0" y="631.25" dx1="2000.0">
 		<Attribute Name="Color" Type="STRING" Value="140,181,218"/>
 	</Segment>
