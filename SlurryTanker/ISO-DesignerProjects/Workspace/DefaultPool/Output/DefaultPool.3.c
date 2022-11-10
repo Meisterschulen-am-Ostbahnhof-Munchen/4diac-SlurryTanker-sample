@@ -41,20 +41,20 @@ const unsigned long ISO_OP_MEMORY_CLASS isoOP_DefaultPool_Offset_Id[] = {
 	   462,  // OutputString_11001_Offset
 	   483,  // workingset_20000_Offset
 	  1014,  // Automatik_ein_20001_Offset
-	  1795,  // Automatik_aus_20002_Offset
-	  2722,  // Einfuelldom_20003_Offset
-	  3669,  // EXACUT_20004_Offset
-	  4514,  // Seitenschieber_20005_Offset
-	  5103,  // Heckschieber_20006_Offset
-	  5618,  // zusammenklappen_20007_Offset
-	  6297,  // auseinanderklappen_20008_Offset
-	  6956,  // Verteiler_heben_20009_Offset
-	  7629,  // Verteiler_senken_20010_Offset
-	  8286,  // Knickdeichsel_heben_20011_Offset
-	  8849,  // Knickdeichsel_senken_20012_Offset
-	  9392,  // lightbulb_20013_Offset
-	  9891,  // trash_icon_20014_Offset
-	 10820,  // Logos_Large_Icons_icon_20015_Offset
-	 11349,  // FontAttributes_23000_Offset
-	 11357,  // AuxFunction2_31000_Offset
+	  1661,  // Automatik_aus_20002_Offset
+	  2308,  // Einfuelldom_20003_Offset
+	  2955,  // EXACUT_20004_Offset
+	  3602,  // Seitenschieber_20005_Offset
+	  4168,  // Heckschieber_20006_Offset
+	  4683,  // zusammenklappen_20007_Offset
+	  5330,  // auseinanderklappen_20008_Offset
+	  5977,  // Verteiler_heben_20009_Offset
+	  6624,  // Verteiler_senken_20010_Offset
+	  7271,  // Knickdeichsel_heben_20011_Offset
+	  7834,  // Knickdeichsel_senken_20012_Offset
+	  8377,  // lightbulb_20013_Offset
+	  8876,  // trash_icon_20014_Offset
+	  9541,  // Logos_Large_Icons_icon_20015_Offset
+	 10070,  // FontAttributes_23000_Offset
+	 10078,  // AuxFunction2_31000_Offset
 };  // isoOP_DefaultPool_Offset_Id
