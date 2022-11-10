@@ -149,47 +149,77 @@
 	</Application>
 	<Application Name="Verteiler" Comment="">
 		<SubAppNetwork>
-			<FB Name="SoftKey_Verteiler_heben" Type="IX" Comment="" x="1868.75" y="1425.0">
+			<FB Name="SoftKey_Verteiler_heben" Type="IX" Comment="" x="1868.75" y="1031.25">
 				<Parameter Name="QI" Value="TRUE"/>
 			</FB>
-			<FB Name="E_FWD_Verteiler" Type="E_FWD" Comment="" x="312.5" y="2518.75">
+			<FB Name="E_FWD_Verteiler" Type="E_FWD" Comment="" x="312.5" y="3918.75">
 			</FB>
-			<FB Name="DigitalOutput_4A" Type="QX" Comment="" x="6900.0" y="1662.5">
+			<FB Name="DigitalOutput_4A" Type="QX" Comment="" x="6925.0" y="175.0">
 				<Parameter Name="QI" Value="TRUE"/>
 			</FB>
-			<FB Name="DigitalOutput_4B" Type="QX" Comment="" x="6900.0" y="2625.0">
+			<FB Name="DigitalOutput_4B" Type="QX" Comment="" x="6925.0" y="1137.5">
 				<Parameter Name="QI" Value="TRUE"/>
 			</FB>
-			<FB Name="SoftKey_Verteiler_senken" Type="IX" Comment="" x="1818.75" y="2518.75">
+			<FB Name="SoftKey_Verteiler_senken" Type="IX" Comment="" x="1818.75" y="2956.25">
 				<Parameter Name="QI" Value="TRUE"/>
 			</FB>
-			<FB Name="OR_4A_4B" Type="OR_2" Comment="" x="5068.75" y="2731.25">
+			<FB Name="OR_4A_4B" Type="OR_2" Comment="" x="5081.25" y="1243.75">
 				<Attribute Name="PinComment" Type="STRING" Value="IN1:Verteiler_heben"/>
 				<Attribute Name="PinComment" Type="STRING" Value="IN2:Verteiler_senken"/>
 			</FB>
-			<FB Name="OR_2_Verteiler_heben" Type="OR_2" Comment="" x="3568.75" y="1637.5">
+			<FB Name="OR_2_Verteiler_heben" Type="OR_2" Comment="" x="3568.75" y="1243.75">
 			</FB>
-			<FB Name="OR_2_Verteiler_senken" Type="OR_2" Comment="" x="3518.75" y="2731.25">
+			<FB Name="OR_2_Verteiler_senken" Type="OR_2" Comment="" x="3518.75" y="3168.75">
+			</FB>
+			<FB Name="Q_BackgroundColour_Verteiler_senken" Type="Q_BackgroundColour" Comment="" x="6925.0" y="3062.5">
+				<Parameter Name="u16ObjId" Value="5004"/>
+			</FB>
+			<FB Name="F_SEL_Verteiler_senken" Type="F_SEL" Comment="" x="5068.75" y="3168.75">
+			</FB>
+			<FB Name="COLOR_GREEN_Verteiler" Type="COLOR_GREEN" Comment="" x="3518.75" y="2368.75">
+			</FB>
+			<FB Name="COLOR_WHITE_Verteiler" Type="COLOR_WHITE" Comment="" x="3518.75" y="3918.75">
+			</FB>
+			<FB Name="Q_BackgroundColour_Verteiler_heben" Type="Q_BackgroundColour" Comment="" x="6925.0" y="2100.0">
+				<Parameter Name="u16ObjId" Value="5010"/>
+			</FB>
+			<FB Name="F_SEL_Verteiler_heben" Type="F_SEL" Comment="" x="5118.75" y="2206.25">
 			</FB>
 			<EventConnections>
-				<Connection Source="E_FWD_Verteiler.CNF" Destination="SoftKey_Verteiler_senken.INIT" Comment=""/>
+				<Connection Source="E_FWD_Verteiler.CNF" Destination="SoftKey_Verteiler_senken.INIT" Comment="" dx1="300.0"/>
 				<Connection Source="OR_4A_4B.CNF" Destination="DigitalOutput_4B.REQ" Comment=""/>
 				<Connection Source="E_FWD_Verteiler.CNF" Destination="SoftKey_Verteiler_heben.INIT" Comment="" dx1="300.0"/>
-				<Connection Source="OR_4A_4B.CNF" Destination="DigitalOutput_4A.REQ" Comment="" dx1="68.75"/>
-				<Connection Source="SoftKey_Verteiler_heben.INITO" Destination="DigitalOutput_4B.INIT" Comment="" dx1="493.75" dx2="568.75" dy="-37.5"/>
-				<Connection Source="SoftKey_Verteiler_heben.INITO" Destination="DigitalOutput_4A.INIT" Comment="" dx1="493.75" dx2="568.75" dy="-37.5"/>
-				<Connection Source="OR_2_Verteiler_senken.CNF" Destination="OR_4A_4B.REQ" Comment=""/>
-				<Connection Source="OR_2_Verteiler_heben.CNF" Destination="OR_4A_4B.REQ" Comment="" dx1="662.5"/>
+				<Connection Source="OR_4A_4B.CNF" Destination="DigitalOutput_4A.REQ" Comment="" dx1="206.25"/>
+				<Connection Source="SoftKey_Verteiler_heben.INITO" Destination="DigitalOutput_4B.INIT" Comment="" dx1="493.75" dx2="631.25" dy="-106.25"/>
+				<Connection Source="SoftKey_Verteiler_heben.INITO" Destination="DigitalOutput_4A.INIT" Comment="" dx1="493.75" dx2="631.25" dy="-106.25"/>
+				<Connection Source="OR_2_Verteiler_senken.CNF" Destination="OR_4A_4B.REQ" Comment="" dx1="775.0"/>
+				<Connection Source="OR_2_Verteiler_heben.CNF" Destination="OR_4A_4B.REQ" Comment=""/>
 				<Connection Source="SoftKey_Verteiler_heben.IND" Destination="OR_2_Verteiler_heben.REQ" Comment=""/>
 				<Connection Source="SoftKey_Verteiler_senken.IND" Destination="OR_2_Verteiler_senken.REQ" Comment=""/>
+				<Connection Source="F_SEL_Verteiler_senken.CNF" Destination="Q_BackgroundColour_Verteiler_senken.REQ" Comment=""/>
+				<Connection Source="F_SEL_Verteiler_heben.CNF" Destination="Q_BackgroundColour_Verteiler_heben.REQ" Comment=""/>
+				<Connection Source="E_FWD_Verteiler.CNF" Destination="COLOR_GREEN_Verteiler.INIT" Comment="" dx1="300.0"/>
+				<Connection Source="E_FWD_Verteiler.CNF" Destination="COLOR_WHITE_Verteiler.INIT" Comment=""/>
+				<Connection Source="OR_2_Verteiler_senken.CNF" Destination="F_SEL_Verteiler_senken.REQ" Comment=""/>
+				<Connection Source="OR_2_Verteiler_heben.CNF" Destination="F_SEL_Verteiler_heben.REQ" Comment="" dx1="725.0"/>
+				<Connection Source="COLOR_WHITE_Verteiler.INITO" Destination="Q_BackgroundColour_Verteiler_senken.INIT" Comment="" dx1="1900.0"/>
+				<Connection Source="COLOR_GREEN_Verteiler.INITO" Destination="Q_BackgroundColour_Verteiler_heben.INIT" Comment="" dx1="300.0" dx2="693.75" dy="-1375.0"/>
 			</EventConnections>
 			<DataConnections>
-				<Connection Source="OR_4A_4B.OUT" Destination="DigitalOutput_4B.OUT" Comment="" dx1="131.25"/>
-				<Connection Source="OR_4A_4B.OUT" Destination="DigitalOutput_4A.OUT" Comment="" dx1="131.25"/>
-				<Connection Source="OR_2_Verteiler_heben.OUT" Destination="OR_4A_4B.IN1" Comment="" dx1="600.0"/>
-				<Connection Source="OR_2_Verteiler_senken.OUT" Destination="OR_4A_4B.IN2" Comment="" dx1="650.0"/>
+				<Connection Source="OR_4A_4B.OUT" Destination="DigitalOutput_4B.OUT" Comment="" dx1="268.75"/>
+				<Connection Source="OR_4A_4B.OUT" Destination="DigitalOutput_4A.OUT" Comment="" dx1="268.75"/>
+				<Connection Source="OR_2_Verteiler_heben.OUT" Destination="OR_4A_4B.IN1" Comment="" dx1="787.5"/>
+				<Connection Source="OR_2_Verteiler_senken.OUT" Destination="OR_4A_4B.IN2" Comment="" dx1="712.5"/>
 				<Connection Source="SoftKey_Verteiler_heben.IN" Destination="OR_2_Verteiler_heben.IN1" Comment="" dx1="493.75"/>
 				<Connection Source="SoftKey_Verteiler_senken.IN" Destination="OR_2_Verteiler_senken.IN1" Comment="" dx1="543.75"/>
+				<Connection Source="F_SEL_Verteiler_senken.OUT" Destination="Q_BackgroundColour_Verteiler_senken.u8Colour" Comment="" dx1="712.5"/>
+				<Connection Source="COLOR_GREEN_Verteiler.u8Colour" Destination="F_SEL_Verteiler_senken.IN1" Comment="" dx1="550.0"/>
+				<Connection Source="COLOR_WHITE_Verteiler.u8Colour" Destination="F_SEL_Verteiler_senken.IN0" Comment="" dx1="487.5"/>
+				<Connection Source="F_SEL_Verteiler_heben.OUT" Destination="Q_BackgroundColour_Verteiler_heben.u8Colour" Comment="" dx1="600.0"/>
+				<Connection Source="COLOR_WHITE_Verteiler.u8Colour" Destination="F_SEL_Verteiler_heben.IN0" Comment="" dx1="487.5"/>
+				<Connection Source="COLOR_GREEN_Verteiler.u8Colour" Destination="F_SEL_Verteiler_heben.IN1" Comment="" dx1="468.75"/>
+				<Connection Source="OR_2_Verteiler_heben.OUT" Destination="F_SEL_Verteiler_heben.G" Comment="" dx1="787.5"/>
+				<Connection Source="OR_2_Verteiler_senken.OUT" Destination="F_SEL_Verteiler_senken.G" Comment="" dx1="712.5"/>
 			</DataConnections>
 		</SubAppNetwork>
 	</Application>
@@ -872,6 +902,20 @@
 				</FB>
 				<FB Name="E_FWD_Automatik_ein_UP" Type="E_FWD" Comment="" x="17512.5" y="818.75">
 				</FB>
+				<FB Name="COLOR_WHITE_Verteiler" Type="COLOR_WHITE" Comment="" x="3518.75" y="3750.0">
+				</FB>
+				<FB Name="Q_BackgroundColour_Verteiler_senken" Type="Q_BackgroundColour" Comment="" x="6925.0" y="4550.0">
+					<Parameter Name="u16ObjId" Value="5004"/>
+				</FB>
+				<FB Name="Q_BackgroundColour_Verteiler_heben" Type="Q_BackgroundColour" Comment="" x="6925.0" y="3587.5">
+					<Parameter Name="u16ObjId" Value="5010"/>
+				</FB>
+				<FB Name="F_SEL_Verteiler_senken" Type="F_SEL" Comment="" x="5068.75" y="4656.25">
+				</FB>
+				<FB Name="COLOR_GREEN_Verteiler" Type="COLOR_GREEN" Comment="" x="3518.75" y="4818.75">
+				</FB>
+				<FB Name="F_SEL_Verteiler_heben" Type="F_SEL" Comment="" x="5118.75" y="3693.75">
+				</FB>
 				<EventConnections>
 					<Connection Source="E_FWD_Vorsteuerventil.CNF" Destination="DigitalOutput_2A.INIT" Comment="" dx1="593.75"/>
 					<Connection Source="E_FWD_Vorsteuerventil.CNF" Destination="DigitalOutput_2B.INIT" Comment="" dx1="593.75"/>
@@ -1009,6 +1053,14 @@
 					<Connection Source="E_SR__Heckschieber.EO" Destination="E_IMPULSE_Heckschieber.REQ" Comment="" dx1="75.0" dx2="75.0" dy="-2562.5"/>
 					<Connection Source="E_T_FF_Seitenschieber.EO" Destination="E_IMPULSE_Seitenschieber.REQ" Comment="" dx1="75.0" dx2="75.0" dy="-337.5"/>
 					<Connection Source="E_T_FF_Abscheider.EO" Destination="E_IMPULSE_Abscheider.REQ" Comment="" dx1="75.0" dx2="75.0" dy="206.25"/>
+					<Connection Source="E_FWD_Verteiler.CNF" Destination="COLOR_WHITE_Verteiler.INIT" Comment=""/>
+					<Connection Source="F_SEL_Verteiler_senken.CNF" Destination="Q_BackgroundColour_Verteiler_senken.REQ" Comment=""/>
+					<Connection Source="E_FWD_Verteiler.CNF" Destination="COLOR_GREEN_Verteiler.INIT" Comment=""/>
+					<Connection Source="F_SEL_Verteiler_heben.CNF" Destination="Q_BackgroundColour_Verteiler_heben.REQ" Comment=""/>
+					<Connection Source="OR_2_Verteiler_senken.CNF" Destination="F_SEL_Verteiler_senken.REQ" Comment=""/>
+					<Connection Source="OR_2_Verteiler_heben.CNF" Destination="F_SEL_Verteiler_heben.REQ" Comment=""/>
+					<Connection Source="COLOR_WHITE_Verteiler.INITO" Destination="Q_BackgroundColour_Verteiler_senken.INIT" Comment=""/>
+					<Connection Source="COLOR_GREEN_Verteiler.INITO" Destination="Q_BackgroundColour_Verteiler_heben.INIT" Comment=""/>
 				</EventConnections>
 				<DataConnections>
 					<Connection Source="OR_4A_4B.OUT" Destination="DigitalOutput_4B.OUT" Comment="" dx1="2262.5"/>
@@ -1078,6 +1130,14 @@
 					<Connection Source="E_SR__Heckschieber.Q" Destination="AND_2_Heckschieber.IN2" Comment="" dx1="493.75"/>
 					<Connection Source="E_SR__Heckschieber.Q" Destination="E_SWITCH__Heckschieber.G" Comment="" dx1="493.75" dx2="462.5" dy="168.75"/>
 					<Connection Source="E_SR__Heckschieber.Q" Destination="F_SEL_Heckschieber.G" Comment="" dx1="75.0" dx2="75.0" dy="-1381.25"/>
+					<Connection Source="COLOR_WHITE_Verteiler.u8Colour" Destination="F_SEL_Verteiler_senken.IN0" Comment=""/>
+					<Connection Source="F_SEL_Verteiler_senken.OUT" Destination="Q_BackgroundColour_Verteiler_senken.u8Colour" Comment=""/>
+					<Connection Source="COLOR_GREEN_Verteiler.u8Colour" Destination="F_SEL_Verteiler_senken.IN1" Comment=""/>
+					<Connection Source="COLOR_WHITE_Verteiler.u8Colour" Destination="F_SEL_Verteiler_heben.IN0" Comment=""/>
+					<Connection Source="COLOR_GREEN_Verteiler.u8Colour" Destination="F_SEL_Verteiler_heben.IN1" Comment=""/>
+					<Connection Source="F_SEL_Verteiler_heben.OUT" Destination="Q_BackgroundColour_Verteiler_heben.u8Colour" Comment=""/>
+					<Connection Source="OR_2_Verteiler_heben.OUT" Destination="F_SEL_Verteiler_heben.G" Comment=""/>
+					<Connection Source="OR_2_Verteiler_senken.OUT" Destination="F_SEL_Verteiler_senken.G" Comment=""/>
 				</DataConnections>
 			</FBNetwork>
 		</Resource>
@@ -1177,6 +1237,12 @@
 	<Mapping From="Heckschieber.E_SR__Heckschieber" To="FORTE_PC.EMB_RES.E_SR__Heckschieber"/>
 	<Mapping From="Heckschieber.E_SWITCH__Heckschieber" To="FORTE_PC.EMB_RES.E_SWITCH__Heckschieber"/>
 	<Mapping From="Heckschieber.E_FWD_Automatik_ein_UP" To="FORTE_PC.EMB_RES.E_FWD_Automatik_ein_UP"/>
+	<Mapping From="Verteiler.COLOR_WHITE_Verteiler" To="FORTE_PC.EMB_RES.COLOR_WHITE_Verteiler"/>
+	<Mapping From="Verteiler.Q_BackgroundColour_Verteiler_senken" To="FORTE_PC.EMB_RES.Q_BackgroundColour_Verteiler_senken"/>
+	<Mapping From="Verteiler.Q_BackgroundColour_Verteiler_heben" To="FORTE_PC.EMB_RES.Q_BackgroundColour_Verteiler_heben"/>
+	<Mapping From="Verteiler.F_SEL_Verteiler_senken" To="FORTE_PC.EMB_RES.F_SEL_Verteiler_senken"/>
+	<Mapping From="Verteiler.COLOR_GREEN_Verteiler" To="FORTE_PC.EMB_RES.COLOR_GREEN_Verteiler"/>
+	<Mapping From="Verteiler.F_SEL_Verteiler_heben" To="FORTE_PC.EMB_RES.F_SEL_Verteiler_heben"/>
 	<Segment Name="Ethernet" Type="Ethernet" Comment="" x="5375.0" y="631.25" dx1="2000.0">
 		<Attribute Name="Color" Type="STRING" Value="140,181,218"/>
 	</Segment>
