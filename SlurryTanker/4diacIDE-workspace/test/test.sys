@@ -484,53 +484,61 @@
 	</Application>
 	<Application Name="Abscheider" Comment="">
 		<SubAppNetwork>
-			<FB Name="SoftKey_Abscheider_UP" Type="IX" Comment="" x="133.33333333333334" y="973.3333333333334">
-				<Parameter Name="QI" Value="TRUE"/>
-				<Attribute Name="GroupName" Type="STRING" Value="Abscheider"/>
-			</FB>
-			<FB Name="E_IMPULSE_Abscheider" Type="E_IMPULSE" Comment="" x="3286.666666666667" y="106.66666666666667">
-				<Parameter Name="TM" Value="T#1s"/>
-				<Attribute Name="GroupName" Type="STRING" Value="Abscheider"/>
-			</FB>
-			<FB Name="E_T_FF_Abscheider" Type="E_T_FF" Comment="" x="1680.0" y="1180.0">
-				<Attribute Name="GroupName" Type="STRING" Value="Abscheider"/>
-			</FB>
-			<FB Name="DigitalOutput_7B" Type="QX" Comment="" x="5046.666666666667" y="0.0">
-				<Parameter Name="QI" Value="TRUE"/>
-				<Attribute Name="GroupName" Type="STRING" Value="Abscheider"/>
-			</FB>
-			<FB Name="E_FWD_Abscheider" Type="E_FWD" Comment="" x="5306.666666666667" y="3133.3333333333335">
-			</FB>
-			<FB Name="AND_2_Abscheider" Type="AND_2" Comment="" x="5046.666666666667" y="966.6666666666667">
-				<Attribute Name="GroupName" Type="STRING" Value="Abscheider"/>
-			</FB>
-			<FB Name="GreenWhiteBackground_Abscheider" Type="GreenWhiteBackground" Comment="" x="5046.666666666667" y="1713.3333333333335">
-				<Parameter Name="u16ObjId" Value="5015"/>
-				<Attribute Name="GroupName" Type="STRING" Value="Abscheider"/>
-			</FB>
-			<FB Name="AND_2" Type="AND_2" Comment="" x="14000.0" y="2133.3333333333335">
-			</FB>
-			<Group Name="Abscheider" Comment="Abscheider" x="6720.0" y="1286.6666666666667" width="6560.0" height="2806.666666666667">
-			</Group>
-			<EventConnections>
-				<Connection Source="E_FWD_Abscheider.CNF" Destination="SoftKey_Abscheider_UP.INIT" Comment="" dx1="346.6666666666667"/>
-				<Connection Source="SoftKey_Abscheider_UP.INITO" Destination="DigitalOutput_7B.INIT" Comment="" dx1="393.33333333333337" dx2="693.3333333333334" dy="-1106.6666666666667"/>
-				<Connection Source="SoftKey_Abscheider_UP.IND" Destination="E_T_FF_Abscheider.CLK" Comment="" dx1="413.33333333333337"/>
-				<Connection Source="E_IMPULSE_Abscheider.CNF" Destination="AND_2_Abscheider.REQ" Comment="" dx1="406.6666666666667"/>
-				<Connection Source="E_IMPULSE_Abscheider.CNF" Destination="DigitalOutput_7B.REQ" Comment="" dx1="486.6666666666667"/>
-				<Connection Source="E_T_FF_Abscheider.EO" Destination="AND_2_Abscheider.REQ" Comment="" dx1="406.6666666666667"/>
-				<Connection Source="E_T_FF_Abscheider.EO" Destination="E_IMPULSE_Abscheider.REQ" Comment="" dx1="406.6666666666667"/>
-				<Connection Source="E_T_FF_Abscheider.EO" Destination="GreenWhiteBackground_Abscheider.REQ" Comment="" dx1="406.6666666666667"/>
-				<Connection Source="E_FWD_Abscheider.CNF" Destination="GreenWhiteBackground_Abscheider.INIT" Comment="" dx1="2986.666666666667"/>
-				<Connection Source="AND_2_Abscheider.CNF" Destination="AND_2.REQ" Comment="" dx1="793.3333333333334"/>
-			</EventConnections>
-			<DataConnections>
-				<Connection Source="E_T_FF_Abscheider.Q" Destination="AND_2_Abscheider.IN2" Comment="" dx1="2100.0"/>
-				<Connection Source="E_IMPULSE_Abscheider.QO" Destination="AND_2_Abscheider.IN1" Comment="" dx1="346.6666666666667"/>
-				<Connection Source="E_IMPULSE_Abscheider.QO" Destination="DigitalOutput_7B.OUT" Comment="" dx1="346.6666666666667"/>
-				<Connection Source="E_T_FF_Abscheider.Q" Destination="GreenWhiteBackground_Abscheider.DI1" Comment="" dx1="346.6666666666667" dx2="693.3333333333334" dy="526.6666666666667"/>
-				<Connection Source="AND_2_Abscheider.OUT" Destination="AND_2.IN1" Comment="" dx1="793.3333333333334"/>
-			</DataConnections>
+			<SubApp Name="Abscheider" Comment="Abscheider" x="6586.666666666667" y="1286.6666666666667">
+				<SubAppInterfaceList>
+					<SubAppEventInputs>
+						<SubAppEvent Name="INIT" Type="Event" Comment="Service Initialization">
+						</SubAppEvent>
+					</SubAppEventInputs>
+					<SubAppEventOutputs>
+						<SubAppEvent Name="CNF" Type="Event" Comment="Execution Confirmation">
+						</SubAppEvent>
+					</SubAppEventOutputs>
+					<OutputVars>
+						<VarDeclaration Name="OUT" Type="BOOL" Comment=""/>
+					</OutputVars>
+				</SubAppInterfaceList>
+				<SubAppNetwork>
+					<FB Name="SoftKey_Abscheider_UP" Type="IX" Comment="" x="133.33333333333334" y="973.3333333333334">
+						<Parameter Name="QI" Value="TRUE"/>
+					</FB>
+					<FB Name="E_IMPULSE_Abscheider" Type="E_IMPULSE" Comment="" x="3286.666666666667" y="106.66666666666667">
+						<Parameter Name="TM" Value="T#1s"/>
+					</FB>
+					<FB Name="E_T_FF_Abscheider" Type="E_T_FF" Comment="" x="1680.0" y="1180.0">
+					</FB>
+					<FB Name="DigitalOutput_7B" Type="QX" Comment="" x="5046.666666666667" y="0.0">
+						<Parameter Name="QI" Value="TRUE"/>
+					</FB>
+					<FB Name="AND_2_Abscheider" Type="AND_2" Comment="" x="5046.666666666667" y="966.6666666666667">
+					</FB>
+					<FB Name="GreenWhiteBackground_Abscheider" Type="GreenWhiteBackground" Comment="" x="5046.666666666667" y="1713.3333333333335">
+						<Parameter Name="u16ObjId" Value="5015"/>
+					</FB>
+					<EventConnections>
+						<Connection Source="SoftKey_Abscheider_UP.INITO" Destination="DigitalOutput_7B.INIT" Comment="" dx1="393.33333333333337" dx2="693.3333333333334" dy="-1106.6666666666667"/>
+						<Connection Source="SoftKey_Abscheider_UP.IND" Destination="E_T_FF_Abscheider.CLK" Comment="" dx1="413.33333333333337"/>
+						<Connection Source="E_T_FF_Abscheider.EO" Destination="E_IMPULSE_Abscheider.REQ" Comment="" dx1="406.6666666666667"/>
+						<Connection Source="E_IMPULSE_Abscheider.CNF" Destination="AND_2_Abscheider.REQ" Comment="" dx1="406.6666666666667"/>
+						<Connection Source="E_IMPULSE_Abscheider.CNF" Destination="DigitalOutput_7B.REQ" Comment="" dx1="486.6666666666667"/>
+						<Connection Source="E_T_FF_Abscheider.EO" Destination="AND_2_Abscheider.REQ" Comment="" dx1="406.6666666666667"/>
+						<Connection Source="E_T_FF_Abscheider.EO" Destination="GreenWhiteBackground_Abscheider.REQ" Comment="" dx1="406.6666666666667"/>
+						<Connection Source="INIT" Destination="SoftKey_Abscheider_UP.INIT" Comment="" dx1="86.66666666666667"/>
+						<Connection Source="AND_2_Abscheider.CNF" Destination="CNF" Comment="" dx1="226.66666666666669"/>
+						<Connection Source="INIT" Destination="GreenWhiteBackground_Abscheider.INIT" Comment="" dx1="2526.666666666667"/>
+					</EventConnections>
+					<DataConnections>
+						<Connection Source="E_IMPULSE_Abscheider.QO" Destination="AND_2_Abscheider.IN1" Comment="" dx1="346.6666666666667"/>
+						<Connection Source="E_IMPULSE_Abscheider.QO" Destination="DigitalOutput_7B.OUT" Comment="" dx1="346.6666666666667"/>
+						<Connection Source="E_T_FF_Abscheider.Q" Destination="AND_2_Abscheider.IN2" Comment="" dx1="2100.0"/>
+						<Connection Source="E_T_FF_Abscheider.Q" Destination="GreenWhiteBackground_Abscheider.DI1" Comment="" dx1="346.6666666666667" dx2="693.3333333333334" dy="526.6666666666667"/>
+						<Connection Source="AND_2_Abscheider.OUT" Destination="OUT" Comment="" dx1="273.33333333333337"/>
+					</DataConnections>
+				</SubAppNetwork>
+				<Attribute Name="Unfolded" Type="STRING" Value="true"/>
+				<Attribute Name="width" Type="LREAL" Value="7093.333333333334"/>
+				<Attribute Name="height" Type="LREAL" Value="2933.3333333333335"/>
+			</SubApp>
 		</SubAppNetwork>
 	</Application>
 	<Application Name="Automatik" Comment="">
@@ -760,21 +768,6 @@
 				<FB Name="DigitalOutput_1B" Type="QX" Comment="" x="21706.666666666668" y="8820.0">
 					<Parameter Name="QI" Value="TRUE"/>
 				</FB>
-				<FB Name="SoftKey_Abscheider_UP" Type="IX" Comment="" x="5086.666666666667" y="15006.666666666668">
-					<Parameter Name="QI" Value="TRUE"/>
-				</FB>
-				<FB Name="E_FWD_Abscheider" Type="E_FWD" Comment="" x="3140.0" y="15006.666666666668">
-				</FB>
-				<FB Name="E_IMPULSE_Abscheider" Type="E_IMPULSE" Comment="" x="17386.666666666668" y="18413.333333333336">
-					<Parameter Name="TM" Value="T#1s"/>
-				</FB>
-				<FB Name="AND_2_Abscheider" Type="AND_2" Comment="" x="43253.333333333336" y="18006.666666666668">
-				</FB>
-				<FB Name="DigitalOutput_7B" Type="QX" Comment="" x="19700.0" y="18306.666666666668">
-					<Parameter Name="QI" Value="TRUE"/>
-				</FB>
-				<FB Name="E_T_FF_Abscheider" Type="E_T_FF" Comment="" x="8073.333333333334" y="18006.666666666668">
-				</FB>
 				<FB Name="OR_2B" Type="OR_5" Comment="" x="47540.0" y="6633.333333333334">
 					<Attribute Name="PinComment" Type="STRING" Value="IN1:Auseinanderklappen"/>
 					<Attribute Name="PinComment" Type="STRING" Value="IN2:Verteiler_senken"/>
@@ -822,9 +815,6 @@
 				<FB Name="E_SWITCH_Heckschieber" Type="E_SWITCH" Comment="" x="24020.0" y="5840.0">
 				</FB>
 				<FB Name="E_FWD_Automatik_ein_UP" Type="E_FWD" Comment="" x="24100.0" y="1946.6666666666667">
-				</FB>
-				<FB Name="GreenWhiteBackground_Abscheider" Type="GreenWhiteBackground" Comment="" x="11000.0" y="18306.666666666668">
-					<Parameter Name="u16ObjId" Value="5015"/>
 				</FB>
 				<FB Name="GreenWhiteBackground_Verteiler_heben" Type="GreenWhiteBackground" Comment="" x="40226.66666666667" y="10593.333333333334">
 					<Parameter Name="u16ObjId" Value="5010"/>
@@ -888,8 +878,6 @@
 					<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 					<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 				</SubApp>
-				<FB Name="AND_2" Type="AND_2" Comment="" x="14000.0" y="2133.3333333333335">
-				</FB>
 				<EventConnections>
 					<Connection Source="E_FWD_Vorsteuerventil.CNF" Destination="DigitalOutput_2A.INIT" Comment="" dx1="833.3333333333334"/>
 					<Connection Source="E_FWD_Vorsteuerventil.CNF" Destination="DigitalOutput_2B.INIT" Comment="" dx1="833.3333333333334"/>
@@ -934,18 +922,10 @@
 					<Connection Source="E_FWD_Schneidwerk.CNF" Destination="SoftKey_Schneidwerk_UP.INIT" Comment=""/>
 					<Connection Source="START.COLD" Destination="E_FWD_Schneidwerk.REQ" Comment="" dx1="2400.0"/>
 					<Connection Source="E_FWD_Schneidwerk.CNF" Destination="DigitalOutput_1B.INIT" Comment="" dx1="580.0"/>
-					<Connection Source="E_FWD_Abscheider.CNF" Destination="SoftKey_Abscheider_UP.INIT" Comment=""/>
-					<Connection Source="E_IMPULSE_Abscheider.CNF" Destination="AND_2_Abscheider.REQ" Comment="" dx1="973.3333333333334" dx2="22233.333333333336" dy="580.0"/>
-					<Connection Source="SoftKey_Abscheider_UP.INITO" Destination="DigitalOutput_7B.INIT" Comment="" dx1="13200.0"/>
-					<Connection Source="E_IMPULSE_Abscheider.CNF" Destination="DigitalOutput_7B.REQ" Comment="" dx1="760.0"/>
-					<Connection Source="SoftKey_Abscheider_UP.IND" Destination="E_T_FF_Abscheider.CLK" Comment="" dx1="553.3333333333334"/>
-					<Connection Source="E_T_FF_Abscheider.EO" Destination="AND_2_Abscheider.REQ" Comment=""/>
-					<Connection Source="START.COLD" Destination="E_FWD_Abscheider.REQ" Comment="" dx1="5140.0"/>
 					<Connection Source="OR_2B.CNF" Destination="DigitalOutput_2B.REQ" Comment="" dx1="1013.3333333333334"/>
 					<Connection Source="SoftKey_Auseinanderklappen.IND" Destination="OR_2B.REQ" Comment="" dx1="5300.0"/>
 					<Connection Source="SoftKey_Knickdeichsel_heben.IND" Destination="OR_2B.REQ" Comment="" dx1="13420.0"/>
 					<Connection Source="AND_2_Heckschieber.CNF" Destination="OR_2B.REQ" Comment=""/>
-					<Connection Source="AND_2_Abscheider.CNF" Destination="OR_2B.REQ" Comment="" dx1="2933.3333333333335"/>
 					<Connection Source="OR_2A.CNF" Destination="DigitalOutput_2A.REQ" Comment=""/>
 					<Connection Source="SoftKey_Zusammenklappen.IND" Destination="OR_2A.REQ" Comment="" dx1="493.33333333333337"/>
 					<Connection Source="SoftKey_Knickdeichsel_senken.IND" Destination="OR_2A.REQ" Comment="" dx1="866.6666666666667" dx2="820.0" dy="1433.3333333333335"/>
@@ -971,9 +951,6 @@
 					<Connection Source="SoftKey_Heckschieber_UP.IND" Destination="E_SWITCH_Heckschieber.EI" Comment="" dx1="493.33333333333337"/>
 					<Connection Source="SoftKey_Automatik_ein_UP.IND" Destination="E_FWD_Automatik_ein_UP.REQ" Comment="" dx1="540.0" dx2="1180.0" dy="2253.3333333333335"/>
 					<Connection Source="E_T_FF_Seitenschieber.EO" Destination="E_IMPULSE_Seitenschieber.REQ" Comment="" dx1="606.6666666666667"/>
-					<Connection Source="E_T_FF_Abscheider.EO" Destination="E_IMPULSE_Abscheider.REQ" Comment="" dx1="7100.0"/>
-					<Connection Source="E_FWD_Abscheider.CNF" Destination="GreenWhiteBackground_Abscheider.INIT" Comment="" dx1="346.6666666666667" dx2="1453.3333333333335" dy="3393.3333333333335"/>
-					<Connection Source="E_T_FF_Abscheider.EO" Destination="GreenWhiteBackground_Abscheider.REQ" Comment="" dx1="973.3333333333334"/>
 					<Connection Source="OR_2_Verteiler_heben.CNF" Destination="GreenWhiteBackground_Verteiler_heben.REQ" Comment="" dx1="4120.0"/>
 					<Connection Source="OR_2_Verteiler_senken.CNF" Destination="GreenWhiteBackground_Verteiler_senken.REQ" Comment="" dx1="1240.0"/>
 					<Connection Source="SoftKey_Verteiler_senken.INITO" Destination="GreenWhiteBackground_Verteiler_senken.INIT" Comment="" dx1="5520.0"/>
@@ -1032,7 +1009,6 @@
 					<Connection Source="E_SR_Heckschieber.EO" Destination="E_IMPULSE_Heckschieber.REQ" Comment="" dx1="593.3333333333334" dx2="633.3333333333334" dy="-753.3333333333334"/>
 					<Connection Source="E_SR_Heckschieber.EO" Destination="GreenWhiteBackground_Heckschieber.REQ" Comment="" dx1="593.3333333333334"/>
 					<Connection Source="START.COLD" Destination="Licht.INIT" Comment="" dx1="380.0"/>
-					<Connection Source="AND_2_Abscheider.CNF" Destination="AND_2.REQ" Comment="" dx1="80.0" dx2="80.0" dy="-7933.333333333334"/>
 				</EventConnections>
 				<DataConnections>
 					<Connection Source="OR_4A_4B.OUT" Destination="DigitalOutput_4B.OUT" Comment="" dx1="786.6666666666667" dx2="693.3333333333334" dy="760.0"/>
@@ -1053,14 +1029,10 @@
 					<Connection Source="E_T_FF_Seitenschieber.Q" Destination="AND_2_Seitenschieber.IN2" Comment="" dx1="546.6666666666667" dx2="1160.0" dy="1753.3333333333335"/>
 					<Connection Source="E_IMPULSE_Seitenschieber.QO" Destination="AND_2_Seitenschieber.IN1" Comment="" dx1="720.0"/>
 					<Connection Source="E_IMPULSE_Seitenschieber.QO" Destination="DigitalOutput_7A.OUT" Comment="" dx1="720.0"/>
-					<Connection Source="E_IMPULSE_Abscheider.QO" Destination="AND_2_Abscheider.IN1" Comment="" dx1="906.6666666666667" dx2="1160.0" dy="420.0"/>
-					<Connection Source="E_IMPULSE_Abscheider.QO" Destination="DigitalOutput_7B.OUT" Comment="" dx1="906.6666666666667"/>
-					<Connection Source="E_T_FF_Abscheider.Q" Destination="AND_2_Abscheider.IN2" Comment="" dx1="846.6666666666667" dx2="1100.0" dy="900.0"/>
 					<Connection Source="OR_2B.OUT" Destination="DigitalOutput_2B.OUT" Comment="" dx1="620.0"/>
 					<Connection Source="SoftKey_Auseinanderklappen.IN" Destination="OR_2B.IN1" Comment="" dx1="686.6666666666667" dx2="400.0" dy="553.3333333333334"/>
 					<Connection Source="SoftKey_Knickdeichsel_heben.IN" Destination="OR_2B.IN3" Comment="" dx1="880.0" dx2="586.6666666666667" dy="546.6666666666667"/>
 					<Connection Source="AND_2_Heckschieber.OUT" Destination="OR_2B.IN4" Comment="" dx1="673.3333333333334"/>
-					<Connection Source="AND_2_Abscheider.OUT" Destination="OR_2B.IN5" Comment="" dx1="3246.666666666667"/>
 					<Connection Source="OR_2A.OUT" Destination="DigitalOutput_2A.OUT" Comment="" dx1="586.6666666666667"/>
 					<Connection Source="SoftKey_Zusammenklappen.IN" Destination="OR_2A.IN1" Comment="" dx1="866.6666666666667"/>
 					<Connection Source="SoftKey_Knickdeichsel_senken.IN" Destination="OR_2A.IN3" Comment="" dx1="740.0" dx2="760.0" dy="1066.6666666666667"/>
@@ -1074,7 +1046,6 @@
 					<Connection Source="OR_2_Verteiler_heben.OUT" Destination="OR_2A.IN2" Comment="" dx1="1113.3333333333335"/>
 					<Connection Source="E_SR_Verteiler_heben.Q" Destination="OR_2_Verteiler_heben.IN2" Comment="" dx1="2880.0"/>
 					<Connection Source="E_SR_Verteiler_senken.Q" Destination="OR_2_Verteiler_senken.IN2" Comment="" dx1="2800.0"/>
-					<Connection Source="E_T_FF_Abscheider.Q" Destination="GreenWhiteBackground_Abscheider.DI1" Comment="" dx1="846.6666666666667"/>
 					<Connection Source="OR_2_Verteiler_heben.OUT" Destination="GreenWhiteBackground_Verteiler_heben.DI1" Comment="" dx1="1113.3333333333335" dx2="500.0" dy="1480.0"/>
 					<Connection Source="OR_2_Verteiler_senken.OUT" Destination="GreenWhiteBackground_Verteiler_senken.DI1" Comment="" dx1="1180.0"/>
 					<Connection Source="E_T_FF_Dom.Q" Destination="GreenWhiteBackground_Dom.DI1" Comment="" dx1="700.0"/>
@@ -1090,7 +1061,6 @@
 					<Connection Source="E_SR_Heckschieber.Q" Destination="E_SWITCH_Heckschieber.G" Comment="" dx1="400.0" dx2="1033.3333333333335" dy="893.3333333333334"/>
 					<Connection Source="E_SR_Heckschieber.Q" Destination="AND_2_Heckschieber.IN2" Comment="" dx1="400.0" dx2="840.0" dy="653.3333333333334"/>
 					<Connection Source="E_SR_Heckschieber.Q" Destination="GreenWhiteBackground_Heckschieber.DI1" Comment="" dx1="400.0"/>
-					<Connection Source="AND_2_Abscheider.OUT" Destination="AND_2.IN1" Comment="" dx1="80.0" dx2="80.0" dy="-7933.333333333334"/>
 				</DataConnections>
 			</FBNetwork>
 		</Resource>
@@ -1140,12 +1110,6 @@
 	<Mapping From="Schneidwerk.DigitalOutput_1A" To="FORTE_PC.EMB_RES.DigitalOutput_1A"/>
 	<Mapping From="Schneidwerk.E_FWD_Schneidwerk" To="FORTE_PC.EMB_RES.E_FWD_Schneidwerk"/>
 	<Mapping From="Schneidwerk.DigitalOutput_1B" To="FORTE_PC.EMB_RES.DigitalOutput_1B"/>
-	<Mapping From="Abscheider.SoftKey_Abscheider_UP" To="FORTE_PC.EMB_RES.SoftKey_Abscheider_UP"/>
-	<Mapping From="Abscheider.E_FWD_Abscheider" To="FORTE_PC.EMB_RES.E_FWD_Abscheider"/>
-	<Mapping From="Abscheider.E_IMPULSE_Abscheider" To="FORTE_PC.EMB_RES.E_IMPULSE_Abscheider"/>
-	<Mapping From="Abscheider.AND_2_Abscheider" To="FORTE_PC.EMB_RES.AND_2_Abscheider"/>
-	<Mapping From="Abscheider.DigitalOutput_7B" To="FORTE_PC.EMB_RES.DigitalOutput_7B"/>
-	<Mapping From="Abscheider.E_T_FF_Abscheider" To="FORTE_PC.EMB_RES.E_T_FF_Abscheider"/>
 	<Mapping From="Vorsteuerventil.OR_2B" To="FORTE_PC.EMB_RES.OR_2B"/>
 	<Mapping From="Vorsteuerventil.OR_2A" To="FORTE_PC.EMB_RES.OR_2A"/>
 	<Mapping From="mapping_Softkeys.UT_SoftkeyMapping_DOWN" To="FORTE_PC.EMB_RES.UT_SoftkeyMapping_DOWN"/>
@@ -1160,7 +1124,6 @@
 	<Mapping From="Automatik.E_SR_Verteiler_heben" To="FORTE_PC.EMB_RES.E_SR_Verteiler_heben"/>
 	<Mapping From="Heckschieber.E_SWITCH_Heckschieber" To="FORTE_PC.EMB_RES.E_SWITCH_Heckschieber"/>
 	<Mapping From="Heckschieber.E_FWD_Automatik_ein_UP" To="FORTE_PC.EMB_RES.E_FWD_Automatik_ein_UP"/>
-	<Mapping From="Abscheider.GreenWhiteBackground_Abscheider" To="FORTE_PC.EMB_RES.GreenWhiteBackground_Abscheider"/>
 	<Mapping From="Verteiler.GreenWhiteBackground_Verteiler_heben" To="FORTE_PC.EMB_RES.GreenWhiteBackground_Verteiler_heben"/>
 	<Mapping From="Verteiler.GreenWhiteBackground_Verteiler_senken" To="FORTE_PC.EMB_RES.GreenWhiteBackground_Verteiler_senken"/>
 	<Mapping From="Dom.GreenWhiteBackground_Dom" To="FORTE_PC.EMB_RES.GreenWhiteBackground_Dom"/>
@@ -1183,7 +1146,6 @@
 	<Mapping From="Automatik.E_FWD_DLY_Automatik_ein_UP" To="FORTE_PC.EMB_RES.E_FWD_DLY_Automatik_ein_UP"/>
 	<Mapping From="Heckschieber.E_SR_Heckschieber" To="FORTE_PC.EMB_RES.E_SR_Heckschieber"/>
 	<Mapping From="Licht.Licht" To="FORTE_PC.EMB_RES.Licht"/>
-	<Mapping From="Abscheider.AND_2" To="FORTE_PC.EMB_RES.AND_2"/>
 	<Segment Name="Ethernet" Type="Ethernet" Comment="" x="5373.333333333334" y="626.6666666666667" dx1="2000.0">
 		<Attribute Name="Color" Type="STRING" Value="140,181,218"/>
 	</Segment>
