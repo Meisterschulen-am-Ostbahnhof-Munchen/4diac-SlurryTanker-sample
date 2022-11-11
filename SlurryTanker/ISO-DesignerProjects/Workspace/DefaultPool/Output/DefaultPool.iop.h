@@ -56,4 +56,6 @@
 #define Knickdeichsel_senken_20012        20012
 #define lightbulb_20013                   20013
 #define trash_icon_20014                  20014
+#define Logos_Large_Icons_icon_20015      20015
 #define FontAttributes_23000              23000
+#define AuxFunction2_31000                31000
