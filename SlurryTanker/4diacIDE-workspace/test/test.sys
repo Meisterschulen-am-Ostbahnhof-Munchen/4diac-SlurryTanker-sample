@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <System Name="test" Comment="">
-	<Identification ApplicationDomain="Slurry Tanker">
+	<Identification Standard="ISO 11783 / IEC 61499" ApplicationDomain="Slurry Tanker" Description="https://github.com/Meisterschulen-am-Ostbahnhof-Munchen/4diac-SlurryTanker-sample" >
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2022-11-09">
 	</VersionInfo>
