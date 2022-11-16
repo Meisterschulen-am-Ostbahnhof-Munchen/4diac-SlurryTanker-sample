@@ -162,7 +162,7 @@ local fbnSpec = {
 return {interfaceSpec = interfaceSpec, fbnSpec = fbnSpec}
 </FBType></Request>
 EMB_RES;<Request ID="15" Action="CREATE"><FB Name="Abscheider.E_IMPULSE_Abscheider" Type="E_IMPULSE" /></Request>
-EMB_RES;<Request ID="16" Action="WRITE"><Connection Source="T#1s" Destination="Abscheider.E_IMPULSE_Abscheider.TM" /></Request>
+EMB_RES;<Request ID="16" Action="WRITE"><Connection Source="T#3s" Destination="Abscheider.E_IMPULSE_Abscheider.TM" /></Request>
 ;<Request ID="17" Action="CREATE"><FBType Name="E_T_FF">local FB_STATE = 0
 local ECC_START = 0
 local ECC_SET = 1
@@ -326,13 +326,13 @@ EMB_RES;<Request ID="28" Action="WRITE"><Connection Source="TRUE" Destination="D
 EMB_RES;<Request ID="29" Action="CREATE"><FB Name="Dom.GreenWhiteBackground_Dom" Type="GreenWhiteBackground" /></Request>
 EMB_RES;<Request ID="30" Action="WRITE"><Connection Source="5001" Destination="Dom.GreenWhiteBackground_Dom.u16ObjId" /></Request>
 EMB_RES;<Request ID="31" Action="CREATE"><FB Name="Dom.E_IMPULSE_Dom" Type="E_IMPULSE" /></Request>
-EMB_RES;<Request ID="32" Action="WRITE"><Connection Source="T#1s" Destination="Dom.E_IMPULSE_Dom.TM" /></Request>
+EMB_RES;<Request ID="32" Action="WRITE"><Connection Source="T#3s" Destination="Dom.E_IMPULSE_Dom.TM" /></Request>
 EMB_RES;<Request ID="33" Action="CREATE"><FB Name="Dom.SoftKey_Dom_UP" Type="IX" /></Request>
 EMB_RES;<Request ID="34" Action="WRITE"><Connection Source="TRUE" Destination="Dom.SoftKey_Dom_UP.QI" /></Request>
 EMB_RES;<Request ID="35" Action="CREATE"><FB Name="Seitenschieber.GreenWhiteBackground_Seitenschieber" Type="GreenWhiteBackground" /></Request>
 EMB_RES;<Request ID="36" Action="WRITE"><Connection Source="5008" Destination="Seitenschieber.GreenWhiteBackground_Seitenschieber.u16ObjId" /></Request>
 EMB_RES;<Request ID="37" Action="CREATE"><FB Name="Seitenschieber.E_IMPULSE_Seitenschieber" Type="E_IMPULSE" /></Request>
-EMB_RES;<Request ID="38" Action="WRITE"><Connection Source="T#1s" Destination="Seitenschieber.E_IMPULSE_Seitenschieber.TM" /></Request>
+EMB_RES;<Request ID="38" Action="WRITE"><Connection Source="T#3s" Destination="Seitenschieber.E_IMPULSE_Seitenschieber.TM" /></Request>
 EMB_RES;<Request ID="39" Action="CREATE"><FB Name="Seitenschieber.AND_2_Seitenschieber" Type="AND_2" /></Request>
 EMB_RES;<Request ID="40" Action="CREATE"><FB Name="Seitenschieber.E_T_FF_Seitenschieber" Type="E_T_FF" /></Request>
 EMB_RES;<Request ID="41" Action="CREATE"><FB Name="Seitenschieber.SoftKey_Seitenschieber_UP" Type="IX" /></Request>
@@ -680,7 +680,7 @@ EMB_RES;<Request ID="56" Action="CREATE"><FB Name="Heckschieber.E_SR_Heckschiebe
 EMB_RES;<Request ID="57" Action="CREATE"><FB Name="Heckschieber.E_SWITCH_Heckschieber" Type="E_SWITCH" /></Request>
 EMB_RES;<Request ID="58" Action="CREATE"><FB Name="Heckschieber.AND_2_Heckschieber" Type="AND_2" /></Request>
 EMB_RES;<Request ID="59" Action="CREATE"><FB Name="Heckschieber.E_IMPULSE_Heckschieber" Type="E_IMPULSE" /></Request>
-EMB_RES;<Request ID="60" Action="WRITE"><Connection Source="T#1s" Destination="Heckschieber.E_IMPULSE_Heckschieber.TM" /></Request>
+EMB_RES;<Request ID="60" Action="WRITE"><Connection Source="T#3s" Destination="Heckschieber.E_IMPULSE_Heckschieber.TM" /></Request>
 EMB_RES;<Request ID="61" Action="CREATE"><FB Name="Klappen.SoftKey_Auseinanderklappen" Type="IX" /></Request>
 EMB_RES;<Request ID="62" Action="WRITE"><Connection Source="TRUE" Destination="Klappen.SoftKey_Auseinanderklappen.QI" /></Request>
 EMB_RES;<Request ID="63" Action="CREATE"><FB Name="Klappen.GreenWhiteBackground_Auseinanderklappen" Type="GreenWhiteBackground" /></Request>
