@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="hsv2rgb" Comment="Simple helper function, converting HSV color space to RGB color space">
+	<Identification Standard="61499-2" Description="Wiki: https://en.wikipedia.org/wiki/HSL_and_HSV" >
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2022-07-16">
+	</VersionInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event" Comment="Service Request">
+				<With Var="h"/>
+				<With Var="s"/>
+				<With Var="v"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+				<With Var="r"/>
+				<With Var="g"/>
+				<With Var="b"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="h" Type="UDINT" Comment="hue"/>
+			<VarDeclaration Name="s" Type="UDINT" Comment="saturation"/>
+			<VarDeclaration Name="v" Type="UDINT" Comment="value"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="r" Type="UDINT" Comment="red"/>
+			<VarDeclaration Name="g" Type="UDINT" Comment="green"/>
+			<VarDeclaration Name="b" Type="UDINT" Comment="blue"/>
+		</OutputVars>
+	</InterfaceList>
+	<Service RightInterface="RESOURCE" LeftInterface="APPLICATION" Comment="Simple helper function, converting HSV color space to RGB color space">
+		<ServiceSequence Name="normal_establishment" Comment="">
+			<ServiceTransaction>
+				<InputPrimitive Interface="APPLICATION" Event="INIT+" Parameters="PARAMS"/>
+				<OutputPrimitive Interface="RESOURCE" Event="initialize" Parameters="PARAMS"/>
+				<OutputPrimitive Interface="APPLICATION" Event="INITO+"/>
+			</ServiceTransaction>
+		</ServiceSequence>
+		<ServiceSequence Name="unsuccessful_establishment" Comment="">
+			<ServiceTransaction>
+				<InputPrimitive Interface="APPLICATION" Event="INIT+" Parameters="PARAMS"/>
+				<OutputPrimitive Interface="RESOURCE" Event="initialize" Parameters="PARAMS"/>
+				<OutputPrimitive Interface="APPLICATION" Event="INITO-" Parameters="STATUS"/>
+			</ServiceTransaction>
+		</ServiceSequence>
+		<ServiceSequence Name="request_confirm" Comment="">
+			<ServiceTransaction>
+				<InputPrimitive Interface="APPLICATION" Event="REQ+" Parameters="SD"/>
+				<OutputPrimitive Interface="RESOURCE" Event="request" Parameters="SD"/>
+				<OutputPrimitive Interface="APPLICATION" Event="CNF+" Parameters="RD"/>
+			</ServiceTransaction>
+		</ServiceSequence>
+		<ServiceSequence Name="request_inhibited" Comment="">
+			<ServiceTransaction>
+				<InputPrimitive Interface="APPLICATION" Event="REQ-" Parameters="SD"/>
+				<OutputPrimitive Interface="APPLICATION" Event="CNF-" Parameters="STATUS"/>
+			</ServiceTransaction>
+		</ServiceSequence>
+		<ServiceSequence Name="request_error" Comment="">
+			<ServiceTransaction>
+				<InputPrimitive Interface="APPLICATION" Event="REQ+" Parameters="SD"/>
+				<OutputPrimitive Interface="RESOURCE" Event="request" Parameters="SD"/>
+				<OutputPrimitive Interface="APPLICATION" Event="CNF-" Parameters="STATUS"/>
+			</ServiceTransaction>
+		</ServiceSequence>
+		<ServiceSequence Name="indication_response" Comment="">
+			<ServiceTransaction>
+				<InputPrimitive Interface="RESOURCE" Event="indicate" Parameters="RD"/>
+				<OutputPrimitive Interface="APPLICATION" Event="IND+" Parameters="RD"/>
+			</ServiceTransaction>
+			<ServiceTransaction>
+				<InputPrimitive Interface="APPLICATION" Event="RSP" Parameters="QI,SD"/>
+				<OutputPrimitive Interface="RESOURCE" Event="response" Parameters="QI,SD"/>
+			</ServiceTransaction>
+		</ServiceSequence>
+		<ServiceSequence Name="indication_inhibited" Comment="">
+			<ServiceTransaction>
+				<InputPrimitive Interface="RESOURCE" Event="indicate" Parameters="RD,QI=FALSE"/>
+				<OutputPrimitive Interface="RESOURCE" Event="inhibited"/>
+			</ServiceTransaction>
+		</ServiceSequence>
+		<ServiceSequence Name="error_indication" Comment="">
+			<ServiceTransaction>
+				<InputPrimitive Interface="RESOURCE" Event="error" Parameters="STATUS"/>
+				<OutputPrimitive Interface="APPLICATION" Event="IND-" Parameters="STATUS"/>
+			</ServiceTransaction>
+		</ServiceSequence>
+		<ServiceSequence Name="application_initiated_termination" Comment="">
+			<ServiceTransaction>
+				<InputPrimitive Interface="APPLICATION" Event="INIT-"/>
+				<OutputPrimitive Interface="RESOURCE" Event="terminate"/>
+				<OutputPrimitive Interface="APPLICATION" Event="INITO-" Parameters="STATUS"/>
+			</ServiceTransaction>
+		</ServiceSequence>
+		<ServiceSequence Name="resource_initiated_termination" Comment="">
+			<ServiceTransaction>
+				<OutputPrimitive Interface="APPLICATION" Event="INITO-" Parameters="STATUS"/>
+			</ServiceTransaction>
+		</ServiceSequence>
+	</Service>
+</FBType>

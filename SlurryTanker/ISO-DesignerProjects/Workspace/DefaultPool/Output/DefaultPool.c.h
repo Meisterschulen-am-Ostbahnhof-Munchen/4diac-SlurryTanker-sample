@@ -38,27 +38,29 @@
 #define OutputString_11001_Offset                             462
 #define workingset_20000_Offset                               483
 #define Automatik_ein_20001_Offset                           1014
-#define Automatik_aus_20002_Offset                           1795
-#define Einfuelldom_20003_Offset                             2722
-#define EXACUT_20004_Offset                                  3669
-#define Seitenschieber_20005_Offset                          4514
-#define Heckschieber_20006_Offset                            5103
-#define zusammenklappen_20007_Offset                         5618
-#define auseinanderklappen_20008_Offset                      6297
-#define Verteiler_heben_20009_Offset                         6956
-#define Verteiler_senken_20010_Offset                        7629
-#define Knickdeichsel_heben_20011_Offset                     8286
-#define Knickdeichsel_senken_20012_Offset                    8849
-#define lightbulb_20013_Offset                               9392
-#define trash_icon_20014_Offset                              9891
-#define FontAttributes_23000_Offset                         10820
+#define Automatik_aus_20002_Offset                           1661
+#define Einfuelldom_20003_Offset                             2308
+#define EXACUT_20004_Offset                                  2955
+#define Seitenschieber_20005_Offset                          3602
+#define Heckschieber_20006_Offset                            4168
+#define zusammenklappen_20007_Offset                         4683
+#define auseinanderklappen_20008_Offset                      5330
+#define Verteiler_heben_20009_Offset                         5977
+#define Verteiler_senken_20010_Offset                        6624
+#define Knickdeichsel_heben_20011_Offset                     7271
+#define Knickdeichsel_senken_20012_Offset                    7834
+#define lightbulb_20013_Offset                               8377
+#define trash_icon_20014_Offset                              8876
+#define Logos_Large_Icons_icon_20015_Offset                  9541
+#define FontAttributes_23000_Offset                         10070
+#define AuxFunction2_31000_Offset                           10078
 
 #define ISO_OP_MEMORY_CLASS
 
-#define ISO_OP_DefaultPool_Size  10828
+#define ISO_OP_DefaultPool_Size  10090
 extern const unsigned char ISO_OP_MEMORY_CLASS isoOP_DefaultPool[];
 
-#define ISO_OP_DefaultPool_ObjectNumber     51
+#define ISO_OP_DefaultPool_ObjectNumber     53
 extern const unsigned long ISO_OP_MEMORY_CLASS isoOP_DefaultPool_Offset[];
 extern const unsigned long ISO_OP_MEMORY_CLASS isoOP_DefaultPool_Offset_Id[];
 #define ISO_OP_DefaultPool_Scale_Offset      1
