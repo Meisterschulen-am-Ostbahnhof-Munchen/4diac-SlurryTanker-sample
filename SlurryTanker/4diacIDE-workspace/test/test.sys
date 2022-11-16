@@ -550,7 +550,7 @@
 						<Parameter Name="u16ObjId" Value="5001"/>
 					</FB>
 					<FB Name="E_IMPULSE_Dom" Type="E_IMPULSE" Comment="" x="3106.666666666667" y="953.3333333333334">
-						<Parameter Name="TM" Value="T#1s"/>
+						<Parameter Name="TM" Value="T#3s"/>
 					</FB>
 					<FB Name="SoftKey_Dom_UP" Type="IX" Comment="" x="273.33333333333337" y="0.0">
 						<Parameter Name="QI" Value="TRUE"/>
@@ -621,7 +621,7 @@
 					<FB Name="AND_2_Heckschieber" Type="AND_2" Comment="" x="7200.0" y="1573.3333333333335">
 					</FB>
 					<FB Name="E_IMPULSE_Heckschieber" Type="E_IMPULSE" Comment="" x="5306.666666666667" y="933.3333333333334">
-						<Parameter Name="TM" Value="T#1s"/>
+						<Parameter Name="TM" Value="T#3s"/>
 					</FB>
 					<EventConnections>
 						<Connection Source="E_IMPULSE_Heckschieber.CNF" Destination="E_F_TRIG_Heckschieber.EI" Comment=""/>
@@ -678,7 +678,7 @@
 						<Parameter Name="u16ObjId" Value="5008"/>
 					</FB>
 					<FB Name="E_IMPULSE_Seitenschieber" Type="E_IMPULSE" Comment="" x="4033.3333333333335" y="960.0">
-						<Parameter Name="TM" Value="T#1s"/>
+						<Parameter Name="TM" Value="T#3s"/>
 					</FB>
 					<FB Name="AND_2_Seitenschieber" Type="AND_2" Comment="" x="5900.0" y="960.0">
 					</FB>
@@ -831,7 +831,7 @@
 						<Parameter Name="QI" Value="TRUE"/>
 					</FB>
 					<FB Name="E_IMPULSE_Abscheider" Type="E_IMPULSE" Comment="" x="3280.0" y="100.0">
-						<Parameter Name="TM" Value="T#1s"/>
+						<Parameter Name="TM" Value="T#3s"/>
 					</FB>
 					<FB Name="E_T_FF_Abscheider" Type="E_T_FF" Comment="" x="1626.6666666666667" y="1060.0">
 					</FB>
