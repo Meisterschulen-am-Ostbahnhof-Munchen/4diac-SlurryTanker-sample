@@ -8,10 +8,6 @@
 	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof, München" Version="0.3" Author="Franz Höpfinger" Date="2022-11-16" Remarks="alle Zeiten auf T#3s">
 	</VersionInfo>
-	<Application Name="testApp" Comment="">
-		<SubAppNetwork>
-		</SubAppNetwork>
-	</Application>
 	<Application Name="mapping_DataPanel" Comment="">
 		<SubAppNetwork>
 			<SubApp Name="mapping_DataPanel" Comment="mapping_DataPanel" x="326.6666666666667" y="180.0">
@@ -49,7 +45,7 @@
 					</FB>
 					<EventConnections>
 						<Connection Source="INIT" Destination="DataPanel_xDB_16_DO_SAE_J1939.INIT" Comment="" dx1="73.33333333333334" dx2="73.33333333333334" dy="80.0"/>
-						<Connection Source="DataPanel_xDB_16_DO_SAE_J1939.INITO" Destination="INITO" Comment="" dx1="166.66666666666669"/>
+						<Connection Source="DataPanel_xDB_16_DO_SAE_J1939.INITO" Destination="INITO" Comment="" dx1="166.66666666666669" dx2="166.66666666666669" dy="0.0"/>
 					</EventConnections>
 				</SubAppNetwork>
 				<Attribute Name="Unfolded" Type="STRING" Value="true"/>
@@ -72,13 +68,21 @@
 					</SubAppEventOutputs>
 				</SubAppInterfaceList>
 				<SubAppNetwork>
-					<FB Name="UT_SoftkeyMapping_DOWN" Type="UT_SoftkeyMapping_DOWN" Comment="" x="7340.0" y="66.66666666666667">
+					<FB Name="UT_SoftkeyMapping" Type="UT_SoftkeyMapping" Comment="" x="1406.6666666666667" y="0.0">
 						<Parameter Name="QI" Value="TRUE"/>
 						<Parameter Name="u8SAMember" Value="255"/>
-						<Parameter Name="u16ObjId_1" Value="5000"/>
-						<Parameter Name="DigitalInput_1" Value="&quot;SoftKey_Automatik_ein_DOWN&quot;"/>
-						<Parameter Name="u16ObjId_7" Value="5006"/>
-						<Parameter Name="DigitalInput_7" Value="&quot;SoftKey_Automatik_aus_DOWN&quot;"/>
+						<Parameter Name="u16ObjId_1" Value="5003"/>
+						<Parameter Name="DigitalInput_1" Value="&quot;SoftKey_Auseinanderklappen&quot;"/>
+						<Parameter Name="u16ObjId_2" Value="5004"/>
+						<Parameter Name="DigitalInput_2" Value="&quot;SoftKey_Verteiler_senken&quot;"/>
+						<Parameter Name="u16ObjId_3" Value="5005"/>
+						<Parameter Name="DigitalInput_3" Value="&quot;SoftKey_Knickdeichsel_senken&quot;"/>
+						<Parameter Name="u16ObjId_4" Value="5009"/>
+						<Parameter Name="DigitalInput_4" Value="&quot;SoftKey_Zusammenklappen&quot;"/>
+						<Parameter Name="u16ObjId_5" Value="5010"/>
+						<Parameter Name="DigitalInput_5" Value="&quot;SoftKey_Verteiler_heben&quot;"/>
+						<Parameter Name="u16ObjId_6" Value="5011"/>
+						<Parameter Name="DigitalInput_6" Value="&quot;SoftKey_Knickdeichsel_heben&quot;"/>
 					</FB>
 					<FB Name="UT_SoftkeyMapping_UP" Type="UT_SoftkeyMapping_UP" Comment="" x="4400.0" y="0.0">
 						<Parameter Name="QI" Value="TRUE"/>
@@ -100,27 +104,19 @@
 						<Parameter Name="u16ObjId_8" Value="5016"/>
 						<Parameter Name="DigitalInput_8" Value="&quot;SoftKey_Licht_UP&quot;"/>
 					</FB>
-					<FB Name="UT_SoftkeyMapping" Type="UT_SoftkeyMapping" Comment="" x="1406.6666666666667" y="0.0">
+					<FB Name="UT_SoftkeyMapping_DOWN" Type="UT_SoftkeyMapping_DOWN" Comment="" x="7340.0" y="66.66666666666667">
 						<Parameter Name="QI" Value="TRUE"/>
 						<Parameter Name="u8SAMember" Value="255"/>
-						<Parameter Name="u16ObjId_1" Value="5003"/>
-						<Parameter Name="DigitalInput_1" Value="&quot;SoftKey_Auseinanderklappen&quot;"/>
-						<Parameter Name="u16ObjId_2" Value="5004"/>
-						<Parameter Name="DigitalInput_2" Value="&quot;SoftKey_Verteiler_senken&quot;"/>
-						<Parameter Name="u16ObjId_3" Value="5005"/>
-						<Parameter Name="DigitalInput_3" Value="&quot;SoftKey_Knickdeichsel_senken&quot;"/>
-						<Parameter Name="u16ObjId_4" Value="5009"/>
-						<Parameter Name="DigitalInput_4" Value="&quot;SoftKey_Zusammenklappen&quot;"/>
-						<Parameter Name="u16ObjId_5" Value="5010"/>
-						<Parameter Name="DigitalInput_5" Value="&quot;SoftKey_Verteiler_heben&quot;"/>
-						<Parameter Name="u16ObjId_6" Value="5011"/>
-						<Parameter Name="DigitalInput_6" Value="&quot;SoftKey_Knickdeichsel_heben&quot;"/>
+						<Parameter Name="u16ObjId_1" Value="5000"/>
+						<Parameter Name="DigitalInput_1" Value="&quot;SoftKey_Automatik_ein_DOWN&quot;"/>
+						<Parameter Name="u16ObjId_7" Value="5006"/>
+						<Parameter Name="DigitalInput_7" Value="&quot;SoftKey_Automatik_aus_DOWN&quot;"/>
 					</FB>
 					<EventConnections>
-						<Connection Source="UT_SoftkeyMapping_UP.INITO" Destination="UT_SoftkeyMapping_DOWN.INIT" Comment="" dx1="460.0"/>
-						<Connection Source="UT_SoftkeyMapping.INITO" Destination="UT_SoftkeyMapping_UP.INIT" Comment=""/>
-						<Connection Source="UT_SoftkeyMapping_DOWN.INITO" Destination="INITO" Comment="" dx1="73.33333333333334" dx2="73.33333333333334" dy="-113.33333333333334"/>
 						<Connection Source="INIT" Destination="UT_SoftkeyMapping.INIT" Comment="" dx1="73.33333333333334" dx2="73.33333333333334" dy="80.0"/>
+						<Connection Source="UT_SoftkeyMapping.INITO" Destination="UT_SoftkeyMapping_UP.INIT" Comment=""/>
+						<Connection Source="UT_SoftkeyMapping_UP.INITO" Destination="UT_SoftkeyMapping_DOWN.INIT" Comment="" dx1="460.0" dx2="460.0" dy="0.0"/>
+						<Connection Source="UT_SoftkeyMapping_DOWN.INITO" Destination="INITO" Comment="" dx1="73.33333333333334" dx2="73.33333333333334" dy="-113.33333333333334"/>
 					</EventConnections>
 				</SubAppNetwork>
 				<Attribute Name="Unfolded" Type="STRING" Value="true"/>
@@ -267,27 +263,27 @@
 					</InputVars>
 				</SubAppInterfaceList>
 				<SubAppNetwork>
+					<FB Name="OR_2A" Type="OR_5" Comment="" x="1100.0" y="260.0">
+					</FB>
 					<FB Name="DigitalOutput_2A" Type="QX" Comment="" x="2566.666666666667" y="0.0">
 						<Parameter Name="QI" Value="TRUE"/>
 					</FB>
-					<FB Name="OR_2A" Type="OR_5" Comment="" x="1100.0" y="260.0">
-					</FB>
 					<EventConnections>
-						<Connection Source="OR_2A.CNF" Destination="DigitalOutput_2A.REQ" Comment="" dx1="326.6666666666667"/>
-						<Connection Source="INIT" Destination="DigitalOutput_2A.INIT" Comment="" dx1="2400.0"/>
 						<Connection Source="REQ1" Destination="OR_2A.REQ" Comment="" dx1="553.3333333333334"/>
 						<Connection Source="REQ2" Destination="OR_2A.REQ" Comment="" dx1="560.0"/>
 						<Connection Source="REQ3" Destination="OR_2A.REQ" Comment="" dx1="560.0"/>
 						<Connection Source="REQ4" Destination="OR_2A.REQ" Comment="" dx1="560.0"/>
 						<Connection Source="REQ5" Destination="OR_2A.REQ" Comment="" dx1="560.0"/>
+						<Connection Source="INIT" Destination="DigitalOutput_2A.INIT" Comment="" dx1="2400.0" dx2="2400.0" dy="0.0"/>
+						<Connection Source="OR_2A.CNF" Destination="DigitalOutput_2A.REQ" Comment="" dx1="326.6666666666667" dx2="326.6666666666667" dy="0.0"/>
 					</EventConnections>
 					<DataConnections>
-						<Connection Source="OR_2A.OUT" Destination="DigitalOutput_2A.OUT" Comment="" dx1="326.6666666666667"/>
 						<Connection Source="IN1" Destination="OR_2A.IN1" Comment="" dx1="853.3333333333334"/>
 						<Connection Source="IN2" Destination="OR_2A.IN2" Comment="" dx1="673.3333333333334"/>
 						<Connection Source="IN3" Destination="OR_2A.IN3" Comment="" dx1="573.3333333333334"/>
 						<Connection Source="IN4" Destination="OR_2A.IN4" Comment="" dx1="446.6666666666667"/>
 						<Connection Source="IN5" Destination="OR_2A.IN5" Comment="" dx1="260.0"/>
+						<Connection Source="OR_2A.OUT" Destination="DigitalOutput_2A.OUT" Comment="" dx1="326.6666666666667" dx2="326.6666666666667" dy="0.0"/>
 					</DataConnections>
 				</SubAppNetwork>
 				<Attribute Name="Unfolded" Type="STRING" Value="true"/>
@@ -368,8 +364,8 @@
 								<Connection Source="OR_4A_4B.CNF" Destination="DigitalOutput_4A.REQ" Comment="" dx1="406.6666666666667"/>
 								<Connection Source="CNF_Verteiler_heben" Destination="OR_4A_4B.REQ" Comment="" dx1="673.3333333333334"/>
 								<Connection Source="CNF_Verteiler_senken" Destination="OR_4A_4B.REQ" Comment="" dx1="500.0"/>
-								<Connection Source="INITO" Destination="DigitalOutput_4B.INIT" Comment="" dx1="2446.666666666667"/>
-								<Connection Source="INITO" Destination="DigitalOutput_4A.INIT" Comment="" dx1="2446.666666666667"/>
+								<Connection Source="INITO" Destination="DigitalOutput_4B.INIT" Comment="" dx1="1886.6666666666667"/>
+								<Connection Source="INITO" Destination="DigitalOutput_4A.INIT" Comment="" dx1="2100.0"/>
 							</EventConnections>
 							<DataConnections>
 								<Connection Source="OR_4A_4B.OUT" Destination="DigitalOutput_4B.OUT" Comment="" dx1="200.0"/>
@@ -769,9 +765,11 @@
 					</DataConnections>
 				</SubAppNetwork>
 				<Attribute Name="Unfolded" Type="STRING" Value="true"/>
-				<Attribute Name="width" Type="LREAL" Value="7260.0"/>
+				<Attribute Name="width" Type="LREAL" Value="7313.333333333334"/>
 				<Attribute Name="height" Type="LREAL" Value="5073.333333333334"/>
 			</SubApp>
+			<Group Name="__Group01" Comment="hier muss noch das rückwärts implementiert werden&amp;#10;" x="9480.0" y="1473.3333333333335" width="1333.3333333333335" height="666.6666666666667">
+			</Group>
 		</SubAppNetwork>
 	</Application>
 	<Application Name="Licht" Comment="">
@@ -831,9 +829,6 @@
 					</OutputVars>
 				</SubAppInterfaceList>
 				<SubAppNetwork>
-					<FB Name="SoftKey_Abscheider_UP" Type="IX" Comment="" x="426.6666666666667" y="926.6666666666667">
-						<Parameter Name="QI" Value="TRUE"/>
-					</FB>
 					<FB Name="E_IMPULSE_Abscheider" Type="E_IMPULSE" Comment="" x="3280.0" y="100.0">
 						<Parameter Name="TM" Value="T#3s"/>
 					</FB>
@@ -847,17 +842,20 @@
 					<FB Name="GreenWhiteBackground_Abscheider" Type="GreenWhiteBackground" Comment="" x="3226.666666666667" y="1726.6666666666667">
 						<Parameter Name="u16ObjId" Value="5015"/>
 					</FB>
+					<FB Name="SoftKey_Abscheider_UP" Type="IX" Comment="" x="426.6666666666667" y="926.6666666666667">
+						<Parameter Name="QI" Value="TRUE"/>
+					</FB>
 					<EventConnections>
-						<Connection Source="SoftKey_Abscheider_UP.IND" Destination="E_T_FF_Abscheider.CLK" Comment="" dx1="400.0"/>
 						<Connection Source="E_T_FF_Abscheider.EO" Destination="E_IMPULSE_Abscheider.REQ" Comment="" dx1="400.0"/>
 						<Connection Source="E_IMPULSE_Abscheider.CNF" Destination="AND_2_Abscheider.REQ" Comment="" dx1="400.0"/>
 						<Connection Source="E_IMPULSE_Abscheider.CNF" Destination="DigitalOutput_7B.REQ" Comment="" dx1="480.0"/>
 						<Connection Source="E_T_FF_Abscheider.EO" Destination="AND_2_Abscheider.REQ" Comment="" dx1="400.0"/>
 						<Connection Source="E_T_FF_Abscheider.EO" Destination="GreenWhiteBackground_Abscheider.REQ" Comment="" dx1="400.0"/>
-						<Connection Source="INIT" Destination="SoftKey_Abscheider_UP.INIT" Comment="" dx1="80.0"/>
 						<Connection Source="AND_2_Abscheider.CNF" Destination="CNF_2b" Comment="" dx1="220.0"/>
 						<Connection Source="INIT" Destination="GreenWhiteBackground_Abscheider.INIT" Comment="" dx1="73.33333333333334"/>
 						<Connection Source="INIT" Destination="DigitalOutput_7B.INIT" Comment="" dx1="4680.0"/>
+						<Connection Source="INIT" Destination="SoftKey_Abscheider_UP.INIT" Comment="" dx1="80.0" dx2="80.0" dy="0.0"/>
+						<Connection Source="SoftKey_Abscheider_UP.IND" Destination="E_T_FF_Abscheider.CLK" Comment="" dx1="400.0" dx2="400.0" dy="0.0"/>
 					</EventConnections>
 					<DataConnections>
 						<Connection Source="E_IMPULSE_Abscheider.QO" Destination="AND_2_Abscheider.IN1" Comment="" dx1="340.0"/>
@@ -934,7 +932,7 @@
 						<Connection Source="SoftKey_Automatik_ein_DOWN.IND" Destination="E_SR_Verteiler_senken.S" Comment="" dx1="313.33333333333337"/>
 						<Connection Source="SoftKey_Automatik_ein_UP.IND" Destination="E_SR_Verteiler_senken.R" Comment="" dx1="360.0"/>
 						<Connection Source="SoftKey_Automatik_ein_UP.IND" Destination="E_FWD_DLY_Automatik_ein_UP.REQ" Comment="" dx1="500.0"/>
-						<Connection Source="SoftKey_Automatik_ein_UP.IND" Destination="E_REND_Automatik_ein.R" Comment=""/>
+						<Connection Source="SoftKey_Automatik_ein_UP.IND" Destination="E_REND_Automatik_ein.R" Comment="" dx1="1713.3333333333335"/>
 						<Connection Source="SoftKey_Automatik_aus_UP.IND" Destination="E_REND_Automatik_aus.R" Comment="" dx1="613.3333333333334"/>
 						<Connection Source="E_FWD_DLY_Automatik_ein_UP.CNF" Destination="E_REND_Automatik_ein.EI2" Comment="" dx1="453.33333333333337"/>
 						<Connection Source="INIT" Destination="SoftKey_Automatik_aus_DOWN.INIT" Comment="" dx1="73.33333333333334"/>
@@ -987,27 +985,27 @@
 					</InputVars>
 				</SubAppInterfaceList>
 				<SubAppNetwork>
+					<FB Name="OR_2B" Type="OR_5" Comment="" x="1100.0" y="260.0">
+					</FB>
 					<FB Name="DigitalOutput_2B" Type="QX" Comment="" x="2566.666666666667" y="0.0">
 						<Parameter Name="QI" Value="TRUE"/>
 					</FB>
-					<FB Name="OR_2B" Type="OR_5" Comment="" x="1100.0" y="260.0">
-					</FB>
 					<EventConnections>
-						<Connection Source="OR_2B.CNF" Destination="DigitalOutput_2B.REQ" Comment="" dx1="326.6666666666667"/>
-						<Connection Source="INIT" Destination="DigitalOutput_2B.INIT" Comment="" dx1="2400.0"/>
 						<Connection Source="REQ1" Destination="OR_2B.REQ" Comment="" dx1="553.3333333333334"/>
 						<Connection Source="REQ2" Destination="OR_2B.REQ" Comment="" dx1="560.0"/>
 						<Connection Source="REQ3" Destination="OR_2B.REQ" Comment="" dx1="560.0"/>
 						<Connection Source="REQ4" Destination="OR_2B.REQ" Comment="" dx1="560.0"/>
 						<Connection Source="REQ5" Destination="OR_2B.REQ" Comment="" dx1="560.0"/>
+						<Connection Source="INIT" Destination="DigitalOutput_2B.INIT" Comment="" dx1="2400.0" dx2="2400.0" dy="0.0"/>
+						<Connection Source="OR_2B.CNF" Destination="DigitalOutput_2B.REQ" Comment="" dx1="326.6666666666667" dx2="326.6666666666667" dy="0.0"/>
 					</EventConnections>
 					<DataConnections>
-						<Connection Source="OR_2B.OUT" Destination="DigitalOutput_2B.OUT" Comment="" dx1="326.6666666666667"/>
 						<Connection Source="IN1" Destination="OR_2B.IN1" Comment="" dx1="853.3333333333334"/>
 						<Connection Source="IN2" Destination="OR_2B.IN2" Comment="" dx1="673.3333333333334"/>
 						<Connection Source="IN3" Destination="OR_2B.IN3" Comment="" dx1="573.3333333333334"/>
 						<Connection Source="IN4" Destination="OR_2B.IN4" Comment="" dx1="446.6666666666667"/>
 						<Connection Source="IN5" Destination="OR_2B.IN5" Comment="" dx1="260.0"/>
+						<Connection Source="OR_2B.OUT" Destination="DigitalOutput_2B.OUT" Comment="" dx1="326.6666666666667" dx2="326.6666666666667" dy="0.0"/>
 					</DataConnections>
 				</SubAppNetwork>
 				<Attribute Name="Unfolded" Type="STRING" Value="true"/>

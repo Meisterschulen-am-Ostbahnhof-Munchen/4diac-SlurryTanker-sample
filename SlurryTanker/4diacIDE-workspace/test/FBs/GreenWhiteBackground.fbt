@@ -44,32 +44,30 @@
 		</OutputVars>
 	</InterfaceList>
 	<FBNetwork>
-		<FB Name="COLOR_GREEN_I" Type="COLOR_GREEN" Comment="" x="-737.5" y="1500.0">
+		<FB Name="COLOR_GREEN_I" Type="COLOR_GREEN" Comment="" x="-733.3333333333334" y="1500.0">
 		</FB>
-		<FB Name="COLOR_WHITE_I" Type="COLOR_WHITE" Comment="" x="-737.5" y="831.25">
+		<FB Name="COLOR_WHITE_I" Type="COLOR_WHITE" Comment="" x="-733.3333333333334" y="826.6666666666667">
 		</FB>
-		<FB Name="F_SEL_I" Type="F_SEL" Comment="" x="581.25" y="350.0">
+		<FB Name="F_SEL_I" Type="F_SEL" Comment="" x="580.0" y="346.6666666666667">
 		</FB>
-		<FB Name="Q_BackgroundColour_I" Type="Q_BackgroundColour" Comment="" x="1600.0" y="243.75">
+		<FB Name="Q_BackgroundColour_I" Type="Q_BackgroundColour" Comment="" x="1600.0" y="240.0">
 		</FB>
 		<EventConnections>
-			<Connection Source="F_SEL_I.CNF" Destination="Q_BackgroundColour_I.REQ" Comment=""/>
-			<Connection Source="INIT" Destination="COLOR_GREEN_I.INIT" Comment="" dx1="443.75"/>
-			<Connection Source="INIT" Destination="COLOR_WHITE_I.INIT" Comment="" dx1="443.75"/>
-			<Connection Source="INIT" Destination="Q_BackgroundColour_I.INIT" Comment="" dx1="2406.25"/>
-			<Connection Source="Q_BackgroundColour_I.INITO" Destination="INITO" Comment=""/>
-			<Connection Source="Q_BackgroundColour_I.CNF" Destination="CNF" Comment=""/>
-			<Connection Source="REQ" Destination="F_SEL_I.REQ" Comment="" dx1="1387.5"/>
+			<Connection Source="INIT" Destination="COLOR_GREEN_I.INIT" Comment="" dx1="440.0"/>
+			<Connection Source="INIT" Destination="COLOR_WHITE_I.INIT" Comment="" dx1="440.0"/>
+			<Connection Source="REQ" Destination="F_SEL_I.REQ" Comment="" dx1="1386.6666666666667"/>
+			<Connection Source="INIT" Destination="Q_BackgroundColour_I.INIT" Comment="" dx1="2400.0" dx2="2400.0" dy="0.0"/>
+			<Connection Source="F_SEL_I.CNF" Destination="Q_BackgroundColour_I.REQ" Comment="" dx1="253.33333333333334" dx2="253.33333333333334" dy="0.0"/>
+			<Connection Source="Q_BackgroundColour_I.INITO" Destination="INITO" Comment="" dx1="2013.3333333333335" dx2="2013.3333333333335" dy="0.0"/>
+			<Connection Source="Q_BackgroundColour_I.CNF" Destination="CNF" Comment="" dx1="2013.3333333333335" dx2="2013.3333333333335" dy="0.0"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="COLOR_GREEN_I.u8Colour" Destination="F_SEL_I.IN1" Comment="" dx1="131.25"/>
-			<Connection Source="F_SEL_I.OUT" Destination="Q_BackgroundColour_I.u8Colour" Comment="" dx1="131.25"/>
-			<Connection Source="COLOR_WHITE_I.u8Colour" Destination="F_SEL_I.IN0" Comment="" dx1="68.75"/>
-			<Connection Source="DI1" Destination="F_SEL_I.G" Comment="" dx1="918.75"/>
-			<Connection Source="u16ObjId" Destination="Q_BackgroundColour_I.u16ObjId" Comment="" dx1="381.25" dx2="437.5" dy="1631.25"/>
-			<Connection Source="Q_BackgroundColour_I.result" Destination="result" Comment="" dx1="481.25"/>
-			<Connection Source="Q_BackgroundColour_I.u8OldColour" Destination="u8OldColour" Comment="" dx1="481.25"/>
-			<Connection Source="Q_BackgroundColour_I.STATUS" Destination="STATUS" Comment="" dx1="481.25"/>
+			<Connection Source="COLOR_GREEN_I.u8Colour" Destination="F_SEL_I.IN1" Comment="" dx1="126.66666666666667"/>
+			<Connection Source="COLOR_WHITE_I.u8Colour" Destination="F_SEL_I.IN0" Comment="" dx1="66.66666666666667"/>
+			<Connection Source="DI1" Destination="F_SEL_I.G" Comment="" dx1="913.3333333333334"/>
+			<Connection Source="u16ObjId" Destination="Q_BackgroundColour_I.u16ObjId" Comment="" dx1="380.0" dx2="380.0" dy="1626.6666666666667"/>
+			<Connection Source="F_SEL_I.OUT" Destination="Q_BackgroundColour_I.u8Colour" Comment="" dx1="126.66666666666667" dx2="126.66666666666667" dy="0.0"/>
+			<Connection Source="Q_BackgroundColour_I.result" Destination="result" Comment="" dx1="480.0" dx2="480.0" dy="0.0"/>
 		</DataConnections>
 	</FBNetwork>
 </FBType>
