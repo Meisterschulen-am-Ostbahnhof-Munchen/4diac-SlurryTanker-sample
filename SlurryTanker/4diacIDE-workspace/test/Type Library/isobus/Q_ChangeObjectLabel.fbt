@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="Q_ChangeObjectLabel" Comment="Command Change Object Label( Part 6 - F.50 ) ">
+	<Identification Standard="ISO 11783-6" Description="&lt;p&gt;This command is used by an ECU to change a label of an object. See also B.21 Object Label Reference List object.&lt;/p&gt;&#10;&#10;&lt;p&gt;Return values&lt;/p&gt;&#10;&#10;&lt;p&gt;iso_s16&lt;/p&gt;&#10;&#10;&lt;ul&gt;&#10;&#9;&lt;li&gt;&lt;span style=&quot;color:#0066cc&quot;&gt;E_NO_ERR&lt;/span&gt; - OK&lt;/li&gt;&#10;&#9;&lt;li&gt;&lt;span style=&quot;color:#0066cc&quot;&gt;E_OVERFLOW&lt;/span&gt; - buffer overflow&lt;/li&gt;&#10;&#9;&lt;li&gt;&lt;span style=&quot;color:#0066cc&quot;&gt;E_NOACT&lt;/span&gt; - Command not possible in current state&lt;/li&gt;&#10;&#9;&lt;li&gt;&lt;span style=&quot;color:#0066cc&quot;&gt;E_NO_INSTANCE&lt;/span&gt; - No VT client available&lt;/li&gt;&#10;&lt;/ul&gt;&#10;" >
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2022-07-08">
+	</VersionInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="Event" Comment="Service Initialization">
+				<With Var="u16ObjId"/>
+			</Event>
+			<Event Name="REQ" Type="Event" Comment="Service Request">
+				<With Var="u16ObjId"/>
+				<With Var="u16ObIdStringVar"/>
+				<With Var="u8FontType"/>
+				<With Var="u16ObIdGrafic"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="Event" Comment="Initialization Confirm">
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+				<With Var="STATUS"/>
+				<With Var="u16OldObIdStringVar"/>
+				<With Var="u8OldFontType"/>
+				<With Var="u16OldObIdGrafic"/>
+				<With Var="result"/>
+				<With Var="u16OldObIdStringVar"/>
+				<With Var="u8OldFontType"/>
+				<With Var="u16OldObIdGrafic"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID"/>
+			<VarDeclaration Name="u16ObIdStringVar" Type="UINT" Comment="Object ID of a String Variable object that contains the label string (32 characters maximum) or FFFF if no text is supplied"/>
+			<VarDeclaration Name="u8FontType" Type="USINT" Comment="Font type (ignored if String Variable object reference is NULL or the string contains a WideString ) "/>
+			<VarDeclaration Name="u16ObIdGrafic" Type="UINT" Comment="Object ID of an object to be used as a graphic representation of the object label or FFFF16 if no designator supplied"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="STATUS" Type="WSTRING" Comment="Service Status"/>
+			<VarDeclaration Name="u16OldObIdStringVar" Type="UINT" Comment="Old Object ID of a String Variable object that contains the label string (32 characters maximum) or FFFF if no text is supplied"/>
+			<VarDeclaration Name="u8OldFontType" Type="USINT" Comment="Old value for attribute "/>
+			<VarDeclaration Name="u16OldObIdGrafic" Type="UINT" Comment=""/>
+			<VarDeclaration Name="result" Type="INT" Comment="retval see description"/>
+		</OutputVars>
+	</InterfaceList>
+</FBType>

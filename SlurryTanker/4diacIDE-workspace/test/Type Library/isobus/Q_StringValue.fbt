@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="Q_StringValue" Comment="Command Change String Value ( Part 6 - F.24 ) ">
+	<Identification Standard="ISO 11783-6" Description="&lt;p&gt;This command sends a string to the VT. The length of the string including &amp;#39;\0&amp;#39; may not be longer than the define ISO_VTC_CMD_STR_MAX_LENGTH. Take care that &amp;#39;\0&amp;#39; is trailed.&lt;/p&gt;&#10;&#10;&lt;p&gt;Return values&lt;/p&gt;&#10;&#10;&lt;p&gt;iso_s16&lt;/p&gt;&#10;&#10;&lt;ul&gt;&#10;&#9;&lt;li&gt;&lt;span style=&quot;color:#0066cc&quot;&gt;E_NO_ERR&lt;/span&gt; - transport started&lt;/li&gt;&#10;&#9;&lt;li&gt;&lt;span style=&quot;color:#0066cc&quot;&gt;E_OVERFLOW&lt;/span&gt; - buffer overflow&lt;/li&gt;&#10;&#9;&lt;li&gt;&lt;span style=&quot;color:#0066cc&quot;&gt;E_NOACT&lt;/span&gt; - Command not possible in current state&lt;/li&gt;&#10;&#9;&lt;li&gt;&lt;span style=&quot;color:#0066cc&quot;&gt;E_NO_INSTANCE&lt;/span&gt; - No VT client available&lt;/li&gt;&#10;&lt;/ul&gt;&#10;" >
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2022-07-08">
+	</VersionInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="Event" Comment="Service Initialization">
+				<With Var="u16ObjId"/>
+			</Event>
+			<Event Name="REQ" Type="Event" Comment="Service Request">
+				<With Var="pau8String"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="Event" Comment="Initialization Confirm">
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+				<With Var="STATUS"/>
+				<With Var="pau8OldString"/>
+				<With Var="result"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID"/>
+			<VarDeclaration Name="pau8String" Type="STRING" Comment="Pointer to string"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="STATUS" Type="WSTRING" Comment="Service Status"/>
+			<VarDeclaration Name="pau8OldString" Type="STRING" Comment="Old pointer to string"/>
+			<VarDeclaration Name="result" Type="INT" Comment="retval see description"/>
+		</OutputVars>
+	</InterfaceList>
+</FBType>

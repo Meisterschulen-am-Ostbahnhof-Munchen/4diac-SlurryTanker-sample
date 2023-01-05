@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="Q_ChildPosition" Comment="Command change child position ( Part 6 - F.16 ) ">
+	<Identification Standard="ISO 11783-6" Description="&lt;p&gt;The Change Child Location command is used to change the absolute position of an object.&lt;/p&gt;&#10;&#10;&lt;p&gt;Return values&lt;/p&gt;&#10;&#10;&lt;p&gt;iso_s16&lt;/p&gt;&#10;&#10;&lt;ul&gt;&#10;&#9;&lt;li&gt;&lt;span style=&quot;color:#0066cc&quot;&gt;E_NO_ERR&lt;/span&gt; - OK&lt;/li&gt;&#10;&#9;&lt;li&gt;&lt;span style=&quot;color:#0066cc&quot;&gt;E_OVERFLOW&lt;/span&gt; - buffer overflow&lt;/li&gt;&#10;&#9;&lt;li&gt;&lt;span style=&quot;color:#0066cc&quot;&gt;E_NOACT&lt;/span&gt; - Command not possible in current state&lt;/li&gt;&#10;&#9;&lt;li&gt;&lt;span style=&quot;color:#0066cc&quot;&gt;E_NO_INSTANCE&lt;/span&gt; - No VT client available&lt;/li&gt;&#10;&lt;/ul&gt;&#10;" >
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2022-07-08">
+	</VersionInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="Event" Comment="Service Initialization">
+				<With Var="u16ObjId"/>
+			</Event>
+			<Event Name="REQ" Type="Event" Comment="Service Request">
+				<With Var="u16ObjIdParent"/>
+				<With Var="s16Xposition"/>
+				<With Var="s16Yposition"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="Event" Comment="Initialization Confirm">
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+				<With Var="STATUS"/>
+				<With Var="s16OldYposition"/>
+				<With Var="u16OldObjIdParent"/>
+				<With Var="s16OldXposition"/>
+				<With Var="result"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID"/>
+			<VarDeclaration Name="u16ObjIdParent" Type="UINT" Comment="Parent object ID"/>
+			<VarDeclaration Name="s16Xposition" Type="INT" Comment="New X position relative to the top left corner of parent object"/>
+			<VarDeclaration Name="s16Yposition" Type="INT" Comment="New Y position relative to the top left corner of parent object"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="STATUS" Type="WSTRING" Comment="Service Status"/>
+			<VarDeclaration Name="u16OldObjIdParent" Type="UINT" Comment="Old Parent object ID "/>
+			<VarDeclaration Name="s16OldXposition" Type="INT" Comment="Old X position relative to the top left corner of parent object"/>
+			<VarDeclaration Name="s16OldYposition" Type="INT" Comment="Old Y position relative to the top left corner of parent object"/>
+			<VarDeclaration Name="result" Type="INT" Comment="retval see description"/>
+		</OutputVars>
+	</InterfaceList>
+</FBType>
