@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="Q_EndPoint" Comment="Command change end point ( Part 6 - F.26 ) ">
+	<Identification Standard="ISO 11783-6" Description="&lt;p&gt;This command is used to change the end point of a line object by changing the width, height and/or line direction attributes.&lt;/p&gt;&#10;&#10;&lt;p&gt;Return values&lt;/p&gt;&#10;&#10;&lt;p&gt;iso_s16&lt;/p&gt;&#10;&#10;&lt;ul&gt;&#10;&#9;&lt;li&gt;&lt;span style=&quot;color:#0066cc&quot;&gt;E_NO_ERR&lt;/span&gt; - OK&lt;/li&gt;&#10;&#9;&lt;li&gt;&lt;span style=&quot;color:#0066cc&quot;&gt;E_OVERFLOW&lt;/span&gt; - buffer overflow&lt;/li&gt;&#10;&#9;&lt;li&gt;&lt;span style=&quot;color:#0066cc&quot;&gt;E_NOACT&lt;/span&gt; - Command not possible in current state&lt;/li&gt;&#10;&#9;&lt;li&gt;&lt;span style=&quot;color:#0066cc&quot;&gt;E_NO_INSTANCE&lt;/span&gt; - No VT client available&lt;/li&gt;&#10;&lt;/ul&gt;&#10;&#10;" >
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2022-07-08">
+	</VersionInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="Event" Comment="Service Initialization">
+				<With Var="u16ObjId"/>
+			</Event>
+			<Event Name="REQ" Type="Event" Comment="Service Request">
+				<With Var="u16Width"/>
+				<With Var="u16Height"/>
+				<With Var="u8LineDirection"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="Event" Comment="Initialization Confirm">
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+				<With Var="STATUS"/>
+				<With Var="u8OldLineDirection"/>
+				<With Var="u16OldWidth"/>
+				<With Var="u16OldHeight"/>
+				<With Var="s16result"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID"/>
+			<VarDeclaration Name="u16Width" Type="UINT" Comment="X value of end point "/>
+			<VarDeclaration Name="u16Height" Type="UINT" Comment="Y value of end point"/>
+			<VarDeclaration Name="u8LineDirection" Type="USINT" Comment="Line direction see Part 6 - B.27"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="STATUS" Type="WSTRING" Comment="Service Status"/>
+			<VarDeclaration Name="u16OldWidth" Type="UINT" Comment="Old X value of end point "/>
+			<VarDeclaration Name="u16OldHeight" Type="UINT" Comment="Old Y value of end point"/>
+			<VarDeclaration Name="u8OldLineDirection" Type="USINT" Comment="Old line direction see Part 6 - B.27"/>
+			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description"/>
+		</OutputVars>
+	</InterfaceList>
+	<Attribute Name="Documentation" Type="WSTRING"><![CDATA[<p>This command is used to change the end point of a line object by changing the width, height and/or line direction attributes.</p>
+
+<p>Return values</p>
+
+<p>iso_s16</p>
+
+<ul>
+	<li><span style="color:#0066cc">E_NO_ERR</span> - OK</li>
+	<li><span style="color:#0066cc">E_OVERFLOW</span> - buffer overflow</li>
+	<li><span style="color:#0066cc">E_NOACT</span> - Command not possible in current state</li>
+	<li><span style="color:#0066cc">E_NO_INSTANCE</span> - No VT client available</li>
+</ul>
+]]></Attribute>
+</FBType>

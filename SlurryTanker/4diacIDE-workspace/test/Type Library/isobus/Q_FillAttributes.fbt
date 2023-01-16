@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="Q_FillAttributes" Comment="Command change fill attributes ( Part 6 - F.32 ) ">
+	<Identification Standard="ISO 11783-6" Description="&lt;p&gt;This command is used to change the fill attributes in a fill attributes object.&lt;/p&gt;&#10;&#10;&lt;p&gt;Return values&lt;/p&gt;&#10;&#10;&lt;p&gt;iso_s16&lt;/p&gt;&#10;&#10;&lt;ul&gt;&#10;&#9;&lt;li&gt;&lt;span style=&quot;color:#0066cc&quot;&gt;E_NO_ERR&lt;/span&gt; - OK&lt;/li&gt;&#10;&#9;&lt;li&gt;&lt;span style=&quot;color:#0066cc&quot;&gt;E_OVERFLOW&lt;/span&gt; - buffer overflow&lt;/li&gt;&#10;&#9;&lt;li&gt;&lt;span style=&quot;color:#0066cc&quot;&gt;E_NOACT&lt;/span&gt; - Command not possible in current state&lt;/li&gt;&#10;&#9;&lt;li&gt;&lt;span style=&quot;color:#0066cc&quot;&gt;E_NO_INSTANCE&lt;/span&gt; - No VT client available&lt;/li&gt;&#10;&lt;/ul&gt;&#10;&#10;" >
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2022-07-08">
+	</VersionInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="Event" Comment="Service Initialization">
+				<With Var="u16ObjId"/>
+			</Event>
+			<Event Name="REQ" Type="Event" Comment="Service Request">
+				<With Var="u8FillType"/>
+				<With Var="u8FillColour"/>
+				<With Var="u16FillPatternId"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="Event" Comment="Initialization Confirm">
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+				<With Var="STATUS"/>
+				<With Var="u16OldFillPatternId"/>
+				<With Var="u8OldFillType"/>
+				<With Var="u8OldFillColour"/>
+				<With Var="s16result"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID"/>
+			<VarDeclaration Name="u8FillType" Type="USINT" Comment="New fill type (see Part 6 - B.14.4) "/>
+			<VarDeclaration Name="u8FillColour" Type="USINT" Comment="New fill colour (see Part 6 - B.14.4) "/>
+			<VarDeclaration Name="u16FillPatternId" Type="UINT" Comment="New fill pattern (see Part 6 - B.14.4) "/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="STATUS" Type="WSTRING" Comment="Service Status"/>
+			<VarDeclaration Name="u8OldFillType" Type="USINT" Comment="Old fill type (see Part 6 - B.14.4) "/>
+			<VarDeclaration Name="u8OldFillColour" Type="USINT" Comment="Old fill colour (see Part 6 - B.14.4) "/>
+			<VarDeclaration Name="u16OldFillPatternId" Type="UINT" Comment="Old fill pattern (see Part 6 - B.14.4) "/>
+			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description"/>
+		</OutputVars>
+	</InterfaceList>
+	<Attribute Name="Documentation" Type="WSTRING"><![CDATA[<p>This command is used to change the fill attributes in a fill attributes object.</p>
+
+<p>Return values</p>
+
+<p>iso_s16</p>
+
+<ul>
+	<li><span style="color:#0066cc">E_NO_ERR</span> - OK</li>
+	<li><span style="color:#0066cc">E_OVERFLOW</span> - buffer overflow</li>
+	<li><span style="color:#0066cc">E_NOACT</span> - Command not possible in current state</li>
+	<li><span style="color:#0066cc">E_NO_INSTANCE</span> - No VT client available</li>
+</ul>
+]]></Attribute>
+</FBType>

@@ -12,14 +12,14 @@
       <Event Comment="" Name="STOP" Type="Event"/>
     </EventInputs>
     <EventOutputs>
-      <Event Comment="" Name="EO0" Type="Event"/>
+      <Event Comment="N events at periods DT, starting at DT[0] after START" Name="EO0" Type="Event"/>
       <Event Comment="" Name="EO1" Type="Event"/>
       <Event Comment="" Name="EO2" Type="Event"/>
       <Event Comment="" Name="EO3" Type="Event"/>
     </EventOutputs>
     <InputVars>
-      <VarDeclaration Comment="" Name="DT" Type="TIME"/>
-      <VarDeclaration Comment="" Name="N" Type="UINT"/>
+      <VarDeclaration Comment="Periods between events" Name="DT" Type="TIME"/>
+      <VarDeclaration Comment="Number of events to generate" Name="N" Type="UINT"/>
     </InputVars>
     <OutputVars/>
   </InterfaceList>
