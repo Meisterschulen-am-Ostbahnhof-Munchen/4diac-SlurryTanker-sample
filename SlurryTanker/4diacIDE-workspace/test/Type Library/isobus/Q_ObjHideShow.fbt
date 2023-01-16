@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FBType Name="Q_ObjHideShow" Comment="Command Hide/Show Object (Container) ( Part 6 - F.2 )">
-	<Identification Standard="ISO 11783-6" Description="&lt;p&gt;This command is used to change the value of an object. It applies only to objects that have a numeric value attribute.&lt;/p&gt;&#10;&#10;&lt;p&gt;Return values&lt;/p&gt;&#10;&#10;&lt;p&gt;iso_s16&lt;/p&gt;&#10;&#10;&lt;ul&gt;&#10;&#9;&lt;li&gt;E_NO_ERR - OK&lt;/li&gt;&#10;&#9;&lt;li&gt;E_OVERFLOW - buffer overflow&lt;/li&gt;&#10;&#9;&lt;li&gt;E_NOACT - Command not possible in current state&lt;/li&gt;&#10;&#9;&lt;li&gt;E_NO_INSTANCE - No VT client available&lt;/li&gt;&#10;&lt;/ul&gt;&#10;" >
+	<Identification Standard="ISO 11783-6" Description="&lt;p&gt;This command is used to change the value of an object. It applies only to objects that have a numeric value attribute.&lt;/p&gt;&#10;&#10;&lt;p&gt;Return values&lt;/p&gt;&#10;&#10;&lt;p&gt;iso_s16&lt;/p&gt;&#10;&#10;&lt;ul&gt;&#10;&#9;&lt;li&gt;E_NO_ERR - OK&lt;/li&gt;&#10;&#9;&lt;li&gt;E_OVERFLOW - buffer overflow&lt;/li&gt;&#10;&#9;&lt;li&gt;E_NOACT - Command not possible in current state&lt;/li&gt;&#10;&#9;&lt;li&gt;E_NO_INSTANCE - No VT client available&lt;/li&gt;&#10;&lt;/ul&gt;&#10;&#10;" >
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2022-07-08">
 	</VersionInfo>
@@ -19,7 +19,7 @@
 			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
 				<With Var="STATUS"/>
 				<With Var="qOldVisible"/>
-				<With Var="result"/>
+				<With Var="s16result"/>
 			</Event>
 		</EventOutputs>
 		<InputVars>
@@ -29,7 +29,20 @@
 		<OutputVars>
 			<VarDeclaration Name="STATUS" Type="WSTRING" Comment="Service Status"/>
 			<VarDeclaration Name="qOldVisible" Type="BOOL" Comment="Old value of Visible"/>
-			<VarDeclaration Name="result" Type="INT" Comment="retval see description"/>
+			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description"/>
 		</OutputVars>
 	</InterfaceList>
+	<Attribute Name="Documentation" Type="WSTRING"><![CDATA[<p>This command is used to change the value of an object. It applies only to objects that have a numeric value attribute.</p>
+
+<p>Return values</p>
+
+<p>iso_s16</p>
+
+<ul>
+	<li>E_NO_ERR - OK</li>
+	<li>E_OVERFLOW - buffer overflow</li>
+	<li>E_NOACT - Command not possible in current state</li>
+	<li>E_NO_INSTANCE - No VT client available</li>
+</ul>
+]]></Attribute>
 </FBType>

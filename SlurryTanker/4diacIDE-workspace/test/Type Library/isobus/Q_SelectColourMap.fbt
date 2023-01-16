@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="Q_SelectColourMap" Comment="Command Select Colour Map ( VT version 4 and later ) ( Part 6 - F.60 ) ">
+	<Identification Standard="ISO 11783-6" Description="&lt;p&gt;The Select Colour Map command is used to select the active Colour Map. This command can take a long time to execute. The command applies to any presentation from the originating Working Set, which includes objects that may be shown on other Working Set screens (e.g. Auxiliary Control objects as may be presented on VT proprietary and other Working Set masks using the Auxiliary Control Designator Type 2 Object Pointer).&lt;/p&gt;
+&#10;
+&#10;&lt;p&gt;Return values&lt;/p&gt;
+&#10;
+&#10;&lt;p&gt;iso_s16&lt;/p&gt;
+&#10;
+&#10;&lt;ul&gt;
+&#10;&#9;&lt;li&gt;&lt;span style=&quot;color:#0066cc&quot;&gt;E_NO_ERR&lt;/span&gt; - OK&lt;/li&gt;
+&#10;&#9;&lt;li&gt;&lt;span style=&quot;color:#0066cc&quot;&gt;E_OVERFLOW&lt;/span&gt; - buffer overflow&lt;/li&gt;
+&#10;&#9;&lt;li&gt;&lt;span style=&quot;color:#0066cc&quot;&gt;E_NOACT&lt;/span&gt; - Command not possible in current state&lt;/li&gt;
+&#10;&#9;&lt;li&gt;&lt;span style=&quot;color:#0066cc&quot;&gt;E_NO_INSTANCE&lt;/span&gt; - No VT client available&lt;/li&gt;
+&#10;&lt;/ul&gt;
+&#10;
+&#10;" >
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2022-07-08">
+	</VersionInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event" Comment="Service Request">
+				<With Var="u16ObjIdColourMap"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+				<With Var="STATUS"/>
+				<With Var="s16result"/>
+				<With Var="u16OldObjIdColourMap"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="u16ObjIdColourMap" Type="UINT" Comment="Object ID of Colour map object or FFFF to restore the default colour table (see A.3) "/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="STATUS" Type="WSTRING" Comment="Service Status"/>
+			<VarDeclaration Name="u16OldObjIdColourMap" Type="UINT" Comment="Old object ID of Colour map object or FFFF to restore the default colour table (see A.3) "/>
+			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description"/>
+		</OutputVars>
+	</InterfaceList>
+	<Attribute Name="Documentation" Type="WSTRING"><![CDATA[<p>The Select Colour Map command is used to select the active Colour Map. This command can take a long time to execute. The command applies to any presentation from the originating Working Set, which includes objects that may be shown on other Working Set screens (e.g. Auxiliary Control objects as may be presented on VT proprietary and other Working Set masks using the Auxiliary Control Designator Type 2 Object Pointer).</p>
+
+<p>Return values</p>
+
+<p>iso_s16</p>
+
+<ul>
+	<li><span style="color:#0066cc">E_NO_ERR</span> - OK</li>
+	<li><span style="color:#0066cc">E_OVERFLOW</span> - buffer overflow</li>
+	<li><span style="color:#0066cc">E_NOACT</span> - Command not possible in current state</li>
+	<li><span style="color:#0066cc">E_NO_INSTANCE</span> - No VT client available</li>
+</ul>
+]]></Attribute>
+</FBType>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="Q_ListItem" Comment="Command change list item ( Part 6 - F.42 ) ">
+	<Identification Standard="ISO 11783-6" Description="&lt;p&gt;This command is used to change a list item in a list input object.&lt;/p&gt;&#10;&#10;&lt;p&gt;Return values&lt;/p&gt;&#10;&#10;&lt;p&gt;iso_s16&lt;/p&gt;&#10;&#10;&lt;ul&gt;&#10;&#9;&lt;li&gt;&lt;span style=&quot;color:#0066cc&quot;&gt;E_NO_ERR&lt;/span&gt; - OK&lt;/li&gt;&#10;&#9;&lt;li&gt;&lt;span style=&quot;color:#0066cc&quot;&gt;E_OVERFLOW&lt;/span&gt; - buffer overflow&lt;/li&gt;&#10;&#9;&lt;li&gt;&lt;span style=&quot;color:#0066cc&quot;&gt;E_NOACT&lt;/span&gt; - Command not possible in current state&lt;/li&gt;&#10;&#9;&lt;li&gt;&lt;span style=&quot;color:#0066cc&quot;&gt;E_NO_INSTANCE&lt;/span&gt; - No VT client available&lt;/li&gt;&#10;&lt;/ul&gt;&#10;&#10;" >
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2022-07-08">
+	</VersionInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="Event" Comment="Service Initialization">
+				<With Var="u16ObjId"/>
+			</Event>
+			<Event Name="REQ" Type="Event" Comment="Service Request">
+				<With Var="u8ListIndex"/>
+				<With Var="u16NewObjId"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="Event" Comment="Initialization Confirm">
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+				<With Var="STATUS"/>
+				<With Var="s16result"/>
+				<With Var="u8OldListIndex"/>
+				<With Var="u16OldObjId"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID"/>
+			<VarDeclaration Name="u8ListIndex" Type="USINT" Comment="List index (-&amp;gt; see list) "/>
+			<VarDeclaration Name="u16NewObjId" Type="UINT" Comment="New object ID or 0xFFFF to set empty "/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="STATUS" Type="WSTRING" Comment="Service Status"/>
+			<VarDeclaration Name="u8OldListIndex" Type="USINT" Comment="Old list index (-&amp;gt; see list) "/>
+			<VarDeclaration Name="u16OldObjId" Type="UINT" Comment="Old object ID or 0xFFFF to set empty "/>
+			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description"/>
+		</OutputVars>
+	</InterfaceList>
+	<Attribute Name="Documentation" Type="WSTRING"><![CDATA[<p>This command is used to change a list item in a list input object.</p>
+
+<p>Return values</p>
+
+<p>iso_s16</p>
+
+<ul>
+	<li><span style="color:#0066cc">E_NO_ERR</span> - OK</li>
+	<li><span style="color:#0066cc">E_OVERFLOW</span> - buffer overflow</li>
+	<li><span style="color:#0066cc">E_NOACT</span> - Command not possible in current state</li>
+	<li><span style="color:#0066cc">E_NO_INSTANCE</span> - No VT client available</li>
+</ul>
+]]></Attribute>
+</FBType>
