@@ -29,19 +29,19 @@
 		</OutputVars>
 	</InterfaceList>
 	<FBNetwork>
-		<FB Name="E_DELAY" Type="E_DELAY" Comment="" x="-800.0" y="-893.75">
+		<FB Name="E_DELAY" Type="E_DELAY" Comment="" x="-470.5882352941176" y="-941.1764705882352">
 		</FB>
-		<FB Name="E_SR" Type="E_SR" Comment="" x="318.75" y="-1000.0">
+		<FB Name="E_SR" Type="E_SR" Comment="" x="705.8823529411765" y="-941.1764705882352">
 		</FB>
 		<EventConnections>
-			<Connection Source="REQ" Destination="E_DELAY.START" Comment="" dx1="381.25"/>
-			<Connection Source="REQ" Destination="E_SR.S" Comment="" dx1="1125.0"/>
-			<Connection Source="E_DELAY.EO" Destination="E_SR.R" Comment=""/>
-			<Connection Source="E_SR.EO" Destination="CNF" Comment="" dx1="1475.0"/>
+			<Connection Source="REQ" Destination="E_DELAY.START" Comment="" dx1="376.4705882352941"/>
+			<Connection Source="REQ" Destination="E_SR.S" Comment="" dx1="1741.1764705882351"/>
+			<Connection Source="E_DELAY.EO" Destination="E_SR.R" Comment="" dx1="270.5882352941176"/>
+			<Connection Source="E_SR.EO" Destination="CNF" Comment="" dx1="1470.5882352941176"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="TM" Destination="E_DELAY.DT" Comment="" dx1="225.0"/>
-			<Connection Source="E_SR.Q" Destination="QO" Comment="" dx1="1475.0"/>
+			<Connection Source="TM" Destination="E_DELAY.DT" Comment="" dx1="223.52941176470586"/>
+			<Connection Source="E_SR.Q" Destination="QO" Comment="" dx1="1470.5882352941176"/>
 		</DataConnections>
 	</FBNetwork>
 </FBType>
