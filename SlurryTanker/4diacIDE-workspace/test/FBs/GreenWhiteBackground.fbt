@@ -35,7 +35,7 @@
 			<VarDeclaration Name="STATUS" Type="WSTRING" Comment="Service Status">
 				<Attribute Name="YPOSITION" Type="STRING" Value="19"/>
 			</VarDeclaration>
-			<VarDeclaration Name="u8OldColour" Type="SINT" Comment="Old value of ID">
+			<VarDeclaration Name="u8OldColour" Type="USINT" Comment="Old value of ID">
 				<Attribute Name="YPOSITION" Type="STRING" Value="0"/>
 			</VarDeclaration>
 			<VarDeclaration Name="result" Type="INT" Comment="retval see description">
@@ -46,11 +46,11 @@
 	<FBNetwork>
 		<FB Name="COLOR_GREEN_I" Type="COLOR_GREEN" Comment="" x="-705.8823529411765" y="1176.4705882352941">
 		</FB>
-		<FB Name="F_SEL_I" Type="F_SEL" Comment="" x="576.470588235294" y="341.17647058823525">
-		</FB>
-		<FB Name="Q_BackgroundColour_I" Type="Q_BackgroundColour" Comment="" x="1599.9999999999998" y="235.2941176470588">
+		<FB Name="F_SEL_I" Type="F_SEL" Comment="" x="570.5882352941176" y="335.2941176470588">
 		</FB>
 		<FB Name="COLOR_WHITE_I" Type="COLOR_WHITE" Comment="" x="-705.8823529411765" y="705.8823529411765">
+		</FB>
+		<FB Name="Q_BackgroundColour_I" Type="Q_BackgroundColour" Comment="" x="1599.9999999999998" y="235.2941176470588">
 		</FB>
 		<EventConnections>
 			<Connection Source="REQ" Destination="F_SEL_I.REQ" Comment="" dx1="1382.3529411764705"/>
@@ -62,10 +62,12 @@
 		<DataConnections>
 			<Connection Source="COLOR_GREEN_I.u8Colour" Destination="F_SEL_I.IN1" Comment="" dx1="323.52941176470586"/>
 			<Connection Source="DI1" Destination="F_SEL_I.G" Comment="" dx1="911.7647058823529"/>
+			<Connection Source="COLOR_WHITE_I.u8Colour" Destination="F_SEL_I.IN0" Comment="" dx1="258.8235294117647"/>
 			<Connection Source="u16ObjId" Destination="Q_BackgroundColour_I.u16ObjId" Comment="" dx1="376.4705882352941" dx2="376.4705882352941" dy="1882.3529411764705"/>
 			<Connection Source="F_SEL_I.OUT" Destination="Q_BackgroundColour_I.u8Colour" Comment="" dx1="123.52941176470587" dx2="123.52941176470587" dy="0.0"/>
-			<Connection Source="COLOR_WHITE_I.u8Colour" Destination="F_SEL_I.IN0" Comment="" dx1="258.8235294117647"/>
-			<Connection Source="Q_BackgroundColour_I.s16result" Destination="result" Comment="" dx1="405.88235294117646"/>
+			<Connection Source="Q_BackgroundColour_I.STATUS" Destination="STATUS" Comment="" dx1="411.7647058823529" dx2="411.7647058823529" dy="0.0"/>
+			<Connection Source="Q_BackgroundColour_I.s16result" Destination="result" Comment="" dx1="405.88235294117646" dx2="405.88235294117646" dy="0.0"/>
+			<Connection Source="Q_BackgroundColour_I.u8OldColour" Destination="u8OldColour" Comment="" dx1="411.7647058823529"/>
 		</DataConnections>
 	</FBNetwork>
 </FBType>
