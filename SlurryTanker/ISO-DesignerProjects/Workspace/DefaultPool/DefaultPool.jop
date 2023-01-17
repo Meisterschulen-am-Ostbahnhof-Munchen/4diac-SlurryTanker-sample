@@ -1325,7 +1325,7 @@
 				<Object JVS-ID="23000"/>
 			</Objects>
 		</Object>
-		<Object Class="CImage" Name="Image" ObjectName="workingset_20000" Pinned="FALSE" JVS-ID="20000">
+		<Object Class="CImage" Name="Image" ObjectName="workingset_pic" Pinned="FALSE" JVS-ID="20500">
 			<PropertySheet Name="Image">
 				<Property Name="Path">
 					<Value>
@@ -1390,7 +1390,7 @@
 				</Property>
 			</PropertySheet>
 		</Object>
-		<Object Class="CImage" Name="Image" ObjectName="Automatik_ein_20001" Pinned="FALSE" JVS-ID="20001">
+		<Object Class="CImage" Name="Image" ObjectName="Automatik_ein" Pinned="FALSE" JVS-ID="20501">
 			<PropertySheet Name="Image">
 				<Property Name="Path">
 					<Value>
@@ -1455,7 +1455,7 @@
 				</Property>
 			</PropertySheet>
 		</Object>
-		<Object Class="CImage" Name="Image" ObjectName="Automatik_aus_20002" Pinned="FALSE" JVS-ID="20002">
+		<Object Class="CImage" Name="Image" ObjectName="Automatik_aus" Pinned="FALSE" JVS-ID="20502">
 			<PropertySheet Name="Image">
 				<Property Name="Path">
 					<Value>
@@ -1520,7 +1520,7 @@
 				</Property>
 			</PropertySheet>
 		</Object>
-		<Object Class="CImage" Name="Image" ObjectName="Einfuelldom_20003" Pinned="FALSE" JVS-ID="20003">
+		<Object Class="CImage" Name="Image" ObjectName="Einfuelldom" Pinned="FALSE" JVS-ID="20503">
 			<PropertySheet Name="Image">
 				<Property Name="Path">
 					<Value>
@@ -1585,7 +1585,7 @@
 				</Property>
 			</PropertySheet>
 		</Object>
-		<Object Class="CImage" Name="Image" ObjectName="EXACUT_20004" Pinned="FALSE" JVS-ID="20004">
+		<Object Class="CImage" Name="Image" ObjectName="EXACUT" Pinned="FALSE" JVS-ID="20504">
 			<PropertySheet Name="Image">
 				<Property Name="Path">
 					<Value>
@@ -1650,7 +1650,7 @@
 				</Property>
 			</PropertySheet>
 		</Object>
-		<Object Class="CImage" Name="Image" ObjectName="Seitenschieber_20005" Pinned="FALSE" JVS-ID="20005">
+		<Object Class="CImage" Name="Image" ObjectName="Seitenschieber" Pinned="FALSE" JVS-ID="20505">
 			<PropertySheet Name="Image">
 				<Property Name="Path">
 					<Value>
@@ -1715,7 +1715,7 @@
 				</Property>
 			</PropertySheet>
 		</Object>
-		<Object Class="CImage" Name="Image" ObjectName="Heckschieber_20006" Pinned="FALSE" JVS-ID="20006">
+		<Object Class="CImage" Name="Image" ObjectName="Heckschieber" Pinned="FALSE" JVS-ID="20506">
 			<PropertySheet Name="Image">
 				<Property Name="Path">
 					<Value>
@@ -1780,7 +1780,7 @@
 				</Property>
 			</PropertySheet>
 		</Object>
-		<Object Class="CImage" Name="Image" ObjectName="zusammenklappen_20007" Pinned="FALSE" JVS-ID="20007">
+		<Object Class="CImage" Name="Image" ObjectName="zusammenklappen" Pinned="FALSE" JVS-ID="20507">
 			<PropertySheet Name="Image">
 				<Property Name="Path">
 					<Value>
@@ -1845,7 +1845,7 @@
 				</Property>
 			</PropertySheet>
 		</Object>
-		<Object Class="CImage" Name="Image" ObjectName="auseinanderklappen_20008" Pinned="FALSE" JVS-ID="20008">
+		<Object Class="CImage" Name="Image" ObjectName="auseinanderklappen" Pinned="FALSE" JVS-ID="20508">
 			<PropertySheet Name="Image">
 				<Property Name="Path">
 					<Value>
@@ -1910,7 +1910,7 @@
 				</Property>
 			</PropertySheet>
 		</Object>
-		<Object Class="CImage" Name="Image" ObjectName="Verteiler_heben_20009" Pinned="FALSE" JVS-ID="20009">
+		<Object Class="CImage" Name="Image" ObjectName="Verteiler_heben" Pinned="FALSE" JVS-ID="20509">
 			<PropertySheet Name="Image">
 				<Property Name="Path">
 					<Value>
@@ -1975,7 +1975,7 @@
 				</Property>
 			</PropertySheet>
 		</Object>
-		<Object Class="CImage" Name="Image" ObjectName="Verteiler_senken_20010" Pinned="FALSE" JVS-ID="20010">
+		<Object Class="CImage" Name="Image" ObjectName="Verteiler_senken" Pinned="FALSE" JVS-ID="20510">
 			<PropertySheet Name="Image">
 				<Property Name="Path">
 					<Value>
@@ -2040,7 +2040,7 @@
 				</Property>
 			</PropertySheet>
 		</Object>
-		<Object Class="CImage" Name="Image" ObjectName="Knickdeichsel_heben_20011" Pinned="FALSE" JVS-ID="20011">
+		<Object Class="CImage" Name="Image" ObjectName="Knickdeichsel_heben" Pinned="FALSE" JVS-ID="20511">
 			<PropertySheet Name="Image">
 				<Property Name="Path">
 					<Value>
@@ -2105,7 +2105,7 @@
 				</Property>
 			</PropertySheet>
 		</Object>
-		<Object Class="CImage" Name="Image" ObjectName="Knickdeichsel_senken_20012" Pinned="FALSE" JVS-ID="20012">
+		<Object Class="CImage" Name="Image" ObjectName="Knickdeichsel_senken" Pinned="FALSE" JVS-ID="20512">
 			<PropertySheet Name="Image">
 				<Property Name="Path">
 					<Value>
@@ -2170,7 +2170,7 @@
 				</Property>
 			</PropertySheet>
 		</Object>
-		<Object Class="CImage" Name="Image" ObjectName="lightbulb_20013" Pinned="FALSE" JVS-ID="20013">
+		<Object Class="CImage" Name="Image" ObjectName="lightbulb" Pinned="FALSE" JVS-ID="20513">
 			<PropertySheet Name="Image">
 				<Property Name="Path">
 					<Value>
@@ -2235,7 +2235,7 @@
 				</Property>
 			</PropertySheet>
 		</Object>
-		<Object Class="CImage" Name="Image" ObjectName="trash_icon_20014" Pinned="FALSE" JVS-ID="20014">
+		<Object Class="CImage" Name="Image" ObjectName="trash_icon" Pinned="FALSE" JVS-ID="20514">
 			<PropertySheet Name="Image">
 				<Property Name="Path">
 					<Value>
@@ -2300,7 +2300,7 @@
 				</Property>
 			</PropertySheet>
 		</Object>
-		<Object Class="CImage" Name="Image" ObjectName="Logos_Large_Icons_icon_20015" Pinned="FALSE" JVS-ID="20015">
+		<Object Class="CImage" Name="Image" ObjectName="Logos_Large_Icons_icon" Pinned="FALSE" JVS-ID="20515">
 			<PropertySheet Name="Image">
 				<Property Name="Path">
 					<Value>
@@ -2438,7 +2438,7 @@
 				</Property>
 			</PropertySheet>
 			<Objects>
-				<Object JVS-ID="20001"/>
+				<Object JVS-ID="20501"/>
 			</Objects>
 		</Object>
 		<Object Class="CProxy" Name="Image_1" ObjectName="" Pinned="FALSE" JVS-ID="4194305">
@@ -2460,7 +2460,7 @@
 				</Property>
 			</PropertySheet>
 			<Objects>
-				<Object JVS-ID="20002"/>
+				<Object JVS-ID="20502"/>
 			</Objects>
 		</Object>
 		<Object Class="CProxy" Name="Image_1" ObjectName="" Pinned="FALSE" JVS-ID="4194306">
@@ -2482,7 +2482,7 @@
 				</Property>
 			</PropertySheet>
 			<Objects>
-				<Object JVS-ID="20003"/>
+				<Object JVS-ID="20503"/>
 			</Objects>
 		</Object>
 		<Object Class="CProxy" Name="Image_1" ObjectName="" Pinned="FALSE" JVS-ID="4194307">
@@ -2504,7 +2504,7 @@
 				</Property>
 			</PropertySheet>
 			<Objects>
-				<Object JVS-ID="20004"/>
+				<Object JVS-ID="20504"/>
 			</Objects>
 		</Object>
 		<Object Class="CProxy" Name="Image_1" ObjectName="" Pinned="FALSE" JVS-ID="4194308">
@@ -2526,7 +2526,7 @@
 				</Property>
 			</PropertySheet>
 			<Objects>
-				<Object JVS-ID="20005"/>
+				<Object JVS-ID="20505"/>
 			</Objects>
 		</Object>
 		<Object Class="CProxy" Name="Image_1" ObjectName="" Pinned="FALSE" JVS-ID="4194309">
@@ -2548,7 +2548,7 @@
 				</Property>
 			</PropertySheet>
 			<Objects>
-				<Object JVS-ID="20006"/>
+				<Object JVS-ID="20506"/>
 			</Objects>
 		</Object>
 		<Object Class="CProxy" Name="Image_1" ObjectName="" Pinned="FALSE" JVS-ID="4194310">
@@ -2570,7 +2570,7 @@
 				</Property>
 			</PropertySheet>
 			<Objects>
-				<Object JVS-ID="20007"/>
+				<Object JVS-ID="20507"/>
 			</Objects>
 		</Object>
 		<Object Class="CProxy" Name="Image_1" ObjectName="" Pinned="FALSE" JVS-ID="4194311">
@@ -2592,7 +2592,7 @@
 				</Property>
 			</PropertySheet>
 			<Objects>
-				<Object JVS-ID="20008"/>
+				<Object JVS-ID="20508"/>
 			</Objects>
 		</Object>
 		<Object Class="CProxy" Name="Image_1" ObjectName="" Pinned="FALSE" JVS-ID="4194312">
@@ -2614,7 +2614,7 @@
 				</Property>
 			</PropertySheet>
 			<Objects>
-				<Object JVS-ID="20009"/>
+				<Object JVS-ID="20509"/>
 			</Objects>
 		</Object>
 		<Object Class="CProxy" Name="Image_1" ObjectName="" Pinned="FALSE" JVS-ID="4194313">
@@ -2636,7 +2636,7 @@
 				</Property>
 			</PropertySheet>
 			<Objects>
-				<Object JVS-ID="20010"/>
+				<Object JVS-ID="20510"/>
 			</Objects>
 		</Object>
 		<Object Class="CProxy" Name="Image_1" ObjectName="" Pinned="FALSE" JVS-ID="4194314">
@@ -2658,7 +2658,7 @@
 				</Property>
 			</PropertySheet>
 			<Objects>
-				<Object JVS-ID="20011"/>
+				<Object JVS-ID="20511"/>
 			</Objects>
 		</Object>
 		<Object Class="CProxy" Name="Image_1" ObjectName="" Pinned="FALSE" JVS-ID="4194315">
@@ -2680,7 +2680,7 @@
 				</Property>
 			</PropertySheet>
 			<Objects>
-				<Object JVS-ID="20012"/>
+				<Object JVS-ID="20512"/>
 			</Objects>
 		</Object>
 		<Object Class="CProxy" Name="Image_1" ObjectName="" Pinned="FALSE" JVS-ID="4194316">
@@ -2702,7 +2702,7 @@
 				</Property>
 			</PropertySheet>
 			<Objects>
-				<Object JVS-ID="20015"/>
+				<Object JVS-ID="20515"/>
 			</Objects>
 		</Object>
 		<Object Class="CProxy" Name="Image_1" ObjectName="" Pinned="FALSE" JVS-ID="4194318">
@@ -2724,7 +2724,7 @@
 				</Property>
 			</PropertySheet>
 			<Objects>
-				<Object JVS-ID="20013"/>
+				<Object JVS-ID="20513"/>
 			</Objects>
 		</Object>
 		<Object Class="CProxy" Name="Image_1" ObjectName="" Pinned="FALSE" JVS-ID="4194319">
@@ -2746,7 +2746,7 @@
 				</Property>
 			</PropertySheet>
 			<Objects>
-				<Object JVS-ID="20014"/>
+				<Object JVS-ID="20514"/>
 			</Objects>
 		</Object>
 		<Object Class="CProxy" Name="Text" ObjectName="" Pinned="FALSE" JVS-ID="4194321">
