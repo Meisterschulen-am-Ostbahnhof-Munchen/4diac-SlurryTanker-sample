@@ -56,6 +56,8 @@
 #define Knickdeichsel_senken              20512
 #define lightbulb                         20513
 #define trash_icon                        20514
+#define nr1                               20524
+#define nr2                               20525
 #define FontAttributes_23000              23000
 #define AuxFunction2_31000                31000
 #define AuxFunction2_31001                31001
@@ -71,3 +73,5 @@
 #define AuxFunction2_31011                31011
 #define AuxFunction2_31015                31015
 #define AuxFunction2_31016                31016
+#define AuxFunction2_31024                31024
+#define AuxFunction2_31025                31025

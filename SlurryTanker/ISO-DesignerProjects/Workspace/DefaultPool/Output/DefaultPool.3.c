@@ -54,19 +54,23 @@ const unsigned long ISO_OP_MEMORY_CLASS isoOP_DefaultPool_Offset_Id[] = {
 	  7834,  // Knickdeichsel_senken_Offset
 	  8377,  // lightbulb_Offset
 	  8876,  // trash_icon_Offset
-	  9541,  // FontAttributes_23000_Offset
-	  9549,  // AuxFunction2_31000_Offset
-	  9561,  // AuxFunction2_31001_Offset
-	  9573,  // AuxFunction2_31002_Offset
-	  9585,  // AuxFunction2_31003_Offset
-	  9597,  // AuxFunction2_31004_Offset
-	  9609,  // AuxFunction2_31005_Offset
-	  9621,  // AuxFunction2_31006_Offset
-	  9633,  // AuxFunction2_31007_Offset
-	  9645,  // AuxFunction2_31008_Offset
-	  9657,  // AuxFunction2_31009_Offset
-	  9669,  // AuxFunction2_31010_Offset
-	  9681,  // AuxFunction2_31011_Offset
-	  9693,  // AuxFunction2_31015_Offset
-	  9705,  // AuxFunction2_31016_Offset
+	  9541,  // nr1_Offset
+	  9942,  // nr2_Offset
+	 10371,  // FontAttributes_23000_Offset
+	 10379,  // AuxFunction2_31000_Offset
+	 10391,  // AuxFunction2_31001_Offset
+	 10403,  // AuxFunction2_31002_Offset
+	 10415,  // AuxFunction2_31003_Offset
+	 10427,  // AuxFunction2_31004_Offset
+	 10439,  // AuxFunction2_31005_Offset
+	 10451,  // AuxFunction2_31006_Offset
+	 10463,  // AuxFunction2_31007_Offset
+	 10475,  // AuxFunction2_31008_Offset
+	 10487,  // AuxFunction2_31009_Offset
+	 10499,  // AuxFunction2_31010_Offset
+	 10511,  // AuxFunction2_31011_Offset
+	 10523,  // AuxFunction2_31015_Offset
+	 10535,  // AuxFunction2_31016_Offset
+	 10547,  // AuxFunction2_31024_Offset
+	 10559,  // AuxFunction2_31025_Offset
 };  // isoOP_DefaultPool_Offset_Id
