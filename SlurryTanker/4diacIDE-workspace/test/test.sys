@@ -10,7 +10,7 @@
 	</VersionInfo>
 	<Application Name="mapping_DataPanel" Comment="">
 		<SubAppNetwork>
-			<SubApp Name="mapping_DataPanel" Comment="mapping_DataPanel" x="323.52941176470586" y="176.47058823529412">
+			<SubApp Name="mapping_DataPanel" Comment="mapping_DataPanel" x="320.0" y="173.33333333333334">
 				<SubAppInterfaceList>
 					<SubAppEventInputs>
 						<SubAppEvent Name="INIT" Type="Event" Comment="">
@@ -22,7 +22,7 @@
 					</SubAppEventOutputs>
 				</SubAppInterfaceList>
 				<SubAppNetwork>
-					<FB Name="DataPanel_xDB_16_DO_SAE_J1939" Type="DataPanel_xDB_16_DO_SAE_J1939" Comment="" x="841.1764705882352" y="0.0">
+					<FB Name="DataPanel_xDB_16_DO_SAE_J1939" Type="DataPanel_xDB_16_DO_SAE_J1939" Comment="" x="840.0" y="0.0">
 						<Parameter Name="QI" Value="TRUE"/>
 						<Parameter Name="u8SAMember" Value="224"/>
 						<Parameter Name="u16ObjId" Value="65535"/>
@@ -44,19 +44,19 @@
 						<Parameter Name="DigitalOutput_8B" Value="&quot;DigitalOutput_8B&quot;"/>
 					</FB>
 					<EventConnections>
-						<Connection Source="INIT" Destination="DataPanel_xDB_16_DO_SAE_J1939.INIT" Comment="" dx1="70.58823529411764" dx2="70.58823529411764" dy="76.47058823529412"/>
-						<Connection Source="DataPanel_xDB_16_DO_SAE_J1939.INITO" Destination="INITO" Comment="" dx1="164.70588235294116" dx2="164.70588235294116" dy="0.0"/>
+						<Connection Source="INIT" Destination="DataPanel_xDB_16_DO_SAE_J1939.INIT" Comment="" dx1="66.66666666666667" dx2="66.66666666666667" dy="73.33333333333334"/>
+						<Connection Source="DataPanel_xDB_16_DO_SAE_J1939.INITO" Destination="INITO" Comment="" dx1="160.0" dx2="160.0" dy="0.0"/>
 					</EventConnections>
 				</SubAppNetwork>
 				<Attribute Name="Unfolded" Type="STRING" Value="true"/>
-				<Attribute Name="width" Type="LREAL" Value="4917.647058823529"/>
-				<Attribute Name="height" Type="LREAL" Value="3199.9999999999995"/>
+				<Attribute Name="width" Type="LREAL" Value="4913.333333333334"/>
+				<Attribute Name="height" Type="LREAL" Value="3193.3333333333335"/>
 			</SubApp>
 		</SubAppNetwork>
 	</Application>
 	<Application Name="mapping_Softkeys" Comment="">
 		<SubAppNetwork>
-			<SubApp Name="mapping_Softkeys" Comment="mapping_Softkeys" x="323.52941176470586" y="-1135.2941176470588">
+			<SubApp Name="mapping_Softkeys" Comment="mapping_Softkeys" x="320.0" y="-1133.3333333333335">
 				<SubAppInterfaceList>
 					<SubAppEventInputs>
 						<SubAppEvent Name="INIT" Type="Event" Comment="">
@@ -68,7 +68,7 @@
 					</SubAppEventOutputs>
 				</SubAppInterfaceList>
 				<SubAppNetwork>
-					<FB Name="UT_SoftkeyMapping" Type="UT_SoftkeyMapping" Comment="" x="1405.8823529411764" y="0.0">
+					<FB Name="UT_SoftkeyMapping" Type="UT_SoftkeyMapping" Comment="" x="1400.0" y="0.0">
 						<Parameter Name="QI" Value="TRUE"/>
 						<Parameter Name="u8SAMember" Value="255"/>
 						<Parameter Name="u16ObjId_1" Value="5003"/>
@@ -104,7 +104,7 @@
 						<Parameter Name="u16ObjId_8" Value="5016"/>
 						<Parameter Name="DigitalInput_8" Value="&quot;SoftKey_Licht_UP&quot;"/>
 					</FB>
-					<FB Name="UT_SoftkeyMapping_DOWN" Type="UT_SoftkeyMapping_DOWN" Comment="" x="7335.294117647059" y="64.70588235294117">
+					<FB Name="UT_SoftkeyMapping_DOWN" Type="UT_SoftkeyMapping_DOWN" Comment="" x="7333.333333333334" y="60.0">
 						<Parameter Name="QI" Value="TRUE"/>
 						<Parameter Name="u8SAMember" Value="255"/>
 						<Parameter Name="u16ObjId_1" Value="5000"/>
@@ -113,21 +113,21 @@
 						<Parameter Name="DigitalInput_7" Value="&quot;SoftKey_Automatik_aus_DOWN&quot;"/>
 					</FB>
 					<EventConnections>
-						<Connection Source="INIT" Destination="UT_SoftkeyMapping.INIT" Comment="" dx1="70.58823529411764" dx2="70.58823529411764" dy="76.47058823529412"/>
+						<Connection Source="INIT" Destination="UT_SoftkeyMapping.INIT" Comment="" dx1="66.66666666666667" dx2="66.66666666666667" dy="73.33333333333334"/>
 						<Connection Source="UT_SoftkeyMapping.INITO" Destination="UT_SoftkeyMapping_UP.INIT" Comment=""/>
-						<Connection Source="UT_SoftkeyMapping_UP.INITO" Destination="UT_SoftkeyMapping_DOWN.INIT" Comment="" dx1="458.8235294117647" dx2="458.8235294117647" dy="0.0"/>
-						<Connection Source="UT_SoftkeyMapping_DOWN.INITO" Destination="INITO" Comment="" dx1="70.58823529411764" dx2="70.58823529411764" dy="-111.76470588235293"/>
+						<Connection Source="UT_SoftkeyMapping_UP.INITO" Destination="UT_SoftkeyMapping_DOWN.INIT" Comment="" dx1="453.33333333333337" dx2="453.33333333333337" dy="0.0"/>
+						<Connection Source="UT_SoftkeyMapping_DOWN.INITO" Destination="INITO" Comment="" dx1="66.66666666666667" dx2="66.66666666666667" dy="-106.66666666666667"/>
 					</EventConnections>
 				</SubAppNetwork>
 				<Attribute Name="Unfolded" Type="STRING" Value="true"/>
 				<Attribute Name="width" Type="LREAL" Value="10300.0"/>
-				<Attribute Name="height" Type="LREAL" Value="3270.5882352941176"/>
+				<Attribute Name="height" Type="LREAL" Value="3266.666666666667"/>
 			</SubApp>
 		</SubAppNetwork>
 	</Application>
 	<Application Name="Klappen" Comment="">
 		<SubAppNetwork>
-			<SubApp Name="Klappen" Comment="Klappen" x="-5000.0" y="-2470.5882352941176">
+			<SubApp Name="Klappen" Comment="Klappen" x="-5000.0" y="-2466.666666666667">
 				<SubAppInterfaceList>
 					<SubAppEventInputs>
 						<SubAppEvent Name="INIT" Type="Event" Comment="">
@@ -152,16 +152,16 @@
 					</OutputVars>
 				</SubAppInterfaceList>
 				<SubAppNetwork>
-					<FB Name="SoftKey_Auseinanderklappen" Type="IX" Comment="" x="358.8235294117647" y="41.17647058823529">
+					<FB Name="SoftKey_Auseinanderklappen" Type="IX" Comment="" x="353.33333333333337" y="40.0">
 						<Parameter Name="QI" Value="TRUE"/>
 					</FB>
-					<FB Name="GreenWhiteBackground_Auseinanderklappen" Type="GreenWhiteBackground" Comment="" x="3223.529411764706" y="2800.0">
+					<FB Name="GreenWhiteBackground_Auseinanderklappen" Type="GreenWhiteBackground" Comment="" x="3220.0" y="2800.0">
 						<Parameter Name="u16ObjId" Value="5003"/>
 					</FB>
-					<FB Name="SoftKey_Zusammenklappen" Type="IX" Comment="" x="558.8235294117646" y="1058.8235294117646">
+					<FB Name="SoftKey_Zusammenklappen" Type="IX" Comment="" x="553.3333333333334" y="1053.3333333333335">
 						<Parameter Name="QI" Value="TRUE"/>
 					</FB>
-					<SubApp Name="Sitzventile" Comment="Sitzventile" x="5223.529411764705" y="1858.8235294117646">
+					<SubApp Name="Sitzventile" Comment="Sitzventile" x="5220.0" y="1853.3333333333335">
 						<SubAppInterfaceList>
 							<SubAppEventInputs>
 								<SubAppEvent Name="INIT" Type="Event" Comment="">
@@ -177,68 +177,68 @@
 							</InputVars>
 						</SubAppInterfaceList>
 						<SubAppNetwork>
-							<FB Name="DigitalOutput_3B" Type="QX" Comment="" x="1682.3529411764705" y="976.470588235294">
+							<FB Name="DigitalOutput_3B" Type="QX" Comment="" x="1680.0" y="973.3333333333334">
 								<Parameter Name="QI" Value="TRUE"/>
 							</FB>
-							<FB Name="DigitalOutput_3A" Type="QX" Comment="" x="1605.8823529411764" y="0.0">
+							<FB Name="DigitalOutput_3A" Type="QX" Comment="" x="1600.0" y="0.0">
 								<Parameter Name="QI" Value="TRUE"/>
 							</FB>
-							<FB Name="OR_3A_3B" Type="OR_2" Comment="" x="617.6470588235294" y="441.17647058823525">
+							<FB Name="OR_3A_3B" Type="OR_2" Comment="" x="613.3333333333334" y="440.0">
 								<Attribute Name="PinComment" Type="STRING" Value="IN1:Auseinanderklappen"/>
 								<Attribute Name="PinComment" Type="STRING" Value="IN2:Zusammenklappen"/>
 							</FB>
 							<EventConnections>
-								<Connection Source="OR_3A_3B.CNF" Destination="DigitalOutput_3B.REQ" Comment="" dx1="117.6470588235294"/>
-								<Connection Source="OR_3A_3B.CNF" Destination="DigitalOutput_3A.REQ" Comment="" dx1="458.8235294117647"/>
-								<Connection Source="INIT" Destination="DigitalOutput_3B.INIT" Comment="" dx1="2258.8235294117644"/>
-								<Connection Source="INIT" Destination="DigitalOutput_3A.INIT" Comment="" dx1="2258.8235294117644"/>
-								<Connection Source="IND_Auseinanderklappen" Destination="OR_3A_3B.REQ" Comment="" dx1="511.7647058823529"/>
-								<Connection Source="IND_Zusammenklappen" Destination="OR_3A_3B.REQ" Comment="" dx1="470.5882352941176"/>
+								<Connection Source="OR_3A_3B.CNF" Destination="DigitalOutput_3B.REQ" Comment="" dx1="113.33333333333334"/>
+								<Connection Source="OR_3A_3B.CNF" Destination="DigitalOutput_3A.REQ" Comment="" dx1="453.33333333333337"/>
+								<Connection Source="INIT" Destination="DigitalOutput_3B.INIT" Comment="" dx1="1826.6666666666667"/>
+								<Connection Source="INIT" Destination="DigitalOutput_3A.INIT" Comment="" dx1="1826.6666666666667"/>
+								<Connection Source="IND_Auseinanderklappen" Destination="OR_3A_3B.REQ" Comment="" dx1="506.6666666666667"/>
+								<Connection Source="IND_Zusammenklappen" Destination="OR_3A_3B.REQ" Comment="" dx1="466.6666666666667"/>
 							</EventConnections>
 							<DataConnections>
-								<Connection Source="OR_3A_3B.OUT" Destination="DigitalOutput_3B.OUT" Comment="" dx1="482.35294117647055"/>
-								<Connection Source="OR_3A_3B.OUT" Destination="DigitalOutput_3A.OUT" Comment="" dx1="458.8235294117647"/>
-								<Connection Source="IN_Auseinanderklappen" Destination="OR_3A_3B.IN1" Comment="" dx1="264.70588235294116"/>
-								<Connection Source="IN_Zusammenklappen" Destination="OR_3A_3B.IN2" Comment="" dx1="70.58823529411764"/>
+								<Connection Source="OR_3A_3B.OUT" Destination="DigitalOutput_3B.OUT" Comment="" dx1="480.0"/>
+								<Connection Source="OR_3A_3B.OUT" Destination="DigitalOutput_3A.OUT" Comment="" dx1="453.33333333333337"/>
+								<Connection Source="IN_Auseinanderklappen" Destination="OR_3A_3B.IN1" Comment="" dx1="260.0"/>
+								<Connection Source="IN_Zusammenklappen" Destination="OR_3A_3B.IN2" Comment="" dx1="66.66666666666667"/>
 							</DataConnections>
 						</SubAppNetwork>
 						<Attribute Name="Unfolded" Type="STRING" Value="true"/>
-						<Attribute Name="width" Type="LREAL" Value="3899.9999999999995"/>
+						<Attribute Name="width" Type="LREAL" Value="3893.3333333333335"/>
 						<Attribute Name="height" Type="LREAL" Value="2400.0"/>
 					</SubApp>
-					<FB Name="GreenWhiteBackground_Zusammenklappen" Type="GreenWhiteBackground" Comment="" x="3223.529411764706" y="3723.5294117647054">
+					<FB Name="GreenWhiteBackground_Zusammenklappen" Type="GreenWhiteBackground" Comment="" x="3220.0" y="3720.0">
 						<Parameter Name="u16ObjId" Value="5009"/>
 					</FB>
 					<EventConnections>
-						<Connection Source="SoftKey_Auseinanderklappen.IND" Destination="GreenWhiteBackground_Auseinanderklappen.REQ" Comment="" dx1="1799.9999999999998"/>
-						<Connection Source="INIT" Destination="SoftKey_Auseinanderklappen.INIT" Comment="" dx1="70.58823529411764"/>
-						<Connection Source="SoftKey_Auseinanderklappen.IND" Destination="CNF_2b" Comment="" dx1="264.70588235294116"/>
-						<Connection Source="INIT" Destination="SoftKey_Zusammenklappen.INIT" Comment="" dx1="70.58823529411764"/>
-						<Connection Source="SoftKey_Zusammenklappen.IND" Destination="CNF_2a" Comment="" dx1="252.9411764705882"/>
-						<Connection Source="INIT" Destination="GreenWhiteBackground_Auseinanderklappen.INIT" Comment="" dx1="70.58823529411764"/>
-						<Connection Source="INIT" Destination="Sitzventile.INIT" Comment="" dx1="70.58823529411764"/>
-						<Connection Source="SoftKey_Auseinanderklappen.IND" Destination="Sitzventile.IND_Auseinanderklappen" Comment="" dx1="3429.411764705882"/>
-						<Connection Source="SoftKey_Zusammenklappen.IND" Destination="Sitzventile.IND_Zusammenklappen" Comment="" dx1="3111.7647058823527"/>
-						<Connection Source="SoftKey_Zusammenklappen.IND" Destination="GreenWhiteBackground_Zusammenklappen.REQ" Comment="" dx1="1452.941176470588"/>
+						<Connection Source="SoftKey_Auseinanderklappen.IND" Destination="GreenWhiteBackground_Auseinanderklappen.REQ" Comment="" dx1="1793.3333333333335"/>
+						<Connection Source="INIT" Destination="SoftKey_Auseinanderklappen.INIT" Comment="" dx1="66.66666666666667"/>
+						<Connection Source="SoftKey_Auseinanderklappen.IND" Destination="CNF_2b" Comment="" dx1="260.0"/>
+						<Connection Source="INIT" Destination="SoftKey_Zusammenklappen.INIT" Comment="" dx1="66.66666666666667"/>
+						<Connection Source="SoftKey_Zusammenklappen.IND" Destination="CNF_2a" Comment="" dx1="246.66666666666669"/>
+						<Connection Source="INIT" Destination="GreenWhiteBackground_Auseinanderklappen.INIT" Comment="" dx1="66.66666666666667"/>
+						<Connection Source="INIT" Destination="Sitzventile.INIT" Comment="" dx1="66.66666666666667"/>
+						<Connection Source="SoftKey_Auseinanderklappen.IND" Destination="Sitzventile.IND_Auseinanderklappen" Comment="" dx1="3426.666666666667"/>
+						<Connection Source="SoftKey_Zusammenklappen.IND" Destination="Sitzventile.IND_Zusammenklappen" Comment="" dx1="3106.666666666667"/>
+						<Connection Source="SoftKey_Zusammenklappen.IND" Destination="GreenWhiteBackground_Zusammenklappen.REQ" Comment="" dx1="1446.6666666666667"/>
 					</EventConnections>
 					<DataConnections>
-						<Connection Source="SoftKey_Auseinanderklappen.IN" Destination="GreenWhiteBackground_Auseinanderklappen.DI1" Comment="" dx1="1676.470588235294"/>
-						<Connection Source="SoftKey_Auseinanderklappen.IN" Destination="OUT_2b" Comment="" dx1="482.35294117647055"/>
-						<Connection Source="SoftKey_Zusammenklappen.IN" Destination="OUT_2a" Comment="" dx1="576.470588235294"/>
-						<Connection Source="SoftKey_Auseinanderklappen.IN" Destination="Sitzventile.IN_Auseinanderklappen" Comment="" dx1="3141.176470588235"/>
-						<Connection Source="SoftKey_Zusammenklappen.IN" Destination="Sitzventile.IN_Zusammenklappen" Comment="" dx1="2929.411764705882"/>
-						<Connection Source="SoftKey_Zusammenklappen.IN" Destination="GreenWhiteBackground_Zusammenklappen.DI1" Comment="" dx1="1323.5294117647059"/>
+						<Connection Source="SoftKey_Auseinanderklappen.IN" Destination="GreenWhiteBackground_Auseinanderklappen.DI1" Comment="" dx1="1673.3333333333335"/>
+						<Connection Source="SoftKey_Auseinanderklappen.IN" Destination="OUT_2b" Comment="" dx1="480.0"/>
+						<Connection Source="SoftKey_Zusammenklappen.IN" Destination="OUT_2a" Comment="" dx1="573.3333333333334"/>
+						<Connection Source="SoftKey_Auseinanderklappen.IN" Destination="Sitzventile.IN_Auseinanderklappen" Comment="" dx1="3140.0"/>
+						<Connection Source="SoftKey_Zusammenklappen.IN" Destination="Sitzventile.IN_Zusammenklappen" Comment="" dx1="2926.666666666667"/>
+						<Connection Source="SoftKey_Zusammenklappen.IN" Destination="GreenWhiteBackground_Zusammenklappen.DI1" Comment="" dx1="1320.0"/>
 					</DataConnections>
 				</SubAppNetwork>
 				<Attribute Name="Unfolded" Type="STRING" Value="true"/>
-				<Attribute Name="width" Type="LREAL" Value="9817.647058823528"/>
-				<Attribute Name="height" Type="LREAL" Value="5141.176470588235"/>
+				<Attribute Name="width" Type="LREAL" Value="9813.333333333334"/>
+				<Attribute Name="height" Type="LREAL" Value="5140.0"/>
 			</SubApp>
 		</SubAppNetwork>
 	</Application>
 	<Application Name="Vorsteuerventil_2A" Comment="">
 		<SubAppNetwork>
-			<SubApp Name="Vorsteuerventil_2A" Comment="Vorsteuerventil_2A" x="-2323.529411764706" y="176.47058823529412">
+			<SubApp Name="Vorsteuerventil_2A" Comment="Vorsteuerventil_2A" x="-2320.0" y="173.33333333333334">
 				<SubAppInterfaceList>
 					<SubAppEventInputs>
 						<SubAppEvent Name="INIT" Type="Event" Comment="">
@@ -263,38 +263,38 @@
 					</InputVars>
 				</SubAppInterfaceList>
 				<SubAppNetwork>
-					<FB Name="OR_2A" Type="OR_5" Comment="" x="1100.0" y="258.8235294117647">
+					<FB Name="OR_2A" Type="OR_5" Comment="" x="1100.0" y="253.33333333333334">
 					</FB>
-					<FB Name="DigitalOutput_2A" Type="QX" Comment="" x="2564.705882352941" y="0.0">
+					<FB Name="DigitalOutput_2A" Type="QX" Comment="" x="2560.0" y="0.0">
 						<Parameter Name="QI" Value="TRUE"/>
 					</FB>
 					<EventConnections>
-						<Connection Source="REQ1" Destination="OR_2A.REQ" Comment="" dx1="552.9411764705882"/>
-						<Connection Source="REQ2" Destination="OR_2A.REQ" Comment="" dx1="558.8235294117646"/>
-						<Connection Source="REQ3" Destination="OR_2A.REQ" Comment="" dx1="558.8235294117646"/>
-						<Connection Source="REQ4" Destination="OR_2A.REQ" Comment="" dx1="558.8235294117646"/>
-						<Connection Source="REQ5" Destination="OR_2A.REQ" Comment="" dx1="558.8235294117646"/>
+						<Connection Source="REQ1" Destination="OR_2A.REQ" Comment="" dx1="546.6666666666667"/>
+						<Connection Source="REQ2" Destination="OR_2A.REQ" Comment="" dx1="553.3333333333334"/>
+						<Connection Source="REQ3" Destination="OR_2A.REQ" Comment="" dx1="553.3333333333334"/>
+						<Connection Source="REQ4" Destination="OR_2A.REQ" Comment="" dx1="553.3333333333334"/>
+						<Connection Source="REQ5" Destination="OR_2A.REQ" Comment="" dx1="553.3333333333334"/>
 						<Connection Source="INIT" Destination="DigitalOutput_2A.INIT" Comment="" dx1="2400.0" dx2="2400.0" dy="0.0"/>
-						<Connection Source="OR_2A.CNF" Destination="DigitalOutput_2A.REQ" Comment="" dx1="323.52941176470586" dx2="323.52941176470586" dy="0.0"/>
+						<Connection Source="OR_2A.CNF" Destination="DigitalOutput_2A.REQ" Comment="" dx1="320.0" dx2="320.0" dy="0.0"/>
 					</EventConnections>
 					<DataConnections>
-						<Connection Source="IN1" Destination="OR_2A.IN1" Comment="" dx1="852.9411764705882"/>
-						<Connection Source="IN2" Destination="OR_2A.IN2" Comment="" dx1="670.5882352941176"/>
-						<Connection Source="IN3" Destination="OR_2A.IN3" Comment="" dx1="570.5882352941176"/>
-						<Connection Source="IN4" Destination="OR_2A.IN4" Comment="" dx1="441.17647058823525"/>
-						<Connection Source="IN5" Destination="OR_2A.IN5" Comment="" dx1="258.8235294117647"/>
-						<Connection Source="OR_2A.OUT" Destination="DigitalOutput_2A.OUT" Comment="" dx1="323.52941176470586" dx2="323.52941176470586" dy="0.0"/>
+						<Connection Source="IN1" Destination="OR_2A.IN1" Comment="" dx1="846.6666666666667"/>
+						<Connection Source="IN2" Destination="OR_2A.IN2" Comment="" dx1="666.6666666666667"/>
+						<Connection Source="IN3" Destination="OR_2A.IN3" Comment="" dx1="566.6666666666667"/>
+						<Connection Source="IN4" Destination="OR_2A.IN4" Comment="" dx1="440.0"/>
+						<Connection Source="IN5" Destination="OR_2A.IN5" Comment="" dx1="253.33333333333334"/>
+						<Connection Source="OR_2A.OUT" Destination="DigitalOutput_2A.OUT" Comment="" dx1="320.0" dx2="320.0" dy="0.0"/>
 					</DataConnections>
 				</SubAppNetwork>
 				<Attribute Name="Unfolded" Type="STRING" Value="true"/>
 				<Attribute Name="width" Type="LREAL" Value="4400.0"/>
-				<Attribute Name="height" Type="LREAL" Value="2476.470588235294"/>
+				<Attribute Name="height" Type="LREAL" Value="2473.3333333333335"/>
 			</SubApp>
 		</SubAppNetwork>
 	</Application>
 	<Application Name="Verteiler" Comment="">
 		<SubAppNetwork>
-			<SubApp Name="Verteiler" Comment="Verteiler" x="399.99999999999994" y="-1135.2941176470588">
+			<SubApp Name="Verteiler" Comment="Verteiler" x="393.33333333333337" y="-1133.3333333333335">
 				<SubAppInterfaceList>
 					<SubAppEventInputs>
 						<SubAppEvent Name="INIT" Type="Event" Comment="">
@@ -320,20 +320,20 @@
 					</OutputVars>
 				</SubAppInterfaceList>
 				<SubAppNetwork>
-					<FB Name="OR_2_Verteiler_senken" Type="OR_2" Comment="" x="1799.9999999999998" y="2123.529411764706">
+					<FB Name="OR_2_Verteiler_senken" Type="OR_2" Comment="" x="1793.3333333333335" y="2120.0">
 					</FB>
-					<FB Name="SoftKey_Verteiler_heben" Type="IX" Comment="" x="464.70588235294116" y="523.5294117647059">
+					<FB Name="SoftKey_Verteiler_heben" Type="IX" Comment="" x="460.0" y="520.0">
 						<Parameter Name="QI" Value="TRUE"/>
 					</FB>
-					<FB Name="OR_2_Verteiler_heben" Type="OR_2" Comment="" x="2058.8235294117644" y="1058.8235294117646">
+					<FB Name="OR_2_Verteiler_heben" Type="OR_2" Comment="" x="2053.3333333333335" y="1053.3333333333335">
 					</FB>
-					<FB Name="GreenWhiteBackground_Verteiler_heben" Type="GreenWhiteBackground" Comment="" x="3129.411764705882" y="3323.529411764706">
+					<FB Name="GreenWhiteBackground_Verteiler_heben" Type="GreenWhiteBackground" Comment="" x="3126.666666666667" y="3320.0">
 						<Parameter Name="u16ObjId" Value="5010"/>
 					</FB>
-					<FB Name="SoftKey_Verteiler_senken" Type="IX" Comment="" x="600.0" y="1599.9999999999998">
+					<FB Name="SoftKey_Verteiler_senken" Type="IX" Comment="" x="600.0" y="1593.3333333333335">
 						<Parameter Name="QI" Value="TRUE"/>
 					</FB>
-					<SubApp Name="Sitzventile" Comment="Sitzventile" x="5929.411764705882" y="2523.529411764706">
+					<SubApp Name="Sitzventile" Comment="Sitzventile" x="5926.666666666667" y="2520.0">
 						<SubAppInterfaceList>
 							<SubAppEventInputs>
 								<SubAppEvent Name="INITO" Type="Event" Comment="">
@@ -349,77 +349,77 @@
 							</InputVars>
 						</SubAppInterfaceList>
 						<SubAppNetwork>
-							<FB Name="OR_4A_4B" Type="OR_2" Comment="" x="676.470588235294" y="570.5882352941176">
+							<FB Name="OR_4A_4B" Type="OR_2" Comment="" x="673.3333333333334" y="566.6666666666667">
 								<Attribute Name="PinComment" Type="STRING" Value="IN1:Verteiler_heben"/>
 								<Attribute Name="PinComment" Type="STRING" Value="IN2:Verteiler_senken"/>
 							</FB>
-							<FB Name="DigitalOutput_4B" Type="QX" Comment="" x="2011.7647058823527" y="176.47058823529412">
+							<FB Name="DigitalOutput_4B" Type="QX" Comment="" x="2006.6666666666667" y="173.33333333333334">
 								<Parameter Name="QI" Value="TRUE"/>
 							</FB>
-							<FB Name="DigitalOutput_4A" Type="QX" Comment="" x="2141.176470588235" y="1241.1764705882351">
+							<FB Name="DigitalOutput_4A" Type="QX" Comment="" x="2140.0" y="1240.0">
 								<Parameter Name="QI" Value="TRUE"/>
 							</FB>
 							<EventConnections>
-								<Connection Source="OR_4A_4B.CNF" Destination="DigitalOutput_4B.REQ" Comment="" dx1="411.7647058823529"/>
-								<Connection Source="OR_4A_4B.CNF" Destination="DigitalOutput_4A.REQ" Comment="" dx1="405.88235294117646"/>
-								<Connection Source="CNF_Verteiler_heben" Destination="OR_4A_4B.REQ" Comment="" dx1="670.5882352941176"/>
-								<Connection Source="CNF_Verteiler_senken" Destination="OR_4A_4B.REQ" Comment="" dx1="499.99999999999994"/>
-								<Connection Source="INITO" Destination="DigitalOutput_4B.INIT" Comment="" dx1="1882.3529411764705"/>
+								<Connection Source="OR_4A_4B.CNF" Destination="DigitalOutput_4B.REQ" Comment="" dx1="406.6666666666667"/>
+								<Connection Source="OR_4A_4B.CNF" Destination="DigitalOutput_4A.REQ" Comment="" dx1="400.0"/>
+								<Connection Source="CNF_Verteiler_heben" Destination="OR_4A_4B.REQ" Comment="" dx1="666.6666666666667"/>
+								<Connection Source="CNF_Verteiler_senken" Destination="OR_4A_4B.REQ" Comment="" dx1="493.33333333333337"/>
+								<Connection Source="INITO" Destination="DigitalOutput_4B.INIT" Comment="" dx1="1880.0"/>
 								<Connection Source="INITO" Destination="DigitalOutput_4A.INIT" Comment="" dx1="2100.0"/>
 							</EventConnections>
 							<DataConnections>
-								<Connection Source="OR_4A_4B.OUT" Destination="DigitalOutput_4B.OUT" Comment="" dx1="199.99999999999997"/>
-								<Connection Source="OR_4A_4B.OUT" Destination="DigitalOutput_4A.OUT" Comment="" dx1="211.76470588235293"/>
-								<Connection Source="IN_Verteiler_heben" Destination="OR_4A_4B.IN1" Comment="" dx1="511.7647058823529"/>
-								<Connection Source="IN_Verteiler_senken" Destination="OR_4A_4B.IN2" Comment="" dx1="370.5882352941176"/>
+								<Connection Source="OR_4A_4B.OUT" Destination="DigitalOutput_4B.OUT" Comment="" dx1="193.33333333333334"/>
+								<Connection Source="OR_4A_4B.OUT" Destination="DigitalOutput_4A.OUT" Comment="" dx1="206.66666666666669"/>
+								<Connection Source="IN_Verteiler_heben" Destination="OR_4A_4B.IN1" Comment="" dx1="506.6666666666667"/>
+								<Connection Source="IN_Verteiler_senken" Destination="OR_4A_4B.IN2" Comment="" dx1="366.6666666666667"/>
 							</DataConnections>
 						</SubAppNetwork>
 						<Attribute Name="Unfolded" Type="STRING" Value="true"/>
 						<Attribute Name="width" Type="LREAL" Value="4400.0"/>
-						<Attribute Name="height" Type="LREAL" Value="2923.529411764706"/>
+						<Attribute Name="height" Type="LREAL" Value="2920.0"/>
 					</SubApp>
-					<FB Name="GreenWhiteBackground_Verteiler_senken" Type="GreenWhiteBackground" Comment="" x="3129.411764705882" y="4123.529411764705">
+					<FB Name="GreenWhiteBackground_Verteiler_senken" Type="GreenWhiteBackground" Comment="" x="3126.666666666667" y="4120.0">
 						<Parameter Name="u16ObjId" Value="5004"/>
 					</FB>
 					<EventConnections>
-						<Connection Source="SoftKey_Verteiler_senken.IND" Destination="OR_2_Verteiler_senken.REQ" Comment="" dx1="235.2941176470588"/>
-						<Connection Source="SoftKey_Verteiler_heben.IND" Destination="OR_2_Verteiler_heben.REQ" Comment="" dx1="370.5882352941176"/>
-						<Connection Source="OR_2_Verteiler_heben.CNF" Destination="GreenWhiteBackground_Verteiler_heben.REQ" Comment="" dx1="517.6470588235294"/>
-						<Connection Source="INIT" Destination="SoftKey_Verteiler_heben.INIT" Comment="" dx1="70.58823529411764"/>
-						<Connection Source="INIT" Destination="SoftKey_Verteiler_senken.INIT" Comment="" dx1="70.58823529411764"/>
-						<Connection Source="INIT" Destination="Sitzventile.INITO" Comment="" dx1="70.58823529411764"/>
-						<Connection Source="OR_2_Verteiler_senken.CNF" Destination="GreenWhiteBackground_Verteiler_senken.REQ" Comment="" dx1="458.8235294117647"/>
-						<Connection Source="INIT" Destination="GreenWhiteBackground_Verteiler_heben.INIT" Comment="" dx1="70.58823529411764"/>
-						<Connection Source="INIT" Destination="GreenWhiteBackground_Verteiler_senken.INIT" Comment="" dx1="70.58823529411764"/>
-						<Connection Source="OR_2_Verteiler_heben.CNF" Destination="Sitzventile.CNF_Verteiler_heben" Comment="" dx1="3082.3529411764703"/>
-						<Connection Source="OR_2_Verteiler_senken.CNF" Destination="Sitzventile.CNF_Verteiler_senken" Comment="" dx1="2882.3529411764703"/>
+						<Connection Source="SoftKey_Verteiler_senken.IND" Destination="OR_2_Verteiler_senken.REQ" Comment="" dx1="233.33333333333334"/>
+						<Connection Source="SoftKey_Verteiler_heben.IND" Destination="OR_2_Verteiler_heben.REQ" Comment="" dx1="366.6666666666667"/>
+						<Connection Source="OR_2_Verteiler_heben.CNF" Destination="GreenWhiteBackground_Verteiler_heben.REQ" Comment="" dx1="513.3333333333334"/>
+						<Connection Source="INIT" Destination="SoftKey_Verteiler_heben.INIT" Comment="" dx1="66.66666666666667"/>
+						<Connection Source="INIT" Destination="SoftKey_Verteiler_senken.INIT" Comment="" dx1="66.66666666666667"/>
+						<Connection Source="INIT" Destination="Sitzventile.INITO" Comment="" dx1="66.66666666666667"/>
+						<Connection Source="OR_2_Verteiler_senken.CNF" Destination="GreenWhiteBackground_Verteiler_senken.REQ" Comment="" dx1="453.33333333333337"/>
+						<Connection Source="INIT" Destination="GreenWhiteBackground_Verteiler_heben.INIT" Comment="" dx1="66.66666666666667"/>
+						<Connection Source="INIT" Destination="GreenWhiteBackground_Verteiler_senken.INIT" Comment="" dx1="66.66666666666667"/>
+						<Connection Source="OR_2_Verteiler_heben.CNF" Destination="Sitzventile.CNF_Verteiler_heben" Comment="" dx1="3080.0"/>
+						<Connection Source="OR_2_Verteiler_senken.CNF" Destination="Sitzventile.CNF_Verteiler_senken" Comment="" dx1="2880.0"/>
 						<Connection Source="EI_Verteiler_heben" Destination="OR_2_Verteiler_heben.REQ" Comment="" dx1="2100.0"/>
-						<Connection Source="EI_Verteiler_senken" Destination="OR_2_Verteiler_senken.REQ" Comment="" dx1="1899.9999999999998"/>
-						<Connection Source="OR_2_Verteiler_heben.CNF" Destination="CNF_2a" Comment="" dx1="499.99999999999994"/>
-						<Connection Source="OR_2_Verteiler_senken.CNF" Destination="CNF_2b" Comment="" dx1="499.99999999999994"/>
+						<Connection Source="EI_Verteiler_senken" Destination="OR_2_Verteiler_senken.REQ" Comment="" dx1="1893.3333333333335"/>
+						<Connection Source="OR_2_Verteiler_heben.CNF" Destination="CNF_2a" Comment="" dx1="493.33333333333337"/>
+						<Connection Source="OR_2_Verteiler_senken.CNF" Destination="CNF_2b" Comment="" dx1="493.33333333333337"/>
 					</EventConnections>
 					<DataConnections>
-						<Connection Source="SoftKey_Verteiler_senken.IN" Destination="OR_2_Verteiler_senken.IN1" Comment="" dx1="423.52941176470586"/>
-						<Connection Source="SoftKey_Verteiler_heben.IN" Destination="OR_2_Verteiler_heben.IN1" Comment="" dx1="329.4117647058823"/>
-						<Connection Source="OR_2_Verteiler_heben.OUT" Destination="GreenWhiteBackground_Verteiler_heben.DI1" Comment="" dx1="352.94117647058823"/>
-						<Connection Source="IN_Verteiler_senken" Destination="OR_2_Verteiler_senken.IN2" Comment="" dx1="205.88235294117646"/>
-						<Connection Source="IN_Verteiler_heben" Destination="OR_2_Verteiler_heben.IN2" Comment="" dx1="358.8235294117647"/>
-						<Connection Source="OR_2_Verteiler_heben.OUT" Destination="Sitzventile.IN_Verteiler_heben" Comment="" dx1="2741.176470588235"/>
+						<Connection Source="SoftKey_Verteiler_senken.IN" Destination="OR_2_Verteiler_senken.IN1" Comment="" dx1="420.0"/>
+						<Connection Source="SoftKey_Verteiler_heben.IN" Destination="OR_2_Verteiler_heben.IN1" Comment="" dx1="326.6666666666667"/>
+						<Connection Source="OR_2_Verteiler_heben.OUT" Destination="GreenWhiteBackground_Verteiler_heben.DI1" Comment="" dx1="346.6666666666667"/>
+						<Connection Source="IN_Verteiler_senken" Destination="OR_2_Verteiler_senken.IN2" Comment="" dx1="200.0"/>
+						<Connection Source="IN_Verteiler_heben" Destination="OR_2_Verteiler_heben.IN2" Comment="" dx1="353.33333333333337"/>
+						<Connection Source="OR_2_Verteiler_heben.OUT" Destination="Sitzventile.IN_Verteiler_heben" Comment="" dx1="2740.0"/>
 						<Connection Source="OR_2_Verteiler_senken.OUT" Destination="Sitzventile.IN_Verteiler_senken" Comment="" dx1="2600.0"/>
-						<Connection Source="OR_2_Verteiler_senken.OUT" Destination="GreenWhiteBackground_Verteiler_senken.DI1" Comment="" dx1="199.99999999999997"/>
-						<Connection Source="OR_2_Verteiler_heben.OUT" Destination="OUT_2a" Comment="" dx1="2741.176470588235"/>
+						<Connection Source="OR_2_Verteiler_senken.OUT" Destination="GreenWhiteBackground_Verteiler_senken.DI1" Comment="" dx1="193.33333333333334"/>
+						<Connection Source="OR_2_Verteiler_heben.OUT" Destination="OUT_2a" Comment="" dx1="2740.0"/>
 						<Connection Source="OR_2_Verteiler_senken.OUT" Destination="OUT_2b" Comment="" dx1="2600.0"/>
 					</DataConnections>
 				</SubAppNetwork>
 				<Attribute Name="Unfolded" Type="STRING" Value="true"/>
 				<Attribute Name="width" Type="LREAL" Value="11900.0"/>
-				<Attribute Name="height" Type="LREAL" Value="6476.470588235294"/>
+				<Attribute Name="height" Type="LREAL" Value="6473.333333333334"/>
 			</SubApp>
 		</SubAppNetwork>
 	</Application>
 	<Application Name="Knickdeichsel" Comment="">
 		<SubAppNetwork>
-			<SubApp Name="Knickdeichsel" Comment="Knickdeichsel" x="1723.5294117647059" y="1370.5882352941176">
+			<SubApp Name="Knickdeichsel" Comment="Knickdeichsel" x="1720.0" y="1366.6666666666667">
 				<SubAppInterfaceList>
 					<SubAppEventInputs>
 						<SubAppEvent Name="INIT" Type="Event" Comment="">
@@ -437,19 +437,19 @@
 					</OutputVars>
 				</SubAppInterfaceList>
 				<SubAppNetwork>
-					<FB Name="SoftKey_Knickdeichsel_heben" Type="IX" Comment="" x="358.8235294117647" y="258.8235294117647">
+					<FB Name="SoftKey_Knickdeichsel_heben" Type="IX" Comment="" x="353.33333333333337" y="253.33333333333334">
 						<Parameter Name="QI" Value="TRUE"/>
 					</FB>
-					<FB Name="SoftKey_Knickdeichsel_senken" Type="IX" Comment="" x="358.8235294117647" y="1458.8235294117646">
+					<FB Name="SoftKey_Knickdeichsel_senken" Type="IX" Comment="" x="353.33333333333337" y="1453.3333333333335">
 						<Parameter Name="QI" Value="TRUE"/>
 					</FB>
-					<FB Name="GreenWhiteBackground_Knickdeichsel_senken" Type="GreenWhiteBackground" Comment="" x="1958.8235294117646" y="4123.529411764705">
+					<FB Name="GreenWhiteBackground_Knickdeichsel_senken" Type="GreenWhiteBackground" Comment="" x="1953.3333333333335" y="4120.0">
 						<Parameter Name="u16ObjId" Value="5005"/>
 					</FB>
-					<FB Name="GreenWhiteBackground_Knickdeichsel_heben" Type="GreenWhiteBackground" Comment="" x="1958.8235294117646" y="3058.8235294117644">
+					<FB Name="GreenWhiteBackground_Knickdeichsel_heben" Type="GreenWhiteBackground" Comment="" x="1953.3333333333335" y="3053.3333333333335">
 						<Parameter Name="u16ObjId" Value="5011"/>
 					</FB>
-					<SubApp Name="Sitzventile" Comment="Sitzventile" x="5152.941176470588" y="2123.529411764706">
+					<SubApp Name="Sitzventile" Comment="Sitzventile" x="5146.666666666667" y="2120.0">
 						<SubAppInterfaceList>
 							<SubAppEventInputs>
 								<SubAppEvent Name="INITO" Type="Event" Comment="">
@@ -465,66 +465,66 @@
 							</InputVars>
 						</SubAppInterfaceList>
 						<SubAppNetwork>
-							<FB Name="OR_5A_5B" Type="OR_2" Comment="" x="499.99999999999994" y="335.2941176470588">
+							<FB Name="OR_5A_5B" Type="OR_2" Comment="" x="493.33333333333337" y="333.33333333333337">
 								<Attribute Name="PinComment" Type="STRING" Value="IN1:Knickdeichsel_heben"/>
 								<Attribute Name="PinComment" Type="STRING" Value="IN2:Knickdeichsel_senken"/>
 							</FB>
-							<FB Name="DigitalOutput_5B" Type="QX" Comment="" x="1558.8235294117646" y="70.58823529411764">
+							<FB Name="DigitalOutput_5B" Type="QX" Comment="" x="1553.3333333333335" y="66.66666666666667">
 								<Parameter Name="QI" Value="TRUE"/>
 							</FB>
-							<FB Name="DigitalOutput_5A" Type="QX" Comment="" x="1558.8235294117646" y="1135.2941176470588">
+							<FB Name="DigitalOutput_5A" Type="QX" Comment="" x="1553.3333333333335" y="1133.3333333333335">
 								<Parameter Name="QI" Value="TRUE"/>
 							</FB>
 							<EventConnections>
-								<Connection Source="OR_5A_5B.CNF" Destination="DigitalOutput_5B.REQ" Comment="" dx1="258.8235294117647"/>
-								<Connection Source="OR_5A_5B.CNF" Destination="DigitalOutput_5A.REQ" Comment="" dx1="270.5882352941176"/>
-								<Connection Source="IND_Knickdeichsel_senken" Destination="OR_5A_5B.REQ" Comment="" dx1="370.5882352941176"/>
-								<Connection Source="IND_Knickdeichsel_heben" Destination="OR_5A_5B.REQ" Comment="" dx1="276.4705882352941"/>
-								<Connection Source="INITO" Destination="DigitalOutput_5B.INIT" Comment="" dx1="1941.1764705882351"/>
+								<Connection Source="OR_5A_5B.CNF" Destination="DigitalOutput_5B.REQ" Comment="" dx1="253.33333333333334"/>
+								<Connection Source="OR_5A_5B.CNF" Destination="DigitalOutput_5A.REQ" Comment="" dx1="266.6666666666667"/>
+								<Connection Source="IND_Knickdeichsel_senken" Destination="OR_5A_5B.REQ" Comment="" dx1="366.6666666666667"/>
+								<Connection Source="IND_Knickdeichsel_heben" Destination="OR_5A_5B.REQ" Comment="" dx1="273.33333333333337"/>
+								<Connection Source="INITO" Destination="DigitalOutput_5B.INIT" Comment="" dx1="1940.0"/>
 								<Connection Source="INITO" Destination="DigitalOutput_5A.INIT" Comment="" dx1="700.0"/>
 							</EventConnections>
 							<DataConnections>
-								<Connection Source="OR_5A_5B.OUT" Destination="DigitalOutput_5B.OUT" Comment="" dx1="435.2941176470588"/>
-								<Connection Source="OR_5A_5B.OUT" Destination="DigitalOutput_5A.OUT" Comment="" dx1="129.41176470588235"/>
-								<Connection Source="IN_Knickdeichsel_heben" Destination="OR_5A_5B.IN1" Comment="" dx1="199.99999999999997"/>
-								<Connection Source="IN_Knickdeichsel_senken" Destination="OR_5A_5B.IN2" Comment="" dx1="70.58823529411764"/>
+								<Connection Source="OR_5A_5B.OUT" Destination="DigitalOutput_5B.OUT" Comment="" dx1="433.33333333333337"/>
+								<Connection Source="OR_5A_5B.OUT" Destination="DigitalOutput_5A.OUT" Comment="" dx1="126.66666666666667"/>
+								<Connection Source="IN_Knickdeichsel_heben" Destination="OR_5A_5B.IN1" Comment="" dx1="193.33333333333334"/>
+								<Connection Source="IN_Knickdeichsel_senken" Destination="OR_5A_5B.IN2" Comment="" dx1="66.66666666666667"/>
 							</DataConnections>
 						</SubAppNetwork>
 						<Attribute Name="Unfolded" Type="STRING" Value="true"/>
-						<Attribute Name="width" Type="LREAL" Value="4129.411764705882"/>
-						<Attribute Name="height" Type="LREAL" Value="2470.5882352941176"/>
+						<Attribute Name="width" Type="LREAL" Value="4126.666666666667"/>
+						<Attribute Name="height" Type="LREAL" Value="2466.666666666667"/>
 					</SubApp>
 					<EventConnections>
-						<Connection Source="SoftKey_Knickdeichsel_heben.IND" Destination="GreenWhiteBackground_Knickdeichsel_heben.REQ" Comment="" dx1="576.470588235294"/>
+						<Connection Source="SoftKey_Knickdeichsel_heben.IND" Destination="GreenWhiteBackground_Knickdeichsel_heben.REQ" Comment="" dx1="573.3333333333334"/>
 						<Connection Source="SoftKey_Knickdeichsel_senken.IND" Destination="GreenWhiteBackground_Knickdeichsel_senken.REQ" Comment="" dx1="300.0"/>
-						<Connection Source="INIT" Destination="SoftKey_Knickdeichsel_heben.INIT" Comment="" dx1="70.58823529411764"/>
+						<Connection Source="INIT" Destination="SoftKey_Knickdeichsel_heben.INIT" Comment="" dx1="66.66666666666667"/>
 						<Connection Source="SoftKey_Knickdeichsel_heben.IND" Destination="IND_2b" Comment="" dx1="1500.0"/>
-						<Connection Source="INIT" Destination="SoftKey_Knickdeichsel_senken.INIT" Comment="" dx1="70.58823529411764"/>
-						<Connection Source="SoftKey_Knickdeichsel_senken.IND" Destination="IND_2a" Comment="" dx1="1570.5882352941176"/>
-						<Connection Source="SoftKey_Knickdeichsel_senken.IND" Destination="Sitzventile.IND_Knickdeichsel_senken" Comment="" dx1="1170.5882352941176"/>
-						<Connection Source="SoftKey_Knickdeichsel_heben.IND" Destination="Sitzventile.IND_Knickdeichsel_heben" Comment="" dx1="1058.8235294117646"/>
-						<Connection Source="INIT" Destination="Sitzventile.INITO" Comment="" dx1="70.58823529411764"/>
-						<Connection Source="INIT" Destination="GreenWhiteBackground_Knickdeichsel_heben.INIT" Comment="" dx1="70.58823529411764"/>
-						<Connection Source="INIT" Destination="GreenWhiteBackground_Knickdeichsel_senken.INIT" Comment="" dx1="70.58823529411764"/>
+						<Connection Source="INIT" Destination="SoftKey_Knickdeichsel_senken.INIT" Comment="" dx1="66.66666666666667"/>
+						<Connection Source="SoftKey_Knickdeichsel_senken.IND" Destination="IND_2a" Comment="" dx1="1566.6666666666667"/>
+						<Connection Source="SoftKey_Knickdeichsel_senken.IND" Destination="Sitzventile.IND_Knickdeichsel_senken" Comment="" dx1="1166.6666666666667"/>
+						<Connection Source="SoftKey_Knickdeichsel_heben.IND" Destination="Sitzventile.IND_Knickdeichsel_heben" Comment="" dx1="1053.3333333333335"/>
+						<Connection Source="INIT" Destination="Sitzventile.INITO" Comment="" dx1="66.66666666666667"/>
+						<Connection Source="INIT" Destination="GreenWhiteBackground_Knickdeichsel_heben.INIT" Comment="" dx1="66.66666666666667"/>
+						<Connection Source="INIT" Destination="GreenWhiteBackground_Knickdeichsel_senken.INIT" Comment="" dx1="66.66666666666667"/>
 					</EventConnections>
 					<DataConnections>
-						<Connection Source="SoftKey_Knickdeichsel_heben.IN" Destination="GreenWhiteBackground_Knickdeichsel_heben.DI1" Comment="" dx1="441.17647058823525"/>
-						<Connection Source="SoftKey_Knickdeichsel_senken.IN" Destination="GreenWhiteBackground_Knickdeichsel_senken.DI1" Comment="" dx1="164.70588235294116"/>
-						<Connection Source="SoftKey_Knickdeichsel_heben.IN" Destination="OUT_2b" Comment="" dx1="1741.1764705882351"/>
-						<Connection Source="SoftKey_Knickdeichsel_senken.IN" Destination="OUT_2a" Comment="" dx1="1835.2941176470588"/>
-						<Connection Source="SoftKey_Knickdeichsel_heben.IN" Destination="Sitzventile.IN_Knickdeichsel_heben" Comment="" dx1="905.8823529411764"/>
-						<Connection Source="SoftKey_Knickdeichsel_senken.IN" Destination="Sitzventile.IN_Knickdeichsel_senken" Comment="" dx1="741.1764705882352"/>
+						<Connection Source="SoftKey_Knickdeichsel_heben.IN" Destination="GreenWhiteBackground_Knickdeichsel_heben.DI1" Comment="" dx1="440.0"/>
+						<Connection Source="SoftKey_Knickdeichsel_senken.IN" Destination="GreenWhiteBackground_Knickdeichsel_senken.DI1" Comment="" dx1="160.0"/>
+						<Connection Source="SoftKey_Knickdeichsel_heben.IN" Destination="OUT_2b" Comment="" dx1="1740.0"/>
+						<Connection Source="SoftKey_Knickdeichsel_senken.IN" Destination="OUT_2a" Comment="" dx1="1833.3333333333335"/>
+						<Connection Source="SoftKey_Knickdeichsel_heben.IN" Destination="Sitzventile.IN_Knickdeichsel_heben" Comment="" dx1="900.0"/>
+						<Connection Source="SoftKey_Knickdeichsel_senken.IN" Destination="Sitzventile.IN_Knickdeichsel_senken" Comment="" dx1="740.0"/>
 					</DataConnections>
 				</SubAppNetwork>
 				<Attribute Name="Unfolded" Type="STRING" Value="true"/>
 				<Attribute Name="width" Type="LREAL" Value="10000.0"/>
-				<Attribute Name="height" Type="LREAL" Value="5811.764705882352"/>
+				<Attribute Name="height" Type="LREAL" Value="5806.666666666667"/>
 			</SubApp>
 		</SubAppNetwork>
 	</Application>
 	<Application Name="Dom" Comment="">
 		<SubAppNetwork>
-			<SubApp Name="Dom" Comment="Dom" x="-5000.0" y="-1135.2941176470588">
+			<SubApp Name="Dom" Comment="Dom" x="-5000.0" y="-1133.3333333333335">
 				<SubAppInterfaceList>
 					<SubAppEventInputs>
 						<SubAppEvent Name="INIT" Type="Event" Comment="">
@@ -539,50 +539,50 @@
 					</OutputVars>
 				</SubAppInterfaceList>
 				<SubAppNetwork>
-					<FB Name="AND_2_Dom" Type="AND_2" Comment="" x="4835.294117647059" y="1005.8823529411764">
+					<FB Name="AND_2_Dom" Type="AND_2" Comment="" x="4833.333333333334" y="1000.0">
 					</FB>
-					<FB Name="E_T_FF_Dom" Type="E_T_FF" Comment="" x="1500.0" y="952.9411764705882">
+					<FB Name="E_T_FF_Dom" Type="E_T_FF" Comment="" x="1500.0" y="946.6666666666667">
 					</FB>
-					<FB Name="DigitalOutput_6A" Type="QX" Comment="" x="4835.294117647059" y="0.0">
+					<FB Name="DigitalOutput_6A" Type="QX" Comment="" x="4833.333333333334" y="0.0">
 						<Parameter Name="QI" Value="TRUE"/>
 					</FB>
-					<FB Name="GreenWhiteBackground_Dom" Type="GreenWhiteBackground" Comment="" x="2817.6470588235293" y="0.0">
+					<FB Name="GreenWhiteBackground_Dom" Type="GreenWhiteBackground" Comment="" x="2813.3333333333335" y="0.0">
 						<Parameter Name="u16ObjId" Value="5001"/>
 					</FB>
-					<FB Name="E_IMPULSE_Dom" Type="E_IMPULSE" Comment="" x="3105.882352941176" y="952.9411764705882">
+					<FB Name="E_IMPULSE_Dom" Type="E_IMPULSE" Comment="" x="3100.0" y="946.6666666666667">
 						<Parameter Name="TM" Value="T#3s"/>
 					</FB>
-					<FB Name="SoftKey_Dom_UP" Type="IE" Comment="" x="270.5882352941176" y="0.0">
+					<FB Name="SoftKey_Dom_UP" Type="IE" Comment="" x="266.6666666666667" y="0.0">
 						<Parameter Name="QI" Value="TRUE"/>
 					</FB>
 					<EventConnections>
-						<Connection Source="E_IMPULSE_Dom.CNF" Destination="AND_2_Dom.REQ" Comment="" dx1="323.52941176470586"/>
-						<Connection Source="E_T_FF_Dom.EO" Destination="GreenWhiteBackground_Dom.REQ" Comment="" dx1="58.8235294117647"/>
+						<Connection Source="E_IMPULSE_Dom.CNF" Destination="AND_2_Dom.REQ" Comment="" dx1="320.0"/>
+						<Connection Source="E_T_FF_Dom.EO" Destination="GreenWhiteBackground_Dom.REQ" Comment="" dx1="53.333333333333336"/>
 						<Connection Source="E_T_FF_Dom.EO" Destination="E_IMPULSE_Dom.REQ" Comment=""/>
 						<Connection Source="GreenWhiteBackground_Dom.INITO" Destination="DigitalOutput_6A.INIT" Comment=""/>
-						<Connection Source="E_IMPULSE_Dom.CNF" Destination="DigitalOutput_6A.REQ" Comment="" dx1="323.52941176470586"/>
-						<Connection Source="AND_2_Dom.CNF" Destination="CNF_2a" Comment="" dx1="558.8235294117646" dx2="358.8235294117647" dy="-576.470588235294"/>
-						<Connection Source="INIT" Destination="SoftKey_Dom_UP.INIT" Comment="" dx1="70.58823529411764" dx2="70.58823529411764" dy="76.47058823529412"/>
+						<Connection Source="E_IMPULSE_Dom.CNF" Destination="DigitalOutput_6A.REQ" Comment="" dx1="320.0"/>
+						<Connection Source="AND_2_Dom.CNF" Destination="CNF_2a" Comment="" dx1="553.3333333333334" dx2="353.33333333333337" dy="-573.3333333333334"/>
+						<Connection Source="INIT" Destination="SoftKey_Dom_UP.INIT" Comment="" dx1="66.66666666666667" dx2="66.66666666666667" dy="73.33333333333334"/>
 						<Connection Source="SoftKey_Dom_UP.INITO" Destination="GreenWhiteBackground_Dom.INIT" Comment=""/>
-						<Connection Source="SoftKey_Dom_UP.IND" Destination="E_T_FF_Dom.CLK" Comment="" dx1="58.8235294117647" dx2="58.8235294117647" dy="0.0"/>
+						<Connection Source="SoftKey_Dom_UP.IND" Destination="E_T_FF_Dom.CLK" Comment="" dx1="53.333333333333336" dx2="53.333333333333336" dy="0.0"/>
 					</EventConnections>
 					<DataConnections>
-						<Connection Source="E_IMPULSE_Dom.QO" Destination="AND_2_Dom.IN1" Comment="" dx1="499.99999999999994"/>
-						<Connection Source="E_T_FF_Dom.Q" Destination="AND_2_Dom.IN2" Comment="" dx1="117.6470588235294" dx2="676.470588235294" dy="158.8235294117647"/>
-						<Connection Source="E_T_FF_Dom.Q" Destination="GreenWhiteBackground_Dom.DI1" Comment="" dx1="117.6470588235294"/>
-						<Connection Source="E_IMPULSE_Dom.QO" Destination="DigitalOutput_6A.OUT" Comment="" dx1="399.99999999999994"/>
-						<Connection Source="AND_2_Dom.OUT" Destination="OUT_2a" Comment="" dx1="752.9411764705882" dx2="70.58823529411764" dy="-641.1764705882352"/>
+						<Connection Source="E_IMPULSE_Dom.QO" Destination="AND_2_Dom.IN1" Comment="" dx1="493.33333333333337"/>
+						<Connection Source="E_T_FF_Dom.Q" Destination="AND_2_Dom.IN2" Comment="" dx1="113.33333333333334" dx2="673.3333333333334" dy="153.33333333333334"/>
+						<Connection Source="E_T_FF_Dom.Q" Destination="GreenWhiteBackground_Dom.DI1" Comment="" dx1="113.33333333333334"/>
+						<Connection Source="E_IMPULSE_Dom.QO" Destination="DigitalOutput_6A.OUT" Comment="" dx1="393.33333333333337"/>
+						<Connection Source="AND_2_Dom.OUT" Destination="OUT_2a" Comment="" dx1="746.6666666666667" dx2="66.66666666666667" dy="-640.0"/>
 					</DataConnections>
 				</SubAppNetwork>
 				<Attribute Name="Unfolded" Type="STRING" Value="true"/>
-				<Attribute Name="width" Type="LREAL" Value="7064.7058823529405"/>
-				<Attribute Name="height" Type="LREAL" Value="2023.5294117647056"/>
+				<Attribute Name="width" Type="LREAL" Value="7060.0"/>
+				<Attribute Name="height" Type="LREAL" Value="2020.0"/>
 			</SubApp>
 		</SubAppNetwork>
 	</Application>
 	<Application Name="Heckschieber" Comment="">
 		<SubAppNetwork>
-			<SubApp Name="Heckschieber" Comment="Heckschieber" x="3000.0" y="-1135.2941176470588">
+			<SubApp Name="Heckschieber" Comment="Heckschieber" x="3000.0" y="-1133.3333333333335">
 				<SubAppInterfaceList>
 					<SubAppEventInputs>
 						<SubAppEvent Name="INIT" Type="Event" Comment="">
@@ -603,63 +603,63 @@
 					</OutputVars>
 				</SubAppInterfaceList>
 				<SubAppNetwork>
-					<FB Name="E_F_TRIG_Heckschieber" Type="E_F_TRIG" Comment="" x="7058.823529411764" y="929.4117647058823">
+					<FB Name="E_F_TRIG_Heckschieber" Type="E_F_TRIG" Comment="" x="7053.333333333334" y="926.6666666666667">
 					</FB>
-					<FB Name="GreenWhiteBackground_Heckschieber" Type="GreenWhiteBackground" Comment="" x="4941.176470588235" y="0.0">
+					<FB Name="GreenWhiteBackground_Heckschieber" Type="GreenWhiteBackground" Comment="" x="4940.0" y="0.0">
 						<Parameter Name="u16ObjId" Value="5002"/>
 					</FB>
-					<FB Name="DigitalOutput_6B" Type="QX" Comment="" x="7299.999999999999" y="0.0">
+					<FB Name="DigitalOutput_6B" Type="QX" Comment="" x="7293.333333333334" y="0.0">
 						<Parameter Name="QI" Value="TRUE"/>
 					</FB>
-					<FB Name="E_SR_Heckschieber" Type="E_SR_RETRIG" Comment="" x="3335.2941176470586" y="1570.5882352941176">
+					<FB Name="E_SR_Heckschieber" Type="E_SR_RETRIG" Comment="" x="3333.3333333333335" y="1566.6666666666667">
 					</FB>
-					<FB Name="E_SWITCH_Heckschieber" Type="E_SWITCH" Comment="" x="1729.4117647058822" y="1570.5882352941176">
+					<FB Name="E_SWITCH_Heckschieber" Type="E_SWITCH" Comment="" x="1726.6666666666667" y="1566.6666666666667">
 					</FB>
-					<FB Name="AND_2_Heckschieber" Type="AND_2" Comment="" x="7199.999999999999" y="1570.5882352941176">
+					<FB Name="AND_2_Heckschieber" Type="AND_2" Comment="" x="7193.333333333334" y="1566.6666666666667">
 					</FB>
-					<FB Name="E_IMPULSE_Heckschieber" Type="E_IMPULSE" Comment="" x="5300.0" y="929.4117647058823">
+					<FB Name="E_IMPULSE_Heckschieber" Type="E_IMPULSE" Comment="" x="5300.0" y="926.6666666666667">
 						<Parameter Name="TM" Value="T#3s"/>
 					</FB>
-					<FB Name="SoftKey_Heckschieber_UP" Type="IE" Comment="" x="241.17647058823528" y="1323.5294117647059">
+					<FB Name="SoftKey_Heckschieber_UP" Type="IE" Comment="" x="240.0" y="1320.0">
 						<Parameter Name="QI" Value="TRUE"/>
 					</FB>
 					<EventConnections>
 						<Connection Source="E_IMPULSE_Heckschieber.CNF" Destination="E_F_TRIG_Heckschieber.EI" Comment=""/>
-						<Connection Source="E_SR_Heckschieber.EO" Destination="GreenWhiteBackground_Heckschieber.REQ" Comment="" dx1="129.41176470588235"/>
+						<Connection Source="E_SR_Heckschieber.EO" Destination="GreenWhiteBackground_Heckschieber.REQ" Comment="" dx1="126.66666666666667"/>
 						<Connection Source="GreenWhiteBackground_Heckschieber.INITO" Destination="DigitalOutput_6B.INIT" Comment=""/>
-						<Connection Source="E_IMPULSE_Heckschieber.CNF" Destination="DigitalOutput_6B.REQ" Comment="" dx1="535.2941176470588"/>
+						<Connection Source="E_IMPULSE_Heckschieber.CNF" Destination="DigitalOutput_6B.REQ" Comment="" dx1="533.3333333333334"/>
 						<Connection Source="E_SWITCH_Heckschieber.EO0" Destination="E_SR_Heckschieber.S" Comment=""/>
 						<Connection Source="E_SWITCH_Heckschieber.EO1" Destination="E_SR_Heckschieber.R" Comment=""/>
 						<Connection Source="E_SR_Heckschieber.EO" Destination="AND_2_Heckschieber.REQ" Comment=""/>
-						<Connection Source="E_SR_Heckschieber.EO" Destination="E_IMPULSE_Heckschieber.REQ" Comment="" dx1="129.41176470588235"/>
-						<Connection Source="E_IMPULSE_Heckschieber.CNF" Destination="AND_2_Heckschieber.REQ" Comment="" dx1="535.2941176470588"/>
-						<Connection Source="OPEN" Destination="E_SR_Heckschieber.S" Comment="" dx1="3299.9999999999995"/>
+						<Connection Source="E_SR_Heckschieber.EO" Destination="E_IMPULSE_Heckschieber.REQ" Comment="" dx1="126.66666666666667"/>
+						<Connection Source="E_IMPULSE_Heckschieber.CNF" Destination="AND_2_Heckschieber.REQ" Comment="" dx1="533.3333333333334"/>
+						<Connection Source="OPEN" Destination="E_SR_Heckschieber.S" Comment="" dx1="3293.3333333333335"/>
 						<Connection Source="CLOSE" Destination="E_SR_Heckschieber.R" Comment="" dx1="2900.0"/>
-						<Connection Source="AND_2_Heckschieber.CNF" Destination="CNF_2b" Comment="" dx1="558.8235294117646" dx2="558.8235294117646" dy="-864.7058823529411"/>
-						<Connection Source="INIT" Destination="GreenWhiteBackground_Heckschieber.INIT" Comment="" dx1="3382.3529411764703"/>
-						<Connection Source="E_F_TRIG_Heckschieber.EO" Destination="EO_Heckschieber_END" Comment="" dx1="441.17647058823525"/>
-						<Connection Source="INIT" Destination="SoftKey_Heckschieber_UP.INIT" Comment="" dx1="229.41176470588235" dx2="229.41176470588235" dy="0.0"/>
-						<Connection Source="SoftKey_Heckschieber_UP.IND" Destination="E_SWITCH_Heckschieber.EI" Comment="" dx1="370.5882352941176" dx2="370.5882352941176" dy="0.0"/>
+						<Connection Source="AND_2_Heckschieber.CNF" Destination="CNF_2b" Comment="" dx1="553.3333333333334" dx2="553.3333333333334" dy="-860.0"/>
+						<Connection Source="INIT" Destination="GreenWhiteBackground_Heckschieber.INIT" Comment="" dx1="3380.0"/>
+						<Connection Source="E_F_TRIG_Heckschieber.EO" Destination="EO_Heckschieber_END" Comment="" dx1="440.0"/>
+						<Connection Source="INIT" Destination="SoftKey_Heckschieber_UP.INIT" Comment="" dx1="226.66666666666669" dx2="226.66666666666669" dy="0.0"/>
+						<Connection Source="SoftKey_Heckschieber_UP.IND" Destination="E_SWITCH_Heckschieber.EI" Comment="" dx1="366.6666666666667" dx2="366.6666666666667" dy="0.0"/>
 					</EventConnections>
 					<DataConnections>
-						<Connection Source="E_IMPULSE_Heckschieber.QO" Destination="E_F_TRIG_Heckschieber.QI" Comment="" dx1="605.8823529411765"/>
-						<Connection Source="E_SR_Heckschieber.Q" Destination="GreenWhiteBackground_Heckschieber.DI1" Comment="" dx1="441.17647058823525"/>
-						<Connection Source="E_IMPULSE_Heckschieber.QO" Destination="DigitalOutput_6B.OUT" Comment="" dx1="605.8823529411765"/>
-						<Connection Source="E_SR_Heckschieber.Q" Destination="E_SWITCH_Heckschieber.G" Comment="" dx1="211.76470588235293" dx2="505.8823529411764" dy="270.5882352941176"/>
-						<Connection Source="E_SR_Heckschieber.Q" Destination="AND_2_Heckschieber.IN2" Comment="" dx1="2411.7647058823527"/>
-						<Connection Source="E_IMPULSE_Heckschieber.QO" Destination="AND_2_Heckschieber.IN1" Comment="" dx1="605.8823529411765"/>
-						<Connection Source="AND_2_Heckschieber.OUT" Destination="OUT_2b" Comment="" dx1="817.6470588235294" dx2="70.58823529411764" dy="-923.5294117647059"/>
+						<Connection Source="E_IMPULSE_Heckschieber.QO" Destination="E_F_TRIG_Heckschieber.QI" Comment="" dx1="600.0"/>
+						<Connection Source="E_SR_Heckschieber.Q" Destination="GreenWhiteBackground_Heckschieber.DI1" Comment="" dx1="440.0"/>
+						<Connection Source="E_IMPULSE_Heckschieber.QO" Destination="DigitalOutput_6B.OUT" Comment="" dx1="600.0"/>
+						<Connection Source="E_SR_Heckschieber.Q" Destination="E_SWITCH_Heckschieber.G" Comment="" dx1="206.66666666666669" dx2="500.0" dy="266.6666666666667"/>
+						<Connection Source="E_SR_Heckschieber.Q" Destination="AND_2_Heckschieber.IN2" Comment="" dx1="2406.666666666667"/>
+						<Connection Source="E_IMPULSE_Heckschieber.QO" Destination="AND_2_Heckschieber.IN1" Comment="" dx1="600.0"/>
+						<Connection Source="AND_2_Heckschieber.OUT" Destination="OUT_2b" Comment="" dx1="813.3333333333334" dx2="66.66666666666667" dy="-920.0"/>
 					</DataConnections>
 				</SubAppNetwork>
 				<Attribute Name="Unfolded" Type="STRING" Value="true"/>
 				<Attribute Name="width" Type="LREAL" Value="10200.0"/>
-				<Attribute Name="height" Type="LREAL" Value="3276.4705882352937"/>
+				<Attribute Name="height" Type="LREAL" Value="3273.3333333333335"/>
 			</SubApp>
 		</SubAppNetwork>
 	</Application>
 	<Application Name="Seitenschieber" Comment="">
 		<SubAppNetwork>
-			<SubApp Name="Seitenschieber" Comment="Seitenschieber" x="323.52941176470586" y="176.47058823529412">
+			<SubApp Name="Seitenschieber" Comment="Seitenschieber" x="320.0" y="173.33333333333334">
 				<SubAppInterfaceList>
 					<SubAppEventInputs>
 						<SubAppEvent Name="INIT" Type="Event" Comment="">
@@ -674,50 +674,50 @@
 					</OutputVars>
 				</SubAppInterfaceList>
 				<SubAppNetwork>
-					<FB Name="GreenWhiteBackground_Seitenschieber" Type="GreenWhiteBackground" Comment="" x="3582.3529411764703" y="17.64705882352941">
+					<FB Name="GreenWhiteBackground_Seitenschieber" Type="GreenWhiteBackground" Comment="" x="3580.0" y="13.333333333333334">
 						<Parameter Name="u16ObjId" Value="5008"/>
 					</FB>
-					<FB Name="E_IMPULSE_Seitenschieber" Type="E_IMPULSE" Comment="" x="4029.411764705882" y="958.8235294117646">
+					<FB Name="E_IMPULSE_Seitenschieber" Type="E_IMPULSE" Comment="" x="4026.666666666667" y="953.3333333333334">
 						<Parameter Name="TM" Value="T#3s"/>
 					</FB>
-					<FB Name="AND_2_Seitenschieber" Type="AND_2" Comment="" x="5900.0" y="958.8235294117646">
+					<FB Name="AND_2_Seitenschieber" Type="AND_2" Comment="" x="5900.0" y="953.3333333333334">
 					</FB>
-					<FB Name="E_T_FF_Seitenschieber" Type="E_T_FF" Comment="" x="1776.470588235294" y="1070.5882352941176">
+					<FB Name="E_T_FF_Seitenschieber" Type="E_T_FF" Comment="" x="1773.3333333333335" y="1066.6666666666667">
 					</FB>
 					<FB Name="DigitalOutput_7A" Type="QX" Comment="" x="6100.0" y="0.0">
 						<Parameter Name="QI" Value="TRUE"/>
 					</FB>
-					<FB Name="SoftKey_Seitenschieber_UP" Type="IE" Comment="" x="29.41176470588235" y="858.8235294117646">
+					<FB Name="SoftKey_Seitenschieber_UP" Type="IE" Comment="" x="26.666666666666668" y="853.3333333333334">
 						<Parameter Name="QI" Value="TRUE"/>
 					</FB>
 					<EventConnections>
-						<Connection Source="E_T_FF_Seitenschieber.EO" Destination="GreenWhiteBackground_Seitenschieber.REQ" Comment="" dx1="664.7058823529411"/>
-						<Connection Source="GreenWhiteBackground_Seitenschieber.INITO" Destination="DigitalOutput_7A.INIT" Comment="" dx1="535.2941176470588"/>
-						<Connection Source="E_T_FF_Seitenschieber.EO" Destination="E_IMPULSE_Seitenschieber.REQ" Comment="" dx1="664.7058823529411"/>
-						<Connection Source="E_IMPULSE_Seitenschieber.CNF" Destination="DigitalOutput_7A.REQ" Comment="" dx1="641.1764705882352"/>
+						<Connection Source="E_T_FF_Seitenschieber.EO" Destination="GreenWhiteBackground_Seitenschieber.REQ" Comment="" dx1="660.0"/>
+						<Connection Source="GreenWhiteBackground_Seitenschieber.INITO" Destination="DigitalOutput_7A.INIT" Comment="" dx1="533.3333333333334"/>
+						<Connection Source="E_T_FF_Seitenschieber.EO" Destination="E_IMPULSE_Seitenschieber.REQ" Comment="" dx1="660.0"/>
+						<Connection Source="E_IMPULSE_Seitenschieber.CNF" Destination="DigitalOutput_7A.REQ" Comment="" dx1="640.0"/>
 						<Connection Source="E_IMPULSE_Seitenschieber.CNF" Destination="AND_2_Seitenschieber.REQ" Comment=""/>
-						<Connection Source="AND_2_Seitenschieber.CNF" Destination="CNF_2a" Comment="" dx1="635.2941176470588" dx2="364.70588235294116" dy="-558.8235294117646"/>
-						<Connection Source="INIT" Destination="GreenWhiteBackground_Seitenschieber.INIT" Comment="" dx1="1905.8823529411764"/>
-						<Connection Source="INIT" Destination="SoftKey_Seitenschieber_UP.INIT" Comment="" dx1="123.52941176470587" dx2="123.52941176470587" dy="0.0"/>
-						<Connection Source="SoftKey_Seitenschieber_UP.IND" Destination="E_T_FF_Seitenschieber.CLK" Comment="" dx1="505.8823529411764" dx2="505.8823529411764" dy="0.0"/>
+						<Connection Source="AND_2_Seitenschieber.CNF" Destination="CNF_2a" Comment="" dx1="633.3333333333334" dx2="360.0" dy="-553.3333333333334"/>
+						<Connection Source="INIT" Destination="GreenWhiteBackground_Seitenschieber.INIT" Comment="" dx1="1900.0"/>
+						<Connection Source="INIT" Destination="SoftKey_Seitenschieber_UP.INIT" Comment="" dx1="120.0" dx2="120.0" dy="0.0"/>
+						<Connection Source="SoftKey_Seitenschieber_UP.IND" Destination="E_T_FF_Seitenschieber.CLK" Comment="" dx1="500.0" dx2="500.0" dy="0.0"/>
 					</EventConnections>
 					<DataConnections>
 						<Connection Source="E_T_FF_Seitenschieber.Q" Destination="GreenWhiteBackground_Seitenschieber.DI1" Comment="" dx1="600.0"/>
-						<Connection Source="E_IMPULSE_Seitenschieber.QO" Destination="AND_2_Seitenschieber.IN1" Comment="" dx1="705.8823529411765"/>
-						<Connection Source="E_IMPULSE_Seitenschieber.QO" Destination="DigitalOutput_7A.OUT" Comment="" dx1="705.8823529411765"/>
-						<Connection Source="E_T_FF_Seitenschieber.Q" Destination="AND_2_Seitenschieber.IN2" Comment="" dx1="3041.176470588235"/>
-						<Connection Source="AND_2_Seitenschieber.OUT" Destination="OUT_2a" Comment="" dx1="1047.0588235294117" dx2="70.58823529411764" dy="-617.6470588235294"/>
+						<Connection Source="E_IMPULSE_Seitenschieber.QO" Destination="AND_2_Seitenschieber.IN1" Comment="" dx1="700.0"/>
+						<Connection Source="E_IMPULSE_Seitenschieber.QO" Destination="DigitalOutput_7A.OUT" Comment="" dx1="700.0"/>
+						<Connection Source="E_T_FF_Seitenschieber.Q" Destination="AND_2_Seitenschieber.IN2" Comment="" dx1="3040.0"/>
+						<Connection Source="AND_2_Seitenschieber.OUT" Destination="OUT_2a" Comment="" dx1="1046.6666666666667" dx2="66.66666666666667" dy="-613.3333333333334"/>
 					</DataConnections>
 				</SubAppNetwork>
 				<Attribute Name="Unfolded" Type="STRING" Value="true"/>
-				<Attribute Name="width" Type="LREAL" Value="8323.529411764704"/>
-				<Attribute Name="height" Type="LREAL" Value="2123.529411764706"/>
+				<Attribute Name="width" Type="LREAL" Value="8320.0"/>
+				<Attribute Name="height" Type="LREAL" Value="2120.0"/>
 			</SubApp>
 		</SubAppNetwork>
 	</Application>
 	<Application Name="Schneidwerk" Comment="">
 		<SubAppNetwork>
-			<SubApp Name="Schneidwerk" Comment="Schneidwerk" x="1664.705882352941" y="-1200.0">
+			<SubApp Name="Schneidwerk" Comment="Schneidwerk" x="1660.0" y="-1200.0">
 				<SubAppInterfaceList>
 					<SubAppEventInputs>
 						<SubAppEvent Name="INIT" Type="Event" Comment="">
@@ -729,20 +729,20 @@
 					</SubAppEventInputs>
 				</SubAppInterfaceList>
 				<SubAppNetwork>
-					<FB Name="DigitalOutput_1A" Type="QX" Comment="" x="5035.294117647059" y="2717.6470588235293">
+					<FB Name="DigitalOutput_1A" Type="QX" Comment="" x="5033.333333333334" y="2713.3333333333335">
 						<Parameter Name="QI" Value="TRUE"/>
 					</FB>
-					<FB Name="GreenWhiteBackground_Schneidwerk" Type="GreenWhiteBackground" Comment="" x="4900.0" y="3652.941176470588">
+					<FB Name="GreenWhiteBackground_Schneidwerk" Type="GreenWhiteBackground" Comment="" x="4900.0" y="3646.666666666667">
 						<Parameter Name="u16ObjId" Value="5007"/>
 					</FB>
-					<FB Name="E_SWITCH_Schneidwerk" Type="E_SWITCH" Comment="" x="1705.8823529411764" y="982.3529411764705">
+					<FB Name="E_SWITCH_Schneidwerk" Type="E_SWITCH" Comment="" x="1700.0" y="980.0">
 					</FB>
-					<FB Name="E_SR_Schneidwerk" Type="E_SR" Comment="" x="3305.882352941176" y="982.3529411764705">
+					<FB Name="E_SR_Schneidwerk" Type="E_SR" Comment="" x="3300.0" y="980.0">
 					</FB>
-					<FB Name="DigitalOutput_1B" Type="QX" Comment="" x="5035.294117647059" y="1917.6470588235293">
+					<FB Name="DigitalOutput_1B" Type="QX" Comment="" x="5033.333333333334" y="1913.3333333333335">
 						<Parameter Name="QI" Value="TRUE"/>
 					</FB>
-					<FB Name="SoftKey_Schneidwerk_UP" Type="IE" Comment="" x="105.88235294117646" y="982.3529411764705">
+					<FB Name="SoftKey_Schneidwerk_UP" Type="IE" Comment="" x="100.0" y="980.0">
 						<Parameter Name="QI" Value="TRUE"/>
 					</FB>
 					<EventConnections>
@@ -750,31 +750,31 @@
 						<Connection Source="E_SR_Schneidwerk.EO" Destination="GreenWhiteBackground_Schneidwerk.REQ" Comment="" dx1="700.0"/>
 						<Connection Source="E_SWITCH_Schneidwerk.EO0" Destination="E_SR_Schneidwerk.S" Comment=""/>
 						<Connection Source="E_SWITCH_Schneidwerk.EO1" Destination="E_SR_Schneidwerk.R" Comment=""/>
-						<Connection Source="S_ON" Destination="E_SR_Schneidwerk.S" Comment="" dx1="2982.3529411764703"/>
-						<Connection Source="S_OFF" Destination="E_SR_Schneidwerk.R" Comment="" dx1="3235.2941176470586"/>
-						<Connection Source="INIT" Destination="DigitalOutput_1B.INIT" Comment="" dx1="70.58823529411764"/>
-						<Connection Source="INIT" Destination="GreenWhiteBackground_Schneidwerk.INIT" Comment="" dx1="70.58823529411764"/>
-						<Connection Source="INIT" Destination="DigitalOutput_1A.INIT" Comment="" dx1="70.58823529411764"/>
-						<Connection Source="INIT" Destination="SoftKey_Schneidwerk_UP.INIT" Comment="" dx1="70.58823529411764" dx2="70.58823529411764" dy="0.0"/>
-						<Connection Source="SoftKey_Schneidwerk_UP.IND" Destination="E_SWITCH_Schneidwerk.EI" Comment="" dx1="499.99999999999994" dx2="499.99999999999994" dy="0.0"/>
+						<Connection Source="S_ON" Destination="E_SR_Schneidwerk.S" Comment="" dx1="2980.0"/>
+						<Connection Source="S_OFF" Destination="E_SR_Schneidwerk.R" Comment="" dx1="3233.3333333333335"/>
+						<Connection Source="INIT" Destination="DigitalOutput_1B.INIT" Comment="" dx1="66.66666666666667"/>
+						<Connection Source="INIT" Destination="GreenWhiteBackground_Schneidwerk.INIT" Comment="" dx1="66.66666666666667"/>
+						<Connection Source="INIT" Destination="DigitalOutput_1A.INIT" Comment="" dx1="66.66666666666667"/>
+						<Connection Source="INIT" Destination="SoftKey_Schneidwerk_UP.INIT" Comment="" dx1="66.66666666666667" dx2="66.66666666666667" dy="0.0"/>
+						<Connection Source="SoftKey_Schneidwerk_UP.IND" Destination="E_SWITCH_Schneidwerk.EI" Comment="" dx1="493.33333333333337" dx2="493.33333333333337" dy="0.0"/>
 					</EventConnections>
 					<DataConnections>
-						<Connection Source="E_SR_Schneidwerk.Q" Destination="DigitalOutput_1A.OUT" Comment="" dx1="399.99999999999994"/>
-						<Connection Source="E_SR_Schneidwerk.Q" Destination="GreenWhiteBackground_Schneidwerk.DI1" Comment="" dx1="399.99999999999994"/>
-						<Connection Source="E_SR_Schneidwerk.Q" Destination="E_SWITCH_Schneidwerk.G" Comment="" dx1="399.99999999999994" dx2="505.8823529411764" dy="300.0"/>
+						<Connection Source="E_SR_Schneidwerk.Q" Destination="DigitalOutput_1A.OUT" Comment="" dx1="393.33333333333337"/>
+						<Connection Source="E_SR_Schneidwerk.Q" Destination="GreenWhiteBackground_Schneidwerk.DI1" Comment="" dx1="393.33333333333337"/>
+						<Connection Source="E_SR_Schneidwerk.Q" Destination="E_SWITCH_Schneidwerk.G" Comment="" dx1="393.33333333333337" dx2="500.0" dy="300.0"/>
 					</DataConnections>
 				</SubAppNetwork>
 				<Attribute Name="Unfolded" Type="STRING" Value="true"/>
-				<Attribute Name="width" Type="LREAL" Value="7311.764705882352"/>
-				<Attribute Name="height" Type="LREAL" Value="5070.588235294117"/>
+				<Attribute Name="width" Type="LREAL" Value="7306.666666666667"/>
+				<Attribute Name="height" Type="LREAL" Value="5066.666666666667"/>
 			</SubApp>
-			<Group Name="__Group01" Comment="hier muss noch das rückwärts implementiert werden &amp;#10;" x="9476.470588235294" y="1470.5882352941176" width="1329.4117647058822" height="664.7058823529411">
+			<Group Name="__Group01" Comment="hier muss noch das rückwärts implementiert werden &amp;#10;" x="9473.333333333334" y="1466.6666666666667" width="1326.6666666666667" height="660.0">
 			</Group>
 		</SubAppNetwork>
 	</Application>
 	<Application Name="Licht" Comment="">
 		<SubAppNetwork>
-			<SubApp Name="Licht" Comment="Licht" x="323.52941176470586" y="-1135.2941176470588">
+			<SubApp Name="Licht" Comment="Licht" x="320.0" y="-1133.3333333333335">
 				<SubAppInterfaceList>
 					<SubAppEventInputs>
 						<SubAppEvent Name="INIT" Type="Event" Comment="Service Initialization">
@@ -782,39 +782,39 @@
 					</SubAppEventInputs>
 				</SubAppInterfaceList>
 				<SubAppNetwork>
-					<FB Name="E_T_FF_Licht" Type="E_T_FF" Comment="" x="1523.5294117647059" y="199.99999999999997">
+					<FB Name="E_T_FF_Licht" Type="E_T_FF" Comment="" x="1520.0" y="193.33333333333334">
 					</FB>
-					<FB Name="GreenWhiteBackground_Licht" Type="GreenWhiteBackground" Comment="" x="2900.0" y="35.29411764705882">
+					<FB Name="GreenWhiteBackground_Licht" Type="GreenWhiteBackground" Comment="" x="2900.0" y="33.333333333333336">
 						<Parameter Name="u16ObjId" Value="5016"/>
 					</FB>
-					<FB Name="DigitalOutput_8A" Type="QX" Comment="" x="2900.0" y="976.470588235294">
+					<FB Name="DigitalOutput_8A" Type="QX" Comment="" x="2900.0" y="973.3333333333334">
 						<Parameter Name="QI" Value="TRUE"/>
 					</FB>
-					<FB Name="SoftKey_Licht_UP" Type="IE" Comment="" x="241.17647058823528" y="0.0">
+					<FB Name="SoftKey_Licht_UP" Type="IE" Comment="" x="240.0" y="0.0">
 						<Parameter Name="QI" Value="TRUE"/>
 					</FB>
 					<EventConnections>
-						<Connection Source="E_T_FF_Licht.EO" Destination="DigitalOutput_8A.REQ" Comment="" dx1="129.41176470588235"/>
-						<Connection Source="E_T_FF_Licht.EO" Destination="GreenWhiteBackground_Licht.REQ" Comment="" dx1="129.41176470588235"/>
-						<Connection Source="INIT" Destination="SoftKey_Licht_UP.INIT" Comment="" dx1="70.58823529411764" dx2="70.58823529411764" dy="76.47058823529412"/>
-						<Connection Source="SoftKey_Licht_UP.INITO" Destination="GreenWhiteBackground_Licht.INIT" Comment="" dx1="117.6470588235294" dx2="117.6470588235294" dy="-35.29411764705882"/>
-						<Connection Source="SoftKey_Licht_UP.INITO" Destination="DigitalOutput_8A.INIT" Comment="" dx1="117.6470588235294" dx2="117.6470588235294" dy="0.0"/>
-						<Connection Source="SoftKey_Licht_UP.IND" Destination="E_T_FF_Licht.CLK" Comment="" dx1="264.70588235294116" dx2="264.70588235294116" dy="0.0"/>
+						<Connection Source="E_T_FF_Licht.EO" Destination="DigitalOutput_8A.REQ" Comment="" dx1="126.66666666666667"/>
+						<Connection Source="E_T_FF_Licht.EO" Destination="GreenWhiteBackground_Licht.REQ" Comment="" dx1="126.66666666666667"/>
+						<Connection Source="INIT" Destination="SoftKey_Licht_UP.INIT" Comment="" dx1="66.66666666666667" dx2="66.66666666666667" dy="73.33333333333334"/>
+						<Connection Source="SoftKey_Licht_UP.INITO" Destination="GreenWhiteBackground_Licht.INIT" Comment="" dx1="113.33333333333334" dx2="113.33333333333334" dy="-33.333333333333336"/>
+						<Connection Source="SoftKey_Licht_UP.INITO" Destination="DigitalOutput_8A.INIT" Comment="" dx1="113.33333333333334" dx2="113.33333333333334" dy="0.0"/>
+						<Connection Source="SoftKey_Licht_UP.IND" Destination="E_T_FF_Licht.CLK" Comment="" dx1="260.0" dx2="260.0" dy="0.0"/>
 					</EventConnections>
 					<DataConnections>
-						<Connection Source="E_T_FF_Licht.Q" Destination="DigitalOutput_8A.OUT" Comment="" dx1="64.70588235294117"/>
-						<Connection Source="E_T_FF_Licht.Q" Destination="GreenWhiteBackground_Licht.DI1" Comment="" dx1="399.99999999999994"/>
+						<Connection Source="E_T_FF_Licht.Q" Destination="DigitalOutput_8A.OUT" Comment="" dx1="60.0"/>
+						<Connection Source="E_T_FF_Licht.Q" Destination="GreenWhiteBackground_Licht.DI1" Comment="" dx1="393.33333333333337"/>
 					</DataConnections>
 				</SubAppNetwork>
 				<Attribute Name="Unfolded" Type="STRING" Value="true"/>
 				<Attribute Name="width" Type="LREAL" Value="5800.0"/>
-				<Attribute Name="height" Type="LREAL" Value="2341.176470588235"/>
+				<Attribute Name="height" Type="LREAL" Value="2340.0"/>
 			</SubApp>
 		</SubAppNetwork>
 	</Application>
 	<Application Name="Abscheider" Comment="">
 		<SubAppNetwork>
-			<SubApp Name="Abscheider" Comment="Abscheider" x="5652.941176470587" y="176.47058823529412">
+			<SubApp Name="Abscheider" Comment="Abscheider" x="5646.666666666667" y="173.33333333333334">
 				<SubAppInterfaceList>
 					<SubAppEventInputs>
 						<SubAppEvent Name="INIT" Type="Event" Comment="Service Initialization">
@@ -829,51 +829,51 @@
 					</OutputVars>
 				</SubAppInterfaceList>
 				<SubAppNetwork>
-					<FB Name="E_IMPULSE_Abscheider" Type="E_IMPULSE" Comment="" x="3276.4705882352937" y="99.99999999999999">
+					<FB Name="E_IMPULSE_Abscheider" Type="E_IMPULSE" Comment="" x="3273.3333333333335" y="93.33333333333334">
 						<Parameter Name="TM" Value="T#3s"/>
 					</FB>
-					<FB Name="E_T_FF_Abscheider" Type="E_T_FF" Comment="" x="1623.5294117647059" y="1058.8235294117646">
+					<FB Name="E_T_FF_Abscheider" Type="E_T_FF" Comment="" x="1620.0" y="1053.3333333333335">
 					</FB>
-					<FB Name="DigitalOutput_7B" Type="QX" Comment="" x="5035.294117647059" y="0.0">
+					<FB Name="DigitalOutput_7B" Type="QX" Comment="" x="5033.333333333334" y="0.0">
 						<Parameter Name="QI" Value="TRUE"/>
 					</FB>
-					<FB Name="AND_2_Abscheider" Type="AND_2" Comment="" x="5035.294117647059" y="958.8235294117646">
+					<FB Name="AND_2_Abscheider" Type="AND_2" Comment="" x="5033.333333333334" y="953.3333333333334">
 					</FB>
-					<FB Name="GreenWhiteBackground_Abscheider" Type="GreenWhiteBackground" Comment="" x="3223.529411764706" y="1723.5294117647059">
+					<FB Name="GreenWhiteBackground_Abscheider" Type="GreenWhiteBackground" Comment="" x="3220.0" y="1720.0">
 						<Parameter Name="u16ObjId" Value="5015"/>
 					</FB>
-					<FB Name="SoftKey_Abscheider_UP" Type="IE" Comment="" x="423.52941176470586" y="923.5294117647059">
+					<FB Name="SoftKey_Abscheider_UP" Type="IE" Comment="" x="420.0" y="920.0">
 						<Parameter Name="QI" Value="TRUE"/>
 					</FB>
 					<EventConnections>
-						<Connection Source="E_T_FF_Abscheider.EO" Destination="E_IMPULSE_Abscheider.REQ" Comment="" dx1="399.99999999999994"/>
-						<Connection Source="E_IMPULSE_Abscheider.CNF" Destination="AND_2_Abscheider.REQ" Comment="" dx1="399.99999999999994"/>
-						<Connection Source="E_IMPULSE_Abscheider.CNF" Destination="DigitalOutput_7B.REQ" Comment="" dx1="476.4705882352941"/>
-						<Connection Source="E_T_FF_Abscheider.EO" Destination="AND_2_Abscheider.REQ" Comment="" dx1="399.99999999999994"/>
-						<Connection Source="E_T_FF_Abscheider.EO" Destination="GreenWhiteBackground_Abscheider.REQ" Comment="" dx1="399.99999999999994"/>
-						<Connection Source="AND_2_Abscheider.CNF" Destination="CNF_2b" Comment="" dx1="217.6470588235294"/>
-						<Connection Source="INIT" Destination="GreenWhiteBackground_Abscheider.INIT" Comment="" dx1="70.58823529411764"/>
-						<Connection Source="INIT" Destination="DigitalOutput_7B.INIT" Comment="" dx1="4676.470588235294"/>
-						<Connection Source="INIT" Destination="SoftKey_Abscheider_UP.INIT" Comment="" dx1="76.47058823529412" dx2="76.47058823529412" dy="0.0"/>
-						<Connection Source="SoftKey_Abscheider_UP.IND" Destination="E_T_FF_Abscheider.CLK" Comment="" dx1="399.99999999999994" dx2="399.99999999999994" dy="0.0"/>
+						<Connection Source="E_T_FF_Abscheider.EO" Destination="E_IMPULSE_Abscheider.REQ" Comment="" dx1="393.33333333333337"/>
+						<Connection Source="E_IMPULSE_Abscheider.CNF" Destination="AND_2_Abscheider.REQ" Comment="" dx1="393.33333333333337"/>
+						<Connection Source="E_IMPULSE_Abscheider.CNF" Destination="DigitalOutput_7B.REQ" Comment="" dx1="473.33333333333337"/>
+						<Connection Source="E_T_FF_Abscheider.EO" Destination="AND_2_Abscheider.REQ" Comment="" dx1="393.33333333333337"/>
+						<Connection Source="E_T_FF_Abscheider.EO" Destination="GreenWhiteBackground_Abscheider.REQ" Comment="" dx1="393.33333333333337"/>
+						<Connection Source="AND_2_Abscheider.CNF" Destination="CNF_2b" Comment="" dx1="213.33333333333334"/>
+						<Connection Source="INIT" Destination="GreenWhiteBackground_Abscheider.INIT" Comment="" dx1="66.66666666666667"/>
+						<Connection Source="INIT" Destination="DigitalOutput_7B.INIT" Comment="" dx1="4673.333333333334"/>
+						<Connection Source="INIT" Destination="SoftKey_Abscheider_UP.INIT" Comment="" dx1="73.33333333333334" dx2="73.33333333333334" dy="0.0"/>
+						<Connection Source="SoftKey_Abscheider_UP.IND" Destination="E_T_FF_Abscheider.CLK" Comment="" dx1="393.33333333333337" dx2="393.33333333333337" dy="0.0"/>
 					</EventConnections>
 					<DataConnections>
-						<Connection Source="E_IMPULSE_Abscheider.QO" Destination="AND_2_Abscheider.IN1" Comment="" dx1="335.2941176470588"/>
-						<Connection Source="E_IMPULSE_Abscheider.QO" Destination="DigitalOutput_7B.OUT" Comment="" dx1="335.2941176470588"/>
-						<Connection Source="E_T_FF_Abscheider.Q" Destination="AND_2_Abscheider.IN2" Comment="" dx1="1417.6470588235293"/>
-						<Connection Source="E_T_FF_Abscheider.Q" Destination="GreenWhiteBackground_Abscheider.DI1" Comment="" dx1="111.76470588235293"/>
-						<Connection Source="AND_2_Abscheider.OUT" Destination="OUT_2b" Comment="" dx1="264.70588235294116"/>
+						<Connection Source="E_IMPULSE_Abscheider.QO" Destination="AND_2_Abscheider.IN1" Comment="" dx1="333.33333333333337"/>
+						<Connection Source="E_IMPULSE_Abscheider.QO" Destination="DigitalOutput_7B.OUT" Comment="" dx1="333.33333333333337"/>
+						<Connection Source="E_T_FF_Abscheider.Q" Destination="AND_2_Abscheider.IN2" Comment="" dx1="1413.3333333333335"/>
+						<Connection Source="E_T_FF_Abscheider.Q" Destination="GreenWhiteBackground_Abscheider.DI1" Comment="" dx1="106.66666666666667"/>
+						<Connection Source="AND_2_Abscheider.OUT" Destination="OUT_2b" Comment="" dx1="260.0"/>
 					</DataConnections>
 				</SubAppNetwork>
 				<Attribute Name="Unfolded" Type="STRING" Value="true"/>
-				<Attribute Name="width" Type="LREAL" Value="7082.35294117647"/>
-				<Attribute Name="height" Type="LREAL" Value="2923.529411764706"/>
+				<Attribute Name="width" Type="LREAL" Value="7080.0"/>
+				<Attribute Name="height" Type="LREAL" Value="2920.0"/>
 			</SubApp>
 		</SubAppNetwork>
 	</Application>
 	<Application Name="Automatik" Comment="">
 		<SubAppNetwork>
-			<SubApp Name="Automatik" Comment="Automatik" x="-2058.8235294117644" y="-2188.235294117647">
+			<SubApp Name="Automatik" Comment="Automatik" x="-2053.3333333333335" y="-2186.666666666667">
 				<SubAppInterfaceList>
 					<SubAppEventInputs>
 						<SubAppEvent Name="INIT" Type="Event" Comment="">
@@ -899,70 +899,70 @@
 					</OutputVars>
 				</SubAppInterfaceList>
 				<SubAppNetwork>
-					<FB Name="E_SR_Verteiler_heben" Type="E_SR" Comment="" x="4800.0" y="3999.9999999999995">
+					<FB Name="E_SR_Verteiler_heben" Type="E_SR" Comment="" x="4800.0" y="3993.3333333333335">
 					</FB>
-					<FB Name="E_REND_Automatik_aus" Type="E_REND" Comment="" x="3723.5294117647054" y="2923.529411764706">
+					<FB Name="E_REND_Automatik_aus" Type="E_REND" Comment="" x="3720.0" y="2920.0">
 					</FB>
-					<FB Name="E_SR_Verteiler_senken" Type="E_SR" Comment="" x="2311.7647058823527" y="1058.8235294117646">
+					<FB Name="E_SR_Verteiler_senken" Type="E_SR" Comment="" x="2306.666666666667" y="1053.3333333333335">
 					</FB>
-					<FB Name="E_REND_Automatik_ein" Type="E_REND" Comment="" x="4252.941176470588" y="1599.9999999999998">
+					<FB Name="E_REND_Automatik_ein" Type="E_REND" Comment="" x="4246.666666666667" y="1593.3333333333335">
 					</FB>
-					<FB Name="E_FWD_DLY_Automatik_ein_UP" Type="E_DELAY" Comment="" x="1858.8235294117646" y="1599.9999999999998">
+					<FB Name="E_FWD_DLY_Automatik_ein_UP" Type="E_DELAY" Comment="" x="1853.3333333333335" y="1593.3333333333335">
 						<Parameter Name="DT" Value="T#10ms"/>
 					</FB>
-					<FB Name="E_FWD_DLY_Automatik_aus_DOWN" Type="E_DELAY" Comment="" x="2394.1176470588234" y="2447.0588235294117">
+					<FB Name="E_FWD_DLY_Automatik_aus_DOWN" Type="E_DELAY" Comment="" x="2393.3333333333335" y="2446.666666666667">
 						<Parameter Name="DT" Value="T#10ms"/>
 					</FB>
-					<FB Name="SoftKey_Automatik_ein_DOWN" Type="IE" Comment="" x="176.47058823529412" y="523.5294117647059">
+					<FB Name="SoftKey_Automatik_ein_DOWN" Type="IE" Comment="" x="173.33333333333334" y="520.0">
 						<Parameter Name="QI" Value="TRUE"/>
 					</FB>
-					<FB Name="SoftKey_Automatik_ein_UP" Type="IE" Comment="" x="176.47058823529412" y="1599.9999999999998">
+					<FB Name="SoftKey_Automatik_ein_UP" Type="IE" Comment="" x="173.33333333333334" y="1593.3333333333335">
 						<Parameter Name="QI" Value="TRUE"/>
 					</FB>
-					<FB Name="SoftKey_Automatik_aus_DOWN" Type="IE" Comment="" x="176.47058823529412" y="2658.8235294117644">
+					<FB Name="SoftKey_Automatik_aus_DOWN" Type="IE" Comment="" x="173.33333333333334" y="2653.3333333333335">
 						<Parameter Name="QI" Value="TRUE"/>
 					</FB>
-					<FB Name="SoftKey_Automatik_aus_UP" Type="IE" Comment="" x="176.47058823529412" y="3723.5294117647054">
+					<FB Name="SoftKey_Automatik_aus_UP" Type="IE" Comment="" x="173.33333333333334" y="3720.0">
 						<Parameter Name="QI" Value="TRUE"/>
 					</FB>
 					<EventConnections>
-						<Connection Source="E_REND_Automatik_aus.EO" Destination="E_SR_Verteiler_heben.S" Comment="" dx1="47.05882352941176"/>
-						<Connection Source="E_SR_Verteiler_heben.EO" Destination="EO_Verteiler_heben" Comment="" dx1="141.17647058823528"/>
-						<Connection Source="E_SR_Verteiler_senken.EO" Destination="EO_Verteiler_senken" Comment="" dx1="2764.705882352941"/>
-						<Connection Source="CNF_Schieber" Destination="E_REND_Automatik_ein.EI1" Comment="" dx1="4194.117647058823"/>
-						<Connection Source="E_REND_Automatik_ein.EO" Destination="EO_Automatik_ein" Comment="" dx1="1017.6470588235294"/>
-						<Connection Source="CNF_Schieber" Destination="E_REND_Automatik_aus.EI1" Comment="" dx1="3705.882352941176" dx2="1370.5882352941176" dy="2217.6470588235293"/>
-						<Connection Source="E_FWD_DLY_Automatik_ein_UP.EO" Destination="E_REND_Automatik_ein.EI2" Comment="" dx1="717.6470588235294"/>
-						<Connection Source="E_FWD_DLY_Automatik_aus_DOWN.EO" Destination="E_REND_Automatik_aus.EI2" Comment="" dx1="1094.1176470588234" dx2="47.05882352941176" dy="1088.235294117647"/>
-						<Connection Source="INIT" Destination="SoftKey_Automatik_ein_DOWN.INIT" Comment="" dx1="70.58823529411764" dx2="70.58823529411764" dy="0.0"/>
-						<Connection Source="SoftKey_Automatik_ein_DOWN.IND" Destination="E_SR_Verteiler_senken.S" Comment="" dx1="282.35294117647055" dx2="282.35294117647055" dy="0.0"/>
-						<Connection Source="INIT" Destination="SoftKey_Automatik_ein_UP.INIT" Comment="" dx1="70.58823529411764" dx2="70.58823529411764" dy="0.0"/>
-						<Connection Source="SoftKey_Automatik_ein_UP.IND" Destination="E_SR_Verteiler_senken.R" Comment="" dx1="252.9411764705882" dx2="252.9411764705882" dy="0.0"/>
-						<Connection Source="SoftKey_Automatik_ein_UP.IND" Destination="E_REND_Automatik_ein.R" Comment="" dx1="276.4705882352941" dx2="276.4705882352941" dy="388.235294117647"/>
-						<Connection Source="SoftKey_Automatik_ein_UP.IND" Destination="EO_Automatik_ein_UP" Comment="" dx1="364.70588235294116" dx2="47.05882352941176" dy="-382.35294117647055"/>
-						<Connection Source="SoftKey_Automatik_ein_UP.IND" Destination="E_FWD_DLY_Automatik_ein_UP.START" Comment="" dx1="347.05882352941177" dx2="347.05882352941177" dy="0.0"/>
-						<Connection Source="INIT" Destination="SoftKey_Automatik_aus_DOWN.INIT" Comment="" dx1="70.58823529411764" dx2="70.58823529411764" dy="0.0"/>
-						<Connection Source="SoftKey_Automatik_aus_DOWN.IND" Destination="E_REND_Automatik_aus.R" Comment="" dx1="494.1176470588235" dx2="494.1176470588235" dy="0.0"/>
-						<Connection Source="SoftKey_Automatik_aus_DOWN.IND" Destination="EO_Automatik_aus_DOWN" Comment="" dx1="511.7647058823529" dx2="511.7647058823529" dy="0.0"/>
-						<Connection Source="SoftKey_Automatik_aus_DOWN.IND" Destination="E_FWD_DLY_Automatik_aus_DOWN.START" Comment="" dx1="494.1176470588235" dx2="494.1176470588235" dy="0.0"/>
-						<Connection Source="INIT" Destination="SoftKey_Automatik_aus_UP.INIT" Comment="" dx1="70.58823529411764" dx2="70.58823529411764" dy="0.0"/>
-						<Connection Source="SoftKey_Automatik_aus_UP.IND" Destination="E_SR_Verteiler_heben.R" Comment="" dx1="1747.0588235294117" dx2="1747.0588235294117" dy="0.0"/>
-						<Connection Source="SoftKey_Automatik_aus_UP.IND" Destination="E_REND_Automatik_aus.R" Comment="" dx1="1247.0588235294117" dx2="1247.0588235294117" dy="0.0"/>
+						<Connection Source="E_REND_Automatik_aus.EO" Destination="E_SR_Verteiler_heben.S" Comment="" dx1="46.66666666666667"/>
+						<Connection Source="E_SR_Verteiler_heben.EO" Destination="EO_Verteiler_heben" Comment="" dx1="140.0"/>
+						<Connection Source="E_SR_Verteiler_senken.EO" Destination="EO_Verteiler_senken" Comment="" dx1="2760.0"/>
+						<Connection Source="CNF_Schieber" Destination="E_REND_Automatik_ein.EI1" Comment="" dx1="4193.333333333334"/>
+						<Connection Source="E_REND_Automatik_ein.EO" Destination="EO_Automatik_ein" Comment="" dx1="1013.3333333333334"/>
+						<Connection Source="CNF_Schieber" Destination="E_REND_Automatik_aus.EI1" Comment="" dx1="3700.0" dx2="1366.6666666666667" dy="2213.3333333333335"/>
+						<Connection Source="E_FWD_DLY_Automatik_ein_UP.EO" Destination="E_REND_Automatik_ein.EI2" Comment="" dx1="713.3333333333334"/>
+						<Connection Source="E_FWD_DLY_Automatik_aus_DOWN.EO" Destination="E_REND_Automatik_aus.EI2" Comment="" dx1="1093.3333333333335" dx2="46.66666666666667" dy="1086.6666666666667"/>
+						<Connection Source="INIT" Destination="SoftKey_Automatik_ein_DOWN.INIT" Comment="" dx1="66.66666666666667" dx2="66.66666666666667" dy="0.0"/>
+						<Connection Source="SoftKey_Automatik_ein_DOWN.IND" Destination="E_SR_Verteiler_senken.S" Comment="" dx1="280.0" dx2="280.0" dy="0.0"/>
+						<Connection Source="INIT" Destination="SoftKey_Automatik_ein_UP.INIT" Comment="" dx1="66.66666666666667" dx2="66.66666666666667" dy="0.0"/>
+						<Connection Source="SoftKey_Automatik_ein_UP.IND" Destination="E_SR_Verteiler_senken.R" Comment="" dx1="246.66666666666669" dx2="246.66666666666669" dy="0.0"/>
+						<Connection Source="SoftKey_Automatik_ein_UP.IND" Destination="E_REND_Automatik_ein.R" Comment="" dx1="273.33333333333337" dx2="273.33333333333337" dy="386.6666666666667"/>
+						<Connection Source="SoftKey_Automatik_ein_UP.IND" Destination="EO_Automatik_ein_UP" Comment="" dx1="360.0" dx2="46.66666666666667" dy="-380.0"/>
+						<Connection Source="SoftKey_Automatik_ein_UP.IND" Destination="E_FWD_DLY_Automatik_ein_UP.START" Comment="" dx1="346.6666666666667" dx2="346.6666666666667" dy="0.0"/>
+						<Connection Source="INIT" Destination="SoftKey_Automatik_aus_DOWN.INIT" Comment="" dx1="66.66666666666667" dx2="66.66666666666667" dy="0.0"/>
+						<Connection Source="SoftKey_Automatik_aus_DOWN.IND" Destination="E_REND_Automatik_aus.R" Comment="" dx1="493.33333333333337" dx2="493.33333333333337" dy="0.0"/>
+						<Connection Source="SoftKey_Automatik_aus_DOWN.IND" Destination="EO_Automatik_aus_DOWN" Comment="" dx1="506.6666666666667" dx2="506.6666666666667" dy="0.0"/>
+						<Connection Source="SoftKey_Automatik_aus_DOWN.IND" Destination="E_FWD_DLY_Automatik_aus_DOWN.START" Comment="" dx1="493.33333333333337" dx2="493.33333333333337" dy="0.0"/>
+						<Connection Source="INIT" Destination="SoftKey_Automatik_aus_UP.INIT" Comment="" dx1="66.66666666666667" dx2="66.66666666666667" dy="0.0"/>
+						<Connection Source="SoftKey_Automatik_aus_UP.IND" Destination="E_SR_Verteiler_heben.R" Comment="" dx1="1746.6666666666667" dx2="1746.6666666666667" dy="0.0"/>
+						<Connection Source="SoftKey_Automatik_aus_UP.IND" Destination="E_REND_Automatik_aus.R" Comment="" dx1="1246.6666666666667" dx2="1246.6666666666667" dy="0.0"/>
 					</EventConnections>
 					<DataConnections>
-						<Connection Source="E_SR_Verteiler_heben.Q" Destination="Q_Verteiler_heben" Comment="" dx1="47.05882352941176" dx2="247.05882352941174" dy="-864.7058823529411"/>
-						<Connection Source="E_SR_Verteiler_senken.Q" Destination="Q_Verteiler_senken" Comment="" dx1="47.05882352941176" dx2="758.8235294117646" dy="-858.8235294117646"/>
+						<Connection Source="E_SR_Verteiler_heben.Q" Destination="Q_Verteiler_heben" Comment="" dx1="46.66666666666667" dx2="246.66666666666669" dy="-860.0"/>
+						<Connection Source="E_SR_Verteiler_senken.Q" Destination="Q_Verteiler_senken" Comment="" dx1="46.66666666666667" dx2="753.3333333333334" dy="-853.3333333333334"/>
 					</DataConnections>
 				</SubAppNetwork>
 				<Attribute Name="Unfolded" Type="STRING" Value="true"/>
-				<Attribute Name="width" Type="LREAL" Value="8664.70588235294"/>
-				<Attribute Name="height" Type="LREAL" Value="7011.764705882352"/>
+				<Attribute Name="width" Type="LREAL" Value="8660.0"/>
+				<Attribute Name="height" Type="LREAL" Value="7006.666666666667"/>
 			</SubApp>
 		</SubAppNetwork>
 	</Application>
 	<Application Name="Vorsteuerventil_2B" Comment="">
 		<SubAppNetwork>
-			<SubApp Name="Vorsteuerventil_2B" Comment="Vorsteuerventil_2B" x="-2323.529411764706" y="2841.176470588235">
+			<SubApp Name="Vorsteuerventil_2B" Comment="Vorsteuerventil_2B" x="-2320.0" y="2840.0">
 				<SubAppInterfaceList>
 					<SubAppEventInputs>
 						<SubAppEvent Name="INIT" Type="Event" Comment="">
@@ -987,43 +987,43 @@
 					</InputVars>
 				</SubAppInterfaceList>
 				<SubAppNetwork>
-					<FB Name="OR_2B" Type="OR_5" Comment="" x="1100.0" y="258.8235294117647">
+					<FB Name="OR_2B" Type="OR_5" Comment="" x="1100.0" y="253.33333333333334">
 					</FB>
-					<FB Name="DigitalOutput_2B" Type="QX" Comment="" x="2564.705882352941" y="0.0">
+					<FB Name="DigitalOutput_2B" Type="QX" Comment="" x="2560.0" y="0.0">
 						<Parameter Name="QI" Value="TRUE"/>
 					</FB>
 					<EventConnections>
-						<Connection Source="REQ1" Destination="OR_2B.REQ" Comment="" dx1="552.9411764705882"/>
-						<Connection Source="REQ2" Destination="OR_2B.REQ" Comment="" dx1="558.8235294117646"/>
-						<Connection Source="REQ3" Destination="OR_2B.REQ" Comment="" dx1="558.8235294117646"/>
-						<Connection Source="REQ4" Destination="OR_2B.REQ" Comment="" dx1="558.8235294117646"/>
-						<Connection Source="REQ5" Destination="OR_2B.REQ" Comment="" dx1="558.8235294117646"/>
+						<Connection Source="REQ1" Destination="OR_2B.REQ" Comment="" dx1="546.6666666666667"/>
+						<Connection Source="REQ2" Destination="OR_2B.REQ" Comment="" dx1="553.3333333333334"/>
+						<Connection Source="REQ3" Destination="OR_2B.REQ" Comment="" dx1="553.3333333333334"/>
+						<Connection Source="REQ4" Destination="OR_2B.REQ" Comment="" dx1="553.3333333333334"/>
+						<Connection Source="REQ5" Destination="OR_2B.REQ" Comment="" dx1="553.3333333333334"/>
 						<Connection Source="INIT" Destination="DigitalOutput_2B.INIT" Comment="" dx1="2400.0" dx2="2400.0" dy="0.0"/>
-						<Connection Source="OR_2B.CNF" Destination="DigitalOutput_2B.REQ" Comment="" dx1="323.52941176470586" dx2="323.52941176470586" dy="0.0"/>
+						<Connection Source="OR_2B.CNF" Destination="DigitalOutput_2B.REQ" Comment="" dx1="320.0" dx2="320.0" dy="0.0"/>
 					</EventConnections>
 					<DataConnections>
-						<Connection Source="IN1" Destination="OR_2B.IN1" Comment="" dx1="852.9411764705882"/>
-						<Connection Source="IN2" Destination="OR_2B.IN2" Comment="" dx1="670.5882352941176"/>
-						<Connection Source="IN3" Destination="OR_2B.IN3" Comment="" dx1="570.5882352941176"/>
-						<Connection Source="IN4" Destination="OR_2B.IN4" Comment="" dx1="441.17647058823525"/>
-						<Connection Source="IN5" Destination="OR_2B.IN5" Comment="" dx1="258.8235294117647"/>
-						<Connection Source="OR_2B.OUT" Destination="DigitalOutput_2B.OUT" Comment="" dx1="323.52941176470586" dx2="323.52941176470586" dy="0.0"/>
+						<Connection Source="IN1" Destination="OR_2B.IN1" Comment="" dx1="846.6666666666667"/>
+						<Connection Source="IN2" Destination="OR_2B.IN2" Comment="" dx1="666.6666666666667"/>
+						<Connection Source="IN3" Destination="OR_2B.IN3" Comment="" dx1="566.6666666666667"/>
+						<Connection Source="IN4" Destination="OR_2B.IN4" Comment="" dx1="440.0"/>
+						<Connection Source="IN5" Destination="OR_2B.IN5" Comment="" dx1="253.33333333333334"/>
+						<Connection Source="OR_2B.OUT" Destination="DigitalOutput_2B.OUT" Comment="" dx1="320.0" dx2="320.0" dy="0.0"/>
 					</DataConnections>
 				</SubAppNetwork>
 				<Attribute Name="Unfolded" Type="STRING" Value="true"/>
 				<Attribute Name="width" Type="LREAL" Value="4400.0"/>
-				<Attribute Name="height" Type="LREAL" Value="2476.470588235294"/>
+				<Attribute Name="height" Type="LREAL" Value="2473.3333333333335"/>
 			</SubApp>
 		</SubAppNetwork>
 	</Application>
-	<Device Name="FORTE_PC" Type="FORTE_PC" Comment="" x="4052.941176470588" y="1235.2941176470588">
+	<Device Name="FORTE_PC" Type="FORTE_PC" Comment="" x="4046.666666666667" y="1233.3333333333335">
 		<Parameter Name="MGR_ID" Value="&quot;192.168.4.1:61499&quot;"/>
 		<Attribute Name="Profile" Type="STRING" Value="DynamicTypeLoad"/>
 		<Attribute Name="Color" Type="STRING" Value="255,190,111"/>
 		<Attribute Name="FBType" Type="STRING" Value="GEN_E_MUX, F_LT, E_CTD, E_STOPWATCH, F_LIMIT, UT_AuxiliaryInputMapping, UT_ButtonMapping_UP, F_TIME_IN_S_TO_UDINT, F_TAN, COLOR_BLACK, F_ACOS, QD, COLOR_WHITE, COLOR_OLIVE, E_MERGE, DataPanel_xDB0808_DIO_SAE_J1939, EMB_RES, COLOR_CYAN, ID, E_DEMUX, GEN_SUBL, QW, QX, F_MUL, IW, IX, Q_ChangePolygonScale, F_LE, GEN_SUBSCRIBE, F_ATAN, GEN_AND, F_SIN, F_LN, GEN_CLIENT, F_NOT, COLOR_MAROON, GEN_SERVER, GEN_PUBL, Q_SelectActiveWorkingSet, E_IMPULSE, RMT_RES, COLOR_RED, UT_ButtonMapping_HOLD, GEN_OR, E_D_FF, E_CYCLE, UT_ButtonMapping, E_R_TRIG, COLOR_TEAL, COLOR_BLUE, Q_ActiveMask, F_GE, E_F_TRIG, GreenWhiteBackground, E_RS, F_MUX_2, DEV_MGR, E_SPLIT, E_FWD, E_CTUD, UT_SoftkeyMapping_UP, F_EQ, E_T_FF, E_RDELAY, UT_ButtonMapping_DOWN, F_MOD, E_RTimeOut, F_NE, CbVtStatus, Q_ObjEnableDisable, F_TIME_IN_NS_TO_UDINT, FB_RANDOM, F_EXP, E_SELECT, GEN_PUBLISH, F_TIME_IN_MS_TO_UDINT, E_CTUD_UDINT, Q_CtrlAudioSignal, E_TRAIN, OUT_ANY_CONSOLE, F_SUB, Q_ChangeObjectLabel, F_GT, COLOR_YELLOW, GEN_E_DEMUX, F_LOG, F_SQRT, E_SR_RETRIG, DataPanel_xDB_16_DO_SAE_J1939, E_SR, COLOR_NAVY, GEN_XOR, Q_ChildLocation, F_MIN, E_SWITCH, E_RESTART, E_PERMIT, UT_SoftkeyMapping_HOLD, F_SEL, Q_ChangePolygonPoint, UT_SoftkeyMapping, F_MAX, E_TimeOut, COLOR_SILVER, Q_BackgroundColour, COLOR_MAGENTA, UT_SoftkeyMapping_DOWN, Q_Attribute, COLOR_LIME, COLOR_GREEN, COLOR_GREY, COLOR_PURPLE, F_ABS, E_DELAY, GEN_ADD, F_COS, Q_ObjHideShow, Q_StringValue, F_TIME_IN_US_TO_UDINT, E_CTU, Q_NumericValue, Q_ChildPosition, E_REND, F_ASIN, F_DIV" Comment="created during deployment"/>
 		<Resource Name="EMB_RES" Type="EMB_RES" Comment="" x="0.0" y="0.0">
 			<FBNetwork>
-				<SubApp Name="Vorsteuerventil_2A" Comment="" x="982.3529411764705" y="0.0">
+				<SubApp Name="Vorsteuerventil_2A" Comment="" x="980.0" y="0.0">
 					<SubAppInterfaceList>
 						<SubAppEventInputs>
 							<SubAppEvent Name="INIT" Type="Event" Comment="">
@@ -1047,11 +1047,11 @@
 							<VarDeclaration Name="IN5" Type="BOOL" Comment=""/>
 						</InputVars>
 					</SubAppInterfaceList>
-					<Attribute Name="width" Type="LREAL" Value="1323.5294117647059"/>
-					<Attribute Name="height" Type="LREAL" Value="658.8235294117646"/>
+					<Attribute Name="width" Type="LREAL" Value="1320.0"/>
+					<Attribute Name="height" Type="LREAL" Value="653.3333333333334"/>
 					<Attribute Name="GroupName" Type="STRING" Value="Vorsteuerventile"/>
 				</SubApp>
-				<SubApp Name="Vorsteuerventil_2B" Comment="" x="2482.3529411764703" y="0.0">
+				<SubApp Name="Vorsteuerventil_2B" Comment="" x="2480.0" y="0.0">
 					<SubAppInterfaceList>
 						<SubAppEventInputs>
 							<SubAppEvent Name="INIT" Type="Event" Comment="">
@@ -1075,11 +1075,11 @@
 							<VarDeclaration Name="IN5" Type="BOOL" Comment=""/>
 						</InputVars>
 					</SubAppInterfaceList>
-					<Attribute Name="width" Type="LREAL" Value="1323.5294117647059"/>
-					<Attribute Name="height" Type="LREAL" Value="658.8235294117646"/>
+					<Attribute Name="width" Type="LREAL" Value="1320.0"/>
+					<Attribute Name="height" Type="LREAL" Value="653.3333333333334"/>
 					<Attribute Name="GroupName" Type="STRING" Value="Vorsteuerventile"/>
 				</SubApp>
-				<SubApp Name="Abscheider" Comment="" x="3499.9999999999995" y="0.0">
+				<SubApp Name="Abscheider" Comment="" x="3493.3333333333335" y="0.0">
 					<SubAppInterfaceList>
 						<SubAppEventInputs>
 							<SubAppEvent Name="INIT" Type="Event" Comment="Service Initialization">
@@ -1093,11 +1093,11 @@
 							<VarDeclaration Name="OUT_2b" Type="BOOL" Comment=""/>
 						</OutputVars>
 					</SubAppInterfaceList>
-					<Attribute Name="width" Type="LREAL" Value="1323.5294117647059"/>
-					<Attribute Name="height" Type="LREAL" Value="658.8235294117646"/>
+					<Attribute Name="width" Type="LREAL" Value="1320.0"/>
+					<Attribute Name="height" Type="LREAL" Value="653.3333333333334"/>
 					<Attribute Name="GroupName" Type="STRING" Value="__Group01"/>
 				</SubApp>
-				<SubApp Name="Dom" Comment="" x="741.1764705882352" y="0.0">
+				<SubApp Name="Dom" Comment="" x="740.0" y="0.0">
 					<SubAppInterfaceList>
 						<SubAppEventInputs>
 							<SubAppEvent Name="INIT" Type="Event" Comment="">
@@ -1111,11 +1111,11 @@
 							<VarDeclaration Name="OUT_2a" Type="BOOL" Comment=""/>
 						</OutputVars>
 					</SubAppInterfaceList>
-					<Attribute Name="width" Type="LREAL" Value="1323.5294117647059"/>
-					<Attribute Name="height" Type="LREAL" Value="658.8235294117646"/>
+					<Attribute Name="width" Type="LREAL" Value="1320.0"/>
+					<Attribute Name="height" Type="LREAL" Value="653.3333333333334"/>
 					<Attribute Name="GroupName" Type="STRING" Value="__Group01"/>
 				</SubApp>
-				<SubApp Name="Seitenschieber" Comment="" x="741.1764705882352" y="499.99999999999994">
+				<SubApp Name="Seitenschieber" Comment="" x="740.0" y="493.33333333333337">
 					<SubAppInterfaceList>
 						<SubAppEventInputs>
 							<SubAppEvent Name="INIT" Type="Event" Comment="">
@@ -1129,11 +1129,11 @@
 							<VarDeclaration Name="OUT_2a" Type="BOOL" Comment=""/>
 						</OutputVars>
 					</SubAppInterfaceList>
-					<Attribute Name="width" Type="LREAL" Value="1323.5294117647059"/>
-					<Attribute Name="height" Type="LREAL" Value="658.8235294117646"/>
+					<Attribute Name="width" Type="LREAL" Value="1320.0"/>
+					<Attribute Name="height" Type="LREAL" Value="653.3333333333334"/>
 					<Attribute Name="GroupName" Type="STRING" Value="__Group01"/>
 				</SubApp>
-				<SubApp Name="Heckschieber" Comment="" x="4605.882352941177" y="1741.1764705882351">
+				<SubApp Name="Heckschieber" Comment="" x="4600.0" y="1740.0">
 					<SubAppInterfaceList>
 						<SubAppEventInputs>
 							<SubAppEvent Name="INIT" Type="Event" Comment="">
@@ -1153,11 +1153,11 @@
 							<VarDeclaration Name="OUT_2b" Type="BOOL" Comment=""/>
 						</OutputVars>
 					</SubAppInterfaceList>
-					<Attribute Name="width" Type="LREAL" Value="1323.5294117647059"/>
-					<Attribute Name="height" Type="LREAL" Value="658.8235294117646"/>
+					<Attribute Name="width" Type="LREAL" Value="1320.0"/>
+					<Attribute Name="height" Type="LREAL" Value="653.3333333333334"/>
 					<Attribute Name="GroupName" Type="STRING" Value="Vorgewendeautomatik"/>
 				</SubApp>
-				<SubApp Name="Klappen" Comment="" x="3499.9999999999995" y="999.9999999999999">
+				<SubApp Name="Klappen" Comment="" x="3493.3333333333335" y="993.3333333333334">
 					<SubAppInterfaceList>
 						<SubAppEventInputs>
 							<SubAppEvent Name="INIT" Type="Event" Comment="">
@@ -1181,11 +1181,11 @@
 							</VarDeclaration>
 						</OutputVars>
 					</SubAppInterfaceList>
-					<Attribute Name="width" Type="LREAL" Value="1323.5294117647059"/>
-					<Attribute Name="height" Type="LREAL" Value="658.8235294117646"/>
+					<Attribute Name="width" Type="LREAL" Value="1320.0"/>
+					<Attribute Name="height" Type="LREAL" Value="653.3333333333334"/>
 					<Attribute Name="GroupName" Type="STRING" Value="__Group01"/>
 				</SubApp>
-				<SubApp Name="Knickdeichsel" Comment="" x="741.1764705882352" y="999.9999999999999">
+				<SubApp Name="Knickdeichsel" Comment="" x="740.0" y="993.3333333333334">
 					<SubAppInterfaceList>
 						<SubAppEventInputs>
 							<SubAppEvent Name="INIT" Type="Event" Comment="">
@@ -1202,22 +1202,22 @@
 							<VarDeclaration Name="OUT_2a" Type="BOOL" Comment=""/>
 						</OutputVars>
 					</SubAppInterfaceList>
-					<Attribute Name="width" Type="LREAL" Value="1323.5294117647059"/>
-					<Attribute Name="height" Type="LREAL" Value="658.8235294117646"/>
+					<Attribute Name="width" Type="LREAL" Value="1320.0"/>
+					<Attribute Name="height" Type="LREAL" Value="653.3333333333334"/>
 					<Attribute Name="GroupName" Type="STRING" Value="__Group01"/>
 				</SubApp>
-				<SubApp Name="Licht" Comment="" x="741.1764705882352" y="2241.176470588235">
+				<SubApp Name="Licht" Comment="" x="740.0" y="2240.0">
 					<SubAppInterfaceList>
 						<SubAppEventInputs>
 							<SubAppEvent Name="INIT" Type="Event" Comment="Service Initialization">
 							</SubAppEvent>
 						</SubAppEventInputs>
 					</SubAppInterfaceList>
-					<Attribute Name="width" Type="LREAL" Value="1323.5294117647059"/>
-					<Attribute Name="height" Type="LREAL" Value="658.8235294117646"/>
+					<Attribute Name="width" Type="LREAL" Value="1320.0"/>
+					<Attribute Name="height" Type="LREAL" Value="653.3333333333334"/>
 					<Attribute Name="GroupName" Type="STRING" Value="__Group01"/>
 				</SubApp>
-				<SubApp Name="Schneidwerk" Comment="" x="4729.411764705882" y="1117.6470588235293">
+				<SubApp Name="Schneidwerk" Comment="" x="4726.666666666667" y="1113.3333333333335">
 					<SubAppInterfaceList>
 						<SubAppEventInputs>
 							<SubAppEvent Name="INIT" Type="Event" Comment="">
@@ -1228,11 +1228,11 @@
 							</SubAppEvent>
 						</SubAppEventInputs>
 					</SubAppInterfaceList>
-					<Attribute Name="width" Type="LREAL" Value="1323.5294117647059"/>
-					<Attribute Name="height" Type="LREAL" Value="658.8235294117646"/>
+					<Attribute Name="width" Type="LREAL" Value="1320.0"/>
+					<Attribute Name="height" Type="LREAL" Value="653.3333333333334"/>
 					<Attribute Name="GroupName" Type="STRING" Value="Vorgewendeautomatik"/>
 				</SubApp>
-				<SubApp Name="Automatik" Comment="" x="764.7058823529411" y="917.6470588235294">
+				<SubApp Name="Automatik" Comment="" x="760.0" y="913.3333333333334">
 					<SubAppInterfaceList>
 						<SubAppEventInputs>
 							<SubAppEvent Name="INIT" Type="Event" Comment="">
@@ -1257,11 +1257,11 @@
 							<VarDeclaration Name="Q_Verteiler_senken" Type="BOOL" Comment=""/>
 						</OutputVars>
 					</SubAppInterfaceList>
-					<Attribute Name="width" Type="LREAL" Value="1323.5294117647059"/>
-					<Attribute Name="height" Type="LREAL" Value="658.8235294117646"/>
+					<Attribute Name="width" Type="LREAL" Value="1320.0"/>
+					<Attribute Name="height" Type="LREAL" Value="653.3333333333334"/>
 					<Attribute Name="GroupName" Type="STRING" Value="Vorgewendeautomatik"/>
 				</SubApp>
-				<SubApp Name="Verteiler" Comment="" x="4482.35294117647" y="0.0">
+				<SubApp Name="Verteiler" Comment="" x="4480.0" y="0.0">
 					<SubAppInterfaceList>
 						<SubAppEventInputs>
 							<SubAppEvent Name="INIT" Type="Event" Comment="">
@@ -1286,11 +1286,11 @@
 							<VarDeclaration Name="OUT_2a" Type="BOOL" Comment=""/>
 						</OutputVars>
 					</SubAppInterfaceList>
-					<Attribute Name="width" Type="LREAL" Value="1323.5294117647059"/>
-					<Attribute Name="height" Type="LREAL" Value="658.8235294117646"/>
+					<Attribute Name="width" Type="LREAL" Value="1320.0"/>
+					<Attribute Name="height" Type="LREAL" Value="653.3333333333334"/>
 					<Attribute Name="GroupName" Type="STRING" Value="Vorgewendeautomatik"/>
 				</SubApp>
-				<SubApp Name="mapping_DataPanel" Comment="" x="3241.176470588235" y="1999.9999999999998">
+				<SubApp Name="mapping_DataPanel" Comment="" x="3240.0" y="1993.3333333333335">
 					<SubAppInterfaceList>
 						<SubAppEventInputs>
 							<SubAppEvent Name="INIT" Type="Event" Comment="">
@@ -1301,11 +1301,11 @@
 							</SubAppEvent>
 						</SubAppEventOutputs>
 					</SubAppInterfaceList>
-					<Attribute Name="width" Type="LREAL" Value="1241.1764705882351"/>
-					<Attribute Name="height" Type="LREAL" Value="617.6470588235294"/>
+					<Attribute Name="width" Type="LREAL" Value="1240.0"/>
+					<Attribute Name="height" Type="LREAL" Value="613.3333333333334"/>
 					<Attribute Name="GroupName" Type="STRING" Value="__Group01"/>
 				</SubApp>
-				<SubApp Name="mapping_Softkeys" Comment="" x="741.1764705882352" y="1741.1764705882351">
+				<SubApp Name="mapping_Softkeys" Comment="" x="740.0" y="1740.0">
 					<SubAppInterfaceList>
 						<SubAppEventInputs>
 							<SubAppEvent Name="INIT" Type="Event" Comment="">
@@ -1316,128 +1316,128 @@
 							</SubAppEvent>
 						</SubAppEventOutputs>
 					</SubAppInterfaceList>
-					<Attribute Name="width" Type="LREAL" Value="1241.1764705882351"/>
-					<Attribute Name="height" Type="LREAL" Value="617.6470588235294"/>
+					<Attribute Name="width" Type="LREAL" Value="1240.0"/>
+					<Attribute Name="height" Type="LREAL" Value="613.3333333333334"/>
 					<Attribute Name="GroupName" Type="STRING" Value="__Group01"/>
 				</SubApp>
-				<Group Name="Vorsteuerventile" Comment="Vorsteuerventile" x="-3241.176470588235" y="-3499.9999999999995" width="3752.941176470588" height="1999.9999999999998">
+				<Group Name="Vorsteuerventile" Comment="Vorsteuerventile" x="-3240.0" y="-3493.3333333333335" width="3746.666666666667" height="1993.3333333333335">
 				</Group>
-				<Group Name="Vorgewendeautomatik" Comment="Vorgewendeautomatik" x="-9500.0" y="-1241.1764705882351" width="10000.0" height="3376.4705882352937">
+				<Group Name="Vorgewendeautomatik" Comment="Vorgewendeautomatik" x="-9500.0" y="-1240.0" width="10000.0" height="3373.3333333333335">
 				</Group>
-				<Group Name="__Group01" Comment="" x="-9500.0" y="-4741.176470588235" width="6000.0" height="3252.941176470588">
+				<Group Name="__Group01" Comment="" x="-9500.0" y="-4740.0" width="6000.0" height="3246.666666666667">
 				</Group>
 				<EventConnections>
-					<Connection Source="START.COLD" Destination="Vorsteuerventil_2A.INIT" Comment="" dx1="529.4117647058823">
+					<Connection Source="START.COLD" Destination="Vorsteuerventil_2A.INIT" Comment="" dx1="526.6666666666667">
 						<Attribute Name="Visible" Type="STRING" Value="false"/>
 					</Connection>
-					<Connection Source="START.COLD" Destination="Vorsteuerventil_2B.INIT" Comment="" dx1="2029.4117647058822">
+					<Connection Source="START.COLD" Destination="Vorsteuerventil_2B.INIT" Comment="" dx1="2026.6666666666667">
 						<Attribute Name="Visible" Type="STRING" Value="false"/>
 					</Connection>
-					<Connection Source="START.COLD" Destination="Abscheider.INIT" Comment="" dx1="70.58823529411764" dx2="70.58823529411764" dy="499.99999999999994">
+					<Connection Source="START.COLD" Destination="Abscheider.INIT" Comment="" dx1="66.66666666666667" dx2="66.66666666666667" dy="493.33333333333337">
 						<Attribute Name="Visible" Type="STRING" Value="false"/>
 					</Connection>
-					<Connection Source="Abscheider.CNF_2b" Destination="Vorsteuerventil_2B.REQ5" Comment="" dx1="2170.5882352941176">
+					<Connection Source="Abscheider.CNF_2b" Destination="Vorsteuerventil_2B.REQ5" Comment="" dx1="2166.666666666667">
 						<Attribute Name="Visible" Type="STRING" Value="false"/>
 					</Connection>
-					<Connection Source="START.COLD" Destination="Dom.INIT" Comment="" dx1="70.58823529411764" dx2="70.58823529411764" dy="-2558.8235294117644">
+					<Connection Source="START.COLD" Destination="Dom.INIT" Comment="" dx1="66.66666666666667" dx2="66.66666666666667" dy="-2553.3333333333335">
 						<Attribute Name="Visible" Type="STRING" Value="false"/>
 					</Connection>
-					<Connection Source="Dom.CNF_2a" Destination="Vorsteuerventil_2A.REQ4" Comment="" dx1="2988.235294117647">
+					<Connection Source="Dom.CNF_2a" Destination="Vorsteuerventil_2A.REQ4" Comment="" dx1="2986.666666666667">
 						<Attribute Name="Visible" Type="STRING" Value="false"/>
 					</Connection>
-					<Connection Source="START.COLD" Destination="Seitenschieber.INIT" Comment="" dx1="70.58823529411764" dx2="70.58823529411764" dy="-2241.176470588235">
+					<Connection Source="START.COLD" Destination="Seitenschieber.INIT" Comment="" dx1="66.66666666666667" dx2="66.66666666666667" dy="-2240.0">
 						<Attribute Name="Visible" Type="STRING" Value="false"/>
 					</Connection>
-					<Connection Source="Seitenschieber.CNF_2a" Destination="Vorsteuerventil_2A.REQ5" Comment="" dx1="3223.529411764706">
+					<Connection Source="Seitenschieber.CNF_2a" Destination="Vorsteuerventil_2A.REQ5" Comment="" dx1="3220.0">
 						<Attribute Name="Visible" Type="STRING" Value="false"/>
 					</Connection>
-					<Connection Source="Heckschieber.CNF_2b" Destination="Vorsteuerventil_2B.REQ4" Comment="" dx1="1782.3529411764705">
+					<Connection Source="Heckschieber.CNF_2b" Destination="Vorsteuerventil_2B.REQ4" Comment="" dx1="1780.0">
 						<Attribute Name="Visible" Type="STRING" Value="false"/>
 					</Connection>
-					<Connection Source="START.COLD" Destination="Klappen.INIT" Comment="" dx1="70.58823529411764" dx2="70.58823529411764" dy="999.9999999999999">
+					<Connection Source="START.COLD" Destination="Klappen.INIT" Comment="" dx1="66.66666666666667" dx2="66.66666666666667" dy="993.3333333333334">
 						<Attribute Name="Visible" Type="STRING" Value="false"/>
 					</Connection>
-					<Connection Source="Klappen.CNF_2b" Destination="Vorsteuerventil_2B.REQ1" Comment="" dx1="723.5294117647059">
+					<Connection Source="Klappen.CNF_2b" Destination="Vorsteuerventil_2B.REQ1" Comment="" dx1="720.0">
 						<Attribute Name="Visible" Type="STRING" Value="false"/>
 					</Connection>
 					<Connection Source="Klappen.CNF_2a" Destination="Vorsteuerventil_2A.REQ1" Comment="" dx1="1100.0">
 						<Attribute Name="Visible" Type="STRING" Value="false"/>
 					</Connection>
-					<Connection Source="START.COLD" Destination="Knickdeichsel.INIT" Comment="" dx1="70.58823529411764" dx2="70.58823529411764" dy="870.5882352941176">
+					<Connection Source="START.COLD" Destination="Knickdeichsel.INIT" Comment="" dx1="66.66666666666667" dx2="66.66666666666667" dy="866.6666666666667">
 						<Attribute Name="Visible" Type="STRING" Value="false"/>
 					</Connection>
-					<Connection Source="Knickdeichsel.IND_2b" Destination="Vorsteuerventil_2B.REQ2" Comment="" dx1="535.2941176470588">
+					<Connection Source="Knickdeichsel.IND_2b" Destination="Vorsteuerventil_2B.REQ2" Comment="" dx1="533.3333333333334">
 						<Attribute Name="Visible" Type="STRING" Value="false"/>
 					</Connection>
-					<Connection Source="Knickdeichsel.IND_2a" Destination="Vorsteuerventil_2A.REQ2" Comment="" dx1="223.52941176470586">
+					<Connection Source="Knickdeichsel.IND_2a" Destination="Vorsteuerventil_2A.REQ2" Comment="" dx1="220.0">
 						<Attribute Name="Visible" Type="STRING" Value="false"/>
 					</Connection>
-					<Connection Source="START.COLD" Destination="Heckschieber.INIT" Comment="" dx1="70.58823529411764" dx2="70.58823529411764" dy="3505.882352941176">
+					<Connection Source="START.COLD" Destination="Heckschieber.INIT" Comment="" dx1="66.66666666666667" dx2="66.66666666666667" dy="3500.0">
 						<Attribute Name="Visible" Type="STRING" Value="false"/>
 					</Connection>
-					<Connection Source="START.COLD" Destination="Licht.INIT" Comment="" dx1="70.58823529411764" dx2="70.58823529411764" dy="-1682.3529411764705">
+					<Connection Source="START.COLD" Destination="Licht.INIT" Comment="" dx1="66.66666666666667" dx2="66.66666666666667" dy="-1680.0">
 						<Attribute Name="Visible" Type="STRING" Value="false"/>
 					</Connection>
-					<Connection Source="START.COLD" Destination="Schneidwerk.INIT" Comment="" dx1="70.58823529411764" dx2="70.58823529411764" dy="3199.9999999999995">
+					<Connection Source="START.COLD" Destination="Schneidwerk.INIT" Comment="" dx1="66.66666666666667" dx2="66.66666666666667" dy="3193.3333333333335">
 						<Attribute Name="Visible" Type="STRING" Value="false"/>
 					</Connection>
-					<Connection Source="START.COLD" Destination="Automatik.INIT" Comment="" dx1="70.58823529411764" dx2="70.58823529411764" dy="2200.0">
+					<Connection Source="START.COLD" Destination="Automatik.INIT" Comment="" dx1="66.66666666666667" dx2="66.66666666666667" dy="2200.0">
 						<Attribute Name="Visible" Type="STRING" Value="false"/>
 					</Connection>
-					<Connection Source="Verteiler.CNF_2b" Destination="Vorsteuerventil_2B.REQ3" Comment="" dx1="1082.3529411764705">
+					<Connection Source="Verteiler.CNF_2b" Destination="Vorsteuerventil_2B.REQ3" Comment="" dx1="1080.0">
 						<Attribute Name="Visible" Type="STRING" Value="false"/>
 					</Connection>
-					<Connection Source="Verteiler.CNF_2a" Destination="Vorsteuerventil_2A.REQ3" Comment="" dx1="252.9411764705882">
+					<Connection Source="Verteiler.CNF_2a" Destination="Vorsteuerventil_2A.REQ3" Comment="" dx1="246.66666666666669">
 						<Attribute Name="Visible" Type="STRING" Value="false"/>
 					</Connection>
-					<Connection Source="START.COLD" Destination="Verteiler.INIT" Comment="" dx1="70.58823529411764" dx2="70.58823529411764" dy="2623.529411764706">
+					<Connection Source="START.COLD" Destination="Verteiler.INIT" Comment="" dx1="66.66666666666667" dx2="66.66666666666667" dy="2620.0">
 						<Attribute Name="Visible" Type="STRING" Value="false"/>
 					</Connection>
-					<Connection Source="Automatik.EO_Verteiler_senken" Destination="Verteiler.EI_Verteiler_senken" Comment="" dx1="1288.235294117647"/>
-					<Connection Source="Automatik.EO_Verteiler_heben" Destination="Verteiler.EI_Verteiler_heben" Comment="" dx1="1123.5294117647059"/>
-					<Connection Source="START.COLD" Destination="mapping_DataPanel.INIT" Comment="" dx1="70.58823529411764" dx2="70.58823529411764" dy="741.1764705882352">
+					<Connection Source="Automatik.EO_Verteiler_senken" Destination="Verteiler.EI_Verteiler_senken" Comment="" dx1="1286.6666666666667"/>
+					<Connection Source="Automatik.EO_Verteiler_heben" Destination="Verteiler.EI_Verteiler_heben" Comment="" dx1="1120.0"/>
+					<Connection Source="START.COLD" Destination="mapping_DataPanel.INIT" Comment="" dx1="66.66666666666667" dx2="66.66666666666667" dy="740.0">
 						<Attribute Name="Visible" Type="STRING" Value="false"/>
 					</Connection>
-					<Connection Source="Automatik.EO_Automatik_ein_UP" Destination="Heckschieber.OPEN" Comment="" dx1="335.2941176470588"/>
-					<Connection Source="Heckschieber.EO_Heckschieber_END" Destination="Automatik.CNF_Schieber" Comment="" dx1="1300.0" dx2="370.5882352941176" dy="476.4705882352941"/>
-					<Connection Source="Automatik.EO_Automatik_ein" Destination="Schneidwerk.S_ON" Comment="" dx1="1723.5294117647059"/>
-					<Connection Source="Automatik.EO_Automatik_aus_DOWN" Destination="Schneidwerk.S_OFF" Comment="" dx1="188.23529411764704"/>
-					<Connection Source="Automatik.EO_Automatik_aus_DOWN" Destination="Heckschieber.CLOSE" Comment="" dx1="199.99999999999997"/>
-					<Connection Source="START.COLD" Destination="mapping_Softkeys.INIT" Comment="" dx1="70.58823529411764" dx2="70.58823529411764" dy="-1699.9999999999998">
+					<Connection Source="Automatik.EO_Automatik_ein_UP" Destination="Heckschieber.OPEN" Comment="" dx1="333.33333333333337"/>
+					<Connection Source="Heckschieber.EO_Heckschieber_END" Destination="Automatik.CNF_Schieber" Comment="" dx1="1300.0" dx2="366.6666666666667" dy="473.33333333333337"/>
+					<Connection Source="Automatik.EO_Automatik_ein" Destination="Schneidwerk.S_ON" Comment="" dx1="1720.0"/>
+					<Connection Source="Automatik.EO_Automatik_aus_DOWN" Destination="Schneidwerk.S_OFF" Comment="" dx1="186.66666666666669"/>
+					<Connection Source="Automatik.EO_Automatik_aus_DOWN" Destination="Heckschieber.CLOSE" Comment="" dx1="193.33333333333334"/>
+					<Connection Source="START.COLD" Destination="mapping_Softkeys.INIT" Comment="" dx1="66.66666666666667" dx2="66.66666666666667" dy="-1693.3333333333335">
 						<Attribute Name="Visible" Type="STRING" Value="false"/>
 					</Connection>
 				</EventConnections>
 				<DataConnections>
-					<Connection Source="Abscheider.OUT_2b" Destination="Vorsteuerventil_2B.IN5" Comment="" dx1="2605.882352941176">
+					<Connection Source="Abscheider.OUT_2b" Destination="Vorsteuerventil_2B.IN5" Comment="" dx1="2600.0">
 						<Attribute Name="Visible" Type="STRING" Value="false"/>
 					</Connection>
-					<Connection Source="Dom.OUT_2a" Destination="Vorsteuerventil_2A.IN4" Comment="" dx1="2864.705882352941">
+					<Connection Source="Dom.OUT_2a" Destination="Vorsteuerventil_2A.IN4" Comment="" dx1="2860.0">
 						<Attribute Name="Visible" Type="STRING" Value="false"/>
 					</Connection>
-					<Connection Source="Seitenschieber.OUT_2a" Destination="Vorsteuerventil_2A.IN5" Comment="" dx1="2676.470588235294">
+					<Connection Source="Seitenschieber.OUT_2a" Destination="Vorsteuerventil_2A.IN5" Comment="" dx1="2673.3333333333335">
 						<Attribute Name="Visible" Type="STRING" Value="false"/>
 					</Connection>
-					<Connection Source="Heckschieber.OUT_2b" Destination="Vorsteuerventil_2B.IN4" Comment="" dx1="1782.3529411764705">
+					<Connection Source="Heckschieber.OUT_2b" Destination="Vorsteuerventil_2B.IN4" Comment="" dx1="1780.0">
 						<Attribute Name="Visible" Type="STRING" Value="false"/>
 					</Connection>
-					<Connection Source="Klappen.OUT_2b" Destination="Vorsteuerventil_2B.IN1" Comment="" dx1="352.94117647058823">
+					<Connection Source="Klappen.OUT_2b" Destination="Vorsteuerventil_2B.IN1" Comment="" dx1="346.6666666666667">
 						<Attribute Name="Visible" Type="STRING" Value="false"/>
 					</Connection>
-					<Connection Source="Klappen.OUT_2a" Destination="Vorsteuerventil_2A.IN1" Comment="" dx1="788.235294117647">
+					<Connection Source="Klappen.OUT_2a" Destination="Vorsteuerventil_2A.IN1" Comment="" dx1="786.6666666666667">
 						<Attribute Name="Visible" Type="STRING" Value="false"/>
 					</Connection>
-					<Connection Source="Knickdeichsel.OUT_2b" Destination="Vorsteuerventil_2B.IN2" Comment="" dx1="282.35294117647055">
+					<Connection Source="Knickdeichsel.OUT_2b" Destination="Vorsteuerventil_2B.IN2" Comment="" dx1="280.0">
 						<Attribute Name="Visible" Type="STRING" Value="false"/>
 					</Connection>
-					<Connection Source="Knickdeichsel.OUT_2a" Destination="Vorsteuerventil_2A.IN2" Comment="" dx1="476.4705882352941">
+					<Connection Source="Knickdeichsel.OUT_2a" Destination="Vorsteuerventil_2A.IN2" Comment="" dx1="473.33333333333337">
 						<Attribute Name="Visible" Type="STRING" Value="false"/>
 					</Connection>
-					<Connection Source="Automatik.Q_Verteiler_heben" Destination="Verteiler.IN_Verteiler_heben" Comment="" dx1="1388.235294117647"/>
+					<Connection Source="Automatik.Q_Verteiler_heben" Destination="Verteiler.IN_Verteiler_heben" Comment="" dx1="1386.6666666666667"/>
 					<Connection Source="Automatik.Q_Verteiler_senken" Destination="Verteiler.IN_Verteiler_senken" Comment="" dx1="1500.0"/>
-					<Connection Source="Verteiler.OUT_2a" Destination="Vorsteuerventil_2A.IN3" Comment="" dx1="358.8235294117647">
+					<Connection Source="Verteiler.OUT_2a" Destination="Vorsteuerventil_2A.IN3" Comment="" dx1="353.33333333333337">
 						<Attribute Name="Visible" Type="STRING" Value="false"/>
 					</Connection>
-					<Connection Source="Verteiler.OUT_2b" Destination="Vorsteuerventil_2B.IN3" Comment="" dx1="64.70588235294117">
+					<Connection Source="Verteiler.OUT_2b" Destination="Vorsteuerventil_2B.IN3" Comment="" dx1="60.0">
 						<Attribute Name="Visible" Type="STRING" Value="false"/>
 					</Connection>
 				</DataConnections>
@@ -1458,7 +1458,7 @@
 	<Mapping From="Verteiler.Verteiler" To="FORTE_PC.EMB_RES.Verteiler"/>
 	<Mapping From="mapping_DataPanel.mapping_DataPanel" To="FORTE_PC.EMB_RES.mapping_DataPanel"/>
 	<Mapping From="mapping_Softkeys.mapping_Softkeys" To="FORTE_PC.EMB_RES.mapping_Softkeys"/>
-	<Segment Name="Ethernet" Type="Ethernet" Comment="" x="5364.7058823529405" y="617.6470588235294" dx1="1999.9999999999998">
+	<Segment Name="Ethernet" Type="Ethernet" Comment="" x="5360.0" y="613.3333333333334" dx1="1993.3333333333335">
 		<Attribute Name="Color" Type="STRING" Value="140,181,218"/>
 	</Segment>
 	<Link SegmentName="Ethernet" CommResource="FORTE_PC" Comment="">
