@@ -2363,7 +2363,7 @@
 					<Value>0</Value>
 				</Property>
 				<Property Name="FunctionType2">
-					<Value>0</Value>
+					<Value>2</Value>
 				</Property>
 				<Property Name="CriticalControl">
 					<Value>0</Value>
@@ -2417,7 +2417,7 @@
 					<Value>0</Value>
 				</Property>
 				<Property Name="FunctionType2">
-					<Value>0</Value>
+					<Value>2</Value>
 				</Property>
 				<Property Name="CriticalControl">
 					<Value>0</Value>
@@ -2471,7 +2471,7 @@
 					<Value>0</Value>
 				</Property>
 				<Property Name="FunctionType2">
-					<Value>0</Value>
+					<Value>2</Value>
 				</Property>
 				<Property Name="CriticalControl">
 					<Value>0</Value>
@@ -2525,7 +2525,7 @@
 					<Value>0</Value>
 				</Property>
 				<Property Name="FunctionType2">
-					<Value>0</Value>
+					<Value>2</Value>
 				</Property>
 				<Property Name="CriticalControl">
 					<Value>0</Value>
@@ -2579,7 +2579,7 @@
 					<Value>0</Value>
 				</Property>
 				<Property Name="FunctionType2">
-					<Value>0</Value>
+					<Value>2</Value>
 				</Property>
 				<Property Name="CriticalControl">
 					<Value>0</Value>
@@ -2633,7 +2633,7 @@
 					<Value>0</Value>
 				</Property>
 				<Property Name="FunctionType2">
-					<Value>0</Value>
+					<Value>2</Value>
 				</Property>
 				<Property Name="CriticalControl">
 					<Value>0</Value>
@@ -2687,7 +2687,7 @@
 					<Value>0</Value>
 				</Property>
 				<Property Name="FunctionType2">
-					<Value>0</Value>
+					<Value>2</Value>
 				</Property>
 				<Property Name="CriticalControl">
 					<Value>0</Value>
@@ -2741,7 +2741,7 @@
 					<Value>0</Value>
 				</Property>
 				<Property Name="FunctionType2">
-					<Value>0</Value>
+					<Value>2</Value>
 				</Property>
 				<Property Name="CriticalControl">
 					<Value>0</Value>
@@ -2795,7 +2795,7 @@
 					<Value>0</Value>
 				</Property>
 				<Property Name="FunctionType2">
-					<Value>0</Value>
+					<Value>2</Value>
 				</Property>
 				<Property Name="CriticalControl">
 					<Value>0</Value>
@@ -2849,7 +2849,7 @@
 					<Value>0</Value>
 				</Property>
 				<Property Name="FunctionType2">
-					<Value>0</Value>
+					<Value>2</Value>
 				</Property>
 				<Property Name="CriticalControl">
 					<Value>0</Value>
@@ -2903,7 +2903,7 @@
 					<Value>0</Value>
 				</Property>
 				<Property Name="FunctionType2">
-					<Value>0</Value>
+					<Value>2</Value>
 				</Property>
 				<Property Name="CriticalControl">
 					<Value>0</Value>
@@ -2957,7 +2957,7 @@
 					<Value>0</Value>
 				</Property>
 				<Property Name="FunctionType2">
-					<Value>0</Value>
+					<Value>2</Value>
 				</Property>
 				<Property Name="CriticalControl">
 					<Value>0</Value>
@@ -3011,7 +3011,7 @@
 					<Value>0</Value>
 				</Property>
 				<Property Name="FunctionType2">
-					<Value>0</Value>
+					<Value>2</Value>
 				</Property>
 				<Property Name="CriticalControl">
 					<Value>0</Value>
