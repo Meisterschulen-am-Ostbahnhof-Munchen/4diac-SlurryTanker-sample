@@ -30,7 +30,6 @@
 	</WindowSettings>
 	<Logging FileLogging="0"/>
 	<ThreadPrio UI="251" MacroTask="248" VariableChangeTask="248" ImageCacheMgrTask="255" JetVMControlTask="249" JetVMCommandWorkerTask="246" JVMPrioInterpreter="247" JVMPrioTimeBase="101" JVMPrioSysIdle="253"/>
-	<Simulation Enabled="1" ConfigFile=".\Simulations\ISO-VT 480x480\ISO-VT 480x480.xml"/>
 	<DisplaySettings>
 		<Orientation>6</Orientation>
 		<Order>1</Order>
@@ -48,4 +47,5 @@
 		<KeyCodes/>
 		<HideSoftKeyMasksInRuntime>0</HideSoftKeyMasksInRuntime>
 	</DisplaySettings>
+	<Simulation Enabled="1" ConfigFile=".\Simulations\ISO-VT 480x480\ISO-VT 480x480.xml"/>
 </JVER-Project>
