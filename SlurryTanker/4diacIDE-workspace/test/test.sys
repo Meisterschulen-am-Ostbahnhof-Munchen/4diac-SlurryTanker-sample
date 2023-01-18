@@ -730,18 +730,18 @@
 						<Connection Source="CLOSE" Destination="E_SR_Heckschieber.R" Comment="" dx1="2900.0"/>
 						<Connection Source="AND_2_Heckschieber.CNF" Destination="CNF_2b" Comment="" dx1="553.3333333333334" dx2="553.3333333333334" dy="-860.0"/>
 						<Connection Source="E_F_TRIG_Heckschieber.EO" Destination="EO_Heckschieber_END" Comment="" dx1="440.0"/>
-						<Connection Source="AuxInput_Heckschieber_UP.IND" Destination="E_SWITCH_Heckschieber.EI" Comment="" dx1="680.0"/>
+						<Connection Source="AuxInput_Heckschieber_UP.IND" Destination="E_SWITCH_Heckschieber.EI" Comment="" dx1="426.6666666666667"/>
 						<Connection Source="INIT" Destination="AuxInput_Heckschieber_UP.INIT" Comment="" dx1="133.33333333333334"/>
 						<Connection Source="INIT" Destination="GreenWhiteBackground_Heckschieber.INIT" Comment="" dx1="3713.3333333333335"/>
 						<Connection Source="E_SR_Heckschieber.EO" Destination="GreenWhiteBackground_Heckschieber.EO" Comment="" dx1="406.6666666666667"/>
 						<Connection Source="GreenWhiteBackground_Heckschieber.INITO" Destination="DigitalOutput_6B.INIT" Comment=""/>
 						<Connection Source="INIT" Destination="SoftKey_Heckschieber_UP.INIT" Comment="" dx1="160.0"/>
-						<Connection Source="SoftKey_Heckschieber_UP.IND" Destination="E_SWITCH_Heckschieber.EI" Comment="" dx1="593.3333333333334"/>
+						<Connection Source="SoftKey_Heckschieber_UP.IND" Destination="E_SWITCH_Heckschieber.EI" Comment="" dx1="460.0"/>
 					</EventConnections>
 					<DataConnections>
 						<Connection Source="E_IMPULSE_Heckschieber.QO" Destination="E_F_TRIG_Heckschieber.QI" Comment="" dx1="600.0"/>
 						<Connection Source="E_IMPULSE_Heckschieber.QO" Destination="DigitalOutput_6B.OUT" Comment="" dx1="600.0"/>
-						<Connection Source="E_SR_Heckschieber.Q" Destination="E_SWITCH_Heckschieber.G" Comment="" dx1="206.66666666666669" dx2="360.0" dy="266.6666666666667"/>
+						<Connection Source="E_SR_Heckschieber.Q" Destination="E_SWITCH_Heckschieber.G" Comment="" dx1="206.66666666666669" dx2="240.0" dy="266.6666666666667"/>
 						<Connection Source="E_SR_Heckschieber.Q" Destination="AND_2_Heckschieber.IN2" Comment="" dx1="2406.666666666667"/>
 						<Connection Source="E_IMPULSE_Heckschieber.QO" Destination="AND_2_Heckschieber.IN1" Comment="" dx1="600.0"/>
 						<Connection Source="AND_2_Heckschieber.OUT" Destination="OUT_2b" Comment="" dx1="813.3333333333334" dx2="66.66666666666667" dy="-920.0"/>
