@@ -2516,7 +2516,7 @@
 				<Object JVS-ID="4194326"/>
 			</Objects>
 		</Object>
-		<Object Class="CAuxFunction" Name="AuxFunction" ObjectName="AuxFunction2_31004" Pinned="FALSE" JVS-ID="31004">
+		<Object Class="CAuxFunction" Name="AuxFunction" ObjectName="AuxFunction2_31004" Pinned="TRUE" JVS-ID="31004">
 			<PropertySheet Name="AuxFunction">
 				<Property Name="BackColor">
 					<Value>16777215</Value>
@@ -2570,7 +2570,7 @@
 				<Object JVS-ID="4194327"/>
 			</Objects>
 		</Object>
-		<Object Class="CAuxFunction" Name="AuxFunction" ObjectName="AuxFunction2_31005" Pinned="FALSE" JVS-ID="31005">
+		<Object Class="CAuxFunction" Name="AuxFunction" ObjectName="AuxFunction2_31005" Pinned="TRUE" JVS-ID="31005">
 			<PropertySheet Name="AuxFunction">
 				<Property Name="BackColor">
 					<Value>16777215</Value>
@@ -2624,7 +2624,7 @@
 				<Object JVS-ID="4194328"/>
 			</Objects>
 		</Object>
-		<Object Class="CAuxFunction" Name="AuxFunction" ObjectName="AuxFunction2_31006" Pinned="FALSE" JVS-ID="31006">
+		<Object Class="CAuxFunction" Name="AuxFunction" ObjectName="AuxFunction2_31006" Pinned="TRUE" JVS-ID="31006">
 			<PropertySheet Name="AuxFunction">
 				<Property Name="BackColor">
 					<Value>16777215</Value>
@@ -2678,7 +2678,7 @@
 				<Object JVS-ID="4194329"/>
 			</Objects>
 		</Object>
-		<Object Class="CAuxFunction" Name="AuxFunction" ObjectName="AuxFunction2_31007" Pinned="FALSE" JVS-ID="31007">
+		<Object Class="CAuxFunction" Name="AuxFunction" ObjectName="AuxFunction2_31007" Pinned="TRUE" JVS-ID="31007">
 			<PropertySheet Name="AuxFunction">
 				<Property Name="BackColor">
 					<Value>16777215</Value>
@@ -2732,7 +2732,7 @@
 				<Object JVS-ID="4194330"/>
 			</Objects>
 		</Object>
-		<Object Class="CAuxFunction" Name="AuxFunction" ObjectName="AuxFunction2_31008" Pinned="FALSE" JVS-ID="31008">
+		<Object Class="CAuxFunction" Name="AuxFunction" ObjectName="AuxFunction2_31008" Pinned="TRUE" JVS-ID="31008">
 			<PropertySheet Name="AuxFunction">
 				<Property Name="BackColor">
 					<Value>16777215</Value>
@@ -2786,7 +2786,7 @@
 				<Object JVS-ID="4194331"/>
 			</Objects>
 		</Object>
-		<Object Class="CAuxFunction" Name="AuxFunction" ObjectName="AuxFunction2_31009" Pinned="FALSE" JVS-ID="31009">
+		<Object Class="CAuxFunction" Name="AuxFunction" ObjectName="AuxFunction2_31009" Pinned="TRUE" JVS-ID="31009">
 			<PropertySheet Name="AuxFunction">
 				<Property Name="BackColor">
 					<Value>16777215</Value>
@@ -2840,7 +2840,7 @@
 				<Object JVS-ID="4194332"/>
 			</Objects>
 		</Object>
-		<Object Class="CAuxFunction" Name="AuxFunction" ObjectName="AuxFunction2_31010" Pinned="FALSE" JVS-ID="31010">
+		<Object Class="CAuxFunction" Name="AuxFunction" ObjectName="AuxFunction2_31010" Pinned="TRUE" JVS-ID="31010">
 			<PropertySheet Name="AuxFunction">
 				<Property Name="BackColor">
 					<Value>16777215</Value>
@@ -2894,7 +2894,7 @@
 				<Object JVS-ID="4194333"/>
 			</Objects>
 		</Object>
-		<Object Class="CAuxFunction" Name="AuxFunction" ObjectName="AuxFunction2_31011" Pinned="FALSE" JVS-ID="31011">
+		<Object Class="CAuxFunction" Name="AuxFunction" ObjectName="AuxFunction2_31011" Pinned="TRUE" JVS-ID="31011">
 			<PropertySheet Name="AuxFunction">
 				<Property Name="BackColor">
 					<Value>16777215</Value>
@@ -2948,7 +2948,7 @@
 				<Object JVS-ID="4194334"/>
 			</Objects>
 		</Object>
-		<Object Class="CAuxFunction" Name="AuxFunction" ObjectName="AuxFunction2_31015" Pinned="FALSE" JVS-ID="31015">
+		<Object Class="CAuxFunction" Name="AuxFunction" ObjectName="AuxFunction2_31015" Pinned="TRUE" JVS-ID="31015">
 			<PropertySheet Name="AuxFunction">
 				<Property Name="BackColor">
 					<Value>16777215</Value>
@@ -3002,7 +3002,7 @@
 				<Object JVS-ID="4194336"/>
 			</Objects>
 		</Object>
-		<Object Class="CAuxFunction" Name="AuxFunction" ObjectName="AuxFunction2_31016" Pinned="FALSE" JVS-ID="31016">
+		<Object Class="CAuxFunction" Name="AuxFunction" ObjectName="AuxFunction2_31016" Pinned="TRUE" JVS-ID="31016">
 			<PropertySheet Name="AuxFunction">
 				<Property Name="BackColor">
 					<Value>16777215</Value>
