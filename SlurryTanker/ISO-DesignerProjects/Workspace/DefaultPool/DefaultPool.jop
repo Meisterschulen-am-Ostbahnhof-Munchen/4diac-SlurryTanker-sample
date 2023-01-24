@@ -619,36 +619,6 @@
 				</Property>
 			</PropertySheet>
 		</Object>
-		<Object Class="CSoftKey" Name="SoftKey" ObjectName="SoftKey_5014" Pinned="FALSE" JVS-ID="5014">
-			<PropertySheet Name="SoftKey">
-				<Property Name="BackColor">
-					<Value>16777215</Value>
-				</Property>
-				<Property Name="KeyCode">
-					<Value>1</Value>
-				</Property>
-				<Property Name="Hotkey">
-					<Value>0</Value>
-				</Property>
-				<Property Name="Width">
-					<Value>80</Value>
-				</Property>
-				<Property Name="Height">
-					<Value>80</Value>
-				</Property>
-				<Property Name="Visible">
-					<Value>1</Value>
-				</Property>
-				<Property Name="Comment">
-					<Value>
-						<![CDATA[AAA=]]>
-					</Value>
-				</Property>
-				<Property Name="Disabled">
-					<Value>0</Value>
-				</Property>
-			</PropertySheet>
-		</Object>
 		<Object Class="CSoftKey" Name="SoftKey" ObjectName="SoftKey_5015" Pinned="FALSE" JVS-ID="5015">
 			<PropertySheet Name="SoftKey">
 				<Property Name="BackColor">
@@ -776,36 +746,6 @@
 			</PropertySheet>
 		</Object>
 		<Object Class="CSoftKey" Name="SoftKey" ObjectName="SoftKey_5019" Pinned="FALSE" JVS-ID="5019">
-			<PropertySheet Name="SoftKey">
-				<Property Name="BackColor">
-					<Value>16777215</Value>
-				</Property>
-				<Property Name="KeyCode">
-					<Value>1</Value>
-				</Property>
-				<Property Name="Hotkey">
-					<Value>0</Value>
-				</Property>
-				<Property Name="Width">
-					<Value>80</Value>
-				</Property>
-				<Property Name="Height">
-					<Value>80</Value>
-				</Property>
-				<Property Name="Visible">
-					<Value>1</Value>
-				</Property>
-				<Property Name="Comment">
-					<Value>
-						<![CDATA[AAA=]]>
-					</Value>
-				</Property>
-				<Property Name="Disabled">
-					<Value>0</Value>
-				</Property>
-			</PropertySheet>
-		</Object>
-		<Object Class="CSoftKey" Name="SoftKey" ObjectName="SoftKey_5020" Pinned="FALSE" JVS-ID="5020">
 			<PropertySheet Name="SoftKey">
 				<Property Name="BackColor">
 					<Value>16777215</Value>

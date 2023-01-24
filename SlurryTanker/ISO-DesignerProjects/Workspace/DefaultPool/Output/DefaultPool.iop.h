@@ -27,13 +27,11 @@
 #define SoftKey_5011                       5011
 #define SoftKey_5012                       5012
 #define SoftKey_5013                       5013
-#define SoftKey_5014                       5014
 #define SoftKey_5015                       5015
 #define SoftKey_5016                       5016
 #define SoftKey_5017                       5017
 #define SoftKey_5018                       5018
 #define SoftKey_5019                       5019
-#define SoftKey_5020                       5020
 #define SoftKey_5021                       5021
 #define SoftKey_5022                       5022
 #define SoftKey_5023                       5023
