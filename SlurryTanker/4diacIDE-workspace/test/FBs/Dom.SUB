@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Dom" Comment="Subapplication Type">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="Franz" Date="2023-01-29">
+	</VersionInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="Event" Comment="">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="CNF_2a" Type="Event" Comment="">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<OutputVars>
+			<VarDeclaration Name="OUT_2a" Type="BOOL" Comment=""/>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="AND_2_Dom" Type="AND_2" Comment="" x="4833.333333333334" y="1000.0">
+		</FB>
+		<FB Name="E_T_FF_Dom" Type="E_T_FF" Comment="" x="1500.0" y="946.6666666666667">
+		</FB>
+		<FB Name="Dom_6A" Type="QX" Comment="" x="4833.333333333334" y="0.0">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="E_IMPULSE_Dom" Type="E_IMPULSE" Comment="" x="3100.0" y="946.6666666666667">
+			<Parameter Name="TM" Value="T#3s"/>
+		</FB>
+		<SubApp Name="AuxInput_Dom_UP" Comment="" x="300.0" y="520.0">
+			<SubAppInterfaceList>
+				<SubAppEventInputs>
+					<SubAppEvent Name="INIT" Type="Event" Comment="">
+					</SubAppEvent>
+				</SubAppEventInputs>
+				<SubAppEventOutputs>
+					<SubAppEvent Name="IND" Type="Event" Comment="">
+					</SubAppEvent>
+				</SubAppEventOutputs>
+			</SubAppInterfaceList>
+			<SubAppNetwork>
+				<FB Name="E_SWITCH_AuxInput_Dom" Type="E_SWITCH" Comment="" x="1100.0" y="100.0">
+				</FB>
+				<FB Name="AuxInput_Dom" Type="IX" Comment="" x="66.66666666666667" y="0.0">
+					<Parameter Name="QI" Value="TRUE"/>
+				</FB>
+				<EventConnections>
+					<Connection Source="AuxInput_Dom.IND" Destination="E_SWITCH_AuxInput_Dom.EI" Comment=""/>
+					<Connection Source="INIT" Destination="AuxInput_Dom.INIT" Comment="" dx1="153.33333333333334"/>
+					<Connection Source="E_SWITCH_AuxInput_Dom.EO0" Destination="IND" Comment="" dx1="933.3333333333334"/>
+				</EventConnections>
+				<DataConnections>
+					<Connection Source="AuxInput_Dom.IN" Destination="E_SWITCH_AuxInput_Dom.G" Comment="" dx1="266.6666666666667"/>
+				</DataConnections>
+			</SubAppNetwork>
+			<Attribute Name="width" Type="LREAL" Value="3053.3333333333335"/>
+			<Attribute Name="height" Type="LREAL" Value="1173.3333333333335"/>
+		</SubApp>
+		<SubApp Name="SoftKey_Dom_UP" Comment="" x="266.6666666666667" y="0.0">
+			<SubAppInterfaceList>
+				<SubAppEventInputs>
+					<SubAppEvent Name="INIT" Type="Event" Comment="">
+					</SubAppEvent>
+				</SubAppEventInputs>
+				<SubAppEventOutputs>
+					<SubAppEvent Name="IND" Type="Event" Comment="">
+					</SubAppEvent>
+				</SubAppEventOutputs>
+			</SubAppInterfaceList>
+			<SubAppNetwork>
+				<FB Name="SoftKey_Dom_UP" Type="IE" Comment="" x="0.0" y="0.0">
+					<Parameter Name="QI" Value="TRUE"/>
+				</FB>
+				<EventConnections>
+					<Connection Source="INIT" Destination="SoftKey_Dom_UP.INIT" Comment="" dx1="80.0" dx2="80.0" dy="-13.333333333333334"/>
+					<Connection Source="SoftKey_Dom_UP.IND" Destination="IND" Comment="" dx1="3026.666666666667"/>
+				</EventConnections>
+			</SubAppNetwork>
+			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
+		</SubApp>
+		<SubApp Name="GreenWhiteBackground_Dom" Comment="" x="2813.3333333333335" y="0.0">
+			<SubAppInterfaceList>
+				<SubAppEventInputs>
+					<SubAppEvent Name="INIT" Type="Event" Comment="">
+						<Attribute Name="YPOSITION" Type="STRING" Value="20"/>
+					</SubAppEvent>
+					<SubAppEvent Name="EO" Type="Event" Comment="">
+						<Attribute Name="YPOSITION" Type="STRING" Value="272"/>
+					</SubAppEvent>
+				</SubAppEventInputs>
+				<InputVars>
+					<VarDeclaration Name="Q" Type="BOOL" Comment="">
+						<Attribute Name="YPOSITION" Type="STRING" Value="139"/>
+					</VarDeclaration>
+				</InputVars>
+			</SubAppInterfaceList>
+			<SubAppNetwork>
+				<FB Name="GreenWhiteBackground_SoftKey_Dom" Type="GreenWhiteBackground" Comment="" x="-2400.0" y="-3466.666666666667">
+					<Parameter Name="u16ObjId" Value="5001"/>
+				</FB>
+				<FB Name="GreenWhiteBackground_AUX_Dom" Type="GreenWhiteBackground" Comment="" x="-2400.0" y="-2526.666666666667">
+					<Parameter Name="u16ObjId" Value="31001"/>
+				</FB>
+				<FB Name="GreenWhiteBackground_AUX_Dom_Joystick" Type="GreenWhiteBackgroundAux" Comment="" x="-2400.0" y="-1620.0">
+					<Parameter Name="u16ObjId" Value="31001"/>
+				</FB>
+				<EventConnections>
+					<Connection Source="EO" Destination="GreenWhiteBackground_SoftKey_Dom.REQ" Comment="" dx1="573.3333333333334"/>
+					<Connection Source="INIT" Destination="GreenWhiteBackground_SoftKey_Dom.INIT" Comment="" dx1="766.6666666666667"/>
+					<Connection Source="EO" Destination="GreenWhiteBackground_AUX_Dom.REQ" Comment="" dx1="786.6666666666667"/>
+					<Connection Source="INIT" Destination="GreenWhiteBackground_AUX_Dom.INIT" Comment="" dx1="466.6666666666667"/>
+					<Connection Source="INIT" Destination="GreenWhiteBackground_AUX_Dom_Joystick.INIT" Comment="" dx1="360.0"/>
+					<Connection Source="EO" Destination="GreenWhiteBackground_AUX_Dom_Joystick.REQ" Comment="" dx1="253.33333333333334"/>
+				</EventConnections>
+				<DataConnections>
+					<Connection Source="Q" Destination="GreenWhiteBackground_SoftKey_Dom.DI1" Comment="" dx1="680.0"/>
+					<Connection Source="Q" Destination="GreenWhiteBackground_AUX_Dom.DI1" Comment="" dx1="893.3333333333334"/>
+					<Connection Source="Q" Destination="GreenWhiteBackground_AUX_Dom_Joystick.DI1" Comment="" dx1="1000.0"/>
+				</DataConnections>
+			</SubAppNetwork>
+			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
+		</SubApp>
+		<EventConnections>
+			<Connection Source="E_IMPULSE_Dom.CNF" Destination="AND_2_Dom.REQ" Comment="" dx1="320.0"/>
+			<Connection Source="E_T_FF_Dom.EO" Destination="E_IMPULSE_Dom.REQ" Comment=""/>
+			<Connection Source="E_IMPULSE_Dom.CNF" Destination="Dom_6A.REQ" Comment="" dx1="320.0"/>
+			<Connection Source="AND_2_Dom.CNF" Destination="CNF_2a" Comment="" dx1="553.3333333333334" dx2="353.33333333333337" dy="-573.3333333333334"/>
+			<Connection Source="INIT" Destination="SoftKey_Dom_UP.INIT" Comment="" dx1="146.66666666666669"/>
+			<Connection Source="SoftKey_Dom_UP.IND" Destination="E_T_FF_Dom.CLK" Comment="" dx1="506.6666666666667"/>
+			<Connection Source="INIT" Destination="AuxInput_Dom_UP.INIT" Comment="" dx1="80.0"/>
+			<Connection Source="AuxInput_Dom_UP.IND" Destination="E_T_FF_Dom.CLK" Comment="" dx1="313.33333333333337"/>
+			<Connection Source="INIT" Destination="Dom_6A.INIT" Comment="" dx1="4566.666666666667"/>
+			<Connection Source="INIT" Destination="GreenWhiteBackground_Dom.INIT" Comment="" dx1="1420.0"/>
+			<Connection Source="E_T_FF_Dom.EO" Destination="GreenWhiteBackground_Dom.EO" Comment="" dx1="373.33333333333337"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="E_IMPULSE_Dom.QO" Destination="AND_2_Dom.IN1" Comment="" dx1="493.33333333333337"/>
+			<Connection Source="E_T_FF_Dom.Q" Destination="AND_2_Dom.IN2" Comment="" dx1="113.33333333333334" dx2="673.3333333333334" dy="153.33333333333334"/>
+			<Connection Source="E_IMPULSE_Dom.QO" Destination="Dom_6A.OUT" Comment="" dx1="393.33333333333337"/>
+			<Connection Source="AND_2_Dom.OUT" Destination="OUT_2a" Comment="" dx1="746.6666666666667" dx2="66.66666666666667" dy="-640.0"/>
+			<Connection Source="E_T_FF_Dom.Q" Destination="GreenWhiteBackground_Dom.Q" Comment="" dx1="373.33333333333337"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

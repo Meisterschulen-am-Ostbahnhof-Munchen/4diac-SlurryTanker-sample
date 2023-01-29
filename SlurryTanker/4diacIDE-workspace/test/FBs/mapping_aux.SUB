@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="mapping_aux" Comment="Subapplication Type">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="Franz" Date="2023-01-29">
+	</VersionInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="Event" Comment="">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="Event" Comment="">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="UT_AuxiliaryInputMapping" Type="UT_AuxiliaryInputMapping" Comment="" x="1106.6666666666667" y="20.0">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u8SAMember" Value="255"/>
+			<Parameter Name="u16ObjId_1" Value="31000"/>
+			<Parameter Name="DigitalInput_1" Value="&quot;AuxInput_31000&quot;"/>
+			<Parameter Name="u16ObjId_2" Value="31001"/>
+			<Parameter Name="DigitalInput_2" Value="&quot;AuxInput_Dom&quot;"/>
+			<Parameter Name="u16ObjId_3" Value="31002"/>
+			<Parameter Name="DigitalInput_3" Value="&quot;AuxInput_Heckschieber&quot;"/>
+			<Parameter Name="u16ObjId_4" Value="31003"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="UT_AuxiliaryInputMapping.INIT" Comment="" dx1="393.33333333333337"/>
+			<Connection Source="UT_AuxiliaryInputMapping.INITO" Destination="INITO" Comment="" dx1="586.6666666666667"/>
+		</EventConnections>
+	</SubAppNetwork>
+</SubAppType>

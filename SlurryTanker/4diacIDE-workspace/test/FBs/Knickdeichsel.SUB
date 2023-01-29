@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Knickdeichsel" Comment="Subapplication Type">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="Franz" Date="2023-01-29">
+	</VersionInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="Event" Comment="">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="IND_2b" Type="Event" Comment="">
+			</SubAppEvent>
+			<SubAppEvent Name="IND_2a" Type="Event" Comment="">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<OutputVars>
+			<VarDeclaration Name="OUT_2b" Type="BOOL" Comment=""/>
+			<VarDeclaration Name="OUT_2a" Type="BOOL" Comment=""/>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="SoftKey_Knickdeichsel_heben" Type="IX" Comment="" x="353.33333333333337" y="253.33333333333334">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="SoftKey_Knickdeichsel_senken" Type="IX" Comment="" x="353.33333333333337" y="1453.3333333333335">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="GreenWhiteBackground_Knickdeichsel_senken" Type="GreenWhiteBackground" Comment="" x="1953.3333333333335" y="4120.0">
+			<Parameter Name="u16ObjId" Value="5005"/>
+		</FB>
+		<FB Name="GreenWhiteBackground_Knickdeichsel_heben" Type="GreenWhiteBackground" Comment="" x="1953.3333333333335" y="3053.3333333333335">
+			<Parameter Name="u16ObjId" Value="5011"/>
+		</FB>
+		<SubApp Name="Sitzventile" Comment="Sitzventile" x="5146.666666666667" y="2120.0">
+			<SubAppInterfaceList>
+				<SubAppEventInputs>
+					<SubAppEvent Name="INITO" Type="Event" Comment="">
+					</SubAppEvent>
+					<SubAppEvent Name="IND_Knickdeichsel_senken" Type="Event" Comment="">
+					</SubAppEvent>
+					<SubAppEvent Name="IND_Knickdeichsel_heben" Type="Event" Comment="">
+					</SubAppEvent>
+				</SubAppEventInputs>
+				<InputVars>
+					<VarDeclaration Name="IN_Knickdeichsel_heben" Type="BOOL" Comment=""/>
+					<VarDeclaration Name="IN_Knickdeichsel_senken" Type="BOOL" Comment=""/>
+				</InputVars>
+			</SubAppInterfaceList>
+			<SubAppNetwork>
+				<FB Name="OR_5A_5B" Type="OR_2" Comment="" x="493.33333333333337" y="333.33333333333337">
+					<Attribute Name="PinComment" Type="STRING" Value="IN1:Knickdeichsel_heben"/>
+					<Attribute Name="PinComment" Type="STRING" Value="IN2:Knickdeichsel_senken"/>
+				</FB>
+				<FB Name="Knickdeichsel_5B" Type="QX" Comment="" x="1553.3333333333335" y="66.66666666666667">
+					<Parameter Name="QI" Value="TRUE"/>
+				</FB>
+				<FB Name="Knickdeichsel_5A" Type="QX" Comment="" x="1553.3333333333335" y="1133.3333333333335">
+					<Parameter Name="QI" Value="TRUE"/>
+				</FB>
+				<EventConnections>
+					<Connection Source="OR_5A_5B.CNF" Destination="Knickdeichsel_5B.REQ" Comment="" dx1="253.33333333333334"/>
+					<Connection Source="OR_5A_5B.CNF" Destination="Knickdeichsel_5A.REQ" Comment="" dx1="266.6666666666667"/>
+					<Connection Source="IND_Knickdeichsel_senken" Destination="OR_5A_5B.REQ" Comment="" dx1="366.6666666666667"/>
+					<Connection Source="IND_Knickdeichsel_heben" Destination="OR_5A_5B.REQ" Comment="" dx1="273.33333333333337"/>
+					<Connection Source="INITO" Destination="Knickdeichsel_5B.INIT" Comment="" dx1="1940.0"/>
+					<Connection Source="INITO" Destination="Knickdeichsel_5A.INIT" Comment="" dx1="700.0"/>
+				</EventConnections>
+				<DataConnections>
+					<Connection Source="OR_5A_5B.OUT" Destination="Knickdeichsel_5B.OUT" Comment="" dx1="433.33333333333337"/>
+					<Connection Source="OR_5A_5B.OUT" Destination="Knickdeichsel_5A.OUT" Comment="" dx1="126.66666666666667"/>
+					<Connection Source="IN_Knickdeichsel_heben" Destination="OR_5A_5B.IN1" Comment="" dx1="193.33333333333334"/>
+					<Connection Source="IN_Knickdeichsel_senken" Destination="OR_5A_5B.IN2" Comment="" dx1="66.66666666666667"/>
+				</DataConnections>
+			</SubAppNetwork>
+			<Attribute Name="Unfolded" Type="STRING" Value="true"/>
+			<Attribute Name="width" Type="LREAL" Value="4126.666666666667"/>
+			<Attribute Name="height" Type="LREAL" Value="2466.666666666667"/>
+		</SubApp>
+		<EventConnections>
+			<Connection Source="SoftKey_Knickdeichsel_heben.IND" Destination="GreenWhiteBackground_Knickdeichsel_heben.REQ" Comment="" dx1="573.3333333333334"/>
+			<Connection Source="SoftKey_Knickdeichsel_senken.IND" Destination="GreenWhiteBackground_Knickdeichsel_senken.REQ" Comment="" dx1="300.0"/>
+			<Connection Source="INIT" Destination="SoftKey_Knickdeichsel_heben.INIT" Comment="" dx1="66.66666666666667"/>
+			<Connection Source="SoftKey_Knickdeichsel_heben.IND" Destination="IND_2b" Comment="" dx1="1500.0"/>
+			<Connection Source="INIT" Destination="SoftKey_Knickdeichsel_senken.INIT" Comment="" dx1="66.66666666666667"/>
+			<Connection Source="SoftKey_Knickdeichsel_senken.IND" Destination="IND_2a" Comment="" dx1="1566.6666666666667"/>
+			<Connection Source="SoftKey_Knickdeichsel_senken.IND" Destination="Sitzventile.IND_Knickdeichsel_senken" Comment="" dx1="1166.6666666666667"/>
+			<Connection Source="SoftKey_Knickdeichsel_heben.IND" Destination="Sitzventile.IND_Knickdeichsel_heben" Comment="" dx1="1053.3333333333335"/>
+			<Connection Source="INIT" Destination="Sitzventile.INITO" Comment="" dx1="66.66666666666667"/>
+			<Connection Source="INIT" Destination="GreenWhiteBackground_Knickdeichsel_heben.INIT" Comment="" dx1="66.66666666666667"/>
+			<Connection Source="INIT" Destination="GreenWhiteBackground_Knickdeichsel_senken.INIT" Comment="" dx1="66.66666666666667"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="SoftKey_Knickdeichsel_heben.IN" Destination="GreenWhiteBackground_Knickdeichsel_heben.DI1" Comment="" dx1="440.0"/>
+			<Connection Source="SoftKey_Knickdeichsel_senken.IN" Destination="GreenWhiteBackground_Knickdeichsel_senken.DI1" Comment="" dx1="160.0"/>
+			<Connection Source="SoftKey_Knickdeichsel_heben.IN" Destination="OUT_2b" Comment="" dx1="1740.0"/>
+			<Connection Source="SoftKey_Knickdeichsel_senken.IN" Destination="OUT_2a" Comment="" dx1="1833.3333333333335"/>
+			<Connection Source="SoftKey_Knickdeichsel_heben.IN" Destination="Sitzventile.IN_Knickdeichsel_heben" Comment="" dx1="900.0"/>
+			<Connection Source="SoftKey_Knickdeichsel_senken.IN" Destination="Sitzventile.IN_Knickdeichsel_senken" Comment="" dx1="740.0"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>
