@@ -1218,7 +1218,7 @@
 						<Parameter Name="u16ObjId_1" Value="31000"/>
 						<Parameter Name="DigitalInput_1" Value="&quot;AuxInput_31000&quot;"/>
 						<Parameter Name="u16ObjId_2" Value="31001"/>
-						<Parameter Name="DigitalInput_2" Value="&quot;AuxInput_Dom_UP&quot;&quot;"/>
+						<Parameter Name="DigitalInput_2" Value="&quot;AuxInput_Dom_UP&quot;"/>
 						<Parameter Name="u16ObjId_3" Value="31002"/>
 						<Parameter Name="DigitalInput_3" Value="&quot;AuxInput_Heckschieber&quot;"/>
 						<Parameter Name="u16ObjId_4" Value="31003"/>
