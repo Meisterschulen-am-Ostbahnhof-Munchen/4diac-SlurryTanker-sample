@@ -11,7 +11,7 @@
 		</SubAppEventInputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="UT_SoftkeyMapping" Type="UT_SoftkeyMapping" Comment="" x="1400.0" y="0.0">
+		<FB Name="UT_SoftkeyMapping" Type="UT_SoftkeyMapping" Comment="" x="1066.6666666666667" y="0.0">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u8SAMember" Value="255"/>
 			<Parameter Name="u16ObjId_1" Value="5003"/>
@@ -27,7 +27,7 @@
 			<Parameter Name="u16ObjId_6" Value="5011"/>
 			<Parameter Name="DigitalInput_6" Value="&quot;SoftKey_Knickdeichsel_heben&quot;"/>
 		</FB>
-		<FB Name="UT_SoftkeyMapping_UP" Type="UT_SoftkeyMapping_UP" Comment="" x="4400.0" y="0.0">
+		<FB Name="UT_SoftkeyMapping_UP" Type="UT_SoftkeyMapping_UP" Comment="" x="1066.6666666666667" y="2666.666666666667">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u8SAMember" Value="255"/>
 			<Parameter Name="u16ObjId_1" Value="5000"/>
@@ -47,7 +47,7 @@
 			<Parameter Name="u16ObjId_8" Value="5016"/>
 			<Parameter Name="DigitalInput_8" Value="&quot;SoftKey_Licht_UP&quot;"/>
 		</FB>
-		<FB Name="UT_SoftkeyMapping_DOWN" Type="UT_SoftkeyMapping_DOWN" Comment="" x="7333.333333333334" y="60.0">
+		<FB Name="UT_SoftkeyMapping_DOWN" Type="UT_SoftkeyMapping_DOWN" Comment="" x="1066.6666666666667" y="5333.333333333334">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u8SAMember" Value="255"/>
 			<Parameter Name="u16ObjId_1" Value="5000"/>
@@ -56,9 +56,9 @@
 			<Parameter Name="DigitalInput_7" Value="&quot;SoftKey_Automatik_aus_DOWN&quot;"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="UT_SoftkeyMapping.INIT" Comment="" dx1="1333.3333333333335"/>
-			<Connection Source="INIT" Destination="UT_SoftkeyMapping_UP.INIT" Comment="" dx1="4753.333333333334"/>
-			<Connection Source="INIT" Destination="UT_SoftkeyMapping_DOWN.INIT" Comment="" dx1="7793.333333333334"/>
+			<Connection Source="INIT" Destination="UT_SoftkeyMapping.INIT" Comment="" dx1="1166.6666666666667"/>
+			<Connection Source="INIT" Destination="UT_SoftkeyMapping_UP.INIT" Comment="" dx1="520.0"/>
+			<Connection Source="INIT" Destination="UT_SoftkeyMapping_DOWN.INIT" Comment="" dx1="413.33333333333337"/>
 		</EventConnections>
 	</SubAppNetwork>
 </SubAppType>

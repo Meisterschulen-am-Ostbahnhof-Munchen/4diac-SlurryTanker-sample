@@ -28,7 +28,7 @@
 		<FB Name="E_IMPULSE_Dom" Type="E_IMPULSE" Comment="" x="3100.0" y="946.6666666666667">
 			<Parameter Name="TM" Value="T#3s"/>
 		</FB>
-		<SubApp Name="AuxInput_Dom_UP" Comment="" x="300.0" y="520.0">
+		<SubApp Name="AuxInput_Dom_UP" Comment="" x="0.0" y="1066.6666666666667">
 			<SubAppInterfaceList>
 				<SubAppEventInputs>
 					<SubAppEvent Name="INIT" Type="Event" Comment="">
@@ -57,7 +57,7 @@
 			<Attribute Name="width" Type="LREAL" Value="3053.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="1173.3333333333335"/>
 		</SubApp>
-		<SubApp Name="SoftKey_Dom_UP" Comment="" x="266.6666666666667" y="0.0">
+		<SubApp Name="SoftKey_Dom_UP" Comment="" x="0.0" y="0.0">
 			<SubAppInterfaceList>
 				<SubAppEventInputs>
 					<SubAppEvent Name="INIT" Type="Event" Comment="">
@@ -132,8 +132,8 @@
 			<Connection Source="SoftKey_Dom_UP.IND" Destination="E_T_FF_Dom.CLK" Comment="" dx1="506.6666666666667"/>
 			<Connection Source="INIT" Destination="AuxInput_Dom_UP.INIT" Comment="" dx1="80.0"/>
 			<Connection Source="AuxInput_Dom_UP.IND" Destination="E_T_FF_Dom.CLK" Comment="" dx1="313.33333333333337"/>
-			<Connection Source="INIT" Destination="Dom_6A.INIT" Comment="" dx1="4566.666666666667"/>
-			<Connection Source="INIT" Destination="GreenWhiteBackground_Dom.INIT" Comment="" dx1="1420.0"/>
+			<Connection Source="INIT" Destination="Dom_6A.INIT" Comment="" dx1="5560.0"/>
+			<Connection Source="INIT" Destination="GreenWhiteBackground_Dom.INIT" Comment="" dx1="3126.666666666667"/>
 			<Connection Source="E_T_FF_Dom.EO" Destination="GreenWhiteBackground_Dom.EO" Comment="" dx1="373.33333333333337"/>
 		</EventConnections>
 		<DataConnections>

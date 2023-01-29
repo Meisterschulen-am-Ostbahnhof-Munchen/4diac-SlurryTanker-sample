@@ -18,9 +18,6 @@
 		</OutputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="GreenWhiteBackground_Seitenschieber" Type="GreenWhiteBackground" Comment="" x="3580.0" y="13.333333333333334">
-			<Parameter Name="u16ObjId" Value="5008"/>
-		</FB>
 		<FB Name="E_IMPULSE_Seitenschieber" Type="E_IMPULSE" Comment="" x="4026.666666666667" y="953.3333333333334">
 			<Parameter Name="TM" Value="T#3s"/>
 		</FB>
@@ -31,26 +28,120 @@
 		<FB Name="Seitenschieber_7A" Type="QX" Comment="" x="6100.0" y="0.0">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="SoftKey_Seitenschieber_UP" Type="IE" Comment="" x="26.666666666666668" y="853.3333333333334">
-			<Parameter Name="QI" Value="TRUE"/>
-		</FB>
+		<SubApp Name="GreenWhiteBackground_Seitenschieber" Comment="" x="3580.0" y="13.333333333333334">
+			<SubAppInterfaceList>
+				<SubAppEventInputs>
+					<SubAppEvent Name="INIT" Type="Event" Comment="">
+						<Attribute Name="YPOSITION" Type="STRING" Value="20"/>
+					</SubAppEvent>
+					<SubAppEvent Name="EO" Type="Event" Comment="">
+						<Attribute Name="YPOSITION" Type="STRING" Value="272"/>
+					</SubAppEvent>
+				</SubAppEventInputs>
+				<InputVars>
+					<VarDeclaration Name="Q" Type="BOOL" Comment="">
+						<Attribute Name="YPOSITION" Type="STRING" Value="139"/>
+					</VarDeclaration>
+				</InputVars>
+			</SubAppInterfaceList>
+			<SubAppNetwork>
+				<FB Name="GreenWhiteBackground_AUX_Seitenschieber" Type="GreenWhiteBackground" Comment="" x="-533.3333333333334" y="-2133.3333333333335">
+					<Parameter Name="u16ObjId" Value="31008"/>
+				</FB>
+				<FB Name="GreenWhiteBackground_SoftKey_Seitenschieber" Type="GreenWhiteBackground" Comment="" x="-533.3333333333334" y="-1066.6666666666667">
+					<Parameter Name="u16ObjId" Value="5008"/>
+				</FB>
+				<FB Name="GreenWhiteBackground_AUX_Seitenschieber_Joystick" Type="GreenWhiteBackgroundAux" Comment="" x="-533.3333333333334" y="0.0">
+					<Parameter Name="u16ObjId" Value="31008"/>
+				</FB>
+				<EventConnections>
+					<Connection Source="INIT" Destination="GreenWhiteBackground_AUX_Seitenschieber.INIT" Comment="" dx1="80.0"/>
+					<Connection Source="EO" Destination="GreenWhiteBackground_AUX_Seitenschieber.REQ" Comment="" dx1="320.0"/>
+					<Connection Source="INIT" Destination="GreenWhiteBackground_SoftKey_Seitenschieber.INIT" Comment="" dx1="80.0"/>
+					<Connection Source="EO" Destination="GreenWhiteBackground_SoftKey_Seitenschieber.REQ" Comment="" dx1="533.3333333333334"/>
+					<Connection Source="INIT" Destination="GreenWhiteBackground_AUX_Seitenschieber_Joystick.INIT" Comment="" dx1="80.0"/>
+					<Connection Source="EO" Destination="GreenWhiteBackground_AUX_Seitenschieber_Joystick.REQ" Comment="" dx1="620.0"/>
+				</EventConnections>
+				<DataConnections>
+					<Connection Source="Q" Destination="GreenWhiteBackground_AUX_Seitenschieber.DI1" Comment="" dx1="426.6666666666667"/>
+					<Connection Source="Q" Destination="GreenWhiteBackground_SoftKey_Seitenschieber.DI1" Comment="" dx1="426.6666666666667"/>
+					<Connection Source="Q" Destination="GreenWhiteBackground_AUX_Seitenschieber_Joystick.DI1" Comment="" dx1="746.6666666666667"/>
+				</DataConnections>
+			</SubAppNetwork>
+			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
+		</SubApp>
+		<SubApp Name="AuxInput_Seitenschieber_UP" Comment="" x="0.0" y="1600.0">
+			<SubAppInterfaceList>
+				<SubAppEventInputs>
+					<SubAppEvent Name="INIT" Type="Event" Comment="">
+					</SubAppEvent>
+				</SubAppEventInputs>
+				<SubAppEventOutputs>
+					<SubAppEvent Name="IND" Type="Event" Comment="">
+					</SubAppEvent>
+				</SubAppEventOutputs>
+			</SubAppInterfaceList>
+			<SubAppNetwork>
+				<FB Name="E_SWITCH_AuxInput_Seitenschieber" Type="E_SWITCH" Comment="" x="1600.0" y="0.0">
+				</FB>
+				<FB Name="AuxInput_Seitenschieber" Type="IX" Comment="" x="66.66666666666667" y="0.0">
+					<Parameter Name="QI" Value="TRUE"/>
+				</FB>
+				<EventConnections>
+					<Connection Source="AuxInput_Seitenschieber.IND" Destination="E_SWITCH_AuxInput_Seitenschieber.EI" Comment="" dx1="440.0"/>
+					<Connection Source="INIT" Destination="AuxInput_Seitenschieber.INIT" Comment="" dx1="153.33333333333334"/>
+					<Connection Source="E_SWITCH_AuxInput_Seitenschieber.EO0" Destination="IND" Comment="" dx1="933.3333333333334"/>
+				</EventConnections>
+				<DataConnections>
+					<Connection Source="AuxInput_Seitenschieber.IN" Destination="E_SWITCH_AuxInput_Seitenschieber.G" Comment="" dx1="266.6666666666667"/>
+				</DataConnections>
+			</SubAppNetwork>
+			<Attribute Name="width" Type="LREAL" Value="3053.3333333333335"/>
+			<Attribute Name="height" Type="LREAL" Value="1173.3333333333335"/>
+		</SubApp>
+		<SubApp Name="SoftKey_Seitenschieber_UP" Comment="" x="0.0" y="533.3333333333334">
+			<SubAppInterfaceList>
+				<SubAppEventInputs>
+					<SubAppEvent Name="INIT" Type="Event" Comment="">
+					</SubAppEvent>
+				</SubAppEventInputs>
+				<SubAppEventOutputs>
+					<SubAppEvent Name="IND" Type="Event" Comment="">
+					</SubAppEvent>
+				</SubAppEventOutputs>
+			</SubAppInterfaceList>
+			<SubAppNetwork>
+				<FB Name="SoftKey_Seitenschieber_UP" Type="IE" Comment="" x="0.0" y="0.0">
+					<Parameter Name="QI" Value="TRUE"/>
+				</FB>
+				<EventConnections>
+					<Connection Source="INIT" Destination="SoftKey_Seitenschieber_UP.INIT" Comment="" dx1="80.0" dx2="80.0" dy="-13.333333333333334"/>
+					<Connection Source="SoftKey_Seitenschieber_UP.IND" Destination="IND" Comment="" dx1="2893.3333333333335"/>
+				</EventConnections>
+			</SubAppNetwork>
+			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
+		</SubApp>
 		<EventConnections>
-			<Connection Source="E_T_FF_Seitenschieber.EO" Destination="GreenWhiteBackground_Seitenschieber.REQ" Comment="" dx1="660.0"/>
-			<Connection Source="GreenWhiteBackground_Seitenschieber.INITO" Destination="Seitenschieber_7A.INIT" Comment="" dx1="533.3333333333334"/>
 			<Connection Source="E_T_FF_Seitenschieber.EO" Destination="E_IMPULSE_Seitenschieber.REQ" Comment="" dx1="660.0"/>
 			<Connection Source="E_IMPULSE_Seitenschieber.CNF" Destination="Seitenschieber_7A.REQ" Comment="" dx1="640.0"/>
 			<Connection Source="E_IMPULSE_Seitenschieber.CNF" Destination="AND_2_Seitenschieber.REQ" Comment=""/>
 			<Connection Source="AND_2_Seitenschieber.CNF" Destination="CNF_2a" Comment="" dx1="633.3333333333334" dx2="360.0" dy="-553.3333333333334"/>
-			<Connection Source="INIT" Destination="GreenWhiteBackground_Seitenschieber.INIT" Comment="" dx1="1900.0"/>
-			<Connection Source="INIT" Destination="SoftKey_Seitenschieber_UP.INIT" Comment="" dx1="120.0" dx2="120.0" dy="0.0"/>
-			<Connection Source="SoftKey_Seitenschieber_UP.IND" Destination="E_T_FF_Seitenschieber.CLK" Comment="" dx1="500.0" dx2="500.0" dy="0.0"/>
+			<Connection Source="INIT" Destination="Seitenschieber_7A.INIT" Comment="" dx1="7066.666666666667"/>
+			<Connection Source="INIT" Destination="GreenWhiteBackground_Seitenschieber.INIT" Comment="" dx1="2453.3333333333335"/>
+			<Connection Source="E_T_FF_Seitenschieber.EO" Destination="GreenWhiteBackground_Seitenschieber.EO" Comment="" dx1="520.0"/>
+			<Connection Source="INIT" Destination="AuxInput_Seitenschieber_UP.INIT" Comment="" dx1="80.0" dx2="980.0" dy="833.3333333333334"/>
+			<Connection Source="AuxInput_Seitenschieber_UP.IND" Destination="E_T_FF_Seitenschieber.CLK" Comment="" dx1="573.3333333333334"/>
+			<Connection Source="INIT" Destination="SoftKey_Seitenschieber_UP.INIT" Comment="" dx1="80.0" dx2="80.0" dy="300.0"/>
+			<Connection Source="SoftKey_Seitenschieber_UP.IND" Destination="E_T_FF_Seitenschieber.CLK" Comment="" dx1="760.0"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="E_T_FF_Seitenschieber.Q" Destination="GreenWhiteBackground_Seitenschieber.DI1" Comment="" dx1="600.0"/>
 			<Connection Source="E_IMPULSE_Seitenschieber.QO" Destination="AND_2_Seitenschieber.IN1" Comment="" dx1="700.0"/>
 			<Connection Source="E_IMPULSE_Seitenschieber.QO" Destination="Seitenschieber_7A.OUT" Comment="" dx1="700.0"/>
 			<Connection Source="E_T_FF_Seitenschieber.Q" Destination="AND_2_Seitenschieber.IN2" Comment="" dx1="3040.0"/>
 			<Connection Source="AND_2_Seitenschieber.OUT" Destination="OUT_2a" Comment="" dx1="1046.6666666666667" dx2="66.66666666666667" dy="-613.3333333333334"/>
+			<Connection Source="E_T_FF_Seitenschieber.Q" Destination="GreenWhiteBackground_Seitenschieber.Q" Comment="" dx1="806.6666666666667"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
