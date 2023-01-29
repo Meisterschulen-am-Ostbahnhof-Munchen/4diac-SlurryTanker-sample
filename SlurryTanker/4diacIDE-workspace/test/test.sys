@@ -13,12 +13,16 @@
 			<SubApp Name="mapping_DataPanel" Type="mapping_DataPanel" Comment="" x="320.0" y="173.33333333333334">
 				<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 				<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
+				<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+				<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			</SubApp>
 		</SubAppNetwork>
 	</Application>
 	<Application Name="mapping_Softkeys" Comment="">
 		<SubAppNetwork>
 			<SubApp Name="mapping_Softkeys" Type="mapping_Softkeys" Comment="" x="320.0" y="-1133.3333333333335">
+				<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+				<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 				<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 				<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			</SubApp>
@@ -29,12 +33,16 @@
 			<SubApp Name="Klappen" Type="Klappen" Comment="" x="-5000.0" y="-2466.666666666667">
 				<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 				<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
+				<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+				<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			</SubApp>
 		</SubAppNetwork>
 	</Application>
 	<Application Name="Vorsteuerventil_2A" Comment="">
 		<SubAppNetwork>
 			<SubApp Name="Vorsteuerventil_2A" Type="Vorsteuerventil_2A" Comment="" x="-2320.0" y="173.33333333333334">
+				<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+				<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 				<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 				<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			</SubApp>
@@ -45,6 +53,8 @@
 			<SubApp Name="Verteiler" Type="Verteiler" Comment="" x="393.33333333333337" y="-1133.3333333333335">
 				<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 				<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
+				<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+				<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			</SubApp>
 		</SubAppNetwork>
 	</Application>
@@ -53,12 +63,16 @@
 			<SubApp Name="Knickdeichsel" Type="Knickdeichsel" Comment="" x="1720.0" y="1366.6666666666667">
 				<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 				<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
+				<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+				<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			</SubApp>
 		</SubAppNetwork>
 	</Application>
 	<Application Name="Dom" Comment="">
 		<SubAppNetwork>
 			<SubApp Name="Dom" Type="Dom" Comment="" x="-5000.0" y="-1133.3333333333335">
+				<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+				<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 				<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 				<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			</SubApp>
@@ -79,6 +93,8 @@
 			<SubApp Name="Seitenschieber" Type="Seitenschieber" Comment="" x="320.0" y="173.33333333333334">
 				<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 				<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
+				<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+				<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			</SubApp>
 		</SubAppNetwork>
 	</Application>
@@ -89,12 +105,16 @@
 			<SubApp Name="Schneidwerk" Type="Schneidwerk" Comment="" x="1660.0" y="-1200.0">
 				<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 				<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
+				<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+				<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			</SubApp>
 		</SubAppNetwork>
 	</Application>
 	<Application Name="Licht" Comment="">
 		<SubAppNetwork>
 			<SubApp Name="Licht" Type="Licht" Comment="" x="320.0" y="-1133.3333333333335">
+				<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+				<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 				<Attribute Name="PinComment" Type="STRING" Value="INIT:Service Initialization"/>
 				<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 				<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
@@ -104,6 +124,8 @@
 	<Application Name="Abscheider" Comment="">
 		<SubAppNetwork>
 			<SubApp Name="Abscheider" Type="Abscheider" Comment="" x="5646.666666666667" y="173.33333333333334">
+				<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+				<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 				<Attribute Name="PinComment" Type="STRING" Value="INIT:Service Initialization"/>
 				<Attribute Name="PinComment" Type="STRING" Value="CNF_2b:Execution Confirmation"/>
 				<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
@@ -116,12 +138,16 @@
 			<SubApp Name="Automatik" Type="Automatik" Comment="" x="-2053.3333333333335" y="-2186.666666666667">
 				<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 				<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
+				<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+				<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			</SubApp>
 		</SubAppNetwork>
 	</Application>
 	<Application Name="Vorsteuerventil_2B" Comment="">
 		<SubAppNetwork>
 			<SubApp Name="Vorsteuerventil_2B" Type="Vorsteuerventil_2B" Comment="" x="-2320.0" y="2840.0">
+				<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+				<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 				<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 				<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			</SubApp>
@@ -132,7 +158,13 @@
 			<SubApp Name="mapping_aux" Type="mapping_aux" Comment="" x="2060.0" y="1366.6666666666667">
 				<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 				<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
+				<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+				<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			</SubApp>
+		</SubAppNetwork>
+	</Application>
+	<Application Name="SlurryTanker" Comment="">
+		<SubAppNetwork>
 		</SubAppNetwork>
 	</Application>
 	<Device Name="FORTE_PC" Type="FORTE_PC" Comment="" x="4046.666666666667" y="1233.3333333333335">
@@ -158,56 +190,84 @@
 				<SubApp Name="Abscheider" Type="Abscheider" Comment="" x="5646.666666666667" y="173.33333333333334">
 					<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 					<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
+					<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+					<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 				</SubApp>
 				<SubApp Name="Automatik" Type="Automatik" Comment="" x="-2053.3333333333335" y="-2186.666666666667">
+					<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+					<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 					<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 					<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 				</SubApp>
 				<SubApp Name="Dom" Type="Dom" Comment="" x="-5000.0" y="-1133.3333333333335">
 					<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 					<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
+					<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+					<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 				</SubApp>
 				<SubApp Name="Klappen" Type="Klappen" Comment="" x="-5000.0" y="-2466.666666666667">
+					<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+					<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 					<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 					<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 				</SubApp>
 				<SubApp Name="Knickdeichsel" Type="Knickdeichsel" Comment="" x="1720.0" y="1366.6666666666667">
 					<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 					<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
+					<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+					<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 				</SubApp>
 				<SubApp Name="Licht" Type="Licht" Comment="" x="320.0" y="-1133.3333333333335">
+					<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+					<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 					<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 					<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 				</SubApp>
 				<SubApp Name="Schneidwerk" Type="Schneidwerk" Comment="" x="1660.0" y="-1200.0">
 					<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 					<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
+					<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+					<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 				</SubApp>
 				<SubApp Name="Seitenschieber" Type="Seitenschieber" Comment="" x="320.0" y="173.33333333333334">
+					<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+					<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 					<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 					<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 				</SubApp>
 				<SubApp Name="Verteiler" Type="Verteiler" Comment="" x="393.33333333333337" y="-1133.3333333333335">
 					<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 					<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
+					<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+					<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 				</SubApp>
 				<SubApp Name="Vorsteuerventil_2A" Type="Vorsteuerventil_2A" Comment="" x="-2320.0" y="173.33333333333334">
+					<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+					<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 					<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 					<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 				</SubApp>
 				<SubApp Name="Vorsteuerventil_2B" Type="Vorsteuerventil_2B" Comment="" x="-2320.0" y="2840.0">
 					<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 					<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
+					<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+					<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 				</SubApp>
 				<SubApp Name="mapping_DataPanel" Type="mapping_DataPanel" Comment="" x="320.0" y="173.33333333333334">
+					<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+					<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 					<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 					<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 				</SubApp>
 				<SubApp Name="mapping_Softkeys" Type="mapping_Softkeys" Comment="" x="320.0" y="-1133.3333333333335">
 					<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 					<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
+					<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+					<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 				</SubApp>
 				<SubApp Name="mapping_aux" Type="mapping_aux" Comment="" x="2060.0" y="1366.6666666666667">
+					<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+					<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 					<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 					<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 				</SubApp>
@@ -215,51 +275,51 @@
 					<Connection Source="START.COLD" Destination="Heckschieber.INIT" Comment="" dx1="80.0" dx2="80.0" dy="533.3333333333334">
 						<Attribute Name="Visible" Type="STRING" Value="false"/>
 					</Connection>
-					<Connection Source="START.COLD" Destination="Abscheider.INIT" Comment=""/>
-					<Connection Source="START.COLD" Destination="Automatik.INIT" Comment=""/>
-					<Connection Source="Heckschieber.EO_Heckschieber_END" Destination="Automatik.CNF_Schieber" Comment=""/>
-					<Connection Source="Automatik.EO_Automatik_ein_UP" Destination="Heckschieber.OPEN" Comment=""/>
-					<Connection Source="Automatik.EO_Automatik_aus_DOWN" Destination="Heckschieber.CLOSE" Comment=""/>
-					<Connection Source="START.COLD" Destination="Dom.INIT" Comment=""/>
-					<Connection Source="START.COLD" Destination="Klappen.INIT" Comment=""/>
-					<Connection Source="START.COLD" Destination="Knickdeichsel.INIT" Comment=""/>
-					<Connection Source="START.COLD" Destination="Licht.INIT" Comment=""/>
-					<Connection Source="START.COLD" Destination="Schneidwerk.INIT" Comment=""/>
-					<Connection Source="Automatik.EO_Automatik_ein" Destination="Schneidwerk.S_ON" Comment=""/>
-					<Connection Source="Automatik.EO_Automatik_aus_DOWN" Destination="Schneidwerk.S_OFF" Comment=""/>
-					<Connection Source="START.COLD" Destination="Seitenschieber.INIT" Comment=""/>
-					<Connection Source="START.COLD" Destination="Verteiler.INIT" Comment=""/>
-					<Connection Source="Automatik.EO_Verteiler_heben" Destination="Verteiler.EI_Verteiler_heben" Comment=""/>
-					<Connection Source="Automatik.EO_Verteiler_senken" Destination="Verteiler.EI_Verteiler_senken" Comment=""/>
-					<Connection Source="START.COLD" Destination="Vorsteuerventil_2A.INIT" Comment=""/>
-					<Connection Source="Klappen.CNF_2a" Destination="Vorsteuerventil_2A.REQ1" Comment=""/>
-					<Connection Source="Knickdeichsel.IND_2a" Destination="Vorsteuerventil_2A.REQ2" Comment=""/>
-					<Connection Source="Verteiler.CNF_2a" Destination="Vorsteuerventil_2A.REQ3" Comment=""/>
-					<Connection Source="Dom.CNF_2a" Destination="Vorsteuerventil_2A.REQ4" Comment=""/>
-					<Connection Source="Seitenschieber.CNF_2a" Destination="Vorsteuerventil_2A.REQ5" Comment=""/>
-					<Connection Source="START.COLD" Destination="Vorsteuerventil_2B.INIT" Comment=""/>
-					<Connection Source="Klappen.CNF_2b" Destination="Vorsteuerventil_2B.REQ1" Comment=""/>
-					<Connection Source="Knickdeichsel.IND_2b" Destination="Vorsteuerventil_2B.REQ2" Comment=""/>
-					<Connection Source="Verteiler.CNF_2b" Destination="Vorsteuerventil_2B.REQ3" Comment=""/>
-					<Connection Source="Heckschieber.CNF_2b" Destination="Vorsteuerventil_2B.REQ4" Comment=""/>
-					<Connection Source="Abscheider.CNF_2b" Destination="Vorsteuerventil_2B.REQ5" Comment=""/>
-					<Connection Source="START.COLD" Destination="mapping_DataPanel.INIT" Comment=""/>
-					<Connection Source="START.COLD" Destination="mapping_Softkeys.INIT" Comment=""/>
-					<Connection Source="START.COLD" Destination="mapping_aux.INIT" Comment=""/>
+					<Connection Source="START.COLD" Destination="Abscheider.INIT" Comment="" dx1="2420.0"/>
+					<Connection Source="START.COLD" Destination="Automatik.INIT" Comment="" dx1="80.0" dx2="80.0" dy="-1093.3333333333335"/>
+					<Connection Source="Heckschieber.EO_Heckschieber_END" Destination="Automatik.CNF_Schieber" Comment="" dx1="80.0" dx2="80.0" dy="-1626.6666666666667"/>
+					<Connection Source="Automatik.EO_Automatik_ein_UP" Destination="Heckschieber.OPEN" Comment="" dx1="80.0" dx2="80.0" dy="1526.6666666666667"/>
+					<Connection Source="Automatik.EO_Automatik_aus_DOWN" Destination="Heckschieber.CLOSE" Comment="" dx1="80.0" dx2="80.0" dy="1526.6666666666667"/>
+					<Connection Source="START.COLD" Destination="Dom.INIT" Comment="" dx1="80.0" dx2="80.0" dy="-566.6666666666667"/>
+					<Connection Source="START.COLD" Destination="Klappen.INIT" Comment="" dx1="80.0" dx2="80.0" dy="-1233.3333333333335"/>
+					<Connection Source="START.COLD" Destination="Knickdeichsel.INIT" Comment="" dx1="460.0"/>
+					<Connection Source="START.COLD" Destination="Licht.INIT" Comment="" dx1="80.0" dx2="80.0" dy="-566.6666666666667"/>
+					<Connection Source="START.COLD" Destination="Schneidwerk.INIT" Comment="" dx1="426.6666666666667"/>
+					<Connection Source="Automatik.EO_Automatik_ein" Destination="Schneidwerk.S_ON" Comment="" dx1="1020.0"/>
+					<Connection Source="Automatik.EO_Automatik_aus_DOWN" Destination="Schneidwerk.S_OFF" Comment="" dx1="1020.0"/>
+					<Connection Source="START.COLD" Destination="Seitenschieber.INIT" Comment="" dx1="80.0" dx2="80.0" dy="86.66666666666667"/>
+					<Connection Source="START.COLD" Destination="Verteiler.INIT" Comment="" dx1="80.0" dx2="80.0" dy="-566.6666666666667"/>
+					<Connection Source="Automatik.EO_Verteiler_heben" Destination="Verteiler.EI_Verteiler_heben" Comment="" dx1="386.6666666666667"/>
+					<Connection Source="Automatik.EO_Verteiler_senken" Destination="Verteiler.EI_Verteiler_senken" Comment="" dx1="386.6666666666667"/>
+					<Connection Source="START.COLD" Destination="Vorsteuerventil_2A.INIT" Comment="" dx1="80.0" dx2="80.0" dy="86.66666666666667"/>
+					<Connection Source="Klappen.CNF_2a" Destination="Vorsteuerventil_2A.REQ1" Comment="" dx1="1033.3333333333335"/>
+					<Connection Source="Knickdeichsel.IND_2a" Destination="Vorsteuerventil_2A.REQ2" Comment="" dx1="80.0" dx2="80.0" dy="-546.6666666666667"/>
+					<Connection Source="Verteiler.CNF_2a" Destination="Vorsteuerventil_2A.REQ3" Comment="" dx1="80.0" dx2="80.0" dy="753.3333333333334"/>
+					<Connection Source="Dom.CNF_2a" Destination="Vorsteuerventil_2A.REQ4" Comment="" dx1="1040.0"/>
+					<Connection Source="Seitenschieber.CNF_2a" Destination="Vorsteuerventil_2A.REQ5" Comment="" dx1="80.0" dx2="80.0" dy="246.66666666666669"/>
+					<Connection Source="START.COLD" Destination="Vorsteuerventil_2B.INIT" Comment="" dx1="80.0" dx2="80.0" dy="1420.0"/>
+					<Connection Source="Klappen.CNF_2b" Destination="Vorsteuerventil_2B.REQ1" Comment="" dx1="1033.3333333333335"/>
+					<Connection Source="Knickdeichsel.IND_2b" Destination="Vorsteuerventil_2B.REQ2" Comment="" dx1="80.0" dx2="80.0" dy="833.3333333333334"/>
+					<Connection Source="Verteiler.CNF_2b" Destination="Vorsteuerventil_2B.REQ3" Comment="" dx1="80.0" dx2="80.0" dy="2133.3333333333335"/>
+					<Connection Source="Heckschieber.CNF_2b" Destination="Vorsteuerventil_2B.REQ4" Comment="" dx1="80.0" dx2="80.0" dy="1086.6666666666667"/>
+					<Connection Source="Abscheider.CNF_2b" Destination="Vorsteuerventil_2B.REQ5" Comment="" dx1="80.0" dx2="80.0" dy="1580.0"/>
+					<Connection Source="START.COLD" Destination="mapping_DataPanel.INIT" Comment="" dx1="80.0" dx2="80.0" dy="86.66666666666667"/>
+					<Connection Source="START.COLD" Destination="mapping_Softkeys.INIT" Comment="" dx1="80.0" dx2="80.0" dy="-566.6666666666667"/>
+					<Connection Source="START.COLD" Destination="mapping_aux.INIT" Comment="" dx1="626.6666666666667"/>
 				</EventConnections>
 				<DataConnections>
-					<Connection Source="Automatik.Q_Verteiler_heben" Destination="Verteiler.IN_Verteiler_heben" Comment=""/>
-					<Connection Source="Automatik.Q_Verteiler_senken" Destination="Verteiler.IN_Verteiler_senken" Comment=""/>
-					<Connection Source="Klappen.OUT_2a" Destination="Vorsteuerventil_2A.IN1" Comment=""/>
-					<Connection Source="Knickdeichsel.OUT_2a" Destination="Vorsteuerventil_2A.IN2" Comment=""/>
-					<Connection Source="Verteiler.OUT_2a" Destination="Vorsteuerventil_2A.IN3" Comment=""/>
-					<Connection Source="Dom.OUT_2a" Destination="Vorsteuerventil_2A.IN4" Comment=""/>
-					<Connection Source="Seitenschieber.OUT_2a" Destination="Vorsteuerventil_2A.IN5" Comment=""/>
-					<Connection Source="Klappen.OUT_2b" Destination="Vorsteuerventil_2B.IN1" Comment=""/>
-					<Connection Source="Knickdeichsel.OUT_2b" Destination="Vorsteuerventil_2B.IN2" Comment=""/>
-					<Connection Source="Verteiler.OUT_2b" Destination="Vorsteuerventil_2B.IN3" Comment=""/>
-					<Connection Source="Heckschieber.OUT_2b" Destination="Vorsteuerventil_2B.IN4" Comment=""/>
-					<Connection Source="Abscheider.OUT_2b" Destination="Vorsteuerventil_2B.IN5" Comment=""/>
+					<Connection Source="Automatik.Q_Verteiler_heben" Destination="Verteiler.IN_Verteiler_heben" Comment="" dx1="386.6666666666667"/>
+					<Connection Source="Automatik.Q_Verteiler_senken" Destination="Verteiler.IN_Verteiler_senken" Comment="" dx1="386.6666666666667"/>
+					<Connection Source="Klappen.OUT_2a" Destination="Vorsteuerventil_2A.IN1" Comment="" dx1="1033.3333333333335"/>
+					<Connection Source="Knickdeichsel.OUT_2a" Destination="Vorsteuerventil_2A.IN2" Comment="" dx1="80.0" dx2="80.0" dy="-393.33333333333337"/>
+					<Connection Source="Verteiler.OUT_2a" Destination="Vorsteuerventil_2A.IN3" Comment="" dx1="80.0" dx2="80.0" dy="853.3333333333334"/>
+					<Connection Source="Dom.OUT_2a" Destination="Vorsteuerventil_2A.IN4" Comment="" dx1="1040.0"/>
+					<Connection Source="Seitenschieber.OUT_2a" Destination="Vorsteuerventil_2A.IN5" Comment="" dx1="80.0" dx2="80.0" dy="446.6666666666667"/>
+					<Connection Source="Klappen.OUT_2b" Destination="Vorsteuerventil_2B.IN1" Comment="" dx1="1033.3333333333335"/>
+					<Connection Source="Knickdeichsel.OUT_2b" Destination="Vorsteuerventil_2B.IN2" Comment="" dx1="80.0" dx2="80.0" dy="986.6666666666667"/>
+					<Connection Source="Verteiler.OUT_2b" Destination="Vorsteuerventil_2B.IN3" Comment="" dx1="80.0" dx2="80.0" dy="2233.3333333333335"/>
+					<Connection Source="Heckschieber.OUT_2b" Destination="Vorsteuerventil_2B.IN4" Comment="" dx1="80.0" dx2="80.0" dy="1186.6666666666667"/>
+					<Connection Source="Abscheider.OUT_2b" Destination="Vorsteuerventil_2B.IN5" Comment="" dx1="80.0" dx2="80.0" dy="1780.0"/>
 				</DataConnections>
 			</FBNetwork>
 		</Resource>
