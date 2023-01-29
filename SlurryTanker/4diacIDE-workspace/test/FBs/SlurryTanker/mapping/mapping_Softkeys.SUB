@@ -9,10 +9,6 @@
 			<SubAppEvent Name="INIT" Type="Event" Comment="">
 			</SubAppEvent>
 		</SubAppEventInputs>
-		<SubAppEventOutputs>
-			<SubAppEvent Name="INITO" Type="Event" Comment="">
-			</SubAppEvent>
-		</SubAppEventOutputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="UT_SoftkeyMapping" Type="UT_SoftkeyMapping" Comment="" x="1400.0" y="0.0">
@@ -60,10 +56,9 @@
 			<Parameter Name="DigitalInput_7" Value="&quot;SoftKey_Automatik_aus_DOWN&quot;"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="UT_SoftkeyMapping.INIT" Comment="" dx1="66.66666666666667" dx2="66.66666666666667" dy="73.33333333333334"/>
-			<Connection Source="UT_SoftkeyMapping.INITO" Destination="UT_SoftkeyMapping_UP.INIT" Comment=""/>
-			<Connection Source="UT_SoftkeyMapping_UP.INITO" Destination="UT_SoftkeyMapping_DOWN.INIT" Comment="" dx1="453.33333333333337" dx2="453.33333333333337" dy="0.0"/>
-			<Connection Source="UT_SoftkeyMapping_DOWN.INITO" Destination="INITO" Comment="" dx1="66.66666666666667" dx2="66.66666666666667" dy="-106.66666666666667"/>
+			<Connection Source="INIT" Destination="UT_SoftkeyMapping.INIT" Comment="" dx1="1333.3333333333335"/>
+			<Connection Source="INIT" Destination="UT_SoftkeyMapping_UP.INIT" Comment="" dx1="4753.333333333334"/>
+			<Connection Source="INIT" Destination="UT_SoftkeyMapping_DOWN.INIT" Comment="" dx1="7793.333333333334"/>
 		</EventConnections>
 	</SubAppNetwork>
 </SubAppType>

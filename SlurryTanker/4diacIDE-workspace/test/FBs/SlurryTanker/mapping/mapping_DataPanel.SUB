@@ -9,10 +9,6 @@
 			<SubAppEvent Name="INIT" Type="Event" Comment="">
 			</SubAppEvent>
 		</SubAppEventInputs>
-		<SubAppEventOutputs>
-			<SubAppEvent Name="INITO" Type="Event" Comment="">
-			</SubAppEvent>
-		</SubAppEventOutputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="DataPanel_xDB_16_DO_SAE_J1939" Type="DataPanel_xDB_16_DO_SAE_J1939" Comment="" x="1246.6666666666667" y="13.333333333333334">
@@ -38,7 +34,6 @@
 		</FB>
 		<EventConnections>
 			<Connection Source="INIT" Destination="DataPanel_xDB_16_DO_SAE_J1939.INIT" Comment="" dx1="640.0"/>
-			<Connection Source="DataPanel_xDB_16_DO_SAE_J1939.INITO" Destination="INITO" Comment="" dx1="706.6666666666667"/>
 		</EventConnections>
 	</SubAppNetwork>
 </SubAppType>

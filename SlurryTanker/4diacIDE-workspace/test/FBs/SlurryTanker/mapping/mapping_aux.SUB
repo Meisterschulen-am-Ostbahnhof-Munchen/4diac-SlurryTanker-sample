@@ -9,10 +9,6 @@
 			<SubAppEvent Name="INIT" Type="Event" Comment="">
 			</SubAppEvent>
 		</SubAppEventInputs>
-		<SubAppEventOutputs>
-			<SubAppEvent Name="INITO" Type="Event" Comment="">
-			</SubAppEvent>
-		</SubAppEventOutputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="UT_AuxiliaryInputMapping" Type="UT_AuxiliaryInputMapping" Comment="" x="1106.6666666666667" y="20.0">
@@ -28,7 +24,6 @@
 		</FB>
 		<EventConnections>
 			<Connection Source="INIT" Destination="UT_AuxiliaryInputMapping.INIT" Comment="" dx1="393.33333333333337"/>
-			<Connection Source="UT_AuxiliaryInputMapping.INITO" Destination="INITO" Comment="" dx1="586.6666666666667"/>
 		</EventConnections>
 	</SubAppNetwork>
 </SubAppType>
