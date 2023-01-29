@@ -673,169 +673,9 @@
 	</Application>
 	<Application Name="Heckschieber" Comment="">
 		<SubAppNetwork>
-			<SubApp Name="Heckschieber" Comment="Heckschieber" x="3000.0" y="-1133.3333333333335">
-				<SubAppInterfaceList>
-					<SubAppEventInputs>
-						<SubAppEvent Name="INIT" Type="Event" Comment="">
-						</SubAppEvent>
-						<SubAppEvent Name="OPEN" Type="Event" Comment="">
-						</SubAppEvent>
-						<SubAppEvent Name="CLOSE" Type="Event" Comment="">
-						</SubAppEvent>
-					</SubAppEventInputs>
-					<SubAppEventOutputs>
-						<SubAppEvent Name="CNF_2b" Type="Event" Comment="">
-						</SubAppEvent>
-						<SubAppEvent Name="EO_Heckschieber_END" Type="Event" Comment="">
-						</SubAppEvent>
-					</SubAppEventOutputs>
-					<OutputVars>
-						<VarDeclaration Name="OUT_2b" Type="BOOL" Comment=""/>
-					</OutputVars>
-				</SubAppInterfaceList>
-				<SubAppNetwork>
-					<FB Name="E_F_TRIG_Heckschieber" Type="E_F_TRIG" Comment="" x="7053.333333333334" y="926.6666666666667">
-					</FB>
-					<FB Name="Heckschieber_6B" Type="QX" Comment="" x="7293.333333333334" y="0.0">
-						<Parameter Name="QI" Value="TRUE"/>
-					</FB>
-					<FB Name="E_SR_Heckschieber" Type="E_SR_RETRIG" Comment="" x="3333.3333333333335" y="1566.6666666666667">
-					</FB>
-					<FB Name="E_SWITCH_Heckschieber" Type="E_SWITCH" Comment="" x="1726.6666666666667" y="1566.6666666666667">
-					</FB>
-					<FB Name="AND_2_Heckschieber" Type="AND_2" Comment="" x="7193.333333333334" y="1566.6666666666667">
-					</FB>
-					<FB Name="E_IMPULSE_Heckschieber" Type="E_IMPULSE" Comment="" x="5300.0" y="926.6666666666667">
-						<Parameter Name="TM" Value="T#3s"/>
-					</FB>
-					<SubApp Name="AuxInput_Heckschieber_UP" Comment="" x="253.33333333333334" y="1853.3333333333335">
-						<SubAppInterfaceList>
-							<SubAppEventInputs>
-								<SubAppEvent Name="INIT" Type="Event" Comment="">
-								</SubAppEvent>
-							</SubAppEventInputs>
-							<SubAppEventOutputs>
-								<SubAppEvent Name="IND" Type="Event" Comment="">
-								</SubAppEvent>
-							</SubAppEventOutputs>
-						</SubAppInterfaceList>
-						<SubAppNetwork>
-							<FB Name="E_SWITCH_AuxInput_Heckschieber" Type="E_SWITCH" Comment="" x="1100.0" y="100.0">
-							</FB>
-							<FB Name="AuxInput_Heckschieber" Type="IX" Comment="" x="66.66666666666667" y="0.0">
-								<Parameter Name="QI" Value="TRUE"/>
-							</FB>
-							<EventConnections>
-								<Connection Source="AuxInput_Heckschieber.IND" Destination="E_SWITCH_AuxInput_Heckschieber.EI" Comment=""/>
-								<Connection Source="INIT" Destination="AuxInput_Heckschieber.INIT" Comment="" dx1="153.33333333333334"/>
-								<Connection Source="E_SWITCH_AuxInput_Heckschieber.EO0" Destination="IND" Comment="" dx1="933.3333333333334"/>
-							</EventConnections>
-							<DataConnections>
-								<Connection Source="AuxInput_Heckschieber.IN" Destination="E_SWITCH_AuxInput_Heckschieber.G" Comment="" dx1="266.6666666666667"/>
-							</DataConnections>
-						</SubAppNetwork>
-						<Attribute Name="width" Type="LREAL" Value="3053.3333333333335"/>
-						<Attribute Name="height" Type="LREAL" Value="1173.3333333333335"/>
-					</SubApp>
-					<SubApp Name="GreenWhiteBackground_Heckschieber" Comment="" x="4940.0" y="0.0">
-						<SubAppInterfaceList>
-							<SubAppEventInputs>
-								<SubAppEvent Name="INIT" Type="Event" Comment="">
-									<Attribute Name="YPOSITION" Type="STRING" Value="20"/>
-								</SubAppEvent>
-								<SubAppEvent Name="EO" Type="Event" Comment="">
-									<Attribute Name="YPOSITION" Type="STRING" Value="272"/>
-								</SubAppEvent>
-							</SubAppEventInputs>
-							<InputVars>
-								<VarDeclaration Name="Q" Type="BOOL" Comment="">
-									<Attribute Name="YPOSITION" Type="STRING" Value="139"/>
-								</VarDeclaration>
-							</InputVars>
-						</SubAppInterfaceList>
-						<SubAppNetwork>
-							<FB Name="GreenWhiteBackground_SoftKey_Heckschieber" Type="GreenWhiteBackground" Comment="" x="0.0" y="-800.0">
-								<Parameter Name="u16ObjId" Value="5002"/>
-							</FB>
-							<FB Name="GreenWhiteBackground_AUX_Heckschieber" Type="GreenWhiteBackground" Comment="" x="133.33333333333334" y="133.33333333333334">
-								<Parameter Name="u16ObjId" Value="31002"/>
-							</FB>
-							<FB Name="GreenWhiteBackground_AUX_Heckschieber_Joystick" Type="GreenWhiteBackgroundAux" Comment="" x="-53.333333333333336" y="1040.0">
-								<Parameter Name="u16ObjId" Value="31002"/>
-							</FB>
-							<EventConnections>
-								<Connection Source="INIT" Destination="GreenWhiteBackground_SoftKey_Heckschieber.INIT" Comment="" dx1="633.3333333333334"/>
-								<Connection Source="EO" Destination="GreenWhiteBackground_SoftKey_Heckschieber.REQ" Comment="" dx1="573.3333333333334"/>
-								<Connection Source="INIT" Destination="GreenWhiteBackground_AUX_Heckschieber.INIT" Comment="" dx1="466.6666666666667"/>
-								<Connection Source="EO" Destination="GreenWhiteBackground_AUX_Heckschieber.REQ" Comment="" dx1="786.6666666666667"/>
-								<Connection Source="INIT" Destination="GreenWhiteBackground_AUX_Heckschieber_Joystick.INIT" Comment="" dx1="360.0"/>
-								<Connection Source="EO" Destination="GreenWhiteBackground_AUX_Heckschieber_Joystick.REQ" Comment="" dx1="253.33333333333334"/>
-							</EventConnections>
-							<DataConnections>
-								<Connection Source="Q" Destination="GreenWhiteBackground_SoftKey_Heckschieber.DI1" Comment="" dx1="680.0"/>
-								<Connection Source="Q" Destination="GreenWhiteBackground_AUX_Heckschieber.DI1" Comment="" dx1="893.3333333333334"/>
-								<Connection Source="Q" Destination="GreenWhiteBackground_AUX_Heckschieber_Joystick.DI1" Comment="" dx1="1000.0"/>
-							</DataConnections>
-						</SubAppNetwork>
-						<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
-						<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
-					</SubApp>
-					<SubApp Name="SoftKey_Heckschieber_UP" Comment="" x="253.33333333333334" y="1453.3333333333335">
-						<SubAppInterfaceList>
-							<SubAppEventInputs>
-								<SubAppEvent Name="INIT" Type="Event" Comment="">
-								</SubAppEvent>
-							</SubAppEventInputs>
-							<SubAppEventOutputs>
-								<SubAppEvent Name="IND" Type="Event" Comment="">
-								</SubAppEvent>
-							</SubAppEventOutputs>
-						</SubAppInterfaceList>
-						<SubAppNetwork>
-							<FB Name="SoftKey_Heckschieber_UP" Type="IE" Comment="" x="0.0" y="0.0">
-								<Parameter Name="QI" Value="TRUE"/>
-							</FB>
-							<EventConnections>
-								<Connection Source="INIT" Destination="SoftKey_Heckschieber_UP.INIT" Comment="" dx1="80.0" dx2="80.0" dy="-13.333333333333334"/>
-								<Connection Source="SoftKey_Heckschieber_UP.IND" Destination="IND" Comment="" dx1="2926.666666666667"/>
-							</EventConnections>
-						</SubAppNetwork>
-						<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
-						<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
-					</SubApp>
-					<EventConnections>
-						<Connection Source="E_IMPULSE_Heckschieber.CNF" Destination="E_F_TRIG_Heckschieber.EI" Comment=""/>
-						<Connection Source="E_IMPULSE_Heckschieber.CNF" Destination="Heckschieber_6B.REQ" Comment="" dx1="533.3333333333334"/>
-						<Connection Source="E_SWITCH_Heckschieber.EO0" Destination="E_SR_Heckschieber.S" Comment=""/>
-						<Connection Source="E_SWITCH_Heckschieber.EO1" Destination="E_SR_Heckschieber.R" Comment=""/>
-						<Connection Source="E_SR_Heckschieber.EO" Destination="AND_2_Heckschieber.REQ" Comment=""/>
-						<Connection Source="E_SR_Heckschieber.EO" Destination="E_IMPULSE_Heckschieber.REQ" Comment="" dx1="126.66666666666667"/>
-						<Connection Source="E_IMPULSE_Heckschieber.CNF" Destination="AND_2_Heckschieber.REQ" Comment="" dx1="533.3333333333334"/>
-						<Connection Source="OPEN" Destination="E_SR_Heckschieber.S" Comment="" dx1="3293.3333333333335"/>
-						<Connection Source="CLOSE" Destination="E_SR_Heckschieber.R" Comment="" dx1="2900.0"/>
-						<Connection Source="AND_2_Heckschieber.CNF" Destination="CNF_2b" Comment="" dx1="553.3333333333334" dx2="280.0" dy="-860.0"/>
-						<Connection Source="E_F_TRIG_Heckschieber.EO" Destination="EO_Heckschieber_END" Comment="" dx1="440.0"/>
-						<Connection Source="AuxInput_Heckschieber_UP.IND" Destination="E_SWITCH_Heckschieber.EI" Comment="" dx1="426.6666666666667"/>
-						<Connection Source="INIT" Destination="AuxInput_Heckschieber_UP.INIT" Comment="" dx1="133.33333333333334"/>
-						<Connection Source="INIT" Destination="GreenWhiteBackground_Heckschieber.INIT" Comment="" dx1="3713.3333333333335"/>
-						<Connection Source="E_SR_Heckschieber.EO" Destination="GreenWhiteBackground_Heckschieber.EO" Comment="" dx1="406.6666666666667"/>
-						<Connection Source="INIT" Destination="SoftKey_Heckschieber_UP.INIT" Comment="" dx1="160.0"/>
-						<Connection Source="SoftKey_Heckschieber_UP.IND" Destination="E_SWITCH_Heckschieber.EI" Comment="" dx1="460.0"/>
-						<Connection Source="INIT" Destination="Heckschieber_6B.INIT" Comment="" dx1="7240.0"/>
-					</EventConnections>
-					<DataConnections>
-						<Connection Source="E_IMPULSE_Heckschieber.QO" Destination="E_F_TRIG_Heckschieber.QI" Comment="" dx1="600.0"/>
-						<Connection Source="E_IMPULSE_Heckschieber.QO" Destination="Heckschieber_6B.OUT" Comment="" dx1="600.0"/>
-						<Connection Source="E_SR_Heckschieber.Q" Destination="E_SWITCH_Heckschieber.G" Comment="" dx1="206.66666666666669" dx2="240.0" dy="266.6666666666667"/>
-						<Connection Source="E_SR_Heckschieber.Q" Destination="AND_2_Heckschieber.IN2" Comment="" dx1="2406.666666666667"/>
-						<Connection Source="E_IMPULSE_Heckschieber.QO" Destination="AND_2_Heckschieber.IN1" Comment="" dx1="600.0"/>
-						<Connection Source="AND_2_Heckschieber.OUT" Destination="OUT_2b" Comment="" dx1="813.3333333333334" dx2="66.66666666666667" dy="-920.0"/>
-						<Connection Source="E_SR_Heckschieber.Q" Destination="GreenWhiteBackground_Heckschieber.Q" Comment="" dx1="653.3333333333334"/>
-					</DataConnections>
-				</SubAppNetwork>
-				<Attribute Name="Unfolded" Type="STRING" Value="true"/>
-				<Attribute Name="width" Type="LREAL" Value="10200.0"/>
-				<Attribute Name="height" Type="LREAL" Value="4073.3333333333335"/>
+			<SubApp Name="Heckschieber" Type="Heckschieber" Comment="" x="3000.0" y="-1133.3333333333335">
+				<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+				<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			</SubApp>
 		</SubAppNetwork>
 	</Application>
@@ -1351,30 +1191,6 @@
 					<Attribute Name="height" Type="LREAL" Value="653.3333333333334"/>
 					<Attribute Name="GroupName" Type="STRING" Value="__Group01"/>
 				</SubApp>
-				<SubApp Name="Heckschieber" Comment="" x="4600.0" y="1740.0">
-					<SubAppInterfaceList>
-						<SubAppEventInputs>
-							<SubAppEvent Name="INIT" Type="Event" Comment="">
-							</SubAppEvent>
-							<SubAppEvent Name="OPEN" Type="Event" Comment="">
-							</SubAppEvent>
-							<SubAppEvent Name="CLOSE" Type="Event" Comment="">
-							</SubAppEvent>
-						</SubAppEventInputs>
-						<SubAppEventOutputs>
-							<SubAppEvent Name="CNF_2b" Type="Event" Comment="">
-							</SubAppEvent>
-							<SubAppEvent Name="EO_Heckschieber_END" Type="Event" Comment="">
-							</SubAppEvent>
-						</SubAppEventOutputs>
-						<OutputVars>
-							<VarDeclaration Name="OUT_2b" Type="BOOL" Comment=""/>
-						</OutputVars>
-					</SubAppInterfaceList>
-					<Attribute Name="width" Type="LREAL" Value="1320.0"/>
-					<Attribute Name="height" Type="LREAL" Value="653.3333333333334"/>
-					<Attribute Name="GroupName" Type="STRING" Value="Vorgewendeautomatik"/>
-				</SubApp>
 				<SubApp Name="Klappen" Comment="" x="3493.3333333333335" y="993.3333333333334">
 					<SubAppInterfaceList>
 						<SubAppEventInputs>
@@ -1559,6 +1375,11 @@
 					<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 					<Attribute Name="GroupName" Type="STRING" Value="__Group01"/>
 				</SubApp>
+				<SubApp Name="Heckschieber" Type="Heckschieber" Comment="" x="7200.0" y="2033.3333333333335">
+					<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+					<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
+					<Attribute Name="GroupName" Type="STRING" Value="Vorgewendeautomatik"/>
+				</SubApp>
 				<EventConnections>
 					<Connection Source="START.COLD" Destination="Vorsteuerventil_2A.INIT" Comment="" dx1="80.0" dx2="80.0" dy="-940.0">
 						<Attribute Name="Visible" Type="STRING" Value="false"/>
@@ -1584,9 +1405,6 @@
 					<Connection Source="Seitenschieber.CNF_2a" Destination="Vorsteuerventil_2A.REQ5" Comment="" dx1="3220.0">
 						<Attribute Name="Visible" Type="STRING" Value="false"/>
 					</Connection>
-					<Connection Source="Heckschieber.CNF_2b" Destination="Vorsteuerventil_2B.REQ4" Comment="" dx1="1780.0">
-						<Attribute Name="Visible" Type="STRING" Value="false"/>
-					</Connection>
 					<Connection Source="START.COLD" Destination="Klappen.INIT" Comment="" dx1="66.66666666666667" dx2="66.66666666666667" dy="993.3333333333334">
 						<Attribute Name="Visible" Type="STRING" Value="false"/>
 					</Connection>
@@ -1603,9 +1421,6 @@
 						<Attribute Name="Visible" Type="STRING" Value="false"/>
 					</Connection>
 					<Connection Source="Knickdeichsel.IND_2a" Destination="Vorsteuerventil_2A.REQ2" Comment="" dx1="220.0">
-						<Attribute Name="Visible" Type="STRING" Value="false"/>
-					</Connection>
-					<Connection Source="START.COLD" Destination="Heckschieber.INIT" Comment="" dx1="66.66666666666667" dx2="66.66666666666667" dy="3500.0">
 						<Attribute Name="Visible" Type="STRING" Value="false"/>
 					</Connection>
 					<Connection Source="START.COLD" Destination="Licht.INIT" Comment="" dx1="66.66666666666667" dx2="66.66666666666667" dy="-1680.0">
@@ -1631,15 +1446,27 @@
 					<Connection Source="START.COLD" Destination="mapping_DataPanel.INIT" Comment="" dx1="66.66666666666667" dx2="66.66666666666667" dy="740.0">
 						<Attribute Name="Visible" Type="STRING" Value="false"/>
 					</Connection>
-					<Connection Source="Automatik.EO_Automatik_ein_UP" Destination="Heckschieber.OPEN" Comment="" dx1="333.33333333333337"/>
-					<Connection Source="Heckschieber.EO_Heckschieber_END" Destination="Automatik.CNF_Schieber" Comment="" dx1="1300.0" dx2="366.6666666666667" dy="473.33333333333337"/>
 					<Connection Source="Automatik.EO_Automatik_ein" Destination="Schneidwerk.S_ON" Comment="" dx1="1720.0"/>
 					<Connection Source="Automatik.EO_Automatik_aus_DOWN" Destination="Schneidwerk.S_OFF" Comment="" dx1="186.66666666666669"/>
-					<Connection Source="Automatik.EO_Automatik_aus_DOWN" Destination="Heckschieber.CLOSE" Comment="" dx1="193.33333333333334"/>
 					<Connection Source="START.COLD" Destination="mapping_Softkeys.INIT" Comment="" dx1="66.66666666666667" dx2="66.66666666666667" dy="-1693.3333333333335">
 						<Attribute Name="Visible" Type="STRING" Value="false"/>
 					</Connection>
 					<Connection Source="START.COLD" Destination="mapping_aux.INIT" Comment="" dx1="80.0" dx2="80.0" dy="-466.6666666666667">
+						<Attribute Name="Visible" Type="STRING" Value="false"/>
+					</Connection>
+					<Connection Source="START.COLD" Destination="Heckschieber.INIT" Comment="" dx1="80.0" dx2="80.0" dy="533.3333333333334">
+						<Attribute Name="Visible" Type="STRING" Value="false"/>
+					</Connection>
+					<Connection Source="Automatik.EO_Automatik_ein_UP" Destination="Heckschieber.OPEN" Comment="" dx1="4693.333333333334">
+						<Attribute Name="Visible" Type="STRING" Value="false"/>
+					</Connection>
+					<Connection Source="Automatik.EO_Automatik_aus_DOWN" Destination="Heckschieber.CLOSE" Comment="" dx1="4693.333333333334">
+						<Attribute Name="Visible" Type="STRING" Value="false"/>
+					</Connection>
+					<Connection Source="Heckschieber.CNF_2b" Destination="Vorsteuerventil_2B.REQ4" Comment="" dx1="286.6666666666667">
+						<Attribute Name="Visible" Type="STRING" Value="false"/>
+					</Connection>
+					<Connection Source="Heckschieber.EO_Heckschieber_END" Destination="Automatik.CNF_Schieber" Comment="" dx1="80.0" dx2="80.0" dy="540.0">
 						<Attribute Name="Visible" Type="STRING" Value="false"/>
 					</Connection>
 				</EventConnections>
@@ -1651,9 +1478,6 @@
 						<Attribute Name="Visible" Type="STRING" Value="false"/>
 					</Connection>
 					<Connection Source="Seitenschieber.OUT_2a" Destination="Vorsteuerventil_2A.IN5" Comment="" dx1="2673.3333333333335">
-						<Attribute Name="Visible" Type="STRING" Value="false"/>
-					</Connection>
-					<Connection Source="Heckschieber.OUT_2b" Destination="Vorsteuerventil_2B.IN4" Comment="" dx1="1780.0">
 						<Attribute Name="Visible" Type="STRING" Value="false"/>
 					</Connection>
 					<Connection Source="Klappen.OUT_2b" Destination="Vorsteuerventil_2B.IN1" Comment="" dx1="346.6666666666667">
@@ -1676,6 +1500,9 @@
 					<Connection Source="Verteiler.OUT_2b" Destination="Vorsteuerventil_2B.IN3" Comment="" dx1="60.0">
 						<Attribute Name="Visible" Type="STRING" Value="false"/>
 					</Connection>
+					<Connection Source="Heckschieber.OUT_2b" Destination="Vorsteuerventil_2B.IN4" Comment="" dx1="286.6666666666667">
+						<Attribute Name="Visible" Type="STRING" Value="false"/>
+					</Connection>
 				</DataConnections>
 			</FBNetwork>
 		</Resource>
@@ -1685,7 +1512,6 @@
 	<Mapping From="Abscheider.Abscheider" To="FORTE_PC.EMB_RES.Abscheider"/>
 	<Mapping From="Dom.Dom" To="FORTE_PC.EMB_RES.Dom"/>
 	<Mapping From="Seitenschieber.Seitenschieber" To="FORTE_PC.EMB_RES.Seitenschieber"/>
-	<Mapping From="Heckschieber.Heckschieber" To="FORTE_PC.EMB_RES.Heckschieber"/>
 	<Mapping From="Klappen.Klappen" To="FORTE_PC.EMB_RES.Klappen"/>
 	<Mapping From="Knickdeichsel.Knickdeichsel" To="FORTE_PC.EMB_RES.Knickdeichsel"/>
 	<Mapping From="Licht.Licht" To="FORTE_PC.EMB_RES.Licht"/>
@@ -1695,6 +1521,7 @@
 	<Mapping From="mapping_DataPanel.mapping_DataPanel" To="FORTE_PC.EMB_RES.mapping_DataPanel"/>
 	<Mapping From="mapping_Softkeys.mapping_Softkeys" To="FORTE_PC.EMB_RES.mapping_Softkeys"/>
 	<Mapping From="mapping_aux.mapping_aux" To="FORTE_PC.EMB_RES.mapping_aux"/>
+	<Mapping From="Heckschieber.Heckschieber" To="FORTE_PC.EMB_RES.Heckschieber"/>
 	<Segment Name="Ethernet" Type="Ethernet" Comment="" x="5360.0" y="613.3333333333334" dx1="1993.3333333333335">
 		<Attribute Name="Color" Type="STRING" Value="140,181,218"/>
 	</Segment>

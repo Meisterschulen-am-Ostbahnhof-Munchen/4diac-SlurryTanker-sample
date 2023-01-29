@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Heckschieber" Comment="Subapplication Type">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="Franz" Date="2023-01-29">
+	</VersionInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="Event" Comment="">
+			</SubAppEvent>
+			<SubAppEvent Name="OPEN" Type="Event" Comment="">
+			</SubAppEvent>
+			<SubAppEvent Name="CLOSE" Type="Event" Comment="">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="CNF_2b" Type="Event" Comment="">
+			</SubAppEvent>
+			<SubAppEvent Name="EO_Heckschieber_END" Type="Event" Comment="">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<OutputVars>
+			<VarDeclaration Name="OUT_2b" Type="BOOL" Comment=""/>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="E_F_TRIG_Heckschieber" Type="E_F_TRIG" Comment="" x="7053.333333333334" y="926.6666666666667">
+		</FB>
+		<FB Name="Heckschieber_6B" Type="QX" Comment="" x="7293.333333333334" y="0.0">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="E_SR_Heckschieber" Type="E_SR_RETRIG" Comment="" x="3333.3333333333335" y="1566.6666666666667">
+		</FB>
+		<FB Name="E_SWITCH_Heckschieber" Type="E_SWITCH" Comment="" x="1726.6666666666667" y="1566.6666666666667">
+		</FB>
+		<FB Name="AND_2_Heckschieber" Type="AND_2" Comment="" x="7193.333333333334" y="1566.6666666666667">
+		</FB>
+		<FB Name="E_IMPULSE_Heckschieber" Type="E_IMPULSE" Comment="" x="5300.0" y="926.6666666666667">
+			<Parameter Name="TM" Value="T#3s"/>
+		</FB>
+		<SubApp Name="AuxInput_Heckschieber_UP" Comment="" x="253.33333333333334" y="1853.3333333333335">
+			<SubAppInterfaceList>
+				<SubAppEventInputs>
+					<SubAppEvent Name="INIT" Type="Event" Comment="">
+					</SubAppEvent>
+				</SubAppEventInputs>
+				<SubAppEventOutputs>
+					<SubAppEvent Name="IND" Type="Event" Comment="">
+					</SubAppEvent>
+				</SubAppEventOutputs>
+			</SubAppInterfaceList>
+			<SubAppNetwork>
+				<FB Name="E_SWITCH_AuxInput_Heckschieber" Type="E_SWITCH" Comment="" x="1100.0" y="100.0">
+				</FB>
+				<FB Name="AuxInput_Heckschieber" Type="IX" Comment="" x="66.66666666666667" y="0.0">
+					<Parameter Name="QI" Value="TRUE"/>
+				</FB>
+				<EventConnections>
+					<Connection Source="AuxInput_Heckschieber.IND" Destination="E_SWITCH_AuxInput_Heckschieber.EI" Comment=""/>
+					<Connection Source="INIT" Destination="AuxInput_Heckschieber.INIT" Comment="" dx1="153.33333333333334"/>
+					<Connection Source="E_SWITCH_AuxInput_Heckschieber.EO0" Destination="IND" Comment="" dx1="933.3333333333334"/>
+				</EventConnections>
+				<DataConnections>
+					<Connection Source="AuxInput_Heckschieber.IN" Destination="E_SWITCH_AuxInput_Heckschieber.G" Comment="" dx1="266.6666666666667"/>
+				</DataConnections>
+			</SubAppNetwork>
+			<Attribute Name="width" Type="LREAL" Value="3053.3333333333335"/>
+			<Attribute Name="height" Type="LREAL" Value="1173.3333333333335"/>
+		</SubApp>
+		<SubApp Name="GreenWhiteBackground_Heckschieber" Comment="" x="4940.0" y="0.0">
+			<SubAppInterfaceList>
+				<SubAppEventInputs>
+					<SubAppEvent Name="INIT" Type="Event" Comment="">
+						<Attribute Name="YPOSITION" Type="STRING" Value="20"/>
+					</SubAppEvent>
+					<SubAppEvent Name="EO" Type="Event" Comment="">
+						<Attribute Name="YPOSITION" Type="STRING" Value="272"/>
+					</SubAppEvent>
+				</SubAppEventInputs>
+				<InputVars>
+					<VarDeclaration Name="Q" Type="BOOL" Comment="">
+						<Attribute Name="YPOSITION" Type="STRING" Value="139"/>
+					</VarDeclaration>
+				</InputVars>
+			</SubAppInterfaceList>
+			<SubAppNetwork>
+				<FB Name="GreenWhiteBackground_SoftKey_Heckschieber" Type="GreenWhiteBackground" Comment="" x="0.0" y="-800.0">
+					<Parameter Name="u16ObjId" Value="5002"/>
+				</FB>
+				<FB Name="GreenWhiteBackground_AUX_Heckschieber" Type="GreenWhiteBackground" Comment="" x="133.33333333333334" y="133.33333333333334">
+					<Parameter Name="u16ObjId" Value="31002"/>
+				</FB>
+				<FB Name="GreenWhiteBackground_AUX_Heckschieber_Joystick" Type="GreenWhiteBackgroundAux" Comment="" x="-53.333333333333336" y="1040.0">
+					<Parameter Name="u16ObjId" Value="31002"/>
+				</FB>
+				<EventConnections>
+					<Connection Source="INIT" Destination="GreenWhiteBackground_SoftKey_Heckschieber.INIT" Comment="" dx1="633.3333333333334"/>
+					<Connection Source="EO" Destination="GreenWhiteBackground_SoftKey_Heckschieber.REQ" Comment="" dx1="573.3333333333334"/>
+					<Connection Source="INIT" Destination="GreenWhiteBackground_AUX_Heckschieber.INIT" Comment="" dx1="466.6666666666667"/>
+					<Connection Source="EO" Destination="GreenWhiteBackground_AUX_Heckschieber.REQ" Comment="" dx1="786.6666666666667"/>
+					<Connection Source="INIT" Destination="GreenWhiteBackground_AUX_Heckschieber_Joystick.INIT" Comment="" dx1="360.0"/>
+					<Connection Source="EO" Destination="GreenWhiteBackground_AUX_Heckschieber_Joystick.REQ" Comment="" dx1="253.33333333333334"/>
+				</EventConnections>
+				<DataConnections>
+					<Connection Source="Q" Destination="GreenWhiteBackground_SoftKey_Heckschieber.DI1" Comment="" dx1="680.0"/>
+					<Connection Source="Q" Destination="GreenWhiteBackground_AUX_Heckschieber.DI1" Comment="" dx1="893.3333333333334"/>
+					<Connection Source="Q" Destination="GreenWhiteBackground_AUX_Heckschieber_Joystick.DI1" Comment="" dx1="1000.0"/>
+				</DataConnections>
+			</SubAppNetwork>
+			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
+		</SubApp>
+		<SubApp Name="SoftKey_Heckschieber_UP" Comment="" x="253.33333333333334" y="1453.3333333333335">
+			<SubAppInterfaceList>
+				<SubAppEventInputs>
+					<SubAppEvent Name="INIT" Type="Event" Comment="">
+					</SubAppEvent>
+				</SubAppEventInputs>
+				<SubAppEventOutputs>
+					<SubAppEvent Name="IND" Type="Event" Comment="">
+					</SubAppEvent>
+				</SubAppEventOutputs>
+			</SubAppInterfaceList>
+			<SubAppNetwork>
+				<FB Name="SoftKey_Heckschieber_UP" Type="IE" Comment="" x="0.0" y="0.0">
+					<Parameter Name="QI" Value="TRUE"/>
+				</FB>
+				<EventConnections>
+					<Connection Source="INIT" Destination="SoftKey_Heckschieber_UP.INIT" Comment="" dx1="80.0" dx2="80.0" dy="-13.333333333333334"/>
+					<Connection Source="SoftKey_Heckschieber_UP.IND" Destination="IND" Comment="" dx1="2926.666666666667"/>
+				</EventConnections>
+			</SubAppNetwork>
+			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
+		</SubApp>
+		<EventConnections>
+			<Connection Source="E_IMPULSE_Heckschieber.CNF" Destination="E_F_TRIG_Heckschieber.EI" Comment=""/>
+			<Connection Source="E_IMPULSE_Heckschieber.CNF" Destination="Heckschieber_6B.REQ" Comment="" dx1="533.3333333333334"/>
+			<Connection Source="E_SWITCH_Heckschieber.EO0" Destination="E_SR_Heckschieber.S" Comment=""/>
+			<Connection Source="E_SWITCH_Heckschieber.EO1" Destination="E_SR_Heckschieber.R" Comment=""/>
+			<Connection Source="E_SR_Heckschieber.EO" Destination="AND_2_Heckschieber.REQ" Comment=""/>
+			<Connection Source="E_SR_Heckschieber.EO" Destination="E_IMPULSE_Heckschieber.REQ" Comment="" dx1="126.66666666666667"/>
+			<Connection Source="E_IMPULSE_Heckschieber.CNF" Destination="AND_2_Heckschieber.REQ" Comment="" dx1="533.3333333333334"/>
+			<Connection Source="OPEN" Destination="E_SR_Heckschieber.S" Comment="" dx1="4353.333333333334"/>
+			<Connection Source="CLOSE" Destination="E_SR_Heckschieber.R" Comment="" dx1="4160.0"/>
+			<Connection Source="AND_2_Heckschieber.CNF" Destination="CNF_2b" Comment="" dx1="553.3333333333334" dx2="280.0" dy="-860.0"/>
+			<Connection Source="E_F_TRIG_Heckschieber.EO" Destination="EO_Heckschieber_END" Comment="" dx1="440.0"/>
+			<Connection Source="AuxInput_Heckschieber_UP.IND" Destination="E_SWITCH_Heckschieber.EI" Comment="" dx1="426.6666666666667"/>
+			<Connection Source="INIT" Destination="AuxInput_Heckschieber_UP.INIT" Comment="" dx1="133.33333333333334"/>
+			<Connection Source="INIT" Destination="GreenWhiteBackground_Heckschieber.INIT" Comment="" dx1="5906.666666666667"/>
+			<Connection Source="E_SR_Heckschieber.EO" Destination="GreenWhiteBackground_Heckschieber.EO" Comment="" dx1="406.6666666666667"/>
+			<Connection Source="INIT" Destination="SoftKey_Heckschieber_UP.INIT" Comment="" dx1="160.0"/>
+			<Connection Source="SoftKey_Heckschieber_UP.IND" Destination="E_SWITCH_Heckschieber.EI" Comment="" dx1="460.0"/>
+			<Connection Source="INIT" Destination="Heckschieber_6B.INIT" Comment="" dx1="7240.0"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="E_IMPULSE_Heckschieber.QO" Destination="E_F_TRIG_Heckschieber.QI" Comment="" dx1="600.0"/>
+			<Connection Source="E_IMPULSE_Heckschieber.QO" Destination="Heckschieber_6B.OUT" Comment="" dx1="600.0"/>
+			<Connection Source="E_SR_Heckschieber.Q" Destination="E_SWITCH_Heckschieber.G" Comment="" dx1="206.66666666666669" dx2="240.0" dy="266.6666666666667"/>
+			<Connection Source="E_SR_Heckschieber.Q" Destination="AND_2_Heckschieber.IN2" Comment="" dx1="2406.666666666667"/>
+			<Connection Source="E_IMPULSE_Heckschieber.QO" Destination="AND_2_Heckschieber.IN1" Comment="" dx1="600.0"/>
+			<Connection Source="AND_2_Heckschieber.OUT" Destination="OUT_2b" Comment="" dx1="813.3333333333334" dx2="66.66666666666667" dy="-920.0"/>
+			<Connection Source="E_SR_Heckschieber.Q" Destination="GreenWhiteBackground_Heckschieber.Q" Comment="" dx1="653.3333333333334"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>
