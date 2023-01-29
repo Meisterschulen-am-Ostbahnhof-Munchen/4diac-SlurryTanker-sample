@@ -22,30 +22,30 @@
 					</SubAppEventOutputs>
 				</SubAppInterfaceList>
 				<SubAppNetwork>
-					<FB Name="DataPanel_xDB_16_DO_SAE_J1939" Type="DataPanel_xDB_16_DO_SAE_J1939" Comment="" x="840.0" y="0.0">
+					<FB Name="DataPanel_xDB_16_DO_SAE_J1939" Type="DataPanel_xDB_16_DO_SAE_J1939" Comment="" x="1246.6666666666667" y="13.333333333333334">
 						<Parameter Name="QI" Value="TRUE"/>
 						<Parameter Name="u8SAMember" Value="224"/>
 						<Parameter Name="u16ObjId" Value="65535"/>
-						<Parameter Name="DigitalOutput_1A" Value="&quot;DigitalOutput_1A&quot;"/>
-						<Parameter Name="DigitalOutput_1B" Value="&quot;DigitalOutput_1B&quot;"/>
-						<Parameter Name="DigitalOutput_2A" Value="&quot;DigitalOutput_2A&quot;"/>
-						<Parameter Name="DigitalOutput_2B" Value="&quot;DigitalOutput_2B&quot;"/>
-						<Parameter Name="DigitalOutput_3A" Value="&quot;DigitalOutput_3A&quot;"/>
-						<Parameter Name="DigitalOutput_3B" Value="&quot;DigitalOutput_3B&quot;"/>
-						<Parameter Name="DigitalOutput_4A" Value="&quot;DigitalOutput_4A&quot;"/>
-						<Parameter Name="DigitalOutput_4B" Value="&quot;DigitalOutput_4B&quot;"/>
-						<Parameter Name="DigitalOutput_5A" Value="&quot;DigitalOutput_5A&quot;"/>
-						<Parameter Name="DigitalOutput_5B" Value="&quot;DigitalOutput_5B&quot;"/>
-						<Parameter Name="DigitalOutput_6A" Value="&quot;DigitalOutput_6A&quot;"/>
-						<Parameter Name="DigitalOutput_6B" Value="&quot;DigitalOutput_6B&quot;"/>
-						<Parameter Name="DigitalOutput_7A" Value="&quot;DigitalOutput_7A&quot;"/>
-						<Parameter Name="DigitalOutput_7B" Value="&quot;DigitalOutput_7B&quot;"/>
-						<Parameter Name="DigitalOutput_8A" Value="&quot;DigitalOutput_8A&quot;"/>
-						<Parameter Name="DigitalOutput_8B" Value="&quot;DigitalOutput_8B&quot;"/>
+						<Parameter Name="DigitalOutput_1A" Value="&quot;Schneidwerk_rechtslauf_1A&quot;"/>
+						<Parameter Name="DigitalOutput_1B" Value="&quot;Schneidwerk_linkslauf_1B&quot;"/>
+						<Parameter Name="DigitalOutput_2A" Value="&quot;Vorsteuerventil_2A&quot;"/>
+						<Parameter Name="DigitalOutput_2B" Value="&quot;Vorsteuerventil_2B&quot;"/>
+						<Parameter Name="DigitalOutput_3A" Value="&quot;Klappen_3A&quot;"/>
+						<Parameter Name="DigitalOutput_3B" Value="&quot;Klappen_3B&quot;"/>
+						<Parameter Name="DigitalOutput_4A" Value="&quot;Verteiler_4A&quot;"/>
+						<Parameter Name="DigitalOutput_4B" Value="&quot;Verteiler_4B&quot;"/>
+						<Parameter Name="DigitalOutput_5A" Value="&quot;Knickdeichsel_5A&quot;"/>
+						<Parameter Name="DigitalOutput_5B" Value="&quot;Knickdeichsel_5B&quot;"/>
+						<Parameter Name="DigitalOutput_6A" Value="&quot;Dom_6A&quot;"/>
+						<Parameter Name="DigitalOutput_6B" Value="&quot;Heckschieber_6B&quot;"/>
+						<Parameter Name="DigitalOutput_7A" Value="&quot;Seitenschieber_7A&quot;"/>
+						<Parameter Name="DigitalOutput_7B" Value="&quot;Abscheider_7B&quot;"/>
+						<Parameter Name="DigitalOutput_8A" Value="&quot;Licht_8A&quot;"/>
+						<Parameter Name="DigitalOutput_8B" Value="&quot;frei_8B&quot;"/>
 					</FB>
 					<EventConnections>
-						<Connection Source="INIT" Destination="DataPanel_xDB_16_DO_SAE_J1939.INIT" Comment="" dx1="66.66666666666667" dx2="66.66666666666667" dy="73.33333333333334"/>
-						<Connection Source="DataPanel_xDB_16_DO_SAE_J1939.INITO" Destination="INITO" Comment="" dx1="160.0" dx2="160.0" dy="0.0"/>
+						<Connection Source="INIT" Destination="DataPanel_xDB_16_DO_SAE_J1939.INIT" Comment="" dx1="640.0"/>
+						<Connection Source="DataPanel_xDB_16_DO_SAE_J1939.INITO" Destination="INITO" Comment="" dx1="706.6666666666667"/>
 					</EventConnections>
 				</SubAppNetwork>
 				<Attribute Name="Unfolded" Type="STRING" Value="true"/>
@@ -177,10 +177,10 @@
 							</InputVars>
 						</SubAppInterfaceList>
 						<SubAppNetwork>
-							<FB Name="DigitalOutput_3B" Type="QX" Comment="" x="1680.0" y="973.3333333333334">
+							<FB Name="Klappen_3B" Type="QX" Comment="" x="1680.0" y="973.3333333333334">
 								<Parameter Name="QI" Value="TRUE"/>
 							</FB>
-							<FB Name="DigitalOutput_3A" Type="QX" Comment="" x="1600.0" y="0.0">
+							<FB Name="Klappen_3A" Type="QX" Comment="" x="1600.0" y="0.0">
 								<Parameter Name="QI" Value="TRUE"/>
 							</FB>
 							<FB Name="OR_3A_3B" Type="OR_2" Comment="" x="613.3333333333334" y="440.0">
@@ -188,16 +188,16 @@
 								<Attribute Name="PinComment" Type="STRING" Value="IN2:Zusammenklappen"/>
 							</FB>
 							<EventConnections>
-								<Connection Source="OR_3A_3B.CNF" Destination="DigitalOutput_3B.REQ" Comment="" dx1="113.33333333333334"/>
-								<Connection Source="OR_3A_3B.CNF" Destination="DigitalOutput_3A.REQ" Comment="" dx1="453.33333333333337"/>
-								<Connection Source="INIT" Destination="DigitalOutput_3B.INIT" Comment="" dx1="1826.6666666666667"/>
-								<Connection Source="INIT" Destination="DigitalOutput_3A.INIT" Comment="" dx1="1826.6666666666667"/>
+								<Connection Source="OR_3A_3B.CNF" Destination="Klappen_3B.REQ" Comment="" dx1="113.33333333333334"/>
+								<Connection Source="OR_3A_3B.CNF" Destination="Klappen_3A.REQ" Comment="" dx1="453.33333333333337"/>
+								<Connection Source="INIT" Destination="Klappen_3B.INIT" Comment="" dx1="1826.6666666666667"/>
+								<Connection Source="INIT" Destination="Klappen_3A.INIT" Comment="" dx1="1826.6666666666667"/>
 								<Connection Source="IND_Auseinanderklappen" Destination="OR_3A_3B.REQ" Comment="" dx1="506.6666666666667"/>
 								<Connection Source="IND_Zusammenklappen" Destination="OR_3A_3B.REQ" Comment="" dx1="466.6666666666667"/>
 							</EventConnections>
 							<DataConnections>
-								<Connection Source="OR_3A_3B.OUT" Destination="DigitalOutput_3B.OUT" Comment="" dx1="480.0"/>
-								<Connection Source="OR_3A_3B.OUT" Destination="DigitalOutput_3A.OUT" Comment="" dx1="453.33333333333337"/>
+								<Connection Source="OR_3A_3B.OUT" Destination="Klappen_3B.OUT" Comment="" dx1="480.0"/>
+								<Connection Source="OR_3A_3B.OUT" Destination="Klappen_3A.OUT" Comment="" dx1="453.33333333333337"/>
 								<Connection Source="IN_Auseinanderklappen" Destination="OR_3A_3B.IN1" Comment="" dx1="260.0"/>
 								<Connection Source="IN_Zusammenklappen" Destination="OR_3A_3B.IN2" Comment="" dx1="66.66666666666667"/>
 							</DataConnections>
@@ -265,7 +265,7 @@
 				<SubAppNetwork>
 					<FB Name="OR_2A" Type="OR_5" Comment="" x="1100.0" y="253.33333333333334">
 					</FB>
-					<FB Name="DigitalOutput_2A" Type="QX" Comment="" x="2560.0" y="0.0">
+					<FB Name="Vorsteuerventil_2A" Type="QX" Comment="" x="2560.0" y="0.0">
 						<Parameter Name="QI" Value="TRUE"/>
 					</FB>
 					<EventConnections>
@@ -274,8 +274,8 @@
 						<Connection Source="REQ3" Destination="OR_2A.REQ" Comment="" dx1="553.3333333333334"/>
 						<Connection Source="REQ4" Destination="OR_2A.REQ" Comment="" dx1="553.3333333333334"/>
 						<Connection Source="REQ5" Destination="OR_2A.REQ" Comment="" dx1="553.3333333333334"/>
-						<Connection Source="INIT" Destination="DigitalOutput_2A.INIT" Comment="" dx1="2400.0" dx2="2400.0" dy="0.0"/>
-						<Connection Source="OR_2A.CNF" Destination="DigitalOutput_2A.REQ" Comment="" dx1="320.0" dx2="320.0" dy="0.0"/>
+						<Connection Source="INIT" Destination="Vorsteuerventil_2A.INIT" Comment="" dx1="2400.0" dx2="2400.0" dy="0.0"/>
+						<Connection Source="OR_2A.CNF" Destination="Vorsteuerventil_2A.REQ" Comment="" dx1="320.0" dx2="320.0" dy="0.0"/>
 					</EventConnections>
 					<DataConnections>
 						<Connection Source="IN1" Destination="OR_2A.IN1" Comment="" dx1="846.6666666666667"/>
@@ -283,7 +283,7 @@
 						<Connection Source="IN3" Destination="OR_2A.IN3" Comment="" dx1="566.6666666666667"/>
 						<Connection Source="IN4" Destination="OR_2A.IN4" Comment="" dx1="440.0"/>
 						<Connection Source="IN5" Destination="OR_2A.IN5" Comment="" dx1="253.33333333333334"/>
-						<Connection Source="OR_2A.OUT" Destination="DigitalOutput_2A.OUT" Comment="" dx1="320.0" dx2="320.0" dy="0.0"/>
+						<Connection Source="OR_2A.OUT" Destination="Vorsteuerventil_2A.OUT" Comment="" dx1="320.0" dx2="320.0" dy="0.0"/>
 					</DataConnections>
 				</SubAppNetwork>
 				<Attribute Name="Unfolded" Type="STRING" Value="true"/>
@@ -353,23 +353,23 @@
 								<Attribute Name="PinComment" Type="STRING" Value="IN1:Verteiler_heben"/>
 								<Attribute Name="PinComment" Type="STRING" Value="IN2:Verteiler_senken"/>
 							</FB>
-							<FB Name="DigitalOutput_4B" Type="QX" Comment="" x="2006.6666666666667" y="173.33333333333334">
+							<FB Name="Verteiler_4B" Type="QX" Comment="" x="2006.6666666666667" y="173.33333333333334">
 								<Parameter Name="QI" Value="TRUE"/>
 							</FB>
-							<FB Name="DigitalOutput_4A" Type="QX" Comment="" x="2140.0" y="1240.0">
+							<FB Name="Verteiler_4A" Type="QX" Comment="" x="2140.0" y="1240.0">
 								<Parameter Name="QI" Value="TRUE"/>
 							</FB>
 							<EventConnections>
-								<Connection Source="OR_4A_4B.CNF" Destination="DigitalOutput_4B.REQ" Comment="" dx1="406.6666666666667"/>
-								<Connection Source="OR_4A_4B.CNF" Destination="DigitalOutput_4A.REQ" Comment="" dx1="400.0"/>
+								<Connection Source="OR_4A_4B.CNF" Destination="Verteiler_4B.REQ" Comment="" dx1="406.6666666666667"/>
+								<Connection Source="OR_4A_4B.CNF" Destination="Verteiler_4A.REQ" Comment="" dx1="400.0"/>
 								<Connection Source="CNF_Verteiler_heben" Destination="OR_4A_4B.REQ" Comment="" dx1="666.6666666666667"/>
 								<Connection Source="CNF_Verteiler_senken" Destination="OR_4A_4B.REQ" Comment="" dx1="493.33333333333337"/>
-								<Connection Source="INITO" Destination="DigitalOutput_4B.INIT" Comment="" dx1="1880.0"/>
-								<Connection Source="INITO" Destination="DigitalOutput_4A.INIT" Comment="" dx1="2100.0"/>
+								<Connection Source="INITO" Destination="Verteiler_4B.INIT" Comment="" dx1="1880.0"/>
+								<Connection Source="INITO" Destination="Verteiler_4A.INIT" Comment="" dx1="2100.0"/>
 							</EventConnections>
 							<DataConnections>
-								<Connection Source="OR_4A_4B.OUT" Destination="DigitalOutput_4B.OUT" Comment="" dx1="193.33333333333334"/>
-								<Connection Source="OR_4A_4B.OUT" Destination="DigitalOutput_4A.OUT" Comment="" dx1="206.66666666666669"/>
+								<Connection Source="OR_4A_4B.OUT" Destination="Verteiler_4B.OUT" Comment="" dx1="193.33333333333334"/>
+								<Connection Source="OR_4A_4B.OUT" Destination="Verteiler_4A.OUT" Comment="" dx1="206.66666666666669"/>
 								<Connection Source="IN_Verteiler_heben" Destination="OR_4A_4B.IN1" Comment="" dx1="506.6666666666667"/>
 								<Connection Source="IN_Verteiler_senken" Destination="OR_4A_4B.IN2" Comment="" dx1="366.6666666666667"/>
 							</DataConnections>
@@ -469,23 +469,23 @@
 								<Attribute Name="PinComment" Type="STRING" Value="IN1:Knickdeichsel_heben"/>
 								<Attribute Name="PinComment" Type="STRING" Value="IN2:Knickdeichsel_senken"/>
 							</FB>
-							<FB Name="DigitalOutput_5B" Type="QX" Comment="" x="1553.3333333333335" y="66.66666666666667">
+							<FB Name="Knickdeichsel_5B" Type="QX" Comment="" x="1553.3333333333335" y="66.66666666666667">
 								<Parameter Name="QI" Value="TRUE"/>
 							</FB>
-							<FB Name="DigitalOutput_5A" Type="QX" Comment="" x="1553.3333333333335" y="1133.3333333333335">
+							<FB Name="Knickdeichsel_5A" Type="QX" Comment="" x="1553.3333333333335" y="1133.3333333333335">
 								<Parameter Name="QI" Value="TRUE"/>
 							</FB>
 							<EventConnections>
-								<Connection Source="OR_5A_5B.CNF" Destination="DigitalOutput_5B.REQ" Comment="" dx1="253.33333333333334"/>
-								<Connection Source="OR_5A_5B.CNF" Destination="DigitalOutput_5A.REQ" Comment="" dx1="266.6666666666667"/>
+								<Connection Source="OR_5A_5B.CNF" Destination="Knickdeichsel_5B.REQ" Comment="" dx1="253.33333333333334"/>
+								<Connection Source="OR_5A_5B.CNF" Destination="Knickdeichsel_5A.REQ" Comment="" dx1="266.6666666666667"/>
 								<Connection Source="IND_Knickdeichsel_senken" Destination="OR_5A_5B.REQ" Comment="" dx1="366.6666666666667"/>
 								<Connection Source="IND_Knickdeichsel_heben" Destination="OR_5A_5B.REQ" Comment="" dx1="273.33333333333337"/>
-								<Connection Source="INITO" Destination="DigitalOutput_5B.INIT" Comment="" dx1="1940.0"/>
-								<Connection Source="INITO" Destination="DigitalOutput_5A.INIT" Comment="" dx1="700.0"/>
+								<Connection Source="INITO" Destination="Knickdeichsel_5B.INIT" Comment="" dx1="1940.0"/>
+								<Connection Source="INITO" Destination="Knickdeichsel_5A.INIT" Comment="" dx1="700.0"/>
 							</EventConnections>
 							<DataConnections>
-								<Connection Source="OR_5A_5B.OUT" Destination="DigitalOutput_5B.OUT" Comment="" dx1="433.33333333333337"/>
-								<Connection Source="OR_5A_5B.OUT" Destination="DigitalOutput_5A.OUT" Comment="" dx1="126.66666666666667"/>
+								<Connection Source="OR_5A_5B.OUT" Destination="Knickdeichsel_5B.OUT" Comment="" dx1="433.33333333333337"/>
+								<Connection Source="OR_5A_5B.OUT" Destination="Knickdeichsel_5A.OUT" Comment="" dx1="126.66666666666667"/>
 								<Connection Source="IN_Knickdeichsel_heben" Destination="OR_5A_5B.IN1" Comment="" dx1="193.33333333333334"/>
 								<Connection Source="IN_Knickdeichsel_senken" Destination="OR_5A_5B.IN2" Comment="" dx1="66.66666666666667"/>
 							</DataConnections>
@@ -543,7 +543,7 @@
 					</FB>
 					<FB Name="E_T_FF_Dom" Type="E_T_FF" Comment="" x="1500.0" y="946.6666666666667">
 					</FB>
-					<FB Name="DigitalOutput_6A" Type="QX" Comment="" x="4833.333333333334" y="0.0">
+					<FB Name="Dom_6A" Type="QX" Comment="" x="4833.333333333334" y="0.0">
 						<Parameter Name="QI" Value="TRUE"/>
 					</FB>
 					<FB Name="E_IMPULSE_Dom" Type="E_IMPULSE" Comment="" x="3100.0" y="946.6666666666667">
@@ -647,20 +647,20 @@
 					<EventConnections>
 						<Connection Source="E_IMPULSE_Dom.CNF" Destination="AND_2_Dom.REQ" Comment="" dx1="320.0"/>
 						<Connection Source="E_T_FF_Dom.EO" Destination="E_IMPULSE_Dom.REQ" Comment=""/>
-						<Connection Source="E_IMPULSE_Dom.CNF" Destination="DigitalOutput_6A.REQ" Comment="" dx1="320.0"/>
+						<Connection Source="E_IMPULSE_Dom.CNF" Destination="Dom_6A.REQ" Comment="" dx1="320.0"/>
 						<Connection Source="AND_2_Dom.CNF" Destination="CNF_2a" Comment="" dx1="553.3333333333334" dx2="353.33333333333337" dy="-573.3333333333334"/>
 						<Connection Source="INIT" Destination="SoftKey_Dom_UP.INIT" Comment="" dx1="146.66666666666669"/>
 						<Connection Source="SoftKey_Dom_UP.IND" Destination="E_T_FF_Dom.CLK" Comment="" dx1="506.6666666666667"/>
 						<Connection Source="INIT" Destination="AuxInput_Dom_UP.INIT" Comment="" dx1="80.0"/>
 						<Connection Source="AuxInput_Dom_UP.IND" Destination="E_T_FF_Dom.CLK" Comment="" dx1="313.33333333333337"/>
-						<Connection Source="INIT" Destination="DigitalOutput_6A.INIT" Comment="" dx1="4566.666666666667"/>
+						<Connection Source="INIT" Destination="Dom_6A.INIT" Comment="" dx1="4566.666666666667"/>
 						<Connection Source="INIT" Destination="GreenWhiteBackground_Dom.INIT" Comment="" dx1="1420.0"/>
 						<Connection Source="E_T_FF_Dom.EO" Destination="GreenWhiteBackground_Dom.EO" Comment="" dx1="373.33333333333337"/>
 					</EventConnections>
 					<DataConnections>
 						<Connection Source="E_IMPULSE_Dom.QO" Destination="AND_2_Dom.IN1" Comment="" dx1="493.33333333333337"/>
 						<Connection Source="E_T_FF_Dom.Q" Destination="AND_2_Dom.IN2" Comment="" dx1="113.33333333333334" dx2="673.3333333333334" dy="153.33333333333334"/>
-						<Connection Source="E_IMPULSE_Dom.QO" Destination="DigitalOutput_6A.OUT" Comment="" dx1="393.33333333333337"/>
+						<Connection Source="E_IMPULSE_Dom.QO" Destination="Dom_6A.OUT" Comment="" dx1="393.33333333333337"/>
 						<Connection Source="AND_2_Dom.OUT" Destination="OUT_2a" Comment="" dx1="746.6666666666667" dx2="66.66666666666667" dy="-640.0"/>
 						<Connection Source="E_T_FF_Dom.Q" Destination="GreenWhiteBackground_Dom.Q" Comment="" dx1="373.33333333333337"/>
 					</DataConnections>
@@ -696,7 +696,7 @@
 				<SubAppNetwork>
 					<FB Name="E_F_TRIG_Heckschieber" Type="E_F_TRIG" Comment="" x="7053.333333333334" y="926.6666666666667">
 					</FB>
-					<FB Name="DigitalOutput_6B" Type="QX" Comment="" x="7293.333333333334" y="0.0">
+					<FB Name="Heckschieber_6B" Type="QX" Comment="" x="7293.333333333334" y="0.0">
 						<Parameter Name="QI" Value="TRUE"/>
 					</FB>
 					<FB Name="E_SR_Heckschieber" Type="E_SR_RETRIG" Comment="" x="3333.3333333333335" y="1566.6666666666667">
@@ -805,7 +805,7 @@
 					</SubApp>
 					<EventConnections>
 						<Connection Source="E_IMPULSE_Heckschieber.CNF" Destination="E_F_TRIG_Heckschieber.EI" Comment=""/>
-						<Connection Source="E_IMPULSE_Heckschieber.CNF" Destination="DigitalOutput_6B.REQ" Comment="" dx1="533.3333333333334"/>
+						<Connection Source="E_IMPULSE_Heckschieber.CNF" Destination="Heckschieber_6B.REQ" Comment="" dx1="533.3333333333334"/>
 						<Connection Source="E_SWITCH_Heckschieber.EO0" Destination="E_SR_Heckschieber.S" Comment=""/>
 						<Connection Source="E_SWITCH_Heckschieber.EO1" Destination="E_SR_Heckschieber.R" Comment=""/>
 						<Connection Source="E_SR_Heckschieber.EO" Destination="AND_2_Heckschieber.REQ" Comment=""/>
@@ -821,11 +821,11 @@
 						<Connection Source="E_SR_Heckschieber.EO" Destination="GreenWhiteBackground_Heckschieber.EO" Comment="" dx1="406.6666666666667"/>
 						<Connection Source="INIT" Destination="SoftKey_Heckschieber_UP.INIT" Comment="" dx1="160.0"/>
 						<Connection Source="SoftKey_Heckschieber_UP.IND" Destination="E_SWITCH_Heckschieber.EI" Comment="" dx1="460.0"/>
-						<Connection Source="INIT" Destination="DigitalOutput_6B.INIT" Comment="" dx1="7240.0"/>
+						<Connection Source="INIT" Destination="Heckschieber_6B.INIT" Comment="" dx1="7240.0"/>
 					</EventConnections>
 					<DataConnections>
 						<Connection Source="E_IMPULSE_Heckschieber.QO" Destination="E_F_TRIG_Heckschieber.QI" Comment="" dx1="600.0"/>
-						<Connection Source="E_IMPULSE_Heckschieber.QO" Destination="DigitalOutput_6B.OUT" Comment="" dx1="600.0"/>
+						<Connection Source="E_IMPULSE_Heckschieber.QO" Destination="Heckschieber_6B.OUT" Comment="" dx1="600.0"/>
 						<Connection Source="E_SR_Heckschieber.Q" Destination="E_SWITCH_Heckschieber.G" Comment="" dx1="206.66666666666669" dx2="240.0" dy="266.6666666666667"/>
 						<Connection Source="E_SR_Heckschieber.Q" Destination="AND_2_Heckschieber.IN2" Comment="" dx1="2406.666666666667"/>
 						<Connection Source="E_IMPULSE_Heckschieber.QO" Destination="AND_2_Heckschieber.IN1" Comment="" dx1="600.0"/>
@@ -866,7 +866,7 @@
 					</FB>
 					<FB Name="E_T_FF_Seitenschieber" Type="E_T_FF" Comment="" x="1773.3333333333335" y="1066.6666666666667">
 					</FB>
-					<FB Name="DigitalOutput_7A" Type="QX" Comment="" x="6100.0" y="0.0">
+					<FB Name="Seitenschieber_7A" Type="QX" Comment="" x="6100.0" y="0.0">
 						<Parameter Name="QI" Value="TRUE"/>
 					</FB>
 					<FB Name="SoftKey_Seitenschieber_UP" Type="IE" Comment="" x="26.666666666666668" y="853.3333333333334">
@@ -874,9 +874,9 @@
 					</FB>
 					<EventConnections>
 						<Connection Source="E_T_FF_Seitenschieber.EO" Destination="GreenWhiteBackground_Seitenschieber.REQ" Comment="" dx1="660.0"/>
-						<Connection Source="GreenWhiteBackground_Seitenschieber.INITO" Destination="DigitalOutput_7A.INIT" Comment="" dx1="533.3333333333334"/>
+						<Connection Source="GreenWhiteBackground_Seitenschieber.INITO" Destination="Seitenschieber_7A.INIT" Comment="" dx1="533.3333333333334"/>
 						<Connection Source="E_T_FF_Seitenschieber.EO" Destination="E_IMPULSE_Seitenschieber.REQ" Comment="" dx1="660.0"/>
-						<Connection Source="E_IMPULSE_Seitenschieber.CNF" Destination="DigitalOutput_7A.REQ" Comment="" dx1="640.0"/>
+						<Connection Source="E_IMPULSE_Seitenschieber.CNF" Destination="Seitenschieber_7A.REQ" Comment="" dx1="640.0"/>
 						<Connection Source="E_IMPULSE_Seitenschieber.CNF" Destination="AND_2_Seitenschieber.REQ" Comment=""/>
 						<Connection Source="AND_2_Seitenschieber.CNF" Destination="CNF_2a" Comment="" dx1="633.3333333333334" dx2="360.0" dy="-553.3333333333334"/>
 						<Connection Source="INIT" Destination="GreenWhiteBackground_Seitenschieber.INIT" Comment="" dx1="1900.0"/>
@@ -886,7 +886,7 @@
 					<DataConnections>
 						<Connection Source="E_T_FF_Seitenschieber.Q" Destination="GreenWhiteBackground_Seitenschieber.DI1" Comment="" dx1="600.0"/>
 						<Connection Source="E_IMPULSE_Seitenschieber.QO" Destination="AND_2_Seitenschieber.IN1" Comment="" dx1="700.0"/>
-						<Connection Source="E_IMPULSE_Seitenschieber.QO" Destination="DigitalOutput_7A.OUT" Comment="" dx1="700.0"/>
+						<Connection Source="E_IMPULSE_Seitenschieber.QO" Destination="Seitenschieber_7A.OUT" Comment="" dx1="700.0"/>
 						<Connection Source="E_T_FF_Seitenschieber.Q" Destination="AND_2_Seitenschieber.IN2" Comment="" dx1="3040.0"/>
 						<Connection Source="AND_2_Seitenschieber.OUT" Destination="OUT_2a" Comment="" dx1="1046.6666666666667" dx2="66.66666666666667" dy="-613.3333333333334"/>
 					</DataConnections>
@@ -911,7 +911,7 @@
 					</SubAppEventInputs>
 				</SubAppInterfaceList>
 				<SubAppNetwork>
-					<FB Name="DigitalOutput_1A" Type="QX" Comment="" x="5033.333333333334" y="2713.3333333333335">
+					<FB Name="Schneidwerk_rechtslauf_1A" Type="QX" Comment="" x="5033.333333333334" y="2713.3333333333335">
 						<Parameter Name="QI" Value="TRUE"/>
 					</FB>
 					<FB Name="GreenWhiteBackground_Schneidwerk" Type="GreenWhiteBackground" Comment="" x="4900.0" y="3646.666666666667">
@@ -921,27 +921,27 @@
 					</FB>
 					<FB Name="E_SR_Schneidwerk" Type="E_SR" Comment="" x="3300.0" y="980.0">
 					</FB>
-					<FB Name="DigitalOutput_1B" Type="QX" Comment="" x="5033.333333333334" y="1913.3333333333335">
+					<FB Name="Schneidwerk_linkslauf_1B" Type="QX" Comment="" x="5033.333333333334" y="1913.3333333333335">
 						<Parameter Name="QI" Value="TRUE"/>
 					</FB>
 					<FB Name="SoftKey_Schneidwerk_UP" Type="IE" Comment="" x="100.0" y="980.0">
 						<Parameter Name="QI" Value="TRUE"/>
 					</FB>
 					<EventConnections>
-						<Connection Source="E_SR_Schneidwerk.EO" Destination="DigitalOutput_1A.REQ" Comment="" dx1="700.0"/>
+						<Connection Source="E_SR_Schneidwerk.EO" Destination="Schneidwerk_rechtslauf_1A.REQ" Comment="" dx1="700.0"/>
 						<Connection Source="E_SR_Schneidwerk.EO" Destination="GreenWhiteBackground_Schneidwerk.REQ" Comment="" dx1="700.0"/>
 						<Connection Source="E_SWITCH_Schneidwerk.EO0" Destination="E_SR_Schneidwerk.S" Comment=""/>
 						<Connection Source="E_SWITCH_Schneidwerk.EO1" Destination="E_SR_Schneidwerk.R" Comment=""/>
 						<Connection Source="S_ON" Destination="E_SR_Schneidwerk.S" Comment="" dx1="2980.0"/>
 						<Connection Source="S_OFF" Destination="E_SR_Schneidwerk.R" Comment="" dx1="3233.3333333333335"/>
-						<Connection Source="INIT" Destination="DigitalOutput_1B.INIT" Comment="" dx1="66.66666666666667"/>
+						<Connection Source="INIT" Destination="Schneidwerk_linkslauf_1B.INIT" Comment="" dx1="66.66666666666667"/>
 						<Connection Source="INIT" Destination="GreenWhiteBackground_Schneidwerk.INIT" Comment="" dx1="66.66666666666667"/>
-						<Connection Source="INIT" Destination="DigitalOutput_1A.INIT" Comment="" dx1="66.66666666666667"/>
+						<Connection Source="INIT" Destination="Schneidwerk_rechtslauf_1A.INIT" Comment="" dx1="66.66666666666667"/>
 						<Connection Source="INIT" Destination="SoftKey_Schneidwerk_UP.INIT" Comment="" dx1="66.66666666666667" dx2="66.66666666666667" dy="0.0"/>
 						<Connection Source="SoftKey_Schneidwerk_UP.IND" Destination="E_SWITCH_Schneidwerk.EI" Comment="" dx1="493.33333333333337" dx2="493.33333333333337" dy="0.0"/>
 					</EventConnections>
 					<DataConnections>
-						<Connection Source="E_SR_Schneidwerk.Q" Destination="DigitalOutput_1A.OUT" Comment="" dx1="393.33333333333337"/>
+						<Connection Source="E_SR_Schneidwerk.Q" Destination="Schneidwerk_rechtslauf_1A.OUT" Comment="" dx1="393.33333333333337"/>
 						<Connection Source="E_SR_Schneidwerk.Q" Destination="GreenWhiteBackground_Schneidwerk.DI1" Comment="" dx1="393.33333333333337"/>
 						<Connection Source="E_SR_Schneidwerk.Q" Destination="E_SWITCH_Schneidwerk.G" Comment="" dx1="393.33333333333337" dx2="500.0" dy="300.0"/>
 					</DataConnections>
@@ -969,22 +969,22 @@
 					<FB Name="GreenWhiteBackground_Licht" Type="GreenWhiteBackground" Comment="" x="2900.0" y="33.333333333333336">
 						<Parameter Name="u16ObjId" Value="5016"/>
 					</FB>
-					<FB Name="DigitalOutput_8A" Type="QX" Comment="" x="2900.0" y="973.3333333333334">
+					<FB Name="Licht_8A" Type="QX" Comment="" x="2900.0" y="973.3333333333334">
 						<Parameter Name="QI" Value="TRUE"/>
 					</FB>
 					<FB Name="SoftKey_Licht_UP" Type="IE" Comment="" x="240.0" y="0.0">
 						<Parameter Name="QI" Value="TRUE"/>
 					</FB>
 					<EventConnections>
-						<Connection Source="E_T_FF_Licht.EO" Destination="DigitalOutput_8A.REQ" Comment="" dx1="126.66666666666667"/>
+						<Connection Source="E_T_FF_Licht.EO" Destination="Licht_8A.REQ" Comment="" dx1="126.66666666666667"/>
 						<Connection Source="E_T_FF_Licht.EO" Destination="GreenWhiteBackground_Licht.REQ" Comment="" dx1="126.66666666666667"/>
 						<Connection Source="INIT" Destination="SoftKey_Licht_UP.INIT" Comment="" dx1="66.66666666666667" dx2="66.66666666666667" dy="73.33333333333334"/>
 						<Connection Source="SoftKey_Licht_UP.INITO" Destination="GreenWhiteBackground_Licht.INIT" Comment="" dx1="113.33333333333334" dx2="113.33333333333334" dy="-33.333333333333336"/>
-						<Connection Source="SoftKey_Licht_UP.INITO" Destination="DigitalOutput_8A.INIT" Comment="" dx1="113.33333333333334" dx2="113.33333333333334" dy="0.0"/>
+						<Connection Source="SoftKey_Licht_UP.INITO" Destination="Licht_8A.INIT" Comment="" dx1="113.33333333333334" dx2="113.33333333333334" dy="0.0"/>
 						<Connection Source="SoftKey_Licht_UP.IND" Destination="E_T_FF_Licht.CLK" Comment="" dx1="260.0" dx2="260.0" dy="0.0"/>
 					</EventConnections>
 					<DataConnections>
-						<Connection Source="E_T_FF_Licht.Q" Destination="DigitalOutput_8A.OUT" Comment="" dx1="60.0"/>
+						<Connection Source="E_T_FF_Licht.Q" Destination="Licht_8A.OUT" Comment="" dx1="60.0"/>
 						<Connection Source="E_T_FF_Licht.Q" Destination="GreenWhiteBackground_Licht.DI1" Comment="" dx1="393.33333333333337"/>
 					</DataConnections>
 				</SubAppNetwork>
@@ -1016,7 +1016,7 @@
 					</FB>
 					<FB Name="E_T_FF_Abscheider" Type="E_T_FF" Comment="" x="1620.0" y="1053.3333333333335">
 					</FB>
-					<FB Name="DigitalOutput_7B" Type="QX" Comment="" x="5033.333333333334" y="0.0">
+					<FB Name="Abscheider_7B" Type="QX" Comment="" x="5033.333333333334" y="0.0">
 						<Parameter Name="QI" Value="TRUE"/>
 					</FB>
 					<FB Name="AND_2_Abscheider" Type="AND_2" Comment="" x="5033.333333333334" y="953.3333333333334">
@@ -1030,18 +1030,18 @@
 					<EventConnections>
 						<Connection Source="E_T_FF_Abscheider.EO" Destination="E_IMPULSE_Abscheider.REQ" Comment="" dx1="393.33333333333337"/>
 						<Connection Source="E_IMPULSE_Abscheider.CNF" Destination="AND_2_Abscheider.REQ" Comment="" dx1="393.33333333333337"/>
-						<Connection Source="E_IMPULSE_Abscheider.CNF" Destination="DigitalOutput_7B.REQ" Comment="" dx1="473.33333333333337"/>
+						<Connection Source="E_IMPULSE_Abscheider.CNF" Destination="Abscheider_7B.REQ" Comment="" dx1="473.33333333333337"/>
 						<Connection Source="E_T_FF_Abscheider.EO" Destination="AND_2_Abscheider.REQ" Comment="" dx1="393.33333333333337"/>
 						<Connection Source="E_T_FF_Abscheider.EO" Destination="GreenWhiteBackground_Abscheider.REQ" Comment="" dx1="393.33333333333337"/>
 						<Connection Source="AND_2_Abscheider.CNF" Destination="CNF_2b" Comment="" dx1="213.33333333333334"/>
 						<Connection Source="INIT" Destination="GreenWhiteBackground_Abscheider.INIT" Comment="" dx1="66.66666666666667"/>
-						<Connection Source="INIT" Destination="DigitalOutput_7B.INIT" Comment="" dx1="4673.333333333334"/>
+						<Connection Source="INIT" Destination="Abscheider_7B.INIT" Comment="" dx1="4673.333333333334"/>
 						<Connection Source="INIT" Destination="SoftKey_Abscheider_UP.INIT" Comment="" dx1="73.33333333333334" dx2="73.33333333333334" dy="0.0"/>
 						<Connection Source="SoftKey_Abscheider_UP.IND" Destination="E_T_FF_Abscheider.CLK" Comment="" dx1="393.33333333333337" dx2="393.33333333333337" dy="0.0"/>
 					</EventConnections>
 					<DataConnections>
 						<Connection Source="E_IMPULSE_Abscheider.QO" Destination="AND_2_Abscheider.IN1" Comment="" dx1="333.33333333333337"/>
-						<Connection Source="E_IMPULSE_Abscheider.QO" Destination="DigitalOutput_7B.OUT" Comment="" dx1="333.33333333333337"/>
+						<Connection Source="E_IMPULSE_Abscheider.QO" Destination="Abscheider_7B.OUT" Comment="" dx1="333.33333333333337"/>
 						<Connection Source="E_T_FF_Abscheider.Q" Destination="AND_2_Abscheider.IN2" Comment="" dx1="1413.3333333333335"/>
 						<Connection Source="E_T_FF_Abscheider.Q" Destination="GreenWhiteBackground_Abscheider.DI1" Comment="" dx1="106.66666666666667"/>
 						<Connection Source="AND_2_Abscheider.OUT" Destination="OUT_2b" Comment="" dx1="260.0"/>
@@ -1171,7 +1171,7 @@
 				<SubAppNetwork>
 					<FB Name="OR_2B" Type="OR_5" Comment="" x="1100.0" y="253.33333333333334">
 					</FB>
-					<FB Name="DigitalOutput_2B" Type="QX" Comment="" x="2560.0" y="0.0">
+					<FB Name="Vorsteuerventil_2B" Type="QX" Comment="" x="2560.0" y="0.0">
 						<Parameter Name="QI" Value="TRUE"/>
 					</FB>
 					<EventConnections>
@@ -1180,8 +1180,8 @@
 						<Connection Source="REQ3" Destination="OR_2B.REQ" Comment="" dx1="553.3333333333334"/>
 						<Connection Source="REQ4" Destination="OR_2B.REQ" Comment="" dx1="553.3333333333334"/>
 						<Connection Source="REQ5" Destination="OR_2B.REQ" Comment="" dx1="553.3333333333334"/>
-						<Connection Source="INIT" Destination="DigitalOutput_2B.INIT" Comment="" dx1="2400.0" dx2="2400.0" dy="0.0"/>
-						<Connection Source="OR_2B.CNF" Destination="DigitalOutput_2B.REQ" Comment="" dx1="320.0" dx2="320.0" dy="0.0"/>
+						<Connection Source="INIT" Destination="Vorsteuerventil_2B.INIT" Comment="" dx1="2400.0" dx2="2400.0" dy="0.0"/>
+						<Connection Source="OR_2B.CNF" Destination="Vorsteuerventil_2B.REQ" Comment="" dx1="320.0" dx2="320.0" dy="0.0"/>
 					</EventConnections>
 					<DataConnections>
 						<Connection Source="IN1" Destination="OR_2B.IN1" Comment="" dx1="846.6666666666667"/>
@@ -1189,7 +1189,7 @@
 						<Connection Source="IN3" Destination="OR_2B.IN3" Comment="" dx1="566.6666666666667"/>
 						<Connection Source="IN4" Destination="OR_2B.IN4" Comment="" dx1="440.0"/>
 						<Connection Source="IN5" Destination="OR_2B.IN5" Comment="" dx1="253.33333333333334"/>
-						<Connection Source="OR_2B.OUT" Destination="DigitalOutput_2B.OUT" Comment="" dx1="320.0" dx2="320.0" dy="0.0"/>
+						<Connection Source="OR_2B.OUT" Destination="Vorsteuerventil_2B.OUT" Comment="" dx1="320.0" dx2="320.0" dy="0.0"/>
 					</DataConnections>
 				</SubAppNetwork>
 				<Attribute Name="Unfolded" Type="STRING" Value="true"/>
