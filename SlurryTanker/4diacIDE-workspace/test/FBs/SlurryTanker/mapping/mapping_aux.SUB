@@ -26,6 +26,8 @@
 			<Parameter Name="u8SAMember" Value="255"/>
 			<Parameter Name="u16ObjId_1" Value="31008"/>
 			<Parameter Name="DigitalInput_1" Value="&quot;AuxInput_Seitenschieber&quot;"/>
+			<Parameter Name="u16ObjId_5" Value="31015"/>
+			<Parameter Name="DigitalInput_5" Value="&quot;AuxInput_Abscheider&quot;"/>
 		</FB>
 		<EventConnections>
 			<Connection Source="INIT" Destination="UT_AuxiliaryInputMapping.INIT" Comment="" dx1="1006.6666666666667"/>
