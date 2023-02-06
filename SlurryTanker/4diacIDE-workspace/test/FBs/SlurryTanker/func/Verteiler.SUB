@@ -69,18 +69,18 @@
 					<Parameter Name="QI" Value="TRUE"/>
 				</FB>
 				<EventConnections>
-					<Connection Source="OR_4A_4B.CNF" Destination="Verteiler_4B.REQ" Comment="" dx1="406.6666666666667"/>
-					<Connection Source="OR_4A_4B.CNF" Destination="Verteiler_4A.REQ" Comment="" dx1="400.0"/>
-					<Connection Source="CNF_Verteiler_heben" Destination="OR_4A_4B.REQ" Comment="" dx1="666.6666666666667"/>
-					<Connection Source="CNF_Verteiler_senken" Destination="OR_4A_4B.REQ" Comment="" dx1="493.33333333333337"/>
-					<Connection Source="INITO" Destination="Verteiler_4B.INIT" Comment="" dx1="1880.0"/>
-					<Connection Source="INITO" Destination="Verteiler_4A.INIT" Comment="" dx1="2100.0"/>
+					<Connection Source="OR_4A_4B.CNF" Destination="Verteiler_4B.REQ" Comment="" dx1="293.33333333333337"/>
+					<Connection Source="OR_4A_4B.CNF" Destination="Verteiler_4A.REQ" Comment="" dx1="413.33333333333337"/>
+					<Connection Source="CNF_Verteiler_heben" Destination="OR_4A_4B.REQ" Comment="" dx1="513.3333333333334"/>
+					<Connection Source="CNF_Verteiler_senken" Destination="OR_4A_4B.REQ" Comment="" dx1="2860.0" dx2="53.333333333333336" dy="-80.0"/>
+					<Connection Source="INITO" Destination="Verteiler_4B.INIT" Comment="" dx1="1953.3333333333335"/>
+					<Connection Source="INITO" Destination="Verteiler_4A.INIT" Comment="" dx1="3073.3333333333335" dx2="53.333333333333336" dy="1140.0"/>
 				</EventConnections>
 				<DataConnections>
-					<Connection Source="OR_4A_4B.OUT" Destination="Verteiler_4B.OUT" Comment="" dx1="193.33333333333334"/>
-					<Connection Source="OR_4A_4B.OUT" Destination="Verteiler_4A.OUT" Comment="" dx1="206.66666666666669"/>
-					<Connection Source="IN_Verteiler_heben" Destination="OR_4A_4B.IN1" Comment="" dx1="506.6666666666667"/>
-					<Connection Source="IN_Verteiler_senken" Destination="OR_4A_4B.IN2" Comment="" dx1="366.6666666666667"/>
+					<Connection Source="OR_4A_4B.OUT" Destination="Verteiler_4B.OUT" Comment="" dx1="520.0"/>
+					<Connection Source="OR_4A_4B.OUT" Destination="Verteiler_4A.OUT" Comment="" dx1="306.6666666666667"/>
+					<Connection Source="IN_Verteiler_heben" Destination="OR_4A_4B.IN1" Comment="" dx1="2966.666666666667" dx2="333.33333333333337" dy="-180.0"/>
+					<Connection Source="IN_Verteiler_senken" Destination="OR_4A_4B.IN2" Comment="" dx1="2966.666666666667" dx2="333.33333333333337" dy="633.3333333333334"/>
 				</DataConnections>
 			</SubAppNetwork>
 			<Attribute Name="Unfolded" Type="STRING" Value="true"/>
@@ -91,33 +91,33 @@
 			<Parameter Name="u16ObjId" Value="5004"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="SoftKey_Verteiler_senken.IND" Destination="OR_2_Verteiler_senken.REQ" Comment="" dx1="233.33333333333334"/>
-			<Connection Source="SoftKey_Verteiler_heben.IND" Destination="OR_2_Verteiler_heben.REQ" Comment="" dx1="366.6666666666667"/>
-			<Connection Source="OR_2_Verteiler_heben.CNF" Destination="GreenWhiteBackground_Verteiler_heben.REQ" Comment="" dx1="513.3333333333334"/>
-			<Connection Source="INIT" Destination="SoftKey_Verteiler_heben.INIT" Comment="" dx1="66.66666666666667"/>
-			<Connection Source="INIT" Destination="SoftKey_Verteiler_senken.INIT" Comment="" dx1="66.66666666666667"/>
-			<Connection Source="INIT" Destination="Sitzventile.INITO" Comment="" dx1="66.66666666666667"/>
-			<Connection Source="OR_2_Verteiler_senken.CNF" Destination="GreenWhiteBackground_Verteiler_senken.REQ" Comment="" dx1="453.33333333333337"/>
-			<Connection Source="INIT" Destination="GreenWhiteBackground_Verteiler_heben.INIT" Comment="" dx1="66.66666666666667"/>
-			<Connection Source="INIT" Destination="GreenWhiteBackground_Verteiler_senken.INIT" Comment="" dx1="66.66666666666667"/>
-			<Connection Source="OR_2_Verteiler_heben.CNF" Destination="Sitzventile.CNF_Verteiler_heben" Comment="" dx1="3080.0"/>
-			<Connection Source="OR_2_Verteiler_senken.CNF" Destination="Sitzventile.CNF_Verteiler_senken" Comment="" dx1="2880.0"/>
-			<Connection Source="EI_Verteiler_heben" Destination="OR_2_Verteiler_heben.REQ" Comment="" dx1="2100.0"/>
-			<Connection Source="EI_Verteiler_senken" Destination="OR_2_Verteiler_senken.REQ" Comment="" dx1="1893.3333333333335"/>
-			<Connection Source="OR_2_Verteiler_heben.CNF" Destination="CNF_2a" Comment="" dx1="493.33333333333337"/>
-			<Connection Source="OR_2_Verteiler_senken.CNF" Destination="CNF_2b" Comment="" dx1="493.33333333333337"/>
+			<Connection Source="SoftKey_Verteiler_senken.IND" Destination="OR_2_Verteiler_senken.REQ" Comment="" dx1="306.6666666666667"/>
+			<Connection Source="SoftKey_Verteiler_heben.IND" Destination="OR_2_Verteiler_heben.REQ" Comment="" dx1="300.0"/>
+			<Connection Source="OR_2_Verteiler_heben.CNF" Destination="GreenWhiteBackground_Verteiler_heben.REQ" Comment="" dx1="60.0"/>
+			<Connection Source="INIT" Destination="SoftKey_Verteiler_heben.INIT" Comment="" dx1="1020.0"/>
+			<Connection Source="INIT" Destination="SoftKey_Verteiler_senken.INIT" Comment="" dx1="913.3333333333334"/>
+			<Connection Source="INIT" Destination="Sitzventile.INITO" Comment="" dx1="5886.666666666667"/>
+			<Connection Source="OR_2_Verteiler_senken.CNF" Destination="GreenWhiteBackground_Verteiler_senken.REQ" Comment="" dx1="153.33333333333334"/>
+			<Connection Source="INIT" Destination="GreenWhiteBackground_Verteiler_heben.INIT" Comment="" dx1="4380.0"/>
+			<Connection Source="INIT" Destination="GreenWhiteBackground_Verteiler_senken.INIT" Comment="" dx1="700.0"/>
+			<Connection Source="OR_2_Verteiler_heben.CNF" Destination="Sitzventile.CNF_Verteiler_heben" Comment="" dx1="1473.3333333333335"/>
+			<Connection Source="OR_2_Verteiler_senken.CNF" Destination="Sitzventile.CNF_Verteiler_senken" Comment="" dx1="1580.0"/>
+			<Connection Source="EI_Verteiler_heben" Destination="OR_2_Verteiler_heben.REQ" Comment="" dx1="3260.0"/>
+			<Connection Source="EI_Verteiler_senken" Destination="OR_2_Verteiler_senken.REQ" Comment="" dx1="3066.666666666667"/>
+			<Connection Source="OR_2_Verteiler_heben.CNF" Destination="CNF_2a" Comment="" dx1="2780.0"/>
+			<Connection Source="OR_2_Verteiler_senken.CNF" Destination="CNF_2b" Comment="" dx1="2886.666666666667"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="SoftKey_Verteiler_senken.IN" Destination="OR_2_Verteiler_senken.IN1" Comment="" dx1="420.0"/>
-			<Connection Source="SoftKey_Verteiler_heben.IN" Destination="OR_2_Verteiler_heben.IN1" Comment="" dx1="326.6666666666667"/>
-			<Connection Source="OR_2_Verteiler_heben.OUT" Destination="GreenWhiteBackground_Verteiler_heben.DI1" Comment="" dx1="346.6666666666667"/>
-			<Connection Source="IN_Verteiler_senken" Destination="OR_2_Verteiler_senken.IN2" Comment="" dx1="200.0"/>
-			<Connection Source="IN_Verteiler_heben" Destination="OR_2_Verteiler_heben.IN2" Comment="" dx1="353.33333333333337"/>
-			<Connection Source="OR_2_Verteiler_heben.OUT" Destination="Sitzventile.IN_Verteiler_heben" Comment="" dx1="2740.0"/>
-			<Connection Source="OR_2_Verteiler_senken.OUT" Destination="Sitzventile.IN_Verteiler_senken" Comment="" dx1="2600.0"/>
-			<Connection Source="OR_2_Verteiler_senken.OUT" Destination="GreenWhiteBackground_Verteiler_senken.DI1" Comment="" dx1="193.33333333333334"/>
-			<Connection Source="OR_2_Verteiler_heben.OUT" Destination="OUT_2a" Comment="" dx1="2740.0"/>
-			<Connection Source="OR_2_Verteiler_senken.OUT" Destination="OUT_2b" Comment="" dx1="2600.0"/>
+			<Connection Source="SoftKey_Verteiler_senken.IN" Destination="OR_2_Verteiler_senken.IN1" Comment="" dx1="306.6666666666667"/>
+			<Connection Source="SoftKey_Verteiler_heben.IN" Destination="OR_2_Verteiler_heben.IN1" Comment="" dx1="193.33333333333334"/>
+			<Connection Source="OR_2_Verteiler_heben.OUT" Destination="GreenWhiteBackground_Verteiler_heben.DI1" Comment="" dx1="53.333333333333336" dx2="100.0" dy="1300.0"/>
+			<Connection Source="IN_Verteiler_senken" Destination="OR_2_Verteiler_senken.IN2" Comment="" dx1="806.6666666666667"/>
+			<Connection Source="IN_Verteiler_heben" Destination="OR_2_Verteiler_heben.IN2" Comment="" dx1="2940.0"/>
+			<Connection Source="OR_2_Verteiler_heben.OUT" Destination="Sitzventile.IN_Verteiler_heben" Comment="" dx1="1260.0"/>
+			<Connection Source="OR_2_Verteiler_senken.OUT" Destination="Sitzventile.IN_Verteiler_senken" Comment="" dx1="1366.6666666666667"/>
+			<Connection Source="OR_2_Verteiler_senken.OUT" Destination="GreenWhiteBackground_Verteiler_senken.DI1" Comment="" dx1="60.0"/>
+			<Connection Source="OR_2_Verteiler_heben.OUT" Destination="OUT_2a" Comment="" dx1="4526.666666666667"/>
+			<Connection Source="OR_2_Verteiler_senken.OUT" Destination="OUT_2b" Comment="" dx1="3100.0"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
