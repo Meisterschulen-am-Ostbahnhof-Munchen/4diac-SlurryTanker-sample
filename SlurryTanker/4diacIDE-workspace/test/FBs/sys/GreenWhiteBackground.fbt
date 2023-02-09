@@ -8,68 +8,116 @@
 		<EventInputs>
 			<Event Name="INIT" Type="Event" Comment="Initialization Request">
 				<With Var="u16ObjId"/>
-				<Attribute Name="YPOSITION" Type="STRING" Value="20"/>
+				<With Var="u16ObjIdA"/>
 			</Event>
 			<Event Name="REQ" Type="Event" Comment="Normal Execution Request">
 				<With Var="DI1"/>
-				<Attribute Name="YPOSITION" Type="STRING" Value="0"/>
+				<Attribute Name="YPOSITION" Type="STRING" Value="175"/>
 			</Event>
 		</EventInputs>
 		<EventOutputs>
-			<Event Name="INITO" Type="Event" Comment="Initialization Confirm">
-				<Attribute Name="YPOSITION" Type="STRING" Value="51"/>
+			<Event Name="INITO_1" Type="Event" Comment="Initialization Confirm">
+				<With Var="STATUS_1"/>
+				<Attribute Name="YPOSITION" Type="STRING" Value="235"/>
 			</Event>
-			<Event Name="CNF" Type="Event" Comment="Execution Confirmation">
-				<Attribute Name="YPOSITION" Type="STRING" Value="0"/>
+			<Event Name="CNF_1" Type="Event" Comment="Execution Confirmation">
+				<With Var="STATUS_1"/>
+				<With Var="u8OldColour_1"/>
+				<With Var="result_1"/>
+			</Event>
+			<Event Name="INITO_2" Type="Event" Comment="">
+				<With Var="STATUS_2"/>
+			</Event>
+			<Event Name="CNF_2" Type="Event" Comment="">
+				<With Var="STATUS_2"/>
+				<With Var="u8OldColour_2"/>
+				<With Var="result_2"/>
+			</Event>
+			<Event Name="INITO_3" Type="Event" Comment="">
+				<With Var="STATUS_3"/>
+			</Event>
+			<Event Name="CNF_3" Type="Event" Comment="">
+				<With Var="STATUS_3"/>
+				<With Var="u8OldColour_3"/>
+				<With Var="result_3"/>
 			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID">
-				<Attribute Name="YPOSITION" Type="STRING" Value="8"/>
+			<VarDeclaration Name="DI1" Type="BOOL" Comment="Selector">
+				<Attribute Name="YPOSITION" Type="STRING" Value="18"/>
 			</VarDeclaration>
-			<VarDeclaration Name="DI1" Type="BOOL" Comment="Selelctor">
-				<Attribute Name="YPOSITION" Type="STRING" Value="25"/>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID Softkey">
+				<Attribute Name="YPOSITION" Type="STRING" Value="45"/>
+			</VarDeclaration>
+			<VarDeclaration Name="u16ObjIdA" Type="UINT" Comment="Object ID AUX">
+				<Attribute Name="YPOSITION" Type="STRING" Value="105"/>
 			</VarDeclaration>
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="STATUS" Type="WSTRING" Comment="Service Status">
-				<Attribute Name="YPOSITION" Type="STRING" Value="19"/>
+			<VarDeclaration Name="STATUS_1" Type="WSTRING" Comment="Service Status"/>
+			<VarDeclaration Name="u8OldColour_1" Type="USINT" Comment="Old value of ID"/>
+			<VarDeclaration Name="result_1" Type="INT" Comment="retval see description"/>
+			<VarDeclaration Name="STATUS_2" Type="WSTRING" Comment="Service Status">
+				<Attribute Name="YPOSITION" Type="STRING" Value="33"/>
 			</VarDeclaration>
-			<VarDeclaration Name="u8OldColour" Type="USINT" Comment="Old value of ID">
-				<Attribute Name="YPOSITION" Type="STRING" Value="0"/>
+			<VarDeclaration Name="u8OldColour_2" Type="USINT" Comment="Old value of ID"/>
+			<VarDeclaration Name="result_2" Type="INT" Comment="retval see description"/>
+			<VarDeclaration Name="STATUS_3" Type="WSTRING" Comment="Service Status">
+				<Attribute Name="YPOSITION" Type="STRING" Value="75"/>
 			</VarDeclaration>
-			<VarDeclaration Name="result" Type="INT" Comment="retval see description">
-				<Attribute Name="YPOSITION" Type="STRING" Value="0"/>
-			</VarDeclaration>
+			<VarDeclaration Name="u8OldColour_3" Type="USINT" Comment="Old value of ID"/>
+			<VarDeclaration Name="result_3" Type="INT" Comment="retval see description"/>
 		</OutputVars>
 	</InterfaceList>
 	<FBNetwork>
-		<FB Name="F_SEL_I" Type="F_SEL" Comment="" x="570.5882352941176" y="335.2941176470588">
+		<FB Name="F_SEL_I" Type="F_SEL" Comment="" x="600.0" y="1200.0">
 		</FB>
-		<FB Name="Q_BackgroundColour_I" Type="Q_BackgroundColour" Comment="" x="1599.9999999999998" y="235.2941176470588">
+		<FB Name="Q_BackgroundColour_1" Type="Q_BackgroundColour" Comment="" x="1600.0" y="1500.0">
 		</FB>
-		<FB Name="COLOR_WHITE_I" Type="COLOR_WHITE" Comment="" x="-705.8823529411765" y="705.8823529411765">
+		<FB Name="COLOR_WHITE_I" Type="COLOR_WHITE" Comment="" x="-700.0" y="200.0">
 		</FB>
-		<FB Name="COLOR_GREEN_I" Type="COLOR_GREEN" Comment="" x="-705.8823529411765" y="1176.4705882352941">
+		<FB Name="COLOR_GREEN_I" Type="COLOR_GREEN" Comment="" x="-700.0" y="700.0">
+		</FB>
+		<FB Name="Q_BackgroundColour_2" Type="Q_BackgroundColour" Comment="" x="1600.0" y="2300.0">
+		</FB>
+		<FB Name="Q_BackgroundColour_3" Type="Q_BackgroundColourAux" Comment="" x="1600.0" y="3100.0">
 		</FB>
 		<EventConnections>
-			<Connection Source="REQ" Destination="F_SEL_I.REQ" Comment="" dx1="1382.3529411764705"/>
-			<Connection Source="INIT" Destination="Q_BackgroundColour_I.INIT" Comment="" dx1="2400.0" dx2="2400.0" dy="0.0"/>
-			<Connection Source="F_SEL_I.CNF" Destination="Q_BackgroundColour_I.REQ" Comment="" dx1="252.9411764705882" dx2="252.9411764705882" dy="0.0"/>
-			<Connection Source="Q_BackgroundColour_I.INITO" Destination="INITO" Comment="" dx1="2011.7647058823527" dx2="2011.7647058823527" dy="0.0"/>
-			<Connection Source="Q_BackgroundColour_I.CNF" Destination="CNF" Comment="" dx1="2011.7647058823527" dx2="2011.7647058823527" dy="0.0"/>
-			<Connection Source="INIT" Destination="COLOR_WHITE_I.INIT" Comment="" dx1="229.41176470588235"/>
-			<Connection Source="INIT" Destination="COLOR_GREEN_I.INIT" Comment="" dx1="229.41176470588235"/>
+			<Connection Source="INIT" Destination="COLOR_WHITE_I.INIT" Comment="" dx1="400.0"/>
+			<Connection Source="INIT" Destination="COLOR_GREEN_I.INIT" Comment="" dx1="400.0"/>
+			<Connection Source="INIT" Destination="Q_BackgroundColour_1.INIT" Comment="" dx1="2800.0"/>
+			<Connection Source="INIT" Destination="Q_BackgroundColour_2.INIT" Comment="" dx1="2800.0"/>
+			<Connection Source="INIT" Destination="Q_BackgroundColour_3.INIT" Comment="" dx1="2800.0"/>
+			<Connection Source="REQ" Destination="F_SEL_I.REQ" Comment="" dx1="960.0"/>
+			<Connection Source="F_SEL_I.CNF" Destination="Q_BackgroundColour_1.REQ" Comment="" dx1="200.0"/>
+			<Connection Source="F_SEL_I.CNF" Destination="Q_BackgroundColour_2.REQ" Comment="" dx1="200.0"/>
+			<Connection Source="F_SEL_I.CNF" Destination="Q_BackgroundColour_3.REQ" Comment="" dx1="200.0"/>
+			<Connection Source="Q_BackgroundColour_3.CNF" Destination="CNF_3" Comment="" dx1="993.3333333333334"/>
+			<Connection Source="Q_BackgroundColour_2.CNF" Destination="CNF_2" Comment="" dx1="913.3333333333334"/>
+			<Connection Source="Q_BackgroundColour_1.CNF" Destination="CNF_1" Comment="" dx1="380.0"/>
+			<Connection Source="Q_BackgroundColour_3.INITO" Destination="INITO_3" Comment="" dx1="866.6666666666667"/>
+			<Connection Source="Q_BackgroundColour_2.INITO" Destination="INITO_2" Comment="" dx1="206.66666666666669"/>
+			<Connection Source="Q_BackgroundColour_1.INITO" Destination="INITO_1" Comment="" dx1="60.0"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="DI1" Destination="F_SEL_I.G" Comment="" dx1="911.7647058823529"/>
-			<Connection Source="u16ObjId" Destination="Q_BackgroundColour_I.u16ObjId" Comment="" dx1="376.4705882352941" dx2="376.4705882352941" dy="1882.3529411764705"/>
-			<Connection Source="F_SEL_I.OUT" Destination="Q_BackgroundColour_I.u8Colour" Comment="" dx1="123.52941176470587" dx2="123.52941176470587" dy="0.0"/>
-			<Connection Source="Q_BackgroundColour_I.STATUS" Destination="STATUS" Comment="" dx1="411.7647058823529" dx2="411.7647058823529" dy="0.0"/>
-			<Connection Source="Q_BackgroundColour_I.s16result" Destination="result" Comment="" dx1="405.88235294117646" dx2="405.88235294117646" dy="0.0"/>
-			<Connection Source="Q_BackgroundColour_I.u8OldColour" Destination="u8OldColour" Comment="" dx1="411.7647058823529"/>
-			<Connection Source="COLOR_WHITE_I.u8Colour" Destination="F_SEL_I.IN0" Comment="" dx1="258.8235294117647" dx2="258.8235294117647" dy="0.0"/>
-			<Connection Source="COLOR_GREEN_I.u8Colour" Destination="F_SEL_I.IN1" Comment="" dx1="341.17647058823525" dx2="341.17647058823525" dy="0.0"/>
+			<Connection Source="DI1" Destination="F_SEL_I.G" Comment="" dx1="380.0"/>
+			<Connection Source="u16ObjId" Destination="Q_BackgroundColour_1.u16ObjId" Comment="" dx1="1460.0"/>
+			<Connection Source="COLOR_WHITE_I.u8Colour" Destination="F_SEL_I.IN0" Comment="" dx1="160.0"/>
+			<Connection Source="COLOR_GREEN_I.u8Colour" Destination="F_SEL_I.IN1" Comment="" dx1="40.0"/>
+			<Connection Source="F_SEL_I.OUT" Destination="Q_BackgroundColour_1.u8Colour" Comment="" dx1="80.0"/>
+			<Connection Source="F_SEL_I.OUT" Destination="Q_BackgroundColour_2.u8Colour" Comment="" dx1="80.0"/>
+			<Connection Source="F_SEL_I.OUT" Destination="Q_BackgroundColour_3.u8Colour" Comment="" dx1="80.0"/>
+			<Connection Source="u16ObjIdA" Destination="Q_BackgroundColour_2.u16ObjId" Comment="" dx1="160.0"/>
+			<Connection Source="u16ObjIdA" Destination="Q_BackgroundColour_3.u16ObjId" Comment="" dx1="133.33333333333334"/>
+			<Connection Source="Q_BackgroundColour_3.s16result" Destination="result_3" Comment="" dx1="240.0"/>
+			<Connection Source="Q_BackgroundColour_3.u8OldColour" Destination="u8OldColour_3" Comment="" dx1="340.0"/>
+			<Connection Source="Q_BackgroundColour_3.STATUS" Destination="STATUS_3" Comment="" dx1="460.0"/>
+			<Connection Source="Q_BackgroundColour_2.s16result" Destination="result_2" Comment="" dx1="700.0"/>
+			<Connection Source="Q_BackgroundColour_2.u8OldColour" Destination="u8OldColour_2" Comment="" dx1="800.0"/>
+			<Connection Source="Q_BackgroundColour_2.STATUS" Destination="STATUS_2" Comment="" dx1="920.0"/>
+			<Connection Source="Q_BackgroundColour_1.s16result" Destination="result_1" Comment="" dx1="560.0"/>
+			<Connection Source="Q_BackgroundColour_1.u8OldColour" Destination="u8OldColour_1" Comment="" dx1="673.3333333333334"/>
+			<Connection Source="Q_BackgroundColour_1.STATUS" Destination="STATUS_1" Comment="" dx1="780.0"/>
 		</DataConnections>
 	</FBNetwork>
 </FBType>
