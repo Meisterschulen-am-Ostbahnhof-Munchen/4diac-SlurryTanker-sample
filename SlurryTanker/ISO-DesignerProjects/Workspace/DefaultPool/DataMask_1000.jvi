@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<JetView-Document Version="3" ObjectPoolVersion="3.0" ProductVersion="5.6.1.5243">
+<JetView-Document Version="0" ObjectPoolVersion="3.0" ProductVersion="5.6.1.5243">
 	<PropertySheets>
 		<PropertySheet Name="General">
 			<Property Name="ObjectID">
@@ -131,13 +131,13 @@
 				</PropertySheet>
 				<PropertySheet Name="Proxy">
 					<Property Name="Top">
-						<Value>200</Value>
+						<Value>216</Value>
 					</Property>
 					<Property Name="Left">
-						<Value>280</Value>
+						<Value>288</Value>
 					</Property>
 					<Property Name="Transform">
-						<Value>(1.0000000000000000)(0.0000000000000000)(280.0000000000000000)(0.0000000000000000)(1.0000000000000000)(200.0000000000000000)</Value>
+						<Value>(1.0000000000000000)(0.0000000000000000)(288.0000000000000000)(0.0000000000000000)(1.0000000000000000)(216.0000000000000000)</Value>
 					</Property>
 					<Property Name="ReferencedObjectForMask">
 						<Value>-1</Value>
@@ -148,7 +148,7 @@
 				<Object JVS-ID="6001"/>
 			</Objects>
 		</Component>
-		<Component ID="102561525" Class="COutputText" Name="Text">
+		<Component ID="182161474" Class="CButton" Name="Button">
 			<PropertySheets>
 				<PropertySheet Name="General">
 					<Property Name="ZOrder">
@@ -157,13 +157,13 @@
 				</PropertySheet>
 				<PropertySheet Name="Proxy">
 					<Property Name="Top">
-						<Value>120</Value>
+						<Value>72</Value>
 					</Property>
 					<Property Name="Left">
-						<Value>280</Value>
+						<Value>288</Value>
 					</Property>
 					<Property Name="Transform">
-						<Value>(1.0000000000000000)(0.0000000000000000)(280.0000000000000000)(0.0000000000000000)(1.0000000000000000)(120.0000000000000000)</Value>
+						<Value>(1.0000000000000000)(0.0000000000000000)(288.0000000000000000)(0.0000000000000000)(1.0000000000000000)(72.0000000000000000)</Value>
 					</Property>
 					<Property Name="ReferencedObjectForMask">
 						<Value>-1</Value>
@@ -171,7 +171,7 @@
 				</PropertySheet>
 			</PropertySheets>
 			<Objects>
-				<Object JVS-ID="11000"/>
+				<Object JVS-ID="6000"/>
 			</Objects>
 		</Component>
 	</Components>

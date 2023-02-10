@@ -7,10 +7,7 @@
 #define MASK_WIDTH                          480
 #define MASK_HEIGHT                         480
 #define WorkingSet_0                          0
-#define Macro_Go_DM1000                       1
-#define Macro_Go_DM1001                       2
 #define DataMask_1000                      1000
-#define DataMask_1001                      1001
 #define SoftKeyMask_4000                   4000
 #define SoftKeyMask_4001                   4001
 #define SoftKey_5000                       5000
@@ -37,8 +34,8 @@
 #define SoftKey_5023                       5023
 #define Button_6000                        6000
 #define Button_6001                        6001
-#define OutputString_11000                11000
-#define OutputString_11001                11001
+#define page_2_MAIN                       20002
+#define page_1_MAIN                       20003
 #define workingset_pic                    20500
 #define Automatik_ein                     20501
 #define Automatik_aus                     20502
@@ -54,9 +51,8 @@
 #define Knickdeichsel_senken              20512
 #define lightbulb                         20513
 #define trash_icon                        20514
-#define nr1                               20524
-#define nr2                               20525
-#define FontAttributes_23000              23000
+#define page_1_AUX                        20516
+#define page_2_AUX                        20517
 #define AuxFunction2_31000                31000
 #define AuxFunction2_31001                31001
 #define AuxFunction2_31002                31002

@@ -1,10 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <JetViewSoft-DefaultObjects Version="3.0" ProductVersion="5.6.1.5243" RelatedObjectPool=".\DefaultPool.jop">
-	<Objects>
-		<Object Class="CButton">
-			<Objects>
-				<Object Class="CFontStyle" JVS-ID="23000" ObjectName="FontAttributes_23000"/>
-			</Objects>
-		</Object>
-	</Objects>
+	<Objects/>
 </JetViewSoft-DefaultObjects>
