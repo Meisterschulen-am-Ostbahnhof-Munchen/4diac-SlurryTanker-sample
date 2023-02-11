@@ -28,8 +28,16 @@
 		<SubApp Name="SoftKey_Schneidwerk_UP" Type="SoftKey_Schneidwerk_UP" Comment="" x="100.0" y="980.0">
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
+			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 		</SubApp>
 		<SubApp Name="GreenWhiteBackground_Schneidwerk" Type="GreenWhiteBackground_Schneidwerk" Comment="" x="4900.0" y="3646.666666666667">
+			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
+			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
+		</SubApp>
+		<SubApp Name="AuxInput_Schneidwerk_UP" Type="AuxInput_Schneidwerk_UP" Comment="" x="100.0" y="1400.0">
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 		</SubApp>
@@ -45,10 +53,12 @@
 			<Connection Source="SoftKey_Schneidwerk_UP.IND" Destination="E_SWITCH_Schneidwerk.EI" Comment=""/>
 			<Connection Source="INIT" Destination="GreenWhiteBackground_Schneidwerk.INIT" Comment="" dx1="80.0" dx2="3113.3333333333335" dy="0.0"/>
 			<Connection Source="E_SR_Schneidwerk.EO" Destination="GreenWhiteBackground_Schneidwerk.EO" Comment="" dx1="493.33333333333337" dx2="493.33333333333337" dy="0.0"/>
+			<Connection Source="AuxInput_Schneidwerk_UP.IND" Destination="E_SWITCH_Schneidwerk.EI" Comment="" dx1="193.33333333333334"/>
+			<Connection Source="INIT" Destination="AuxInput_Schneidwerk_UP.INIT" Comment="" dx1="80.0"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="E_SR_Schneidwerk.Q" Destination="Schneidwerk_rechtslauf_1A.OUT" Comment="" dx1="586.6666666666667"/>
-			<Connection Source="E_SR_Schneidwerk.Q" Destination="E_SWITCH_Schneidwerk.G" Comment="" dx1="233.33333333333334" dx2="500.0" dy="300.0"/>
+			<Connection Source="E_SR_Schneidwerk.Q" Destination="E_SWITCH_Schneidwerk.G" Comment="" dx1="233.33333333333334" dx2="146.66666666666669" dy="300.0"/>
 			<Connection Source="E_SR_Schneidwerk.Q" Destination="GreenWhiteBackground_Schneidwerk.Q" Comment="" dx1="373.33333333333337" dx2="493.33333333333337" dy="0.0"/>
 		</DataConnections>
 	</SubAppNetwork>
