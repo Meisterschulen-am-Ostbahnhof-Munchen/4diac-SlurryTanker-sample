@@ -14,30 +14,30 @@
 		<FB Name="UT_SoftkeyMapping" Type="UT_SoftkeyMapping" Comment="" x="1066.6666666666667" y="0.0">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u8SAMember" Value="255"/>
-			<Parameter Name="u16ObjId_1" Value="5003"/>
-			<Parameter Name="DigitalInput_1" Value="&quot;SoftKey_Auseinanderklappen&quot;"/>
-			<Parameter Name="u16ObjId_2" Value="5004"/>
-			<Parameter Name="DigitalInput_2" Value="&quot;SoftKey_Verteiler_senken&quot;"/>
-			<Parameter Name="u16ObjId_3" Value="5005"/>
-			<Parameter Name="DigitalInput_3" Value="&quot;SoftKey_Knickdeichsel_senken&quot;"/>
-			<Parameter Name="u16ObjId_4" Value="5009"/>
-			<Parameter Name="DigitalInput_4" Value="&quot;SoftKey_Zusammenklappen&quot;"/>
-			<Parameter Name="u16ObjId_5" Value="5010"/>
-			<Parameter Name="DigitalInput_5" Value="&quot;SoftKey_Verteiler_heben&quot;"/>
-			<Parameter Name="u16ObjId_6" Value="5011"/>
-			<Parameter Name="DigitalInput_6" Value="&quot;SoftKey_Knickdeichsel_heben&quot;"/>
+			<Parameter Name="u16ObjId_1" Value="5000"/>
+			<Parameter Name="DigitalInput_1" Value="&quot;SoftKey_Automatik_ein&quot;"/>
+			<Parameter Name="u16ObjId_2" Value="5003"/>
+			<Parameter Name="DigitalInput_2" Value="&quot;SoftKey_Auseinanderklappen&quot;"/>
+			<Parameter Name="u16ObjId_3" Value="5004"/>
+			<Parameter Name="DigitalInput_3" Value="&quot;SoftKey_Verteiler_senken&quot;"/>
+			<Parameter Name="u16ObjId_4" Value="5005"/>
+			<Parameter Name="DigitalInput_4" Value="&quot;SoftKey_Knickdeichsel_senken&quot;"/>
+			<Parameter Name="u16ObjId_5" Value="5006"/>
+			<Parameter Name="DigitalInput_5" Value="&quot;SoftKey_Automatik_aus_UP&quot;"/>
+			<Parameter Name="u16ObjId_6" Value="5009"/>
+			<Parameter Name="DigitalInput_6" Value="&quot;SoftKey_Zusammenklappen&quot;"/>
+			<Parameter Name="u16ObjId_7" Value="5010"/>
+			<Parameter Name="DigitalInput_7" Value="&quot;SoftKey_Verteiler_heben&quot;"/>
+			<Parameter Name="u16ObjId_8" Value="5011"/>
+			<Parameter Name="DigitalInput_8" Value="&quot;SoftKey_Knickdeichsel_heben&quot;"/>
 		</FB>
 		<FB Name="UT_SoftkeyMapping_UP" Type="UT_SoftkeyMapping_UP" Comment="" x="1066.6666666666667" y="2666.666666666667">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u8SAMember" Value="255"/>
-			<Parameter Name="u16ObjId_1" Value="5000"/>
-			<Parameter Name="DigitalInput_1" Value="&quot;SoftKey_Automatik_ein_UP&quot;"/>
 			<Parameter Name="u16ObjId_2" Value="5001"/>
 			<Parameter Name="DigitalInput_2" Value="&quot;SoftKey_Dom_UP&quot;"/>
 			<Parameter Name="u16ObjId_3" Value="5002"/>
 			<Parameter Name="DigitalInput_3" Value="&quot;SoftKey_Heckschieber_UP&quot;"/>
-			<Parameter Name="u16ObjId_4" Value="5006"/>
-			<Parameter Name="DigitalInput_4" Value="&quot;SoftKey_Automatik_aus_UP&quot;"/>
 			<Parameter Name="u16ObjId_5" Value="5007"/>
 			<Parameter Name="DigitalInput_5" Value="&quot;SoftKey_Schneidwerk_UP&quot;"/>
 			<Parameter Name="u16ObjId_6" Value="5008"/>
@@ -47,18 +47,9 @@
 			<Parameter Name="u16ObjId_8" Value="5016"/>
 			<Parameter Name="DigitalInput_8" Value="&quot;SoftKey_Licht_UP&quot;"/>
 		</FB>
-		<FB Name="UT_SoftkeyMapping_DOWN" Type="UT_SoftkeyMapping_DOWN" Comment="" x="1066.6666666666667" y="5333.333333333334">
-			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="u8SAMember" Value="255"/>
-			<Parameter Name="u16ObjId_1" Value="5000"/>
-			<Parameter Name="DigitalInput_1" Value="&quot;SoftKey_Automatik_ein_DOWN&quot;"/>
-			<Parameter Name="u16ObjId_7" Value="5006"/>
-			<Parameter Name="DigitalInput_7" Value="&quot;SoftKey_Automatik_aus_DOWN&quot;"/>
-		</FB>
 		<EventConnections>
 			<Connection Source="INIT" Destination="UT_SoftkeyMapping.INIT" Comment="" dx1="1166.6666666666667"/>
 			<Connection Source="INIT" Destination="UT_SoftkeyMapping_UP.INIT" Comment="" dx1="520.0"/>
-			<Connection Source="INIT" Destination="UT_SoftkeyMapping_DOWN.INIT" Comment="" dx1="413.33333333333337"/>
 		</EventConnections>
 	</SubAppNetwork>
 </SubAppType>

@@ -82,7 +82,7 @@
 			<Attribute Name="width" Type="LREAL" Value="3893.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="2400.0"/>
 		</SubApp>
-		<FB Name="GreenWhiteBackground_Zusammenklappen" Type="GreenWhiteBackground" Comment="" x="3220.0" y="3720.0">
+		<FB Name="GreenWhiteBackground_Zusammenklappen" Type="GreenWhiteBackground" Comment="" x="3400.0" y="4800.0">
 			<Parameter Name="u16ObjId" Value="5009"/>
 		</FB>
 		<EventConnections>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Automatik_aus" Comment="Subapplication Type">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2023-02-11">
+	</VersionInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="Event" Comment="">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="Automatik_aus_DOWN" Type="Event" Comment="">
+			</SubAppEvent>
+			<SubAppEvent Name="Automatik_aus_UP" Type="Event" Comment="">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="SoftKey_Automatik_aus_DOWN" Type="IE" Comment="" x="0.0" y="0.0">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="SoftKey_Automatik_aus_UP" Type="IE" Comment="" x="0.0" y="1000.0">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="SoftKey_Automatik_aus_DOWN.INIT" Comment="" dx1="80.0" dx2="80.0" dy="-13.333333333333334"/>
+			<Connection Source="SoftKey_Automatik_aus_DOWN.IND" Destination="Automatik_aus_DOWN" Comment="" dx1="2206.666666666667"/>
+			<Connection Source="INIT" Destination="SoftKey_Automatik_aus_UP.INIT" Comment="" dx1="80.0" dx2="700.0" dy="480.0"/>
+			<Connection Source="SoftKey_Automatik_aus_UP.IND" Destination="Automatik_aus_UP" Comment="" dx1="2913.3333333333335"/>
+		</EventConnections>
+	</SubAppNetwork>
+</SubAppType>
