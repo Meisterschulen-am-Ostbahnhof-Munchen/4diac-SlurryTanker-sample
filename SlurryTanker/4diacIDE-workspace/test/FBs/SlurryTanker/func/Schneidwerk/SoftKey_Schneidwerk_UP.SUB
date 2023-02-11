@@ -2,7 +2,7 @@
 <SubAppType Name="SoftKey_Schneidwerk_UP" Comment="Subapplication Type">
 	<Identification Standard="61499-2">
 	</Identification>
-	<VersionInfo Version="1.0" Author="franz" Date="2023-02-11">
+	<VersionInfo Version="1.0" Author="franz" Date="2023-02-06">
 	</VersionInfo>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
@@ -15,12 +15,12 @@
 		</SubAppEventOutputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="SoftKey_Schneidwerk_UP" Type="IE" Comment="" x="0.0" y="0.0">
+		<FB Name="SoftKey_Schneidwerk_UP" Type="IE" Comment="" x="0.0" y="100.0">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="SoftKey_Schneidwerk_UP.INIT" Comment="" dx1="80.0" dx2="80.0" dy="-13.333333333333334"/>
-			<Connection Source="SoftKey_Schneidwerk_UP.IND" Destination="IND" Comment="" dx1="2933.3333333333335"/>
+			<Connection Source="INIT" Destination="SoftKey_Schneidwerk_UP.INIT" Comment="" dx1="633.3333333333334"/>
+			<Connection Source="SoftKey_Schneidwerk_UP.IND" Destination="IND" Comment="" dx1="1613.3333333333335"/>
 		</EventConnections>
 	</SubAppNetwork>
 </SubAppType>

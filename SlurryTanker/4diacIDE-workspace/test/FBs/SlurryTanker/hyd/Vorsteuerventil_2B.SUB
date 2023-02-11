@@ -9,14 +9,19 @@
 			<SubAppEvent Name="INIT" Type="Event" Comment="">
 			</SubAppEvent>
 			<SubAppEvent Name="REQ1" Type="Event" Comment="">
+				<With Var="IN1"/>
 			</SubAppEvent>
 			<SubAppEvent Name="REQ2" Type="Event" Comment="">
+				<With Var="IN2"/>
 			</SubAppEvent>
 			<SubAppEvent Name="REQ3" Type="Event" Comment="">
+				<With Var="IN3"/>
 			</SubAppEvent>
 			<SubAppEvent Name="REQ4" Type="Event" Comment="">
+				<With Var="IN4"/>
 			</SubAppEvent>
 			<SubAppEvent Name="REQ5" Type="Event" Comment="">
+				<With Var="IN5"/>
 			</SubAppEvent>
 		</SubAppEventInputs>
 		<InputVars>
