@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="AuxInput_Heckschieber_UP" Comment="Subapplication Type">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2023-02-11">
+	</VersionInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="Event" Comment="">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="IND" Type="Event" Comment="">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="E_SWITCH_AuxInput_Heckschieber" Type="E_SWITCH" Comment="" x="1100.0" y="100.0">
+		</FB>
+		<FB Name="AuxInput_Heckschieber" Type="IX" Comment="" x="66.66666666666667" y="0.0">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="AuxInput_Heckschieber.IND" Destination="E_SWITCH_AuxInput_Heckschieber.EI" Comment=""/>
+			<Connection Source="INIT" Destination="AuxInput_Heckschieber.INIT" Comment="" dx1="153.33333333333334"/>
+			<Connection Source="E_SWITCH_AuxInput_Heckschieber.EO0" Destination="IND" Comment="" dx1="933.3333333333334"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="AuxInput_Heckschieber.IN" Destination="E_SWITCH_AuxInput_Heckschieber.G" Comment="" dx1="266.6666666666667"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

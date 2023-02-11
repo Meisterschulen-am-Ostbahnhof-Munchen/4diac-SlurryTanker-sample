@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="Q_BackgroundColourAux" Comment="Command change background colour ( Part 6 - F.20 )">
+	<Identification Standard="ISO 11783-6" Description="&lt;p&gt;This command is used to change the background colour of an object. etval iso_s16 - #E_NO_ERR - OK - #E_OVERFLOW - buffer overflow - #E_NOACT - Command not possible in current state - #E_NO_INSTANCE - No VT client available&lt;/p&gt; &#10; &#10;" >
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2022-07-08">
+	</VersionInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="Event" Comment="Service Initialization">
+				<With Var="u16ObjId"/>
+			</Event>
+			<Event Name="REQ" Type="Event" Comment="Service Request">
+				<With Var="u8Colour"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="Event" Comment="Initialization Confirm">
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+				<With Var="STATUS"/>
+				<With Var="u8OldColour"/>
+				<With Var="s16result"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID"/>
+			<VarDeclaration Name="u8Colour" Type="USINT" Comment="New Background colour see Part 6 - A.3 VT standard colour palette"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="STATUS" Type="WSTRING" Comment="Service Status"/>
+			<VarDeclaration Name="u8OldColour" Type="USINT" Comment="Old value of ID"/>
+			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description"/>
+		</OutputVars>
+	</InterfaceList>
+</FBType>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="GreenWhiteBackground_Auseinanderklappen" Comment="Subapplication Type">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2023-02-11">
+	</VersionInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="Event" Comment="">
+				<Attribute Name="YPOSITION" Type="STRING" Value="20"/>
+			</SubAppEvent>
+			<SubAppEvent Name="CNF" Type="Event" Comment="">
+				<Attribute Name="YPOSITION" Type="STRING" Value="0"/>
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<InputVars>
+			<VarDeclaration Name="OUT" Type="BOOL" Comment="">
+				<Attribute Name="YPOSITION" Type="STRING" Value="279"/>
+			</VarDeclaration>
+		</InputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="GreenWhiteBackground_Auseinanderklappen" Type="GreenWhiteBackground" Comment="" x="-986.6666666666667" y="-866.6666666666667">
+			<Parameter Name="u16ObjId" Value="5003"/>
+			<Parameter Name="u16ObjIdA" Value="31003"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="GreenWhiteBackground_Auseinanderklappen.INIT" Comment="" dx1="193.33333333333334"/>
+			<Connection Source="CNF" Destination="GreenWhiteBackground_Auseinanderklappen.REQ" Comment="" dx1="86.66666666666667"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="OUT" Destination="GreenWhiteBackground_Auseinanderklappen.DI1" Comment="" dx1="140.0"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

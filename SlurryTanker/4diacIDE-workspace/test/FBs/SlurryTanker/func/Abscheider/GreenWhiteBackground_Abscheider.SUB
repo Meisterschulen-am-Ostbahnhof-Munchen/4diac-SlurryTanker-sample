@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="GreenWhiteBackground_Abscheider" Comment="Subapplication Type">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2023-02-06">
+	</VersionInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="Event" Comment="">
+				<Attribute Name="YPOSITION" Type="STRING" Value="20"/>
+			</SubAppEvent>
+			<SubAppEvent Name="EO" Type="Event" Comment="">
+				<Attribute Name="YPOSITION" Type="STRING" Value="0"/>
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<InputVars>
+			<VarDeclaration Name="Q" Type="BOOL" Comment="">
+				<Attribute Name="YPOSITION" Type="STRING" Value="279"/>
+			</VarDeclaration>
+		</InputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="GreenWhiteBackground_SoftKey_Abscheider" Type="GreenWhiteBackground" Comment="" x="-3653.3333333333335" y="-3533.3333333333335">
+			<Parameter Name="u16ObjId" Value="5015"/>
+			<Parameter Name="u16ObjIdA" Value="31015"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="EO" Destination="GreenWhiteBackground_SoftKey_Abscheider.REQ" Comment="" dx1="86.66666666666667"/>
+			<Connection Source="INIT" Destination="GreenWhiteBackground_SoftKey_Abscheider.INIT" Comment="" dx1="140.0"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="Q" Destination="GreenWhiteBackground_SoftKey_Abscheider.DI1" Comment="" dx1="193.33333333333334"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

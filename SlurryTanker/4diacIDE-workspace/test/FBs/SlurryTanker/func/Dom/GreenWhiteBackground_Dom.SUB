@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="GreenWhiteBackground_Dom" Comment="Subapplication Type">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2023-02-06">
+	</VersionInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="Event" Comment="">
+				<Attribute Name="YPOSITION" Type="STRING" Value="20"/>
+			</SubAppEvent>
+			<SubAppEvent Name="EO" Type="Event" Comment="">
+				<Attribute Name="YPOSITION" Type="STRING" Value="272"/>
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<InputVars>
+			<VarDeclaration Name="Q" Type="BOOL" Comment="">
+				<Attribute Name="YPOSITION" Type="STRING" Value="139"/>
+			</VarDeclaration>
+		</InputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="GreenWhiteBackground_Dom" Type="GreenWhiteBackground" Comment="" x="-2533.3333333333335" y="-3466.666666666667">
+			<Parameter Name="u16ObjId" Value="5001"/>
+			<Parameter Name="u16ObjIdA" Value="31001"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="EO" Destination="GreenWhiteBackground_Dom.REQ" Comment="" dx1="573.3333333333334"/>
+			<Connection Source="INIT" Destination="GreenWhiteBackground_Dom.INIT" Comment="" dx1="766.6666666666667"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="Q" Destination="GreenWhiteBackground_Dom.DI1" Comment="" dx1="680.0"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

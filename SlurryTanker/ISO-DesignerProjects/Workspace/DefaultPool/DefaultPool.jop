@@ -1,93 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <JetView-ObjectPool Version="3.0" ProductVersion="5.6.1.5243">
 	<Objects>
-		<Object Class="CMacro" JVS-ID="1" ObjectName="Macro_Go_DM1000" Pinned="FALSE">
-			<Commands>
-				<Command id="173" subid="-1">
-					<Params>
-						<Param Name="Workingset" Type="7">0 - WorkingSet_0</Param>
-						<Param Name="New active Mask" Type="8">1000 - DataMask_1000</Param>
-					</Params>
-				</Command>
-			</Commands>
-			<Property Name="Comment">
-				<Value>
-					<![CDATA[AAA=]]>
-				</Value>
-			</Property>
-		</Object>
-		<Object Class="CMacro" JVS-ID="2" ObjectName="Macro_Go_DM1001" Pinned="FALSE">
-			<Commands>
-				<Command id="173" subid="-1">
-					<Params>
-						<Param Name="Workingset" Type="7">0 - WorkingSet_0</Param>
-						<Param Name="New active Mask" Type="8">1001 - DataMask_1001</Param>
-					</Params>
-				</Command>
-			</Commands>
-			<Property Name="Comment">
-				<Value>
-					<![CDATA[AAA=]]>
-				</Value>
-			</Property>
-		</Object>
-		<Object Class="CFontStyle" JVS-ID="23000" ObjectName="FontAttributes_23000" Pinned="FALSE">
-			<PropertySheet Name="Font" ID="68816">
-				<Property Name="Name">
-					<Value>Lucida Console</Value>
-				</Property>
-				<Property Name="Size">
-					<Value>12</Value>
-				</Property>
-				<Property Name="Height">
-					<Value>16</Value>
-				</Property>
-				<Property Name="Color">
-					<Value>0</Value>
-				</Property>
-				<Property Name="Weight">
-					<Value>400</Value>
-				</Property>
-				<Property Name="Italic">
-					<Value>0</Value>
-				</Property>
-				<Property Name="Underline">
-					<Value>0</Value>
-				</Property>
-				<Property Name="Strikeout">
-					<Value>0</Value>
-				</Property>
-				<Property Name="PointWidth">
-					<Value>9</Value>
-				</Property>
-				<Property Name="Width">
-					<Value>12</Value>
-				</Property>
-				<Property Name="Inverted">
-					<Value>0</Value>
-				</Property>
-				<Property Name="FlashInverted">
-					<Value>0</Value>
-				</Property>
-				<Property Name="FlashHidden">
-					<Value>0</Value>
-				</Property>
-				<Property Name="Proportional">
-					<Value>0</Value>
-				</Property>
-				<Property Name="ISOFontType">
-					<Value>0</Value>
-				</Property>
-				<Property Name="ResourceID">
-					<Value/>
-				</Property>
-				<Property Name="Comment">
-					<Value>
-						<![CDATA[AAA=]]>
-					</Value>
-				</Property>
-			</PropertySheet>
-		</Object>
 		<Object Class="CWorkingSet" Name="" ObjectName="WorkingSet_0" Pinned="FALSE" JVS-ID="0" JVS-RefCount="1">
 			<PropertySheet Name="Model">
 				<Property Name="MaskType">
@@ -110,21 +23,6 @@
 				</Property>
 				<Property Name="Path">
 					<Value>.\DataMask_1000.jvi</Value>
-				</Property>
-				<Property Name="Comment">
-					<Value>
-						<![CDATA[AAA=]]>
-					</Value>
-				</Property>
-			</PropertySheet>
-		</Object>
-		<Object Class="CDataMask" Name="" ObjectName="DataMask_1001" Pinned="FALSE" JVS-ID="1001" JVS-RefCount="1">
-			<PropertySheet Name="Model">
-				<Property Name="MaskType">
-					<Value>1</Value>
-				</Property>
-				<Property Name="Path">
-					<Value>.\DataMask_1001.jvi</Value>
 				</Property>
 				<Property Name="Comment">
 					<Value>
@@ -619,36 +517,6 @@
 				</Property>
 			</PropertySheet>
 		</Object>
-		<Object Class="CSoftKey" Name="SoftKey" ObjectName="SoftKey_5014" Pinned="FALSE" JVS-ID="5014">
-			<PropertySheet Name="SoftKey">
-				<Property Name="BackColor">
-					<Value>16777215</Value>
-				</Property>
-				<Property Name="KeyCode">
-					<Value>1</Value>
-				</Property>
-				<Property Name="Hotkey">
-					<Value>0</Value>
-				</Property>
-				<Property Name="Width">
-					<Value>80</Value>
-				</Property>
-				<Property Name="Height">
-					<Value>80</Value>
-				</Property>
-				<Property Name="Visible">
-					<Value>1</Value>
-				</Property>
-				<Property Name="Comment">
-					<Value>
-						<![CDATA[AAA=]]>
-					</Value>
-				</Property>
-				<Property Name="Disabled">
-					<Value>0</Value>
-				</Property>
-			</PropertySheet>
-		</Object>
 		<Object Class="CSoftKey" Name="SoftKey" ObjectName="SoftKey_5015" Pinned="FALSE" JVS-ID="5015">
 			<PropertySheet Name="SoftKey">
 				<Property Name="BackColor">
@@ -805,36 +673,6 @@
 				</Property>
 			</PropertySheet>
 		</Object>
-		<Object Class="CSoftKey" Name="SoftKey" ObjectName="SoftKey_5020" Pinned="FALSE" JVS-ID="5020">
-			<PropertySheet Name="SoftKey">
-				<Property Name="BackColor">
-					<Value>16777215</Value>
-				</Property>
-				<Property Name="KeyCode">
-					<Value>1</Value>
-				</Property>
-				<Property Name="Hotkey">
-					<Value>0</Value>
-				</Property>
-				<Property Name="Width">
-					<Value>80</Value>
-				</Property>
-				<Property Name="Height">
-					<Value>80</Value>
-				</Property>
-				<Property Name="Visible">
-					<Value>1</Value>
-				</Property>
-				<Property Name="Comment">
-					<Value>
-						<![CDATA[AAA=]]>
-					</Value>
-				</Property>
-				<Property Name="Disabled">
-					<Value>0</Value>
-				</Property>
-			</PropertySheet>
-		</Object>
 		<Object Class="CSoftKey" Name="SoftKey" ObjectName="SoftKey_5021" Pinned="FALSE" JVS-ID="5021">
 			<PropertySheet Name="SoftKey">
 				<Property Name="BackColor">
@@ -928,10 +766,10 @@
 		<Object Class="CButton" Name="Button" ObjectName="Button_6000" Pinned="FALSE" JVS-ID="6000">
 			<PropertySheet Name="Button">
 				<Property Name="BackColor">
-					<Value>10066329</Value>
+					<Value>16777215</Value>
 				</Property>
 				<Property Name="BorderColor">
-					<Value>10066329</Value>
+					<Value>0</Value>
 				</Property>
 				<Property Name="KeyCode">
 					<Value>1</Value>
@@ -987,51 +825,17 @@
 					<Value>0</Value>
 				</Property>
 			</PropertySheet>
-			<Events>
-				<Event>
-					<Property Name="ID">
-						<Value>
-							<![CDATA[25]]>
-						</Value>
-					</Property>
-					<Property Name="Name">
-						<Value>
-							<![CDATA[OnKeyRelease]]>
-						</Value>
-					</Property>
-					<Property Name="Param">
-						<Value>
-							<![CDATA[]]>
-						</Value>
-					</Property>
-					<Property Name="Macros">
-						<Value>
-							<![CDATA[1]]>
-						</Value>
-					</Property>
-					<Property Name="Conditions">
-						<Value>
-							<![CDATA[]]>
-						</Value>
-					</Property>
-					<Property Name="KeyCode">
-						<Value>
-							<![CDATA[0]]>
-						</Value>
-					</Property>
-				</Event>
-			</Events>
 			<Objects>
-				<Object JVS-ID="4194321"/>
+				<Object JVS-ID="4194342"/>
 			</Objects>
 		</Object>
 		<Object Class="CButton" Name="Button" ObjectName="Button_6001" Pinned="FALSE" JVS-ID="6001">
 			<PropertySheet Name="Button">
 				<Property Name="BackColor">
-					<Value>10066329</Value>
+					<Value>16777215</Value>
 				</Property>
 				<Property Name="BorderColor">
-					<Value>10066329</Value>
+					<Value>0</Value>
 				</Property>
 				<Property Name="KeyCode">
 					<Value>1</Value>
@@ -1087,124 +891,58 @@
 					<Value>0</Value>
 				</Property>
 			</PropertySheet>
-			<Events>
-				<Event>
-					<Property Name="ID">
-						<Value>
-							<![CDATA[25]]>
-						</Value>
-					</Property>
-					<Property Name="Name">
-						<Value>
-							<![CDATA[OnKeyRelease]]>
-						</Value>
-					</Property>
-					<Property Name="Param">
-						<Value>
-							<![CDATA[]]>
-						</Value>
-					</Property>
-					<Property Name="Macros">
-						<Value>
-							<![CDATA[2]]>
-						</Value>
-					</Property>
-					<Property Name="Conditions">
-						<Value>
-							<![CDATA[]]>
-						</Value>
-					</Property>
-					<Property Name="KeyCode">
-						<Value>
-							<![CDATA[0]]>
-						</Value>
-					</Property>
-				</Event>
-			</Events>
 			<Objects>
-				<Object JVS-ID="4194324"/>
+				<Object JVS-ID="4194341"/>
 			</Objects>
 		</Object>
-		<Object Class="COutputText" Name="Text" ObjectName="OutputString_11000" Pinned="FALSE" JVS-ID="11000">
-			<PropertySheet Name="Text">
-				<Property Name="Text">
+		<Object Class="CImage" Name="Image" ObjectName="page_2_MAIN" Pinned="FALSE" JVS-ID="20002">
+			<PropertySheet Name="Image">
+				<Property Name="Path">
 					<Value>
-						<![CDATA[RgAxAAAA]]>
+						<![CDATA[.\img\page_2.bmp]]>
 					</Value>
 				</Property>
 				<Property Name="ResourceID">
 					<Value/>
 				</Property>
-				<Property Name="MultiLine">
-					<Value>0</Value>
-				</Property>
-				<Property Name="WordBreak">
-					<Value>0</Value>
-				</Property>
-				<Property Name="WrapOnHyphen">
-					<Value>0</Value>
-				</Property>
-				<Property Name="AlignH">
+				<Property Name="Retain Aspect Ratio">
 					<Value>1</Value>
 				</Property>
-				<Property Name="AlignV">
-					<Value>0</Value>
+				<Property Name="Transparency">
+					<Value>1</Value>
 				</Property>
-				<Property Name="Appearance">
-					<Value>0</Value>
+				<Property Name="TransColor">
+					<Value>16777215</Value>
 				</Property>
 				<Property Name="ControlType">
 					<Value>0</Value>
 				</Property>
-				<Property Name="Numeric">
-					<Value>0</Value>
-				</Property>
-				<Property Name="Offset">
-					<Value>0</Value>
-				</Property>
-				<Property Name="Scale">
+				<Property Name="BitPerPixel">
 					<Value>1</Value>
 				</Property>
-				<Property Name="FormatType">
+				<Property Name="IsFlashing">
 					<Value>0</Value>
 				</Property>
-				<Property Name="FormatString">
+				<Property Name="Encoding">
 					<Value>0</Value>
 				</Property>
-				<Property Name="NoOfDecimals">
+				<Property Name="Extended">
 					<Value>0</Value>
 				</Property>
-				<Property Name="Value">
-					<Value>
-						<![CDATA[RgAxAAAA]]>
-					</Value>
+				<Property Name="RealImageWidth">
+					<Value>72</Value>
 				</Property>
-				<Property Name="StringLength">
-					<Value>4</Value>
+				<Property Name="RealImageHeight">
+					<Value>72</Value>
 				</Property>
-				<Property Name="Transparent">
-					<Value>1</Value>
-				</Property>
-				<Property Name="LeadingZeros">
-					<Value>0</Value>
-				</Property>
-				<Property Name="ZeroAsBlank">
-					<Value>0</Value>
-				</Property>
-				<Property Name="Truncate">
-					<Value>0</Value>
-				</Property>
-				<Property Name="BkColor">
-					<Value>16777215</Value>
-				</Property>
-				<Property Name="RoundEdgeRadius">
-					<Value>0</Value>
+				<Property Name="RotationAngle">
+					<Value>0.000000</Value>
 				</Property>
 				<Property Name="Width">
-					<Value>160</Value>
+					<Value>72</Value>
 				</Property>
 				<Property Name="Height">
-					<Value>16</Value>
+					<Value>72</Value>
 				</Property>
 				<Property Name="Visible">
 					<Value>1</Value>
@@ -1221,90 +959,55 @@
 					<Value>0</Value>
 				</Property>
 			</PropertySheet>
-			<Objects>
-				<Object JVS-ID="23000"/>
-			</Objects>
 		</Object>
-		<Object Class="COutputText" Name="Text" ObjectName="OutputString_11001" Pinned="FALSE" JVS-ID="11001">
-			<PropertySheet Name="Text">
-				<Property Name="Text">
+		<Object Class="CImage" Name="Image" ObjectName="page_1_MAIN" Pinned="FALSE" JVS-ID="20003">
+			<PropertySheet Name="Image">
+				<Property Name="Path">
 					<Value>
-						<![CDATA[RgAyAAAA]]>
+						<![CDATA[.\img\page_1.bmp]]>
 					</Value>
 				</Property>
 				<Property Name="ResourceID">
 					<Value/>
 				</Property>
-				<Property Name="MultiLine">
-					<Value>0</Value>
-				</Property>
-				<Property Name="WordBreak">
-					<Value>0</Value>
-				</Property>
-				<Property Name="WrapOnHyphen">
-					<Value>0</Value>
-				</Property>
-				<Property Name="AlignH">
+				<Property Name="Retain Aspect Ratio">
 					<Value>1</Value>
 				</Property>
-				<Property Name="AlignV">
-					<Value>0</Value>
+				<Property Name="Transparency">
+					<Value>1</Value>
 				</Property>
-				<Property Name="Appearance">
-					<Value>0</Value>
+				<Property Name="TransColor">
+					<Value>16777215</Value>
 				</Property>
 				<Property Name="ControlType">
 					<Value>0</Value>
 				</Property>
-				<Property Name="Numeric">
-					<Value>0</Value>
-				</Property>
-				<Property Name="Offset">
-					<Value>0</Value>
-				</Property>
-				<Property Name="Scale">
+				<Property Name="BitPerPixel">
 					<Value>1</Value>
 				</Property>
-				<Property Name="FormatType">
+				<Property Name="IsFlashing">
 					<Value>0</Value>
 				</Property>
-				<Property Name="FormatString">
+				<Property Name="Encoding">
 					<Value>0</Value>
 				</Property>
-				<Property Name="NoOfDecimals">
+				<Property Name="Extended">
 					<Value>0</Value>
 				</Property>
-				<Property Name="Value">
-					<Value>
-						<![CDATA[RgAyAAAA]]>
-					</Value>
+				<Property Name="RealImageWidth">
+					<Value>72</Value>
 				</Property>
-				<Property Name="StringLength">
-					<Value>4</Value>
+				<Property Name="RealImageHeight">
+					<Value>72</Value>
 				</Property>
-				<Property Name="Transparent">
-					<Value>1</Value>
-				</Property>
-				<Property Name="LeadingZeros">
-					<Value>0</Value>
-				</Property>
-				<Property Name="ZeroAsBlank">
-					<Value>0</Value>
-				</Property>
-				<Property Name="Truncate">
-					<Value>0</Value>
-				</Property>
-				<Property Name="BkColor">
-					<Value>16777215</Value>
-				</Property>
-				<Property Name="RoundEdgeRadius">
-					<Value>0</Value>
+				<Property Name="RotationAngle">
+					<Value>0.000000</Value>
 				</Property>
 				<Property Name="Width">
-					<Value>160</Value>
+					<Value>72</Value>
 				</Property>
 				<Property Name="Height">
-					<Value>16</Value>
+					<Value>72</Value>
 				</Property>
 				<Property Name="Visible">
 					<Value>1</Value>
@@ -1321,9 +1024,6 @@
 					<Value>0</Value>
 				</Property>
 			</PropertySheet>
-			<Objects>
-				<Object JVS-ID="23000"/>
-			</Objects>
 		</Object>
 		<Object Class="CImage" Name="Image" ObjectName="workingset_pic" Pinned="FALSE" JVS-ID="20500">
 			<PropertySheet Name="Image">
@@ -1354,7 +1054,7 @@
 					<Value>0</Value>
 				</Property>
 				<Property Name="Encoding">
-					<Value>1</Value>
+					<Value>0</Value>
 				</Property>
 				<Property Name="Extended">
 					<Value>0</Value>
@@ -1744,7 +1444,7 @@
 					<Value>0</Value>
 				</Property>
 				<Property Name="Encoding">
-					<Value>1</Value>
+					<Value>0</Value>
 				</Property>
 				<Property Name="Extended">
 					<Value>0</Value>
@@ -2069,7 +1769,7 @@
 					<Value>0</Value>
 				</Property>
 				<Property Name="Encoding">
-					<Value>1</Value>
+					<Value>0</Value>
 				</Property>
 				<Property Name="Extended">
 					<Value>0</Value>
@@ -2134,7 +1834,7 @@
 					<Value>0</Value>
 				</Property>
 				<Property Name="Encoding">
-					<Value>1</Value>
+					<Value>0</Value>
 				</Property>
 				<Property Name="Extended">
 					<Value>0</Value>
@@ -2199,7 +1899,7 @@
 					<Value>0</Value>
 				</Property>
 				<Property Name="Encoding">
-					<Value>1</Value>
+					<Value>0</Value>
 				</Property>
 				<Property Name="Extended">
 					<Value>0</Value>
@@ -2300,11 +2000,11 @@
 				</Property>
 			</PropertySheet>
 		</Object>
-		<Object Class="CImage" Name="Image" ObjectName="nr1" Pinned="FALSE" JVS-ID="20524">
+		<Object Class="CImage" Name="Image" ObjectName="page_1_AUX" Pinned="FALSE" JVS-ID="20516">
 			<PropertySheet Name="Image">
 				<Property Name="Path">
 					<Value>
-						<![CDATA[.\img\nr1.bmp]]>
+						<![CDATA[.\img\page_1.bmp]]>
 					</Value>
 				</Property>
 				<Property Name="ResourceID">
@@ -2329,25 +2029,25 @@
 					<Value>0</Value>
 				</Property>
 				<Property Name="Encoding">
-					<Value>1</Value>
+					<Value>0</Value>
 				</Property>
 				<Property Name="Extended">
 					<Value>0</Value>
 				</Property>
 				<Property Name="RealImageWidth">
-					<Value>76</Value>
+					<Value>72</Value>
 				</Property>
 				<Property Name="RealImageHeight">
-					<Value>63</Value>
+					<Value>72</Value>
 				</Property>
 				<Property Name="RotationAngle">
 					<Value>0.000000</Value>
 				</Property>
 				<Property Name="Width">
-					<Value>76</Value>
+					<Value>72</Value>
 				</Property>
 				<Property Name="Height">
-					<Value>63</Value>
+					<Value>72</Value>
 				</Property>
 				<Property Name="Visible">
 					<Value>1</Value>
@@ -2365,11 +2065,11 @@
 				</Property>
 			</PropertySheet>
 		</Object>
-		<Object Class="CImage" Name="Image" ObjectName="nr2" Pinned="FALSE" JVS-ID="20525">
+		<Object Class="CImage" Name="Image" ObjectName="page_2_AUX" Pinned="FALSE" JVS-ID="20517">
 			<PropertySheet Name="Image">
 				<Property Name="Path">
 					<Value>
-						<![CDATA[.\img\nr2.bmp]]>
+						<![CDATA[.\img\page_2.bmp]]>
 					</Value>
 				</Property>
 				<Property Name="ResourceID">
@@ -2394,25 +2094,25 @@
 					<Value>0</Value>
 				</Property>
 				<Property Name="Encoding">
-					<Value>1</Value>
+					<Value>0</Value>
 				</Property>
 				<Property Name="Extended">
 					<Value>0</Value>
 				</Property>
 				<Property Name="RealImageWidth">
-					<Value>75</Value>
+					<Value>72</Value>
 				</Property>
 				<Property Name="RealImageHeight">
-					<Value>64</Value>
+					<Value>72</Value>
 				</Property>
 				<Property Name="RotationAngle">
 					<Value>0.000000</Value>
 				</Property>
 				<Property Name="Width">
-					<Value>75</Value>
+					<Value>72</Value>
 				</Property>
 				<Property Name="Height">
-					<Value>64</Value>
+					<Value>72</Value>
 				</Property>
 				<Property Name="Visible">
 					<Value>1</Value>
@@ -3237,7 +2937,7 @@
 				</Property>
 			</PropertySheet>
 			<Objects>
-				<Object JVS-ID="4194316"/>
+				<Object JVS-ID="4194338"/>
 			</Objects>
 		</Object>
 		<Object Class="CAuxFunction" Name="AuxFunction" ObjectName="AuxFunction2_31025" Pinned="TRUE" JVS-ID="31025">
@@ -3291,7 +2991,7 @@
 				</Property>
 			</PropertySheet>
 			<Objects>
-				<Object JVS-ID="4194320"/>
+				<Object JVS-ID="4194340"/>
 			</Objects>
 		</Object>
 		<Object Class="CProxy" Name="Image_1" ObjectName="" Pinned="FALSE" JVS-ID="4194304">
@@ -3558,28 +3258,6 @@
 				<Object JVS-ID="20512"/>
 			</Objects>
 		</Object>
-		<Object Class="CProxy" Name="Image_1" ObjectName="" Pinned="FALSE" JVS-ID="4194316">
-			<PropertySheet Name="Proxy">
-				<Property Name="Top">
-					<Value>0</Value>
-				</Property>
-				<Property Name="Left">
-					<Value>0</Value>
-				</Property>
-				<Property Name="Name">
-					<Value>Image_1</Value>
-				</Property>
-				<Property Name="TabIndex">
-					<Value>-1</Value>
-				</Property>
-				<Property Name="Transform">
-					<Value>(1.0000000000000000)(0.0000000000000000)(0.0000000000000000)(0.0000000000000000)(1.0000000000000000)(0.0000000000000000)</Value>
-				</Property>
-			</PropertySheet>
-			<Objects>
-				<Object JVS-ID="20524"/>
-			</Objects>
-		</Object>
 		<Object Class="CProxy" Name="Image_1" ObjectName="" Pinned="FALSE" JVS-ID="4194318">
 			<PropertySheet Name="Proxy">
 				<Property Name="Top">
@@ -3624,50 +3302,6 @@
 				<Object JVS-ID="20514"/>
 			</Objects>
 		</Object>
-		<Object Class="CProxy" Name="Image_1" ObjectName="" Pinned="FALSE" JVS-ID="4194320">
-			<PropertySheet Name="Proxy">
-				<Property Name="Top">
-					<Value>0</Value>
-				</Property>
-				<Property Name="Left">
-					<Value>0</Value>
-				</Property>
-				<Property Name="Name">
-					<Value>Image_1</Value>
-				</Property>
-				<Property Name="TabIndex">
-					<Value>-1</Value>
-				</Property>
-				<Property Name="Transform">
-					<Value>(1.0000000000000000)(0.0000000000000000)(0.0000000000000000)(0.0000000000000000)(1.0000000000000000)(0.0000000000000000)</Value>
-				</Property>
-			</PropertySheet>
-			<Objects>
-				<Object JVS-ID="20525"/>
-			</Objects>
-		</Object>
-		<Object Class="CProxy" Name="Text" ObjectName="" Pinned="FALSE" JVS-ID="4194321">
-			<PropertySheet Name="Proxy">
-				<Property Name="Top">
-					<Value>32</Value>
-				</Property>
-				<Property Name="Left">
-					<Value>0</Value>
-				</Property>
-				<Property Name="Name">
-					<Value>Text</Value>
-				</Property>
-				<Property Name="TabIndex">
-					<Value>-1</Value>
-				</Property>
-				<Property Name="Transform">
-					<Value>(1.0000000000000000)(0.0000000000000000)(0.0000000000000000)(0.0000000000000000)(1.0000000000000000)(32.0000000000000000)</Value>
-				</Property>
-			</PropertySheet>
-			<Objects>
-				<Object JVS-ID="11000"/>
-			</Objects>
-		</Object>
 		<Object Class="CProxy" Name="Image_1" ObjectName="" Pinned="FALSE" JVS-ID="4194322">
 			<PropertySheet Name="Proxy">
 				<Property Name="Top">
@@ -3710,28 +3344,6 @@
 			</PropertySheet>
 			<Objects>
 				<Object JVS-ID="20503"/>
-			</Objects>
-		</Object>
-		<Object Class="CProxy" Name="Text" ObjectName="" Pinned="FALSE" JVS-ID="4194324">
-			<PropertySheet Name="Proxy">
-				<Property Name="Top">
-					<Value>32</Value>
-				</Property>
-				<Property Name="Left">
-					<Value>0</Value>
-				</Property>
-				<Property Name="Name">
-					<Value>Text</Value>
-				</Property>
-				<Property Name="TabIndex">
-					<Value>-1</Value>
-				</Property>
-				<Property Name="Transform">
-					<Value>(1.0000000000000000)(0.0000000000000000)(0.0000000000000000)(0.0000000000000000)(1.0000000000000000)(32.0000000000000000)</Value>
-				</Property>
-			</PropertySheet>
-			<Objects>
-				<Object JVS-ID="11001"/>
 			</Objects>
 		</Object>
 		<Object Class="CProxy" Name="Image_1" ObjectName="" Pinned="FALSE" JVS-ID="4194325">
@@ -4018,6 +3630,94 @@
 			</PropertySheet>
 			<Objects>
 				<Object JVS-ID="20513"/>
+			</Objects>
+		</Object>
+		<Object Class="CProxy" Name="Image_1" ObjectName="" Pinned="FALSE" JVS-ID="4194338">
+			<PropertySheet Name="Proxy">
+				<Property Name="Top">
+					<Value>0</Value>
+				</Property>
+				<Property Name="Left">
+					<Value>0</Value>
+				</Property>
+				<Property Name="Name">
+					<Value>Image_1</Value>
+				</Property>
+				<Property Name="TabIndex">
+					<Value>-1</Value>
+				</Property>
+				<Property Name="Transform">
+					<Value>(1.0000000000000000)(0.0000000000000000)(0.0000000000000000)(0.0000000000000000)(1.0000000000000000)(0.0000000000000000)</Value>
+				</Property>
+			</PropertySheet>
+			<Objects>
+				<Object JVS-ID="20516"/>
+			</Objects>
+		</Object>
+		<Object Class="CProxy" Name="Image_1" ObjectName="" Pinned="FALSE" JVS-ID="4194340">
+			<PropertySheet Name="Proxy">
+				<Property Name="Top">
+					<Value>0</Value>
+				</Property>
+				<Property Name="Left">
+					<Value>0</Value>
+				</Property>
+				<Property Name="Name">
+					<Value>Image_1</Value>
+				</Property>
+				<Property Name="TabIndex">
+					<Value>-1</Value>
+				</Property>
+				<Property Name="Transform">
+					<Value>(1.0000000000000000)(0.0000000000000000)(0.0000000000000000)(0.0000000000000000)(1.0000000000000000)(0.0000000000000000)</Value>
+				</Property>
+			</PropertySheet>
+			<Objects>
+				<Object JVS-ID="20517"/>
+			</Objects>
+		</Object>
+		<Object Class="CProxy" Name="Image_1" ObjectName="" Pinned="FALSE" JVS-ID="4194341">
+			<PropertySheet Name="Proxy">
+				<Property Name="Top">
+					<Value>4</Value>
+				</Property>
+				<Property Name="Left">
+					<Value>4</Value>
+				</Property>
+				<Property Name="Name">
+					<Value>Image_1</Value>
+				</Property>
+				<Property Name="TabIndex">
+					<Value>-1</Value>
+				</Property>
+				<Property Name="Transform">
+					<Value>(1.0000000000000000)(0.0000000000000000)(4.0000000000000000)(0.0000000000000000)(1.0000000000000000)(4.0000000000000000)</Value>
+				</Property>
+			</PropertySheet>
+			<Objects>
+				<Object JVS-ID="20002"/>
+			</Objects>
+		</Object>
+		<Object Class="CProxy" Name="Image_1" ObjectName="" Pinned="FALSE" JVS-ID="4194342">
+			<PropertySheet Name="Proxy">
+				<Property Name="Top">
+					<Value>4</Value>
+				</Property>
+				<Property Name="Left">
+					<Value>4</Value>
+				</Property>
+				<Property Name="Name">
+					<Value>Image_1</Value>
+				</Property>
+				<Property Name="TabIndex">
+					<Value>-1</Value>
+				</Property>
+				<Property Name="Transform">
+					<Value>(1.0000000000000000)(0.0000000000000000)(4.0000000000000000)(0.0000000000000000)(1.0000000000000000)(4.0000000000000000)</Value>
+				</Property>
+			</PropertySheet>
+			<Objects>
+				<Object JVS-ID="20003"/>
 			</Objects>
 		</Object>
 	</Objects>
