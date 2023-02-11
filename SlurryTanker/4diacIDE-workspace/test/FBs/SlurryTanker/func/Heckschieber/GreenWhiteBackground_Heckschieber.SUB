@@ -10,26 +10,26 @@
 				<Attribute Name="YPOSITION" Type="STRING" Value="20"/>
 			</SubAppEvent>
 			<SubAppEvent Name="EO" Type="Event" Comment="">
-				<Attribute Name="YPOSITION" Type="STRING" Value="272"/>
+				<Attribute Name="YPOSITION" Type="STRING" Value="0"/>
 			</SubAppEvent>
 		</SubAppEventInputs>
 		<InputVars>
 			<VarDeclaration Name="Q" Type="BOOL" Comment="">
-				<Attribute Name="YPOSITION" Type="STRING" Value="139"/>
+				<Attribute Name="YPOSITION" Type="STRING" Value="279"/>
 			</VarDeclaration>
 		</InputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="GreenWhiteBackground_SoftKey_Heckschieber" Type="GreenWhiteBackground" Comment="" x="0.0" y="-800.0">
+		<FB Name="GreenWhiteBackground_SoftKey_Heckschieber" Type="GreenWhiteBackground" Comment="" x="-986.6666666666667" y="-866.6666666666667">
 			<Parameter Name="u16ObjId" Value="5002"/>
 			<Parameter Name="u16ObjIdA" Value="31002"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="GreenWhiteBackground_SoftKey_Heckschieber.INIT" Comment="" dx1="633.3333333333334"/>
-			<Connection Source="EO" Destination="GreenWhiteBackground_SoftKey_Heckschieber.REQ" Comment="" dx1="573.3333333333334"/>
+			<Connection Source="INIT" Destination="GreenWhiteBackground_SoftKey_Heckschieber.INIT" Comment="" dx1="140.0"/>
+			<Connection Source="EO" Destination="GreenWhiteBackground_SoftKey_Heckschieber.REQ" Comment="" dx1="86.66666666666667"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="Q" Destination="GreenWhiteBackground_SoftKey_Heckschieber.DI1" Comment="" dx1="680.0"/>
+			<Connection Source="Q" Destination="GreenWhiteBackground_SoftKey_Heckschieber.DI1" Comment="" dx1="193.33333333333334"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

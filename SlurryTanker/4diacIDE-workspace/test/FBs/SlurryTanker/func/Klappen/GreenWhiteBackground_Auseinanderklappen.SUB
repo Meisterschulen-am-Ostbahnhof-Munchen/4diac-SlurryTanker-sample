@@ -21,15 +21,15 @@
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="GreenWhiteBackground_Auseinanderklappen" Type="GreenWhiteBackground" Comment="" x="-986.6666666666667" y="-866.6666666666667">
-			<Parameter Name="u16ObjId" Value="5010"/>
-			<Parameter Name="u16ObjIdA" Value="31010"/>
+			<Parameter Name="u16ObjId" Value="5003"/>
+			<Parameter Name="u16ObjIdA" Value="31003"/>
 		</FB>
 		<EventConnections>
 			<Connection Source="INIT" Destination="GreenWhiteBackground_Auseinanderklappen.INIT" Comment="" dx1="193.33333333333334"/>
 			<Connection Source="CNF" Destination="GreenWhiteBackground_Auseinanderklappen.REQ" Comment="" dx1="86.66666666666667"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="OUT" Destination="GreenWhiteBackground_Auseinanderklappen.DI1" Comment="" dx1="100.0"/>
+			<Connection Source="OUT" Destination="GreenWhiteBackground_Auseinanderklappen.DI1" Comment="" dx1="140.0"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

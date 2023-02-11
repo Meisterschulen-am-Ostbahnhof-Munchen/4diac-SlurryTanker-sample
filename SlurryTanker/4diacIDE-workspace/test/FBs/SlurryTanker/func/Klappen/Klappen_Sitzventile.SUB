@@ -7,41 +7,48 @@
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
 			<SubAppEvent Name="INITO" Type="Event" Comment="">
+				<Attribute Name="YPOSITION" Type="STRING" Value="20"/>
 			</SubAppEvent>
 			<SubAppEvent Name="CNF_Auseinanderklappen" Type="Event" Comment="">
+				<Attribute Name="YPOSITION" Type="STRING" Value="0"/>
 			</SubAppEvent>
 			<SubAppEvent Name="CNF_Zusammenklappen" Type="Event" Comment="">
+				<Attribute Name="YPOSITION" Type="STRING" Value="0"/>
 			</SubAppEvent>
 		</SubAppEventInputs>
 		<InputVars>
-			<VarDeclaration Name="IN_Auseinanderklappen" Type="BOOL" Comment=""/>
-			<VarDeclaration Name="IN_Zusammenklappen" Type="BOOL" Comment=""/>
+			<VarDeclaration Name="IN_Auseinanderklappen" Type="BOOL" Comment="">
+				<Attribute Name="YPOSITION" Type="STRING" Value="265"/>
+			</VarDeclaration>
+			<VarDeclaration Name="IN_Zusammenklappen" Type="BOOL" Comment="">
+				<Attribute Name="YPOSITION" Type="STRING" Value="0"/>
+			</VarDeclaration>
 		</InputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="OR_4A_4B" Type="OR_2" Comment="" x="673.3333333333334" y="566.6666666666667">
+		<FB Name="OR_4A_4B" Type="OR_2" Comment="" x="-713.3333333333334" y="526.6666666666667">
 			<Attribute Name="PinComment" Type="STRING" Value="IN1:Auseinanderklappen"/>
 			<Attribute Name="PinComment" Type="STRING" Value="IN2:Zusammenklappen"/>
 		</FB>
-		<FB Name="Klappen_3B" Type="QX" Comment="" x="2006.6666666666667" y="173.33333333333334">
+		<FB Name="Klappen_3B" Type="QX" Comment="" x="293.33333333333337" y="526.6666666666667">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="Klappen_3A" Type="QX" Comment="" x="2140.0" y="1240.0">
+		<FB Name="Klappen_3A" Type="QX" Comment="" x="293.33333333333337" y="1366.6666666666667">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="OR_4A_4B.CNF" Destination="Klappen_3B.REQ" Comment="" dx1="293.33333333333337"/>
-			<Connection Source="OR_4A_4B.CNF" Destination="Klappen_3A.REQ" Comment="" dx1="413.33333333333337"/>
-			<Connection Source="CNF_Auseinanderklappen" Destination="OR_4A_4B.REQ" Comment="" dx1="513.3333333333334"/>
-			<Connection Source="CNF_Zusammenklappen" Destination="OR_4A_4B.REQ" Comment="" dx1="2860.0" dx2="53.333333333333336" dy="-80.0"/>
-			<Connection Source="INITO" Destination="Klappen_3B.INIT" Comment="" dx1="2366.666666666667"/>
-			<Connection Source="INITO" Destination="Klappen_3A.INIT" Comment="" dx1="80.0" dx2="53.333333333333336" dy="1140.0"/>
+			<Connection Source="OR_4A_4B.CNF" Destination="Klappen_3B.REQ" Comment="" dx1="253.33333333333334"/>
+			<Connection Source="OR_4A_4B.CNF" Destination="Klappen_3A.REQ" Comment="" dx1="106.66666666666667"/>
+			<Connection Source="CNF_Auseinanderklappen" Destination="OR_4A_4B.REQ" Comment="" dx1="333.33333333333337"/>
+			<Connection Source="CNF_Zusammenklappen" Destination="OR_4A_4B.REQ" Comment="" dx1="226.66666666666669"/>
+			<Connection Source="INITO" Destination="Klappen_3B.INIT" Comment="" dx1="1353.3333333333335"/>
+			<Connection Source="INITO" Destination="Klappen_3A.INIT" Comment="" dx1="1246.6666666666667"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="OR_4A_4B.OUT" Destination="Klappen_3B.OUT" Comment="" dx1="520.0"/>
-			<Connection Source="OR_4A_4B.OUT" Destination="Klappen_3A.OUT" Comment="" dx1="306.6666666666667"/>
-			<Connection Source="IN_Auseinanderklappen" Destination="OR_4A_4B.IN1" Comment="" dx1="2966.666666666667" dx2="333.33333333333337" dy="-180.0"/>
-			<Connection Source="IN_Zusammenklappen" Destination="OR_4A_4B.IN2" Comment="" dx1="220.0" dx2="333.33333333333337" dy="633.3333333333334"/>
+			<Connection Source="OR_4A_4B.OUT" Destination="Klappen_3B.OUT" Comment="" dx1="193.33333333333334"/>
+			<Connection Source="OR_4A_4B.OUT" Destination="Klappen_3A.OUT" Comment="" dx1="60.0"/>
+			<Connection Source="IN_Auseinanderklappen" Destination="OR_4A_4B.IN1" Comment="" dx1="93.33333333333334"/>
+			<Connection Source="IN_Zusammenklappen" Destination="OR_4A_4B.IN2" Comment="" dx1="200.0"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

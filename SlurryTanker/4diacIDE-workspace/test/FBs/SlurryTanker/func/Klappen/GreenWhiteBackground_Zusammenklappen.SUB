@@ -7,25 +7,29 @@
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
 			<SubAppEvent Name="INIT" Type="Event" Comment="">
+				<Attribute Name="YPOSITION" Type="STRING" Value="20"/>
 			</SubAppEvent>
 			<SubAppEvent Name="CNF" Type="Event" Comment="">
+				<Attribute Name="YPOSITION" Type="STRING" Value="0"/>
 			</SubAppEvent>
 		</SubAppEventInputs>
 		<InputVars>
-			<VarDeclaration Name="OUT" Type="BOOL" Comment=""/>
+			<VarDeclaration Name="OUT" Type="BOOL" Comment="">
+				<Attribute Name="YPOSITION" Type="STRING" Value="279"/>
+			</VarDeclaration>
 		</InputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="GreenWhiteBackground_Zusammenklappen" Type="GreenWhiteBackground" Comment="" x="0.0" y="0.0">
-			<Parameter Name="u16ObjId" Value="5004"/>
-			<Parameter Name="u16ObjIdA" Value="31004"/>
+		<FB Name="GreenWhiteBackground_Zusammenklappen" Type="GreenWhiteBackground" Comment="" x="-986.6666666666667" y="-866.6666666666667">
+			<Parameter Name="u16ObjId" Value="5009"/>
+			<Parameter Name="u16ObjIdA" Value="31009"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="GreenWhiteBackground_Zusammenklappen.INIT" Comment=""/>
-			<Connection Source="CNF" Destination="GreenWhiteBackground_Zusammenklappen.REQ" Comment=""/>
+			<Connection Source="INIT" Destination="GreenWhiteBackground_Zusammenklappen.INIT" Comment="" dx1="193.33333333333334"/>
+			<Connection Source="CNF" Destination="GreenWhiteBackground_Zusammenklappen.REQ" Comment="" dx1="86.66666666666667"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="OUT" Destination="GreenWhiteBackground_Zusammenklappen.DI1" Comment=""/>
+			<Connection Source="OUT" Destination="GreenWhiteBackground_Zusammenklappen.DI1" Comment="" dx1="126.66666666666667"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
