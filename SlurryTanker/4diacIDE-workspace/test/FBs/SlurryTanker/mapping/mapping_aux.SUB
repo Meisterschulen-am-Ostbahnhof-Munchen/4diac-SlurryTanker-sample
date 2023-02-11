@@ -29,9 +29,18 @@
 			<Parameter Name="u16ObjId_5" Value="31015"/>
 			<Parameter Name="DigitalInput_5" Value="&quot;AuxInput_Abscheider&quot;"/>
 		</FB>
+		<FB Name="UT_AuxiliaryInputMapping_2" Type="UT_AuxiliaryInputMapping" Comment="" x="-2100.0" y="4400.0">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u8SAMember" Value="255"/>
+			<Parameter Name="u16ObjId_1" Value="31024"/>
+			<Parameter Name="DigitalInput_1" Value="&quot;PAGE_1_AUX&quot;"/>
+			<Parameter Name="u16ObjId_2" Value="31025"/>
+			<Parameter Name="DigitalInput_2" Value="&quot;PAGE_2_AUX&quot;"/>
+		</FB>
 		<EventConnections>
 			<Connection Source="INIT" Destination="UT_AuxiliaryInputMapping.INIT" Comment="" dx1="1006.6666666666667"/>
 			<Connection Source="INIT" Destination="UT_AuxiliaryInputMapping_1.INIT" Comment="" dx1="1166.6666666666667"/>
+			<Connection Source="INIT" Destination="UT_AuxiliaryInputMapping_2.INIT" Comment="" dx1="953.3333333333334"/>
 		</EventConnections>
 	</SubAppNetwork>
 </SubAppType>
