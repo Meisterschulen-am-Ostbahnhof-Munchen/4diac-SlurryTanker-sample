@@ -21,8 +21,8 @@
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="GreenWhiteBackground_Seitenschieber" Type="GreenWhiteBackground" Comment="" x="-2533.3333333333335" y="-3466.666666666667">
-			<Parameter Name="u16ObjId" Value="5001"/>
-			<Parameter Name="u16ObjIdA" Value="31001"/>
+			<Parameter Name="u16ObjId" Value="5008"/>
+			<Parameter Name="u16ObjIdA" Value="31008"/>
 		</FB>
 		<EventConnections>
 			<Connection Source="EO" Destination="GreenWhiteBackground_Seitenschieber.REQ" Comment="" dx1="573.3333333333334"/>
