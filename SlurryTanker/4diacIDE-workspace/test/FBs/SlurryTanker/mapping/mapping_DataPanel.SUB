@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="mapping_DataPanel" Comment="Subapplication Type">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="Franz" Date="2023-01-29">
+	</VersionInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="Event" Comment="">
+			</SubAppEvent>
+		</SubAppEventInputs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DataPanel_xDB_16_DO_SAE_J1939" Type="DataPanel_xDB_16_DO_SAE_J1939" Comment="" x="1246.6666666666667" y="13.333333333333334">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u8SAMember" Value="224"/>
+			<Parameter Name="u16ObjId" Value="65535"/>
+			<Parameter Name="DigitalOutput_1A" Value="&quot;Schneidwerk_rechtslauf_1A&quot;"/>
+			<Parameter Name="DigitalOutput_1B" Value="&quot;Schneidwerk_linkslauf_1B&quot;"/>
+			<Parameter Name="DigitalOutput_2A" Value="&quot;Vorsteuerventil_2A&quot;"/>
+			<Parameter Name="DigitalOutput_2B" Value="&quot;Vorsteuerventil_2B&quot;"/>
+			<Parameter Name="DigitalOutput_3A" Value="&quot;Klappen_3A&quot;"/>
+			<Parameter Name="DigitalOutput_3B" Value="&quot;Klappen_3B&quot;"/>
+			<Parameter Name="DigitalOutput_4A" Value="&quot;Verteiler_4A&quot;"/>
+			<Parameter Name="DigitalOutput_4B" Value="&quot;Verteiler_4B&quot;"/>
+			<Parameter Name="DigitalOutput_5A" Value="&quot;Knickdeichsel_5A&quot;"/>
+			<Parameter Name="DigitalOutput_5B" Value="&quot;Knickdeichsel_5B&quot;"/>
+			<Parameter Name="DigitalOutput_6A" Value="&quot;Dom_6A&quot;"/>
+			<Parameter Name="DigitalOutput_6B" Value="&quot;Heckschieber_6B&quot;"/>
+			<Parameter Name="DigitalOutput_7A" Value="&quot;Seitenschieber_7A&quot;"/>
+			<Parameter Name="DigitalOutput_7B" Value="&quot;Abscheider_7B&quot;"/>
+			<Parameter Name="DigitalOutput_8A" Value="&quot;Licht_8A&quot;"/>
+			<Parameter Name="DigitalOutput_8B" Value="&quot;frei_8B&quot;"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="DataPanel_xDB_16_DO_SAE_J1939.INIT" Comment="" dx1="640.0"/>
+		</EventConnections>
+	</SubAppNetwork>
+</SubAppType>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="SoftKey_Verteiler_senken" Comment="Subapplication Type">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2023-02-11">
+	</VersionInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="Event" Comment="">
+				<Attribute Name="YPOSITION" Type="STRING" Value="30"/>
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="IND" Type="Event" Comment="">
+				<Attribute Name="YPOSITION" Type="STRING" Value="20"/>
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<OutputVars>
+			<VarDeclaration Name="IN" Type="BOOL" Comment="">
+				<Attribute Name="YPOSITION" Type="STRING" Value="134"/>
+			</VarDeclaration>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="SoftKey_Verteiler_senken" Type="IX" Comment="" x="-846.6666666666667" y="-900.0">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="SoftKey_Verteiler_senken.INIT" Comment="" dx1="213.33333333333334"/>
+			<Connection Source="SoftKey_Verteiler_senken.IND" Destination="IND" Comment="" dx1="1866.6666666666667"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="SoftKey_Verteiler_senken.IN" Destination="IN" Comment="" dx1="1866.6666666666667"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

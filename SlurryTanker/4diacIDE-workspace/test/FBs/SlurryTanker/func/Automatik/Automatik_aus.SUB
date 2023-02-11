@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Automatik_aus" Comment="Subapplication Type">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2023-02-07">
+	</VersionInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="Event" Comment="">
+				<Attribute Name="YPOSITION" Type="STRING" Value="210"/>
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="Automatik_aus_UP" Type="Event" Comment="">
+				<Attribute Name="YPOSITION" Type="STRING" Value="255"/>
+			</SubAppEvent>
+			<SubAppEvent Name="Automatik_aus_DOWN" Type="Event" Comment="">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="SoftKey_Automatik_aus" Type="IX" Comment="" x="-200.0" y="0.0">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="AuxInput_Automatik_aus" Type="IX" Comment="" x="-200.0" y="1000.0">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="Automatik_aus_OR_2" Type="OR_2" Comment="" x="1800.0" y="300.0">
+		</FB>
+		<FB Name="E_SWITCH" Type="E_SWITCH" Comment="" x="3066.666666666667" y="266.6666666666667">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="SoftKey_Automatik_aus.INIT" Comment="" dx1="80.0" dx2="80.0" dy="0.0"/>
+			<Connection Source="INIT" Destination="AuxInput_Automatik_aus.INIT" Comment="" dx1="600.0"/>
+			<Connection Source="SoftKey_Automatik_aus.IND" Destination="Automatik_aus_OR_2.REQ" Comment="" dx1="500.0"/>
+			<Connection Source="AuxInput_Automatik_aus.IND" Destination="Automatik_aus_OR_2.REQ" Comment="" dx1="500.0"/>
+			<Connection Source="Automatik_aus_OR_2.CNF" Destination="E_SWITCH.EI" Comment="" dx1="220.0"/>
+			<Connection Source="E_SWITCH.EO0" Destination="Automatik_aus_UP" Comment="" dx1="126.66666666666667"/>
+			<Connection Source="E_SWITCH.EO1" Destination="Automatik_aus_DOWN" Comment="" dx1="133.33333333333334"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="SoftKey_Automatik_aus.IN" Destination="Automatik_aus_OR_2.IN1" Comment=""/>
+			<Connection Source="AuxInput_Automatik_aus.IN" Destination="Automatik_aus_OR_2.IN2" Comment="" dx1="600.0"/>
+			<Connection Source="Automatik_aus_OR_2.OUT" Destination="E_SWITCH.G" Comment="" dx1="220.0"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>
