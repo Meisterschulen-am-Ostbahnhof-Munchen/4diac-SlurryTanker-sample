@@ -12,24 +12,27 @@
 		<SubAppEventOutputs>
 			<SubAppEvent Name="CNF_2a" Type="Event" Comment="">
 				<With Var="OUT_2a"/>
+				<Attribute Name="YPOSITION" Type="STRING" Value="345"/>
 			</SubAppEvent>
 		</SubAppEventOutputs>
 		<OutputVars>
-			<VarDeclaration Name="OUT_2a" Type="BOOL" Comment=""/>
+			<VarDeclaration Name="OUT_2a" Type="BOOL" Comment="">
+				<Attribute Name="YPOSITION" Type="STRING" Value="18"/>
+			</VarDeclaration>
 		</OutputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="AND_2_Abscheider" Type="AND_2" Comment="" x="4800.0" y="1066.6666666666667">
+		<FB Name="AND_2_Abscheider" Type="AND_2" Comment="" x="4800.0" y="900.0">
 		</FB>
 		<FB Name="E_T_FF_Abscheider" Type="E_T_FF" Comment="" x="1100.0" y="-700.0">
 		</FB>
-		<FB Name="Abscheider_7B" Type="QX" Comment="" x="4800.0" y="0.0">
+		<FB Name="Abscheider_7B" Type="QX" Comment="" x="4800.0" y="-100.0">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="E_IMPULSE_Abscheider" Type="E_IMPULSE" Comment="" x="2666.666666666667" y="0.0">
 			<Parameter Name="TM" Value="T#3s"/>
 		</FB>
-		<SubApp Name="GreenWhiteBackground_Abscheider" Type="GreenWhiteBackground_Abscheider" Comment="" x="2666.666666666667" y="-1066.6666666666667">
+		<SubApp Name="GreenWhiteBackground_Abscheider" Type="GreenWhiteBackground_Abscheider" Comment="" x="2700.0" y="-800.0">
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
@@ -50,22 +53,22 @@
 		<EventConnections>
 			<Connection Source="E_IMPULSE_Abscheider.CNF" Destination="AND_2_Abscheider.REQ" Comment="" dx1="473.33333333333337"/>
 			<Connection Source="E_T_FF_Abscheider.EO" Destination="E_IMPULSE_Abscheider.REQ" Comment="" dx1="520.0"/>
-			<Connection Source="E_IMPULSE_Abscheider.CNF" Destination="Abscheider_7B.REQ" Comment="" dx1="600.0"/>
+			<Connection Source="E_IMPULSE_Abscheider.CNF" Destination="Abscheider_7B.REQ" Comment=""/>
 			<Connection Source="AND_2_Abscheider.CNF" Destination="CNF_2a" Comment="" dx1="506.6666666666667"/>
-			<Connection Source="INIT" Destination="Abscheider_7B.INIT" Comment="" dx1="5933.333333333334"/>
-			<Connection Source="INIT" Destination="GreenWhiteBackground_Abscheider.INIT" Comment="" dx1="3620.0"/>
-			<Connection Source="E_T_FF_Abscheider.EO" Destination="GreenWhiteBackground_Abscheider.EO" Comment="" dx1="206.66666666666669"/>
-			<Connection Source="INIT" Destination="AuxInput_Abscheider_UP.INIT" Comment="" dx1="126.66666666666667"/>
-			<Connection Source="AuxInput_Abscheider_UP.IND" Destination="E_T_FF_Abscheider.CLK" Comment="" dx1="466.6666666666667"/>
-			<Connection Source="INIT" Destination="SoftKey_Abscheider_UP.INIT" Comment="" dx1="126.66666666666667"/>
-			<Connection Source="SoftKey_Abscheider_UP.IND" Destination="E_T_FF_Abscheider.CLK" Comment="" dx1="506.6666666666667"/>
+			<Connection Source="INIT" Destination="Abscheider_7B.INIT" Comment="" dx1="6086.666666666667"/>
+			<Connection Source="INIT" Destination="GreenWhiteBackground_Abscheider.INIT" Comment="" dx1="3960.0"/>
+			<Connection Source="E_T_FF_Abscheider.EO" Destination="GreenWhiteBackground_Abscheider.EO" Comment=""/>
+			<Connection Source="INIT" Destination="AuxInput_Abscheider_UP.INIT" Comment="" dx1="193.33333333333334"/>
+			<Connection Source="AuxInput_Abscheider_UP.IND" Destination="E_T_FF_Abscheider.CLK" Comment="" dx1="453.33333333333337"/>
+			<Connection Source="INIT" Destination="SoftKey_Abscheider_UP.INIT" Comment="" dx1="193.33333333333334"/>
+			<Connection Source="SoftKey_Abscheider_UP.IND" Destination="E_T_FF_Abscheider.CLK" Comment="" dx1="500.0"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="E_IMPULSE_Abscheider.QO" Destination="AND_2_Abscheider.IN1" Comment="" dx1="366.6666666666667"/>
-			<Connection Source="E_T_FF_Abscheider.Q" Destination="AND_2_Abscheider.IN2" Comment="" dx1="320.0"/>
+			<Connection Source="E_T_FF_Abscheider.Q" Destination="AND_2_Abscheider.IN2" Comment="Schieber offen" dx1="320.0"/>
 			<Connection Source="E_IMPULSE_Abscheider.QO" Destination="Abscheider_7B.OUT" Comment="" dx1="580.0"/>
 			<Connection Source="AND_2_Abscheider.OUT" Destination="OUT_2a" Comment="" dx1="613.3333333333334"/>
-			<Connection Source="E_T_FF_Abscheider.Q" Destination="GreenWhiteBackground_Abscheider.Q" Comment="" dx1="313.33333333333337"/>
+			<Connection Source="E_T_FF_Abscheider.Q" Destination="GreenWhiteBackground_Abscheider.Q" Comment="Schieber offen"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
