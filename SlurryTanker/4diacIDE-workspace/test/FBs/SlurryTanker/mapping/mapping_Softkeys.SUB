@@ -48,8 +48,8 @@
 			<Parameter Name="DigitalInput_8" Value="&quot;SoftKey_Licht_UP&quot;"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="UT_SoftkeyMapping.INIT" Comment="" dx1="1166.6666666666667"/>
-			<Connection Source="INIT" Destination="UT_SoftkeyMapping_UP.INIT" Comment="" dx1="520.0"/>
+			<Connection Source="INIT" Destination="UT_SoftkeyMapping.INIT" Comment="" dx1="80.0"/>
+			<Connection Source="INIT" Destination="UT_SoftkeyMapping_UP.INIT" Comment="" dx1="80.0"/>
 		</EventConnections>
 	</SubAppNetwork>
 </SubAppType>
