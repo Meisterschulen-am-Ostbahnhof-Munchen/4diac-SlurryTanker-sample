@@ -86,25 +86,14 @@
 			<SubAppNetwork>
 				<FB Name="GreenWhiteBackground_SoftKey_Heckschieber" Type="GreenWhiteBackground" Comment="" x="0.0" y="-800.0">
 					<Parameter Name="u16ObjId" Value="5002"/>
-				</FB>
-				<FB Name="GreenWhiteBackground_AUX_Heckschieber" Type="GreenWhiteBackground" Comment="" x="133.33333333333334" y="133.33333333333334">
-					<Parameter Name="u16ObjId" Value="31002"/>
-				</FB>
-				<FB Name="GreenWhiteBackground_AUX_Heckschieber_Joystick" Type="GreenWhiteBackgroundAux" Comment="" x="-53.333333333333336" y="1040.0">
-					<Parameter Name="u16ObjId" Value="31002"/>
+					<Parameter Name="u16ObjIdA" Value="31002"/>
 				</FB>
 				<EventConnections>
 					<Connection Source="INIT" Destination="GreenWhiteBackground_SoftKey_Heckschieber.INIT" Comment="" dx1="633.3333333333334"/>
 					<Connection Source="EO" Destination="GreenWhiteBackground_SoftKey_Heckschieber.REQ" Comment="" dx1="573.3333333333334"/>
-					<Connection Source="INIT" Destination="GreenWhiteBackground_AUX_Heckschieber.INIT" Comment="" dx1="466.6666666666667"/>
-					<Connection Source="EO" Destination="GreenWhiteBackground_AUX_Heckschieber.REQ" Comment="" dx1="786.6666666666667"/>
-					<Connection Source="INIT" Destination="GreenWhiteBackground_AUX_Heckschieber_Joystick.INIT" Comment="" dx1="360.0"/>
-					<Connection Source="EO" Destination="GreenWhiteBackground_AUX_Heckschieber_Joystick.REQ" Comment="" dx1="253.33333333333334"/>
 				</EventConnections>
 				<DataConnections>
 					<Connection Source="Q" Destination="GreenWhiteBackground_SoftKey_Heckschieber.DI1" Comment="" dx1="680.0"/>
-					<Connection Source="Q" Destination="GreenWhiteBackground_AUX_Heckschieber.DI1" Comment="" dx1="893.3333333333334"/>
-					<Connection Source="Q" Destination="GreenWhiteBackground_AUX_Heckschieber_Joystick.DI1" Comment="" dx1="1000.0"/>
 				</DataConnections>
 			</SubAppNetwork>
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>

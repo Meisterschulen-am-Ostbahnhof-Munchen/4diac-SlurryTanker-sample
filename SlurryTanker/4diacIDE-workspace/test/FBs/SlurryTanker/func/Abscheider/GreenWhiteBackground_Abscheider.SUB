@@ -22,25 +22,14 @@
 	<SubAppNetwork>
 		<FB Name="GreenWhiteBackground_SoftKey_Abscheider" Type="GreenWhiteBackground" Comment="" x="-2533.3333333333335" y="-3466.666666666667">
 			<Parameter Name="u16ObjId" Value="5015"/>
-		</FB>
-		<FB Name="GreenWhiteBackground_AUX_Abscheider" Type="GreenWhiteBackground" Comment="" x="-2400.0" y="-2526.666666666667">
-			<Parameter Name="u16ObjId" Value="31015"/>
-		</FB>
-		<FB Name="GreenWhiteBackground_AUX_Abscheider_Joystick" Type="GreenWhiteBackgroundAux" Comment="" x="-2533.3333333333335" y="-1600.0">
-			<Parameter Name="u16ObjId" Value="31015"/>
+			<Parameter Name="u16ObjIdA" Value="31015"/>
 		</FB>
 		<EventConnections>
 			<Connection Source="EO" Destination="GreenWhiteBackground_SoftKey_Abscheider.REQ" Comment="" dx1="573.3333333333334"/>
 			<Connection Source="INIT" Destination="GreenWhiteBackground_SoftKey_Abscheider.INIT" Comment="" dx1="766.6666666666667"/>
-			<Connection Source="EO" Destination="GreenWhiteBackground_AUX_Abscheider.REQ" Comment="" dx1="786.6666666666667"/>
-			<Connection Source="INIT" Destination="GreenWhiteBackground_AUX_Abscheider.INIT" Comment="" dx1="466.6666666666667"/>
-			<Connection Source="INIT" Destination="GreenWhiteBackground_AUX_Abscheider_Joystick.INIT" Comment="" dx1="360.0"/>
-			<Connection Source="EO" Destination="GreenWhiteBackground_AUX_Abscheider_Joystick.REQ" Comment="" dx1="253.33333333333334"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="Q" Destination="GreenWhiteBackground_SoftKey_Abscheider.DI1" Comment="" dx1="680.0"/>
-			<Connection Source="Q" Destination="GreenWhiteBackground_AUX_Abscheider.DI1" Comment="" dx1="893.3333333333334"/>
-			<Connection Source="Q" Destination="GreenWhiteBackground_AUX_Abscheider_Joystick.DI1" Comment="" dx1="1000.0"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
