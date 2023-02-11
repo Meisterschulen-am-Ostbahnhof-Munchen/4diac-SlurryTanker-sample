@@ -7,103 +7,108 @@
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
 			<SubAppEvent Name="INIT" Type="Event" Comment="">
-				<Attribute Name="YPOSITION" Type="STRING" Value="46"/>
+			</SubAppEvent>
+			<SubAppEvent Name="EI_Klappen_heben" Type="Event" Comment="">
+			</SubAppEvent>
+			<SubAppEvent Name="EI_Klappen_senken" Type="Event" Comment="">
 			</SubAppEvent>
 		</SubAppEventInputs>
 		<SubAppEventOutputs>
 			<SubAppEvent Name="CNF_2b" Type="Event" Comment="">
-				<Attribute Name="YPOSITION" Type="STRING" Value="138"/>
 			</SubAppEvent>
 			<SubAppEvent Name="CNF_2a" Type="Event" Comment="">
-				<Attribute Name="YPOSITION" Type="STRING" Value="300"/>
 			</SubAppEvent>
 		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="IN_Klappen_heben" Type="BOOL" Comment=""/>
+			<VarDeclaration Name="IN_Klappen_senken" Type="BOOL" Comment=""/>
+		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="OUT_2b" Type="BOOL" Comment="">
-				<Attribute Name="YPOSITION" Type="STRING" Value="0"/>
-			</VarDeclaration>
-			<VarDeclaration Name="OUT_2a" Type="BOOL" Comment="">
-				<Attribute Name="YPOSITION" Type="STRING" Value="0"/>
-			</VarDeclaration>
+			<VarDeclaration Name="OUT_2b" Type="BOOL" Comment=""/>
+			<VarDeclaration Name="OUT_2a" Type="BOOL" Comment=""/>
 		</OutputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="SoftKey_Auseinanderklappen" Type="IX" Comment="" x="353.33333333333337" y="40.0">
-			<Parameter Name="QI" Value="TRUE"/>
-		</FB>
-		<FB Name="GreenWhiteBackground_Auseinanderklappen" Type="GreenWhiteBackground" Comment="" x="3220.0" y="2800.0">
-			<Parameter Name="u16ObjId" Value="5003"/>
-		</FB>
-		<FB Name="SoftKey_Zusammenklappen" Type="IX" Comment="" x="553.3333333333334" y="1053.3333333333335">
-			<Parameter Name="QI" Value="TRUE"/>
-		</FB>
-		<SubApp Name="Sitzventile" Comment="Sitzventile" x="5220.0" y="1853.3333333333335">
-			<SubAppInterfaceList>
-				<SubAppEventInputs>
-					<SubAppEvent Name="INIT" Type="Event" Comment="">
-					</SubAppEvent>
-					<SubAppEvent Name="IND_Auseinanderklappen" Type="Event" Comment="">
-					</SubAppEvent>
-					<SubAppEvent Name="IND_Zusammenklappen" Type="Event" Comment="">
-					</SubAppEvent>
-				</SubAppEventInputs>
-				<InputVars>
-					<VarDeclaration Name="IN_Auseinanderklappen" Type="BOOL" Comment=""/>
-					<VarDeclaration Name="IN_Zusammenklappen" Type="BOOL" Comment=""/>
-				</InputVars>
-			</SubAppInterfaceList>
-			<SubAppNetwork>
-				<FB Name="Klappen_3B" Type="QX" Comment="" x="1680.0" y="973.3333333333334">
-					<Parameter Name="QI" Value="TRUE"/>
-				</FB>
-				<FB Name="Klappen_3A" Type="QX" Comment="" x="1600.0" y="0.0">
-					<Parameter Name="QI" Value="TRUE"/>
-				</FB>
-				<FB Name="OR_3A_3B" Type="OR_2" Comment="" x="613.3333333333334" y="440.0">
-					<Attribute Name="PinComment" Type="STRING" Value="IN1:Auseinanderklappen"/>
-					<Attribute Name="PinComment" Type="STRING" Value="IN2:Zusammenklappen"/>
-				</FB>
-				<EventConnections>
-					<Connection Source="OR_3A_3B.CNF" Destination="Klappen_3B.REQ" Comment="" dx1="113.33333333333334"/>
-					<Connection Source="OR_3A_3B.CNF" Destination="Klappen_3A.REQ" Comment="" dx1="453.33333333333337"/>
-					<Connection Source="INIT" Destination="Klappen_3B.INIT" Comment="" dx1="1826.6666666666667"/>
-					<Connection Source="INIT" Destination="Klappen_3A.INIT" Comment="" dx1="1826.6666666666667"/>
-					<Connection Source="IND_Auseinanderklappen" Destination="OR_3A_3B.REQ" Comment="" dx1="506.6666666666667"/>
-					<Connection Source="IND_Zusammenklappen" Destination="OR_3A_3B.REQ" Comment="" dx1="466.6666666666667"/>
-				</EventConnections>
-				<DataConnections>
-					<Connection Source="OR_3A_3B.OUT" Destination="Klappen_3B.OUT" Comment="" dx1="480.0"/>
-					<Connection Source="OR_3A_3B.OUT" Destination="Klappen_3A.OUT" Comment="" dx1="453.33333333333337"/>
-					<Connection Source="IN_Auseinanderklappen" Destination="OR_3A_3B.IN1" Comment="" dx1="260.0"/>
-					<Connection Source="IN_Zusammenklappen" Destination="OR_3A_3B.IN2" Comment="" dx1="66.66666666666667"/>
-				</DataConnections>
-			</SubAppNetwork>
-			<Attribute Name="Unfolded" Type="STRING" Value="true"/>
-			<Attribute Name="width" Type="LREAL" Value="3893.3333333333335"/>
-			<Attribute Name="height" Type="LREAL" Value="2400.0"/>
+		<SubApp Name="GreenWhiteBackground_Klappen_heben" Type="GreenWhiteBackground_Klappen_heben" Comment="" x="3800.0" y="3300.0">
+			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
+			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 		</SubApp>
-		<FB Name="GreenWhiteBackground_Zusammenklappen" Type="GreenWhiteBackground" Comment="" x="3400.0" y="4800.0">
-			<Parameter Name="u16ObjId" Value="5009"/>
+		<SubApp Name="GreenWhiteBackground_Klappen_senken" Type="GreenWhiteBackground_Klappen_senken" Comment="" x="3800.0" y="4000.0">
+			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
+			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
+		</SubApp>
+		<SubApp Name="Klappen_Sitzventile" Type="Klappen_Sitzventile" Comment="" x="5926.666666666667" y="2520.0">
+			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
+			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
+		</SubApp>
+		<FB Name="OR_2_Klappen_heben" Type="OR_3" Comment="" x="2300.0" y="700.0">
 		</FB>
+		<FB Name="OR_2_Klappen_senken" Type="OR_3" Comment="" x="2200.0" y="2100.0">
+		</FB>
+		<SubApp Name="SoftKey_Klappen_heben" Type="SoftKey_Klappen_heben" Comment="" x="-200.0" y="500.0">
+			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
+			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
+		</SubApp>
+		<SubApp Name="SoftKey_Klappen_senken" Type="SoftKey_Klappen_senken" Comment="" x="-200.0" y="1500.0">
+			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
+			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
+		</SubApp>
+		<SubApp Name="AuxInput_Klappen_heben" Type="SoftKey_Klappen_heben" Comment="" x="-200.0" y="1000.0">
+			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
+			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
+		</SubApp>
+		<SubApp Name="AuxInput_Klappen_senken" Type="AuxInput_Klappen_senken" Comment="" x="-200.0" y="2000.0">
+			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
+			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
+		</SubApp>
 		<EventConnections>
-			<Connection Source="SoftKey_Auseinanderklappen.IND" Destination="GreenWhiteBackground_Auseinanderklappen.REQ" Comment="" dx1="1793.3333333333335"/>
-			<Connection Source="INIT" Destination="SoftKey_Auseinanderklappen.INIT" Comment="" dx1="66.66666666666667"/>
-			<Connection Source="SoftKey_Auseinanderklappen.IND" Destination="CNF_2b" Comment="" dx1="260.0"/>
-			<Connection Source="INIT" Destination="SoftKey_Zusammenklappen.INIT" Comment="" dx1="66.66666666666667"/>
-			<Connection Source="SoftKey_Zusammenklappen.IND" Destination="CNF_2a" Comment="" dx1="246.66666666666669"/>
-			<Connection Source="INIT" Destination="GreenWhiteBackground_Auseinanderklappen.INIT" Comment="" dx1="66.66666666666667"/>
-			<Connection Source="INIT" Destination="Sitzventile.INIT" Comment="" dx1="66.66666666666667"/>
-			<Connection Source="SoftKey_Auseinanderklappen.IND" Destination="Sitzventile.IND_Auseinanderklappen" Comment="" dx1="3426.666666666667"/>
-			<Connection Source="SoftKey_Zusammenklappen.IND" Destination="Sitzventile.IND_Zusammenklappen" Comment="" dx1="3106.666666666667"/>
-			<Connection Source="SoftKey_Zusammenklappen.IND" Destination="GreenWhiteBackground_Zusammenklappen.REQ" Comment="" dx1="1446.6666666666667"/>
+			<Connection Source="INIT" Destination="GreenWhiteBackground_Klappen_heben.INIT" Comment="" dx1="5046.666666666667"/>
+			<Connection Source="INIT" Destination="GreenWhiteBackground_Klappen_senken.INIT" Comment="" dx1="5046.666666666667"/>
+			<Connection Source="INIT" Destination="Klappen_Sitzventile.INITO" Comment="" dx1="6906.666666666667" dx2="5886.666666666667" dy="0.0"/>
+			<Connection Source="EI_Klappen_heben" Destination="OR_2_Klappen_heben.REQ" Comment="" dx1="3566.666666666667"/>
+			<Connection Source="OR_2_Klappen_heben.CNF" Destination="CNF_2a" Comment="" dx1="5586.666666666667"/>
+			<Connection Source="OR_2_Klappen_heben.CNF" Destination="GreenWhiteBackground_Klappen_heben.CNF" Comment="" dx1="606.6666666666667"/>
+			<Connection Source="OR_2_Klappen_heben.CNF" Destination="Klappen_Sitzventile.CNF_Klappen_heben" Comment="" dx1="2506.666666666667"/>
+			<Connection Source="EI_Klappen_senken" Destination="OR_2_Klappen_senken.REQ" Comment="" dx1="3406.666666666667"/>
+			<Connection Source="OR_2_Klappen_senken.CNF" Destination="CNF_2b" Comment="" dx1="5333.333333333334"/>
+			<Connection Source="OR_2_Klappen_senken.CNF" Destination="GreenWhiteBackground_Klappen_senken.CNF" Comment="" dx1="453.33333333333337"/>
+			<Connection Source="OR_2_Klappen_senken.CNF" Destination="Klappen_Sitzventile.CNF_Klappen_senken" Comment="" dx1="1500.0"/>
+			<Connection Source="INIT" Destination="SoftKey_Klappen_heben.INIT" Comment="" dx1="713.3333333333334"/>
+			<Connection Source="SoftKey_Klappen_heben.IND" Destination="OR_2_Klappen_heben.REQ" Comment="" dx1="413.33333333333337"/>
+			<Connection Source="INIT" Destination="SoftKey_Klappen_senken.INIT" Comment="" dx1="713.3333333333334"/>
+			<Connection Source="SoftKey_Klappen_senken.IND" Destination="OR_2_Klappen_senken.REQ" Comment="" dx1="760.0"/>
+			<Connection Source="INIT" Destination="AuxInput_Klappen_heben.INIT" Comment="" dx1="713.3333333333334"/>
+			<Connection Source="AuxInput_Klappen_heben.IND" Destination="OR_2_Klappen_heben.REQ" Comment="" dx1="413.33333333333337"/>
+			<Connection Source="INIT" Destination="AuxInput_Klappen_senken.INIT" Comment="" dx1="713.3333333333334" dx2="713.3333333333334" dy="0.0"/>
+			<Connection Source="AuxInput_Klappen_senken.IND" Destination="OR_2_Klappen_senken.REQ" Comment="" dx1="600.0"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="SoftKey_Auseinanderklappen.IN" Destination="GreenWhiteBackground_Auseinanderklappen.DI1" Comment="" dx1="1673.3333333333335"/>
-			<Connection Source="SoftKey_Auseinanderklappen.IN" Destination="OUT_2b" Comment="" dx1="480.0"/>
-			<Connection Source="SoftKey_Zusammenklappen.IN" Destination="OUT_2a" Comment="" dx1="573.3333333333334"/>
-			<Connection Source="SoftKey_Auseinanderklappen.IN" Destination="Sitzventile.IN_Auseinanderklappen" Comment="" dx1="3140.0"/>
-			<Connection Source="SoftKey_Zusammenklappen.IN" Destination="Sitzventile.IN_Zusammenklappen" Comment="" dx1="2926.666666666667"/>
-			<Connection Source="SoftKey_Zusammenklappen.IN" Destination="GreenWhiteBackground_Zusammenklappen.DI1" Comment="" dx1="1320.0"/>
+			<Connection Source="IN_Klappen_heben" Destination="OR_2_Klappen_heben.IN2" Comment="" dx1="3246.666666666667"/>
+			<Connection Source="OR_2_Klappen_heben.OUT" Destination="OUT_2a" Comment="" dx1="6093.333333333334"/>
+			<Connection Source="OR_2_Klappen_heben.OUT" Destination="GreenWhiteBackground_Klappen_heben.OUT" Comment="" dx1="493.33333333333337"/>
+			<Connection Source="OR_2_Klappen_heben.OUT" Destination="Klappen_Sitzventile.IN_Klappen_heben" Comment="" dx1="2300.0"/>
+			<Connection Source="IN_Klappen_senken" Destination="OR_2_Klappen_senken.IN2" Comment="" dx1="173.33333333333334"/>
+			<Connection Source="OR_2_Klappen_senken.OUT" Destination="OUT_2b" Comment="" dx1="5893.333333333334"/>
+			<Connection Source="OR_2_Klappen_senken.OUT" Destination="GreenWhiteBackground_Klappen_senken.OUT" Comment="" dx1="360.0"/>
+			<Connection Source="OR_2_Klappen_senken.OUT" Destination="Klappen_Sitzventile.IN_Klappen_senken" Comment="" dx1="1500.0"/>
+			<Connection Source="SoftKey_Klappen_heben.IN" Destination="OR_2_Klappen_heben.IN1" Comment="" dx1="213.33333333333334"/>
+			<Connection Source="SoftKey_Klappen_senken.IN" Destination="OR_2_Klappen_senken.IN1" Comment="" dx1="426.6666666666667"/>
+			<Connection Source="AuxInput_Klappen_heben.IN" Destination="OR_2_Klappen_heben.IN3" Comment="" dx1="566.6666666666667"/>
+			<Connection Source="AuxInput_Klappen_senken.IN" Destination="OR_2_Klappen_senken.IN3" Comment="" dx1="246.66666666666669"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
