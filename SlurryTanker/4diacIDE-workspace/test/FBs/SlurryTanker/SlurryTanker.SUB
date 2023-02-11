@@ -129,6 +129,11 @@
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			<Attribute Name="GroupName" Type="STRING" Value="func"/>
 		</SubApp>
+		<SubApp Name="Licht" Type="Licht" Comment="" x="4406.666666666667" y="2226.666666666667">
+			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
+			<Attribute Name="GroupName" Type="STRING" Value="func"/>
+		</SubApp>
 		<EventConnections>
 			<Connection Source="INIT" Destination="Dom.INIT" Comment="" dx1="160.0">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
@@ -213,6 +218,9 @@
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
 			<Connection Source="Knickdeichsel.CNF_2a" Destination="Vorsteuerventil_2A.REQ2" Comment="" dx1="2926.666666666667">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="INIT" Destination="Licht.INIT" Comment="" dx1="3293.3333333333335">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
 		</EventConnections>
