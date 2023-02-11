@@ -19,23 +19,38 @@
 		<SubApp Name="GreenWhiteBackground_Licht" Type="GreenWhiteBackground_Licht" Comment="" x="4400.0" y="100.0">
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
+			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 		</SubApp>
 		<SubApp Name="SoftKey_Licht_UP" Type="SoftKey_Licht_UP" Comment="" x="-700.0" y="0.0">
+			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 		</SubApp>
 		<SubApp Name="AuxInput_Licht_UP" Type="AuxInput_Licht_UP" Comment="" x="-700.0" y="500.0">
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
+			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 		</SubApp>
 		<EventConnections>
 			<Connection Source="E_T_FF_Licht.EO" Destination="Licht_8A.REQ" Comment="" dx1="126.66666666666667"/>
-			<Connection Source="INIT" Destination="GreenWhiteBackground_Licht.INIT" Comment="" dx1="5253.333333333334"/>
+			<Connection Source="INIT" Destination="GreenWhiteBackground_Licht.INIT" Comment="" dx1="5253.333333333334">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
 			<Connection Source="E_T_FF_Licht.EO" Destination="GreenWhiteBackground_Licht.EO" Comment="" dx1="1160.0"/>
-			<Connection Source="INIT" Destination="SoftKey_Licht_UP.INIT" Comment="" dx1="80.0" dx2="80.0" dy="0.0"/>
+			<Connection Source="INIT" Destination="SoftKey_Licht_UP.INIT" Comment="" dx1="80.0" dx2="80.0" dy="0.0">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
 			<Connection Source="SoftKey_Licht_UP.IND" Destination="E_T_FF_Licht.CLK" Comment="" dx1="786.6666666666667" dx2="786.6666666666667" dy="0.0"/>
-			<Connection Source="INIT" Destination="AuxInput_Licht_UP.INIT" Comment="" dx1="80.0" dx2="80.0" dy="0.0"/>
+			<Connection Source="INIT" Destination="AuxInput_Licht_UP.INIT" Comment="" dx1="80.0" dx2="80.0" dy="0.0">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
 			<Connection Source="AuxInput_Licht_UP.IND" Destination="E_T_FF_Licht.CLK" Comment="" dx1="713.3333333333334" dx2="713.3333333333334" dy="0.0"/>
+			<Connection Source="INIT" Destination="Licht_8A.INIT" Comment="" dx1="4113.333333333334">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="E_T_FF_Licht.Q" Destination="Licht_8A.OUT" Comment="" dx1="60.0"/>

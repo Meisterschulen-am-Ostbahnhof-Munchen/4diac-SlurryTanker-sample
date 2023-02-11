@@ -11,7 +11,6 @@
 		</SubAppEventInputs>
 		<SubAppEventOutputs>
 			<SubAppEvent Name="CNF_2a" Type="Event" Comment="">
-				<With Var="OUT_2a"/>
 				<Attribute Name="YPOSITION" Type="STRING" Value="345"/>
 			</SubAppEvent>
 		</SubAppEventOutputs>
@@ -26,7 +25,7 @@
 		</FB>
 		<FB Name="E_T_FF_Dom" Type="E_T_FF" Comment="" x="1100.0" y="-700.0">
 		</FB>
-		<FB Name="Dom_6B" Type="QX" Comment="" x="4800.0" y="-100.0">
+		<FB Name="Dom_6A" Type="QX" Comment="" x="4800.0" y="-100.0">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="E_IMPULSE_Dom" Type="E_IMPULSE" Comment="" x="2666.666666666667" y="0.0">
@@ -53,9 +52,9 @@
 		<EventConnections>
 			<Connection Source="E_IMPULSE_Dom.CNF" Destination="AND_2_Dom.REQ" Comment="" dx1="473.33333333333337"/>
 			<Connection Source="E_T_FF_Dom.EO" Destination="E_IMPULSE_Dom.REQ" Comment="" dx1="520.0"/>
-			<Connection Source="E_IMPULSE_Dom.CNF" Destination="Dom_6B.REQ" Comment=""/>
+			<Connection Source="E_IMPULSE_Dom.CNF" Destination="Dom_6A.REQ" Comment=""/>
 			<Connection Source="AND_2_Dom.CNF" Destination="CNF_2a" Comment="" dx1="506.6666666666667"/>
-			<Connection Source="INIT" Destination="Dom_6B.INIT" Comment="" dx1="6086.666666666667"/>
+			<Connection Source="INIT" Destination="Dom_6A.INIT" Comment="" dx1="6086.666666666667"/>
 			<Connection Source="INIT" Destination="GreenWhiteBackground_Dom.INIT" Comment="" dx1="3960.0"/>
 			<Connection Source="E_T_FF_Dom.EO" Destination="GreenWhiteBackground_Dom.EO" Comment=""/>
 			<Connection Source="INIT" Destination="AuxInput_Dom_UP.INIT" Comment="" dx1="193.33333333333334"/>
@@ -66,7 +65,7 @@
 		<DataConnections>
 			<Connection Source="E_IMPULSE_Dom.QO" Destination="AND_2_Dom.IN1" Comment="" dx1="366.6666666666667"/>
 			<Connection Source="E_T_FF_Dom.Q" Destination="AND_2_Dom.IN2" Comment="Schieber offen" dx1="320.0"/>
-			<Connection Source="E_IMPULSE_Dom.QO" Destination="Dom_6B.OUT" Comment="" dx1="580.0"/>
+			<Connection Source="E_IMPULSE_Dom.QO" Destination="Dom_6A.OUT" Comment="" dx1="580.0"/>
 			<Connection Source="AND_2_Dom.OUT" Destination="OUT_2a" Comment="" dx1="613.3333333333334"/>
 			<Connection Source="E_T_FF_Dom.Q" Destination="GreenWhiteBackground_Dom.Q" Comment="Schieber offen"/>
 		</DataConnections>
