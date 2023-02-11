@@ -52,21 +52,21 @@
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			<Attribute Name="GroupName" Type="STRING" Value="func"/>
 		</SubApp>
-		<SubApp Name="mapping_Softkeys" Type="mapping_Softkeys" Comment="" x="366.6666666666667" y="2526.666666666667">
+		<SubApp Name="mapping_Softkeys" Type="mapping_Softkeys" Comment="" x="2306.666666666667" y="2706.666666666667">
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			<Attribute Name="GroupName" Type="STRING" Value="func"/>
 		</SubApp>
-		<SubApp Name="mapping_DataPanel" Type="mapping_DataPanel" Comment="" x="1966.6666666666667" y="2526.666666666667">
+		<SubApp Name="mapping_DataPanel" Type="mapping_DataPanel" Comment="" x="2306.666666666667" y="2306.666666666667">
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			<Attribute Name="GroupName" Type="STRING" Value="func"/>
 		</SubApp>
-		<SubApp Name="mapping_aux" Type="mapping_aux" Comment="" x="3833.3333333333335" y="2526.666666666667">
+		<SubApp Name="mapping_aux" Type="mapping_aux" Comment="" x="3806.666666666667" y="2406.666666666667">
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
@@ -111,6 +111,16 @@
 		<SubApp Name="Klappen" Type="Klappen" Comment="" x="4480.0" y="946.6666666666667">
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
+			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
+			<Attribute Name="GroupName" Type="STRING" Value="func"/>
+		</SubApp>
+		<SubApp Name="PAGES" Type="PAGES" Comment="" x="5106.666666666667" y="2606.666666666667">
+			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
+			<Attribute Name="GroupName" Type="STRING" Value="func"/>
+		</SubApp>
+		<SubApp Name="mapping_Buttons" Type="mapping_Buttons" Comment="" x="3806.666666666667" y="1906.6666666666667">
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			<Attribute Name="GroupName" Type="STRING" Value="func"/>
@@ -193,6 +203,12 @@
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
 			<Connection Source="Abscheider.CNF_2b" Destination="Vorsteuerventil_2B.REQ5" Comment="" dx1="2426.666666666667">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="INIT" Destination="PAGES.INIT" Comment="" dx1="3000.0">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="INIT" Destination="mapping_Buttons.INIT" Comment="" dx1="2666.666666666667">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
 		</EventConnections>

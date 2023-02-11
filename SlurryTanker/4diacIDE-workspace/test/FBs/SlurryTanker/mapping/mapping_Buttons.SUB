@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="mapping_Buttons" Comment="Subapplication Type">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="Franz" Date="2023-01-29">
+	</VersionInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="Event" Comment="">
+			</SubAppEvent>
+		</SubAppEventInputs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="UT_SoftkeyMapping_UP" Type="UT_ButtonMapping" Comment="" x="900.0" y="900.0">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u8SAMember" Value="255"/>
+			<Parameter Name="u16ObjId_1" Value="6000"/>
+			<Parameter Name="DigitalInput_1" Value="&quot;PAGE_1_BTN&quot;"/>
+			<Parameter Name="u16ObjId_2" Value="6001"/>
+			<Parameter Name="DigitalInput_2" Value="&quot;PAGE_2_BTN&quot;"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="UT_SoftkeyMapping_UP.INIT" Comment="" dx1="520.0" dx2="520.0" dy="0.0"/>
+		</EventConnections>
+	</SubAppNetwork>
+</SubAppType>

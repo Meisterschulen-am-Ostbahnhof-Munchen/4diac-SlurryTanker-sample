@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="PAGES" Comment="Subapplication Type">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2023-02-06">
+	</VersionInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="Event" Comment="">
+				<Attribute Name="YPOSITION" Type="STRING" Value="100"/>
+			</SubAppEvent>
+		</SubAppEventInputs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="GreenWhiteBackground_PAGE_1" Type="GreenWhiteBackground" Comment="" x="5066.666666666667" y="533.3333333333334">
+			<Parameter Name="u16ObjId" Value="6000"/>
+			<Parameter Name="u16ObjIdA" Value="31024"/>
+		</FB>
+		<SubApp Name="PAGE_1" Type="PAGE_1" Comment="" x="0.0" y="0.0">
+			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
+			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
+		</SubApp>
+		<SubApp Name="PAGE_2" Type="PAGE_2" Comment="" x="0.0" y="533.3333333333334">
+			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
+			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
+		</SubApp>
+		<FB Name="GreenWhiteBackground_PAGE_2" Type="GreenWhiteBackground" Comment="" x="5066.666666666667" y="2533.3333333333335">
+			<Parameter Name="u16ObjId" Value="6001"/>
+			<Parameter Name="u16ObjIdA" Value="31025"/>
+		</FB>
+		<FB Name="E_SR" Type="E_SR" Comment="" x="2000.0" y="266.6666666666667">
+		</FB>
+		<FB Name="F_NOT" Type="F_NOT" Comment="" x="3466.666666666667" y="2133.3333333333335">
+		</FB>
+		<FB Name="Q_SoftKeyMask" Type="Q_SoftKeyMask" Comment="" x="4933.333333333334" y="-1066.6666666666667">
+			<Parameter Name="u8MaskType" Value="1"/>
+			<Parameter Name="u16DataMaskId" Value="1000"/>
+		</FB>
+		<FB Name="F_SEL_I" Type="F_SEL" Comment="" x="3600.0" y="-1066.6666666666667">
+			<Parameter Name="IN0" Value="UINT#4000"/>
+			<Parameter Name="IN1" Value="UINT#4001"/>
+		</FB>
+		<FB Name="CbVtStatus" Type="CbVtStatus" Comment="" x="-800.0" y="-933.3333333333334">
+		</FB>
+		<FB Name="E_R_TRIG" Type="E_R_TRIG" Comment="" x="266.6666666666667" y="-933.3333333333334">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="GreenWhiteBackground_PAGE_1.INIT" Comment="" dx1="3000.0">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="INIT" Destination="PAGE_1.INIT" Comment="" dx1="400.0" dx2="400.0" dy="0.0">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="INIT" Destination="PAGE_2.INIT" Comment="" dx1="666.6666666666667">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="INIT" Destination="GreenWhiteBackground_PAGE_2.INIT" Comment="" dx1="3213.3333333333335">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="PAGE_1.IND" Destination="E_SR.S" Comment="" dx1="720.0"/>
+			<Connection Source="PAGE_2.IND" Destination="E_SR.R" Comment="" dx1="720.0"/>
+			<Connection Source="E_SR.EO" Destination="F_NOT.REQ" Comment="" dx1="693.3333333333334"/>
+			<Connection Source="E_SR.EO" Destination="GreenWhiteBackground_PAGE_1.REQ" Comment="" dx1="1560.0"/>
+			<Connection Source="F_NOT.CNF" Destination="GreenWhiteBackground_PAGE_2.REQ" Comment="" dx1="553.3333333333334"/>
+			<Connection Source="E_SR.EO" Destination="F_SEL_I.REQ" Comment="" dx1="160.0"/>
+			<Connection Source="F_SEL_I.CNF" Destination="Q_SoftKeyMask.REQ" Comment=""/>
+			<Connection Source="CbVtStatus.IND" Destination="E_R_TRIG.EI" Comment=""/>
+			<Connection Source="E_R_TRIG.EO" Destination="E_SR.S" Comment="" dx1="853.3333333333334"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="E_SR.Q" Destination="GreenWhiteBackground_PAGE_1.DI1" Comment="" dx1="1306.6666666666667"/>
+			<Connection Source="E_SR.Q" Destination="F_NOT.IN" Comment="" dx1="500.0"/>
+			<Connection Source="F_NOT.OUT" Destination="GreenWhiteBackground_PAGE_2.DI1" Comment="" dx1="353.33333333333337"/>
+			<Connection Source="F_SEL_I.OUT" Destination="Q_SoftKeyMask.u16SoftKeyMaskId" Comment="" dx1="406.6666666666667"/>
+			<Connection Source="E_SR.Q" Destination="F_SEL_I.G" Comment="" dx1="566.6666666666667"/>
+			<Connection Source="CbVtStatus.qWsActive" Destination="E_R_TRIG.QI" Comment="" dx1="160.0"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>
