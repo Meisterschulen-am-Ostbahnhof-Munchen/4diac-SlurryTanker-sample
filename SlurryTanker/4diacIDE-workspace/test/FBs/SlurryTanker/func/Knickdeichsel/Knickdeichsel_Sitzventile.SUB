@@ -6,11 +6,11 @@
 	</VersionInfo>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
-			<SubAppEvent Name="INIT" Type="Event" Comment="">
+			<SubAppEvent Name="INITO" Type="Event" Comment="">
 			</SubAppEvent>
-			<SubAppEvent Name="IND_Knickdeichsel_senken" Type="Event" Comment="">
+			<SubAppEvent Name="CNF_Knickdeichsel_heben" Type="Event" Comment="">
 			</SubAppEvent>
-			<SubAppEvent Name="IND_Knickdeichsel_heben" Type="Event" Comment="">
+			<SubAppEvent Name="CNF_Knickdeichsel_senken" Type="Event" Comment="">
 			</SubAppEvent>
 		</SubAppEventInputs>
 		<InputVars>
@@ -19,29 +19,29 @@
 		</InputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="OR_5A_5B" Type="OR_2" Comment="" x="493.33333333333337" y="333.33333333333337">
+		<FB Name="OR_2" Type="OR_2" Comment="" x="673.3333333333334" y="566.6666666666667">
 			<Attribute Name="PinComment" Type="STRING" Value="IN1:Knickdeichsel_heben"/>
 			<Attribute Name="PinComment" Type="STRING" Value="IN2:Knickdeichsel_senken"/>
 		</FB>
-		<FB Name="Knickdeichsel_5B" Type="QX" Comment="" x="1553.3333333333335" y="66.66666666666667">
+		<FB Name="Knickdeichsel_5B" Type="QX" Comment="" x="2006.6666666666667" y="173.33333333333334">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="Knickdeichsel_5A" Type="QX" Comment="" x="1553.3333333333335" y="1133.3333333333335">
+		<FB Name="Knickdeichsel_5A" Type="QX" Comment="" x="2006.6666666666667" y="1240.0">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="OR_5A_5B.CNF" Destination="Knickdeichsel_5B.REQ" Comment="" dx1="293.33333333333337"/>
-			<Connection Source="OR_5A_5B.CNF" Destination="Knickdeichsel_5A.REQ" Comment="" dx1="206.66666666666669"/>
-			<Connection Source="IND_Knickdeichsel_senken" Destination="OR_5A_5B.REQ" Comment="" dx1="2500.0" dx2="160.0" dy="-86.66666666666667"/>
-			<Connection Source="IND_Knickdeichsel_heben" Destination="OR_5A_5B.REQ" Comment="" dx1="2393.3333333333335" dx2="53.333333333333336" dy="-186.66666666666669"/>
-			<Connection Source="INIT" Destination="Knickdeichsel_5B.INIT" Comment="" dx1="1500.0"/>
-			<Connection Source="INIT" Destination="Knickdeichsel_5A.INIT" Comment="" dx1="2713.3333333333335" dx2="53.333333333333336" dy="873.3333333333334"/>
+			<Connection Source="OR_2.CNF" Destination="Knickdeichsel_5B.REQ" Comment="" dx1="333.33333333333337"/>
+			<Connection Source="OR_2.CNF" Destination="Knickdeichsel_5A.REQ" Comment="" dx1="300.0"/>
+			<Connection Source="CNF_Knickdeichsel_heben" Destination="OR_2.REQ" Comment="" dx1="1066.6666666666667"/>
+			<Connection Source="CNF_Knickdeichsel_senken" Destination="OR_2.REQ" Comment="" dx1="960.0"/>
+			<Connection Source="INITO" Destination="Knickdeichsel_5B.INIT" Comment="" dx1="3366.666666666667"/>
+			<Connection Source="INITO" Destination="Knickdeichsel_5A.INIT" Comment="" dx1="3366.666666666667"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="OR_5A_5B.OUT" Destination="Knickdeichsel_5B.OUT" Comment="" dx1="313.33333333333337"/>
-			<Connection Source="OR_5A_5B.OUT" Destination="Knickdeichsel_5A.OUT" Comment="" dx1="100.0"/>
-			<Connection Source="IN_Knickdeichsel_heben" Destination="OR_5A_5B.IN1" Comment="" dx1="2606.666666666667" dx2="333.33333333333337" dy="-286.6666666666667"/>
-			<Connection Source="IN_Knickdeichsel_senken" Destination="OR_5A_5B.IN2" Comment="" dx1="2820.0" dx2="333.33333333333337" dy="580.0"/>
+			<Connection Source="OR_2.OUT" Destination="Knickdeichsel_5B.OUT" Comment="" dx1="406.6666666666667"/>
+			<Connection Source="OR_2.OUT" Destination="Knickdeichsel_5A.OUT" Comment="" dx1="193.33333333333334"/>
+			<Connection Source="IN_Knickdeichsel_heben" Destination="OR_2.IN1" Comment="" dx1="853.3333333333334"/>
+			<Connection Source="IN_Knickdeichsel_senken" Destination="OR_2.IN2" Comment="" dx1="746.6666666666667"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

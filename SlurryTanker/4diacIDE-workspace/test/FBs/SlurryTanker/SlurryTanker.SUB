@@ -11,11 +11,11 @@
 		</SubAppEventInputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<Group Name="func" Comment="" x="246.66666666666669" y="20.0" width="6540.0" height="3473.3333333333335">
+		<Group Name="func" Comment="" x="246.66666666666669" y="-200.0" width="6540.0" height="4220.0">
 		</Group>
 		<Group Name="Vorsteuerventile" Comment="Vorsteuerventile" x="6913.333333333334" y="153.33333333333334" width="4673.333333333334" height="1993.3333333333335">
 		</Group>
-		<Group Name="Vorgewendeautomatik" Comment="Vorgewendeautomatik" x="246.66666666666669" y="3620.0" width="10000.0" height="3606.666666666667">
+		<Group Name="Vorgewendeautomatik" Comment="Vorgewendeautomatik" x="246.66666666666669" y="4133.333333333334" width="10000.0" height="3093.3333333333335">
 		</Group>
 		<SubApp Name="Vorsteuerventil_2A" Type="Vorsteuerventil_2A" Comment="" x="1033.3333333333335" y="126.66666666666667">
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
@@ -31,96 +31,100 @@
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			<Attribute Name="GroupName" Type="STRING" Value="Vorsteuerventile"/>
 		</SubApp>
-		<SubApp Name="Dom" Type="Dom" Comment="" x="480.0" y="146.66666666666669">
+		<SubApp Name="Dom" Type="Dom" Comment="" x="480.0" y="366.6666666666667">
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			<Attribute Name="GroupName" Type="STRING" Value="func"/>
 		</SubApp>
-		<SubApp Name="Seitenschieber" Type="Seitenschieber" Comment="" x="366.6666666666667" y="793.3333333333334">
+		<SubApp Name="Seitenschieber" Type="Seitenschieber" Comment="" x="366.6666666666667" y="1013.3333333333334">
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			<Attribute Name="GroupName" Type="STRING" Value="func"/>
 		</SubApp>
-		<SubApp Name="Knickdeichsel" Type="Knickdeichsel" Comment="" x="366.6666666666667" y="1460.0">
+		<SubApp Name="Knickdeichsel" Type="Knickdeichsel" Comment="" x="366.6666666666667" y="1680.0">
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			<Attribute Name="GroupName" Type="STRING" Value="func"/>
 		</SubApp>
-		<SubApp Name="mapping_Softkeys" Type="mapping_Softkeys" Comment="" x="2306.666666666667" y="2706.666666666667">
+		<SubApp Name="mapping_Softkeys" Type="mapping_Softkeys" Comment="" x="206.66666666666669" y="3026.666666666667">
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			<Attribute Name="GroupName" Type="STRING" Value="func"/>
 		</SubApp>
-		<SubApp Name="mapping_DataPanel" Type="mapping_DataPanel" Comment="" x="2306.666666666667" y="2306.666666666667">
+		<SubApp Name="mapping_DataPanel" Type="mapping_DataPanel" Comment="" x="206.66666666666669" y="2626.666666666667">
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			<Attribute Name="GroupName" Type="STRING" Value="func"/>
 		</SubApp>
-		<SubApp Name="mapping_aux" Type="mapping_aux" Comment="" x="3806.666666666667" y="2406.666666666667">
+		<SubApp Name="mapping_aux" Type="mapping_aux" Comment="" x="206.66666666666669" y="3426.666666666667">
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			<Attribute Name="GroupName" Type="STRING" Value="func"/>
 		</SubApp>
-		<SubApp Name="Automatik" Type="Automatik" Comment="" x="1126.6666666666667" y="1220.0">
+		<SubApp Name="Automatik" Type="Automatik" Comment="" x="1126.6666666666667" y="706.6666666666667">
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			<Attribute Name="GroupName" Type="STRING" Value="Vorgewendeautomatik"/>
 		</SubApp>
-		<SubApp Name="Verteiler" Type="Verteiler" Comment="" x="7013.333333333334" y="513.3333333333334">
+		<SubApp Name="Verteiler" Type="Verteiler" Comment="" x="7013.333333333334" y="0.0">
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			<Attribute Name="GroupName" Type="STRING" Value="Vorgewendeautomatik"/>
 		</SubApp>
-		<SubApp Name="Schneidwerk" Type="Schneidwerk" Comment="" x="7280.0" y="1446.6666666666667">
+		<SubApp Name="Schneidwerk" Type="Schneidwerk" Comment="" x="7280.0" y="933.3333333333334">
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			<Attribute Name="GroupName" Type="STRING" Value="Vorgewendeautomatik"/>
 		</SubApp>
-		<SubApp Name="Heckschieber" Type="Heckschieber" Comment="" x="7013.333333333334" y="2113.3333333333335">
+		<SubApp Name="Heckschieber" Type="Heckschieber" Comment="" x="7013.333333333334" y="1600.0">
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			<Attribute Name="GroupName" Type="STRING" Value="Vorgewendeautomatik"/>
 		</SubApp>
-		<SubApp Name="Abscheider" Type="Abscheider" Comment="" x="4366.666666666667" y="373.33333333333337">
+		<SubApp Name="Abscheider" Type="Abscheider" Comment="" x="4366.666666666667" y="593.3333333333334">
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			<Attribute Name="GroupName" Type="STRING" Value="func"/>
 		</SubApp>
-		<SubApp Name="Klappen" Type="Klappen" Comment="" x="4480.0" y="946.6666666666667">
+		<SubApp Name="Klappen" Type="Klappen" Comment="" x="4480.0" y="1166.6666666666667">
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			<Attribute Name="GroupName" Type="STRING" Value="func"/>
 		</SubApp>
-		<SubApp Name="PAGES" Type="PAGES" Comment="" x="5106.666666666667" y="2606.666666666667">
+		<SubApp Name="PAGES" Type="PAGES" Comment="" x="1706.6666666666667" y="2726.666666666667">
+			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			<Attribute Name="GroupName" Type="STRING" Value="func"/>
 		</SubApp>
-		<SubApp Name="mapping_Buttons" Type="mapping_Buttons" Comment="" x="3806.666666666667" y="1906.6666666666667">
+		<SubApp Name="mapping_Buttons" Type="mapping_Buttons" Comment="" x="1506.6666666666667" y="3126.666666666667">
+			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			<Attribute Name="GroupName" Type="STRING" Value="func"/>
@@ -138,7 +142,7 @@
 			<Connection Source="INIT" Destination="mapping_Softkeys.INIT" Comment="" dx1="340.0">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
-			<Connection Source="INIT" Destination="mapping_aux.INIT" Comment="" dx1="2073.3333333333335">
+			<Connection Source="INIT" Destination="mapping_aux.INIT" Comment="" dx1="1760.0">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
 			<Connection Source="INIT" Destination="mapping_DataPanel.INIT" Comment="" dx1="1140.0">
@@ -181,12 +185,6 @@
 			<Connection Source="Klappen.CNF_2a" Destination="Vorsteuerventil_2A.REQ1" Comment="" dx1="960.0">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
-			<Connection Source="Knickdeichsel.IND_2b" Destination="Vorsteuerventil_2B.REQ2" Comment="" dx1="4233.333333333334">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
-			</Connection>
-			<Connection Source="Knickdeichsel.IND_2a" Destination="Vorsteuerventil_2A.REQ2" Comment="" dx1="3233.3333333333335">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
-			</Connection>
 			<Connection Source="Verteiler.CNF_2b" Destination="Vorsteuerventil_2B.REQ3" Comment="" dx1="826.6666666666667">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
@@ -209,6 +207,12 @@
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
 			<Connection Source="INIT" Destination="mapping_Buttons.INIT" Comment="" dx1="2666.666666666667">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="Knickdeichsel.CNF_2b" Destination="Vorsteuerventil_2B.REQ2" Comment="" dx1="4060.0">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="Knickdeichsel.CNF_2a" Destination="Vorsteuerventil_2A.REQ2" Comment="" dx1="2926.666666666667">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
 		</EventConnections>
