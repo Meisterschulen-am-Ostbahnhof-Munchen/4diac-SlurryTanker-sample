@@ -40,7 +40,11 @@
 		<SubApp Name="AuxInput_Schneidwerk_UP" Type="AuxInput_Schneidwerk_UP" Comment="" x="100.0" y="1400.0">
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
+			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 		</SubApp>
+		<Group Name="__Group01" Comment="TODO: Schneidwerk linkslauf bei jedem 2. Start. &amp;#10;" x="7086.666666666667" y="2100.0" width="1333.3333333333335" height="666.6666666666667">
+		</Group>
 		<EventConnections>
 			<Connection Source="E_SR_Schneidwerk.EO" Destination="Schneidwerk_rechtslauf_1A.REQ" Comment="" dx1="700.0"/>
 			<Connection Source="E_SWITCH_Schneidwerk.EO0" Destination="E_SR_Schneidwerk.S" Comment=""/>

@@ -7,26 +7,30 @@
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
 			<SubAppEvent Name="INIT" Type="Event" Comment="">
+				<Attribute Name="YPOSITION" Type="STRING" Value="30"/>
 			</SubAppEvent>
 		</SubAppEventInputs>
 		<SubAppEventOutputs>
 			<SubAppEvent Name="IND" Type="Event" Comment="">
+				<Attribute Name="YPOSITION" Type="STRING" Value="20"/>
 			</SubAppEvent>
 		</SubAppEventOutputs>
 		<OutputVars>
-			<VarDeclaration Name="IN" Type="BOOL" Comment=""/>
+			<VarDeclaration Name="IN" Type="BOOL" Comment="">
+				<Attribute Name="YPOSITION" Type="STRING" Value="134"/>
+			</VarDeclaration>
 		</OutputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="AuxInput_Verteiler_senken" Type="IX" Comment="" x="0.0" y="0.0">
+		<FB Name="AuxInput_Verteiler_senken" Type="IX" Comment="" x="-846.6666666666667" y="-2233.3333333333335">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="AuxInput_Verteiler_senken.INIT" Comment="" dx1="80.0" dx2="80.0" dy="33.333333333333336"/>
-			<Connection Source="AuxInput_Verteiler_senken.IND" Destination="IND" Comment="" dx1="2913.3333333333335"/>
+			<Connection Source="INIT" Destination="AuxInput_Verteiler_senken.INIT" Comment="" dx1="213.33333333333334"/>
+			<Connection Source="AuxInput_Verteiler_senken.IND" Destination="IND" Comment="" dx1="1846.6666666666667"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="AuxInput_Verteiler_senken.IN" Destination="IN" Comment="" dx1="2913.3333333333335"/>
+			<Connection Source="AuxInput_Verteiler_senken.IN" Destination="IN" Comment="" dx1="1846.6666666666667"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

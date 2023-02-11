@@ -108,7 +108,7 @@
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			<Attribute Name="GroupName" Type="STRING" Value="func"/>
 		</SubApp>
-		<SubApp Name="Klappen" Type="Klappen" Comment="" x="4480.0" y="1166.6666666666667">
+		<SubApp Name="Klappen" Type="Klappen" Comment="" x="4006.666666666667" y="1226.6666666666667">
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
@@ -151,7 +151,7 @@
 			<Connection Source="INIT" Destination="Abscheider.INIT" Comment="" dx1="9300.0" dx2="53.333333333333336" dy="606.6666666666667">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
-			<Connection Source="INIT" Destination="Klappen.INIT" Comment="" dx1="9193.333333333334" dx2="273.33333333333337" dy="540.0">
+			<Connection Source="INIT" Destination="Klappen.INIT" Comment="" dx1="2820.0">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
 			<Connection Source="INIT" Destination="Vorsteuerventil_2A.INIT" Comment="" dx1="6826.666666666667">

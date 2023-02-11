@@ -7,25 +7,29 @@
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
 			<SubAppEvent Name="INIT" Type="Event" Comment="">
+				<Attribute Name="YPOSITION" Type="STRING" Value="20"/>
 			</SubAppEvent>
 			<SubAppEvent Name="EO" Type="Event" Comment="">
+				<Attribute Name="YPOSITION" Type="STRING" Value="0"/>
 			</SubAppEvent>
 		</SubAppEventInputs>
 		<InputVars>
-			<VarDeclaration Name="Q" Type="BOOL" Comment=""/>
+			<VarDeclaration Name="Q" Type="BOOL" Comment="">
+				<Attribute Name="YPOSITION" Type="STRING" Value="279"/>
+			</VarDeclaration>
 		</InputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="GreenWhiteBackground_Schneidwerk" Type="GreenWhiteBackground" Comment="" x="0.0" y="0.0">
+		<FB Name="GreenWhiteBackground_Schneidwerk" Type="GreenWhiteBackground" Comment="" x="-986.6666666666667" y="-866.6666666666667">
 			<Parameter Name="u16ObjId" Value="5007"/>
 			<Parameter Name="u16ObjIdA" Value="31007"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="GreenWhiteBackground_Schneidwerk.INIT" Comment=""/>
-			<Connection Source="EO" Destination="GreenWhiteBackground_Schneidwerk.REQ" Comment=""/>
+			<Connection Source="INIT" Destination="GreenWhiteBackground_Schneidwerk.INIT" Comment="" dx1="193.33333333333334"/>
+			<Connection Source="EO" Destination="GreenWhiteBackground_Schneidwerk.REQ" Comment="" dx1="86.66666666666667"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="Q" Destination="GreenWhiteBackground_Schneidwerk.DI1" Comment=""/>
+			<Connection Source="Q" Destination="GreenWhiteBackground_Schneidwerk.DI1" Comment="" dx1="80.0"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
