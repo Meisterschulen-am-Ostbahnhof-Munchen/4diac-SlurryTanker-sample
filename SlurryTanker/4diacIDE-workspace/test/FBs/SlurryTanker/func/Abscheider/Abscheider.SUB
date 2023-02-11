@@ -10,13 +10,12 @@
 			</SubAppEvent>
 		</SubAppEventInputs>
 		<SubAppEventOutputs>
-			<SubAppEvent Name="CNF_2a" Type="Event" Comment="">
-				<With Var="OUT_2a"/>
+			<SubAppEvent Name="CNF_2b" Type="Event" Comment="">
 				<Attribute Name="YPOSITION" Type="STRING" Value="345"/>
 			</SubAppEvent>
 		</SubAppEventOutputs>
 		<OutputVars>
-			<VarDeclaration Name="OUT_2a" Type="BOOL" Comment="">
+			<VarDeclaration Name="OUT_2b" Type="BOOL" Comment="">
 				<Attribute Name="YPOSITION" Type="STRING" Value="18"/>
 			</VarDeclaration>
 		</OutputVars>
@@ -54,7 +53,7 @@
 			<Connection Source="E_IMPULSE_Abscheider.CNF" Destination="AND_2_Abscheider.REQ" Comment="" dx1="473.33333333333337"/>
 			<Connection Source="E_T_FF_Abscheider.EO" Destination="E_IMPULSE_Abscheider.REQ" Comment="" dx1="520.0"/>
 			<Connection Source="E_IMPULSE_Abscheider.CNF" Destination="Abscheider_7B.REQ" Comment=""/>
-			<Connection Source="AND_2_Abscheider.CNF" Destination="CNF_2a" Comment="" dx1="506.6666666666667"/>
+			<Connection Source="AND_2_Abscheider.CNF" Destination="CNF_2b" Comment="" dx1="506.6666666666667"/>
 			<Connection Source="INIT" Destination="Abscheider_7B.INIT" Comment="" dx1="6086.666666666667"/>
 			<Connection Source="INIT" Destination="GreenWhiteBackground_Abscheider.INIT" Comment="" dx1="3960.0"/>
 			<Connection Source="E_T_FF_Abscheider.EO" Destination="GreenWhiteBackground_Abscheider.EO" Comment=""/>
@@ -67,7 +66,7 @@
 			<Connection Source="E_IMPULSE_Abscheider.QO" Destination="AND_2_Abscheider.IN1" Comment="" dx1="366.6666666666667"/>
 			<Connection Source="E_T_FF_Abscheider.Q" Destination="AND_2_Abscheider.IN2" Comment="Schieber offen" dx1="320.0"/>
 			<Connection Source="E_IMPULSE_Abscheider.QO" Destination="Abscheider_7B.OUT" Comment="" dx1="580.0"/>
-			<Connection Source="AND_2_Abscheider.OUT" Destination="OUT_2a" Comment="" dx1="613.3333333333334"/>
+			<Connection Source="AND_2_Abscheider.OUT" Destination="OUT_2b" Comment="" dx1="613.3333333333334"/>
 			<Connection Source="E_T_FF_Abscheider.Q" Destination="GreenWhiteBackground_Abscheider.Q" Comment="Schieber offen"/>
 		</DataConnections>
 	</SubAppNetwork>
