@@ -909,7 +909,7 @@
 					<Value>1</Value>
 				</Property>
 				<Property Name="Transparency">
-					<Value>0</Value>
+					<Value>1</Value>
 				</Property>
 				<Property Name="TransColor">
 					<Value>16777215</Value>
@@ -974,7 +974,7 @@
 					<Value>1</Value>
 				</Property>
 				<Property Name="Transparency">
-					<Value>0</Value>
+					<Value>1</Value>
 				</Property>
 				<Property Name="TransColor">
 					<Value>16777215</Value>
@@ -2014,7 +2014,7 @@
 					<Value>1</Value>
 				</Property>
 				<Property Name="Transparency">
-					<Value>0</Value>
+					<Value>1</Value>
 				</Property>
 				<Property Name="TransColor">
 					<Value>16777215</Value>
@@ -2079,7 +2079,7 @@
 					<Value>1</Value>
 				</Property>
 				<Property Name="Transparency">
-					<Value>0</Value>
+					<Value>1</Value>
 				</Property>
 				<Property Name="TransColor">
 					<Value>16777215</Value>
