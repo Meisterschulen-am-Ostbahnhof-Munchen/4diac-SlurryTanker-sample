@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="VT_active" Comment="Subapplication Type">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2023-02-19">
+	</VersionInfo>
+	<SubAppInterfaceList>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="EO" Type="Event" Comment="">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="E_R_TRIG" Type="E_R_TRIG" Comment="" x="1066.6666666666667" y="0.0">
+		</FB>
+		<FB Name="CbVtStatus" Type="CbVtStatus" Comment="" x="0.0" y="0.0">
+		</FB>
+		<EventConnections>
+			<Connection Source="CbVtStatus.IND" Destination="E_R_TRIG.EI" Comment=""/>
+			<Connection Source="E_R_TRIG.EO" Destination="EO" Comment=""/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="CbVtStatus.qWsActive" Destination="E_R_TRIG.QI" Comment="" dx1="160.0"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>
