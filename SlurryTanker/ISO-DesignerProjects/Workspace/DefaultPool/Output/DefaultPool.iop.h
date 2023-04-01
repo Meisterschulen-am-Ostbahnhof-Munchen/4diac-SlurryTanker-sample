@@ -53,10 +53,10 @@
 #define trash_icon                        20514
 #define page_1_AUX                        20516
 #define page_2_AUX                        20517
-#define AuxFunction2_31000                31000
+#define AuxInput_Automatik_ein            31000
 #define AuxFunction2_31001                31001
 #define AuxFunction2_31002                31002
-#define AuxFunction2_31003                31003
+#define AuxInput_Auseinanderklappen       31003
 #define AuxFunction2_31004                31004
 #define AuxFunction2_31005                31005
 #define AuxFunction2_31006                31006

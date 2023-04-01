@@ -51,10 +51,10 @@ const unsigned long ISO_OP_MEMORY_CLASS isoOP_DefaultPool_Offset[] = {
 	 10476,  // trash_icon_Offset
 	 11141,  // page_1_AUX_Offset
 	 11806,  // page_2_AUX_Offset
-	 12471,  // AuxFunction2_31000_Offset
+	 12471,  // AuxInput_Automatik_ein_Offset
 	 12483,  // AuxFunction2_31001_Offset
 	 12495,  // AuxFunction2_31002_Offset
-	 12507,  // AuxFunction2_31003_Offset
+	 12507,  // AuxInput_Auseinanderklappen_Offset
 	 12519,  // AuxFunction2_31004_Offset
 	 12531,  // AuxFunction2_31005_Offset
 	 12543,  // AuxFunction2_31006_Offset

@@ -48,10 +48,10 @@
 #define trash_icon_Offset                                   10476
 #define page_1_AUX_Offset                                   11141
 #define page_2_AUX_Offset                                   11806
-#define AuxFunction2_31000_Offset                           12471
+#define AuxInput_Automatik_ein_Offset                       12471
 #define AuxFunction2_31001_Offset                           12483
 #define AuxFunction2_31002_Offset                           12495
-#define AuxFunction2_31003_Offset                           12507
+#define AuxInput_Auseinanderklappen_Offset                  12507
 #define AuxFunction2_31004_Offset                           12519
 #define AuxFunction2_31005_Offset                           12531
 #define AuxFunction2_31006_Offset                           12543

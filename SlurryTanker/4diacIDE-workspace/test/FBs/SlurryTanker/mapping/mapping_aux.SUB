@@ -15,7 +15,7 @@
 		<FB Name="UT_AuxiliaryInputMapping" Type="UT_AuxiliaryInputMapping" Comment="" x="-1600.0" y="-1066.6666666666667">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u8SAMember" Value="255"/>
-			<Parameter Name="u16ObjId_1" Value="31000"/>
+			<Parameter Name="u16ObjId_1" Value="AuxInput_Automatik_ein"/>
 			<Parameter Name="DigitalInput_1" Value="&quot;AuxInput_Automatik_ein&quot;"/>
 			<Parameter Name="u16ObjId_2" Value="31003"/>
 			<Parameter Name="DigitalInput_2" Value="&quot;AuxInput_Auseinanderklappen&quot;"/>

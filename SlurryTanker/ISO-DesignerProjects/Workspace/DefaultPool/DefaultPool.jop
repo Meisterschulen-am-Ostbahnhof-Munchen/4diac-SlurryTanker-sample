@@ -2130,7 +2130,7 @@
 				</Property>
 			</PropertySheet>
 		</Object>
-		<Object Class="CAuxFunction" Name="AuxFunction" ObjectName="AuxFunction2_31000" Pinned="TRUE" JVS-ID="31000">
+		<Object Class="CAuxFunction" Name="AuxFunction" ObjectName="AuxInput_Automatik_ein" Pinned="TRUE" JVS-ID="31000">
 			<PropertySheet Name="AuxFunction">
 				<Property Name="BackColor">
 					<Value>16777215</Value>
@@ -2292,7 +2292,7 @@
 				<Object JVS-ID="4194325"/>
 			</Objects>
 		</Object>
-		<Object Class="CAuxFunction" Name="AuxFunction" ObjectName="AuxFunction2_31003" Pinned="TRUE" JVS-ID="31003">
+		<Object Class="CAuxFunction" Name="AuxFunction" ObjectName="AuxInput_Auseinanderklappen" Pinned="TRUE" JVS-ID="31003">
 			<PropertySheet Name="AuxFunction">
 				<Property Name="BackColor">
 					<Value>16777215</Value>
