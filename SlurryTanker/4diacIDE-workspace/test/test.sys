@@ -8,32 +8,23 @@
 	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof, München" Version="0.3" Author="Franz Höpfinger" Date="2022-11-16" Remarks="alle Zeiten auf T#3s">
 	</VersionInfo>
-	<Application Name="SlurryTanker" Comment="">
-		<SubAppNetwork>
-			<SubApp Name="SlurryTanker" Type="SlurryTanker" Comment="" x="2786.666666666667" y="2033.3333333333335">
-				<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
-				<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
-			</SubApp>
-		</SubAppNetwork>
-	</Application>
 	<Device Name="FORTE_PC" Type="FORTE_PC" Comment="" x="4046.666666666667" y="1233.3333333333335">
 		<Parameter Name="MGR_ID" Value="&quot;192.168.4.1:61499&quot;"/>
 		<Attribute Name="Profile" Type="STRING" Value="DynamicTypeLoad"/>
 		<Attribute Name="Color" Type="STRING" Value="255,190,111"/>
-		<Attribute Name="FBType" Type="STRING" Value="GEN_E_MUX, F_LT, E_CTD, E_STOPWATCH, F_LIMIT, UT_AuxiliaryInputMapping, UT_ButtonMapping_UP, F_TIME_IN_S_TO_UDINT, F_TAN, Q_SelectColourMap, COLOR_BLACK, QB, F_ACOS, QD, COLOR_WHITE, Q_SoftKeyMask, COLOR_OLIVE, E_MERGE, DataPanel_xDB0808_DIO_SAE_J1939, IB, EMB_RES, COLOR_CYAN, QL, ID, E_DEMUX, IE, NVS_UDINT, IL, GEN_SUBL, QW, QX, Q_FontAttributes, F_MUL, IW, IX, Q_ChangePolygonScale, F_LE, GEN_SUBSCRIBE, Q_ExecuteExtendedMacro, F_ATAN, GEN_AND, F_SIN, F_LN, GEN_CLIENT, F_NOT, Q_ObjSelectInput, COLOR_MAROON, GEN_SERVER, Q_EndPoint, GEN_PUBL, Q_SelectActiveWorkingSet, E_IMPULSE, RMT_RES, COLOR_RED, UT_ButtonMapping_HOLD, GEN_OR, E_D_FF, E_CYCLE, UT_ButtonMapping, E_R_TRIG, COLOR_TEAL, COLOR_BLUE, Q_ActiveMask, F_GE, E_F_TRIG, GreenWhiteBackground, E_RS, F_MUX_2, DEV_MGR, E_SPLIT, E_CTUD, UT_SoftkeyMapping_UP, F_EQ, E_T_FF, E_RDELAY, Q_FillAttributes, UT_ButtonMapping_DOWN, F_MOD, E_RTimeOut, F_NE, NVS_UINT, CbVtStatus, Q_ObjEnableDisable, F_TIME_IN_NS_TO_UDINT, FB_RANDOM, Q_LineAttributes, F_EXP, E_SELECT, GEN_PUBLISH, F_TIME_IN_MS_TO_UDINT, E_CTUD_UDINT, Q_CtrlAudioSignal, E_TRAIN, GreenWhiteBackgroundAux, OUT_ANY_CONSOLE, F_SUB, Q_ChangeObjectLabel, F_GT, COLOR_YELLOW, GEN_E_DEMUX, F_LOG, F_SQRT, Q_LockUnlockMask, Q_BackgroundColourAux, Q_ListItem, E_SR_RETRIG, DataPanel_xDB_16_DO_SAE_J1939, E_SR, COLOR_NAVY, GEN_XOR, Q_ChildLocation, F_MIN, E_SWITCH, E_RESTART, E_PERMIT, UT_SoftkeyMapping_HOLD, Q_ESC, F_SEL, Q_ChangePolygonPoint, UT_SoftkeyMapping, F_MAX, E_TimeOut, COLOR_SILVER, Q_SetAudioVolume, Q_Size, Q_BackgroundColour, COLOR_MAGENTA, UT_SoftkeyMapping_DOWN, Q_Attribute, COLOR_LIME, COLOR_GREEN, COLOR_GREY, COLOR_PURPLE, F_ABS, E_DELAY, GEN_ADD, Q_GraphicsContext, F_COS, Q_ObjHideShow, Q_StringValue, F_TIME_IN_US_TO_UDINT, E_CTU, Q_Priority, Q_NumericValue, Q_ChildPosition, Q_ExecuteMacro, Q_GetAttribute, E_REND, F_ASIN, F_DIV" Comment="created during deployment"/>
+		<Attribute Name="FBType" Type="STRING" Value="E_SWITCH, E_SR_RETRIG, E_R_TRIG, E_T_FF, E_IMPULSE, E_SR, E_F_TRIG, E_REND, E_D_FF" Comment="created during deployment"/>
 		<Resource Name="EMB_RES" Type="EMB_RES" Comment="" x="0.0" y="0.0">
 			<FBNetwork>
-				<SubApp Name="SlurryTanker" Type="SlurryTanker" Comment="" x="2800.0" y="700.0">
+				<SubApp Name="SlurryTanker" Type="SlurryTanker" Comment="" x="2000.0" y="0.0">
 					<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 					<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 				</SubApp>
 				<EventConnections>
-					<Connection Source="START.COLD" Destination="SlurryTanker.INIT" Comment="" dx1="993.3333333333334"/>
+					<Connection Source="START.COLD" Destination="SlurryTanker.INIT" Comment=""/>
 				</EventConnections>
 			</FBNetwork>
 		</Resource>
 	</Device>
-	<Mapping From="SlurryTanker.SlurryTanker" To="FORTE_PC.EMB_RES.SlurryTanker"/>
 	<Segment Name="Ethernet" Type="Ethernet" Comment="" x="5360.0" y="613.3333333333334" dx1="1993.3333333333335">
 		<Attribute Name="Color" Type="STRING" Value="140,181,218"/>
 	</Segment>
