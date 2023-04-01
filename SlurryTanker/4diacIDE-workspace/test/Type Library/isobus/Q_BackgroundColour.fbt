@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FBType Name="Q_BackgroundColour" Comment="Command change background colour ( Part 6 - F.20 )">
-	<Identification Standard="ISO 11783-6" Description="&lt;p&gt;This command is used to change the background colour of an object. etval iso_s16 - #E_NO_ERR - OK - #E_OVERFLOW - buffer overflow - #E_NOACT - Command not possible in current state - #E_NO_INSTANCE - No VT client available&lt;/p&gt;&#10;&#10;" >
+	<Identification Standard="ISO 11783-6" Description="&lt;p&gt;This command is used to change the background colour of an object. etval iso_s16 - #E_NO_ERR - OK - #E_OVERFLOW - buffer overflow - #E_NOACT - Command not possible in current state - #E_NO_INSTANCE - No VT client available&lt;/p&gt; &#10; &#10;" >
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2022-07-08">
 	</VersionInfo>
@@ -32,16 +32,4 @@
 			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description"/>
 		</OutputVars>
 	</InterfaceList>
-	<Attribute Name="Documentation" Type="WSTRING"><![CDATA[<p>This command is used to change the background colour of an object.</p>
-
-<p>etval iso_s16 -</p>
-
-<p>#E_NO_ERR - OK -</p>
-
-<p>#E_OVERFLOW - buffer overflow -</p>
-
-<p>#E_NOACT - Command not possible in current state -</p>
-
-<p>#E_NO_INSTANCE - No VT client available</p>
-]]></Attribute>
 </FBType>

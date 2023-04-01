@@ -1,47 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<FBType Name="GreenWhiteBackground" Comment="Composite FB wrapping other FBs">
+<SubAppType Name="GreenWhiteBackground" Comment="Subapplication Type">
 	<Identification Standard="61499-2">
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2022-11-10">
 	</VersionInfo>
-	<InterfaceList>
-		<EventInputs>
-			<Event Name="INIT" Type="Event" Comment="Initialization Request">
-				<With Var="u16ObjId"/>
-				<With Var="u16ObjIdA"/>
-			</Event>
-			<Event Name="REQ" Type="Event" Comment="Normal Execution Request">
-				<With Var="DI1"/>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="Event" Comment="Initialization Request">
+			</SubAppEvent>
+			<SubAppEvent Name="REQ" Type="Event" Comment="Normal Execution Request">
 				<Attribute Name="YPOSITION" Type="STRING" Value="175"/>
-			</Event>
-		</EventInputs>
-		<EventOutputs>
-			<Event Name="INITO_1" Type="Event" Comment="Initialization Confirm">
-				<With Var="STATUS_1"/>
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO_1" Type="Event" Comment="Initialization Confirm">
 				<Attribute Name="YPOSITION" Type="STRING" Value="235"/>
-			</Event>
-			<Event Name="CNF_1" Type="Event" Comment="Execution Confirmation">
-				<With Var="STATUS_1"/>
-				<With Var="u8OldColour_1"/>
-				<With Var="result_1"/>
-			</Event>
-			<Event Name="INITO_2" Type="Event" Comment="">
-				<With Var="STATUS_2"/>
-			</Event>
-			<Event Name="CNF_2" Type="Event" Comment="">
-				<With Var="STATUS_2"/>
-				<With Var="u8OldColour_2"/>
-				<With Var="result_2"/>
-			</Event>
-			<Event Name="INITO_3" Type="Event" Comment="">
-				<With Var="STATUS_3"/>
-			</Event>
-			<Event Name="CNF_3" Type="Event" Comment="">
-				<With Var="STATUS_3"/>
-				<With Var="u8OldColour_3"/>
-				<With Var="result_3"/>
-			</Event>
-		</EventOutputs>
+			</SubAppEvent>
+			<SubAppEvent Name="CNF_1" Type="Event" Comment="Execution Confirmation">
+			</SubAppEvent>
+			<SubAppEvent Name="INITO_2" Type="Event" Comment="">
+			</SubAppEvent>
+			<SubAppEvent Name="CNF_2" Type="Event" Comment="">
+			</SubAppEvent>
+			<SubAppEvent Name="INITO_3" Type="Event" Comment="">
+			</SubAppEvent>
+			<SubAppEvent Name="CNF_3" Type="Event" Comment="">
+			</SubAppEvent>
+		</SubAppEventOutputs>
 		<InputVars>
 			<VarDeclaration Name="DI1" Type="BOOL" Comment="Selector">
 				<Attribute Name="YPOSITION" Type="STRING" Value="18"/>
@@ -68,45 +53,35 @@
 			<VarDeclaration Name="u8OldColour_3" Type="USINT" Comment="Old value of ID"/>
 			<VarDeclaration Name="result_3" Type="INT" Comment="retval see description"/>
 		</OutputVars>
-	</InterfaceList>
-	<FBNetwork>
-		<FB Name="F_SEL_I" Type="F_SEL" Comment="" x="600.0" y="1200.0">
-		</FB>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
 		<FB Name="Q_BackgroundColour_1" Type="Q_BackgroundColour" Comment="" x="1600.0" y="1500.0">
-		</FB>
-		<FB Name="COLOR_WHITE_I" Type="COLOR_WHITE" Comment="" x="-700.0" y="200.0">
-		</FB>
-		<FB Name="COLOR_GREEN_I" Type="COLOR_GREEN" Comment="" x="-700.0" y="700.0">
 		</FB>
 		<FB Name="Q_BackgroundColour_2" Type="Q_BackgroundColour" Comment="" x="1600.0" y="2300.0">
 		</FB>
 		<FB Name="Q_BackgroundColour_3" Type="Q_BackgroundColourAux" Comment="" x="1600.0" y="3100.0">
 		</FB>
+		<FB Name="F_SEL_I" Type="F_SEL_USINT" Comment="" x="-466.6666666666667" y="1200.0">
+			<Parameter Name="IN0" Value="COLOR_WHITE"/>
+			<Parameter Name="IN1" Value="COLOR_GREEN"/>
+		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="COLOR_WHITE_I.INIT" Comment="" dx1="400.0"/>
-			<Connection Source="INIT" Destination="COLOR_GREEN_I.INIT" Comment="" dx1="400.0"/>
 			<Connection Source="INIT" Destination="Q_BackgroundColour_1.INIT" Comment="" dx1="2800.0"/>
 			<Connection Source="INIT" Destination="Q_BackgroundColour_2.INIT" Comment="" dx1="2800.0"/>
 			<Connection Source="INIT" Destination="Q_BackgroundColour_3.INIT" Comment="" dx1="2800.0"/>
-			<Connection Source="REQ" Destination="F_SEL_I.REQ" Comment="" dx1="960.0"/>
-			<Connection Source="F_SEL_I.CNF" Destination="Q_BackgroundColour_1.REQ" Comment="" dx1="200.0"/>
-			<Connection Source="F_SEL_I.CNF" Destination="Q_BackgroundColour_2.REQ" Comment="" dx1="200.0"/>
-			<Connection Source="F_SEL_I.CNF" Destination="Q_BackgroundColour_3.REQ" Comment="" dx1="200.0"/>
 			<Connection Source="Q_BackgroundColour_3.CNF" Destination="CNF_3" Comment="" dx1="993.3333333333334"/>
 			<Connection Source="Q_BackgroundColour_2.CNF" Destination="CNF_2" Comment="" dx1="913.3333333333334"/>
 			<Connection Source="Q_BackgroundColour_1.CNF" Destination="CNF_1" Comment="" dx1="380.0"/>
 			<Connection Source="Q_BackgroundColour_3.INITO" Destination="INITO_3" Comment="" dx1="866.6666666666667"/>
 			<Connection Source="Q_BackgroundColour_2.INITO" Destination="INITO_2" Comment="" dx1="206.66666666666669"/>
 			<Connection Source="Q_BackgroundColour_1.INITO" Destination="INITO_1" Comment="" dx1="60.0"/>
+			<Connection Source="REQ" Destination="F_SEL_I.REQ" Comment="" dx1="80.0" dx2="80.0" dy="6.666666666666667"/>
+			<Connection Source="F_SEL_I.CNF" Destination="Q_BackgroundColour_1.REQ" Comment="" dx1="773.3333333333334" dx2="773.3333333333334" dy="0.0"/>
+			<Connection Source="F_SEL_I.CNF" Destination="Q_BackgroundColour_2.REQ" Comment="" dx1="773.3333333333334" dx2="773.3333333333334" dy="0.0"/>
+			<Connection Source="F_SEL_I.CNF" Destination="Q_BackgroundColour_3.REQ" Comment="" dx1="773.3333333333334" dx2="773.3333333333334" dy="0.0"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="DI1" Destination="F_SEL_I.G" Comment="" dx1="380.0"/>
 			<Connection Source="u16ObjId" Destination="Q_BackgroundColour_1.u16ObjId" Comment="" dx1="1460.0"/>
-			<Connection Source="COLOR_WHITE_I.u8Colour" Destination="F_SEL_I.IN0" Comment="" dx1="160.0"/>
-			<Connection Source="COLOR_GREEN_I.u8Colour" Destination="F_SEL_I.IN1" Comment="" dx1="40.0"/>
-			<Connection Source="F_SEL_I.OUT" Destination="Q_BackgroundColour_1.u8Colour" Comment="" dx1="80.0"/>
-			<Connection Source="F_SEL_I.OUT" Destination="Q_BackgroundColour_2.u8Colour" Comment="" dx1="80.0"/>
-			<Connection Source="F_SEL_I.OUT" Destination="Q_BackgroundColour_3.u8Colour" Comment="" dx1="80.0"/>
 			<Connection Source="u16ObjIdA" Destination="Q_BackgroundColour_2.u16ObjId" Comment="" dx1="160.0"/>
 			<Connection Source="u16ObjIdA" Destination="Q_BackgroundColour_3.u16ObjId" Comment="" dx1="133.33333333333334"/>
 			<Connection Source="Q_BackgroundColour_3.s16result" Destination="result_3" Comment="" dx1="240.0"/>
@@ -118,6 +93,10 @@
 			<Connection Source="Q_BackgroundColour_1.s16result" Destination="result_1" Comment="" dx1="560.0"/>
 			<Connection Source="Q_BackgroundColour_1.u8OldColour" Destination="u8OldColour_1" Comment="" dx1="673.3333333333334"/>
 			<Connection Source="Q_BackgroundColour_1.STATUS" Destination="STATUS_1" Comment="" dx1="780.0"/>
+			<Connection Source="DI1" Destination="F_SEL_I.G" Comment="" dx1="80.0" dx2="80.0" dy="6.666666666666667"/>
+			<Connection Source="F_SEL_I.OUT" Destination="Q_BackgroundColour_1.u8Colour" Comment="" dx1="773.3333333333334" dx2="773.3333333333334" dy="0.0"/>
+			<Connection Source="F_SEL_I.OUT" Destination="Q_BackgroundColour_2.u8Colour" Comment="" dx1="773.3333333333334" dx2="773.3333333333334" dy="0.0"/>
+			<Connection Source="F_SEL_I.OUT" Destination="Q_BackgroundColour_3.u8Colour" Comment="" dx1="773.3333333333334" dx2="773.3333333333334" dy="0.0"/>
 		</DataConnections>
-	</FBNetwork>
-</FBType>
+	</SubAppNetwork>
+</SubAppType>

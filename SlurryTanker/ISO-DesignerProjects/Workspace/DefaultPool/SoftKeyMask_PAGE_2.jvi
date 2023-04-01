@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<JetView-Document Version="5" ObjectPoolVersion="3.0" ProductVersion="5.6.1.5243">
+<JetView-Document Version="2" ObjectPoolVersion="3.0" ProductVersion="5.6.1.5243">
 	<PropertySheets>
 		<PropertySheet Name="General">
 			<Property Name="ObjectID">
-				<Value>4000</Value>
+				<Value>4001</Value>
 			</Property>
 			<Property Name="Titel">
 				<Value>
@@ -125,7 +125,7 @@
 		</PropertySheet>
 	</PropertySheets>
 	<Components>
-		<Component ID="606908994" Class="CSoftKey" Name="SoftKey">
+		<Component ID="88205625" Class="CSoftKey" Name="SoftKey">
 			<PropertySheets>
 				<PropertySheet Name="General">
 					<Property Name="ZOrder">
@@ -151,10 +151,10 @@
 				</PropertySheet>
 			</PropertySheets>
 			<Objects>
-				<Object JVS-ID="5000"/>
+				<Object JVS-ID="5012"/>
 			</Objects>
 		</Component>
-		<Component ID="450536220" Class="CSoftKey" Name="SoftKey">
+		<Component ID="9699576" Class="CSoftKey" Name="SoftKey">
 			<PropertySheets>
 				<PropertySheet Name="General">
 					<Property Name="ZOrder">
@@ -180,10 +180,10 @@
 				</PropertySheet>
 			</PropertySheets>
 			<Objects>
-				<Object JVS-ID="5001"/>
+				<Object JVS-ID="5013"/>
 			</Objects>
 		</Component>
-		<Component ID="394689915" Class="CSoftKey" Name="SoftKey">
+		<Component ID="85050624" Class="CSoftKey" Name="SoftKey">
 			<PropertySheets>
 				<PropertySheet Name="General">
 					<Property Name="ZOrder">
@@ -209,10 +209,10 @@
 				</PropertySheet>
 			</PropertySheets>
 			<Objects>
-				<Object JVS-ID="5002"/>
+				<Object JVS-ID="5015"/>
 			</Objects>
 		</Component>
-		<Component ID="586902162" Class="CSoftKey" Name="SoftKey">
+		<Component ID="37409632" Class="CSoftKey" Name="SoftKey">
 			<PropertySheets>
 				<PropertySheet Name="General">
 					<Property Name="ZOrder">
@@ -238,10 +238,10 @@
 				</PropertySheet>
 			</PropertySheets>
 			<Objects>
-				<Object JVS-ID="5003"/>
+				<Object JVS-ID="5016"/>
 			</Objects>
 		</Component>
-		<Component ID="29062112" Class="CSoftKey" Name="SoftKey">
+		<Component ID="345869190" Class="CSoftKey" Name="SoftKey">
 			<PropertySheets>
 				<PropertySheet Name="General">
 					<Property Name="ZOrder">
@@ -267,10 +267,10 @@
 				</PropertySheet>
 			</PropertySheets>
 			<Objects>
-				<Object JVS-ID="5004"/>
+				<Object JVS-ID="5005"/>
 			</Objects>
 		</Component>
-		<Component ID="345869190" Class="CSoftKey" Name="SoftKey">
+		<Component ID="519027025" Class="CSoftKey" Name="SoftKey">
 			<PropertySheets>
 				<PropertySheet Name="General">
 					<Property Name="ZOrder">
@@ -296,10 +296,10 @@
 				</PropertySheet>
 			</PropertySheets>
 			<Objects>
-				<Object JVS-ID="5005"/>
+				<Object JVS-ID="5017"/>
 			</Objects>
 		</Component>
-		<Component ID="70328960" Class="CSoftKey" Name="SoftKey">
+		<Component ID="478950705" Class="CSoftKey" Name="SoftKey">
 			<PropertySheets>
 				<PropertySheet Name="General">
 					<Property Name="ZOrder">
@@ -325,10 +325,10 @@
 				</PropertySheet>
 			</PropertySheets>
 			<Objects>
-				<Object JVS-ID="5006"/>
+				<Object JVS-ID="5018"/>
 			</Objects>
 		</Component>
-		<Component ID="18835670" Class="CSoftKey" Name="SoftKey">
+		<Component ID="106985276" Class="CSoftKey" Name="SoftKey">
 			<PropertySheets>
 				<PropertySheet Name="General">
 					<Property Name="ZOrder">
@@ -354,10 +354,10 @@
 				</PropertySheet>
 			</PropertySheets>
 			<Objects>
-				<Object JVS-ID="5007"/>
+				<Object JVS-ID="5019"/>
 			</Objects>
 		</Component>
-		<Component ID="413635872" Class="CSoftKey" Name="SoftKey">
+		<Component ID="50534400" Class="CSoftKey" Name="SoftKey">
 			<PropertySheets>
 				<PropertySheet Name="General">
 					<Property Name="ZOrder">
@@ -383,10 +383,10 @@
 				</PropertySheet>
 			</PropertySheets>
 			<Objects>
-				<Object JVS-ID="5008"/>
+				<Object JVS-ID="5021"/>
 			</Objects>
 		</Component>
-		<Component ID="138969558" Class="CSoftKey" Name="SoftKey">
+		<Component ID="588578496" Class="CSoftKey" Name="SoftKey">
 			<PropertySheets>
 				<PropertySheet Name="General">
 					<Property Name="ZOrder">
@@ -412,10 +412,10 @@
 				</PropertySheet>
 			</PropertySheets>
 			<Objects>
-				<Object JVS-ID="5009"/>
+				<Object JVS-ID="5022"/>
 			</Objects>
 		</Component>
-		<Component ID="756185444" Class="CSoftKey" Name="SoftKey">
+		<Component ID="777504231" Class="CSoftKey" Name="SoftKey">
 			<PropertySheets>
 				<PropertySheet Name="General">
 					<Property Name="ZOrder">
@@ -441,10 +441,10 @@
 				</PropertySheet>
 			</PropertySheets>
 			<Objects>
-				<Object JVS-ID="5010"/>
+				<Object JVS-ID="5011"/>
 			</Objects>
 		</Component>
-		<Component ID="777504231" Class="CSoftKey" Name="SoftKey">
+		<Component ID="24670876" Class="CSoftKey" Name="SoftKey">
 			<PropertySheets>
 				<PropertySheet Name="General">
 					<Property Name="ZOrder">
@@ -470,7 +470,7 @@
 				</PropertySheet>
 			</PropertySheets>
 			<Objects>
-				<Object JVS-ID="5011"/>
+				<Object JVS-ID="5023"/>
 			</Objects>
 		</Component>
 	</Components>

@@ -1,0 +1,18 @@
+VAR_GLOBAL CONSTANT
+    COLOR_BLACK      : USINT   :=  0;
+    COLOR_WHITE      : USINT   :=  1;
+    COLOR_GREEN      : USINT   :=  2;
+    COLOR_TEAL       : USINT   :=  3;
+    COLOR_MAROON     : USINT   :=  4;
+    COLOR_PURPLE     : USINT   :=  5;
+    COLOR_OLIVE      : USINT   :=  6;
+    COLOR_SILVER     : USINT   :=  7;
+    COLOR_GREY       : USINT   :=  8;
+    COLOR_BLUE       : USINT   :=  9;
+    COLOR_LIME       : USINT   :=  10;
+    COLOR_CYAN       : USINT   :=  11;
+    COLOR_RED        : USINT   :=  12;
+    COLOR_MAGENTA    : USINT   :=  13;
+    COLOR_YELLOW     : USINT   :=  14;
+    COLOR_NAVY       : USINT   :=  15;
+END_VAR

@@ -20,16 +20,18 @@
 		</InputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="GreenWhiteBackground_SoftKey_Abscheider" Type="GreenWhiteBackground" Comment="" x="-3653.3333333333335" y="-3533.3333333333335">
-			<Parameter Name="u16ObjId" Value="5015"/>
-			<Parameter Name="u16ObjIdA" Value="31015"/>
-		</FB>
+		<SubApp Name="GreenWhiteBackground_SoftKey_Abscheider" Type="GreenWhiteBackground" Comment="" x="-5000.0" y="-3500.0">
+			<Parameter Name="u16ObjId" Value="SoftKey_Abscheider"/>
+			<Parameter Name="u16ObjIdA" Value="AuxInput_Abscheider"/>
+			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
+		</SubApp>
 		<EventConnections>
-			<Connection Source="EO" Destination="GreenWhiteBackground_SoftKey_Abscheider.REQ" Comment="" dx1="86.66666666666667"/>
-			<Connection Source="INIT" Destination="GreenWhiteBackground_SoftKey_Abscheider.INIT" Comment="" dx1="140.0"/>
+			<Connection Source="EO" Destination="GreenWhiteBackground_SoftKey_Abscheider.REQ" Comment="" dx1="826.6666666666667"/>
+			<Connection Source="INIT" Destination="GreenWhiteBackground_SoftKey_Abscheider.INIT" Comment="" dx1="986.6666666666667"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="Q" Destination="GreenWhiteBackground_SoftKey_Abscheider.DI1" Comment="" dx1="193.33333333333334"/>
+			<Connection Source="Q" Destination="GreenWhiteBackground_SoftKey_Abscheider.DI1" Comment="" dx1="986.6666666666667"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

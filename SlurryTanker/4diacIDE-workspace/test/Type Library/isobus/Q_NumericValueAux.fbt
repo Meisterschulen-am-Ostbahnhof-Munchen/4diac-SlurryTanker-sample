@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<FBType Name="Q_NumericValue" Comment="Command change numeric value ( Part 6 - F.22 )">
+<FBType Name="Q_NumericValueAux" Comment="Command change numeric value ( Part 6 - F.22 )">
 	<Identification Standard="ISO 11783-6" Description="&lt;p&gt;This command is used to change the value of an object. It applies only to objects that have a numeric value attribute.&amp;nbsp;&lt;/p&gt; &#10; &#10;&lt;p&gt;Return values&lt;/p&gt; &#10; &#10;&lt;p&gt;iso_s16&lt;/p&gt; &#10; &#10;&lt;ul&gt; &#10;&#9;&lt;li&gt;&lt;span style=&quot;color:#0066cc&quot;&gt;E_NO_ERR&lt;/span&gt; - OK&lt;/li&gt; &#10;&#9;&lt;li&gt;&lt;span style=&quot;color:#0066cc&quot;&gt;E_OVERFLOW&lt;/span&gt; - buffer overflow&lt;/li&gt; &#10;&#9;&lt;li&gt;&lt;span style=&quot;color:#0066cc&quot;&gt;E_NOACT&lt;/span&gt; - Command not possible in current state&lt;/li&gt; &#10;&#9;&lt;li&gt;&lt;span style=&quot;color:#0066cc&quot;&gt;E_NO_INSTANCE&lt;/span&gt; - No VT client available&lt;/li&gt; &#10;&lt;/ul&gt; &#10; &#10;" >
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2022-07-08">
