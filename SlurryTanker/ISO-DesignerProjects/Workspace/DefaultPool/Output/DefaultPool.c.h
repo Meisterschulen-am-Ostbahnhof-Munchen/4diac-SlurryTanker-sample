@@ -27,8 +27,8 @@
 #define SoftKey_5021_Offset                                   318
 #define SoftKey_5022_Offset                                   325
 #define SoftKey_5023_Offset                                   332
-#define PAGE_2_BTN_Offset                                     339
-#define PAGE_1_BTN_Offset                                     358
+#define PAGE_1_BTN_Offset                                     339
+#define PAGE_2_BTN_Offset                                     358
 #define page_2_MAIN_Offset                                    377
 #define page_1_MAIN_Offset                                   1042
 #define workingset_pic_Offset                                1707

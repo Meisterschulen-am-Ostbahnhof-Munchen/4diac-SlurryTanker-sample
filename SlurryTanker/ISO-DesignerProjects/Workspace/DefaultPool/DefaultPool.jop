@@ -763,7 +763,7 @@
 				</Property>
 			</PropertySheet>
 		</Object>
-		<Object Class="CButton" Name="Button" ObjectName="PAGE_2_BTN" Pinned="FALSE" JVS-ID="6000">
+		<Object Class="CButton" Name="Button" ObjectName="PAGE_1_BTN" Pinned="FALSE" JVS-ID="6000">
 			<PropertySheet Name="Button">
 				<Property Name="BackColor">
 					<Value>16777215</Value>
@@ -829,7 +829,7 @@
 				<Object JVS-ID="4194342"/>
 			</Objects>
 		</Object>
-		<Object Class="CButton" Name="Button" ObjectName="PAGE_1_BTN" Pinned="FALSE" JVS-ID="6001">
+		<Object Class="CButton" Name="Button" ObjectName="PAGE_2_BTN" Pinned="FALSE" JVS-ID="6001">
 			<PropertySheet Name="Button">
 				<Property Name="BackColor">
 					<Value>16777215</Value>

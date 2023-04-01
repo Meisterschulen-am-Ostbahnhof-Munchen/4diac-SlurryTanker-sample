@@ -32,8 +32,8 @@
 #define SoftKey_5021                       5021
 #define SoftKey_5022                       5022
 #define SoftKey_5023                       5023
-#define PAGE_2_BTN                         6000
-#define PAGE_1_BTN                         6001
+#define PAGE_1_BTN                         6000
+#define PAGE_2_BTN                         6001
 #define page_2_MAIN                       20002
 #define page_1_MAIN                       20003
 #define workingset_pic                    20500

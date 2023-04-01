@@ -30,8 +30,8 @@ const unsigned long ISO_OP_MEMORY_CLASS isoOP_DefaultPool_Offset[] = {
 	   318,  // SoftKey_5021_Offset
 	   325,  // SoftKey_5022_Offset
 	   332,  // SoftKey_5023_Offset
-	   339,  // PAGE_2_BTN_Offset
-	   358,  // PAGE_1_BTN_Offset
+	   339,  // PAGE_1_BTN_Offset
+	   358,  // PAGE_2_BTN_Offset
 	   377,  // page_2_MAIN_Offset
 	  1042,  // page_1_MAIN_Offset
 	  1707,  // workingset_pic_Offset
