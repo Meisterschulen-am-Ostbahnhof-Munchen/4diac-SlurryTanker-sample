@@ -1133,7 +1133,7 @@ const unsigned char ISO_OP_MEMORY_CLASS isoOP_DefaultPool[] = {
 		XYREF(EXACUT, 0, 0),
 	ID(AuxInput_Seitenschieber), TYPEID_AUXFUNC2, COLOR_WHITE, 130, 1, 
 		XYREF(Seitenschieber, 0, 0),
-	ID(AuxInput_Zusammenklappen), TYPEID_AUXFUNC2, COLOR_WHITE, 155, 1, 
+	ID(AuxInput_Zusammenklappen), TYPEID_AUXFUNC2, COLOR_WHITE, 130, 1, 
 		XYREF(zusammenklappen, 0, 0),
 	ID(AuxInput_Verteiler_heben), TYPEID_AUXFUNC2, COLOR_WHITE, 130, 1, 
 		XYREF(Verteiler_heben, 0, 0),
