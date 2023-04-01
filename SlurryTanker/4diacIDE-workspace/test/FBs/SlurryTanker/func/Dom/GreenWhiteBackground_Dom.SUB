@@ -20,16 +20,18 @@
 		</InputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="GreenWhiteBackground_Dom" Type="GreenWhiteBackground" Comment="" x="-2533.3333333333335" y="-3466.666666666667">
+		<SubApp Name="GreenWhiteBackground_Dom" Type="GreenWhiteBackground" Comment="" x="-2533.3333333333335" y="-3466.666666666667">
 			<Parameter Name="u16ObjId" Value="5001"/>
 			<Parameter Name="u16ObjIdA" Value="31001"/>
-		</FB>
+			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
+		</SubApp>
 		<EventConnections>
-			<Connection Source="EO" Destination="GreenWhiteBackground_Dom.REQ" Comment="" dx1="573.3333333333334"/>
-			<Connection Source="INIT" Destination="GreenWhiteBackground_Dom.INIT" Comment="" dx1="766.6666666666667"/>
+			<Connection Source="EO" Destination="GreenWhiteBackground_Dom.REQ" Comment="" dx1="573.3333333333334" dx2="573.3333333333334" dy="0.0"/>
+			<Connection Source="INIT" Destination="GreenWhiteBackground_Dom.INIT" Comment="" dx1="766.6666666666667" dx2="766.6666666666667" dy="0.0"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="Q" Destination="GreenWhiteBackground_Dom.DI1" Comment="" dx1="680.0"/>
+			<Connection Source="Q" Destination="GreenWhiteBackground_Dom.DI1" Comment="" dx1="680.0" dx2="680.0" dy="0.0"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

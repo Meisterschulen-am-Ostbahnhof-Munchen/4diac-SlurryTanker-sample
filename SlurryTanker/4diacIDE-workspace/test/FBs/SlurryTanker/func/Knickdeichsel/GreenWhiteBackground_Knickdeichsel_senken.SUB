@@ -20,16 +20,18 @@
 		</InputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="GreenWhiteBackground_Knickdeichsel_senken" Type="GreenWhiteBackground" Comment="" x="-986.6666666666667" y="-866.6666666666667">
+		<SubApp Name="GreenWhiteBackground_Knickdeichsel_senken" Type="GreenWhiteBackground" Comment="" x="-986.6666666666667" y="-866.6666666666667">
 			<Parameter Name="u16ObjId" Value="5005"/>
 			<Parameter Name="u16ObjIdA" Value="31005"/>
-		</FB>
+			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
+		</SubApp>
 		<EventConnections>
-			<Connection Source="INIT" Destination="GreenWhiteBackground_Knickdeichsel_senken.INIT" Comment="" dx1="193.33333333333334"/>
-			<Connection Source="CNF" Destination="GreenWhiteBackground_Knickdeichsel_senken.REQ" Comment="" dx1="86.66666666666667"/>
+			<Connection Source="INIT" Destination="GreenWhiteBackground_Knickdeichsel_senken.INIT" Comment="" dx1="193.33333333333334" dx2="193.33333333333334" dy="0.0"/>
+			<Connection Source="CNF" Destination="GreenWhiteBackground_Knickdeichsel_senken.REQ" Comment="" dx1="86.66666666666667" dx2="86.66666666666667" dy="0.0"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="OUT" Destination="GreenWhiteBackground_Knickdeichsel_senken.DI1" Comment="" dx1="140.0"/>
+			<Connection Source="OUT" Destination="GreenWhiteBackground_Knickdeichsel_senken.DI1" Comment="" dx1="140.0" dx2="140.0" dy="0.0"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
