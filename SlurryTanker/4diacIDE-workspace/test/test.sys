@@ -9,8 +9,8 @@
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof, München" Version="0.3" Author="Franz Höpfinger" Date="2022-11-16" Remarks="alle Zeiten auf T#3s">
 	</VersionInfo>
 	<Device Name="FORTE_PC" Type="FORTE_PC" Comment="" x="4046.666666666667" y="1233.3333333333335">
-		<Parameter Name="MGR_ID" Value="&quot;192.168.4.1:61499&quot;"/>
-		<Attribute Name="Profile" Type="STRING" Value="DynamicTypeLoad"/>
+		<Parameter Name="MGR_ID" Value="C_00"/>
+		<Attribute Name="Profile" Type="STRING" Value="HOLOBLOC"/>
 		<Attribute Name="Color" Type="STRING" Value="255,190,111"/>
 		<Attribute Name="FBType" Type="STRING" Value="E_SWITCH, E_SR_RETRIG, E_R_TRIG, E_T_FF, E_IMPULSE, E_SR, E_F_TRIG, E_REND, E_D_FF" Comment="created during deployment"/>
 		<Resource Name="EMB_RES" Type="EMB_RES" Comment="" x="0.0" y="0.0">
