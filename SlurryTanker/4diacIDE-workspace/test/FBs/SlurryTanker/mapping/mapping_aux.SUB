@@ -17,43 +17,43 @@
 			<Parameter Name="u8SAMember" Value="255"/>
 			<Parameter Name="u16ObjId_1" Value="AuxInput_Automatik_ein"/>
 			<Parameter Name="DigitalInput_1" Value="&quot;AuxInput_Automatik_ein&quot;"/>
-			<Parameter Name="u16ObjId_2" Value="31003"/>
+			<Parameter Name="u16ObjId_2" Value="AuxInput_Auseinanderklappen"/>
 			<Parameter Name="DigitalInput_2" Value="&quot;AuxInput_Auseinanderklappen&quot;"/>
-			<Parameter Name="u16ObjId_3" Value="31004"/>
+			<Parameter Name="u16ObjId_3" Value="AuxInput_Verteiler_senken"/>
 			<Parameter Name="DigitalInput_3" Value="&quot;AuxInput_Verteiler_senken&quot;"/>
-			<Parameter Name="u16ObjId_4" Value="31005"/>
+			<Parameter Name="u16ObjId_4" Value="AuxInput_Knickdeichsel_senken"/>
 			<Parameter Name="DigitalInput_4" Value="&quot;AuxInput_Knickdeichsel_senken&quot;"/>
-			<Parameter Name="u16ObjId_5" Value="31006"/>
+			<Parameter Name="u16ObjId_5" Value="AuxInput_Automatik_aus"/>
 			<Parameter Name="DigitalInput_5" Value="&quot;AuxInput_Automatik_aus&quot;"/>
-			<Parameter Name="u16ObjId_6" Value="31009"/>
+			<Parameter Name="u16ObjId_6" Value="AuxInput_Zusammenklappen"/>
 			<Parameter Name="DigitalInput_6" Value="&quot;AuxInput_Zusammenklappen&quot;"/>
-			<Parameter Name="u16ObjId_7" Value="31010"/>
+			<Parameter Name="u16ObjId_7" Value="AuxInput_Verteiler_heben"/>
 			<Parameter Name="DigitalInput_7" Value="&quot;AuxInput_Verteiler_heben&quot;"/>
-			<Parameter Name="u16ObjId_8" Value="31011"/>
+			<Parameter Name="u16ObjId_8" Value="AuxInput_Knickdeichsel_heben"/>
 			<Parameter Name="DigitalInput_8" Value="&quot;AuxInput_Knickdeichsel_heben&quot;"/>
 		</FB>
 		<FB Name="UT_AuxiliaryInputMapping_1" Type="UT_AuxiliaryInputMapping" Comment="" x="-1600.0" y="1600.0">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u8SAMember" Value="255"/>
-			<Parameter Name="u16ObjId_2" Value="31001"/>
+			<Parameter Name="u16ObjId_2" Value="AuxInput_Dom"/>
 			<Parameter Name="DigitalInput_2" Value="&quot;AuxInput_Dom&quot;"/>
-			<Parameter Name="u16ObjId_3" Value="31002"/>
+			<Parameter Name="u16ObjId_3" Value="AuxInput_Heckschieber"/>
 			<Parameter Name="DigitalInput_3" Value="&quot;AuxInput_Heckschieber&quot;"/>
-			<Parameter Name="u16ObjId_5" Value="31007"/>
+			<Parameter Name="u16ObjId_5" Value="AuxInput_Schneidwerk"/>
 			<Parameter Name="DigitalInput_5" Value="&quot;AuxInput_Schneidwerk&quot;"/>
-			<Parameter Name="u16ObjId_6" Value="31008"/>
+			<Parameter Name="u16ObjId_6" Value="AuxInput_Seitenschieber"/>
 			<Parameter Name="DigitalInput_6" Value="&quot;AuxInput_Seitenschieber&quot;"/>
-			<Parameter Name="u16ObjId_7" Value="31015"/>
+			<Parameter Name="u16ObjId_7" Value="AuxInput_Abscheider"/>
 			<Parameter Name="DigitalInput_7" Value="&quot;AuxInput_Abscheider&quot;"/>
-			<Parameter Name="u16ObjId_8" Value="31016"/>
+			<Parameter Name="u16ObjId_8" Value="AuxInput_Licht"/>
 			<Parameter Name="DigitalInput_8" Value="&quot;AuxInput_Licht&quot;"/>
 		</FB>
 		<FB Name="UT_AuxiliaryInputMapping_2" Type="UT_AuxiliaryInputMapping" Comment="" x="-2100.0" y="4400.0">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u8SAMember" Value="255"/>
-			<Parameter Name="u16ObjId_1" Value="31024"/>
+			<Parameter Name="u16ObjId_1" Value="PAGE_1_AUX"/>
 			<Parameter Name="DigitalInput_1" Value="&quot;PAGE_1_AUX&quot;"/>
-			<Parameter Name="u16ObjId_2" Value="31025"/>
+			<Parameter Name="u16ObjId_2" Value="PAGE_2_AUX"/>
 			<Parameter Name="DigitalInput_2" Value="&quot;PAGE_2_AUX&quot;"/>
 		</FB>
 		<EventConnections>
