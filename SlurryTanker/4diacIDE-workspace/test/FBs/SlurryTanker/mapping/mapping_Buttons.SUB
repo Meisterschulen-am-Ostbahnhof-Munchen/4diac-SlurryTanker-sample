@@ -14,9 +14,9 @@
 		<FB Name="UT_ButtonMapping_UP" Type="UT_ButtonMapping" Comment="" x="900.0" y="900.0">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u8SAMember" Value="255"/>
-			<Parameter Name="u16ObjId_1" Value="6000"/>
+			<Parameter Name="u16ObjId_1" Value="PAGE_1_BTN"/>
 			<Parameter Name="DigitalInput_1" Value="&quot;PAGE_1_BTN&quot;"/>
-			<Parameter Name="u16ObjId_2" Value="6001"/>
+			<Parameter Name="u16ObjId_2" Value="PAGE_2_BTN"/>
 			<Parameter Name="DigitalInput_2" Value="&quot;PAGE_2_BTN&quot;"/>
 		</FB>
 		<EventConnections>

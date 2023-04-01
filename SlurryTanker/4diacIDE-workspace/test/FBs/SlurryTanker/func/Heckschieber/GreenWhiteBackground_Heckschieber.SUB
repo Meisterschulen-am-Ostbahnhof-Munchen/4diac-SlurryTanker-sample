@@ -21,8 +21,8 @@
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<SubApp Name="GreenWhiteBackground_SoftKey_Heckschieber" Type="GreenWhiteBackground" Comment="" x="-986.6666666666667" y="-866.6666666666667">
-			<Parameter Name="u16ObjId" Value="5002"/>
-			<Parameter Name="u16ObjIdA" Value="31002"/>
+			<Parameter Name="u16ObjId" Value="SoftKey_Heckschieber"/>
+			<Parameter Name="u16ObjIdA" Value="AuxInput_Heckschieber"/>
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 		</SubApp>

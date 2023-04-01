@@ -21,8 +21,8 @@
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<SubApp Name="GreenWhiteBackground_Knickdeichsel_senken" Type="GreenWhiteBackground" Comment="" x="-986.6666666666667" y="-866.6666666666667">
-			<Parameter Name="u16ObjId" Value="5005"/>
-			<Parameter Name="u16ObjIdA" Value="31005"/>
+			<Parameter Name="u16ObjId" Value="SoftKey_Knickdeichsel_senken"/>
+			<Parameter Name="u16ObjIdA" Value="AuxInput_Knickdeichsel_senken"/>
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 		</SubApp>

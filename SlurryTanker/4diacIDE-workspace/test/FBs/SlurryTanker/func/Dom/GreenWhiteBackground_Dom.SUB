@@ -21,8 +21,8 @@
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<SubApp Name="GreenWhiteBackground_Dom" Type="GreenWhiteBackground" Comment="" x="-2533.3333333333335" y="-3466.666666666667">
-			<Parameter Name="u16ObjId" Value="5001"/>
-			<Parameter Name="u16ObjIdA" Value="31001"/>
+			<Parameter Name="u16ObjId" Value="SoftKey_Dom"/>
+			<Parameter Name="u16ObjIdA" Value="AuxInput_Dom"/>
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 		</SubApp>

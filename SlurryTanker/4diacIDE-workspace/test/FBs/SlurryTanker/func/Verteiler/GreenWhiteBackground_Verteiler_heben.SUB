@@ -21,8 +21,8 @@
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<SubApp Name="GreenWhiteBackground_Verteiler_heben" Type="GreenWhiteBackground" Comment="" x="-986.6666666666667" y="-866.6666666666667">
-			<Parameter Name="u16ObjId" Value="5010"/>
-			<Parameter Name="u16ObjIdA" Value="31010"/>
+			<Parameter Name="u16ObjId" Value="SoftKey_Verteiler_heben"/>
+			<Parameter Name="u16ObjIdA" Value="AuxInput_Verteiler_heben"/>
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 		</SubApp>

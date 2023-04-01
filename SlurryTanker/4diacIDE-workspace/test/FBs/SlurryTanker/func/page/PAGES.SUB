@@ -26,7 +26,7 @@
 		</SubApp>
 		<FB Name="Q_SoftKeyMask" Type="Q_SoftKeyMask" Comment="" x="4933.333333333334" y="-1066.6666666666667">
 			<Parameter Name="u8MaskType" Value="1"/>
-			<Parameter Name="u16DataMaskId" Value="1000"/>
+			<Parameter Name="u16DataMaskId" Value="DataMask_1000"/>
 		</FB>
 		<SubApp Name="VT_active" Type="VT_active" Comment="" x="-800.0" y="-1100.0">
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
@@ -43,14 +43,14 @@
 		<FB Name="E_SR_PAGE_2" Type="E_SR" Comment="" x="3500.0" y="2700.0">
 		</FB>
 		<SubApp Name="GreenWhiteBackground_PAGE_2" Type="GreenWhiteBackground" Comment="" x="5066.666666666667" y="2533.3333333333335">
-			<Parameter Name="u16ObjId" Value="6001"/>
-			<Parameter Name="u16ObjIdA" Value="31025"/>
+			<Parameter Name="u16ObjId" Value="PAGE_2_BTN"/>
+			<Parameter Name="u16ObjIdA" Value="PAGE_2_AUX"/>
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 		</SubApp>
 		<SubApp Name="GreenWhiteBackground_PAGE_1" Type="GreenWhiteBackground" Comment="" x="5066.666666666667" y="533.3333333333334">
-			<Parameter Name="u16ObjId" Value="6000"/>
-			<Parameter Name="u16ObjIdA" Value="31024"/>
+			<Parameter Name="u16ObjId" Value="PAGE_1_BTN"/>
+			<Parameter Name="u16ObjIdA" Value="PAGE_1_AUX"/>
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 		</SubApp>
@@ -93,7 +93,7 @@
 			<Connection Source="E_SR_PAGE_1.EO" Destination="GreenWhiteBackground_PAGE_1.REQ" Comment="" dx1="500.0" dx2="500.0" dy="0.0"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="F_SEL_I.OUT" Destination="Q_SoftKeyMask.u16SoftKeyMaskId" Comment="" dx1="446.6666666666667"/>
+			<Connection Source="F_SEL_I.OUT" Destination="Q_SoftKeyMask.u16SoftKeyMaskId" Comment="" dx1="180.0"/>
 			<Connection Source="E_SR_PAGE_2.Q" Destination="GreenWhiteBackground_PAGE_2.DI1" Comment="" dx1="546.6666666666667" dx2="546.6666666666667" dy="0.0"/>
 			<Connection Source="E_SR_PAGE_1.Q" Destination="GreenWhiteBackground_PAGE_1.DI1" Comment="" dx1="500.0" dx2="500.0" dy="0.0"/>
 		</DataConnections>

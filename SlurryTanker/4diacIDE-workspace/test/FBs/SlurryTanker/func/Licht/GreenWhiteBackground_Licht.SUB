@@ -21,8 +21,8 @@
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<SubApp Name="GreenWhiteBackground_Licht" Type="GreenWhiteBackground" Comment="" x="-100.0" y="-800.0">
-			<Parameter Name="u16ObjId" Value="5016"/>
-			<Parameter Name="u16ObjIdA" Value="31016"/>
+			<Parameter Name="u16ObjId" Value="SoftKey_Licht"/>
+			<Parameter Name="u16ObjIdA" Value="AuxInput_Licht"/>
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 		</SubApp>
