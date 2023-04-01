@@ -31,13 +31,13 @@
 				</Property>
 			</PropertySheet>
 		</Object>
-		<Object Class="CSoftKeyMask" Name="" ObjectName="SoftKeyMask_4000" Pinned="FALSE" JVS-ID="4000" JVS-RefCount="1">
+		<Object Class="CSoftKeyMask" Name="" ObjectName="SoftKeyMask_PAGE_1" Pinned="FALSE" JVS-ID="4000" JVS-RefCount="1">
 			<PropertySheet Name="Model">
 				<Property Name="MaskType">
 					<Value>2</Value>
 				</Property>
 				<Property Name="Path">
-					<Value>.\SoftKeyMask_4000.jvi</Value>
+					<Value>.\SoftKeyMask_PAGE_1.jvi</Value>
 				</Property>
 				<Property Name="Comment">
 					<Value>
@@ -46,13 +46,13 @@
 				</Property>
 			</PropertySheet>
 		</Object>
-		<Object Class="CSoftKeyMask" Name="" ObjectName="SoftKeyMask_4001" Pinned="FALSE" JVS-ID="4001" JVS-RefCount="1">
+		<Object Class="CSoftKeyMask" Name="" ObjectName="SoftKeyMask_PAGE_2" Pinned="FALSE" JVS-ID="4001" JVS-RefCount="1">
 			<PropertySheet Name="Model">
 				<Property Name="MaskType">
 					<Value>2</Value>
 				</Property>
 				<Property Name="Path">
-					<Value>.\SoftKeyMask_4001.jvi</Value>
+					<Value>.\SoftKeyMask_PAGE_2.jvi</Value>
 				</Property>
 				<Property Name="Comment">
 					<Value>
@@ -61,7 +61,7 @@
 				</Property>
 			</PropertySheet>
 		</Object>
-		<Object Class="CSoftKey" Name="SoftKey" ObjectName="SoftKey_5000" Pinned="FALSE" JVS-ID="5000">
+		<Object Class="CSoftKey" Name="SoftKey" ObjectName="SoftKey_Automatik_ein" Pinned="FALSE" JVS-ID="5000">
 			<PropertySheet Name="SoftKey">
 				<Property Name="BackColor">
 					<Value>16777215</Value>
@@ -94,7 +94,7 @@
 				<Object JVS-ID="4194304"/>
 			</Objects>
 		</Object>
-		<Object Class="CSoftKey" Name="SoftKey" ObjectName="SoftKey_5001" Pinned="FALSE" JVS-ID="5001">
+		<Object Class="CSoftKey" Name="SoftKey" ObjectName="SoftKey_Dom" Pinned="FALSE" JVS-ID="5001">
 			<PropertySheet Name="SoftKey">
 				<Property Name="BackColor">
 					<Value>16777215</Value>
@@ -127,7 +127,7 @@
 				<Object JVS-ID="4194306"/>
 			</Objects>
 		</Object>
-		<Object Class="CSoftKey" Name="SoftKey" ObjectName="SoftKey_5002" Pinned="FALSE" JVS-ID="5002">
+		<Object Class="CSoftKey" Name="SoftKey" ObjectName="SoftKey_Heckschieber" Pinned="FALSE" JVS-ID="5002">
 			<PropertySheet Name="SoftKey">
 				<Property Name="BackColor">
 					<Value>16777215</Value>
@@ -160,7 +160,7 @@
 				<Object JVS-ID="4194309"/>
 			</Objects>
 		</Object>
-		<Object Class="CSoftKey" Name="SoftKey" ObjectName="SoftKey_5003" Pinned="FALSE" JVS-ID="5003">
+		<Object Class="CSoftKey" Name="SoftKey" ObjectName="SoftKey_Auseinanderklappen" Pinned="FALSE" JVS-ID="5003">
 			<PropertySheet Name="SoftKey">
 				<Property Name="BackColor">
 					<Value>16777215</Value>
@@ -193,7 +193,7 @@
 				<Object JVS-ID="4194311"/>
 			</Objects>
 		</Object>
-		<Object Class="CSoftKey" Name="SoftKey" ObjectName="SoftKey_5004" Pinned="FALSE" JVS-ID="5004">
+		<Object Class="CSoftKey" Name="SoftKey" ObjectName="SoftKey_Verteiler_senken" Pinned="FALSE" JVS-ID="5004">
 			<PropertySheet Name="SoftKey">
 				<Property Name="BackColor">
 					<Value>16777215</Value>
@@ -226,7 +226,7 @@
 				<Object JVS-ID="4194313"/>
 			</Objects>
 		</Object>
-		<Object Class="CSoftKey" Name="SoftKey" ObjectName="SoftKey_5005" Pinned="FALSE" JVS-ID="5005">
+		<Object Class="CSoftKey" Name="SoftKey" ObjectName="SoftKey_Knickdeichsel_senken" Pinned="FALSE" JVS-ID="5005">
 			<PropertySheet Name="SoftKey">
 				<Property Name="BackColor">
 					<Value>16777215</Value>
@@ -259,7 +259,7 @@
 				<Object JVS-ID="4194315"/>
 			</Objects>
 		</Object>
-		<Object Class="CSoftKey" Name="SoftKey" ObjectName="SoftKey_5006" Pinned="FALSE" JVS-ID="5006">
+		<Object Class="CSoftKey" Name="SoftKey" ObjectName="SoftKey_Automatik_aus" Pinned="FALSE" JVS-ID="5006">
 			<PropertySheet Name="SoftKey">
 				<Property Name="BackColor">
 					<Value>16777215</Value>
@@ -292,7 +292,7 @@
 				<Object JVS-ID="4194305"/>
 			</Objects>
 		</Object>
-		<Object Class="CSoftKey" Name="SoftKey" ObjectName="SoftKey_5007" Pinned="FALSE" JVS-ID="5007">
+		<Object Class="CSoftKey" Name="SoftKey" ObjectName="SoftKey_Schneidwerk" Pinned="FALSE" JVS-ID="5007">
 			<PropertySheet Name="SoftKey">
 				<Property Name="BackColor">
 					<Value>16777215</Value>
@@ -325,7 +325,7 @@
 				<Object JVS-ID="4194307"/>
 			</Objects>
 		</Object>
-		<Object Class="CSoftKey" Name="SoftKey" ObjectName="SoftKey_5008" Pinned="FALSE" JVS-ID="5008">
+		<Object Class="CSoftKey" Name="SoftKey" ObjectName="SoftKey_Seitenschieber" Pinned="FALSE" JVS-ID="5008">
 			<PropertySheet Name="SoftKey">
 				<Property Name="BackColor">
 					<Value>16777215</Value>
@@ -358,7 +358,7 @@
 				<Object JVS-ID="4194308"/>
 			</Objects>
 		</Object>
-		<Object Class="CSoftKey" Name="SoftKey" ObjectName="SoftKey_5009" Pinned="FALSE" JVS-ID="5009">
+		<Object Class="CSoftKey" Name="SoftKey" ObjectName="SoftKey_Zusammenklappen" Pinned="FALSE" JVS-ID="5009">
 			<PropertySheet Name="SoftKey">
 				<Property Name="BackColor">
 					<Value>16777215</Value>
@@ -391,7 +391,7 @@
 				<Object JVS-ID="4194310"/>
 			</Objects>
 		</Object>
-		<Object Class="CSoftKey" Name="SoftKey" ObjectName="SoftKey_5010" Pinned="FALSE" JVS-ID="5010">
+		<Object Class="CSoftKey" Name="SoftKey" ObjectName="SoftKey_Verteiler_heben" Pinned="FALSE" JVS-ID="5010">
 			<PropertySheet Name="SoftKey">
 				<Property Name="BackColor">
 					<Value>16777215</Value>
@@ -424,7 +424,7 @@
 				<Object JVS-ID="4194312"/>
 			</Objects>
 		</Object>
-		<Object Class="CSoftKey" Name="SoftKey" ObjectName="SoftKey_5011" Pinned="FALSE" JVS-ID="5011">
+		<Object Class="CSoftKey" Name="SoftKey" ObjectName="SoftKey_Knickdeichsel_heben" Pinned="FALSE" JVS-ID="5011">
 			<PropertySheet Name="SoftKey">
 				<Property Name="BackColor">
 					<Value>16777215</Value>
@@ -517,7 +517,7 @@
 				</Property>
 			</PropertySheet>
 		</Object>
-		<Object Class="CSoftKey" Name="SoftKey" ObjectName="SoftKey_5015" Pinned="FALSE" JVS-ID="5015">
+		<Object Class="CSoftKey" Name="SoftKey" ObjectName="SoftKey_Abscheider" Pinned="FALSE" JVS-ID="5015">
 			<PropertySheet Name="SoftKey">
 				<Property Name="BackColor">
 					<Value>16777215</Value>
@@ -550,7 +550,7 @@
 				<Object JVS-ID="4194319"/>
 			</Objects>
 		</Object>
-		<Object Class="CSoftKey" Name="SoftKey" ObjectName="SoftKey_5016" Pinned="FALSE" JVS-ID="5016">
+		<Object Class="CSoftKey" Name="SoftKey" ObjectName="SoftKey_Licht" Pinned="FALSE" JVS-ID="5016">
 			<PropertySheet Name="SoftKey">
 				<Property Name="BackColor">
 					<Value>16777215</Value>
@@ -763,7 +763,7 @@
 				</Property>
 			</PropertySheet>
 		</Object>
-		<Object Class="CButton" Name="Button" ObjectName="Button_6000" Pinned="FALSE" JVS-ID="6000">
+		<Object Class="CButton" Name="Button" ObjectName="PAGE_1_BTN" Pinned="FALSE" JVS-ID="6000">
 			<PropertySheet Name="Button">
 				<Property Name="BackColor">
 					<Value>16777215</Value>
@@ -829,7 +829,7 @@
 				<Object JVS-ID="4194342"/>
 			</Objects>
 		</Object>
-		<Object Class="CButton" Name="Button" ObjectName="Button_6001" Pinned="FALSE" JVS-ID="6001">
+		<Object Class="CButton" Name="Button" ObjectName="PAGE_2_BTN" Pinned="FALSE" JVS-ID="6001">
 			<PropertySheet Name="Button">
 				<Property Name="BackColor">
 					<Value>16777215</Value>
@@ -2000,7 +2000,7 @@
 				</Property>
 			</PropertySheet>
 		</Object>
-		<Object Class="CImage" Name="Image" ObjectName="page_1_AUX" Pinned="FALSE" JVS-ID="20516">
+		<Object Class="CImage" Name="Image" ObjectName="page_1_for_AUX" Pinned="FALSE" JVS-ID="20516">
 			<PropertySheet Name="Image">
 				<Property Name="Path">
 					<Value>
@@ -2065,7 +2065,7 @@
 				</Property>
 			</PropertySheet>
 		</Object>
-		<Object Class="CImage" Name="Image" ObjectName="page_2_AUX" Pinned="FALSE" JVS-ID="20517">
+		<Object Class="CImage" Name="Image" ObjectName="page_2_for_AUX" Pinned="FALSE" JVS-ID="20517">
 			<PropertySheet Name="Image">
 				<Property Name="Path">
 					<Value>
@@ -2130,7 +2130,7 @@
 				</Property>
 			</PropertySheet>
 		</Object>
-		<Object Class="CAuxFunction" Name="AuxFunction" ObjectName="AuxFunction2_31000" Pinned="TRUE" JVS-ID="31000">
+		<Object Class="CAuxFunction" Name="AuxFunction" ObjectName="AuxInput_Automatik_ein" Pinned="TRUE" JVS-ID="31000">
 			<PropertySheet Name="AuxFunction">
 				<Property Name="BackColor">
 					<Value>16777215</Value>
@@ -2184,7 +2184,7 @@
 				<Object JVS-ID="4194322"/>
 			</Objects>
 		</Object>
-		<Object Class="CAuxFunction" Name="AuxFunction" ObjectName="AuxFunction2_31001" Pinned="TRUE" JVS-ID="31001">
+		<Object Class="CAuxFunction" Name="AuxFunction" ObjectName="AuxInput_Dom" Pinned="TRUE" JVS-ID="31001">
 			<PropertySheet Name="AuxFunction">
 				<Property Name="BackColor">
 					<Value>16777215</Value>
@@ -2238,7 +2238,7 @@
 				<Object JVS-ID="4194323"/>
 			</Objects>
 		</Object>
-		<Object Class="CAuxFunction" Name="AuxFunction" ObjectName="AuxFunction2_31002" Pinned="TRUE" JVS-ID="31002">
+		<Object Class="CAuxFunction" Name="AuxFunction" ObjectName="AuxInput_Heckschieber" Pinned="TRUE" JVS-ID="31002">
 			<PropertySheet Name="AuxFunction">
 				<Property Name="BackColor">
 					<Value>16777215</Value>
@@ -2292,7 +2292,7 @@
 				<Object JVS-ID="4194325"/>
 			</Objects>
 		</Object>
-		<Object Class="CAuxFunction" Name="AuxFunction" ObjectName="AuxFunction2_31003" Pinned="TRUE" JVS-ID="31003">
+		<Object Class="CAuxFunction" Name="AuxFunction" ObjectName="AuxInput_Auseinanderklappen" Pinned="TRUE" JVS-ID="31003">
 			<PropertySheet Name="AuxFunction">
 				<Property Name="BackColor">
 					<Value>16777215</Value>
@@ -2346,7 +2346,7 @@
 				<Object JVS-ID="4194326"/>
 			</Objects>
 		</Object>
-		<Object Class="CAuxFunction" Name="AuxFunction" ObjectName="AuxFunction2_31004" Pinned="TRUE" JVS-ID="31004">
+		<Object Class="CAuxFunction" Name="AuxFunction" ObjectName="AuxInput_Verteiler_senken" Pinned="TRUE" JVS-ID="31004">
 			<PropertySheet Name="AuxFunction">
 				<Property Name="BackColor">
 					<Value>16777215</Value>
@@ -2400,7 +2400,7 @@
 				<Object JVS-ID="4194327"/>
 			</Objects>
 		</Object>
-		<Object Class="CAuxFunction" Name="AuxFunction" ObjectName="AuxFunction2_31005" Pinned="TRUE" JVS-ID="31005">
+		<Object Class="CAuxFunction" Name="AuxFunction" ObjectName="AuxInput_Knickdeichsel_senken" Pinned="TRUE" JVS-ID="31005">
 			<PropertySheet Name="AuxFunction">
 				<Property Name="BackColor">
 					<Value>16777215</Value>
@@ -2454,7 +2454,7 @@
 				<Object JVS-ID="4194328"/>
 			</Objects>
 		</Object>
-		<Object Class="CAuxFunction" Name="AuxFunction" ObjectName="AuxFunction2_31006" Pinned="TRUE" JVS-ID="31006">
+		<Object Class="CAuxFunction" Name="AuxFunction" ObjectName="AuxInput_Automatik_aus" Pinned="TRUE" JVS-ID="31006">
 			<PropertySheet Name="AuxFunction">
 				<Property Name="BackColor">
 					<Value>16777215</Value>
@@ -2508,7 +2508,7 @@
 				<Object JVS-ID="4194329"/>
 			</Objects>
 		</Object>
-		<Object Class="CAuxFunction" Name="AuxFunction" ObjectName="AuxFunction2_31007" Pinned="TRUE" JVS-ID="31007">
+		<Object Class="CAuxFunction" Name="AuxFunction" ObjectName="AuxInput_Schneidwerk" Pinned="TRUE" JVS-ID="31007">
 			<PropertySheet Name="AuxFunction">
 				<Property Name="BackColor">
 					<Value>16777215</Value>
@@ -2562,7 +2562,7 @@
 				<Object JVS-ID="4194330"/>
 			</Objects>
 		</Object>
-		<Object Class="CAuxFunction" Name="AuxFunction" ObjectName="AuxFunction2_31008" Pinned="TRUE" JVS-ID="31008">
+		<Object Class="CAuxFunction" Name="AuxFunction" ObjectName="AuxInput_Seitenschieber" Pinned="TRUE" JVS-ID="31008">
 			<PropertySheet Name="AuxFunction">
 				<Property Name="BackColor">
 					<Value>16777215</Value>
@@ -2616,7 +2616,7 @@
 				<Object JVS-ID="4194331"/>
 			</Objects>
 		</Object>
-		<Object Class="CAuxFunction" Name="AuxFunction" ObjectName="AuxFunction2_31009" Pinned="TRUE" JVS-ID="31009">
+		<Object Class="CAuxFunction" Name="AuxFunction" ObjectName="AuxInput_Zusammenklappen" Pinned="TRUE" JVS-ID="31009">
 			<PropertySheet Name="AuxFunction">
 				<Property Name="BackColor">
 					<Value>16777215</Value>
@@ -2670,7 +2670,7 @@
 				<Object JVS-ID="4194332"/>
 			</Objects>
 		</Object>
-		<Object Class="CAuxFunction" Name="AuxFunction" ObjectName="AuxFunction2_31010" Pinned="TRUE" JVS-ID="31010">
+		<Object Class="CAuxFunction" Name="AuxFunction" ObjectName="AuxInput_Verteiler_heben" Pinned="TRUE" JVS-ID="31010">
 			<PropertySheet Name="AuxFunction">
 				<Property Name="BackColor">
 					<Value>16777215</Value>
@@ -2724,7 +2724,7 @@
 				<Object JVS-ID="4194333"/>
 			</Objects>
 		</Object>
-		<Object Class="CAuxFunction" Name="AuxFunction" ObjectName="AuxFunction2_31011" Pinned="TRUE" JVS-ID="31011">
+		<Object Class="CAuxFunction" Name="AuxFunction" ObjectName="AuxInput_Knickdeichsel_heben" Pinned="TRUE" JVS-ID="31011">
 			<PropertySheet Name="AuxFunction">
 				<Property Name="BackColor">
 					<Value>16777215</Value>
@@ -2778,7 +2778,7 @@
 				<Object JVS-ID="4194334"/>
 			</Objects>
 		</Object>
-		<Object Class="CAuxFunction" Name="AuxFunction" ObjectName="AuxFunction2_31015" Pinned="TRUE" JVS-ID="31015">
+		<Object Class="CAuxFunction" Name="AuxFunction" ObjectName="AuxInput_Abscheider" Pinned="TRUE" JVS-ID="31015">
 			<PropertySheet Name="AuxFunction">
 				<Property Name="BackColor">
 					<Value>16777215</Value>
@@ -2832,7 +2832,7 @@
 				<Object JVS-ID="4194336"/>
 			</Objects>
 		</Object>
-		<Object Class="CAuxFunction" Name="AuxFunction" ObjectName="AuxFunction2_31016" Pinned="TRUE" JVS-ID="31016">
+		<Object Class="CAuxFunction" Name="AuxFunction" ObjectName="AuxInput_Licht" Pinned="TRUE" JVS-ID="31016">
 			<PropertySheet Name="AuxFunction">
 				<Property Name="BackColor">
 					<Value>16777215</Value>
@@ -2886,7 +2886,7 @@
 				<Object JVS-ID="4194337"/>
 			</Objects>
 		</Object>
-		<Object Class="CAuxFunction" Name="AuxFunction" ObjectName="AuxFunction2_31024" Pinned="TRUE" JVS-ID="31024">
+		<Object Class="CAuxFunction" Name="AuxFunction" ObjectName="PAGE_1_AUX" Pinned="TRUE" JVS-ID="31024">
 			<PropertySheet Name="AuxFunction">
 				<Property Name="BackColor">
 					<Value>16777215</Value>
@@ -2940,7 +2940,7 @@
 				<Object JVS-ID="4194338"/>
 			</Objects>
 		</Object>
-		<Object Class="CAuxFunction" Name="AuxFunction" ObjectName="AuxFunction2_31025" Pinned="TRUE" JVS-ID="31025">
+		<Object Class="CAuxFunction" Name="AuxFunction" ObjectName="PAGE_2_AUX" Pinned="TRUE" JVS-ID="31025">
 			<PropertySheet Name="AuxFunction">
 				<Property Name="BackColor">
 					<Value>16777215</Value>

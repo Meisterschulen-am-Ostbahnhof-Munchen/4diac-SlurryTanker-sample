@@ -20,16 +20,18 @@
 		</InputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="GreenWhiteBackground_Licht" Type="GreenWhiteBackground" Comment="" x="-100.0" y="-800.0">
-			<Parameter Name="u16ObjId" Value="5016"/>
-			<Parameter Name="u16ObjIdA" Value="31016"/>
-		</FB>
+		<SubApp Name="GreenWhiteBackground_Licht" Type="GreenWhiteBackground" Comment="" x="-100.0" y="-800.0">
+			<Parameter Name="u16ObjId" Value="SoftKey_Licht"/>
+			<Parameter Name="u16ObjIdA" Value="AuxInput_Licht"/>
+			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
+		</SubApp>
 		<EventConnections>
-			<Connection Source="INIT" Destination="GreenWhiteBackground_Licht.INIT" Comment="" dx1="586.6666666666667"/>
-			<Connection Source="EO" Destination="GreenWhiteBackground_Licht.REQ" Comment="" dx1="400.0"/>
+			<Connection Source="INIT" Destination="GreenWhiteBackground_Licht.INIT" Comment="" dx1="586.6666666666667" dx2="586.6666666666667" dy="0.0"/>
+			<Connection Source="EO" Destination="GreenWhiteBackground_Licht.REQ" Comment="" dx1="400.0" dx2="400.0" dy="0.0"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="Q" Destination="GreenWhiteBackground_Licht.DI1" Comment="" dx1="506.6666666666667"/>
+			<Connection Source="Q" Destination="GreenWhiteBackground_Licht.DI1" Comment="" dx1="506.6666666666667" dx2="506.6666666666667" dy="0.0"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
