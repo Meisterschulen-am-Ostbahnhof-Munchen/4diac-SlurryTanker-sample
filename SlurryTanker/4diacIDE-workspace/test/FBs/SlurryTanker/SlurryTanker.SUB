@@ -132,6 +132,13 @@
 		<SubApp Name="Licht" Type="Licht" Comment="" x="4406.666666666667" y="2226.666666666667">
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
+			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
+			<Attribute Name="GroupName" Type="STRING" Value="func"/>
+		</SubApp>
+		<SubApp Name="mapping_blink" Type="mapping_blink" Comment="" x="4206.666666666667" y="2986.666666666667">
+			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			<Attribute Name="GroupName" Type="STRING" Value="func"/>
 		</SubApp>
 		<EventConnections>
@@ -221,6 +228,9 @@
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
 			<Connection Source="INIT" Destination="Licht.INIT" Comment="" dx1="3293.3333333333335">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="INIT" Destination="mapping_blink.INIT" Comment="" dx1="2920.0">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
 		</EventConnections>

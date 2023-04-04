@@ -67,6 +67,9 @@
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 		</SubApp>
+		<FB Name="DigitalInput_Key_1" Type="IX" Comment="" x="100.0" y="3000.0">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
 		<EventConnections>
 			<Connection Source="INIT" Destination="GreenWhiteBackground_Knickdeichsel_heben.INIT" Comment="" dx1="5046.666666666667"/>
 			<Connection Source="INIT" Destination="GreenWhiteBackground_Knickdeichsel_senken.INIT" Comment="" dx1="5046.666666666667"/>
@@ -85,6 +88,7 @@
 			<Connection Source="AuxInput_Knickdeichsel_heben.IND" Destination="OR_2_Knickdeichsel_heben.REQ" Comment="" dx1="413.33333333333337" dx2="413.33333333333337" dy="0.0"/>
 			<Connection Source="OR_2_Knickdeichsel_heben.CNF" Destination="CNF_2b" Comment="" dx1="4953.333333333334"/>
 			<Connection Source="OR_2_Knickdeichsel_senken.CNF" Destination="CNF_2a" Comment="" dx1="5426.666666666667"/>
+			<Connection Source="INIT" Destination="DigitalInput_Key_1.INIT" Comment="" dx1="720.0"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="SoftKey_Knickdeichsel_heben.IN" Destination="OR_2_Knickdeichsel_heben.IN1" Comment="" dx1="213.33333333333334" dx2="213.33333333333334" dy="0.0"/>
