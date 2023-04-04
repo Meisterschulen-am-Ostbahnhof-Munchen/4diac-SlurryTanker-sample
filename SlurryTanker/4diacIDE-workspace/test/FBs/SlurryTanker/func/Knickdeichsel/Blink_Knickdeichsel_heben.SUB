@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Blink_Knickdeichsel_heben" Comment="Subapplication Type">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2023-02-11">
+	</VersionInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="Event" Comment="">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="IND" Type="Event" Comment="">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<OutputVars>
+			<VarDeclaration Name="IN" Type="BOOL" Comment=""/>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalInput_Key_1" Type="IX" Comment="" x="0.0" y="0.0">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="DigitalInput_Key_1.INIT" Comment="" dx1="80.0" dx2="1140.0" dy="33.333333333333336"/>
+			<Connection Source="DigitalInput_Key_1.IND" Destination="IND" Comment="" dx1="2926.666666666667"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="DigitalInput_Key_1.IN" Destination="IN" Comment="" dx1="2926.666666666667"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>
