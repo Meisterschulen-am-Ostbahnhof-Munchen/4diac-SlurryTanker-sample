@@ -20,5 +20,8 @@
 			<Parameter Name="DigitalInput_Key_3" Value="&quot;DigitalInput_Key_3&quot;"/>
 			<Parameter Name="DigitalInput_Key_4" Value="&quot;DigitalInput_Key_4&quot;"/>
 		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="PKP_2200_LI_4_DI.INIT" Comment="" dx1="1033.3333333333335"/>
+		</EventConnections>
 	</SubAppNetwork>
 </SubAppType>
