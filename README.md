@@ -1,4 +1,5 @@
 # 4diac-SlurryTanker-sample
+logiBUS®
 
 ### Need help or have a question? Join the chat at [Gitter](https://gitter.im/Meisterschulen-am-Ostbahnhof-Munchen/4diac-SlurryTanker-sample) or [open a new Discussion](https://github.com/Meisterschulen-am-Ostbahnhof-Munchen/4diac-SlurryTanker-sample/discussions)
 
