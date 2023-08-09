@@ -7,3 +7,7 @@ logiBUS®
 
 
 [SlurryTanker/Ablaufplan.md](SlurryTanker/Ablaufplan.md)
+
+
+
+![WhatsApp Image 2023-01-30 at 08 51 21 (2)](https://github.com/Meisterschulen-am-Ostbahnhof-Munchen/4diac-SlurryTanker-sample/assets/69573151/7cddedd2-e5f0-4e82-9b5e-6eaccb80aad0)
