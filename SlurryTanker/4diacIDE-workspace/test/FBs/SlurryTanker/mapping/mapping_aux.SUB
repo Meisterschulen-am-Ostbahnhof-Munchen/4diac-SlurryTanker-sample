@@ -16,7 +16,7 @@
 			<Parameter Name="QI" Value="TRUE" Comment=""/>
 			<Parameter Name="u8SAMember" Value="255" Comment=""/>
 			<Parameter Name="u16ObjId_1" Value="AuxInput_Automatik_ein" Comment=""/>
-			<Parameter Name="DigitalInput_1" Value="'SlurryTanker.Automatik.Automatik_ein.AuxInput_Automatik_ein'" Comment=""/>
+			<Parameter Name="DigitalInput_1" Value="'SlurryTanker.Automatik.ein.AuxInput'" Comment=""/>
 			<Parameter Name="u16ObjId_2" Value="AuxInput_Auseinanderklappen" Comment=""/>
 			<Parameter Name="DigitalInput_2" Value="'AuxInput_Auseinanderklappen'" Comment=""/>
 			<Parameter Name="u16ObjId_3" Value="AuxInput_Verteiler_senken" Comment=""/>
@@ -24,7 +24,7 @@
 			<Parameter Name="u16ObjId_4" Value="AuxInput_Knickdeichsel_senken" Comment=""/>
 			<Parameter Name="DigitalInput_4" Value="'AuxInput_Knickdeichsel_senken'" Comment=""/>
 			<Parameter Name="u16ObjId_5" Value="AuxInput_Automatik_aus" Comment=""/>
-			<Parameter Name="DigitalInput_5" Value="'AuxInput_Automatik_aus'" Comment=""/>
+			<Parameter Name="DigitalInput_5" Value="'SlurryTanker.Automatik.aus.AuxInput'" Comment=""/>
 			<Parameter Name="u16ObjId_6" Value="AuxInput_Zusammenklappen" Comment=""/>
 			<Parameter Name="DigitalInput_6" Value="'AuxInput_Zusammenklappen'" Comment=""/>
 			<Parameter Name="u16ObjId_7" Value="AuxInput_Verteiler_heben" Comment=""/>
@@ -36,7 +36,7 @@
 			<Parameter Name="QI" Value="TRUE" Comment=""/>
 			<Parameter Name="u8SAMember" Value="255" Comment=""/>
 			<Parameter Name="u16ObjId_2" Value="AuxInput_Dom" Comment=""/>
-			<Parameter Name="DigitalInput_2" Value="'AuxInput_Dom'" Comment=""/>
+			<Parameter Name="DigitalInput_2" Value="'SlurryTanker.Dom.AuxInput_UP.AuxInput'" Comment=""/>
 			<Parameter Name="u16ObjId_3" Value="AuxInput_Heckschieber" Comment=""/>
 			<Parameter Name="DigitalInput_3" Value="'AuxInput_Heckschieber'" Comment=""/>
 			<Parameter Name="u16ObjId_5" Value="AuxInput_Schneidwerk" Comment=""/>

@@ -11,39 +11,25 @@
 		</SubAppEventInputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<Group Name="func" Comment="" x="246.66666666666669" y="-200.0" width="6540.0" height="4220.0">
+		<Group Name="func" Comment="" x="-666.6666666666667" y="-1200.0" width="4806.666666666667" height="6673.333333333334" locked="false">
 		</Group>
-		<Group Name="Vorsteuerventile" Comment="Vorsteuerventile" x="6913.333333333334" y="153.33333333333334" width="4673.333333333334" height="1993.3333333333335">
+		<Group Name="Vorsteuerventile" Comment="Vorsteuerventile" x="4266.666666666667" y="-1066.6666666666667" width="2940.0" height="3880.0" locked="false">
 		</Group>
-		<Group Name="Vorgewendeautomatik" Comment="Vorgewendeautomatik" x="246.66666666666669" y="4133.333333333334" width="10000.0" height="3093.3333333333335">
+		<Group Name="Vorgewendeautomatik" Comment="Vorgewendeautomatik" x="-800.0" y="5600.0" width="10000.0" height="3093.3333333333335" locked="false">
 		</Group>
-		<SubApp Name="Vorsteuerventil_2A" Type="Vorsteuerventil_2A" Comment="" x="1033.3333333333335" y="126.66666666666667">
+		<SubApp Name="Vorsteuerventil_2A" Type="Vorsteuerventil_2A" Comment="" x="1440.0" y="133.33333333333334">
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			<Attribute Name="GroupName" Type="STRING" Value="Vorsteuerventile"/>
 		</SubApp>
-		<SubApp Name="Vorsteuerventil_2B" Type="Vorsteuerventil_2B" Comment="" x="3300.0" y="126.66666666666667">
+		<SubApp Name="Vorsteuerventil_2B" Type="Vorsteuerventil_2B" Comment="" x="1440.0" y="1866.6666666666667">
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			<Attribute Name="GroupName" Type="STRING" Value="Vorsteuerventile"/>
-		</SubApp>
-		<SubApp Name="Dom" Type="Dom" Comment="" x="480.0" y="366.6666666666667">
-			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
-			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
-			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
-			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
-			<Attribute Name="GroupName" Type="STRING" Value="func"/>
-		</SubApp>
-		<SubApp Name="Seitenschieber" Type="Seitenschieber" Comment="" x="366.6666666666667" y="1013.3333333333334">
-			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
-			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
-			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
-			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
-			<Attribute Name="GroupName" Type="STRING" Value="func"/>
 		</SubApp>
 		<SubApp Name="Knickdeichsel" Type="Knickdeichsel" Comment="" x="366.6666666666667" y="1680.0">
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
@@ -101,46 +87,50 @@
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			<Attribute Name="GroupName" Type="STRING" Value="Vorgewendeautomatik"/>
 		</SubApp>
-		<SubApp Name="Abscheider" Type="Abscheider" Comment="" x="4366.666666666667" y="593.3333333333334">
+		<SubApp Name="Abscheider" Type="Abscheider" Comment="" x="2086.666666666667" y="3726.666666666667">
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			<Attribute Name="GroupName" Type="STRING" Value="func"/>
 		</SubApp>
-		<SubApp Name="Klappen" Type="Klappen" Comment="" x="4006.666666666667" y="1226.6666666666667">
+		<SubApp Name="Klappen" Type="Klappen" Comment="" x="753.3333333333334" y="5326.666666666667">
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			<Attribute Name="GroupName" Type="STRING" Value="func"/>
 		</SubApp>
-		<SubApp Name="PAGES" Type="PAGES" Comment="" x="1706.6666666666667" y="2726.666666666667">
+		<SubApp Name="PAGES" Type="PAGES" Comment="" x="353.33333333333337" y="4660.0">
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			<Attribute Name="GroupName" Type="STRING" Value="func"/>
 		</SubApp>
-		<SubApp Name="mapping_Buttons" Type="mapping_Buttons" Comment="" x="1506.6666666666667" y="3126.666666666667">
+		<SubApp Name="mapping_Buttons" Type="mapping_Buttons" Comment="" x="353.33333333333337" y="4126.666666666667">
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			<Attribute Name="GroupName" Type="STRING" Value="func"/>
 		</SubApp>
-		<SubApp Name="Licht" Type="Licht" Comment="" x="4406.666666666667" y="2226.666666666667">
+		<SubApp Name="Licht" Type="Licht" Comment="" x="1953.3333333333335" y="2393.3333333333335">
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
+			<Attribute Name="GroupName" Type="STRING" Value="func"/>
+		</SubApp>
+		<SubApp Name="Dom" Type="TimedFunc" Comment="" x="1286.6666666666667" y="126.66666666666667">
+			<Parameter Name="u16ObjId" Value="SoftKey_Dom" Comment=""/>
+			<Parameter Name="u16ObjIdA" Value="AuxInput_Dom" Comment=""/>
+			<Attribute Name="GroupName" Type="STRING" Value="func"/>
+		</SubApp>
+		<SubApp Name="Seitenschieber" Type="TimedFunc" Comment="" x="1286.6666666666667" y="793.3333333333334">
+			<Parameter Name="u16ObjId" Value="SoftKey_Seitenschieber" Comment=""/>
+			<Parameter Name="u16ObjIdA" Value="AuxInput_Seitenschieber" Comment=""/>
 			<Attribute Name="GroupName" Type="STRING" Value="func"/>
 		</SubApp>
 		<EventConnections>
-			<Connection Source="INIT" Destination="Dom.INIT" Comment="" dx1="160.0">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="Seitenschieber.INIT" Comment="" dx1="340.0">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
-			</Connection>
 			<Connection Source="INIT" Destination="Knickdeichsel.INIT" Comment="" dx1="340.0">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
@@ -153,10 +143,10 @@
 			<Connection Source="INIT" Destination="mapping_DataPanel.INIT" Comment="" dx1="1140.0">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
-			<Connection Source="INIT" Destination="Abscheider.INIT" Comment="" dx1="9300.0" dx2="53.333333333333336" dy="606.6666666666667">
+			<Connection Source="INIT" Destination="Abscheider.INIT" Comment="" dx1="2866.666666666667">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
-			<Connection Source="INIT" Destination="Klappen.INIT" Comment="" dx1="2820.0">
+			<Connection Source="INIT" Destination="Klappen.INIT" Comment="" dx1="2193.3333333333335">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
 			<Connection Source="INIT" Destination="Vorsteuerventil_2A.INIT" Comment="" dx1="6826.666666666667">
@@ -190,28 +180,22 @@
 			<Connection Source="Klappen.CNF_2a" Destination="Vorsteuerventil_2A.REQ1" Comment="" dx1="960.0">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
-			<Connection Source="Verteiler.CNF_2b" Destination="Vorsteuerventil_2B.REQ3" Comment="" dx1="826.6666666666667">
+			<Connection Source="Verteiler.CNF_2b" Destination="Vorsteuerventil_2B.REQ3" Comment="" dx1="80.0" dx2="80.0" dy="-920.0">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
 			<Connection Source="Verteiler.CNF_2a" Destination="Vorsteuerventil_2A.REQ3" Comment="" dx1="80.0" dx2="80.0" dy="-1226.6666666666667">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
-			<Connection Source="Heckschieber.CNF_2b" Destination="Vorsteuerventil_2B.REQ4" Comment="" dx1="853.3333333333334">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
-			</Connection>
-			<Connection Source="Dom.CNF_2a" Destination="Vorsteuerventil_2A.REQ4" Comment="" dx1="3313.3333333333335">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
-			</Connection>
-			<Connection Source="Seitenschieber.CNF_2a" Destination="Vorsteuerventil_2A.REQ5" Comment="" dx1="3273.3333333333335">
+			<Connection Source="Heckschieber.CNF_2b" Destination="Vorsteuerventil_2B.REQ4" Comment="" dx1="80.0" dx2="80.0" dy="-1666.6666666666667">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
 			<Connection Source="Abscheider.CNF_2b" Destination="Vorsteuerventil_2B.REQ5" Comment="" dx1="2426.666666666667">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
-			<Connection Source="INIT" Destination="PAGES.INIT" Comment="" dx1="3000.0">
+			<Connection Source="INIT" Destination="PAGES.INIT" Comment="" dx1="1793.3333333333335">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
-			<Connection Source="INIT" Destination="mapping_Buttons.INIT" Comment="" dx1="2666.666666666667">
+			<Connection Source="INIT" Destination="mapping_Buttons.INIT" Comment="" dx1="1793.3333333333335">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
 			<Connection Source="Knickdeichsel.CNF_2b" Destination="Vorsteuerventil_2B.REQ2" Comment="" dx1="4060.0">
@@ -221,6 +205,18 @@
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
 			<Connection Source="INIT" Destination="Licht.INIT" Comment="" dx1="3293.3333333333335">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="INIT" Destination="Dom.INIT" Comment="" dx1="1000.0">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="Dom.CNF" Destination="Vorsteuerventil_2A.REQ4" Comment="" dx1="2193.3333333333335">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="INIT" Destination="Seitenschieber.INIT" Comment="" dx1="1000.0">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="Seitenschieber.CNF" Destination="Vorsteuerventil_2A.REQ5" Comment="" dx1="2193.3333333333335">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
 		</EventConnections>
@@ -239,22 +235,22 @@
 			<Connection Source="Knickdeichsel.OUT_2a" Destination="Vorsteuerventil_2A.IN2" Comment="" dx1="3233.3333333333335">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
-			<Connection Source="Verteiler.OUT_2b" Destination="Vorsteuerventil_2B.IN3" Comment="" dx1="826.6666666666667">
+			<Connection Source="Verteiler.OUT_2b" Destination="Vorsteuerventil_2B.IN3" Comment="" dx1="80.0" dx2="80.0" dy="-820.0">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
 			<Connection Source="Verteiler.OUT_2a" Destination="Vorsteuerventil_2A.IN3" Comment="" dx1="80.0" dx2="80.0" dy="-1126.6666666666667">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
-			<Connection Source="Heckschieber.OUT_2b" Destination="Vorsteuerventil_2B.IN4" Comment="" dx1="853.3333333333334">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
-			</Connection>
-			<Connection Source="Dom.OUT_2a" Destination="Vorsteuerventil_2A.IN4" Comment="" dx1="3313.3333333333335">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
-			</Connection>
-			<Connection Source="Seitenschieber.OUT_2a" Destination="Vorsteuerventil_2A.IN5" Comment="" dx1="3273.3333333333335">
+			<Connection Source="Heckschieber.OUT_2b" Destination="Vorsteuerventil_2B.IN4" Comment="" dx1="80.0" dx2="80.0" dy="-1566.6666666666667">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
 			<Connection Source="Abscheider.OUT_2b" Destination="Vorsteuerventil_2B.IN5" Comment="" dx1="2426.666666666667">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="Dom.OUT" Destination="Vorsteuerventil_2A.IN4" Comment="" dx1="2193.3333333333335">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="Seitenschieber.OUT" Destination="Vorsteuerventil_2A.IN5" Comment="" dx1="2193.3333333333335">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
 		</DataConnections>
