@@ -116,10 +116,18 @@
 			<Parameter Name="u16ObjIdA" Value="AuxInput_Seitenschieber" Comment=""/>
 			<Attribute Name="GroupName" Type="STRING" Value="func"/>
 		</SubApp>
-		<SubApp Name="Klappen" Type="doppeltwirkend" Comment="" x="753.3333333333334" y="5326.666666666667">
+		<SubApp Name="Klappen" Type="doppeltwirkend" Comment="" x="1820.0" y="5326.666666666667">
+			<Parameter Name="u16ObjId_heben" Value="SoftKey_Auseinanderklappen" Comment=""/>
+			<Parameter Name="u16ObjId_senken" Value="SoftKey_Zusammenklappen" Comment=""/>
+			<Parameter Name="u16ObjIdA_heben" Value="AuxInput_Auseinanderklappen" Comment=""/>
+			<Parameter Name="u16ObjIdA_senken" Value="AuxInput_Zusammenklappen" Comment=""/>
 			<Attribute Name="GroupName" Type="STRING" Value="func"/>
 		</SubApp>
 		<SubApp Name="Verteiler" Type="doppeltwirkend" Comment="" x="7013.333333333334" y="0.0">
+			<Parameter Name="u16ObjId_heben" Value="SoftKey_Verteiler_heben" Comment=""/>
+			<Parameter Name="u16ObjId_senken" Value="SoftKey_Verteiler_senken" Comment=""/>
+			<Parameter Name="u16ObjIdA_heben" Value="AuxInput_Verteiler_heben" Comment=""/>
+			<Parameter Name="u16ObjIdA_senken" Value="AuxInput_Verteiler_senken" Comment=""/>
 			<Attribute Name="GroupName" Type="STRING" Value="Vorgewendeautomatik"/>
 		</SubApp>
 		<EventConnections>
@@ -191,13 +199,13 @@
 			<Connection Source="Seitenschieber.CNF" Destination="Vorsteuerventil_2A.REQ5" Comment="" dx1="2193.3333333333335">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
-			<Connection Source="INIT" Destination="Klappen.INIT" Comment="" dx1="2193.3333333333335" dx2="2193.3333333333335" dy="0.0">
+			<Connection Source="INIT" Destination="Klappen.INIT" Comment="" dx1="1266.6666666666667">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
-			<Connection Source="Klappen.CNF_b" Destination="Vorsteuerventil_2B.REQ1" Comment="" dx1="2293.3333333333335" dx2="2293.3333333333335" dy="0.0">
+			<Connection Source="Klappen.CNF_b" Destination="Vorsteuerventil_2B.REQ1" Comment="" dx1="1720.0">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
-			<Connection Source="Klappen.CNF_a" Destination="Vorsteuerventil_2A.REQ1" Comment="" dx1="2293.3333333333335" dx2="2293.3333333333335" dy="0.0">
+			<Connection Source="Klappen.CNF_a" Destination="Vorsteuerventil_2A.REQ1" Comment="" dx1="1720.0">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
 			<Connection Source="INIT" Destination="Verteiler.INIT" Comment="" dx1="11340.0" dx2="11340.0" dy="4233.333333333334">
@@ -231,10 +239,10 @@
 			<Connection Source="Seitenschieber.OUT" Destination="Vorsteuerventil_2A.IN5" Comment="" dx1="2193.3333333333335">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
-			<Connection Source="Klappen.OUT_b" Destination="Vorsteuerventil_2B.IN1" Comment="" dx1="2313.3333333333335" dx2="2313.3333333333335" dy="0.0">
+			<Connection Source="Klappen.OUT_b" Destination="Vorsteuerventil_2B.IN1" Comment="" dx1="1720.0">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
-			<Connection Source="Klappen.OUT_a" Destination="Vorsteuerventil_2A.IN1" Comment="" dx1="2306.666666666667" dx2="2306.666666666667" dy="0.0">
+			<Connection Source="Klappen.OUT_a" Destination="Vorsteuerventil_2A.IN1" Comment="" dx1="1720.0">
 				<Attribute Name="Visible" Type="STRING" Value="false"/>
 			</Connection>
 			<Connection Source="Automatik.Q_Verteiler_heben" Destination="Verteiler.IN_heben" Comment="" dx1="2060.0" dx2="2060.0" dy="0.0"/>

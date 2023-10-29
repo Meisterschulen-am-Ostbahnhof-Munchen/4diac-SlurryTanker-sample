@@ -21,10 +21,10 @@
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<SubApp Name="GreenWhiteBackground_Auseinanderklappen" Type="GreenWhiteBackground" Comment="" x="-986.6666666666667" y="-866.6666666666667">
-			<Parameter Name="u16ObjId" Value="SoftKey_Auseinanderklappen"/>
-			<Parameter Name="u16ObjIdA" Value="AuxInput_Auseinanderklappen"/>
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
+			<Parameter Name="u16ObjId" Value="SoftKey_Auseinanderklappen" Comment=""/>
+			<Parameter Name="u16ObjIdA" Value="AuxInput_Auseinanderklappen" Comment=""/>
 		</SubApp>
 		<EventConnections>
 			<Connection Source="INIT" Destination="GreenWhiteBackground_Auseinanderklappen.INIT" Comment="" dx1="193.33333333333334" dx2="193.33333333333334" dy="0.0"/>
