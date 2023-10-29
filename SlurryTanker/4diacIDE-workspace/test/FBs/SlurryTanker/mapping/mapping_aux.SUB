@@ -52,9 +52,9 @@
 			<Parameter Name="QI" Value="TRUE" Comment=""/>
 			<Parameter Name="u8SAMember" Value="255" Comment=""/>
 			<Parameter Name="u16ObjId_1" Value="PAGE_1_AUX" Comment=""/>
-			<Parameter Name="DigitalInput_1" Value="'PAGE_1_AUX'" Comment=""/>
+			<Parameter Name="DigitalInput_1" Value="'SlurryTanker.PAGES.PAGE_1.AUX'" Comment=""/>
 			<Parameter Name="u16ObjId_2" Value="PAGE_2_AUX" Comment=""/>
-			<Parameter Name="DigitalInput_2" Value="'PAGE_2_AUX'" Comment=""/>
+			<Parameter Name="DigitalInput_2" Value="'SlurryTanker.PAGES.PAGE_2.AUX'" Comment=""/>
 		</FB>
 		<EventConnections>
 			<Connection Source="INIT" Destination="UT_AuxiliaryInputMapping.INIT" Comment="" dx1="80.0">

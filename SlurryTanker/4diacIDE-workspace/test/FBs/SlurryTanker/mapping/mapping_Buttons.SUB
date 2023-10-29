@@ -15,9 +15,9 @@
 			<Parameter Name="QI" Value="TRUE" Comment=""/>
 			<Parameter Name="u8SAMember" Value="255" Comment=""/>
 			<Parameter Name="u16ObjId_1" Value="PAGE_1_BTN" Comment=""/>
-			<Parameter Name="DigitalInput_1" Value="'PAGE_1_BTN'" Comment=""/>
+			<Parameter Name="DigitalInput_1" Value="'SlurryTanker.PAGES.PAGE_1.BTN'" Comment=""/>
 			<Parameter Name="u16ObjId_2" Value="PAGE_2_BTN" Comment=""/>
-			<Parameter Name="DigitalInput_2" Value="'PAGE_2_BTN'" Comment=""/>
+			<Parameter Name="DigitalInput_2" Value="'SlurryTanker.PAGES.PAGE_2.BTN'" Comment=""/>
 		</FB>
 		<EventConnections>
 			<Connection Source="INIT" Destination="UT_ButtonMapping_UP.INIT" Comment="" dx1="520.0" dx2="520.0" dy="0.0">
