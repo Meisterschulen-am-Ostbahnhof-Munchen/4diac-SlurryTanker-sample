@@ -27,7 +27,7 @@
 			<VarDeclaration Name="u8Option" Type="USINT" Comment="normal: 0xFF, for Version 4 also 0 possible "/>
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="STATUS" Type="WSTRING" Comment="Service Status"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
 			<VarDeclaration Name="u8OldOption" Type="USINT" Comment="Old normal: 0xFF, for Version 4 also 0 possible "/>
 			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description"/>
 		</OutputVars>

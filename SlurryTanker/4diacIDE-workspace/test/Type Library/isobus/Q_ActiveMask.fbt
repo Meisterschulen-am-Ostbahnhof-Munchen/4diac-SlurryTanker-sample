@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FBType Name="Q_ActiveMask" Comment="Command change active mask( Part 6 - F.34 ) ">
-	<Identification Standard="ISO 11783-6" Description="&lt;p&gt;This command is used to change the active mask of a working set to either a data or an alarm mask object.&lt;/p&gt; &#10; &#10;&lt;p&gt;Return values&lt;/p&gt; &#10; &#10;&lt;p&gt;iso_s16&lt;/p&gt; &#10; &#10;&lt;ul&gt; &#10;&#9;&lt;li&gt;&lt;span style=&quot;color:#0066cc&quot;&gt;E_NO_ERR ( 0 ) &lt;/span&gt; - OK&lt;/li&gt; &#10;&#9;&lt;li&gt;&lt;span style=&quot;color:#0066cc&quot;&gt;E_OVERFLOW (-6 )&lt;/span&gt; - buffer overflow&lt;/li&gt; &#10;&#9;&lt;li&gt;&lt;span style=&quot;color:#0066cc&quot;&gt;E_NOACT (-8 )&lt;/span&gt; - Command not possible in current state&lt;/li&gt; &#10;&#9;&lt;li&gt;&lt;span style=&quot;color:#0066cc&quot;&gt;E_NO_INSTANCE (-21)&lt;/span&gt; - No VT client available&lt;/li&gt; &#10;&lt;/ul&gt; &#10;&#10;" >
+	<Identification Standard="ISO 11783-6" Description="&lt;p&gt;This command is used to change the active mask of a working set to either a data or an alarm mask object.&lt;/p&gt;  &#10;  &#10;&lt;p&gt;Return values&lt;/p&gt;  &#10;  &#10;&lt;p&gt;iso_s16&lt;/p&gt;  &#10;  &#10;&lt;ul&gt;  &#10;&#9;&lt;li&gt;&lt;span style=&quot;color:#0066cc&quot;&gt;E_NO_ERR ( 0 ) &lt;/span&gt; - OK&lt;/li&gt;  &#10;&#9;&lt;li&gt;&lt;span style=&quot;color:#0066cc&quot;&gt;E_OVERFLOW (-6 )&lt;/span&gt; - buffer overflow&lt;/li&gt;  &#10;&#9;&lt;li&gt;&lt;span style=&quot;color:#0066cc&quot;&gt;E_NOACT (-8 )&lt;/span&gt; - Command not possible in current state&lt;/li&gt;  &#10;&#9;&lt;li&gt;&lt;span style=&quot;color:#0066cc&quot;&gt;E_NO_INSTANCE (-21)&lt;/span&gt; - No VT client available&lt;/li&gt;  &#10;&lt;/ul&gt;  &#10; &#10;" >
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2022-07-08">
 	</VersionInfo>
 	<InterfaceList>
 		<EventInputs>
+			<Event Name="INIT" Type="Event" Comment="Service Initialization">
+			</Event>
 			<Event Name="REQ" Type="Event" Comment="Service Request">
 				<With Var="u16NewMaskId"/>
 				<With Var="u16WorkSetId"/>
 			</Event>
 		</EventInputs>
 		<EventOutputs>
+			<Event Name="INITO" Type="Event" Comment="Initialization Confirm">
+			</Event>
 			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
 				<With Var="STATUS"/>
 				<With Var="u16OldMaskId"/>
@@ -24,22 +28,9 @@
 			<VarDeclaration Name="u16NewMaskId" Type="UINT" Comment="Object ID of new active (data/alarm)-mask"/>
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="STATUS" Type="WSTRING" Comment="Service Status"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
 			<VarDeclaration Name="u16OldMaskId" Type="UINT" Comment="Object ID of old active (data/alarm)-mask"/>
 			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description"/>
 		</OutputVars>
 	</InterfaceList>
-	<Attribute Name="Documentation" Type="WSTRING"><![CDATA[<p>This command is used to change the active mask of a working set to either a data or an alarm mask object.</p>
-
-<p>Return values</p>
-
-<p>iso_s16</p>
-
-<ul>
-	<li><span style="color:#0066cc">E_NO_ERR ( 0 ) </span> - OK</li>
-	<li><span style="color:#0066cc">E_OVERFLOW (-6 )</span> - buffer overflow</li>
-	<li><span style="color:#0066cc">E_NOACT (-8 )</span> - Command not possible in current state</li>
-	<li><span style="color:#0066cc">E_NO_INSTANCE (-21)</span> - No VT client available</li>
-</ul>
-]]></Attribute>
 </FBType>

@@ -30,7 +30,7 @@
 			<VarDeclaration Name="u16Height" Type="UINT" Comment="New height"/>
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="STATUS" Type="WSTRING" Comment="Service Status"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
 			<VarDeclaration Name="u16OldWidth" Type="UINT" Comment="Old width "/>
 			<VarDeclaration Name="u16OldHeight" Type="UINT" Comment="Old height"/>
 			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description"/>

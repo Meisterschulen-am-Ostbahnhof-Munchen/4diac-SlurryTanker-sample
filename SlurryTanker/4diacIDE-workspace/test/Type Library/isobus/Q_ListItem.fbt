@@ -30,7 +30,7 @@
 			<VarDeclaration Name="u16NewObjId" Type="UINT" Comment="New object ID or 0xFFFF to set empty "/>
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="STATUS" Type="WSTRING" Comment="Service Status"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
 			<VarDeclaration Name="u8OldListIndex" Type="USINT" Comment="Old list index (-&amp;gt; see list) "/>
 			<VarDeclaration Name="u16OldObjId" Type="UINT" Comment="Old object ID or 0xFFFF to set empty "/>
 			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description"/>

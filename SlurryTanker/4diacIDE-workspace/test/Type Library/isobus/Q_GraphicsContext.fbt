@@ -33,7 +33,7 @@
 			<VarDeclaration Name="u16LenBytes" Type="UINT" Comment="Length in bytes of parameter list "/>
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="STATUS" Type="WSTRING" Comment="Service Status"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
 			<VarDeclaration Name="u8OldSubCommandID" Type="USINT" Comment="Old Sub-Command ID "/>
 			<VarDeclaration Name="u8OldParaList" Type="USINT" Comment="Old parameters based on sub-command ID byte " ArraySize="5"/>
 			<VarDeclaration Name="u16OldLenBytes" Type="UINT" Comment="Old length in bytes of parameter list "/>

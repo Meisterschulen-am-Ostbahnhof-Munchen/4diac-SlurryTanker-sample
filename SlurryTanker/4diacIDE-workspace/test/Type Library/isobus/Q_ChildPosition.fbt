@@ -45,7 +45,7 @@
 			<VarDeclaration Name="s16Yposition" Type="INT" Comment="New Y position relative to the top left corner of parent object"/>
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="STATUS" Type="WSTRING" Comment="Service Status"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
 			<VarDeclaration Name="s16OldXposition" Type="INT" Comment="Old X position relative to the top left corner of parent object"/>
 			<VarDeclaration Name="s16OldYposition" Type="INT" Comment="Old Y position relative to the top left corner of parent object"/>
 			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description"/>

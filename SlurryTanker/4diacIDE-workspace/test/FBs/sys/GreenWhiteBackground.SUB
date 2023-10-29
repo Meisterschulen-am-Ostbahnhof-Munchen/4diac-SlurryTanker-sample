@@ -39,15 +39,15 @@
 			</VarDeclaration>
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="STATUS_1" Type="WSTRING" Comment="Service Status"/>
+			<VarDeclaration Name="STATUS_1" Type="STRING" Comment="Service Status"/>
 			<VarDeclaration Name="u8OldColour_1" Type="USINT" Comment="Old value of ID"/>
 			<VarDeclaration Name="result_1" Type="INT" Comment="retval see description"/>
-			<VarDeclaration Name="STATUS_2" Type="WSTRING" Comment="Service Status">
+			<VarDeclaration Name="STATUS_2" Type="STRING" Comment="Service Status">
 				<Attribute Name="YPOSITION" Type="STRING" Value="33"/>
 			</VarDeclaration>
 			<VarDeclaration Name="u8OldColour_2" Type="USINT" Comment="Old value of ID"/>
 			<VarDeclaration Name="result_2" Type="INT" Comment="retval see description"/>
-			<VarDeclaration Name="STATUS_3" Type="WSTRING" Comment="Service Status">
+			<VarDeclaration Name="STATUS_3" Type="STRING" Comment="Service Status">
 				<Attribute Name="YPOSITION" Type="STRING" Value="75"/>
 			</VarDeclaration>
 			<VarDeclaration Name="u8OldColour_3" Type="USINT" Comment="Old value of ID"/>
@@ -61,7 +61,7 @@
 		</FB>
 		<FB Name="Q_BackgroundColour_3" Type="Q_BackgroundColourAux" Comment="" x="1600.0" y="3100.0">
 		</FB>
-		<FB Name="F_SEL_I" Type="F_SEL_USINT" Comment="" x="-466.6666666666667" y="1200.0">
+		<FB Name="F_SEL_I" Type="F_SEL" Comment="" x="-466.6666666666667" y="1200.0">
 			<Parameter Name="IN0" Value="COLOR_WHITE"/>
 			<Parameter Name="IN1" Value="COLOR_GREEN"/>
 		</FB>
