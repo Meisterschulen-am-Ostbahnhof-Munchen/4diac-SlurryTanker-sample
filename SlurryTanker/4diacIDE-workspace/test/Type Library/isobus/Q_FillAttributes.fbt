@@ -33,7 +33,7 @@
 			<VarDeclaration Name="u16FillPatternId" Type="UINT" Comment="New fill pattern (see Part 6 - B.14.4) "/>
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="STATUS" Type="WSTRING" Comment="Service Status"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
 			<VarDeclaration Name="u8OldFillType" Type="USINT" Comment="Old fill type (see Part 6 - B.14.4) "/>
 			<VarDeclaration Name="u8OldFillColour" Type="USINT" Comment="Old fill colour (see Part 6 - B.14.4) "/>
 			<VarDeclaration Name="u16OldFillPatternId" Type="UINT" Comment="Old fill pattern (see Part 6 - B.14.4) "/>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="ESP32_Testboard_8_DI" Comment="Service Interface Function Block Type">
+	<Identification Function="All Inputs" Description="this maps to IX" >
+	</Identification>
+	<VersionInfo Version="1.0" Author="Jose Cabral" Date="2018-12-05">
+	</VersionInfo>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.1" Author="Franz Höpfinger" Date="2022-08-04">
+	</VersionInfo>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.2" Author="Franz Höpfinger" Date="2023-01-05">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="Event" Comment="Service Initialization">
+				<With Var="QI"/>
+				<With Var="u8SAMember"/>
+				<With Var="u16ObjId"/>
+				<With Var="DigitalInput_IX00"/>
+				<With Var="DigitalInput_IX01"/>
+				<With Var="DigitalInput_IX02"/>
+				<With Var="DigitalInput_IX03"/>
+				<With Var="DigitalInput_IX04"/>
+				<With Var="DigitalInput_IX05"/>
+				<With Var="DigitalInput_IX06"/>
+				<With Var="DigitalInput_IX07"/>
+
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="Event" Comment="Initialization Confirm">
+				<With Var="QO"/>
+			</Event>
+			<Event Name="IND" Type="Event" Comment="Indication from Resource">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
+			<VarDeclaration Name="u8SAMember" Type="USINT" Comment="Dummy !, set to 255 if in doubt. 0 deactivates FB." InitialValue="255"/>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Dummy ! set to 65535 if in Doubt. 0 deactivates FB." InitialValue="65535"/>
+			<VarDeclaration Name="DigitalInput_IX00" Type="STRING" Comment="Identifier for Input 0"/>
+			<VarDeclaration Name="DigitalInput_IX01" Type="STRING" Comment="Identifier for Input 1"/>
+			<VarDeclaration Name="DigitalInput_IX02" Type="STRING" Comment="Identifier for Input 2"/>
+			<VarDeclaration Name="DigitalInput_IX03" Type="STRING" Comment="Identifier for Input 3"/>
+			<VarDeclaration Name="DigitalInput_IX04" Type="STRING" Comment="Identifier for Input 4"/>
+			<VarDeclaration Name="DigitalInput_IX05" Type="STRING" Comment="Identifier for Input 5"/>
+			<VarDeclaration Name="DigitalInput_IX06" Type="STRING" Comment="Identifier for Input 6"/>
+			<VarDeclaration Name="DigitalInput_IX07" Type="STRING" Comment="Identifier for Input 7"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
+		</OutputVars>
+	</InterfaceList>
+</FBType>

@@ -27,7 +27,7 @@
 			<VarDeclaration Name="u8AID" Type="USINT" Comment="Attribute ID of the object "/>
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="STATUS" Type="WSTRING" Comment="Service Status"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
 			<VarDeclaration Name="u8OldAID" Type="USINT" Comment="Old attribute ID of the object "/>
 			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description"/>
 		</OutputVars>

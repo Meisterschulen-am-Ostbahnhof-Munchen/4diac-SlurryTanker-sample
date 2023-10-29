@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="PKP_2200" Comment="Global constants">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2023-10-22">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="PKP_2200_DEFAULT" Type="USINT" Comment="" InitialValue="USINT#16#21"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[VAR_GLOBAL CONSTANT
+	PKP_2200_DEFAULT : USINT := USINT#16#21;
+END_VAR
+
+]]></OriginalSource>
+</GlobalConstants>

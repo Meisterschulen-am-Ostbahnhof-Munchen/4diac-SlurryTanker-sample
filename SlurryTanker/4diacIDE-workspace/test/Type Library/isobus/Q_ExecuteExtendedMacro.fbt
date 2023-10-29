@@ -24,7 +24,7 @@
 			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID of Macro object "/>
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="STATUS" Type="WSTRING" Comment="Service Status"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
 			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description"/>
 		</OutputVars>
 	</InterfaceList>

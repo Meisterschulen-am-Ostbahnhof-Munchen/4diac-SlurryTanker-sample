@@ -33,7 +33,7 @@
 			<VarDeclaration Name="u16LineArt" Type="UINT" Comment="New line art (see Part 6 - B.14.3) "/>
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="STATUS" Type="WSTRING" Comment="Service Status"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
 			<VarDeclaration Name="u8OldLineColour" Type="USINT" Comment="Old line colour "/>
 			<VarDeclaration Name="u8OldLineWidth" Type="USINT" Comment="Old line width (see Part 6 - B.14.3)"/>
 			<VarDeclaration Name="u16OldLineArt" Type="UINT" Comment="Old line art (see Part 6 - B.14.3) "/>

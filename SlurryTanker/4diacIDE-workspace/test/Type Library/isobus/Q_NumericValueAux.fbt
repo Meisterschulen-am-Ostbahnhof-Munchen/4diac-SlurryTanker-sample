@@ -27,7 +27,7 @@
 			<VarDeclaration Name="u32NewValue" Type="UDINT" Comment="New value of ID"/>
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="STATUS" Type="WSTRING" Comment="Service Status"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
 			<VarDeclaration Name="u32OldValue" Type="UDINT" Comment="Old value of ID"/>
 			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description"/>
 		</OutputVars>

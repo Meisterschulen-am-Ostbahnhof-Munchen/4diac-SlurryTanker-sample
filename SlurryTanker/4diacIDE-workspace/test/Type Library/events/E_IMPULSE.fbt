@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<FBType Name="E_IMPULSE" Comment="Composite FB wrapping other FBs">
-	<Identification Standard="61499-2">
+<FBType Name="E_IMPULSE" Comment="Generate a Impulse">
+	<Identification Standard="61499-2" Description="This program and the accompanying materials are made 
+&#10;available under the terms of the Eclipse Public License 2.0 
+&#10;which is available at https://www.eclipse.org/legal/epl-2.0/ 
+&#10; 
+&#10;SPDX-License-Identifier: EPL-2.0
+&#10; 
+&#10; 
+&#10;E_IMPULSE -- Impulse forming FB
+&#10;
+&#10;Generate a Impulse with a given Time.
+&#10;This FB makes a Impulse of Duration TM on the Output QO." >
 	</Identification>
-	<VersionInfo Version="1.0" Author="franz" Date="2022-11-09">
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2023-08-21">
 	</VersionInfo>
 	<InterfaceList>
 		<EventInputs>
@@ -29,19 +39,19 @@
 		</OutputVars>
 	</InterfaceList>
 	<FBNetwork>
-		<FB Name="E_DELAY" Type="E_DELAY" Comment="" x="-470.5882352941176" y="-941.1764705882352">
+		<FB Name="E_DELAY" Type="E_DELAY" Comment="" x="-466.6666666666667" y="-940.0">
 		</FB>
-		<FB Name="E_SR" Type="E_SR" Comment="" x="705.8823529411765" y="-941.1764705882352">
+		<FB Name="E_SR" Type="E_SR" Comment="" x="700.0" y="-940.0">
 		</FB>
 		<EventConnections>
-			<Connection Source="REQ" Destination="E_DELAY.START" Comment="" dx1="376.4705882352941"/>
-			<Connection Source="REQ" Destination="E_SR.S" Comment="" dx1="1741.1764705882351"/>
-			<Connection Source="E_DELAY.EO" Destination="E_SR.R" Comment="" dx1="270.5882352941176"/>
-			<Connection Source="E_SR.EO" Destination="CNF" Comment="" dx1="1470.5882352941176"/>
+			<Connection Source="REQ" Destination="E_DELAY.START" Comment="" dx1="373.33333333333337"/>
+			<Connection Source="REQ" Destination="E_SR.S" Comment="" dx1="1740.0"/>
+			<Connection Source="E_DELAY.EO" Destination="E_SR.R" Comment="" dx1="266.6666666666667"/>
+			<Connection Source="E_SR.EO" Destination="CNF" Comment="" dx1="1466.6666666666667"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="TM" Destination="E_DELAY.DT" Comment="" dx1="223.52941176470586"/>
-			<Connection Source="E_SR.Q" Destination="QO" Comment="" dx1="1470.5882352941176"/>
+			<Connection Source="TM" Destination="E_DELAY.DT" Comment="" dx1="220.0"/>
+			<Connection Source="E_SR.Q" Destination="QO" Comment="" dx1="1466.6666666666667"/>
 		</DataConnections>
 	</FBNetwork>
 </FBType>

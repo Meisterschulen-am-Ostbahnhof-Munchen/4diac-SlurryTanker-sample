@@ -33,8 +33,6 @@
 			<ECTransition Source="START" Destination="SET" Condition="S" Comment="" x="993.3333333333334" y="446.6666666666667"/>
 			<ECTransition Source="SET" Destination="RESET" Condition="R" Comment="" x="1200.0" y="680.0"/>
 			<ECTransition Source="RESET" Destination="SET" Condition="S" Comment="" x="1453.3333333333335" y="673.3333333333334"/>
-			<ECTransition Source="SET" Destination="SET" Condition="S" Comment="" x="1333.3333333333335" y="206.66666666666669"/>
-			<ECTransition Source="RESET" Destination="RESET" Condition="R" Comment="" x="1333.3333333333335" y="1266.6666666666667"/>
 			<ECTransition Source="START" Destination="RESET" Condition="R" Comment="" x="946.6666666666667" y="726.6666666666667"/>
 		</ECC>
 		<Algorithm Name="SET" Comment="">
