@@ -15,9 +15,9 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u8SAMember" Value="255"/>
 			<Parameter Name="u16ObjId_1" Value="PAGE_1_BTN"/>
-			<Parameter Name="DigitalInput_1" Value="&quot;PAGE_1_BTN&quot;"/>
+			<Parameter Name="DigitalInput_1" Value="'PAGE_1_BTN'"/>
 			<Parameter Name="u16ObjId_2" Value="PAGE_2_BTN"/>
-			<Parameter Name="DigitalInput_2" Value="&quot;PAGE_2_BTN&quot;"/>
+			<Parameter Name="DigitalInput_2" Value="'PAGE_2_BTN'"/>
 		</FB>
 		<EventConnections>
 			<Connection Source="INIT" Destination="UT_ButtonMapping_UP.INIT" Comment="" dx1="520.0" dx2="520.0" dy="0.0"/>

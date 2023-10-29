@@ -15,22 +15,22 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u8SAMember" Value="224"/>
 			<Parameter Name="u16ObjId" Value="65535"/>
-			<Parameter Name="DigitalOutput_1A" Value="&quot;Schneidwerk_rechtslauf_1A&quot;"/>
-			<Parameter Name="DigitalOutput_1B" Value="&quot;Schneidwerk_linkslauf_1B&quot;"/>
-			<Parameter Name="DigitalOutput_2A" Value="&quot;Vorsteuerventil_2A&quot;"/>
-			<Parameter Name="DigitalOutput_2B" Value="&quot;Vorsteuerventil_2B&quot;"/>
-			<Parameter Name="DigitalOutput_3A" Value="&quot;Klappen_3A&quot;"/>
-			<Parameter Name="DigitalOutput_3B" Value="&quot;Klappen_3B&quot;"/>
-			<Parameter Name="DigitalOutput_4A" Value="&quot;Verteiler_4A&quot;"/>
-			<Parameter Name="DigitalOutput_4B" Value="&quot;Verteiler_4B&quot;"/>
-			<Parameter Name="DigitalOutput_5A" Value="&quot;Knickdeichsel_5A&quot;"/>
-			<Parameter Name="DigitalOutput_5B" Value="&quot;Knickdeichsel_5B&quot;"/>
-			<Parameter Name="DigitalOutput_6A" Value="&quot;Dom_6A&quot;"/>
-			<Parameter Name="DigitalOutput_6B" Value="&quot;Heckschieber_6B&quot;"/>
-			<Parameter Name="DigitalOutput_7A" Value="&quot;Seitenschieber_7A&quot;"/>
-			<Parameter Name="DigitalOutput_7B" Value="&quot;Abscheider_7B&quot;"/>
-			<Parameter Name="DigitalOutput_8A" Value="&quot;Licht_8A&quot;"/>
-			<Parameter Name="DigitalOutput_8B" Value="&quot;frei_8B&quot;"/>
+			<Parameter Name="DigitalOutput_1A" Value="'Schneidwerk_rechtslauf_1A'"/>
+			<Parameter Name="DigitalOutput_1B" Value="'Schneidwerk_linkslauf_1B'"/>
+			<Parameter Name="DigitalOutput_2A" Value="'Vorsteuerventil_2A'"/>
+			<Parameter Name="DigitalOutput_2B" Value="'Vorsteuerventil_2B'"/>
+			<Parameter Name="DigitalOutput_3A" Value="'Klappen_3A'"/>
+			<Parameter Name="DigitalOutput_3B" Value="'Klappen_3B'"/>
+			<Parameter Name="DigitalOutput_4A" Value="'Verteiler_4A'"/>
+			<Parameter Name="DigitalOutput_4B" Value="'Verteiler_4B'"/>
+			<Parameter Name="DigitalOutput_5A" Value="'Knickdeichsel_5A'"/>
+			<Parameter Name="DigitalOutput_5B" Value="'Knickdeichsel_5B'"/>
+			<Parameter Name="DigitalOutput_6A" Value="'Dom_6A'"/>
+			<Parameter Name="DigitalOutput_6B" Value="'Heckschieber_6B'"/>
+			<Parameter Name="DigitalOutput_7A" Value="'Seitenschieber_7A'"/>
+			<Parameter Name="DigitalOutput_7B" Value="'Abscheider_7B'"/>
+			<Parameter Name="DigitalOutput_8A" Value="'Licht_8A'"/>
+			<Parameter Name="DigitalOutput_8B" Value="'frei_8B'"/>
 		</FB>
 		<EventConnections>
 			<Connection Source="INIT" Destination="DataPanel_xDB_16_DO_SAE_J1939.INIT" Comment="" dx1="640.0"/>
