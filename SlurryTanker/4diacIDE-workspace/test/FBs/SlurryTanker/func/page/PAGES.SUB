@@ -34,7 +34,7 @@
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 		</SubApp>
-		<FB Name="F_SEL_I" Type="F_SEL_UINT_E_2" Comment="" x="3100.0" y="-1100.0">
+		<FB Name="F_SEL_I" Type="F_SEL_E_2" Comment="" x="3100.0" y="-1100.0">
 			<Parameter Name="IN0" Value="SoftKeyMask_PAGE_1"/>
 			<Parameter Name="IN1" Value="SoftKeyMask_PAGE_2"/>
 		</FB>
