@@ -15,22 +15,21 @@
 			<Parameter Name="QI" Value="TRUE" Comment=""/>
 			<Parameter Name="u8SAMember" Value="224" Comment=""/>
 			<Parameter Name="u16ObjId" Value="65535" Comment=""/>
-			<Parameter Name="DigitalOutput_1A" Value="'Schneidwerk_rechtslauf_1A'" Comment=""/>
-			<Parameter Name="DigitalOutput_1B" Value="'Schneidwerk_linkslauf_1B'" Comment=""/>
-			<Parameter Name="DigitalOutput_2A" Value="'Vorsteuerventil_2A'" Comment=""/>
-			<Parameter Name="DigitalOutput_2B" Value="'Vorsteuerventil_2B'" Comment=""/>
-			<Parameter Name="DigitalOutput_3A" Value="'Klappen_3A'" Comment=""/>
-			<Parameter Name="DigitalOutput_3B" Value="'Klappen_3B'" Comment=""/>
-			<Parameter Name="DigitalOutput_4A" Value="'Verteiler_4A'" Comment=""/>
-			<Parameter Name="DigitalOutput_4B" Value="'Verteiler_4B'" Comment=""/>
-			<Parameter Name="DigitalOutput_5A" Value="'Knickdeichsel_5A'" Comment=""/>
-			<Parameter Name="DigitalOutput_5B" Value="'Knickdeichsel_5B'" Comment=""/>
-			<Parameter Name="DigitalOutput_6A" Value="'Dom_6A'" Comment=""/>
-			<Parameter Name="DigitalOutput_6B" Value="'Heckschieber_6B'" Comment=""/>
-			<Parameter Name="DigitalOutput_7A" Value="'Seitenschieber_7A'" Comment=""/>
-			<Parameter Name="DigitalOutput_7B" Value="'Abscheider_7B'" Comment=""/>
-			<Parameter Name="DigitalOutput_8A" Value="'Licht_8A'" Comment=""/>
-			<Parameter Name="DigitalOutput_8B" Value="'frei_8B'" Comment=""/>
+			<Parameter Name="DigitalOutput_1A" Value="'SlurryTanker.Schneidwerk.rechtslauf'" Comment=""/>
+			<Parameter Name="DigitalOutput_1B" Value="'SlurryTanker.Schneidwerk.linkslauf'" Comment=""/>
+			<Parameter Name="DigitalOutput_2A" Value="'SlurryTanker.Vorsteuerventil_2A.QX'" Comment=""/>
+			<Parameter Name="DigitalOutput_2B" Value="'SlurryTanker.Vorsteuerventil_2B.QX'" Comment=""/>
+			<Parameter Name="DigitalOutput_3A" Value="'SlurryTanker.Klappen.Sitzventile.QXA'" Comment=""/>
+			<Parameter Name="DigitalOutput_3B" Value="'SlurryTanker.Klappen.Sitzventile.QXB'" Comment=""/>
+			<Parameter Name="DigitalOutput_4A" Value="'SlurryTanker.Verteiler.Sitzventile.QXA'" Comment=""/>
+			<Parameter Name="DigitalOutput_4B" Value="'SlurryTanker.Verteiler.Sitzventile.QXB'" Comment=""/>
+			<Parameter Name="DigitalOutput_5A" Value="'SlurryTanker.Knickdeichsel.Sitzventile.QXA'" Comment=""/>
+			<Parameter Name="DigitalOutput_5B" Value="'SlurryTanker.Knickdeichsel.Sitzventile.QXB'" Comment=""/>
+			<Parameter Name="DigitalOutput_6A" Value="'SlurryTanker.Dom.QX'" Comment=""/>
+			<Parameter Name="DigitalOutput_6B" Value="'SlurryTanker.Heckschieber.QXB'" Comment=""/>
+			<Parameter Name="DigitalOutput_7A" Value="'SlurryTanker.Seitenschieber.QX'" Comment=""/>
+			<Parameter Name="DigitalOutput_7B" Value="'SlurryTanker.Abscheider.QX'" Comment=""/>
+			<Parameter Name="DigitalOutput_8A" Value="'SlurryTanker.Licht.QX'" Comment=""/>
 		</FB>
 		<EventConnections>
 			<Connection Source="INIT" Destination="DataPanel_xDB_16_DO_SAE_J1939.INIT" Comment="" dx1="640.0">

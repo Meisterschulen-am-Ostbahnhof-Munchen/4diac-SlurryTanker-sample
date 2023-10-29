@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="PAGE" Comment="Subapplication Type">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2023-02-07">
+	</VersionInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="Event" Comment="">
+				<Attribute Name="YPOSITION" Type="STRING" Value="210"/>
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="IND" Type="Event" Comment="">
+				<Attribute Name="YPOSITION" Type="STRING" Value="255"/>
+			</SubAppEvent>
+		</SubAppEventOutputs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="BTN" Type="IX" Comment="" x="0.0" y="0.0">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		</FB>
+		<FB Name="AUX" Type="IX" Comment="" x="0.0" y="1000.0">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		</FB>
+		<FB Name="OR_2" Type="OR_2" Comment="" x="2000.0" y="300.0">
+		</FB>
+		<FB Name="E_SWITCH" Type="E_SWITCH" Comment="" x="3066.666666666667" y="266.6666666666667">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="BTN.INIT" Comment="" dx1="600.0"/>
+			<Connection Source="INIT" Destination="AUX.INIT" Comment="" dx1="600.0"/>
+			<Connection Source="BTN.IND" Destination="OR_2.REQ" Comment="" dx1="500.0"/>
+			<Connection Source="AUX.IND" Destination="OR_2.REQ" Comment="" dx1="500.0"/>
+			<Connection Source="OR_2.CNF" Destination="E_SWITCH.EI" Comment="" dx1="220.0"/>
+			<Connection Source="E_SWITCH.EO0" Destination="IND" Comment="" dx1="126.66666666666667"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="BTN.IN" Destination="OR_2.IN1" Comment="" dx1="1000.0"/>
+			<Connection Source="AUX.IN" Destination="OR_2.IN2" Comment="" dx1="600.0"/>
+			<Connection Source="OR_2.OUT" Destination="E_SWITCH.G" Comment="" dx1="220.0"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

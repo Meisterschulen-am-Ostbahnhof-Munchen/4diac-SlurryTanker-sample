@@ -18,19 +18,19 @@
 			<Parameter Name="u16ObjId_1" Value="AuxInput_Automatik_ein" Comment=""/>
 			<Parameter Name="DigitalInput_1" Value="'SlurryTanker.Automatik.ein.AuxInput'" Comment=""/>
 			<Parameter Name="u16ObjId_2" Value="AuxInput_Auseinanderklappen" Comment=""/>
-			<Parameter Name="DigitalInput_2" Value="'AuxInput_Auseinanderklappen'" Comment=""/>
+			<Parameter Name="DigitalInput_2" Value="'SlurryTanker.Klappen.AuxInput_heben.AuxInput'" Comment=""/>
 			<Parameter Name="u16ObjId_3" Value="AuxInput_Verteiler_senken" Comment=""/>
-			<Parameter Name="DigitalInput_3" Value="'AuxInput_Verteiler_senken'" Comment=""/>
+			<Parameter Name="DigitalInput_3" Value="'SlurryTanker.Verteiler.AuxInput_senken.AuxInput'" Comment=""/>
 			<Parameter Name="u16ObjId_4" Value="AuxInput_Knickdeichsel_senken" Comment=""/>
-			<Parameter Name="DigitalInput_4" Value="'AuxInput_Knickdeichsel_senken'" Comment=""/>
+			<Parameter Name="DigitalInput_4" Value="'SlurryTanker.Knickdeichsel.AuxInput_senken.AuxInput'" Comment=""/>
 			<Parameter Name="u16ObjId_5" Value="AuxInput_Automatik_aus" Comment=""/>
 			<Parameter Name="DigitalInput_5" Value="'SlurryTanker.Automatik.aus.AuxInput'" Comment=""/>
 			<Parameter Name="u16ObjId_6" Value="AuxInput_Zusammenklappen" Comment=""/>
-			<Parameter Name="DigitalInput_6" Value="'AuxInput_Zusammenklappen'" Comment=""/>
+			<Parameter Name="DigitalInput_6" Value="'SlurryTanker.Klappen.AuxInput_senken.AuxInput'" Comment=""/>
 			<Parameter Name="u16ObjId_7" Value="AuxInput_Verteiler_heben" Comment=""/>
-			<Parameter Name="DigitalInput_7" Value="'AuxInput_Verteiler_heben'" Comment=""/>
+			<Parameter Name="DigitalInput_7" Value="'SlurryTanker.Verteiler.AuxInput_heben.AuxInput'" Comment=""/>
 			<Parameter Name="u16ObjId_8" Value="AuxInput_Knickdeichsel_heben" Comment=""/>
-			<Parameter Name="DigitalInput_8" Value="'AuxInput_Knickdeichsel_heben'" Comment=""/>
+			<Parameter Name="DigitalInput_8" Value="'SlurryTanker.Knickdeichsel.AuxInput_heben.AuxInput'" Comment=""/>
 		</FB>
 		<FB Name="UT_AuxiliaryInputMapping_1" Type="UT_AuxiliaryInputMapping_Type_02_Bool_NonLatched" Comment="" x="-1600.0" y="1600.0">
 			<Parameter Name="QI" Value="TRUE" Comment=""/>
@@ -38,15 +38,15 @@
 			<Parameter Name="u16ObjId_2" Value="AuxInput_Dom" Comment=""/>
 			<Parameter Name="DigitalInput_2" Value="'SlurryTanker.Dom.AuxInput_UP.AuxInput'" Comment=""/>
 			<Parameter Name="u16ObjId_3" Value="AuxInput_Heckschieber" Comment=""/>
-			<Parameter Name="DigitalInput_3" Value="'AuxInput_Heckschieber'" Comment=""/>
+			<Parameter Name="DigitalInput_3" Value="'SlurryTanker.Heckschieber.AuxInput_UP.AuxInput'" Comment=""/>
 			<Parameter Name="u16ObjId_5" Value="AuxInput_Schneidwerk" Comment=""/>
-			<Parameter Name="DigitalInput_5" Value="'AuxInput_Schneidwerk'" Comment=""/>
+			<Parameter Name="DigitalInput_5" Value="'SlurryTanker.Schneidwerk.AuxInput_UP.AuxInput'" Comment=""/>
 			<Parameter Name="u16ObjId_6" Value="AuxInput_Seitenschieber" Comment=""/>
 			<Parameter Name="DigitalInput_6" Value="'SlurryTanker.Seitenschieber.AuxInput_UP.AuxInput'" Comment=""/>
 			<Parameter Name="u16ObjId_7" Value="AuxInput_Abscheider" Comment=""/>
-			<Parameter Name="DigitalInput_7" Value="'AuxInput_Abscheider'" Comment=""/>
+			<Parameter Name="DigitalInput_7" Value="'SlurryTanker.Abscheider.AuxInput_UP.AuxInput'" Comment=""/>
 			<Parameter Name="u16ObjId_8" Value="AuxInput_Licht" Comment=""/>
-			<Parameter Name="DigitalInput_8" Value="'AuxInput_Licht'" Comment=""/>
+			<Parameter Name="DigitalInput_8" Value="'SlurryTanker.Licht.AuxInput_UP.AuxInput'" Comment=""/>
 		</FB>
 		<FB Name="UT_AuxiliaryInputMapping_2" Type="UT_AuxiliaryInputMapping_Type_02_Bool_NonLatched" Comment="" x="-2100.0" y="4400.0">
 			<Parameter Name="QI" Value="TRUE" Comment=""/>
