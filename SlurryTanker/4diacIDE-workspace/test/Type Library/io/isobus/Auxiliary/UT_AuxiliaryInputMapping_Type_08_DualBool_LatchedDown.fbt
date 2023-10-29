@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="UT_AuxiliaryInputMapping_Type_08_DualBool_LatchedDown" Comment="Type 8 DualBool_LatchedDown Three-position switch - latching in down position">
+	<Identification Standard=" ISO 11783-6" Classification="AUX – ISO 11783-6" Function="All Inputs" Type="UT according to ISO 11783-6" Description="- &#10;Type 8 DualBool_LatchedDown Three-position switch - latching in down position &#10;Applicable AUX-N only &#10; * Maps to IX" >
+	</Identification>
+	<VersionInfo Version="1.0" Author="Jose Cabral" Date="2018-12-05">
+	</VersionInfo>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.1" Author="Franz Höpfinger" Date="2022-08-04">
+	</VersionInfo>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.2" Author="Franz Höpfinger" Date="2023-01-05">
+	</VersionInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="Event" Comment="Service Initialization">
+				<With Var="QI"/>
+				<With Var="u8SAMember"/>
+				<With Var="u16ObjId_1"/>
+				<With Var="DigitalInput_1_UP"/>
+				<With Var="DigitalInput_1_DOWN"/>
+				<With Var="u16ObjId_2"/>
+				<With Var="DigitalInput_2_UP"/>
+				<With Var="DigitalInput_2_DOWN"/>
+				<With Var="u16ObjId_3"/>
+				<With Var="DigitalInput_3_UP"/>
+				<With Var="DigitalInput_3_DOWN"/>
+				<With Var="u16ObjId_4"/>
+				<With Var="DigitalInput_4_UP"/>
+				<With Var="DigitalInput_4_DOWN"/>
+				<With Var="u16ObjId_5"/>
+				<With Var="DigitalInput_5_UP"/>
+				<With Var="DigitalInput_5_DOWN"/>
+				<With Var="u16ObjId_6"/>
+				<With Var="DigitalInput_6_UP"/>
+				<With Var="DigitalInput_6_DOWN"/>
+				<With Var="u16ObjId_7"/>
+				<With Var="DigitalInput_7_UP"/>
+				<With Var="DigitalInput_7_DOWN"/>
+				<With Var="u16ObjId_8"/>
+				<With Var="DigitalInput_8_UP"/>
+				<With Var="DigitalInput_8_DOWN"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="Event" Comment="Initialization Confirm">
+				<With Var="QO"/>
+			</Event>
+			<Event Name="IND" Type="Event" Comment="Indication from Resource">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
+			<VarDeclaration Name="u8SAMember" Type="USINT" Comment="Dummy !, set to 255 if in doubt. 0 deactivates FB." InitialValue="255"/>
+			<VarDeclaration Name="u16ObjId_1" Type="UINT" Comment="Object ID of Input 1"/>
+			<VarDeclaration Name="DigitalInput_1_UP" Type="STRING" Comment="Identifier for Input 1 UP"/>
+			<VarDeclaration Name="DigitalInput_1_DOWN" Type="STRING" Comment="Identifier for Input 1 DOWN"/>
+			<VarDeclaration Name="u16ObjId_2" Type="UINT" Comment="Object ID of Input 2"/>
+			<VarDeclaration Name="DigitalInput_2_UP" Type="STRING" Comment="Identifier for Input 2 UP"/>
+			<VarDeclaration Name="DigitalInput_2_DOWN" Type="STRING" Comment="Identifier for Input 2 DOWN"/>
+			<VarDeclaration Name="u16ObjId_3" Type="UINT" Comment="Object ID of Input 3"/>
+			<VarDeclaration Name="DigitalInput_3_UP" Type="STRING" Comment="Identifier for Input 3 UP"/>
+			<VarDeclaration Name="DigitalInput_3_DOWN" Type="STRING" Comment="Identifier for Input 3 DOWN"/>
+			<VarDeclaration Name="u16ObjId_4" Type="UINT" Comment="Object ID of Input 4"/>
+			<VarDeclaration Name="DigitalInput_4_UP" Type="STRING" Comment="Identifier for Input 4 UP"/>
+			<VarDeclaration Name="DigitalInput_4_DOWN" Type="STRING" Comment="Identifier for Input 4 DOWN"/>
+			<VarDeclaration Name="u16ObjId_5" Type="UINT" Comment="Object ID of Input 5"/>
+			<VarDeclaration Name="DigitalInput_5_UP" Type="STRING" Comment="Identifier for Input 5 UP"/>
+			<VarDeclaration Name="DigitalInput_5_DOWN" Type="STRING" Comment="Identifier for Input 5 DOWN"/>
+			<VarDeclaration Name="u16ObjId_6" Type="UINT" Comment="Object ID of Input 6"/>
+			<VarDeclaration Name="DigitalInput_6_UP" Type="STRING" Comment="Identifier for Input 6 UP"/>
+			<VarDeclaration Name="DigitalInput_6_DOWN" Type="STRING" Comment="Identifier for Input 6 DOWN"/>
+			<VarDeclaration Name="u16ObjId_7" Type="UINT" Comment="Object ID of Input 7"/>
+			<VarDeclaration Name="DigitalInput_7_UP" Type="STRING" Comment="Identifier for Input 7 UP"/>
+			<VarDeclaration Name="DigitalInput_7_DOWN" Type="STRING" Comment="Identifier for Input 7 DOWN"/>
+			<VarDeclaration Name="u16ObjId_8" Type="UINT" Comment="Object ID of Input 8"/>
+			<VarDeclaration Name="DigitalInput_8_UP" Type="STRING" Comment="Identifier for Input 8 UP"/>
+			<VarDeclaration Name="DigitalInput_8_DOWN" Type="STRING" Comment="Identifier for Input 8 DOWN"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
+		</OutputVars>
+	</InterfaceList>
+</FBType>

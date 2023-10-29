@@ -7,9 +7,9 @@
 	<InterfaceList>
 		<EventInputs>
 			<Event Name="REQ" Type="Event" Comment="Service Request">
-				<With Var="h"/>
-				<With Var="s"/>
-				<With Var="v"/>
+				<With Var="hue"/>
+				<With Var="saturation"/>
+				<With Var="value"/>
 			</Event>
 		</EventInputs>
 		<EventOutputs>
@@ -20,9 +20,9 @@
 			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="h" Type="UDINT" Comment="hue"/>
-			<VarDeclaration Name="s" Type="UDINT" Comment="saturation"/>
-			<VarDeclaration Name="v" Type="UDINT" Comment="value"/>
+			<VarDeclaration Name="hue" Type="UDINT" Comment="hue"/>
+			<VarDeclaration Name="saturation" Type="UDINT" Comment="saturation"/>
+			<VarDeclaration Name="value" Type="UDINT" Comment="value"/>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="r" Type="UDINT" Comment="red"/>

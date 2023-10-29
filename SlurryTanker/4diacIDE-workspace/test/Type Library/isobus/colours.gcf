@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="colours" Comment="Global constants">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2023-10-22">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="COLOR_BLACK" Type="USINT" Comment="" InitialValue="0"/>
+		<VarDeclaration Name="COLOR_WHITE" Type="USINT" Comment="" InitialValue="1"/>
+		<VarDeclaration Name="COLOR_GREEN" Type="USINT" Comment="" InitialValue="2"/>
+		<VarDeclaration Name="COLOR_TEAL" Type="USINT" Comment="" InitialValue="3"/>
+		<VarDeclaration Name="COLOR_MAROON" Type="USINT" Comment="" InitialValue="4"/>
+		<VarDeclaration Name="COLOR_PURPLE" Type="USINT" Comment="" InitialValue="5"/>
+		<VarDeclaration Name="COLOR_OLIVE" Type="USINT" Comment="" InitialValue="6"/>
+		<VarDeclaration Name="COLOR_SILVER" Type="USINT" Comment="" InitialValue="7"/>
+		<VarDeclaration Name="COLOR_GREY" Type="USINT" Comment="" InitialValue="8"/>
+		<VarDeclaration Name="COLOR_BLUE" Type="USINT" Comment="" InitialValue="9"/>
+		<VarDeclaration Name="COLOR_LIME" Type="USINT" Comment="" InitialValue="10"/>
+		<VarDeclaration Name="COLOR_CYAN" Type="USINT" Comment="" InitialValue="11"/>
+		<VarDeclaration Name="COLOR_RED" Type="USINT" Comment="" InitialValue="12"/>
+		<VarDeclaration Name="COLOR_MAGENTA" Type="USINT" Comment="" InitialValue="13"/>
+		<VarDeclaration Name="COLOR_YELLOW" Type="USINT" Comment="" InitialValue="14"/>
+		<VarDeclaration Name="COLOR_NAVY" Type="USINT" Comment="" InitialValue="15"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[VAR_GLOBAL CONSTANT
+	COLOR_BLACK : USINT := 0;
+	COLOR_WHITE : USINT := 1;
+	COLOR_GREEN : USINT := 2;
+	COLOR_TEAL : USINT := 3;
+	COLOR_MAROON : USINT := 4;
+	COLOR_PURPLE : USINT := 5;
+	COLOR_OLIVE : USINT := 6;
+	COLOR_SILVER : USINT := 7;
+	COLOR_GREY : USINT := 8;
+	COLOR_BLUE : USINT := 9;
+	COLOR_LIME : USINT := 10;
+	COLOR_CYAN : USINT := 11;
+	COLOR_RED : USINT := 12;
+	COLOR_MAGENTA : USINT := 13;
+	COLOR_YELLOW : USINT := 14;
+	COLOR_NAVY : USINT := 15;
+END_VAR
+
+]]></OriginalSource>
+</GlobalConstants>

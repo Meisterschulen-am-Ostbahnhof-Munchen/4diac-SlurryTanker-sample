@@ -27,7 +27,7 @@
 			<VarDeclaration Name="u8Colour" Type="USINT" Comment="New Background colour see Part 6 - A.3 VT standard colour palette"/>
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="STATUS" Type="WSTRING" Comment="Service Status"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
 			<VarDeclaration Name="u8OldColour" Type="USINT" Comment="Old value of ID"/>
 			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description"/>
 		</OutputVars>

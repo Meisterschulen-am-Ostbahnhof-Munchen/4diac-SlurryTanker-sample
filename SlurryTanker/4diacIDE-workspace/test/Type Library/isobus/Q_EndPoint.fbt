@@ -33,7 +33,7 @@
 			<VarDeclaration Name="u8LineDirection" Type="USINT" Comment="Line direction see Part 6 - B.27"/>
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="STATUS" Type="WSTRING" Comment="Service Status"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
 			<VarDeclaration Name="u16OldWidth" Type="UINT" Comment="Old X value of end point "/>
 			<VarDeclaration Name="u16OldHeight" Type="UINT" Comment="Old Y value of end point"/>
 			<VarDeclaration Name="u8OldLineDirection" Type="USINT" Comment="Old line direction see Part 6 - B.27"/>

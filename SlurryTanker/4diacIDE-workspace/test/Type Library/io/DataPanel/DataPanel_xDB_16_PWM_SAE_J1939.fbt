@@ -45,26 +45,26 @@
 			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
 			<VarDeclaration Name="u8SAMember" Type="USINT" Comment="Node SA 224..239" InitialValue="224"/>
 			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Dummy ! set to 65535 if in Doubt. 0 deactivates FB." InitialValue="65535"/>
-			<VarDeclaration Name="DigitalOutput_1A" Type="WSTRING" Comment="" InitialValue="&quot;DigitalOutput_1A&quot;"/>
-			<VarDeclaration Name="DigitalOutput_1B" Type="WSTRING" Comment="" InitialValue="&quot;DigitalOutput_1B&quot;"/>
-			<VarDeclaration Name="DigitalOutput_2A" Type="WSTRING" Comment="" InitialValue="&quot;DigitalOutput_2A&quot;"/>
-			<VarDeclaration Name="DigitalOutput_2B" Type="WSTRING" Comment="" InitialValue="&quot;DigitalOutput_2B&quot;"/>
-			<VarDeclaration Name="DigitalOutput_3A" Type="WSTRING" Comment="" InitialValue="&quot;DigitalOutput_3A&quot;"/>
-			<VarDeclaration Name="DigitalOutput_3B" Type="WSTRING" Comment="" InitialValue="&quot;DigitalOutput_3B&quot;"/>
-			<VarDeclaration Name="DigitalOutput_4A" Type="WSTRING" Comment="" InitialValue="&quot;DigitalOutput_4A&quot;"/>
-			<VarDeclaration Name="DigitalOutput_4B" Type="WSTRING" Comment="" InitialValue="&quot;DigitalOutput_4B&quot;"/>
-			<VarDeclaration Name="DigitalOutput_5A" Type="WSTRING" Comment="" InitialValue="&quot;DigitalOutput_5A&quot;"/>
-			<VarDeclaration Name="DigitalOutput_5B" Type="WSTRING" Comment="" InitialValue="&quot;DigitalOutput_5B&quot;"/>
-			<VarDeclaration Name="DigitalOutput_6A" Type="WSTRING" Comment="" InitialValue="&quot;DigitalOutput_6A&quot;"/>
-			<VarDeclaration Name="DigitalOutput_6B" Type="WSTRING" Comment="" InitialValue="&quot;DigitalOutput_6B&quot;"/>
-			<VarDeclaration Name="DigitalOutput_7A" Type="WSTRING" Comment="" InitialValue="&quot;DigitalOutput_7A&quot;"/>
-			<VarDeclaration Name="DigitalOutput_7B" Type="WSTRING" Comment="" InitialValue="&quot;DigitalOutput_7B&quot;"/>
-			<VarDeclaration Name="DigitalOutput_8A" Type="WSTRING" Comment="" InitialValue="&quot;DigitalOutput_8A&quot;"/>
-			<VarDeclaration Name="DigitalOutput_8B" Type="WSTRING" Comment="" InitialValue="&quot;DigitalOutput_8B&quot;"/>
+			<VarDeclaration Name="DigitalOutput_1A" Type="STRING" Comment=""/>
+			<VarDeclaration Name="DigitalOutput_1B" Type="STRING" Comment=""/>
+			<VarDeclaration Name="DigitalOutput_2A" Type="STRING" Comment=""/>
+			<VarDeclaration Name="DigitalOutput_2B" Type="STRING" Comment=""/>
+			<VarDeclaration Name="DigitalOutput_3A" Type="STRING" Comment=""/>
+			<VarDeclaration Name="DigitalOutput_3B" Type="STRING" Comment=""/>
+			<VarDeclaration Name="DigitalOutput_4A" Type="STRING" Comment=""/>
+			<VarDeclaration Name="DigitalOutput_4B" Type="STRING" Comment=""/>
+			<VarDeclaration Name="DigitalOutput_5A" Type="STRING" Comment=""/>
+			<VarDeclaration Name="DigitalOutput_5B" Type="STRING" Comment=""/>
+			<VarDeclaration Name="DigitalOutput_6A" Type="STRING" Comment=""/>
+			<VarDeclaration Name="DigitalOutput_6B" Type="STRING" Comment=""/>
+			<VarDeclaration Name="DigitalOutput_7A" Type="STRING" Comment=""/>
+			<VarDeclaration Name="DigitalOutput_7B" Type="STRING" Comment=""/>
+			<VarDeclaration Name="DigitalOutput_8A" Type="STRING" Comment=""/>
+			<VarDeclaration Name="DigitalOutput_8B" Type="STRING" Comment=""/>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
-			<VarDeclaration Name="STATUS" Type="WSTRING" Comment="Service Status"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
 		</OutputVars>
 	</InterfaceList>
 </FBType>

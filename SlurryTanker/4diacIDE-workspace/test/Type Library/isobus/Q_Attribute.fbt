@@ -30,7 +30,7 @@
 			<VarDeclaration Name="u32ValueAttribute" Type="UDINT" Comment="New value for attribute "/>
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="STATUS" Type="WSTRING" Comment="Service Status"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
 			<VarDeclaration Name="u32OldValueAttribute" Type="UDINT" Comment="Old value for attribute "/>
 			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description"/>
 		</OutputVars>

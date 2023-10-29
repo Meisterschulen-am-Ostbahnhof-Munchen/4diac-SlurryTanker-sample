@@ -31,12 +31,12 @@
 			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
 			<VarDeclaration Name="u8SAMember" Type="USINT" Comment="Dummy !, set to 255 if in doubt. 0 deactivates FB." InitialValue="255"/>
 			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Dummy ! set to 65535 if in Doubt. 0 deactivates FB." InitialValue="65535"/>
-			<VarDeclaration Name="DigitalOutput_Q1" Type="WSTRING" Comment="" InitialValue="&quot;DigitalOutput_Q1&quot;"/>
-			<VarDeclaration Name="DigitalOutput_Q2" Type="WSTRING" Comment="" InitialValue="&quot;DigitalOutput_Q2&quot;"/>
+			<VarDeclaration Name="DigitalOutput_Q1" Type="STRING" Comment=""/>
+			<VarDeclaration Name="DigitalOutput_Q2" Type="STRING" Comment=""/>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
-			<VarDeclaration Name="STATUS" Type="WSTRING" Comment="Service Status"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
 		</OutputVars>
 	</InterfaceList>
 </FBType>

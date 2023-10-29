@@ -33,7 +33,7 @@
 			<VarDeclaration Name="u16NewYValue" Type="UINT" Comment="New Y value of a point relative to the top left corner of the polygon "/>
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="STATUS" Type="WSTRING" Comment="Service Status"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
 			<VarDeclaration Name="u8OldPointIndex" Type="USINT" Comment="Old point index of the point to replace."/>
 			<VarDeclaration Name="u16OldXValue" Type="UINT" Comment="Old X value of a point relative to the top left corner of the polygon "/>
 			<VarDeclaration Name="u16OldYValue" Type="UINT" Comment="Old Y value of a point relative to the top left corner of the polygon "/>

@@ -27,7 +27,7 @@
 			<VarDeclaration Name="pau8String" Type="STRING" Comment="Pointer to string"/>
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="STATUS" Type="WSTRING" Comment="Service Status"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
 			<VarDeclaration Name="pau8OldString" Type="STRING" Comment="Old pointer to string"/>
 			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description"/>
 		</OutputVars>

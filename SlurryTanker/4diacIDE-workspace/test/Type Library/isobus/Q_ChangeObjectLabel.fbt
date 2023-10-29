@@ -36,7 +36,7 @@
 			<VarDeclaration Name="u16ObIdGrafic" Type="UINT" Comment="Object ID of an object to be used as a graphic representation of the object label or FFFF16 if no designator supplied"/>
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="STATUS" Type="WSTRING" Comment="Service Status"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
 			<VarDeclaration Name="u16OldObIdStringVar" Type="UINT" Comment="Old Object ID of a String Variable object that contains the label string (32 characters maximum) or FFFF if no text is supplied"/>
 			<VarDeclaration Name="u8OldFontType" Type="USINT" Comment="Old value for attribute "/>
 			<VarDeclaration Name="u16OldObIdGrafic" Type="UINT" Comment=""/>

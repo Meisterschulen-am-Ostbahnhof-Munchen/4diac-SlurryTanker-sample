@@ -45,7 +45,7 @@
 			<VarDeclaration Name="u8Ychange" Type="USINT" Comment="Relative change in y position (interpreted as signed!)"/>
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="STATUS" Type="WSTRING" Comment="Service Status"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
 			<VarDeclaration Name="u8OldXchange" Type="USINT" Comment="Old relative change in x position (interpreted as signed!)"/>
 			<VarDeclaration Name="u8OldYchange" Type="USINT" Comment="Old relative change in y position (interpreted as signed!)"/>
 			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description"/>

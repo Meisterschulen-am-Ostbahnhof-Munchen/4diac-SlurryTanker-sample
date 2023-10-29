@@ -3,10 +3,13 @@
 <FBType Comment="Input service interface function block for long word input data" Name="IL">
   <Identification Description="Copyright (c) 2018 TU Wien/ACIN&#13;&#10; &#13;&#10;This program and the accompanying materials are made&#13;&#10;available under the terms of the Eclipse Public License 2.0&#13;&#10;which is available at https://www.eclipse.org/legal/epl-2.0/&#13;&#10;&#13;&#10;SPDX-License-Identifier: EPL-2.0"/>
   <VersionInfo Author="Martin Melik-Merkumians" Date="2018-10-05" Organization="TU Wien/ACIN" Version="1.0"/>
-  <VersionInfo Author="Franz Höpfinger" Date="2023-01-05" Organization="HR Agrartechnik GmbH" Version="1.1" Remarks="removed PARAMS, REQ, CNF" />
   <InterfaceList>
     <EventInputs>
       <Event Comment="Service Initialization" Name="INIT" Type="Event">
+        <With Var="QI"/>
+        <With Var="PARAMS"/>
+      </Event>
+      <Event Comment="Service Request" Name="REQ" Type="Event">
         <With Var="QI"/>
       </Event>
     </EventInputs>
@@ -15,7 +18,12 @@
         <With Var="QO"/>
         <With Var="STATUS"/>
       </Event>
-      <Event Comment="Indication from Resource" Name="IND" Type="Event">
+      <Event Comment="Confirmation of Requested Service" Name="CNF" Type="Event">
+        <With Var="QO"/>
+        <With Var="STATUS"/>
+        <With Var="IN"/>
+      </Event>
+      <Event Comment="" Name="IND" Type="Event">
         <With Var="QO"/>
         <With Var="STATUS"/>
         <With Var="IN"/>
@@ -23,6 +31,7 @@
     </EventOutputs>
     <InputVars>
       <VarDeclaration Comment="Event Input Qualifier" Name="QI" Type="BOOL"/>
+      <VarDeclaration Comment="Service Parameters" Name="PARAMS" Type="STRING"/>
     </InputVars>
     <OutputVars>
       <VarDeclaration Comment="Event Output Qualifier" Name="QO" Type="BOOL"/>

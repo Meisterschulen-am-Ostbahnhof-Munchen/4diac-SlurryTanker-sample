@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="Computers" Comment="Global constants">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2023-10-22">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="C_00" Type="WSTRING" Comment="" InitialValue="&quot;192.168.4.1:61499&quot;"/>
+		<VarDeclaration Name="C_01" Type="WSTRING" Comment="" InitialValue="&quot;192.168.188.1:61499&quot;"/>
+		<VarDeclaration Name="C_02" Type="WSTRING" Comment="" InitialValue="&quot;192.168.188.2:61499&quot;"/>
+		<VarDeclaration Name="C_03" Type="WSTRING" Comment="" InitialValue="&quot;192.168.188.3:61499&quot;"/>
+		<VarDeclaration Name="C_04" Type="WSTRING" Comment="" InitialValue="&quot;192.168.188.4:61499&quot;"/>
+		<VarDeclaration Name="C_05" Type="WSTRING" Comment="" InitialValue="&quot;192.168.188.5:61499&quot;"/>
+		<VarDeclaration Name="C_06" Type="WSTRING" Comment="" InitialValue="&quot;192.168.188.6:61499&quot;"/>
+		<VarDeclaration Name="C_07" Type="WSTRING" Comment="" InitialValue="&quot;192.168.188.7:61499&quot;"/>
+		<VarDeclaration Name="C_08" Type="WSTRING" Comment="" InitialValue="&quot;192.168.188.8:61499&quot;"/>
+		<VarDeclaration Name="C_09" Type="WSTRING" Comment="" InitialValue="&quot;192.168.188.9:61499&quot;"/>
+		<VarDeclaration Name="C_10" Type="WSTRING" Comment="" InitialValue="&quot;192.168.188.10:61499&quot;"/>
+		<VarDeclaration Name="C_11" Type="WSTRING" Comment="" InitialValue="&quot;192.168.188.11:61499&quot;"/>
+		<VarDeclaration Name="C_12" Type="WSTRING" Comment="" InitialValue="&quot;192.168.188.12:61499&quot;"/>
+		<VarDeclaration Name="C_13" Type="WSTRING" Comment="" InitialValue="&quot;192.168.188.13:61499&quot;"/>
+		<VarDeclaration Name="C_14" Type="WSTRING" Comment="" InitialValue="&quot;192.168.188.14:61499&quot;"/>
+		<VarDeclaration Name="C_15" Type="WSTRING" Comment="" InitialValue="&quot;192.168.188.15:61499&quot;"/>
+		<VarDeclaration Name="C_16" Type="WSTRING" Comment="" InitialValue="&quot;192.168.188.16:61499&quot;"/>
+		<VarDeclaration Name="C_17" Type="WSTRING" Comment="" InitialValue="&quot;192.168.188.17:61499&quot;"/>
+		<VarDeclaration Name="C_18" Type="WSTRING" Comment="" InitialValue="&quot;192.168.188.18:61499&quot;"/>
+		<VarDeclaration Name="C_19" Type="WSTRING" Comment="" InitialValue="&quot;192.168.188.19:61499&quot;"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[VAR_GLOBAL CONSTANT
+	C_00 : WSTRING := "192.168.4.1:61499";
+	C_01 : WSTRING := "192.168.188.1:61499";
+	C_02 : WSTRING := "192.168.188.2:61499";
+	C_03 : WSTRING := "192.168.188.3:61499";
+	C_04 : WSTRING := "192.168.188.4:61499";
+	C_05 : WSTRING := "192.168.188.5:61499";
+	C_06 : WSTRING := "192.168.188.6:61499";
+	C_07 : WSTRING := "192.168.188.7:61499";
+	C_08 : WSTRING := "192.168.188.8:61499";
+	C_09 : WSTRING := "192.168.188.9:61499";
+	C_10 : WSTRING := "192.168.188.10:61499";
+	C_11 : WSTRING := "192.168.188.11:61499";
+	C_12 : WSTRING := "192.168.188.12:61499";
+	C_13 : WSTRING := "192.168.188.13:61499";
+	C_14 : WSTRING := "192.168.188.14:61499";
+	C_15 : WSTRING := "192.168.188.15:61499";
+	C_16 : WSTRING := "192.168.188.16:61499";
+	C_17 : WSTRING := "192.168.188.17:61499";
+	C_18 : WSTRING := "192.168.188.18:61499";
+	C_19 : WSTRING := "192.168.188.19:61499";
+END_VAR
+
+]]></OriginalSource>
+</GlobalConstants>

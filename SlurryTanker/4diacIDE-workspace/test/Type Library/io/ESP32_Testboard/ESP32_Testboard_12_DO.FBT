@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="ESP32_Testboard_12_DO" Comment="Service Interface Function Block Type">
+	<Identification Function="All Outputs" Description="this maps to QX" >
+	</Identification>
+	<VersionInfo Version="1.0" Author="Jose Cabral" Date="2018-12-05">
+	</VersionInfo>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.1" Author="Franz Höpfinger" Date="2022-08-04">
+	</VersionInfo>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.2" Author="Franz Höpfinger" Date="2023-01-05">
+	</VersionInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="Event" Comment="Service Initialization">
+				<With Var="QI"/>
+				<With Var="u8SAMember"/>
+				<With Var="u16ObjId"/>
+				<With Var="DigitalOutput_QX00"/>
+				<With Var="DigitalOutput_QX01"/>
+				<With Var="DigitalOutput_QX02"/>
+				<With Var="DigitalOutput_QX03"/>
+				<With Var="DigitalOutput_QX04"/>
+				<With Var="DigitalOutput_QX05"/>
+				<With Var="DigitalOutput_QX06"/>
+				<With Var="DigitalOutput_QX07"/>
+				<With Var="DigitalOutput_LED10"/>
+				<With Var="DigitalOutput_LED11"/>
+				<With Var="DigitalOutput_LED12"/>
+				<With Var="DigitalOutput_LED13"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="Event" Comment="Initialization Confirm">
+				<With Var="QO"/>
+			</Event>
+			<Event Name="IND" Type="Event" Comment="Indication from Resource">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
+			<VarDeclaration Name="u8SAMember" Type="USINT" Comment="Dummy !, set to 255 if in doubt. 0 deactivates FB." InitialValue="255"/>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Dummy ! set to 65535 if in Doubt. 0 deactivates FB." InitialValue="65535"/>
+			<VarDeclaration Name="DigitalOutput_QX00" Type="STRING" Comment=""/>
+			<VarDeclaration Name="DigitalOutput_QX01" Type="STRING" Comment=""/>
+			<VarDeclaration Name="DigitalOutput_QX02" Type="STRING" Comment=""/>
+			<VarDeclaration Name="DigitalOutput_QX03" Type="STRING" Comment=""/>
+			<VarDeclaration Name="DigitalOutput_QX04" Type="STRING" Comment=""/>
+			<VarDeclaration Name="DigitalOutput_QX05" Type="STRING" Comment=""/>
+			<VarDeclaration Name="DigitalOutput_QX06" Type="STRING" Comment=""/>
+			<VarDeclaration Name="DigitalOutput_QX07" Type="STRING" Comment=""/>
+			<VarDeclaration Name="DigitalOutput_LED10" Type="STRING" Comment=""/>
+			<VarDeclaration Name="DigitalOutput_LED11" Type="STRING" Comment=""/>
+			<VarDeclaration Name="DigitalOutput_LED12" Type="STRING" Comment=""/>
+			<VarDeclaration Name="DigitalOutput_LED13" Type="STRING" Comment=""/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
+		</OutputVars>
+	</InterfaceList>
+</FBType>

@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FBType Name="CbVtStatus" Comment="This function is called in case of every page change - you can do e. g. initialisations ...  ">
-	<Identification Standard="ISO 11783-6" Description="&lt;p&gt;This function is called in case of every page change - you can do e. g. initialisations ...&lt;/p&gt;&#10;&#10;" >
+	<Identification Standard="ISO 11783-6" Description="&lt;p&gt;This function is called in case of every page change - you can do e. g. initialisations ...&lt;/p&gt; &#10; &#10;" >
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2022-07-20">
 	</VersionInfo>
 	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="Event" Comment="Service Initialization">
+			</Event>
+		</EventInputs>
 		<EventOutputs>
+			<Event Name="INITO" Type="Event" Comment="Initialization Confirm">
+				<With Var="STATUS"/>
+			</Event>
 			<Event Name="IND" Type="Event" Comment="Indication from Resource">
 				<With Var="STATUS"/>
 				<With Var="wPage"/>
@@ -14,12 +21,10 @@
 			</Event>
 		</EventOutputs>
 		<OutputVars>
-			<VarDeclaration Name="STATUS" Type="WSTRING" Comment="Service Status"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
 			<VarDeclaration Name="u8Instance" Type="USINT" Comment="Identifier of the client instance"/>
 			<VarDeclaration Name="qWsActive" Type="BOOL" Comment="true, if the working set is active (displayed on screen) "/>
 			<VarDeclaration Name="wPage" Type="UINT" Comment="Contains the object ID of the open/last mask, or NULL object ID if unknown (ID_NULL = 0xFFFF)"/>
 		</OutputVars>
 	</InterfaceList>
-	<Attribute Name="Documentation" Type="WSTRING"><![CDATA[<p>This function is called in case of every page change - you can do e. g. initialisations ...</p>
-]]></Attribute>
 </FBType>

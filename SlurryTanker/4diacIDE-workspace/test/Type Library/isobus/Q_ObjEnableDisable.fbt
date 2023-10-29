@@ -27,7 +27,7 @@
 			<VarDeclaration Name="qAbility" Type="BOOL" Comment="0 == disable, 1 == enable"/>
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="STATUS" Type="WSTRING" Comment="Service Status"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
 			<VarDeclaration Name="qOldAbility" Type="BOOL" Comment="0 == disable, 1 == enable "/>
 			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description"/>
 		</OutputVars>
