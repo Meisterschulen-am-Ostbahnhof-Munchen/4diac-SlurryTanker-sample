@@ -41,7 +41,7 @@
 			<Parameter Name="u16ObjId_5" Value="SoftKey_Schneidwerk" Comment=""/>
 			<Parameter Name="DigitalInput_5" Value="'SoftKey_Schneidwerk_UP'" Comment=""/>
 			<Parameter Name="u16ObjId_6" Value="SoftKey_Seitenschieber" Comment=""/>
-			<Parameter Name="DigitalInput_6" Value="'SoftKey_Seitenschieber_UP'" Comment=""/>
+			<Parameter Name="DigitalInput_6" Value="'SlurryTanker.Seitenschieber.SoftKey_UP.SoftKey'" Comment=""/>
 			<Parameter Name="u16ObjId_7" Value="SoftKey_Abscheider" Comment=""/>
 			<Parameter Name="DigitalInput_7" Value="'SoftKey_Abscheider_UP'" Comment=""/>
 			<Parameter Name="u16ObjId_8" Value="SoftKey_Licht" Comment=""/>

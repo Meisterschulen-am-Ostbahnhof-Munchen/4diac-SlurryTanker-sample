@@ -42,7 +42,7 @@
 			<Parameter Name="u16ObjId_5" Value="AuxInput_Schneidwerk" Comment=""/>
 			<Parameter Name="DigitalInput_5" Value="'AuxInput_Schneidwerk'" Comment=""/>
 			<Parameter Name="u16ObjId_6" Value="AuxInput_Seitenschieber" Comment=""/>
-			<Parameter Name="DigitalInput_6" Value="'AuxInput_Seitenschieber'" Comment=""/>
+			<Parameter Name="DigitalInput_6" Value="'SlurryTanker.Seitenschieber.AuxInput_UP.AuxInput'" Comment=""/>
 			<Parameter Name="u16ObjId_7" Value="AuxInput_Abscheider" Comment=""/>
 			<Parameter Name="DigitalInput_7" Value="'AuxInput_Abscheider'" Comment=""/>
 			<Parameter Name="u16ObjId_8" Value="AuxInput_Licht" Comment=""/>
