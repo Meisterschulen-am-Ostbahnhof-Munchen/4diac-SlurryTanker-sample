@@ -35,17 +35,17 @@
 			<Parameter Name="QI" Value="TRUE" Comment=""/>
 			<Parameter Name="u8SAMember" Value="255" Comment=""/>
 			<Parameter Name="u16ObjId_2" Value="SoftKey_Dom" Comment=""/>
-			<Parameter Name="DigitalInput_2" Value="'Ventilsteuerung.functions.Dom.SoftKey_UP.SoftKey'" Comment=""/>
+			<Parameter Name="DigitalInput_2" Value="'Ventilsteuerung.functions.Dom.SoftKey_UP.IE'" Comment=""/>
 			<Parameter Name="u16ObjId_3" Value="SoftKey_Heckschieber" Comment=""/>
-			<Parameter Name="DigitalInput_3" Value="'Ventilsteuerung.functions.Heckschieber.SoftKey_UP.SoftKey'" Comment=""/>
+			<Parameter Name="DigitalInput_3" Value="'Ventilsteuerung.functions.Heckschieber.SoftKey_UP.IE'" Comment=""/>
 			<Parameter Name="u16ObjId_5" Value="SoftKey_Schneidwerk" Comment=""/>
-			<Parameter Name="DigitalInput_5" Value="'Ventilsteuerung.functions.Schneidwerk.SoftKey_UP.SoftKey'" Comment=""/>
+			<Parameter Name="DigitalInput_5" Value="'Ventilsteuerung.functions.Schneidwerk.SoftKey_UP.IE'" Comment=""/>
 			<Parameter Name="u16ObjId_6" Value="SoftKey_Seitenschieber" Comment=""/>
-			<Parameter Name="DigitalInput_6" Value="'Ventilsteuerung.functions.Seitenschieber.SoftKey_UP.SoftKey'" Comment=""/>
+			<Parameter Name="DigitalInput_6" Value="'Ventilsteuerung.functions.Seitenschieber.SoftKey_UP.IE'" Comment=""/>
 			<Parameter Name="u16ObjId_7" Value="SoftKey_Abscheider" Comment=""/>
-			<Parameter Name="DigitalInput_7" Value="'Ventilsteuerung.functions.Abscheider.SoftKey_UP.SoftKey'" Comment=""/>
+			<Parameter Name="DigitalInput_7" Value="'Ventilsteuerung.functions.Abscheider.SoftKey_UP.IE'" Comment=""/>
 			<Parameter Name="u16ObjId_8" Value="SoftKey_Licht" Comment=""/>
-			<Parameter Name="DigitalInput_8" Value="'Ventilsteuerung.functions.Licht.SoftKey_UP.SoftKey'" Comment=""/>
+			<Parameter Name="DigitalInput_8" Value="'Ventilsteuerung.functions.Licht.SoftKey_UP.IE'" Comment=""/>
 		</FB>
 		<EventConnections>
 			<Connection Source="INIT" Destination="UT_SoftkeyMapping.INIT" Comment="" dx1="80.0">
