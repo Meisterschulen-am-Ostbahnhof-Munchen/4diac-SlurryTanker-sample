@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Ventilsteuerung" Comment="Subapplication Type">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2023-10-23">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="Event" Comment="">
+				<Attribute Name="YPOSITION" Value="0"/>
+			</SubAppEvent>
+		</SubAppEventInputs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<SubApp Name="mapping" Type="mapping" Comment="" x="753.3333333333334" y="393.33333333333337">
+			<Attribute Name="GroupName" Type="STRING" Value="Ventilsteuerung"/>
+		</SubApp>
+		<SubApp Name="functions" Type="SlurryTanker" Comment="" x="753.3333333333334" y="926.6666666666667">
+			<Attribute Name="GroupName" Type="STRING" Value="Ventilsteuerung"/>
+		</SubApp>
+		<SubApp Name="PAGES" Type="PAGES" Comment="" x="753.3333333333334" y="1460.0">
+			<Attribute Name="GroupName" Type="STRING" Value="Ventilsteuerung"/>
+		</SubApp>
+		<Group Name="Ventilsteuerung" Comment="" x="-1200.0" y="-266.6666666666667" width="2406.666666666667" height="2406.666666666667" locked="false">
+		</Group>
+		<EventConnections>
+			<Connection Source="INIT" Destination="mapping.INIT" Comment="" dx1="533.3333333333334">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="INIT" Destination="functions.INIT" Comment="" dx1="533.3333333333334">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="INIT" Destination="PAGES.INIT" Comment="" dx1="720.0">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</EventConnections>
+	</SubAppNetwork>
+</SubAppType>

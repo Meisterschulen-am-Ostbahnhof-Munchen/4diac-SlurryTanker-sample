@@ -12,13 +12,13 @@
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="PKP_2200_LI_4_DI" Type="PKP_2200_LI_4_DI" Comment="" x="726.6666666666667" y="526.6666666666667">
-			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="u8SAMember" Value="PKP_2200_DEFAULT"/>
-			<Parameter Name="u16ObjId" Value="65535"/>
-			<Parameter Name="DigitalInput_Key_1" Value="&quot;DigitalInput_Key_1&quot;"/>
-			<Parameter Name="DigitalInput_Key_2" Value="&quot;DigitalInput_Key_2&quot;"/>
-			<Parameter Name="DigitalInput_Key_3" Value="&quot;DigitalInput_Key_3&quot;"/>
-			<Parameter Name="DigitalInput_Key_4" Value="&quot;DigitalInput_Key_4&quot;"/>
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+			<Parameter Name="u8SAMember" Value="PKP_2200_DEFAULT" Comment=""/>
+			<Parameter Name="u16ObjId" Value="65535" Comment=""/>
+			<Parameter Name="DigitalInput_Key_1" Value="'DigitalInput_Key_1'" Comment=""/>
+			<Parameter Name="DigitalInput_Key_2" Value="'DigitalInput_Key_2'" Comment=""/>
+			<Parameter Name="DigitalInput_Key_3" Value="'DigitalInput_Key_3'" Comment=""/>
+			<Parameter Name="DigitalInput_Key_4" Value="'DigitalInput_Key_4'" Comment=""/>
 		</FB>
 		<EventConnections>
 			<Connection Source="INIT" Destination="PKP_2200_LI_4_DI.INIT" Comment="" dx1="1033.3333333333335"/>
