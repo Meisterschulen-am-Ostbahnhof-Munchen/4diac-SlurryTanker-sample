@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="Modules_with_low_IO_density" Comment="Global constants">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2024-01-25">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="LO_00" Type="USINT" Comment="" InitialValue="217"/>
+		<VarDeclaration Name="LO_01" Type="USINT" Comment="" InitialValue="218"/>
+		<VarDeclaration Name="LO_02" Type="USINT" Comment="" InitialValue="219"/>
+		<VarDeclaration Name="LO_03" Type="USINT" Comment="" InitialValue="220"/>
+		<VarDeclaration Name="LO_04" Type="USINT" Comment="" InitialValue="221"/>
+		<VarDeclaration Name="LO_05" Type="USINT" Comment="" InitialValue="222"/>
+		<VarDeclaration Name="LO_06" Type="USINT" Comment="" InitialValue="223"/>
+		<VarDeclaration Name="LO_07" Type="USINT" Comment="" InitialValue="224"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[VAR_GLOBAL CONSTANT
+	LO_00 : USINT := 217;
+	LO_01 : USINT := 218;
+	LO_02 : USINT := 219;
+	LO_03 : USINT := 220;
+	LO_04 : USINT := 221;
+	LO_05 : USINT := 222;
+	LO_06 : USINT := 223;
+	LO_07 : USINT := 224;
+END_VAR
+
+]]></OriginalSource>
+</GlobalConstants>

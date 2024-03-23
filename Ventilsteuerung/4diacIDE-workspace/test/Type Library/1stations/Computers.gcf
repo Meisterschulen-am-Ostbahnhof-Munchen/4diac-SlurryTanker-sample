@@ -7,6 +7,8 @@
 	<CompilerInfo>
 	</CompilerInfo>
 	<GlobalConstants>
+		<VarDeclaration Name="C_ET" Type="WSTRING" Comment="" InitialValue="&quot;192.168.5.1:61499&quot;"/>
+		<VarDeclaration Name="C_ST" Type="WSTRING" Comment="" InitialValue="&quot;192.168.4.1:61499&quot;"/>
 		<VarDeclaration Name="C_00" Type="WSTRING" Comment="" InitialValue="&quot;192.168.4.1:61499&quot;"/>
 		<VarDeclaration Name="C_01" Type="WSTRING" Comment="" InitialValue="&quot;192.168.188.1:61499&quot;"/>
 		<VarDeclaration Name="C_02" Type="WSTRING" Comment="" InitialValue="&quot;192.168.188.2:61499&quot;"/>
@@ -29,6 +31,8 @@
 		<VarDeclaration Name="C_19" Type="WSTRING" Comment="" InitialValue="&quot;192.168.188.19:61499&quot;"/>
 	</GlobalConstants>
 	<OriginalSource><![CDATA[VAR_GLOBAL CONSTANT
+	C_ET : WSTRING := "192.168.5.1:61499";
+	C_ST : WSTRING := "192.168.4.1:61499";
 	C_00 : WSTRING := "192.168.4.1:61499";
 	C_01 : WSTRING := "192.168.188.1:61499";
 	C_02 : WSTRING := "192.168.188.2:61499";

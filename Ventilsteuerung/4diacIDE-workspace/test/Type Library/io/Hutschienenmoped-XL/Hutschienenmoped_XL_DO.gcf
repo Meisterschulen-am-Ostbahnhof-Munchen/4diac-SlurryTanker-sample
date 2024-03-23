@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="Hutschienenmoped_XL_DO" Comment="Global constants">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2024-01-25">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="Output_Q1" Type="USINT" Comment="" InitialValue="1"/>
+		<VarDeclaration Name="Output_Q2" Type="USINT" Comment="" InitialValue="2"/>
+		<VarDeclaration Name="Output_Q3" Type="USINT" Comment="" InitialValue="3"/>
+		<VarDeclaration Name="Output_Q4" Type="USINT" Comment="" InitialValue="4"/>
+		<VarDeclaration Name="Output_Q5" Type="USINT" Comment="" InitialValue="5"/>
+		<VarDeclaration Name="Output_Q6" Type="USINT" Comment="" InitialValue="6"/>
+		<VarDeclaration Name="Output_Q7" Type="USINT" Comment="" InitialValue="7"/>
+		<VarDeclaration Name="Output_Q8" Type="USINT" Comment="" InitialValue="8"/>
+		<VarDeclaration Name="Output_Q9" Type="USINT" Comment="" InitialValue="9"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[VAR_GLOBAL CONSTANT
+	Output_Q1 : USINT := 1;
+	Output_Q2 : USINT := 2;
+	Output_Q3 : USINT := 3;
+	Output_Q4 : USINT := 4;
+	Output_Q5 : USINT := 5;
+	Output_Q6 : USINT := 6;
+	Output_Q7 : USINT := 7;
+	Output_Q8 : USINT := 8;
+	Output_Q9 : USINT := 9;
+END_VAR
+
+]]></OriginalSource>
+</GlobalConstants>

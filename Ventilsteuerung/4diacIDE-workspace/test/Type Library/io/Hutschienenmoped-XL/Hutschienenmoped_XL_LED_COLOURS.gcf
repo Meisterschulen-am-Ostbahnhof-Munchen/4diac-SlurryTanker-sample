@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="Hutschienenmoped_XL_LED_COLOURS" Comment="Global constants">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2024-01-25">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="LED_RED" Type="UINT" Comment="" InitialValue="1"/>
+		<VarDeclaration Name="LED_YELLOW" Type="UINT" Comment="" InitialValue="2"/>
+		<VarDeclaration Name="LED_ORANGE" Type="UINT" Comment="" InitialValue="3"/>
+		<VarDeclaration Name="LED_GREEN" Type="UINT" Comment="" InitialValue="4"/>
+		<VarDeclaration Name="LED_BLUE" Type="UINT" Comment="" InitialValue="5"/>
+		<VarDeclaration Name="LED_WHITE" Type="UINT" Comment="" InitialValue="6"/>
+		<VarDeclaration Name="LED_MAGENTA" Type="UINT" Comment="" InitialValue="7"/>
+		<VarDeclaration Name="LED_CYAN" Type="UINT" Comment="" InitialValue="8"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[VAR_GLOBAL CONSTANT
+	LED_RED : UINT := 1;
+	LED_YELLOW : UINT := 2;
+	LED_ORANGE : UINT := 3;
+	LED_GREEN : UINT := 4;
+	LED_BLUE : UINT := 5;
+	LED_WHITE : UINT := 6;
+	LED_MAGENTA : UINT := 7;
+	LED_CYAN : UINT := 8;
+END_VAR
+
+]]></OriginalSource>
+</GlobalConstants>

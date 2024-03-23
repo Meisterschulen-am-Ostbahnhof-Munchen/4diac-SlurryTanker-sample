@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="quarter" Comment="Global constants">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2024-02-23">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="STATUS_DISABLED" Type="BYTE" Comment="Disabled (off, passive, etc.)" InitialValue="2#00"/>
+		<VarDeclaration Name="STATUS_ENABLED" Type="BYTE" Comment="Enabled (on, active, etc.)" InitialValue="2#01"/>
+		<VarDeclaration Name="STATUS_ERROR" Type="BYTE" Comment="Error indicator" InitialValue="2#10"/>
+		<VarDeclaration Name="STATUS_NOT_AVAILABLE" Type="BYTE" Comment="Not available or not installed" InitialValue="2#11"/>
+		<VarDeclaration Name="STATUS_DISABLED_msg" Type="STRING" Comment="" InitialValue="'Disabled (off, passive, etc.)'"/>
+		<VarDeclaration Name="STATUS_ENABLED_msg" Type="STRING" Comment="" InitialValue="'Enabled (on, active, etc.)'"/>
+		<VarDeclaration Name="STATUS_ERROR_msg" Type="STRING" Comment="" InitialValue="'Error indicator'"/>
+		<VarDeclaration Name="STATUS_NOT_AVAILABLE_msg" Type="STRING" Comment="" InitialValue="'Not available or not installed'"/>
+		<VarDeclaration Name="COMMAND_DISABLE" Type="BYTE" Comment="Command to disable function (turn off, etc.)" InitialValue="2#00"/>
+		<VarDeclaration Name="COMMAND_ENABLE" Type="BYTE" Comment="Command to enable function (turn on, etc.)" InitialValue="2#01"/>
+		<VarDeclaration Name="COMMAND_RESERVED" Type="BYTE" Comment="Reserved" InitialValue="2#10"/>
+		<VarDeclaration Name="COMMAND_NO_ACTION" Type="BYTE" Comment="Don&amp;apos;t care/take no action (leave function as is)" InitialValue="2#11"/>
+		<VarDeclaration Name="COMMAND_DISABLE_msg" Type="STRING" Comment="" InitialValue="'Command to disable function (turn off, etc.)'"/>
+		<VarDeclaration Name="COMMAND_ENABLE_msg" Type="STRING" Comment="" InitialValue="'Command to enable function (turn on, etc.)'"/>
+		<VarDeclaration Name="COMMAND_RESERVED_msg" Type="STRING" Comment="" InitialValue="'Reserved'"/>
+		<VarDeclaration Name="COMMAND_NO_ACTION_msg" Type="STRING" Comment="" InitialValue="'Don`t care/take no action (leave function as is)'"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[
+
+//SAEJ1939_71.pdf
+//https://forge.codesys.com/forge/talk/CODESYS-V2/thread/e3add933b3/dbf2/attachment/SAEJ1939_71.pdf
+
+
+//TABLE 2 - TRANSMITTED VALUES FOR DISCRETE PARAMETERS (MEASURED)
+VAR_GLOBAL CONSTANT
+	STATUS_DISABLED : BYTE := 2#00;    // Disabled (off, passive, etc.)
+	STATUS_ENABLED : BYTE := 2#01;    // Enabled (on, active, etc.)
+	STATUS_ERROR : BYTE := 2#10;    // Error indicator
+	STATUS_NOT_AVAILABLE : BYTE := 2#11;    // Not available or not installed
+END_VAR
+
+// TABLE 2 - TRANSMITTED VALUES FOR DISCRETE PARAMETERS (MEASURED) Strings
+VAR_GLOBAL CONSTANT
+	STATUS_DISABLED_msg : STRING := 'Disabled (off, passive, etc.)';
+	STATUS_ENABLED_msg : STRING := 'Enabled (on, active, etc.)';
+	STATUS_ERROR_msg : STRING := 'Error indicator';
+	STATUS_NOT_AVAILABLE_msg : STRING := 'Not available or not installed';
+END_VAR
+
+// TABLE 3 - TRANSMITTED VALUES FOR CONTROL COMMANDS (STATUS)
+VAR_GLOBAL CONSTANT
+	COMMAND_DISABLE : BYTE := 2#00;    // Command to disable function (turn off, etc.)
+	COMMAND_ENABLE : BYTE := 2#01;    // Command to enable function (turn on, etc.)
+	COMMAND_RESERVED : BYTE := 2#10;    // Reserved
+	COMMAND_NO_ACTION : BYTE := 2#11;    // Don't care/take no action (leave function as is)
+END_VAR
+
+// TABLE 3 - TRANSMITTED VALUES FOR CONTROL COMMANDS (STATUS) Strings
+VAR_GLOBAL CONSTANT
+	COMMAND_DISABLE_msg : STRING := 'Command to disable function (turn off, etc.)';
+	COMMAND_ENABLE_msg : STRING := 'Command to enable function (turn on, etc.)';
+	COMMAND_RESERVED_msg : STRING := 'Reserved';
+	COMMAND_NO_ACTION_msg : STRING := 'Don`t care/take no action (leave function as is)';
+END_VAR
+
+]]></OriginalSource>
+</GlobalConstants>

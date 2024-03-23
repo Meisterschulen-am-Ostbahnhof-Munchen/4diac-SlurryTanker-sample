@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Function Name="ST08B_TO_BYTE" Comment="">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2024-02-22">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event" Comment="Normal Execution Request">
+				<With Var="IN"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event" Comment="Execution Confirmation">
+				<With Var="OUT"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="IN" Type="ST08B" Comment="ST08B Input"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="OUT" Type="BYTE" Comment="BYTE Output"/>
+		</OutputVars>
+	</InterfaceList>
+	<FunctionBody>
+		<ST><![CDATA[FUNCTION ST08B_TO_BYTE
+
+VAR_INPUT
+	IN : ST08B;    // ST08B Input
+END_VAR
+
+VAR_OUTPUT
+	OUT : BYTE;    // BYTE Output
+END_VAR
+
+(* this Function extracts the 8 BOOLS from a byte *)
+OUT.0 := IN.B_00;
+OUT.1 := IN.B_01;
+OUT.2 := IN.B_02;
+OUT.3 := IN.B_03;
+OUT.4 := IN.B_04;
+OUT.5 := IN.B_05;
+OUT.6 := IN.B_06;
+OUT.7 := IN.B_07;
+
+END_FUNCTION
+]]></ST>
+	</FunctionBody>
+</Function>

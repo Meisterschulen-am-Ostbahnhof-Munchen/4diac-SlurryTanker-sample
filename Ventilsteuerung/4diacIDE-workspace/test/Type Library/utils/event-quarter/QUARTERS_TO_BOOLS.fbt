@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="QUARTERS_TO_BOOLS" Comment="Composite FB wrapping other FBs">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2024-02-29">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event" Comment="Normal Execution Request">
+				<With Var="IB_00"/>
+				<With Var="IB_01"/>
+				<With Var="IB_02"/>
+				<With Var="IB_03"/>
+				<With Var="IB_04"/>
+				<With Var="IB_05"/>
+				<With Var="IB_06"/>
+				<With Var="IB_07"/>
+				<With Var="IB_08"/>
+				<With Var="IB_09"/>
+				<With Var="IB_10"/>
+				<With Var="IB_11"/>
+				<With Var="IB_12"/>
+				<With Var="IB_13"/>
+				<With Var="IB_14"/>
+				<With Var="IB_15"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event" Comment="Execution Confirmation">
+				<With Var="Q_00"/>
+				<With Var="Q_01"/>
+				<With Var="Q_02"/>
+				<With Var="Q_03"/>
+				<With Var="Q_04"/>
+				<With Var="Q_05"/>
+				<With Var="Q_06"/>
+				<With Var="Q_07"/>
+				<With Var="Q_08"/>
+				<With Var="Q_09"/>
+				<With Var="Q_10"/>
+				<With Var="Q_11"/>
+				<With Var="Q_12"/>
+				<With Var="Q_13"/>
+				<With Var="Q_14"/>
+				<With Var="Q_15"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="IB_00" Type="BYTE" Comment="2bit (quarter Byte) Output with 4 States" InitialValue="COMMAND_DISABLE"/>
+			<VarDeclaration Name="IB_01" Type="BYTE" Comment="2bit (quarter Byte) Output with 4 States" InitialValue="COMMAND_DISABLE"/>
+			<VarDeclaration Name="IB_02" Type="BYTE" Comment="2bit (quarter Byte) Output with 4 States" InitialValue="COMMAND_DISABLE"/>
+			<VarDeclaration Name="IB_03" Type="BYTE" Comment="2bit (quarter Byte) Output with 4 States" InitialValue="COMMAND_DISABLE"/>
+			<VarDeclaration Name="IB_04" Type="BYTE" Comment="2bit (quarter Byte) Output with 4 States" InitialValue="COMMAND_DISABLE"/>
+			<VarDeclaration Name="IB_05" Type="BYTE" Comment="2bit (quarter Byte) Output with 4 States" InitialValue="COMMAND_DISABLE"/>
+			<VarDeclaration Name="IB_06" Type="BYTE" Comment="2bit (quarter Byte) Output with 4 States" InitialValue="COMMAND_DISABLE"/>
+			<VarDeclaration Name="IB_07" Type="BYTE" Comment="2bit (quarter Byte) Output with 4 States" InitialValue="COMMAND_DISABLE"/>
+			<VarDeclaration Name="IB_08" Type="BYTE" Comment="2bit (quarter Byte) Output with 4 States" InitialValue="COMMAND_DISABLE"/>
+			<VarDeclaration Name="IB_09" Type="BYTE" Comment="2bit (quarter Byte) Output with 4 States" InitialValue="COMMAND_DISABLE"/>
+			<VarDeclaration Name="IB_10" Type="BYTE" Comment="2bit (quarter Byte) Output with 4 States" InitialValue="COMMAND_DISABLE"/>
+			<VarDeclaration Name="IB_11" Type="BYTE" Comment="2bit (quarter Byte) Output with 4 States" InitialValue="COMMAND_DISABLE"/>
+			<VarDeclaration Name="IB_12" Type="BYTE" Comment="2bit (quarter Byte) Output with 4 States" InitialValue="COMMAND_DISABLE"/>
+			<VarDeclaration Name="IB_13" Type="BYTE" Comment="2bit (quarter Byte) Output with 4 States" InitialValue="COMMAND_DISABLE"/>
+			<VarDeclaration Name="IB_14" Type="BYTE" Comment="2bit (quarter Byte) Output with 4 States" InitialValue="COMMAND_DISABLE"/>
+			<VarDeclaration Name="IB_15" Type="BYTE" Comment="2bit (quarter Byte) Output with 4 States" InitialValue="COMMAND_DISABLE"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="Q_00" Type="BOOL" Comment="BOOL Output" InitialValue="FALSE"/>
+			<VarDeclaration Name="Q_01" Type="BOOL" Comment="BOOL Output" InitialValue="FALSE"/>
+			<VarDeclaration Name="Q_02" Type="BOOL" Comment="BOOL Output" InitialValue="FALSE"/>
+			<VarDeclaration Name="Q_03" Type="BOOL" Comment="BOOL Output" InitialValue="FALSE"/>
+			<VarDeclaration Name="Q_04" Type="BOOL" Comment="BOOL Output" InitialValue="FALSE"/>
+			<VarDeclaration Name="Q_05" Type="BOOL" Comment="BOOL Output" InitialValue="FALSE"/>
+			<VarDeclaration Name="Q_06" Type="BOOL" Comment="BOOL Output" InitialValue="FALSE"/>
+			<VarDeclaration Name="Q_07" Type="BOOL" Comment="BOOL Output" InitialValue="FALSE"/>
+			<VarDeclaration Name="Q_08" Type="BOOL" Comment="BOOL Output" InitialValue="FALSE"/>
+			<VarDeclaration Name="Q_09" Type="BOOL" Comment="BOOL Output" InitialValue="FALSE"/>
+			<VarDeclaration Name="Q_10" Type="BOOL" Comment="BOOL Output" InitialValue="FALSE"/>
+			<VarDeclaration Name="Q_11" Type="BOOL" Comment="BOOL Output" InitialValue="FALSE"/>
+			<VarDeclaration Name="Q_12" Type="BOOL" Comment="BOOL Output" InitialValue="FALSE"/>
+			<VarDeclaration Name="Q_13" Type="BOOL" Comment="BOOL Output" InitialValue="FALSE"/>
+			<VarDeclaration Name="Q_14" Type="BOOL" Comment="BOOL Output" InitialValue="FALSE"/>
+			<VarDeclaration Name="Q_15" Type="BOOL" Comment="BOOL Output" InitialValue="FALSE"/>
+		</OutputVars>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="QUARTER_TO_BOOL_00" Type="QUARTER_TO_BOOL" Comment="" x="666.6666666666667" y="-3600.0">
+		</FB>
+		<FB Name="QUARTER_TO_BOOL_01" Type="QUARTER_TO_BOOL" Comment="" x="666.6666666666667" y="-3066.666666666667">
+		</FB>
+		<FB Name="QUARTER_TO_BOOL_02" Type="QUARTER_TO_BOOL" Comment="" x="666.6666666666667" y="-2533.3333333333335">
+		</FB>
+		<FB Name="QUARTER_TO_BOOL_03" Type="QUARTER_TO_BOOL" Comment="" x="666.6666666666667" y="-2000.0">
+		</FB>
+		<FB Name="QUARTER_TO_BOOL_04" Type="QUARTER_TO_BOOL" Comment="" x="666.6666666666667" y="-1466.6666666666667">
+		</FB>
+		<FB Name="QUARTER_TO_BOOL_05" Type="QUARTER_TO_BOOL" Comment="" x="666.6666666666667" y="-933.3333333333334">
+		</FB>
+		<FB Name="QUARTER_TO_BOOL_06" Type="QUARTER_TO_BOOL" Comment="" x="666.6666666666667" y="-400.0">
+		</FB>
+		<FB Name="QUARTER_TO_BOOL_07" Type="QUARTER_TO_BOOL" Comment="" x="666.6666666666667" y="133.33333333333334">
+		</FB>
+		<FB Name="QUARTER_TO_BOOL_08" Type="QUARTER_TO_BOOL" Comment="" x="666.6666666666667" y="666.6666666666667">
+		</FB>
+		<FB Name="QUARTER_TO_BOOL_09" Type="QUARTER_TO_BOOL" Comment="" x="666.6666666666667" y="1206.6666666666667">
+		</FB>
+		<FB Name="QUARTER_TO_BOOL_10" Type="QUARTER_TO_BOOL" Comment="" x="666.6666666666667" y="1733.3333333333335">
+		</FB>
+		<FB Name="QUARTER_TO_BOOL_11" Type="QUARTER_TO_BOOL" Comment="" x="666.6666666666667" y="2266.666666666667">
+		</FB>
+		<FB Name="QUARTER_TO_BOOL_12" Type="QUARTER_TO_BOOL" Comment="" x="666.6666666666667" y="2800.0">
+		</FB>
+		<FB Name="QUARTER_TO_BOOL_13" Type="QUARTER_TO_BOOL" Comment="" x="666.6666666666667" y="3333.3333333333335">
+		</FB>
+		<FB Name="QUARTER_TO_BOOL_14" Type="QUARTER_TO_BOOL" Comment="" x="666.6666666666667" y="3866.666666666667">
+		</FB>
+		<FB Name="QUARTER_TO_BOOL_15" Type="QUARTER_TO_BOOL" Comment="" x="666.6666666666667" y="4400.0">
+		</FB>
+		<EventConnections>
+			<Connection Source="REQ" Destination="QUARTER_TO_BOOL_00.REQ" Comment="" dx1="1000.0"/>
+			<Connection Source="QUARTER_TO_BOOL_00.CNF" Destination="QUARTER_TO_BOOL_01.REQ" Comment="" dx1="80.0" dx2="80.0" dy="266.6666666666667"/>
+			<Connection Source="QUARTER_TO_BOOL_01.CNF" Destination="QUARTER_TO_BOOL_02.REQ" Comment="" dx1="80.0" dx2="80.0" dy="266.6666666666667"/>
+			<Connection Source="QUARTER_TO_BOOL_03.CNF" Destination="QUARTER_TO_BOOL_04.REQ" Comment="" dx1="80.0" dx2="80.0" dy="266.6666666666667"/>
+			<Connection Source="QUARTER_TO_BOOL_04.CNF" Destination="QUARTER_TO_BOOL_05.REQ" Comment="" dx1="80.0" dx2="80.0" dy="266.6666666666667"/>
+			<Connection Source="QUARTER_TO_BOOL_05.CNF" Destination="QUARTER_TO_BOOL_06.REQ" Comment="" dx1="80.0" dx2="80.0" dy="266.6666666666667"/>
+			<Connection Source="QUARTER_TO_BOOL_14.CNF" Destination="QUARTER_TO_BOOL_15.REQ" Comment="" dx1="80.0" dx2="80.0" dy="266.6666666666667"/>
+			<Connection Source="QUARTER_TO_BOOL_15.CNF" Destination="CNF" Comment="" dx1="1166.6666666666667"/>
+			<Connection Source="QUARTER_TO_BOOL_13.CNF" Destination="QUARTER_TO_BOOL_14.REQ" Comment="" dx1="80.0" dx2="80.0" dy="266.6666666666667"/>
+			<Connection Source="QUARTER_TO_BOOL_12.CNF" Destination="QUARTER_TO_BOOL_13.REQ" Comment="" dx1="80.0" dx2="80.0" dy="266.6666666666667"/>
+			<Connection Source="QUARTER_TO_BOOL_11.CNF" Destination="QUARTER_TO_BOOL_12.REQ" Comment="" dx1="80.0" dx2="80.0" dy="266.6666666666667"/>
+			<Connection Source="QUARTER_TO_BOOL_10.CNF" Destination="QUARTER_TO_BOOL_11.REQ" Comment="" dx1="80.0" dx2="80.0" dy="266.6666666666667"/>
+			<Connection Source="QUARTER_TO_BOOL_09.CNF" Destination="QUARTER_TO_BOOL_10.REQ" Comment="" dx1="80.0" dx2="80.0" dy="260.0"/>
+			<Connection Source="QUARTER_TO_BOOL_08.CNF" Destination="QUARTER_TO_BOOL_09.REQ" Comment="" dx1="80.0" dx2="80.0" dy="266.6666666666667"/>
+			<Connection Source="QUARTER_TO_BOOL_07.CNF" Destination="QUARTER_TO_BOOL_08.REQ" Comment="" dx1="80.0" dx2="80.0" dy="266.6666666666667"/>
+			<Connection Source="QUARTER_TO_BOOL_06.CNF" Destination="QUARTER_TO_BOOL_07.REQ" Comment="" dx1="80.0" dx2="80.0" dy="266.6666666666667"/>
+			<Connection Source="QUARTER_TO_BOOL_02.CNF" Destination="QUARTER_TO_BOOL_03.REQ" Comment="" dx1="80.0" dx2="80.0" dy="266.6666666666667"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="IB_00" Destination="QUARTER_TO_BOOL_00.IB" Comment="" dx1="1000.0"/>
+			<Connection Source="IB_01" Destination="QUARTER_TO_BOOL_01.IB" Comment="" dx1="1000.0"/>
+			<Connection Source="IB_02" Destination="QUARTER_TO_BOOL_02.IB" Comment="" dx1="1000.0"/>
+			<Connection Source="IB_03" Destination="QUARTER_TO_BOOL_03.IB" Comment="" dx1="1000.0"/>
+			<Connection Source="IB_04" Destination="QUARTER_TO_BOOL_04.IB" Comment="" dx1="1000.0"/>
+			<Connection Source="IB_05" Destination="QUARTER_TO_BOOL_05.IB" Comment="" dx1="1000.0"/>
+			<Connection Source="IB_06" Destination="QUARTER_TO_BOOL_06.IB" Comment="" dx1="1000.0"/>
+			<Connection Source="IB_07" Destination="QUARTER_TO_BOOL_07.IB" Comment="" dx1="1000.0"/>
+			<Connection Source="IB_15" Destination="QUARTER_TO_BOOL_15.IB" Comment="" dx1="1000.0"/>
+			<Connection Source="IB_14" Destination="QUARTER_TO_BOOL_14.IB" Comment="" dx1="1000.0"/>
+			<Connection Source="IB_13" Destination="QUARTER_TO_BOOL_13.IB" Comment="" dx1="1000.0"/>
+			<Connection Source="IB_12" Destination="QUARTER_TO_BOOL_12.IB" Comment="" dx1="1000.0"/>
+			<Connection Source="IB_11" Destination="QUARTER_TO_BOOL_11.IB" Comment="" dx1="1000.0"/>
+			<Connection Source="IB_10" Destination="QUARTER_TO_BOOL_10.IB" Comment="" dx1="1000.0"/>
+			<Connection Source="IB_09" Destination="QUARTER_TO_BOOL_09.IB" Comment="" dx1="1000.0"/>
+			<Connection Source="IB_08" Destination="QUARTER_TO_BOOL_08.IB" Comment="" dx1="1000.0"/>
+			<Connection Source="QUARTER_TO_BOOL_15.Q" Destination="Q_15" Comment="" dx1="1166.6666666666667"/>
+			<Connection Source="QUARTER_TO_BOOL_00.Q" Destination="Q_00" Comment="" dx1="1166.6666666666667"/>
+			<Connection Source="QUARTER_TO_BOOL_01.Q" Destination="Q_01" Comment="" dx1="1166.6666666666667"/>
+			<Connection Source="QUARTER_TO_BOOL_02.Q" Destination="Q_02" Comment="" dx1="1166.6666666666667"/>
+			<Connection Source="QUARTER_TO_BOOL_03.Q" Destination="Q_03" Comment="" dx1="1166.6666666666667"/>
+			<Connection Source="QUARTER_TO_BOOL_04.Q" Destination="Q_04" Comment="" dx1="1166.6666666666667"/>
+			<Connection Source="QUARTER_TO_BOOL_05.Q" Destination="Q_05" Comment="" dx1="1166.6666666666667"/>
+			<Connection Source="QUARTER_TO_BOOL_06.Q" Destination="Q_06" Comment="" dx1="1166.6666666666667"/>
+			<Connection Source="QUARTER_TO_BOOL_07.Q" Destination="Q_07" Comment="" dx1="1166.6666666666667"/>
+			<Connection Source="QUARTER_TO_BOOL_08.Q" Destination="Q_08" Comment="" dx1="1166.6666666666667"/>
+			<Connection Source="QUARTER_TO_BOOL_09.Q" Destination="Q_09" Comment="" dx1="1166.6666666666667"/>
+			<Connection Source="QUARTER_TO_BOOL_10.Q" Destination="Q_10" Comment="" dx1="1166.6666666666667"/>
+			<Connection Source="QUARTER_TO_BOOL_11.Q" Destination="Q_11" Comment="" dx1="1166.6666666666667"/>
+			<Connection Source="QUARTER_TO_BOOL_12.Q" Destination="Q_12" Comment="" dx1="1166.6666666666667"/>
+			<Connection Source="QUARTER_TO_BOOL_13.Q" Destination="Q_13" Comment="" dx1="1166.6666666666667"/>
+			<Connection Source="QUARTER_TO_BOOL_14.Q" Destination="Q_14" Comment="" dx1="1166.6666666666667"/>
+		</DataConnections>
+	</FBNetwork>
+</FBType>
