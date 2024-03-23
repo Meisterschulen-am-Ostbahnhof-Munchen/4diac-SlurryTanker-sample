@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="mapping_blink" Comment="Subapplication Type">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2023-04-04">
+	</VersionInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="Event" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="PKP_2200_LI_4_DI" Type="PKP_2200_LI_4_DI" Comment="" x="726.6666666666667" y="526.6666666666667">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u8SAMember" Value="PKP_2200_DEFAULT"/>
+			<Parameter Name="u16ObjId" Value="65535"/>
+			<Parameter Name="DigitalInput_Key_1" Value="&quot;DigitalInput_Key_1&quot;"/>
+			<Parameter Name="DigitalInput_Key_2" Value="&quot;DigitalInput_Key_2&quot;"/>
+			<Parameter Name="DigitalInput_Key_3" Value="&quot;DigitalInput_Key_3&quot;"/>
+			<Parameter Name="DigitalInput_Key_4" Value="&quot;DigitalInput_Key_4&quot;"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="PKP_2200_LI_4_DI.INIT" Comment="" dx1="1033.3333333333335"/>
+		</EventConnections>
+	</SubAppNetwork>
+</SubAppType>
