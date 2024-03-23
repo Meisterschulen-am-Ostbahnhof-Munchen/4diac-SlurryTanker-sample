@@ -3,9 +3,9 @@ EMB_RES;<Request ID="3" Action="CREATE"><FB Name="Ventilsteuerung.mapping.mappin
 EMB_RES;<Request ID="4" Action="WRITE"><Connection Source="TRUE" Destination="Ventilsteuerung.mapping.mapping_Buttons.UT_ButtonMapping_UP.QI" /></Request>
 EMB_RES;<Request ID="5" Action="WRITE"><Connection Source="255" Destination="Ventilsteuerung.mapping.mapping_Buttons.UT_ButtonMapping_UP.u8SAMember" /></Request>
 EMB_RES;<Request ID="6" Action="WRITE"><Connection Source="6000" Destination="Ventilsteuerung.mapping.mapping_Buttons.UT_ButtonMapping_UP.u16ObjId_1" /></Request>
-EMB_RES;<Request ID="7" Action="WRITE"><Connection Source="&apos;Ventilsteuerung.functions.PAGES.PAGE_1.BTN&apos;" Destination="Ventilsteuerung.mapping.mapping_Buttons.UT_ButtonMapping_UP.DigitalInput_1" /></Request>
+EMB_RES;<Request ID="7" Action="WRITE"><Connection Source="&apos;Ventilsteuerung.PAGES.PAGE_1.BTN&apos;" Destination="Ventilsteuerung.mapping.mapping_Buttons.UT_ButtonMapping_UP.DigitalInput_1" /></Request>
 EMB_RES;<Request ID="8" Action="WRITE"><Connection Source="6001" Destination="Ventilsteuerung.mapping.mapping_Buttons.UT_ButtonMapping_UP.u16ObjId_2" /></Request>
-EMB_RES;<Request ID="9" Action="WRITE"><Connection Source="&apos;Ventilsteuerung.functions.PAGES.PAGE_2.BTN&apos;" Destination="Ventilsteuerung.mapping.mapping_Buttons.UT_ButtonMapping_UP.DigitalInput_2" /></Request>
+EMB_RES;<Request ID="9" Action="WRITE"><Connection Source="&apos;Ventilsteuerung.PAGES.PAGE_2.BTN&apos;" Destination="Ventilsteuerung.mapping.mapping_Buttons.UT_ButtonMapping_UP.DigitalInput_2" /></Request>
 EMB_RES;<Request ID="10" Action="CREATE"><FB Name="Ventilsteuerung.mapping.mapping_aux.UT_AuxiliaryInputMapping" Type="UT_AuxiliaryInputMapping_Type_02_Bool_NonLatched" /></Request>
 EMB_RES;<Request ID="11" Action="WRITE"><Connection Source="TRUE" Destination="Ventilsteuerung.mapping.mapping_aux.UT_AuxiliaryInputMapping.QI" /></Request>
 EMB_RES;<Request ID="12" Action="WRITE"><Connection Source="255" Destination="Ventilsteuerung.mapping.mapping_aux.UT_AuxiliaryInputMapping.u8SAMember" /></Request>
