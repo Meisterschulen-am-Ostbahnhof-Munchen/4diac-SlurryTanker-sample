@@ -39,8 +39,8 @@
 		</FB>
 		<FB Name="AND_2" Type="AND_2" Comment="" x="7193.333333333334" y="1566.6666666666667">
 		</FB>
-		<FB Name="E_IMPULSE" Type="E_IMPULSE" Comment="" x="5300.0" y="926.6666666666667">
-			<Parameter Name="TM" Value="T#3s" Comment=""/>
+		<FB Name="E_PULSE" Type="E_PULSE" Comment="" x="5300.0" y="926.6666666666667">
+			<Parameter Name="PT" Value="T#3s" Comment=""/>
 		</FB>
 		<SubApp Name="SoftKey_UP" Type="SoftKey_UP" Comment="" x="-400.0" y="1400.0">
 		</SubApp>
@@ -49,13 +49,13 @@
 		<SubApp Name="GreenWhiteBackground_Function" Type="GreenWhiteBackground_Function" Comment="" x="4940.0" y="0.0">
 		</SubApp>
 		<EventConnections>
-			<Connection Source="E_IMPULSE.CNF" Destination="E_F_TRIG.EI" Comment=""/>
-			<Connection Source="E_IMPULSE.CNF" Destination="QXB.REQ" Comment="" dx1="693.3333333333334"/>
+			<Connection Source="E_PULSE.CNF" Destination="E_F_TRIG.EI" Comment=""/>
+			<Connection Source="E_PULSE.CNF" Destination="QXB.REQ" Comment="" dx1="693.3333333333334"/>
 			<Connection Source="E_SWITCH.EO0" Destination="E_SR.S" Comment=""/>
 			<Connection Source="E_SWITCH.EO1" Destination="E_SR.R" Comment=""/>
 			<Connection Source="E_SR.EO" Destination="AND_2.REQ" Comment=""/>
-			<Connection Source="E_SR.EO" Destination="E_IMPULSE.REQ" Comment="" dx1="126.66666666666667"/>
-			<Connection Source="E_IMPULSE.CNF" Destination="AND_2.REQ" Comment="" dx1="533.3333333333334"/>
+			<Connection Source="E_SR.EO" Destination="E_PULSE.REQ" Comment="" dx1="126.66666666666667"/>
+			<Connection Source="E_PULSE.CNF" Destination="AND_2.REQ" Comment="" dx1="533.3333333333334"/>
 			<Connection Source="OPEN" Destination="E_SR.S" Comment="" dx1="4353.333333333334"/>
 			<Connection Source="CLOSE" Destination="E_SR.R" Comment="" dx1="4160.0"/>
 			<Connection Source="AND_2.CNF" Destination="CNF_2b" Comment="" dx1="553.3333333333334" dx2="280.0" dy="-860.0"/>
@@ -69,19 +69,19 @@
 			<Connection Source="E_SR.EO" Destination="GreenWhiteBackground_Function.EO" Comment="" dx1="406.6666666666667" dx2="406.6666666666667" dy="0.0"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="E_IMPULSE.QO" Destination="E_F_TRIG.QI" Comment="" dx1="600.0"/>
-			<Connection Source="E_IMPULSE.QO" Destination="QXB.OUT" Comment="" dx1="773.3333333333334"/>
 			<Connection Source="E_SR.Q" Destination="E_SWITCH.G" Comment="" dx1="206.66666666666669" dx2="240.0" dy="266.6666666666667"/>
 			<Connection Source="E_SR.Q" Destination="AND_2.IN2" Comment="" dx1="2406.666666666667"/>
-			<Connection Source="E_IMPULSE.QO" Destination="AND_2.IN1" Comment="" dx1="600.0"/>
 			<Connection Source="AND_2.OUT" Destination="OUT_2b" Comment="" dx1="813.3333333333334" dx2="66.66666666666667" dy="-920.0"/>
 			<Connection Source="E_SR.Q" Destination="GreenWhiteBackground_Function.Q" Comment="" dx1="653.3333333333334" dx2="653.3333333333334" dy="0.0"/>
 			<Connection Source="u16ObjId" Destination="GreenWhiteBackground_Function.u16ObjId" Comment="" dx1="3140.0">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
+				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="u16ObjIdA" Destination="GreenWhiteBackground_Function.u16ObjIdA" Comment="" dx1="3140.0">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
+				<Attribute Name="Visible" Value="false"/>
 			</Connection>
+			<Connection Source="E_PULSE.Q" Destination="E_F_TRIG.QI" Comment="" dx1="600.0" dx2="600.0" dy="0.0"/>
+			<Connection Source="E_PULSE.Q" Destination="QXB.OUT" Comment="" dx1="773.3333333333334" dx2="773.3333333333334" dy="0.0"/>
+			<Connection Source="E_PULSE.Q" Destination="AND_2.IN1" Comment="" dx1="600.0" dx2="600.0" dy="0.0"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
