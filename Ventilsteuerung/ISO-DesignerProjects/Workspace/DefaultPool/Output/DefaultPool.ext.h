@@ -1,4 +1,4 @@
-// ISO-Designer ISO 11783   Version 5.6.1.5243 Jetter AG
+// ISO-Designer ISO 11783   Version 5.6.2.5533 Jetter AG
 // Do not change!
 #define ISO_SOFTKEY_MASK_WIDTH              640
 #define ISO_SOFTKEY_MASK_HEIGHT             480
