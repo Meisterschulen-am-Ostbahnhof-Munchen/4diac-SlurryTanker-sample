@@ -12,7 +12,7 @@
 		<Parameter Name="MGR_ID" Value="C_00"/>
 		<Attribute Name="Profile" Type="STRING" Value="HOLOBLOC"/>
 		<Attribute Name="Color" Type="STRING" Value="255,190,111"/>
-		<Attribute Name="FBType" Type="STRING" Value="E_SWITCH, E_SR_RETRIG, E_R_TRIG, E_T_FF, E_IMPULSE, E_SR, E_F_TRIG, E_REND, E_D_FF" Comment="created during deployment"/>
+		<Attribute Name="FBType" Type="STRING" Value="E_SWITCH, E_SR_RETRIG, E_R_TRIG, E_T_FF, E_PULSE, E_SR, E_F_TRIG, E_REND, E_D_FF" Comment="created during deployment"/>
 		<Resource Name="EMB_RES" Type="EMB_RES" Comment="" x="0.0" y="0.0">
 			<FBNetwork>
 				<SubApp Name="SlurryTanker" Type="SlurryTanker" Comment="" x="2000.0" y="0.0">
