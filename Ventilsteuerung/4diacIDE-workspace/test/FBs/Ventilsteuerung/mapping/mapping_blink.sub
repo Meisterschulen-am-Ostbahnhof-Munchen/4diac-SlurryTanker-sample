@@ -15,13 +15,13 @@
 			<Parameter Name="QI" Value="TRUE" Comment=""/>
 			<Parameter Name="u8SAMember" Value="PKP_2200_DEFAULT" Comment=""/>
 			<Parameter Name="u16ObjId" Value="65535" Comment=""/>
-			<Parameter Name="DigitalInput_Key_1" Value="'DigitalInput_Key_1'" Comment=""/>
-			<Parameter Name="DigitalInput_Key_2" Value="'DigitalInput_Key_2'" Comment=""/>
-			<Parameter Name="DigitalInput_Key_3" Value="'DigitalInput_Key_3'" Comment=""/>
-			<Parameter Name="DigitalInput_Key_4" Value="'DigitalInput_Key_4'" Comment=""/>
+			<Parameter Name="DigitalInput_Key_1" Value="'Ventilsteuerung.functions.Knickdeichsel_heben.IX'" Comment=""/>
+			<Parameter Name="DigitalInput_Key_2" Value="'Ventilsteuerung.functions.Knickdeichsel_senken.IX'" Comment=""/>
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="PKP_2200_LI_4_DI.INIT" Comment="" dx1="1033.3333333333335"/>
+			<Connection Source="INIT" Destination="PKP_2200_LI_4_DI.INIT" Comment="" dx1="1033.3333333333335">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
 		</EventConnections>
 	</SubAppNetwork>
 </SubAppType>
