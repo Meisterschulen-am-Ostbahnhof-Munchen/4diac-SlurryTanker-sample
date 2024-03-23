@@ -15,21 +15,21 @@
 			<Parameter Name="QI" Value="TRUE" Comment=""/>
 			<Parameter Name="u8SAMember" Value="255" Comment=""/>
 			<Parameter Name="u16ObjId_1" Value="SoftKey_Automatik_ein" Comment=""/>
-			<Parameter Name="DigitalInput_1" Value="'Ventilsteuerung.functions.Automatik.ein.SoftKey'" Comment=""/>
+			<Parameter Name="DigitalInput_1" Value="'Ventilsteuerung.functions.Automatik.ein.IX'" Comment=""/>
 			<Parameter Name="u16ObjId_2" Value="SoftKey_Auseinanderklappen" Comment=""/>
-			<Parameter Name="DigitalInput_2" Value="'Ventilsteuerung.functions.Klappen.SoftKey_heben.SoftKey'" Comment=""/>
+			<Parameter Name="DigitalInput_2" Value="'Ventilsteuerung.functions.Klappen.SoftKey_heben.IX'" Comment=""/>
 			<Parameter Name="u16ObjId_3" Value="SoftKey_Verteiler_senken" Comment=""/>
-			<Parameter Name="DigitalInput_3" Value="'Ventilsteuerung.functions.Verteiler.SoftKey_senken.SoftKey'" Comment=""/>
+			<Parameter Name="DigitalInput_3" Value="'Ventilsteuerung.functions.Verteiler.SoftKey_senken.IX'" Comment=""/>
 			<Parameter Name="u16ObjId_4" Value="SoftKey_Knickdeichsel_senken" Comment=""/>
-			<Parameter Name="DigitalInput_4" Value="'Ventilsteuerung.functions.Knickdeichsel.SoftKey_senken.SoftKey'" Comment=""/>
+			<Parameter Name="DigitalInput_4" Value="'Ventilsteuerung.functions.Knickdeichsel.SoftKey_senken.IX'" Comment=""/>
 			<Parameter Name="u16ObjId_5" Value="SoftKey_Automatik_aus" Comment=""/>
-			<Parameter Name="DigitalInput_5" Value="'Ventilsteuerung.functions.Automatik.aus.SoftKey'" Comment=""/>
+			<Parameter Name="DigitalInput_5" Value="'Ventilsteuerung.functions.Automatik.aus.IX'" Comment=""/>
 			<Parameter Name="u16ObjId_6" Value="SoftKey_Zusammenklappen" Comment=""/>
-			<Parameter Name="DigitalInput_6" Value="'Ventilsteuerung.functions.Klappen.SoftKey_senken.SoftKey'" Comment=""/>
+			<Parameter Name="DigitalInput_6" Value="'Ventilsteuerung.functions.Klappen.SoftKey_senken.IX'" Comment=""/>
 			<Parameter Name="u16ObjId_7" Value="SoftKey_Verteiler_heben" Comment=""/>
-			<Parameter Name="DigitalInput_7" Value="'Ventilsteuerung.functions.Verteiler.SoftKey_heben.SoftKey'" Comment=""/>
+			<Parameter Name="DigitalInput_7" Value="'Ventilsteuerung.functions.Verteiler.SoftKey_heben.IX'" Comment=""/>
 			<Parameter Name="u16ObjId_8" Value="SoftKey_Knickdeichsel_heben" Comment=""/>
-			<Parameter Name="DigitalInput_8" Value="'Ventilsteuerung.functions.Knickdeichsel.SoftKey_heben.SoftKey'" Comment=""/>
+			<Parameter Name="DigitalInput_8" Value="'Ventilsteuerung.functions.Knickdeichsel.SoftKey_heben.IX'" Comment=""/>
 		</FB>
 		<FB Name="UT_SoftkeyMapping_UP" Type="UT_SoftkeyMapping_UP" Comment="" x="1066.6666666666667" y="2666.666666666667">
 			<Parameter Name="QI" Value="TRUE" Comment=""/>
