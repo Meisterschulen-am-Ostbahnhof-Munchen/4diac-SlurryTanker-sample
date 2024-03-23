@@ -37,9 +37,9 @@
 		</FB>
 		<SubApp Name="GreenWhiteBackground" Type="GreenWhiteBackground_Function" Comment="" x="2700.0" y="-800.0">
 		</SubApp>
-		<SubApp Name="AuxInput_UP" Type="AuxInput_UP" Comment="" x="-1066.6666666666667" y="-133.33333333333334">
+		<SubApp Name="AuxInput_UP" Type="IN_UP" Comment="" x="-1066.6666666666667" y="-133.33333333333334">
 		</SubApp>
-		<SubApp Name="SoftKey_UP" Type="SoftKey_UP" Comment="" x="-1066.6666666666667" y="-666.6666666666667">
+		<SubApp Name="SoftKey_UP" Type="IE_UP" Comment="" x="-1066.6666666666667" y="-666.6666666666667">
 		</SubApp>
 		<EventConnections>
 			<Connection Source="E_PULSE.CNF" Destination="AND_2.REQ" Comment="" dx1="473.33333333333337"/>

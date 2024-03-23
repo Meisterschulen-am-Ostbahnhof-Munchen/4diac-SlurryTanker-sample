@@ -42,11 +42,11 @@
 		<FB Name="E_PULSE" Type="E_PULSE" Comment="" x="5300.0" y="926.6666666666667">
 			<Parameter Name="PT" Value="T#3s" Comment=""/>
 		</FB>
-		<SubApp Name="SoftKey_UP" Type="SoftKey_UP" Comment="" x="-400.0" y="1400.0">
-		</SubApp>
-		<SubApp Name="AuxInput_UP" Type="AuxInput_UP" Comment="" x="-400.0" y="1800.0">
-		</SubApp>
 		<SubApp Name="GreenWhiteBackground_Function" Type="GreenWhiteBackground_Function" Comment="" x="4940.0" y="0.0">
+		</SubApp>
+		<SubApp Name="SoftKey_UP" Type="IE_UP" Comment="" x="-400.0" y="1400.0">
+		</SubApp>
+		<SubApp Name="AuxInput_UP" Type="IN_UP" Comment="" x="-400.0" y="1800.0">
 		</SubApp>
 		<EventConnections>
 			<Connection Source="E_PULSE.CNF" Destination="E_F_TRIG.EI" Comment=""/>
@@ -61,12 +61,12 @@
 			<Connection Source="AND_2.CNF" Destination="CNF_2b" Comment="" dx1="553.3333333333334" dx2="280.0" dy="-860.0"/>
 			<Connection Source="E_F_TRIG.EO" Destination="EO_Heckschieber_END" Comment="" dx1="440.0"/>
 			<Connection Source="INIT" Destination="QXB.INIT" Comment="" dx1="8313.333333333334"/>
+			<Connection Source="INIT" Destination="GreenWhiteBackground_Function.INIT" Comment="" dx1="5906.666666666667" dx2="5906.666666666667" dy="0.0"/>
+			<Connection Source="E_SR.EO" Destination="GreenWhiteBackground_Function.EO" Comment="" dx1="406.6666666666667" dx2="406.6666666666667" dy="0.0"/>
 			<Connection Source="INIT" Destination="SoftKey_UP.INIT" Comment="" dx1="466.6666666666667" dx2="466.6666666666667" dy="0.0"/>
 			<Connection Source="SoftKey_UP.IND" Destination="E_SWITCH.EI" Comment="" dx1="466.6666666666667" dx2="466.6666666666667" dy="0.0"/>
 			<Connection Source="INIT" Destination="AuxInput_UP.INIT" Comment="" dx1="466.6666666666667" dx2="466.6666666666667" dy="0.0"/>
 			<Connection Source="AuxInput_UP.IND" Destination="E_SWITCH.EI" Comment="" dx1="440.0" dx2="440.0" dy="0.0"/>
-			<Connection Source="INIT" Destination="GreenWhiteBackground_Function.INIT" Comment="" dx1="5906.666666666667" dx2="5906.666666666667" dy="0.0"/>
-			<Connection Source="E_SR.EO" Destination="GreenWhiteBackground_Function.EO" Comment="" dx1="406.6666666666667" dx2="406.6666666666667" dy="0.0"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="E_SR.Q" Destination="E_SWITCH.G" Comment="" dx1="206.66666666666669" dx2="240.0" dy="266.6666666666667"/>
