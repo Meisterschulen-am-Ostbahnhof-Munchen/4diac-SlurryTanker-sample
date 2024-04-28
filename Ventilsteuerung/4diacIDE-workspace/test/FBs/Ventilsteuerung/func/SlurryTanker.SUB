@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="SlurryTanker" Comment="Subapplication Type">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2023-02-11">
+	</VersionInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="Event" Comment="">
+			</SubAppEvent>
+		</SubAppEventInputs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<Group Name="funktionen" Comment="" x="-920.0" y="-1200.0" width="6660.0" height="8940.0" locked="false">
+		</Group>
+		<Group Name="Vorsteuerventile" Comment="Vorsteuerventile" x="5866.666666666667" y="-1066.6666666666667" width="4140.0" height="3880.0" locked="false">
+		</Group>
+		<Group Name="Vorgewendeautomatik" Comment="Vorgewendeautomatik" x="-800.0" y="7866.666666666667" width="10000.0" height="5073.333333333334" locked="false">
+		</Group>
+		<SubApp Name="Automatik" Type="Automatik" Comment="" x="1153.3333333333335" y="1726.6666666666667">
+			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
+			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
+			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
+			<Attribute Name="GroupName" Type="STRING" Value="Vorgewendeautomatik"/>
+		</SubApp>
+		<SubApp Name="Dom" Type="TimedFunc" Comment="" x="4140.0" y="126.66666666666667">
+			<Parameter Name="u16ObjId" Value="SoftKey_Dom" Comment=""/>
+			<Parameter Name="u16ObjIdA" Value="AuxInput_Dom" Comment=""/>
+			<Attribute Name="GroupName" Type="STRING" Value="funktionen"/>
+		</SubApp>
+		<SubApp Name="Seitenschieber" Type="TimedFunc" Comment="" x="4140.0" y="793.3333333333334">
+			<Parameter Name="u16ObjId" Value="SoftKey_Seitenschieber" Comment=""/>
+			<Parameter Name="u16ObjIdA" Value="AuxInput_Seitenschieber" Comment=""/>
+			<Attribute Name="GroupName" Type="STRING" Value="funktionen"/>
+		</SubApp>
+		<SubApp Name="Klappen" Type="doppeltwirkend" Comment="" x="3940.0" y="5593.333333333334">
+			<Parameter Name="u16ObjId_heben" Value="SoftKey_Auseinanderklappen" Comment=""/>
+			<Parameter Name="u16ObjId_senken" Value="SoftKey_Zusammenklappen" Comment=""/>
+			<Parameter Name="u16ObjIdA_heben" Value="AuxInput_Auseinanderklappen" Comment=""/>
+			<Parameter Name="u16ObjIdA_senken" Value="AuxInput_Zusammenklappen" Comment=""/>
+			<Attribute Name="GroupName" Type="STRING" Value="funktionen"/>
+		</SubApp>
+		<SubApp Name="Verteiler" Type="doppeltwirkend" Comment="" x="7013.333333333334" y="0.0">
+			<Parameter Name="u16ObjId_heben" Value="SoftKey_Verteiler_heben" Comment=""/>
+			<Parameter Name="u16ObjId_senken" Value="SoftKey_Verteiler_senken" Comment=""/>
+			<Parameter Name="u16ObjIdA_heben" Value="AuxInput_Verteiler_heben" Comment=""/>
+			<Parameter Name="u16ObjIdA_senken" Value="AuxInput_Verteiler_senken" Comment=""/>
+			<Attribute Name="GroupName" Type="STRING" Value="Vorgewendeautomatik"/>
+		</SubApp>
+		<SubApp Name="Vorsteuerventil_2A" Type="Vorsteuerventil" Comment="" x="2486.666666666667" y="126.66666666666667">
+			<Attribute Name="GroupName" Type="STRING" Value="Vorsteuerventile"/>
+		</SubApp>
+		<SubApp Name="Vorsteuerventil_2B" Type="Vorsteuerventil" Comment="" x="2486.666666666667" y="1860.0">
+			<Attribute Name="GroupName" Type="STRING" Value="Vorsteuerventile"/>
+		</SubApp>
+		<SubApp Name="Knickdeichsel" Type="doppeltwirkend" Comment="" x="3940.0" y="1726.6666666666667">
+			<Parameter Name="u16ObjId_heben" Value="SoftKey_Knickdeichsel_heben" Comment=""/>
+			<Parameter Name="u16ObjId_senken" Value="SoftKey_Knickdeichsel_senken" Comment=""/>
+			<Parameter Name="u16ObjIdA_heben" Value="AuxInput_Knickdeichsel_heben" Comment=""/>
+			<Parameter Name="u16ObjIdA_senken" Value="AuxInput_Knickdeichsel_senken" Comment=""/>
+			<Attribute Name="GroupName" Type="STRING" Value="funktionen"/>
+		</SubApp>
+		<SubApp Name="Licht" Type="Dauerfunktion" Comment="" x="4046.666666666667" y="3593.3333333333335">
+			<Parameter Name="u16ObjId" Value="SoftKey_Licht" Comment=""/>
+			<Parameter Name="u16ObjIdA" Value="AuxInput_Licht" Comment=""/>
+			<Attribute Name="GroupName" Type="STRING" Value="funktionen"/>
+		</SubApp>
+		<SubApp Name="Abscheider" Type="TimedFunc" Comment="" x="4140.0" y="4660.0">
+			<Parameter Name="u16ObjId" Value="SoftKey_Abscheider" Comment=""/>
+			<Parameter Name="u16ObjIdA" Value="AuxInput_Abscheider" Comment=""/>
+			<Attribute Name="GroupName" Type="STRING" Value="funktionen"/>
+		</SubApp>
+		<SubApp Name="Schneidwerk" Type="Schneidwerk" Comment="" x="7020.0" y="1460.0">
+			<Parameter Name="u16ObjId" Value="SoftKey_Schneidwerk" Comment=""/>
+			<Parameter Name="u16ObjIdA" Value="AuxInput_Schneidwerk" Comment=""/>
+			<Attribute Name="GroupName" Type="STRING" Value="Vorgewendeautomatik"/>
+		</SubApp>
+		<SubApp Name="Heckschieber" Type="Heckschieber" Comment="" x="7020.0" y="3460.0">
+			<Parameter Name="u16ObjId" Value="SoftKey_Heckschieber" Comment=""/>
+			<Parameter Name="u16ObjIdA" Value="AuxInput_Heckschieber" Comment=""/>
+			<Attribute Name="GroupName" Type="STRING" Value="Vorgewendeautomatik"/>
+		</SubApp>
+		<SubApp Name="Knickdeichsel_heben" Type="IN" Comment="" x="606.6666666666667" y="1993.3333333333335">
+			<Attribute Name="GroupName" Type="STRING" Value="funktionen"/>
+		</SubApp>
+		<SubApp Name="Knickdeichsel_senken" Type="IN" Comment="" x="606.6666666666667" y="2793.3333333333335">
+			<Attribute Name="GroupName" Type="STRING" Value="funktionen"/>
+		</SubApp>
+		<EventConnections>
+			<Connection Source="INIT" Destination="Automatik.INIT" Comment="" dx1="866.6666666666667">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="INIT" Destination="Dom.INIT" Comment="" dx1="1000.0">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="INIT" Destination="Seitenschieber.INIT" Comment="" dx1="1000.0">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="INIT" Destination="Klappen.INIT" Comment="" dx1="1266.6666666666667">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="INIT" Destination="Verteiler.INIT" Comment="" dx1="11340.0" dx2="11340.0" dy="4233.333333333334">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Automatik.EO_Verteiler_heben" Destination="Verteiler.EI_heben" Comment="" dx1="1240.0"/>
+			<Connection Source="Automatik.EO_Verteiler_senken" Destination="Verteiler.EI_senken" Comment="" dx1="1333.3333333333335"/>
+			<Connection Source="INIT" Destination="Vorsteuerventil_2A.INIT" Comment="" dx1="4066.666666666667">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Klappen.CNF_a" Destination="Vorsteuerventil_2A.REQ1" Comment="" dx1="1720.0">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Verteiler.CNF_a" Destination="Vorsteuerventil_2A.REQ3" Comment="" dx1="80.0" dx2="80.0" dy="-1226.6666666666667">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Dom.CNF" Destination="Vorsteuerventil_2A.REQ4" Comment="" dx1="2713.3333333333335">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Seitenschieber.CNF" Destination="Vorsteuerventil_2A.REQ5" Comment="" dx1="2713.3333333333335">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="INIT" Destination="Vorsteuerventil_2B.INIT" Comment="" dx1="4066.666666666667">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Klappen.CNF_b" Destination="Vorsteuerventil_2B.REQ1" Comment="" dx1="1720.0">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Verteiler.CNF_b" Destination="Vorsteuerventil_2B.REQ3" Comment="" dx1="80.0" dx2="80.0" dy="-920.0">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="INIT" Destination="Knickdeichsel.INIT" Comment="" dx1="1200.0">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Knickdeichsel.CNF_b" Destination="Vorsteuerventil_2B.REQ2" Comment="" dx1="1786.6666666666667">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Knickdeichsel.CNF_a" Destination="Vorsteuerventil_2A.REQ2" Comment="" dx1="1786.6666666666667">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="INIT" Destination="Licht.INIT" Comment="" dx1="1333.3333333333335">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="INIT" Destination="Abscheider.INIT" Comment="" dx1="1400.0">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Abscheider.CNF" Destination="Vorsteuerventil_2B.REQ5" Comment="" dx1="2313.3333333333335">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="INIT" Destination="Schneidwerk.INIT" Comment="" dx1="3800.0">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Automatik.EO_Automatik_ein" Destination="Schneidwerk.S_ON" Comment="" dx1="2460.0"/>
+			<Connection Source="Automatik.EO_Automatik_aus_DOWN" Destination="Schneidwerk.S_OFF" Comment="" dx1="2493.3333333333335"/>
+			<Connection Source="INIT" Destination="Heckschieber.INIT" Comment="" dx1="3800.0">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Automatik.EO_Automatik_ein_UP" Destination="Heckschieber.OPEN" Comment="" dx1="2853.3333333333335"/>
+			<Connection Source="Automatik.EO_Automatik_aus_DOWN" Destination="Heckschieber.CLOSE" Comment="" dx1="2620.0"/>
+			<Connection Source="Heckschieber.CNF_2b" Destination="Vorsteuerventil_2B.REQ4" Comment="" dx1="80.0" dx2="80.0" dy="-1666.6666666666667">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Heckschieber.EO_Heckschieber_END" Destination="Automatik.CNF_Schieber" Comment="" dx1="66.66666666666667" dx2="66.66666666666667" dy="-633.3333333333334"/>
+			<Connection Source="INIT" Destination="Knickdeichsel_heben.INIT" Comment="" dx1="706.6666666666667">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="INIT" Destination="Knickdeichsel_senken.INIT" Comment="" dx1="653.3333333333334">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Knickdeichsel_heben.IND" Destination="Knickdeichsel.EI_heben" Comment="" dx1="713.3333333333334"/>
+			<Connection Source="Knickdeichsel_senken.IND" Destination="Knickdeichsel.EI_senken" Comment="" dx1="813.3333333333334"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="Automatik.Q_Verteiler_heben" Destination="Verteiler.IN_heben" Comment="" dx1="1633.3333333333335"/>
+			<Connection Source="Automatik.Q_Verteiler_senken" Destination="Verteiler.IN_senken" Comment="" dx1="1726.6666666666667"/>
+			<Connection Source="Klappen.OUT_a" Destination="Vorsteuerventil_2A.IN1" Comment="" dx1="1720.0">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Verteiler.OUT_a" Destination="Vorsteuerventil_2A.IN3" Comment="" dx1="80.0" dx2="80.0" dy="-1126.6666666666667">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Dom.OUT" Destination="Vorsteuerventil_2A.IN4" Comment="" dx1="2713.3333333333335">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Seitenschieber.OUT" Destination="Vorsteuerventil_2A.IN5" Comment="" dx1="2713.3333333333335">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Klappen.OUT_b" Destination="Vorsteuerventil_2B.IN1" Comment="" dx1="1720.0">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Verteiler.OUT_b" Destination="Vorsteuerventil_2B.IN3" Comment="" dx1="80.0" dx2="80.0" dy="-820.0">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Knickdeichsel.OUT_b" Destination="Vorsteuerventil_2B.IN2" Comment="" dx1="1786.6666666666667">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Knickdeichsel.OUT_a" Destination="Vorsteuerventil_2A.IN2" Comment="" dx1="1786.6666666666667">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Abscheider.OUT" Destination="Vorsteuerventil_2B.IN5" Comment="" dx1="2313.3333333333335">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Heckschieber.OUT_2b" Destination="Vorsteuerventil_2B.IN4" Comment="" dx1="80.0" dx2="80.0" dy="-1566.6666666666667">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Knickdeichsel_heben.IN" Destination="Knickdeichsel.IN_heben" Comment="" dx1="713.3333333333334"/>
+			<Connection Source="Knickdeichsel_senken.IN" Destination="Knickdeichsel.IN_senken" Comment="" dx1="973.3333333333334"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

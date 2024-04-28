@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="QUARTER_TO_E" Comment="quad-state to 4 Events">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2024-02-23">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event" Comment="Normal Execution Request">
+				<With Var="IB"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event" Comment="Execution Confirmation">
+				<With Var="Q"/>
+			</Event>
+			<Event Name="S" Type="Event" Comment="Enabled (on, active, etc.)">
+			</Event>
+			<Event Name="R" Type="Event" Comment="Disabled (off, passive, etc.)">
+			</Event>
+			<Event Name="ERR" Type="Event" Comment="Error indicator">
+			</Event>
+			<Event Name="NONE" Type="Event" Comment="Not available or not installed">
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="IB" Type="BYTE" Comment="2bit (quarter Byte) Output with 4 States" InitialValue="COMMAND_DISABLE"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="Q" Type="BOOL" Comment="BOOL Output"/>
+		</OutputVars>
+	</InterfaceList>
+	<BasicFB>
+		<ECC>
+			<ECState Name="START" Comment="Initial State" x="666.6666666666667" y="1600.0">
+			</ECState>
+			<ECState Name="SET" Comment="" x="4000.0" y="533.3333333333334">
+				<ECAction Algorithm="SET" Output="S"/>
+			</ECState>
+			<ECState Name="RESET" Comment="" x="4000.0" y="1200.0">
+				<ECAction Algorithm="RESET" Output="R"/>
+			</ECState>
+			<ECState Name="Error" Comment="" x="4000.0" y="1866.6666666666667">
+				<ECAction Algorithm="ERROR" Output="ERR"/>
+			</ECState>
+			<ECState Name="none" Comment="" x="4000.0" y="2533.3333333333335">
+				<ECAction Algorithm="NONE" Output="NONE"/>
+			</ECState>
+			<ECState Name="ok" Comment="" x="6746.666666666667" y="1353.3333333333335">
+				<ECAction Output="CNF"/>
+			</ECState>
+			<ECTransition Source="START" Destination="SET" Condition="REQ[IB = STATUS_ENABLED]" Comment="" x="2640.0" y="1080.0"/>
+			<ECTransition Source="START" Destination="RESET" Condition="REQ[IB = STATUS_DISABLED]" Comment="" x="2673.3333333333335" y="1446.6666666666667"/>
+			<ECTransition Source="START" Destination="Error" Condition="REQ[IB = STATUS_ERROR]" Comment="" x="2700.0" y="1840.0"/>
+			<ECTransition Source="START" Destination="none" Condition="REQ[IB = STATUS_NOT_AVAILABLE]" Comment="" x="2653.3333333333335" y="2200.0"/>
+			<ECTransition Source="SET" Destination="ok" Condition="1" Comment="" x="4700.0" y="393.33333333333337"/>
+			<ECTransition Source="RESET" Destination="ok" Condition="1" Comment="" x="4546.666666666667" y="1040.0"/>
+			<ECTransition Source="Error" Destination="ok" Condition="1" Comment="" x="4593.333333333334" y="1753.3333333333335"/>
+			<ECTransition Source="none" Destination="ok" Condition="1" Comment="" x="4713.333333333334" y="2380.0"/>
+			<ECTransition Source="ok" Destination="START" Condition="1" Comment="" x="4426.666666666667" y="3606.666666666667"/>
+		</ECC>
+		<Algorithm Name="SET" Comment="">
+			<ST><![CDATA[ALGORITHM SET
+Q := TRUE;
+END_ALGORITHM]]></ST>
+		</Algorithm>
+		<Algorithm Name="RESET" Comment="">
+			<ST><![CDATA[
+
+ALGORITHM RESET
+Q := FALSE;
+END_ALGORITHM]]></ST>
+		</Algorithm>
+		<Algorithm Name="ERROR" Comment="">
+			<ST><![CDATA[
+
+ALGORITHM ERROR
+Q := FALSE;
+END_ALGORITHM]]></ST>
+		</Algorithm>
+		<Algorithm Name="NONE" Comment="">
+			<ST><![CDATA[
+
+ALGORITHM NONE
+// Q Don't care/take no action (leave function as is)
+END_ALGORITHM
+
+]]></ST>
+		</Algorithm>
+	</BasicFB>
+</FBType>

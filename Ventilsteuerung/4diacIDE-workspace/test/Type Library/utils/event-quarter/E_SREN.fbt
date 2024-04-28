@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="E_SREN" Comment="Event-driven quad-state">
+	<Identification Standard="61499-1 Annex A" Description="Copyright (c) 2024 HR Agrartechnik GmbH &#10;   &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10;  &#10;SPDX-License-Identifier: EPL-2.0 &#10; &#10;The Output Q will be TRUE only at S.  &#10;The Output Q will be FALSE only at R and ERR.  &#10;The Output Q will be not changed at NONE" >
+	</Identification>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="S" Type="Event" Comment="Enabled (on, active, etc.)">
+			</Event>
+			<Event Name="R" Type="Event" Comment="Disabled (off, passive, etc.)">
+			</Event>
+			<Event Name="ERR" Type="Event" Comment="Error indicator">
+			</Event>
+			<Event Name="NONE" Type="Event" Comment="Not available or not installed">
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="EO" Type="Event" Comment="Output Q has changed">
+				<With Var="Q"/>
+				<With Var="QB"/>
+			</Event>
+		</EventOutputs>
+		<OutputVars>
+			<VarDeclaration Name="Q" Type="BOOL" Comment="BOOL Output" InitialValue="FALSE"/>
+			<VarDeclaration Name="QB" Type="BYTE" Comment="2bit (quarter Byte) Output with 4 States" InitialValue="COMMAND_DISABLE"/>
+		</OutputVars>
+	</InterfaceList>
+	<BasicFB>
+		<InternalVars>
+			<VarDeclaration Name="old_Q" Type="BOOL" Comment="old BOOL Output" InitialValue="FALSE"/>
+			<VarDeclaration Name="old_QB" Type="BYTE" Comment="old 2bit (quarter Byte) Output with 4 States" InitialValue="COMMAND_DISABLE"/>
+		</InternalVars>
+		<ECC>
+			<ECState Name="START" Comment="Initial State" x="133.33333333333334" y="1466.6666666666667">
+			</ECState>
+			<ECState Name="SET" Comment="" x="1600.0" y="400.0">
+				<ECAction Algorithm="SET"/>
+			</ECState>
+			<ECState Name="RESET" Comment="" x="1600.0" y="1200.0">
+				<ECAction Algorithm="RESET"/>
+			</ECState>
+			<ECState Name="Error" Comment="" x="1600.0" y="1866.6666666666667">
+				<ECAction Algorithm="ERROR"/>
+			</ECState>
+			<ECState Name="none" Comment="" x="1600.0" y="2533.3333333333335">
+				<ECAction Algorithm="NONE"/>
+			</ECState>
+			<ECState Name="FireEvent" Comment="" x="5333.333333333334" y="1333.3333333333335">
+				<ECAction Output="EO"/>
+			</ECState>
+			<ECTransition Source="START" Destination="SET" Condition="S" Comment="" x="1200.0" y="546.6666666666667"/>
+			<ECTransition Source="START" Destination="RESET" Condition="R" Comment="" x="1313.3333333333335" y="1080.0"/>
+			<ECTransition Source="START" Destination="Error" Condition="ERR" Comment="" x="1460.0" y="1600.0"/>
+			<ECTransition Source="SET" Destination="FireEvent" Condition="[old_Q &lt;&gt; Q OR old_QB &lt;&gt; QB]" Comment="" x="3966.666666666667" y="1006.6666666666667"/>
+			<ECTransition Source="RESET" Destination="FireEvent" Condition="[old_Q &lt;&gt; Q OR old_QB &lt;&gt; QB]" Comment="" x="4020.0" y="1373.3333333333335"/>
+			<ECTransition Source="Error" Destination="FireEvent" Condition="[old_Q &lt;&gt; Q OR old_QB &lt;&gt; QB]" Comment="" x="3946.666666666667" y="1646.6666666666667"/>
+			<ECTransition Source="none" Destination="FireEvent" Condition="[old_Q &lt;&gt; Q OR old_QB &lt;&gt; QB]" Comment="" x="3893.3333333333335" y="1926.6666666666667"/>
+			<ECTransition Source="FireEvent" Destination="START" Condition="1" Comment="" x="906.6666666666667" y="3266.666666666667"/>
+			<ECTransition Source="SET" Destination="START" Condition="1" Comment="" x="993.3333333333334" y="993.3333333333334"/>
+			<ECTransition Source="RESET" Destination="START" Condition="1" Comment="" x="1033.3333333333335" y="1393.3333333333335"/>
+			<ECTransition Source="Error" Destination="START" Condition="1" Comment="" x="1060.0" y="1713.3333333333335"/>
+			<ECTransition Source="none" Destination="START" Condition="1" Comment="" x="926.6666666666667" y="2066.666666666667"/>
+			<ECTransition Source="START" Destination="none" Condition="NONE" Comment="" x="1200.0" y="1946.6666666666667"/>
+		</ECC>
+		<Algorithm Name="SET" Comment="">
+			<ST><![CDATA[ALGORITHM SET
+Q := TRUE;
+QB := COMMAND_ENABLE;
+END_ALGORITHM]]></ST>
+		</Algorithm>
+		<Algorithm Name="RESET" Comment="">
+			<ST><![CDATA[
+
+ALGORITHM RESET
+Q := FALSE;
+QB := COMMAND_DISABLE;
+END_ALGORITHM]]></ST>
+		</Algorithm>
+		<Algorithm Name="ERROR" Comment="">
+			<ST><![CDATA[
+
+ALGORITHM ERROR
+Q := FALSE;
+QB := STATUS_ERROR;
+END_ALGORITHM]]></ST>
+		</Algorithm>
+		<Algorithm Name="NONE" Comment="">
+			<ST><![CDATA[
+
+ALGORITHM NONE
+// Q Don't care/take no action (leave function as is)
+QB := COMMAND_NO_ACTION;
+END_ALGORITHM]]></ST>
+		</Algorithm>
+		<Algorithm Name="HOLD" Comment="">
+			<ST><![CDATA[
+
+ALGORITHM HOLD
+old_Q := Q;
+old_QB := QB;
+END_ALGORITHM
+
+]]></ST>
+		</Algorithm>
+	</BasicFB>
+</FBType>

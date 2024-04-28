@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="mapping_Buttons" Comment="Subapplication Type">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="Franz" Date="2023-01-29">
+	</VersionInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="Event" Comment="">
+			</SubAppEvent>
+		</SubAppEventInputs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="UT_ButtonMapping_UP" Type="UT_ButtonMapping" Comment="" x="900.0" y="900.0">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+			<Parameter Name="u8SAMember" Value="255" Comment=""/>
+			<Parameter Name="u16ObjId_1" Value="PAGE_1_BTN" Comment=""/>
+			<Parameter Name="DigitalInput_1" Value="'Ventilsteuerung.PAGES.PAGE_1.BTN'" Comment=""/>
+			<Parameter Name="u16ObjId_2" Value="PAGE_2_BTN" Comment=""/>
+			<Parameter Name="DigitalInput_2" Value="'Ventilsteuerung.PAGES.PAGE_2.BTN'" Comment=""/>
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="UT_ButtonMapping_UP.INIT" Comment="" dx1="520.0" dx2="520.0" dy="0.0">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</EventConnections>
+	</SubAppNetwork>
+</SubAppType>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Function Name="VERSION" Comment="">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2024-03-05">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event" Comment="">
+				<With Var="VERSION"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event" Comment="">
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="VERSION" Type="STRING" Comment=""/>
+		</InputVars>
+	</InterfaceList>
+	<FunctionBody>
+		<ST><![CDATA[FUNCTION VERSION
+VAR_INPUT
+	VERSION : STRING;
+END_VAR
+END_FUNCTION
+]]></ST>
+	</FunctionBody>
+</Function>

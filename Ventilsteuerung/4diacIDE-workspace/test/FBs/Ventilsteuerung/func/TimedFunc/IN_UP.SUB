@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="IN_UP" Comment="Subapplication Type">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2023-02-06">
+	</VersionInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="Event" Comment="">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="IND" Type="Event" Comment="">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="E_SWITCH" Type="E_SWITCH" Comment="" x="1466.6666666666667" y="400.0">
+		</FB>
+		<FB Name="IX" Type="IX" Comment="" x="0.0" y="100.0">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		</FB>
+		<EventConnections>
+			<Connection Source="IX.IND" Destination="E_SWITCH.EI" Comment="" dx1="386.6666666666667"/>
+			<Connection Source="INIT" Destination="IX.INIT" Comment="" dx1="633.3333333333334"/>
+			<Connection Source="E_SWITCH.EO0" Destination="IND" Comment="" dx1="713.3333333333334"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="IX.IN" Destination="E_SWITCH.G" Comment="" dx1="546.6666666666667"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

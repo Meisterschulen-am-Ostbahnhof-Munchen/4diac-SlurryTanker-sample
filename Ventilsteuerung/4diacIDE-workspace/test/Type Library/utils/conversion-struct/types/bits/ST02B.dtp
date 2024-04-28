@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataType Name="ST02B" Comment="A Structure with 2 BOOLS">
+	<Identification>
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2024-02-21">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<StructuredType>
+		<VarDeclaration Name="B_00" Type="BOOL" Comment="BIT 00"/>
+		<VarDeclaration Name="B_01" Type="BOOL" Comment="BIT 01"/>
+	</StructuredType>
+</DataType>
