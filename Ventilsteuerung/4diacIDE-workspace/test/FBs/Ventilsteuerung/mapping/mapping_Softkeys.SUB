@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="mapping_Softkeys" Comment="Subapplication Type">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="Franz" Date="2023-01-29">
+	</VersionInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="Event" Comment="">
+			</SubAppEvent>
+		</SubAppEventInputs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="UT_SoftkeyMapping" Type="UT_SoftkeyMapping" Comment="" x="1066.6666666666667" y="0.0">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+			<Parameter Name="u8SAMember" Value="255" Comment=""/>
+			<Parameter Name="u16ObjId_1" Value="SoftKey_Automatik_ein" Comment=""/>
+			<Parameter Name="DigitalInput_1" Value="'Ventilsteuerung.functions.Automatik.ein.IX'" Comment=""/>
+			<Parameter Name="u16ObjId_2" Value="SoftKey_Auseinanderklappen" Comment=""/>
+			<Parameter Name="DigitalInput_2" Value="'Ventilsteuerung.functions.Klappen.SoftKey_heben.IX'" Comment=""/>
+			<Parameter Name="u16ObjId_3" Value="SoftKey_Verteiler_senken" Comment=""/>
+			<Parameter Name="DigitalInput_3" Value="'Ventilsteuerung.functions.Verteiler.SoftKey_senken.IX'" Comment=""/>
+			<Parameter Name="u16ObjId_4" Value="SoftKey_Knickdeichsel_senken" Comment=""/>
+			<Parameter Name="DigitalInput_4" Value="'Ventilsteuerung.functions.Knickdeichsel.SoftKey_senken.IX'" Comment=""/>
+			<Parameter Name="u16ObjId_5" Value="SoftKey_Automatik_aus" Comment=""/>
+			<Parameter Name="DigitalInput_5" Value="'Ventilsteuerung.functions.Automatik.aus.IX'" Comment=""/>
+			<Parameter Name="u16ObjId_6" Value="SoftKey_Zusammenklappen" Comment=""/>
+			<Parameter Name="DigitalInput_6" Value="'Ventilsteuerung.functions.Klappen.SoftKey_senken.IX'" Comment=""/>
+			<Parameter Name="u16ObjId_7" Value="SoftKey_Verteiler_heben" Comment=""/>
+			<Parameter Name="DigitalInput_7" Value="'Ventilsteuerung.functions.Verteiler.SoftKey_heben.IX'" Comment=""/>
+			<Parameter Name="u16ObjId_8" Value="SoftKey_Knickdeichsel_heben" Comment=""/>
+			<Parameter Name="DigitalInput_8" Value="'Ventilsteuerung.functions.Knickdeichsel.SoftKey_heben.IX'" Comment=""/>
+		</FB>
+		<FB Name="UT_SoftkeyMapping_UP" Type="UT_SoftkeyMapping_UP" Comment="" x="1066.6666666666667" y="2666.666666666667">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+			<Parameter Name="u8SAMember" Value="255" Comment=""/>
+			<Parameter Name="u16ObjId_2" Value="SoftKey_Dom" Comment=""/>
+			<Parameter Name="DigitalInput_2" Value="'Ventilsteuerung.functions.Dom.SoftKey_UP.IE'" Comment=""/>
+			<Parameter Name="u16ObjId_3" Value="SoftKey_Heckschieber" Comment=""/>
+			<Parameter Name="DigitalInput_3" Value="'Ventilsteuerung.functions.Heckschieber.SoftKey_UP.IE'" Comment=""/>
+			<Parameter Name="u16ObjId_5" Value="SoftKey_Schneidwerk" Comment=""/>
+			<Parameter Name="DigitalInput_5" Value="'Ventilsteuerung.functions.Schneidwerk.SoftKey_UP.IE'" Comment=""/>
+			<Parameter Name="u16ObjId_6" Value="SoftKey_Seitenschieber" Comment=""/>
+			<Parameter Name="DigitalInput_6" Value="'Ventilsteuerung.functions.Seitenschieber.SoftKey_UP.IE'" Comment=""/>
+			<Parameter Name="u16ObjId_7" Value="SoftKey_Abscheider" Comment=""/>
+			<Parameter Name="DigitalInput_7" Value="'Ventilsteuerung.functions.Abscheider.SoftKey_UP.IE'" Comment=""/>
+			<Parameter Name="u16ObjId_8" Value="SoftKey_Licht" Comment=""/>
+			<Parameter Name="DigitalInput_8" Value="'Ventilsteuerung.functions.Licht.SoftKey_UP.IE'" Comment=""/>
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="UT_SoftkeyMapping.INIT" Comment="" dx1="80.0">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+			<Connection Source="INIT" Destination="UT_SoftkeyMapping_UP.INIT" Comment="" dx1="80.0">
+				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			</Connection>
+		</EventConnections>
+	</SubAppNetwork>
+</SubAppType>

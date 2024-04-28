@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="byteconst" Comment="Global constants">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2024-02-22">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="WORD_BYTE_ZZ" Type="WORD" Comment="ZERO Constant" InitialValue="16#0000"/>
+		<VarDeclaration Name="SHFT_BYTE_00" Type="SINT" Comment="shift 0 bits" InitialValue="0"/>
+		<VarDeclaration Name="WORD_BYTE_00" Type="WORD" Comment="LSB_Byte Constant" InitialValue="16#00FF"/>
+		<VarDeclaration Name="SHFT_BYTE_01" Type="SINT" Comment="shift 8 bits" InitialValue="8"/>
+		<VarDeclaration Name="WORD_BYTE_01" Type="WORD" Comment="MSB_Byte Constant" InitialValue="16#FF00"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[// Constants for Datatype WORD
+VAR_GLOBAL CONSTANT
+	WORD_BYTE_ZZ : WORD := 16#0000;    // ZERO Constant
+	SHFT_BYTE_00 : SINT := 0;    // shift 0 bits
+	WORD_BYTE_00 : WORD := 16#00FF;    // LSB_Byte Constant
+	SHFT_BYTE_01 : SINT := 8;    // shift 8 bits
+	WORD_BYTE_01 : WORD := 16#FF00;    // MSB_Byte Constant
+END_VAR
+
+]]></OriginalSource>
+</GlobalConstants>

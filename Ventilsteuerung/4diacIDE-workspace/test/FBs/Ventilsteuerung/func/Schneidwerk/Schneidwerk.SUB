@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Schneidwerk" Comment="Subapplication Type">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="Franz" Date="2023-01-29">
+	</VersionInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="Event" Comment="">
+			</SubAppEvent>
+			<SubAppEvent Name="S_ON" Type="Event" Comment="">
+			</SubAppEvent>
+			<SubAppEvent Name="S_OFF" Type="Event" Comment="">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<InputVars>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment=""/>
+			<VarDeclaration Name="u16ObjIdA" Type="UINT" Comment=""/>
+		</InputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="rechtslauf" Type="QX" Comment="" x="5033.333333333334" y="2713.3333333333335">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		</FB>
+		<FB Name="E_SWITCH" Type="E_SWITCH" Comment="" x="1700.0" y="980.0">
+		</FB>
+		<FB Name="E_SR" Type="E_SR" Comment="" x="3300.0" y="980.0">
+		</FB>
+		<FB Name="linkslauf" Type="QX" Comment="" x="5033.333333333334" y="1913.3333333333335">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		</FB>
+		<Group Name="__Group01" Comment="TODO: Schneidwerk linkslauf bei jedem 2. Start.  &amp;#10;" x="7086.666666666667" y="2100.0" width="1333.3333333333335" height="666.6666666666667" locked="false">
+		</Group>
+		<SubApp Name="GreenWhiteBackground_Function" Type="GreenWhiteBackground_Function" Comment="" x="4900.0" y="3646.666666666667">
+		</SubApp>
+		<SubApp Name="SoftKey_UP" Type="IE_UP" Comment="" x="100.0" y="980.0">
+		</SubApp>
+		<SubApp Name="AuxInput_UP" Type="IN_UP" Comment="" x="100.0" y="1400.0">
+		</SubApp>
+		<EventConnections>
+			<Connection Source="E_SR.EO" Destination="rechtslauf.REQ" Comment="" dx1="700.0"/>
+			<Connection Source="E_SWITCH.EO0" Destination="E_SR.S" Comment=""/>
+			<Connection Source="E_SWITCH.EO1" Destination="E_SR.R" Comment=""/>
+			<Connection Source="S_ON" Destination="E_SR.S" Comment="" dx1="4586.666666666667"/>
+			<Connection Source="S_OFF" Destination="E_SR.R" Comment="" dx1="4413.333333333334"/>
+			<Connection Source="INIT" Destination="linkslauf.INIT" Comment="" dx1="80.0">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="INIT" Destination="rechtslauf.INIT" Comment="" dx1="80.0">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="INIT" Destination="GreenWhiteBackground_Function.INIT" Comment="" dx1="80.0" dx2="80.0" dy="0.0">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="E_SR.EO" Destination="GreenWhiteBackground_Function.EO" Comment="" dx1="493.33333333333337" dx2="493.33333333333337" dy="0.0"/>
+			<Connection Source="INIT" Destination="SoftKey_UP.INIT" Comment="" dx1="80.0" dx2="80.0" dy="0.0">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="SoftKey_UP.IND" Destination="E_SWITCH.EI" Comment="" dx1="193.33333333333334" dx2="193.33333333333334" dy="0.0"/>
+			<Connection Source="INIT" Destination="AuxInput_UP.INIT" Comment="" dx1="80.0" dx2="80.0" dy="0.0">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AuxInput_UP.IND" Destination="E_SWITCH.EI" Comment="" dx1="193.33333333333334" dx2="193.33333333333334" dy="0.0"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="E_SR.Q" Destination="rechtslauf.OUT" Comment="" dx1="586.6666666666667"/>
+			<Connection Source="E_SR.Q" Destination="E_SWITCH.G" Comment="" dx1="233.33333333333334" dx2="146.66666666666669" dy="300.0"/>
+			<Connection Source="E_SR.Q" Destination="GreenWhiteBackground_Function.Q" Comment="" dx1="373.33333333333337" dx2="373.33333333333337" dy="0.0"/>
+			<Connection Source="u16ObjId" Destination="GreenWhiteBackground_Function.u16ObjId" Comment="" dx1="3120.0">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjIdA" Destination="GreenWhiteBackground_Function.u16ObjIdA" Comment="" dx1="3120.0">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

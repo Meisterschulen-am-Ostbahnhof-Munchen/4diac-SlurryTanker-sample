@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Function Name="BOOL_TO_QUARTER" Comment="">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2024-02-29">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event" Comment="">
+				<With Var="I"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event" Comment="">
+				<With Var="QB"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="I" Type="BOOL" Comment="BOOL Input" InitialValue="BOOL#FALSE"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QB" Type="BYTE" Comment="2bit (quarter Byte) Output with 4 States (only 2 used)" InitialValue="COMMAND_DISABLE"/>
+		</OutputVars>
+	</InterfaceList>
+	<FunctionBody>
+		<ST><![CDATA[FUNCTION BOOL_TO_QUARTER
+
+VAR_INPUT
+	I : BOOL := BOOL#FALSE;    // BOOL Input
+END_VAR
+
+VAR_OUTPUT
+	QB : BYTE := COMMAND_DISABLE;    // 2bit (quarter Byte) Output with 4 States (only 2 used)
+END_VAR
+
+CASE I OF
+	BOOL#TRUE :
+		QB := COMMAND_ENABLE;
+	ELSE
+		QB := COMMAND_DISABLE;
+END_CASE;
+
+END_FUNCTION
+]]></ST>
+	</FunctionBody>
+</Function>
