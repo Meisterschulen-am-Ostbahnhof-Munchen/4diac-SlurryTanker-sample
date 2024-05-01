@@ -16,7 +16,7 @@
 			<Parameter Name="QI" Value="TRUE" Comment=""/>
 			<Parameter Name="u8SAMember" Value="255" Comment=""/>
 			<Parameter Name="u16ObjId_1" Value="AuxInput_Automatik_ein" Comment=""/>
-			<Parameter Name="DigitalInput_1" Value="'Ventilsteuerung.functions.Automatik.ein.IX'" Comment=""/>
+			<Parameter Name="DigitalInput_1" Value="'Ventilsteuerung.functions.Automatik.ein.AuxInput'" Comment=""/>
 			<Parameter Name="u16ObjId_2" Value="AuxInput_Auseinanderklappen" Comment=""/>
 			<Parameter Name="DigitalInput_2" Value="'Ventilsteuerung.functions.Klappen.AuxInput_heben.IX'" Comment=""/>
 			<Parameter Name="u16ObjId_3" Value="AuxInput_Verteiler_senken" Comment=""/>
@@ -58,13 +58,13 @@
 		</FB>
 		<EventConnections>
 			<Connection Source="INIT" Destination="UT_AuxiliaryInputMapping.INIT" Comment="" dx1="80.0">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
+				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="INIT" Destination="UT_AuxiliaryInputMapping_1.INIT" Comment="" dx1="80.0">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
+				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="INIT" Destination="UT_AuxiliaryInputMapping_2.INIT" Comment="" dx1="80.0">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
+				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 		</EventConnections>
 	</SubAppNetwork>
