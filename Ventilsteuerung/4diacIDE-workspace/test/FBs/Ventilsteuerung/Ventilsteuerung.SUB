@@ -9,7 +9,7 @@
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
 			<SubAppEvent Name="INIT" Type="Event" Comment="">
-				<Attribute Name="YPOSITION" Value="0"/>
+				<Attribute Name="YPOSITION" Type="INT" Value="0"/>
 			</SubAppEvent>
 		</SubAppEventInputs>
 	</SubAppInterfaceList>
