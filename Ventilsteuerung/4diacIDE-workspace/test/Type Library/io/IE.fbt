@@ -5,7 +5,7 @@
   <VersionInfo Author="Waldemar Eisenmenger" Date="2014-08-26" Organization="fortiss GmbH" Version="1.0"/>
   <VersionInfo Author="Alois Zoitl" Date="2014-08-30" Organization="fortiss GmbH" Version="1.1"/>
   <VersionInfo Author="Monika Wenger" Date="2015-06-10" Organization="fortiss GmbH" Version="1.2"/>
-  <VersionInfo Author="Franz Hoepfinger" Date="2023-09-07" Organization="HR Agrartechnik GmbH" Version="1.3"/>
+  <VersionInfo Author="Franz Höpfinger" Date="2023-09-07" Organization="HR Agrartechnik GmbH" Version="1.3"/>
   <InterfaceList>
     <EventInputs>
       <Event Comment="Service Initialization" Name="INIT" Type="Event">

@@ -15,7 +15,7 @@
         <With Var="QO"/>
         <With Var="STATUS"/>
       </Event>
-      <Event Name="IND" Type="Event" Comment="Indication from Resource">
+      <Event Comment="" Name="IND" Type="Event">
         <With Var="STATUS"/>
         <With Var="QO"/>
       </Event>

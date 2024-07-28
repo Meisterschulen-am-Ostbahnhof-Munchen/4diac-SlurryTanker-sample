@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="AX_BOOL_TO_X" Comment="Composite FB for convert BOOL to AX">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2024-04-24">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event" Comment="Initialization Request">
+				<With Var="OUT"/>
+				<Attribute Name="YPOSITION" Type="DINT" Value="46"/>
+			</Event>
+		</EventInputs>
+		<InputVars>
+			<VarDeclaration Name="OUT" Type="BOOL" Comment="">
+				<Attribute Name="YPOSITION" Type="DINT" Value="31"/>
+			</VarDeclaration>
+		</InputVars>
+		<Plugs>
+			<AdapterDeclaration Name="AX_OUT" Type="AX" Comment="" x="1686.6666666666667" y="346.6666666666667"/>
+		</Plugs>
+	</InterfaceList>
+	<FBNetwork>
+		<EventConnections>
+			<Connection Source="REQ" Destination="AX_OUT.E1" Comment="" dx1="180.0"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="OUT" Destination="AX_OUT.D1" Comment="" dx1="180.0"/>
+		</DataConnections>
+	</FBNetwork>
+</FBType>

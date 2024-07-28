@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="QXP" Comment="Composite FB for boolean output data">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2024-04-24">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="Event" Comment="Initialization Request">
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="Event" Comment="Initialization Confirm">
+			</Event>
+		</EventOutputs>
+		<Sockets>
+			<AdapterDeclaration Name="OUT" Type="AX" Comment="" x="-533.3333333333334" y="800.0"/>
+		</Sockets>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="QX" Type="QX" Comment="" x="1240.0" y="460.0">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="QX.INIT" Comment="" dx1="1286.6666666666667"/>
+			<Connection Source="QX.INITO" Destination="INITO" Comment="" dx1="1026.6666666666667"/>
+			<Connection Source="OUT.E1" Destination="QX.REQ" Comment="" dx1="700.0"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="OUT.D1" Destination="QX.OUT" Comment=""/>
+		</DataConnections>
+	</FBNetwork>
+</FBType>

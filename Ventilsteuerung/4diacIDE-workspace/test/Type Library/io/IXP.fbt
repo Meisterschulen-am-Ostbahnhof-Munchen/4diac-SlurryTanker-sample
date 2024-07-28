@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="IXP" Comment="Composite FB for boolean input data">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2024-04-24">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="Event" Comment="Initialization Request">
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="Event" Comment="Initialization Confirm">
+			</Event>
+		</EventOutputs>
+		<Plugs>
+			<AdapterDeclaration Name="IN" Type="AX" Comment="" x="3200.0" y="886.6666666666667"/>
+		</Plugs>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="IX" Type="IX" Comment="" x="1240.0" y="433.33333333333337">
+			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="IX.INIT" Comment="" dx1="1286.6666666666667"/>
+			<Connection Source="IX.INITO" Destination="INITO" Comment="" dx1="1026.6666666666667"/>
+			<Connection Source="IX.IND" Destination="IN.E1" Comment="" dx1="633.3333333333334" dx2="633.3333333333334" dy="0.0"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="IX.IN" Destination="IN.D1" Comment=""/>
+		</DataConnections>
+	</FBNetwork>
+</FBType>

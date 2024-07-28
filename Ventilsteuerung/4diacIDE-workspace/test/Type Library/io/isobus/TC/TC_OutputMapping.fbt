@@ -3,9 +3,9 @@
 	<Identification Standard="ISO 11783-10" Function="All Outputs" Type="TC according to ISO 11783-10" Description="this maps to QD&#10;32 bit Process Data (PD)" >	</Identification>
 	<VersionInfo Version="1.0" Author="Jose Cabral" Date="2018-12-05">
 	</VersionInfo>
-	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.1" Author="Franz Hoepfinger" Date="2022-08-04">
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.1" Author="Franz Höpfinger" Date="2022-08-04">
 	</VersionInfo>
-	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.2" Author="Franz Hoepfinger" Date="2023-01-05">
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.2" Author="Franz Höpfinger" Date="2023-01-05">
 	</VersionInfo>
 	<InterfaceList>
 		<EventInputs>
