@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="ASCII"?>
-<buildpath:buildpath xmlns:buildpath="http://www.eclipse.org/4diac/xml/buildpath.xsd">
-  <sourceFolder name="">
-    <exclude>Type Library</exclude>
-  </sourceFolder>
-  <sourceFolder name="Type Library"/>
-  <sourceFolder name="FBs"/>
-</buildpath:buildpath>
