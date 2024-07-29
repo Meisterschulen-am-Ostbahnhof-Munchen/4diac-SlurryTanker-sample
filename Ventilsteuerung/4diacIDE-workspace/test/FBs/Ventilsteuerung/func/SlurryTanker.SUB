@@ -20,8 +20,6 @@
 		<SubApp Name="Automatik" Type="Automatik" Comment="" x="1153.33" y="1726.67">
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
-			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
-			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			<Attribute Name="GroupName" Type="STRING" Value="Vorgewendeautomatik"/>
 		</SubApp>
 		<SubApp Name="Dom" Type="TimedFunc" Comment="" x="4140" y="126.67">
