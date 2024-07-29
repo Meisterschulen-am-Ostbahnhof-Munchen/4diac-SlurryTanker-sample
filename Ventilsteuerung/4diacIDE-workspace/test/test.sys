@@ -8,14 +8,14 @@
 	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof, München" Version="0.3" Author="Franz Höpfinger" Date="2022-11-16" Remarks="alle Zeiten auf T#3s">
 	</VersionInfo>
-	<Device Name="FORTE_PC" Type="FORTE_PC" Comment="" x="4046.666666666667" y="1233.3333333333335">
+	<Device Name="FORTE_PC" Type="FORTE_PC" Comment="" x="4046.67" y="1233.33">
 		<Parameter Name="MGR_ID" Value="C_00" Comment="Device manager socket ID"/>
 		<Attribute Name="Profile" Type="STRING" Value="HOLOBLOC"/>
 		<Attribute Name="Color" Type="STRING" Value="255,190,111"/>
 		<Attribute Name="FBType" Type="STRING" Value="E_SWITCH, E_SR_RETRIG, E_R_TRIG, E_T_FF, E_PULSE, E_SR, E_F_TRIG, E_REND, E_D_FF" Comment="created during deployment"/>
-		<Resource Name="EMB_RES" Type="EMB_RES" Comment="" x="0.0" y="0.0">
+		<Resource Name="EMB_RES" Type="EMB_RES" Comment="" x="0" y="0">
 			<FBNetwork>
-				<SubApp Name="Ventilsteuerung" Type="Ventilsteuerung" Comment="" x="3346.666666666667" y="0.0">
+				<SubApp Name="Ventilsteuerung" Type="Ventilsteuerung" Comment="" x="3346.67" y="0">
 				</SubApp>
 				<EventConnections>
 					<Connection Source="START.COLD" Destination="Ventilsteuerung.INIT" Comment=""/>
@@ -23,7 +23,7 @@
 			</FBNetwork>
 		</Resource>
 	</Device>
-	<Segment Name="Ethernet" Type="Ethernet" Comment="" x="5360.0" y="613.3333333333334" dx1="1993.3333333333335">
+	<Segment Name="Ethernet" Type="Ethernet" Comment="" x="5360" y="613.33" dx1="1993.33">
 		<Attribute Name="Color" Type="STRING" Value="140,181,218"/>
 	</Segment>
 	<Link SegmentName="Ethernet" CommResource="FORTE_PC" Comment="">
