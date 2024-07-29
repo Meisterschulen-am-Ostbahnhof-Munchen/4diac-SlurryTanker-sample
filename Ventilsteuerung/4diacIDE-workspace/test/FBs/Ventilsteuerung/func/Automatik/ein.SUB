@@ -7,12 +7,12 @@
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
 			<SubAppEvent Name="INIT" Type="Event" Comment="">
-				<Attribute Name="YPOSITION" Type="STRING" Value="210"/>
+				<Attribute Name="YPOSITION" Type="INT" Value="210"/>
 			</SubAppEvent>
 		</SubAppEventInputs>
 		<SubAppEventOutputs>
 			<SubAppEvent Name="UP" Type="Event" Comment="">
-				<Attribute Name="YPOSITION" Type="STRING" Value="255"/>
+				<Attribute Name="YPOSITION" Type="INT" Value="255"/>
 			</SubAppEvent>
 			<SubAppEvent Name="DOWN" Type="Event" Comment="">
 			</SubAppEvent>

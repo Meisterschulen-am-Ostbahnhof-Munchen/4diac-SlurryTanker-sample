@@ -7,17 +7,17 @@
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
 			<SubAppEvent Name="INIT" Type="Event" Comment="">
-				<Attribute Name="YPOSITION" Type="STRING" Value="30"/>
+				<Attribute Name="YPOSITION" Type="INT" Value="30"/>
 			</SubAppEvent>
 		</SubAppEventInputs>
 		<SubAppEventOutputs>
 			<SubAppEvent Name="IND" Type="Event" Comment="">
-				<Attribute Name="YPOSITION" Type="STRING" Value="20"/>
+				<Attribute Name="YPOSITION" Type="INT" Value="20"/>
 			</SubAppEvent>
 		</SubAppEventOutputs>
 		<OutputVars>
 			<VarDeclaration Name="IN" Type="BOOL" Comment="">
-				<Attribute Name="YPOSITION" Type="STRING" Value="134"/>
+				<Attribute Name="YPOSITION" Type="INT" Value="134"/>
 			</VarDeclaration>
 		</OutputVars>
 	</SubAppInterfaceList>

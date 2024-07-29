@@ -7,7 +7,7 @@
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
 			<SubAppEvent Name="INIT" Type="Event" Comment="">
-				<Attribute Name="YPOSITION" Type="STRING" Value="100"/>
+				<Attribute Name="YPOSITION" Type="INT" Value="100"/>
 			</SubAppEvent>
 		</SubAppEventInputs>
 	</SubAppInterfaceList>
@@ -17,8 +17,6 @@
 			<Parameter Name="u16DataMaskId" Value="DataMask_1000" Comment=""/>
 		</FB>
 		<SubApp Name="VT_active" Type="VT_active" Comment="" x="-800.0" y="-1100.0">
-			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
-			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 		</SubApp>

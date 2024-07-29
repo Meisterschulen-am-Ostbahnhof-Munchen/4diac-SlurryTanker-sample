@@ -11,7 +11,7 @@
 		</SubAppEventInputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<Group Name="funktionen" Comment="" x="-920" y="-1200" width="6660" height="8940" locked="false">
+		<Group Name="funktionen" Comment="" x="-920" y="-2800" width="6660" height="10540" locked="false">
 		</Group>
 		<Group Name="Vorsteuerventile" Comment="Vorsteuerventile" x="5866.67" y="-1066.67" width="4140" height="3880" locked="false">
 		</Group>
@@ -22,17 +22,17 @@
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			<Attribute Name="GroupName" Type="STRING" Value="Vorgewendeautomatik"/>
 		</SubApp>
-		<SubApp Name="Dom" Type="TimedFunc" Comment="" x="4140" y="126.67">
+		<SubApp Name="Dom" Type="TimedFunc" Comment="" x="4340" y="393.34">
 			<Parameter Name="u16ObjId" Value="SoftKey_Dom" Comment=""/>
 			<Parameter Name="u16ObjIdA" Value="AuxInput_Dom" Comment=""/>
 			<Attribute Name="GroupName" Type="STRING" Value="funktionen"/>
 		</SubApp>
-		<SubApp Name="Seitenschieber" Type="TimedFunc" Comment="" x="4140" y="793.33">
+		<SubApp Name="Seitenschieber" Type="TimedFunc" Comment="" x="4340" y="1466.66">
 			<Parameter Name="u16ObjId" Value="SoftKey_Seitenschieber" Comment=""/>
 			<Parameter Name="u16ObjIdA" Value="AuxInput_Seitenschieber" Comment=""/>
 			<Attribute Name="GroupName" Type="STRING" Value="funktionen"/>
 		</SubApp>
-		<SubApp Name="Klappen" Type="doppeltwirkend" Comment="" x="3940" y="5593.33">
+		<SubApp Name="Klappen" Type="doppeltwirkend" Comment="" x="3940" y="7193.33">
 			<Parameter Name="u16ObjId_heben" Value="SoftKey_Auseinanderklappen" Comment=""/>
 			<Parameter Name="u16ObjId_senken" Value="SoftKey_Zusammenklappen" Comment=""/>
 			<Parameter Name="u16ObjIdA_heben" Value="AuxInput_Auseinanderklappen" Comment=""/>
@@ -52,19 +52,19 @@
 		<SubApp Name="Vorsteuerventil_2B" Type="Vorsteuerventil" Comment="" x="2486.67" y="1860">
 			<Attribute Name="GroupName" Type="STRING" Value="Vorsteuerventile"/>
 		</SubApp>
-		<SubApp Name="Knickdeichsel" Type="doppeltwirkend" Comment="" x="3940" y="1726.67">
+		<SubApp Name="Knickdeichsel" Type="doppeltwirkend" Comment="" x="3940" y="3326.67">
 			<Parameter Name="u16ObjId_heben" Value="SoftKey_Knickdeichsel_heben" Comment=""/>
 			<Parameter Name="u16ObjId_senken" Value="SoftKey_Knickdeichsel_senken" Comment=""/>
 			<Parameter Name="u16ObjIdA_heben" Value="AuxInput_Knickdeichsel_heben" Comment=""/>
 			<Parameter Name="u16ObjIdA_senken" Value="AuxInput_Knickdeichsel_senken" Comment=""/>
 			<Attribute Name="GroupName" Type="STRING" Value="funktionen"/>
 		</SubApp>
-		<SubApp Name="Licht" Type="Dauerfunktion" Comment="" x="4046.67" y="3593.33">
+		<SubApp Name="Licht" Type="Dauerfunktion" Comment="" x="4046.67" y="5193.33">
 			<Parameter Name="u16ObjId" Value="SoftKey_Licht" Comment=""/>
 			<Parameter Name="u16ObjIdA" Value="AuxInput_Licht" Comment=""/>
 			<Attribute Name="GroupName" Type="STRING" Value="funktionen"/>
 		</SubApp>
-		<SubApp Name="Abscheider" Type="TimedFunc" Comment="" x="4140" y="4660">
+		<SubApp Name="Abscheider" Type="TimedFunc" Comment="" x="4140" y="6260">
 			<Parameter Name="u16ObjId" Value="SoftKey_Abscheider" Comment=""/>
 			<Parameter Name="u16ObjIdA" Value="AuxInput_Abscheider" Comment=""/>
 			<Attribute Name="GroupName" Type="STRING" Value="funktionen"/>
@@ -79,10 +79,16 @@
 			<Parameter Name="u16ObjIdA" Value="AuxInput_Heckschieber" Comment=""/>
 			<Attribute Name="GroupName" Type="STRING" Value="Vorgewendeautomatik"/>
 		</SubApp>
-		<SubApp Name="Knickdeichsel_heben" Type="IN" Comment="" x="606.67" y="1993.33">
+		<SubApp Name="Knickdeichsel_heben" Type="IN" Comment="" x="606.67" y="3593.33">
 			<Attribute Name="GroupName" Type="STRING" Value="funktionen"/>
 		</SubApp>
-		<SubApp Name="Knickdeichsel_senken" Type="IN" Comment="" x="606.67" y="2793.33">
+		<SubApp Name="Knickdeichsel_senken" Type="IN" Comment="" x="606.67" y="4393.33">
+			<Attribute Name="GroupName" Type="STRING" Value="funktionen"/>
+		</SubApp>
+		<SubApp Name="Seitenschieber_Auf" Type="IN_UP" Comment="" x="740" y="1860">
+			<Attribute Name="GroupName" Type="STRING" Value="funktionen"/>
+		</SubApp>
+		<SubApp Name="Seitenschieber_Zu" Type="IN_UP" Comment="" x="740" y="2386.67">
 			<Attribute Name="GroupName" Type="STRING" Value="funktionen"/>
 		</SubApp>
 		<EventConnections>
@@ -167,6 +173,14 @@
 			<Connection Source="Verteiler.CNF_senken" Destination="Vorsteuerventil_2B.REQ3" Comment="" dx1="266.67" dx2="266.67" dy="0">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
+			<Connection Source="INIT" Destination="Seitenschieber_Auf.INIT" Comment="" dx1="3033.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Seitenschieber_Auf.IND" Destination="Seitenschieber.S" Comment="" dx1="633.33"/>
+			<Connection Source="INIT" Destination="Seitenschieber_Zu.INIT" Comment="" dx1="3033.33" dx2="3033.33" dy="0">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Seitenschieber_Zu.IND" Destination="Seitenschieber.R" Comment="" dx1="1473.33"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="Dom.OUT" Destination="Vorsteuerventil_2A.IN4" Comment="" dx1="2713.33">

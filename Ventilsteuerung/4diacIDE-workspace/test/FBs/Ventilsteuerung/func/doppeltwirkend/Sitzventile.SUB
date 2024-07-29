@@ -7,21 +7,21 @@
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
 			<SubAppEvent Name="INITO" Type="Event" Comment="">
-				<Attribute Name="YPOSITION" Type="STRING" Value="20"/>
+				<Attribute Name="YPOSITION" Type="INT" Value="20"/>
 			</SubAppEvent>
 			<SubAppEvent Name="CNF_heben" Type="Event" Comment="">
-				<Attribute Name="YPOSITION" Type="STRING" Value="0"/>
+				<Attribute Name="YPOSITION" Type="INT" Value="0"/>
 			</SubAppEvent>
 			<SubAppEvent Name="CNF_senken" Type="Event" Comment="">
-				<Attribute Name="YPOSITION" Type="STRING" Value="0"/>
+				<Attribute Name="YPOSITION" Type="INT" Value="0"/>
 			</SubAppEvent>
 		</SubAppEventInputs>
 		<InputVars>
 			<VarDeclaration Name="IN_heben" Type="BOOL" Comment="">
-				<Attribute Name="YPOSITION" Type="STRING" Value="265"/>
+				<Attribute Name="YPOSITION" Type="INT" Value="265"/>
 			</VarDeclaration>
 			<VarDeclaration Name="IN_senken" Type="BOOL" Comment="">
-				<Attribute Name="YPOSITION" Type="STRING" Value="0"/>
+				<Attribute Name="YPOSITION" Type="INT" Value="0"/>
 			</VarDeclaration>
 		</InputVars>
 	</SubAppInterfaceList>
