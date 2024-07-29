@@ -19,29 +19,29 @@
 		</SubAppEventOutputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="SoftKey" Type="IX" Comment="" x="-200.0" y="0.0">
+		<FB Name="SoftKey" Type="IX" Comment="" x="-200" y="0">
 			<Parameter Name="QI" Value="TRUE" Comment=""/>
 		</FB>
-		<FB Name="AuxInput" Type="IX" Comment="" x="-200.0" y="1000.0">
+		<FB Name="AuxInput" Type="IX" Comment="" x="-200" y="1000">
 			<Parameter Name="QI" Value="TRUE" Comment=""/>
 		</FB>
-		<FB Name="OR_2" Type="OR_2" Comment="" x="1800.0" y="300.0">
+		<FB Name="OR_2" Type="OR_2" Comment="" x="1800" y="300">
 		</FB>
-		<FB Name="E_SWITCH" Type="E_SWITCH" Comment="" x="3066.666666666667" y="266.6666666666667">
+		<FB Name="E_SWITCH" Type="E_SWITCH" Comment="" x="3066.67" y="266.67">
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="SoftKey.INIT" Comment="" dx1="80.0" dx2="80.0" dy="0.0"/>
-			<Connection Source="INIT" Destination="AuxInput.INIT" Comment="" dx1="600.0"/>
-			<Connection Source="SoftKey.IND" Destination="OR_2.REQ" Comment="" dx1="500.0"/>
-			<Connection Source="AuxInput.IND" Destination="OR_2.REQ" Comment="" dx1="500.0"/>
-			<Connection Source="OR_2.CNF" Destination="E_SWITCH.EI" Comment="" dx1="220.0"/>
-			<Connection Source="E_SWITCH.EO0" Destination="UP" Comment="" dx1="126.66666666666667"/>
-			<Connection Source="E_SWITCH.EO1" Destination="DOWN" Comment="" dx1="133.33333333333334"/>
+			<Connection Source="INIT" Destination="SoftKey.INIT" Comment="" dx1="80" dx2="80" dy="0"/>
+			<Connection Source="INIT" Destination="AuxInput.INIT" Comment="" dx1="600"/>
+			<Connection Source="SoftKey.IND" Destination="OR_2.REQ" Comment="" dx1="500"/>
+			<Connection Source="AuxInput.IND" Destination="OR_2.REQ" Comment="" dx1="500"/>
+			<Connection Source="OR_2.CNF" Destination="E_SWITCH.EI" Comment="" dx1="220"/>
+			<Connection Source="E_SWITCH.EO0" Destination="UP" Comment="" dx1="1926.67"/>
+			<Connection Source="E_SWITCH.EO1" Destination="DOWN" Comment="" dx1="133.33"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="SoftKey.IN" Destination="OR_2.IN1" Comment="" dx1="673.3333333333334"/>
-			<Connection Source="AuxInput.IN" Destination="OR_2.IN2" Comment="" dx1="600.0"/>
-			<Connection Source="OR_2.OUT" Destination="E_SWITCH.G" Comment="" dx1="220.0"/>
+			<Connection Source="SoftKey.IN" Destination="OR_2.IN1" Comment="" dx1="673.33"/>
+			<Connection Source="AuxInput.IN" Destination="OR_2.IN2" Comment="" dx1="600"/>
+			<Connection Source="OR_2.OUT" Destination="E_SWITCH.G" Comment="" dx1="220"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
