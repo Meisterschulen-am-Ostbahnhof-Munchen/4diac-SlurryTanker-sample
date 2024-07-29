@@ -105,9 +105,9 @@ EMB_RES;<Request ID="105" Action="WRITE"><Connection Source="TRUE" Destination="
 EMB_RES;<Request ID="106" Action="WRITE"><Connection Source="33" Destination="Ventilsteuerung.mapping.mapping_blink.PKP_2200_LI_4_DI.u8SAMember" /></Request>
 EMB_RES;<Request ID="107" Action="WRITE"><Connection Source="65535" Destination="Ventilsteuerung.mapping.mapping_blink.PKP_2200_LI_4_DI.u16ObjId" /></Request>
 EMB_RES;<Request ID="108" Action="WRITE"><Connection Source="&apos;Ventilsteuerung.functions.Knickdeichsel_heben.IX&apos;" Destination="Ventilsteuerung.mapping.mapping_blink.PKP_2200_LI_4_DI.DigitalInput_Key_1" /></Request>
-EMB_RES;<Request ID="109" Action="WRITE"><Connection Source="&apos;Ventilsteuerung.functions.Seitenschieber_auf.IX&apos;" Destination="Ventilsteuerung.mapping.mapping_blink.PKP_2200_LI_4_DI.DigitalInput_Key_2" /></Request>
+EMB_RES;<Request ID="109" Action="WRITE"><Connection Source="&apos;Ventilsteuerung.functions.Seitenschieber_Auf.IX&apos;" Destination="Ventilsteuerung.mapping.mapping_blink.PKP_2200_LI_4_DI.DigitalInput_Key_2" /></Request>
 EMB_RES;<Request ID="110" Action="WRITE"><Connection Source="&apos;Ventilsteuerung.functions.Knickdeichsel_senken.IX&apos;" Destination="Ventilsteuerung.mapping.mapping_blink.PKP_2200_LI_4_DI.DigitalInput_Key_3" /></Request>
-EMB_RES;<Request ID="111" Action="WRITE"><Connection Source="&apos;Ventilsteuerung.functions.Seitenschieber_zu.IX&apos;" Destination="Ventilsteuerung.mapping.mapping_blink.PKP_2200_LI_4_DI.DigitalInput_Key_4" /></Request>
+EMB_RES;<Request ID="111" Action="WRITE"><Connection Source="&apos;Ventilsteuerung.functions.Seitenschieber_Zu.IX&apos;" Destination="Ventilsteuerung.mapping.mapping_blink.PKP_2200_LI_4_DI.DigitalInput_Key_4" /></Request>
 EMB_RES;<Request ID="112" Action="CREATE"><FB Name="Ventilsteuerung.functions.Automatik.E_SR_Verteiler_heben" Type="E_SR" /></Request>
 EMB_RES;<Request ID="113" Action="CREATE"><FB Name="Ventilsteuerung.functions.Automatik.E_SR_Verteiler_senken" Type="E_SR" /></Request>
 EMB_RES;<Request ID="114" Action="CREATE"><FB Name="Ventilsteuerung.functions.Automatik.E_REND_Automatik_ein" Type="E_REND" /></Request>
