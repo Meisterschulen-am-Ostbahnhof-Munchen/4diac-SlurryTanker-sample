@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <System Name="test" Comment="">
-	<Identification Standard="ISO 11783 / IEC 61499" ApplicationDomain="Slurry Tanker" Description="https://github.com/Meisterschulen-am-Ostbahnhof-Munchen/4diac-SlurryTanker-sample" >
-	</Identification>
-	<VersionInfo Organization="Meisterschulen am Ostbahnhof, München" Version="0.1" Author="Franz Höpfinger" Date="2022-11-10" Remarks="erste Version.">
-	</VersionInfo>
-	<VersionInfo Organization="Meisterschulen am Ostbahnhof, München" Version="0.2" Author="Franz Höpfinger" Date="2022-11-11" Remarks="Vorgewendeautomatik">
-	</VersionInfo>
-	<VersionInfo Organization="Meisterschulen am Ostbahnhof, München" Version="0.3" Author="Franz Höpfinger" Date="2022-11-16" Remarks="alle Zeiten auf T#3s">
+	<VersionInfo Version="1.0" Author="franz" Date="2023-10-23">
 	</VersionInfo>
 	<Device Name="FORTE_PC" Type="FORTE_PC" Comment="" x="4046.67" y="1233.33">
 		<Parameter Name="MGR_ID" Value="C_00" Comment="Device manager socket ID"/>
