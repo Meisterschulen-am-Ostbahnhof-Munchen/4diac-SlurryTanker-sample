@@ -13,7 +13,7 @@
 	<SubAppNetwork>
 		<FB Name="UT_SoftkeyMapping" Type="UT_SoftkeyMapping" Comment="" x="1066.67" y="0">
 			<Parameter Name="QI" Value="TRUE" Comment=""/>
-			<Parameter Name="u8SAMember" Value="255" Comment=""/>
+			<Parameter Name="u8SAMember" Value="GLOBAL" Comment=""/>
 			<Parameter Name="u16ObjId_1" Value="SoftKey_Automatik_ein" Comment=""/>
 			<Parameter Name="DigitalInput_1" Value="'Ventilsteuerung.functions.Automatik.ein.SoftKey'" Comment=""/>
 			<Parameter Name="u16ObjId_2" Value="SoftKey_Auseinanderklappen" Comment=""/>
@@ -33,7 +33,7 @@
 		</FB>
 		<FB Name="UT_SoftkeyMapping_UP" Type="UT_SoftkeyMapping_UP" Comment="" x="1066.67" y="2666.67">
 			<Parameter Name="QI" Value="TRUE" Comment=""/>
-			<Parameter Name="u8SAMember" Value="255" Comment=""/>
+			<Parameter Name="u8SAMember" Value="GLOBAL" Comment=""/>
 			<Parameter Name="u16ObjId_2" Value="SoftKey_Dom" Comment=""/>
 			<Parameter Name="DigitalInput_2" Value="'Ventilsteuerung.functions.Dom.SoftKey_UP.IE'" Comment=""/>
 			<Parameter Name="u16ObjId_3" Value="SoftKey_Heckschieber" Comment=""/>

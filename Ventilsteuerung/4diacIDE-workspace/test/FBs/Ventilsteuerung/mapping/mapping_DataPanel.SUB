@@ -11,10 +11,10 @@
 		</SubAppEventInputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="DataPanel_xDB_16_DO_SAE_J1939" Type="DataPanel_xDB_16_DO_SAE_J1939" Comment="" x="1246.6666666666667" y="13.333333333333334">
+		<FB Name="DataPanel_xDB_16_DO_SAE_J1939" Type="DataPanel_xDB_16_DO_SAE_J1939" Comment="" x="1246.67" y="13.33">
 			<Parameter Name="QI" Value="TRUE" Comment=""/>
-			<Parameter Name="u8SAMember" Value="224" Comment=""/>
-			<Parameter Name="u16ObjId" Value="65535" Comment=""/>
+			<Parameter Name="u8SAMember" Value="MI_00" Comment=""/>
+			<Parameter Name="u16ObjId" Value="ID_NULL" Comment=""/>
 			<Parameter Name="DigitalOutput_1A" Value="'Ventilsteuerung.functions.Schneidwerk.rechtslauf'" Comment=""/>
 			<Parameter Name="DigitalOutput_1B" Value="'Ventilsteuerung.functions.Schneidwerk.linkslauf'" Comment=""/>
 			<Parameter Name="DigitalOutput_2A" Value="'Ventilsteuerung.functions.Vorsteuerventil_2A.QX'" Comment=""/>
@@ -32,8 +32,8 @@
 			<Parameter Name="DigitalOutput_8A" Value="'Ventilsteuerung.functions.Licht.QX'" Comment=""/>
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="DataPanel_xDB_16_DO_SAE_J1939.INIT" Comment="" dx1="640.0">
-				<Attribute Name="Visible" Type="STRING" Value="false"/>
+			<Connection Source="INIT" Destination="DataPanel_xDB_16_DO_SAE_J1939.INIT" Comment="" dx1="640">
+				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 		</EventConnections>
 	</SubAppNetwork>
