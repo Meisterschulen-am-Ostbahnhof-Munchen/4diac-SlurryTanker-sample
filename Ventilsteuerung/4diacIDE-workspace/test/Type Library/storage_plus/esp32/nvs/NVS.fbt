@@ -10,6 +10,7 @@
 				<With Var="QI"/>
 				<With Var="KEY"/>
 				<With Var="VALUE"/>
+				<With Var="DEFAULT_VALUE"/>
 			</Event>
 			<Event Name="SET" Type="Event" Comment="set value for given key">
 				<With Var="VALUE"/>
@@ -39,6 +40,7 @@
 			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
 			<VarDeclaration Name="KEY" Type="STRING" Comment="Key name."/>
 			<VarDeclaration Name="VALUE" Type="ANY_ELEMENTARY" Comment="The value to set."/>
+			<VarDeclaration Name="DEFAULT_VALUE" Type="ANY_ELEMENTARY" Comment="The value to read if there is noting in the NVS"/>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
