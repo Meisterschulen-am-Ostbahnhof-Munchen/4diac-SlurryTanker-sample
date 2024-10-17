@@ -45,68 +45,68 @@
 			<VarDeclaration Name="Q_timeout" Type="BOOL" Comment=""/>
 			<VarDeclaration Name="timestamp_timeout" Type="UINT" Comment=""/>
 			<VarDeclaration Name="timestamp_data" Type="UINT" Comment=""/>
-			<VarDeclaration Name="WHEELBASEDMACHINESPEED" Type="UINT" Comment="Wheel-based machine speed">
+			<VarDeclaration Name="WHEELBASEDMACHINESPEED" Type="UINT" Comment="Wheel-based machine speed (see Attributes for Details)">
 				<Attribute Name="SPN" Type="INT" Value="1862"/>
 				<Attribute Name="SP_Name" Type="STRING" Value="'Wheel-based machine speed'"/>
 				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'1-2'"/>
 				<Attribute Name="SP_Length" Type="INT" Value="16" Comment="16 bits"/>
 				<Attribute Name="Scaling" Type="STRING" Value="'0.001 m/s per bit'"/>
 				<Attribute Name="Offset" Type="INT" Value=""/>
-				<Attribute Name="Link" Type="STRING" Value="'https://www.isobus.net/isobus/pGNAndSPN/14642?type=SPN'"/>
+				<Attribute Name="Link" Type="STRING" Value="'https://www.isobus.net/isobus/pGNAndSPN/14869?type=SPN'"/>
 			</VarDeclaration>
-			<VarDeclaration Name="WHEELBASEDMACHINEDISTANCE" Type="UDINT" Comment="Wheel-based machine distance">
+			<VarDeclaration Name="WHEELBASEDMACHINEDISTANCE" Type="UDINT" Comment="Wheel-based machine distance (see Attributes for Details)">
 				<Attribute Name="SPN" Type="INT" Value="1863"/>
 				<Attribute Name="SP_Name" Type="STRING" Value="'Wheel-based machine distance'"/>
 				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'3-6'"/>
 				<Attribute Name="SP_Length" Type="INT" Value="16" Comment="32 bits"/>
 				<Attribute Name="Scaling" Type="STRING" Value="'0.001 m/bit'"/>
 				<Attribute Name="Offset" Type="INT" Value=""/>
-				<Attribute Name="Link" Type="STRING" Value="'https://www.isobus.net/isobus/pGNAndSPN/14643?type=SPN'"/>
+				<Attribute Name="Link" Type="STRING" Value="'https://www.isobus.net/isobus/pGNAndSPN/14870?type=SPN'"/>
 			</VarDeclaration>
-			<VarDeclaration Name="MAXI_TIMEOFTRACPOWER" Type="USINT" Comment="Maximum Time of Tractor Power">
+			<VarDeclaration Name="MAXI_TIMEOFTRACPOWER" Type="USINT" Comment="Maximum Time of Tractor Power (see Attributes for Details)">
 				<Attribute Name="SPN" Type="INT" Value="1866"/>
 				<Attribute Name="SP_Name" Type="STRING" Value="'Maximum Time of Tractor Power'"/>
 				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'7'"/>
 				<Attribute Name="SP_Length" Type="INT" Value="16" Comment="8 bits"/>
 				<Attribute Name="Scaling" Type="STRING" Value="'1 min/bit'"/>
 				<Attribute Name="Offset" Type="INT" Value=""/>
-				<Attribute Name="Link" Type="STRING" Value="'https://www.isobus.net/isobus/pGNAndSPN/14644?type=SPN'"/>
+				<Attribute Name="Link" Type="STRING" Value="'https://www.isobus.net/isobus/pGNAndSPN/14871?type=SPN'"/>
 			</VarDeclaration>
-			<VarDeclaration Name="WHEELBASEDMACHINEDIRECTION" Type="BYTE" Comment="Wheel-based machine direction">
+			<VarDeclaration Name="WHEELBASEDMACHINEDIRECTION" Type="BYTE" Comment="Wheel-based machine direction (see Attributes for Details)">
 				<Attribute Name="SPN" Type="INT" Value="1864"/>
 				<Attribute Name="SP_Name" Type="STRING" Value="'Wheel-based machine direction'"/>
 				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'8.1'"/>
 				<Attribute Name="SP_Length" Type="INT" Value="16" Comment="2 bits"/>
 				<Attribute Name="Scaling" Type="STRING" Value="'4 states/2 bit'"/>
 				<Attribute Name="Offset" Type="INT" Value=""/>
-				<Attribute Name="Link" Type="STRING" Value="'https://www.isobus.net/isobus/pGNAndSPN/14645?type=SPN'"/>
+				<Attribute Name="Link" Type="STRING" Value="'https://www.isobus.net/isobus/pGNAndSPN/14872?type=SPN'"/>
 			</VarDeclaration>
-			<VarDeclaration Name="KEYSWITCHSTATE" Type="BYTE" Comment="Key switch state">
+			<VarDeclaration Name="KEYSWITCHSTATE" Type="BYTE" Comment="Key switch state (see Attributes for Details)">
 				<Attribute Name="SPN" Type="INT" Value="1865"/>
 				<Attribute Name="SP_Name" Type="STRING" Value="'Key switch state'"/>
 				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'8.3'"/>
 				<Attribute Name="SP_Length" Type="INT" Value="16" Comment="2 bits"/>
 				<Attribute Name="Scaling" Type="STRING" Value="'4 states/2 bit'"/>
 				<Attribute Name="Offset" Type="INT" Value=""/>
-				<Attribute Name="Link" Type="STRING" Value="'https://www.isobus.net/isobus/pGNAndSPN/14646?type=SPN'"/>
+				<Attribute Name="Link" Type="STRING" Value="'https://www.isobus.net/isobus/pGNAndSPN/14873?type=SPN'"/>
 			</VarDeclaration>
-			<VarDeclaration Name="START_STOP_STATE" Type="BYTE" Comment="Implement Start/Stop operations">
+			<VarDeclaration Name="START_STOP_STATE" Type="BYTE" Comment="Implement Start/Stop operations (see Attributes for Details)">
 				<Attribute Name="SPN" Type="INT" Value="5203"/>
 				<Attribute Name="SP_Name" Type="STRING" Value="'Implement Start/Stop operations'"/>
 				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'8.5'"/>
 				<Attribute Name="SP_Length" Type="INT" Value="16" Comment="2 bits"/>
 				<Attribute Name="Scaling" Type="STRING" Value="'4 states/2 bit'"/>
 				<Attribute Name="Offset" Type="INT" Value=""/>
-				<Attribute Name="Link" Type="STRING" Value="'https://www.isobus.net/isobus/pGNAndSPN/14647?type=SPN'"/>
+				<Attribute Name="Link" Type="STRING" Value="'https://www.isobus.net/isobus/pGNAndSPN/14874?type=SPN'"/>
 			</VarDeclaration>
-			<VarDeclaration Name="OPERATOR_DIREC_REVERSED" Type="BYTE" Comment="Operator direction reversed">
+			<VarDeclaration Name="OPERATOR_DIREC_REVERSED" Type="BYTE" Comment="Operator direction reversed (see Attributes for Details)">
 				<Attribute Name="SPN" Type="INT" Value="5244"/>
 				<Attribute Name="SP_Name" Type="STRING" Value="'Operator direction reversed'"/>
 				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'8.7'"/>
 				<Attribute Name="SP_Length" Type="INT" Value="16" Comment="2 bits"/>
 				<Attribute Name="Scaling" Type="STRING" Value="'4 states/2 bit'"/>
 				<Attribute Name="Offset" Type="INT" Value=""/>
-				<Attribute Name="Link" Type="STRING" Value="'https://www.isobus.net/isobus/pGNAndSPN/14648?type=SPN'"/>
+				<Attribute Name="Link" Type="STRING" Value="'https://www.isobus.net/isobus/pGNAndSPN/14875?type=SPN'"/>
 			</VarDeclaration>
 		</OutputVars>
 	</InterfaceList>
