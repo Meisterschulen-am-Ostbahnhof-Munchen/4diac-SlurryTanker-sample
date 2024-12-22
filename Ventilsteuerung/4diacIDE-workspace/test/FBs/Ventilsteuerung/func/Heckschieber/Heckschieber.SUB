@@ -42,24 +42,30 @@
 		</FB>
 		<SubApp Name="GreenWhiteBackground_Function" Type="GreenWhiteBackground_Function" x="4940" y="0">
 		</SubApp>
-		<SubApp Name="SoftKey_UP" Type="IE_UP" x="-400" y="1500">
-		</SubApp>
-		<SubApp Name="AuxInput_UP" Type="IN_UP" x="-400" y="1900">
-		</SubApp>
+		<FB Name="SoftKey" Type="IE" x="-200" y="1200">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="AuxInput" Type="IE" x="-200" y="2100">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
 		<EventConnections>
 			<Connection Source="E_PULSE.CNF" Destination="E_F_TRIG.EI"/>
 			<Connection Source="E_PULSE.CNF" Destination="QXB.REQ" dx1="693.33"/>
 			<Connection Source="E_PULSE.CNF" Destination="AND_2.REQ" dx1="533.33"/>
 			<Connection Source="AND_2.CNF" Destination="CNF_2b" dx1="553.33" dx2="280" dy="-860"/>
 			<Connection Source="E_F_TRIG.EO" Destination="EO_Heckschieber_END" dx1="440"/>
-			<Connection Source="INIT" Destination="QXB.INIT" dx1="8313.33"/>
+			<Connection Source="INIT" Destination="QXB.INIT" dx1="10253.33"/>
 			<Connection Source="INIT" Destination="GreenWhiteBackground_Function.INIT" dx1="5906.67" dx2="5906.67" dy="0"/>
-			<Connection Source="INIT" Destination="SoftKey_UP.INIT" dx1="1500"/>
-			<Connection Source="SoftKey_UP.IND" Destination="E_T_FF_SR.CLK" dx1="1606.67"/>
-			<Connection Source="INIT" Destination="AuxInput_UP.INIT" dx1="1500"/>
-			<Connection Source="AuxInput_UP.IND" Destination="E_T_FF_SR.CLK" dx1="1606.67"/>
-			<Connection Source="OPEN" Destination="E_T_FF_SR.S" dx1="6613.33" dx2="6613.33" dy="0"/>
-			<Connection Source="CLOSE" Destination="E_T_FF_SR.R" dx1="6080" dx2="6080" dy="0"/>
+			<Connection Source="INIT" Destination="SoftKey.INIT" dx1="2933.33"/>
+			<Connection Source="SoftKey.IND" Destination="E_T_FF_SR.CLK" dx1="1420"/>
+			<Connection Source="INIT" Destination="AuxInput.INIT" dx1="2833.33"/>
+			<Connection Source="AuxInput.IND" Destination="E_T_FF_SR.CLK" dx1="1520"/>
+			<Connection Source="OPEN" Destination="E_T_FF_SR.S" dx1="6613.33" dx2="6613.33" dy="0">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="CLOSE" Destination="E_T_FF_SR.R" dx1="8746.67" dx2="6080" dy="0">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
 			<Connection Source="E_T_FF_SR.EO" Destination="AND_2.REQ" dx1="1360" dx2="1360" dy="0"/>
 			<Connection Source="E_T_FF_SR.EO" Destination="E_PULSE.REQ" dx1="126.67" dx2="126.67" dy="0"/>
 			<Connection Source="E_T_FF_SR.EO" Destination="GreenWhiteBackground_Function.EO" dx1="406.67" dx2="406.67" dy="0"/>

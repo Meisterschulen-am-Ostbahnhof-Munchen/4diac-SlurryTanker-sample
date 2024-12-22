@@ -22,10 +22,12 @@
 		</FB>
 		<SubApp Name="GreenWhiteBackground_Function" Type="GreenWhiteBackground_Function" x="4400" y="0">
 		</SubApp>
-		<SubApp Name="SoftKey_UP" Type="IE_UP" x="-600" y="-200">
-		</SubApp>
-		<SubApp Name="AuxInput_UP" Type="IN_UP" x="-600" y="500">
-		</SubApp>
+		<FB Name="SoftKey" Type="IE" x="-600" y="-400">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="AuxInput" Type="IE" x="-600" y="700">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
 		<EventConnections>
 			<Connection Source="E_T_FF.EO" Destination="QX.REQ" dx1="126.67"/>
 			<Connection Source="INIT" Destination="QX.INIT" dx1="4113.33">
@@ -35,14 +37,14 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="E_T_FF.EO" Destination="GreenWhiteBackground_Function.EO"/>
-			<Connection Source="INIT" Destination="SoftKey_UP.INIT" dx1="2733.33">
+			<Connection Source="INIT" Destination="SoftKey.INIT" dx1="2733.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="SoftKey_UP.IND" Destination="E_T_FF.CLK" dx1="893.33"/>
-			<Connection Source="INIT" Destination="AuxInput_UP.INIT" dx1="2833.33">
+			<Connection Source="SoftKey.IND" Destination="E_T_FF.CLK" dx1="753.33"/>
+			<Connection Source="INIT" Destination="AuxInput.INIT" dx1="2733.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="AuxInput_UP.IND" Destination="E_T_FF.CLK" dx1="893.33"/>
+			<Connection Source="AuxInput.IND" Destination="E_T_FF.CLK" dx1="753.33"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="E_T_FF.Q" Destination="QX.OUT" dx1="60"/>

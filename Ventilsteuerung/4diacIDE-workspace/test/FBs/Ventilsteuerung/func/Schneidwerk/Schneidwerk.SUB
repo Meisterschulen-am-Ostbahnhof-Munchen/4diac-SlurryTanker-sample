@@ -1,74 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Schneidwerk" Comment="Subapplication Type">
+<SubAppType Name="Schneidwerk" Comment="Subapplication Type" >
 	<Identification Standard="61499-2">
 	</Identification>
 	<VersionInfo Version="1.0" Author="Franz" Date="2023-01-29">
 	</VersionInfo>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
-			<SubAppEvent Name="INIT" Type="Event" Comment="">
+			<SubAppEvent Name="INIT" Type="Event">
 			</SubAppEvent>
-			<SubAppEvent Name="S_ON" Type="Event" Comment="">
+			<SubAppEvent Name="S_ON" Type="Event">
 			</SubAppEvent>
-			<SubAppEvent Name="S_OFF" Type="Event" Comment="">
+			<SubAppEvent Name="S_OFF" Type="Event">
 			</SubAppEvent>
 		</SubAppEventInputs>
 		<InputVars>
-			<VarDeclaration Name="u16ObjId" Type="UINT" Comment=""/>
-			<VarDeclaration Name="u16ObjIdA" Type="UINT" Comment=""/>
+			<VarDeclaration Name="u16ObjId" Type="UINT"/>
+			<VarDeclaration Name="u16ObjIdA" Type="UINT"/>
 		</InputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="rechtslauf" Type="QX" Comment="" x="5033.33" y="2713.33">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="rechtslauf" Type="QX" x="5900" y="1400">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="E_SWITCH" Type="E_SWITCH" Comment="" x="1700" y="980">
+		<FB Name="E_T_FF_SR" Type="E_T_FF_SR" x="3200" y="1500">
 		</FB>
-		<FB Name="E_SR" Type="E_SR" Comment="" x="3300" y="980">
+		<FB Name="linkslauf" Type="QX" x="5900" y="-100">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="linkslauf" Type="QX" Comment="" x="5033.33" y="1913.33">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
-		</FB>
-		<SubApp Name="GreenWhiteBackground_Function" Type="GreenWhiteBackground_Function" Comment="" x="4900" y="3646.67">
+		<SubApp Name="GreenWhiteBackground_Function" Type="GreenWhiteBackground_Function" x="5900" y="2200">
 		</SubApp>
-		<SubApp Name="SoftKey_UP" Type="IE_UP" Comment="" x="100" y="980">
-		</SubApp>
-		<SubApp Name="AuxInput_UP" Type="IN_UP" Comment="" x="100" y="1400">
-		</SubApp>
-		<Comment Comment="TODO: Schneidwerk linkslauf bei jedem 2. Start.  &amp;#10;" x="6666.67" y="2266.67" width="1073.33" height="540"/>
+		<FB Name="SoftKey" Type="IE" x="100" y="980">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="AuxInput" Type="IE" x="100" y="1800">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<Comment Comment="TODO: Schneidwerk linkslauf bei jedem 2. Start.  &#10;"  x="6800" y="0" width="1073.33" height="540"/>
 		<EventConnections>
-			<Connection Source="E_SR.EO" Destination="rechtslauf.REQ" Comment="" dx1="700"/>
-			<Connection Source="E_SWITCH.EO0" Destination="E_SR.S" Comment=""/>
-			<Connection Source="E_SWITCH.EO1" Destination="E_SR.R" Comment=""/>
-			<Connection Source="S_ON" Destination="E_SR.S" Comment="" dx1="4586.67"/>
-			<Connection Source="S_OFF" Destination="E_SR.R" Comment="" dx1="4413.33"/>
-			<Connection Source="INIT" Destination="linkslauf.INIT" Comment="" dx1="80">
+			<Connection Source="E_T_FF_SR.EO" Destination="rechtslauf.REQ"/>
+			<Connection Source="S_ON" Destination="E_T_FF_SR.S" dx1="3300">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="INIT" Destination="rechtslauf.INIT" Comment="" dx1="80">
+			<Connection Source="S_OFF" Destination="E_T_FF_SR.R" dx1="3300">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="INIT" Destination="GreenWhiteBackground_Function.INIT" Comment="" dx1="80" dx2="80" dy="0">
+			<Connection Source="INIT" Destination="linkslauf.INIT" dx1="80">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="E_SR.EO" Destination="GreenWhiteBackground_Function.EO" Comment="" dx1="493.33" dx2="493.33" dy="0"/>
-			<Connection Source="INIT" Destination="SoftKey_UP.INIT" Comment="" dx1="80" dx2="80" dy="0">
+			<Connection Source="INIT" Destination="rechtslauf.INIT" dx1="80">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="SoftKey_UP.IND" Destination="E_SWITCH.EI" Comment="" dx1="193.33" dx2="193.33" dy="0"/>
-			<Connection Source="INIT" Destination="AuxInput_UP.INIT" Comment="" dx1="80" dx2="80" dy="0">
+			<Connection Source="INIT" Destination="GreenWhiteBackground_Function.INIT" dx1="4646.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="AuxInput_UP.IND" Destination="E_SWITCH.EI" Comment="" dx1="193.33" dx2="193.33" dy="0"/>
+			<Connection Source="E_T_FF_SR.EO" Destination="GreenWhiteBackground_Function.EO" dx1="1400"/>
+			<Connection Source="INIT" Destination="SoftKey.INIT" dx1="80" dx2="80" dy="0">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="SoftKey.IND" Destination="E_T_FF_SR.CLK" dx1="1206.67"/>
+			<Connection Source="INIT" Destination="AuxInput.INIT" dx1="1746.67" dx2="1746.67" dy="0">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AuxInput.IND" Destination="E_T_FF_SR.CLK" dx1="1206.67"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="E_SR.Q" Destination="rechtslauf.OUT" Comment="" dx1="586.67"/>
-			<Connection Source="E_SR.Q" Destination="E_SWITCH.G" Comment="" dx1="233.33" dx2="146.67" dy="300"/>
-			<Connection Source="E_SR.Q" Destination="GreenWhiteBackground_Function.Q" Comment="" dx1="373.33" dx2="373.33" dy="0"/>
-			<Connection Source="u16ObjId" Destination="GreenWhiteBackground_Function.u16ObjId" Comment="" dx1="3120">
+			<Connection Source="E_T_FF_SR.Q" Destination="rechtslauf.OUT"/>
+			<Connection Source="E_T_FF_SR.Q" Destination="GreenWhiteBackground_Function.Q" dx1="500"/>
+			<Connection Source="u16ObjId" Destination="GreenWhiteBackground_Function.u16ObjId" dx1="3120">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="u16ObjIdA" Destination="GreenWhiteBackground_Function.u16ObjIdA" Comment="" dx1="3120">
+			<Connection Source="u16ObjIdA" Destination="GreenWhiteBackground_Function.u16ObjIdA" dx1="3120">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 		</DataConnections>
