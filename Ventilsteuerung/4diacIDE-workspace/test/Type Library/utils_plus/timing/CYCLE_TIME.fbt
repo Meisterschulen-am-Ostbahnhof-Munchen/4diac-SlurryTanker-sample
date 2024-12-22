@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="CYCLE_TIME" Comment="Calculcates the Time passed since last Call.">
+	<Identification Standard="61499-1" Description="Copyright (c) 2024 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made&#10;available under the terms of the Eclipse Public License 2.0&#10;which is available at https://www.eclipse.org/legal/epl-2.0/&#10;&#10;SPDX-License-Identifier: EPL-2.0" >
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2024-10-18">
+	</VersionInfo>
+	<CompilerInfo packageName="utils::timing">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event" Comment="Normal Execution Request">
+				<With Var="TM"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event" Comment="Execution Confirmation">
+				<With Var="CYCLE"/>
+				<With Var="LAST"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="TM" Type="DINT" Comment="Current Call Time" InitialValue="0"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="CYCLE" Type="DINT" Comment="Cycle Time" InitialValue="0"/>
+			<VarDeclaration Name="LAST" Type="DINT" Comment="Last Call Time" InitialValue="0"/>
+		</OutputVars>
+	</InterfaceList>
+	<SimpleFB>
+		<Algorithm Name="REQ" Comment="">
+			<ST><![CDATA[ALGORITHM REQ
+
+CYCLE := TM - LAST;
+LAST := TM;
+
+END_ALGORITHM
+
+]]></ST>
+		</Algorithm>
+	</SimpleFB>
+</FBType>

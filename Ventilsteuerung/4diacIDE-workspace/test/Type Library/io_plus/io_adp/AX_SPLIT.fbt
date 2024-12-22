@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="AX_SPLIT" Comment="Basic FB with empty ECC">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2024-10-24">
+	</VersionInfo>
+	<CompilerInfo packageName="io::adp">
+	</CompilerInfo>
+	<InterfaceList>
+		<Plugs>
+			<AdapterDeclaration Name="OUT0" Type="AX" Comment=""/>
+			<AdapterDeclaration Name="OUT1" Type="AX" Comment=""/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="IN" Type="AX" Comment=""/>
+		</Sockets>
+	</InterfaceList>
+	<BasicFB>
+		<ECC>
+			<ECState Name="START" Comment="Initial State" x="550" y="425">
+			</ECState>
+			<ECState Name="State" Comment="" x="2226.67" y="673.33">
+				<ECAction Algorithm="OUT0" Output="OUT0.E1"/>
+				<ECAction Algorithm="OUT1" Output="OUT1.E1"/>
+			</ECState>
+			<ECTransition Source="State" Destination="START" Condition="1" Comment="" x="1406.67" y="1060"/>
+			<ECTransition Source="START" Destination="State" Condition="IN.E1" Comment="" x="1566.67" y="586.67"/>
+		</ECC>
+		<Algorithm Name="OUT0" Comment="">
+			<ST><![CDATA[ALGORITHM OUT0
+OUT0.D1 := IN.D1;
+END_ALGORITHM]]></ST>
+		</Algorithm>
+		<Algorithm Name="OUT1" Comment="">
+			<ST><![CDATA[
+
+ALGORITHM OUT1
+OUT1.D1 := IN.D1;
+END_ALGORITHM
+
+]]></ST>
+		</Algorithm>
+	</BasicFB>
+</FBType>

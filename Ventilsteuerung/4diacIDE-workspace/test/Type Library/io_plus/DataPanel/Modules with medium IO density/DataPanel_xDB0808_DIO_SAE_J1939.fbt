@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<FBType Name="DataPanel_xDB0808_DIO_SAE_J1939" Comment="Service Interface Function Block Type">
+<FBType Name="DataPanel_xDB0808_DIO_SAE_J1939" Comment="Service Interface Function Block Type" >
 	<Identification Standard="SAE J1939" Function="Combo Block: 8 Inputs/8 Outputs (includes all input/output types)" Type="DP-34044-1-000" Description="this maps to IX/QX" >
 	</Identification>
 	<VersionInfo Version="1.0" Author="Jose Cabral" Date="2018-12-05">
@@ -10,7 +10,7 @@
 	</VersionInfo>
 	<InterfaceList>
 		<EventInputs>
-			<Event Name="INIT" Type="Event" Comment="Service Initialization">
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization" >
 				<With Var="QI"/>
 				<With Var="u8SAMember"/>
 				<With Var="u16ObjId"/>
@@ -37,10 +37,10 @@
 			</Event>
 		</EventInputs>
 		<EventOutputs>
-			<Event Name="INITO" Type="Event" Comment="Initialization Confirm">
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm" >
 				<With Var="QO"/>
 			</Event>
-			<Event Name="IND" Type="Event" Comment="Indication from Resource">
+			<Event Name="IND" Type="Event" Comment="Indication from Resource" >
 				<With Var="QO"/>
 				<With Var="STATUS"/>
 				<With Var="qTimedOut"/>
@@ -66,53 +66,53 @@
 			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
-			<VarDeclaration Name="u8SAMember" Type="USINT" Comment="Node SA 224..239" InitialValue="MI_00"/>
-			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Dummy ! set to ID_NULL if in Doubt. ID_OFF deactivates FB." InitialValue="ID_NULL"/>
-			<VarDeclaration Name="DigitalOutput_1A" Type="STRING" Comment=""/>
-			<VarDeclaration Name="DigitalOutput_1B" Type="STRING" Comment=""/>
-			<VarDeclaration Name="DigitalOutput_2A" Type="STRING" Comment=""/>
-			<VarDeclaration Name="DigitalOutput_2B" Type="STRING" Comment=""/>
-			<VarDeclaration Name="DigitalOutput_3A" Type="STRING" Comment=""/>
-			<VarDeclaration Name="DigitalOutput_3B" Type="STRING" Comment=""/>
-			<VarDeclaration Name="DigitalOutput_4A" Type="STRING" Comment=""/>
-			<VarDeclaration Name="DigitalOutput_4B" Type="STRING" Comment=""/>
-			<VarDeclaration Name="DigitalInput_5A" Type="STRING" Comment=""/>
-			<VarDeclaration Name="DigitalInput_5B" Type="STRING" Comment=""/>
-			<VarDeclaration Name="DigitalInput_6A" Type="STRING" Comment=""/>
-			<VarDeclaration Name="DigitalInput_6B" Type="STRING" Comment=""/>
-			<VarDeclaration Name="DigitalInput_7A" Type="STRING" Comment=""/>
-			<VarDeclaration Name="DigitalInput_7B" Type="STRING" Comment=""/>
-			<VarDeclaration Name="DigitalInput_8A" Type="STRING" Comment=""/>
-			<VarDeclaration Name="DigitalInput_8B" Type="STRING" Comment=""/>
-			<VarDeclaration Name="Input_Power_Port_5" Type="STRING" Comment=""/>
-			<VarDeclaration Name="Input_Power_Port_6" Type="STRING" Comment=""/>
-			<VarDeclaration Name="Input_Power_Port_7" Type="STRING" Comment=""/>
-			<VarDeclaration Name="Input_Power_Port_8" Type="STRING" Comment=""/>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier" />
+			<VarDeclaration Name="u8SAMember" Type="USINT" Comment="Node SA 224..239"  InitialValue="MI_00"/>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Dummy ! set to ID_NULL if in Doubt. ID_OFF deactivates FB."  InitialValue="ID_NULL"/>
+			<VarDeclaration Name="DigitalOutput_1A" Type="STRING"/>
+			<VarDeclaration Name="DigitalOutput_1B" Type="STRING"/>
+			<VarDeclaration Name="DigitalOutput_2A" Type="STRING"/>
+			<VarDeclaration Name="DigitalOutput_2B" Type="STRING"/>
+			<VarDeclaration Name="DigitalOutput_3A" Type="STRING"/>
+			<VarDeclaration Name="DigitalOutput_3B" Type="STRING"/>
+			<VarDeclaration Name="DigitalOutput_4A" Type="STRING"/>
+			<VarDeclaration Name="DigitalOutput_4B" Type="STRING"/>
+			<VarDeclaration Name="DigitalInput_5A" Type="STRING"/>
+			<VarDeclaration Name="DigitalInput_5B" Type="STRING"/>
+			<VarDeclaration Name="DigitalInput_6A" Type="STRING"/>
+			<VarDeclaration Name="DigitalInput_6B" Type="STRING"/>
+			<VarDeclaration Name="DigitalInput_7A" Type="STRING"/>
+			<VarDeclaration Name="DigitalInput_7B" Type="STRING"/>
+			<VarDeclaration Name="DigitalInput_8A" Type="STRING"/>
+			<VarDeclaration Name="DigitalInput_8B" Type="STRING"/>
+			<VarDeclaration Name="Input_Power_Port_5" Type="STRING"/>
+			<VarDeclaration Name="Input_Power_Port_6" Type="STRING"/>
+			<VarDeclaration Name="Input_Power_Port_7" Type="STRING"/>
+			<VarDeclaration Name="Input_Power_Port_8" Type="STRING"/>
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
-			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
-			<VarDeclaration Name="qTimedOut" Type="BOOL" Comment=""/>
-			<VarDeclaration Name="Version" Type="USINT" Comment=""/>
-			<VarDeclaration Name="Revision" Type="USINT" Comment=""/>
-			<VarDeclaration Name="Fault_Code" Type="USINT" Comment=""/>
-			<VarDeclaration Name="User_ID" Type="USINT" Comment=""/>
-			<VarDeclaration Name="Hardware_Version" Type="USINT" Comment=""/>
-			<VarDeclaration Name="Status_01" Type="BOOL" Comment=""/>
-			<VarDeclaration Name="Status_02" Type="BOOL" Comment=""/>
-			<VarDeclaration Name="Status_03" Type="BOOL" Comment=""/>
-			<VarDeclaration Name="Status_04" Type="BOOL" Comment=""/>
-			<VarDeclaration Name="Status_05" Type="BOOL" Comment=""/>
-			<VarDeclaration Name="Status_06" Type="BOOL" Comment=""/>
-			<VarDeclaration Name="Status_07" Type="BOOL" Comment=""/>
-			<VarDeclaration Name="Status_08" Type="BOOL" Comment=""/>
-			<VarDeclaration Name="Status_09" Type="BOOL" Comment=""/>
-			<VarDeclaration Name="Status_10" Type="BOOL" Comment=""/>
-			<VarDeclaration Name="Status_11" Type="BOOL" Comment=""/>
-			<VarDeclaration Name="Status_12" Type="BOOL" Comment=""/>
-			<VarDeclaration Name="Status_13" Type="BOOL" Comment=""/>
-			<VarDeclaration Name="Status_14" Type="BOOL" Comment=""/>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier" />
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status" />
+			<VarDeclaration Name="qTimedOut" Type="BOOL"/>
+			<VarDeclaration Name="Version" Type="USINT"/>
+			<VarDeclaration Name="Revision" Type="USINT"/>
+			<VarDeclaration Name="Fault_Code" Type="USINT"/>
+			<VarDeclaration Name="User_ID" Type="USINT"/>
+			<VarDeclaration Name="Hardware_Version" Type="USINT"/>
+			<VarDeclaration Name="Status_01" Type="BOOL"/>
+			<VarDeclaration Name="Status_02" Type="BOOL"/>
+			<VarDeclaration Name="Status_03" Type="BOOL"/>
+			<VarDeclaration Name="Status_04" Type="BOOL"/>
+			<VarDeclaration Name="Status_05" Type="BOOL"/>
+			<VarDeclaration Name="Status_06" Type="BOOL"/>
+			<VarDeclaration Name="Status_07" Type="BOOL"/>
+			<VarDeclaration Name="Status_08" Type="BOOL"/>
+			<VarDeclaration Name="Status_09" Type="BOOL"/>
+			<VarDeclaration Name="Status_10" Type="BOOL"/>
+			<VarDeclaration Name="Status_11" Type="BOOL"/>
+			<VarDeclaration Name="Status_12" Type="BOOL"/>
+			<VarDeclaration Name="Status_13" Type="BOOL"/>
+			<VarDeclaration Name="Status_14" Type="BOOL"/>
 		</OutputVars>
 	</InterfaceList>
 </FBType>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="AX_MUX_2" Comment="AX multiplexor">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2024-10-23">
+	</VersionInfo>
+	<CompilerInfo packageName="io::adp::selection">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event" Comment="Set Index K">
+				<With Var="K"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event" Comment="Confirmation of Set Index K">
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="K" Type="UINT" Comment="index"/>
+		</InputVars>
+		<Plugs>
+			<AdapterDeclaration Name="OUT" Type="AX" Comment="IN0 for K = 0, IN1 for K = 1"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="IN0" Type="AX" Comment="Input value 0"/>
+			<AdapterDeclaration Name="IN1" Type="AX" Comment="Input value 1"/>
+		</Sockets>
+	</InterfaceList>
+	<BasicFB>
+		<ECC>
+			<ECState Name="START" Comment="Initial State" x="550" y="425">
+			</ECState>
+			<ECState Name="State_0" Comment="" x="2560" y="240">
+				<ECAction Algorithm="IN0" Output="OUT.E1"/>
+			</ECState>
+			<ECState Name="State_1" Comment="" x="2560" y="720">
+				<ECAction Algorithm="IN1" Output="OUT.E1"/>
+			</ECState>
+			<ECState Name="Set_K" Comment="" x="80" y="1440">
+				<ECAction Output="CNF"/>
+			</ECState>
+			<ECTransition Source="START" Destination="State_0" Condition="IN0.E1[K = 0]" Comment="" x="1646.67" y="373.33"/>
+			<ECTransition Source="START" Destination="State_1" Condition="IN1.E1[K = 1]" Comment="" x="1606.67" y="800"/>
+			<ECTransition Source="State_0" Destination="START" Condition="1" Comment="" x="1646.67" y="540"/>
+			<ECTransition Source="State_1" Destination="START" Condition="1" Comment="" x="1506.67" y="1040"/>
+			<ECTransition Source="START" Destination="Set_K" Condition="REQ" Comment="" x="533.33" y="1013.33"/>
+			<ECTransition Source="Set_K" Destination="START" Condition="1" Comment="" x="253.33" y="900"/>
+		</ECC>
+		<Algorithm Name="IN0" Comment="">
+			<ST><![CDATA[ALGORITHM IN0
+OUT.D1 := IN0.D1;
+END_ALGORITHM]]></ST>
+		</Algorithm>
+		<Algorithm Name="IN1" Comment="">
+			<ST><![CDATA[
+
+ALGORITHM IN1
+OUT.D1 := IN1.D1;
+END_ALGORITHM
+
+]]></ST>
+		</Algorithm>
+	</BasicFB>
+</FBType>

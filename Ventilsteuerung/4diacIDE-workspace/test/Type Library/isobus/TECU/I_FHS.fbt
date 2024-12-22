@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="I_FHS" Comment="Primary or Front Hitch Status FHS">
+	<Identification Standard="ISO 11783-7" Classification="PGN 65094" Function="Secondary or Front Hitch Status FHS" Description="Copyright (c) 2024 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made&#10;available under the terms of the Eclipse Public License 2.0&#10;which is available at https://www.eclipse.org/legal/epl-2.0/&#10;&#10;SPDX-License-Identifier: EPL-2.0&#10;&#10;Message that provides the measurement of the current front-hitch parameters.&#10;&#10;https://www.isobus.net/isobus/pGNAndSPN/14862?type=PGN" >
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Hoepfinger" Date="2024-07-09">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="Event" Comment="Service Initialization">
+				<With Var="QI"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="Event" Comment="Initialization Confirm">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+			</Event>
+			<Event Name="IND" Type="Event" Comment="Indication from Resource">
+				<With Var="QO"/>
+				<With Var="timestamp_data"/>
+				<With Var="STATUS"/>
+				<With Var="Q_timeout"/>
+				<With Var="FRONT_HITCH_POSITION"/>
+				<With Var="FRONT_HITCH_WORK_INDICATION"/>
+				<With Var="FRONT_HITCH_POS_LIMIT_STATUS"/>
+				<With Var="FRONT_HITCH_NOMINAL_LOWER_LINK_FORCE"/>
+				<With Var="FRONT_HITCH_DRAFT"/>
+				<With Var="FRONT_HITCH_EXIT_REASON_CODE"/>
+			</Event>
+			<Event Name="TIMEOUT" Type="Event" Comment="">
+				<With Var="timestamp_timeout"/>
+				<With Var="STATUS"/>
+				<With Var="Q_timeout"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment=""/>
+			<VarDeclaration Name="Q_timeout" Type="BOOL" Comment=""/>
+			<VarDeclaration Name="timestamp_timeout" Type="DINT" Comment=""/>
+			<VarDeclaration Name="timestamp_data" Type="DINT" Comment=""/>
+			<VarDeclaration Name="FRONT_HITCH_POSITION" Type="USINT" Comment="Front Hitch Position (see Attributes for Details)">
+				<Attribute Name="SPN" Type="INT" Value="1872"/>
+				<Attribute Name="SP_Name" Type="STRING" Value="'Front Hitch Position'"/>
+				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'1'"/>
+				<Attribute Name="SP_Length" Type="INT" Value="8" Comment="8 bits"/>
+				<Attribute Name="Scaling" Type="STRING" Value="'0.4 %/bit'"/>
+				<Attribute Name="Offset" Type="INT" Value=""/>
+				<Attribute Name="Link" Type="STRING" Value="'https://www.isobus.net/isobus/pGNAndSPN/14857?type=SPN'"/>
+			</VarDeclaration>
+			<VarDeclaration Name="FRONT_HITCH_WORK_INDICATION" Type="BYTE" Comment="Front Hitch In-work Indication">
+				<Attribute Name="SPN" Type="INT" Value="1876"/>
+				<Attribute Name="SP_Name" Type="STRING" Value="'Front Hitch In-work Indication'"/>
+				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'2.7'"/>
+				<Attribute Name="SP_Length" Type="INT" Value="2" Comment="2 bits"/>
+				<Attribute Name="Scaling" Type="STRING" Value="'4 states/2 bit'"/>
+				<Attribute Name="Offset" Type="INT" Value=""/>
+				<Attribute Name="Link" Type="STRING" Value="'https://www.isobus.net/isobus/pGNAndSPN/14859?type=SPN'"/>
+			</VarDeclaration>
+			<VarDeclaration Name="FRONT_HITCH_POS_LIMIT_STATUS" Type="BYTE" Comment="Front Hitch Position Limit status">
+				<Attribute Name="SPN" Type="INT" Value="5150"/>
+				<Attribute Name="SP_Name" Type="STRING" Value="'Front Hitch Position Limit status'"/>
+				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'2.4'"/>
+				<Attribute Name="SP_Length" Type="INT" Value="3" Comment="3 bits"/>
+				<Attribute Name="Scaling" Type="STRING" Value="'8 states/3 bit'"/>
+				<Attribute Name="Offset" Type="INT" Value=""/>
+				<Attribute Name="Link" Type="STRING" Value="'https://www.isobus.net/isobus/pGNAndSPN/14858?type=SPN'"/>
+			</VarDeclaration>
+			<VarDeclaration Name="FRONT_HITCH_NOMINAL_LOWER_LINK_FORCE" Type="USINT" Comment="Front Nominal Lower Link Force">
+				<Attribute Name="SPN" Type="INT" Value="1880"/>
+				<Attribute Name="SP_Name" Type="STRING" Value="'Front Nominal Lower Link Force'"/>
+				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'3'"/>
+				<Attribute Name="SP_Length" Type="INT" Value="8" Comment="8 bits"/>
+				<Attribute Name="Scaling" Type="STRING" Value="'0.8 %/bit'"/>
+				<Attribute Name="Offset" Type="INT" Value="-100"/>
+				<Attribute Name="Link" Type="STRING" Value="'https://www.isobus.net/isobus/pGNAndSPN/14860?type=SPN'"/>
+			</VarDeclaration>
+			<VarDeclaration Name="FRONT_HITCH_DRAFT" Type="UINT" Comment="Front Draft">
+				<Attribute Name="SPN" Type="INT" Value="1878"/>
+				<Attribute Name="SP_Name" Type="STRING" Value="'Front Draft'"/>
+				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'4-5'"/>
+				<Attribute Name="SP_Length" Type="INT" Value="16" Comment="16 bits"/>
+				<Attribute Name="Scaling" Type="STRING" Value="'10 N/bit'"/>
+				<Attribute Name="Offset" Type="DINT" Value="-320000"/>
+				<Attribute Name="Link" Type="STRING" Value="'https://www.isobus.net/isobus/pGNAndSPN/14861?type=SPN'"/>
+			</VarDeclaration>
+			<VarDeclaration Name="FRONT_HITCH_EXIT_REASON_CODE" Type="BYTE" Comment="Front hitch exit/reason code">
+				<Attribute Name="SPN" Type="INT" Value="5816"/>
+				<Attribute Name="SP_Name" Type="STRING" Value="'Front hitch exit/reason code'"/>
+				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'6.1'"/>
+				<Attribute Name="SP_Length" Type="INT" Value="6" Comment="6 bits"/>
+				<Attribute Name="Scaling" Type="STRING" Value="'64 states/6 bit'"/>
+				<Attribute Name="Offset" Type="INT" Value="0"/>
+				<Attribute Name="Link" Type="STRING" Value="'https://www.isobus.net/isobus/pGNAndSPN/14862?type=SPN'"/>
+			</VarDeclaration>
+		</OutputVars>
+	</InterfaceList>
+</FBType>
