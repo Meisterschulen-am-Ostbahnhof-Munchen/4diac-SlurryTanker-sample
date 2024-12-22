@@ -8,4 +8,4 @@ MaxValueLabelSize=60
 SystemConfPaletteFactory.Size=200
 SystemConfPaletteFactory.State=4
 eclipse.preferences.version=1
-
+org.eclipse.gef.psize=125
