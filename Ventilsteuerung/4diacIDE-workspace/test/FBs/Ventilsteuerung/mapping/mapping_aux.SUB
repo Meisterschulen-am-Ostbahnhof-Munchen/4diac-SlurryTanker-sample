@@ -36,17 +36,17 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u8SAMember" Value="GLOBAL"/>
 			<Parameter Name="u16ObjId_2" Value="AuxInput_Dom"/>
-			<Parameter Name="DigitalInput_2" Value="'Ventilsteuerung.functions.Dom.AuxInput_UP.IX'"/>
+			<Parameter Name="DigitalInput_2" Value="'Ventilsteuerung.functions.Dom.AuxInput'"/>
 			<Parameter Name="u16ObjId_3" Value="AuxInput_Heckschieber"/>
-			<Parameter Name="DigitalInput_3" Value="'Ventilsteuerung.functions.Heckschieber.AuxInput_UP.IX'"/>
+			<Parameter Name="DigitalInput_3" Value="'Ventilsteuerung.functions.Heckschieber.AuxInput'"/>
 			<Parameter Name="u16ObjId_5" Value="AuxInput_Schneidwerk"/>
-			<Parameter Name="DigitalInput_5" Value="'Ventilsteuerung.functions.Schneidwerk.AuxInput_UP.IX'"/>
+			<Parameter Name="DigitalInput_5" Value="'Ventilsteuerung.functions.Schneidwerk.AuxInput'"/>
 			<Parameter Name="u16ObjId_6" Value="AuxInput_Seitenschieber"/>
-			<Parameter Name="DigitalInput_6" Value="'Ventilsteuerung.functions.Seitenschieber.AuxInput_UP.IX'"/>
+			<Parameter Name="DigitalInput_6" Value="'Ventilsteuerung.functions.Seitenschieber.AuxInput'"/>
 			<Parameter Name="u16ObjId_7" Value="AuxInput_Abscheider"/>
-			<Parameter Name="DigitalInput_7" Value="'Ventilsteuerung.functions.Abscheider.AuxInput_UP.IX'"/>
+			<Parameter Name="DigitalInput_7" Value="'Ventilsteuerung.functions.Abscheider.AuxInput'"/>
 			<Parameter Name="u16ObjId_8" Value="AuxInput_Licht"/>
-			<Parameter Name="DigitalInput_8" Value="'Ventilsteuerung.functions.Licht.AuxInput_UP.IX'"/>
+			<Parameter Name="DigitalInput_8" Value="'Ventilsteuerung.functions.Licht.AuxInput'"/>
 		</FB>
 		<FB Name="UT_AuxiliaryInputMapping_2" Type="UT_AuxiliaryInputMapping_Type_02_Bool_NonLatched" x="-2100" y="4400">
 			<Parameter Name="QI" Value="TRUE"/>
