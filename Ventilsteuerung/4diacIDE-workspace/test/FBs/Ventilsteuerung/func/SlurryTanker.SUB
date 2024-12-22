@@ -136,10 +136,10 @@
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="Heckschieber.EO_Heckschieber_END" Destination="Automatik.CNF_Schieber" dx1="66.67" dx2="66.67" dy="-633.33"/>
-			<Connection Source="INIT" Destination="Knickdeichsel_heben.INIT" dx1="706.67">
+			<Connection Source="INIT" Destination="Knickdeichsel_heben.INIT" dx1="706.67" dx2="706.67" dy="0">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="INIT" Destination="Knickdeichsel_senken.INIT" dx1="653.33">
+			<Connection Source="INIT" Destination="Knickdeichsel_senken.INIT" dx1="653.33" dx2="653.33" dy="0">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="INIT" Destination="Klappen.INIT" dx1="1266.67" dx2="1266.67" dy="0">
