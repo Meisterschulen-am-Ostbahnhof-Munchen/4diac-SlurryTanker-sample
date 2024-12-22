@@ -1,116 +1,116 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="doppeltwirkend" Comment="Subapplication Type">
+<SubAppType Name="doppeltwirkend" Comment="Subapplication Type" >
 	<Identification Standard="61499-2">
 	</Identification>
 	<VersionInfo Version="1.0" Author="Franz" Date="2023-01-29">
 	</VersionInfo>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
-			<SubAppEvent Name="INIT" Type="Event" Comment="">
+			<SubAppEvent Name="INIT" Type="Event">
 			</SubAppEvent>
-			<SubAppEvent Name="EI_heben" Type="Event" Comment="">
+			<SubAppEvent Name="EI_heben" Type="Event">
 			</SubAppEvent>
-			<SubAppEvent Name="EI_senken" Type="Event" Comment="">
+			<SubAppEvent Name="EI_senken" Type="Event">
 			</SubAppEvent>
 		</SubAppEventInputs>
 		<SubAppEventOutputs>
-			<SubAppEvent Name="CNF_heben" Type="Event" Comment="">
+			<SubAppEvent Name="CNF_heben" Type="Event">
 			</SubAppEvent>
-			<SubAppEvent Name="CNF_senken" Type="Event" Comment="">
+			<SubAppEvent Name="CNF_senken" Type="Event">
 			</SubAppEvent>
 		</SubAppEventOutputs>
 		<InputVars>
-			<VarDeclaration Name="IN_heben" Type="BOOL" Comment=""/>
-			<VarDeclaration Name="IN_senken" Type="BOOL" Comment=""/>
-			<VarDeclaration Name="u16ObjId_heben" Type="UINT" Comment=""/>
-			<VarDeclaration Name="u16ObjId_senken" Type="UINT" Comment=""/>
-			<VarDeclaration Name="u16ObjIdA_heben" Type="UINT" Comment=""/>
-			<VarDeclaration Name="u16ObjIdA_senken" Type="UINT" Comment=""/>
+			<VarDeclaration Name="IN_heben" Type="BOOL"/>
+			<VarDeclaration Name="IN_senken" Type="BOOL"/>
+			<VarDeclaration Name="u16ObjId_heben" Type="UINT"/>
+			<VarDeclaration Name="u16ObjId_senken" Type="UINT"/>
+			<VarDeclaration Name="u16ObjIdA_heben" Type="UINT"/>
+			<VarDeclaration Name="u16ObjIdA_senken" Type="UINT"/>
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="OUT_heben" Type="BOOL" Comment=""/>
-			<VarDeclaration Name="OUT_senken" Type="BOOL" Comment=""/>
+			<VarDeclaration Name="OUT_heben" Type="BOOL"/>
+			<VarDeclaration Name="OUT_senken" Type="BOOL"/>
 		</OutputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="OR_2_heben" Type="OR_3" Comment="" x="3166.67" y="766.67">
+		<FB Name="OR_2_heben" Type="OR_3" x="3166.67" y="766.67">
 		</FB>
-		<FB Name="OR_2_senken" Type="OR_3" Comment="" x="3066.67" y="2166.67">
+		<FB Name="OR_2_senken" Type="OR_3" x="3066.67" y="2166.67">
 		</FB>
-		<SubApp Name="GreenWhiteBackground_heben" Type="GreenWhiteBackground_Function" Comment="" x="5933.33" y="3533.33">
+		<SubApp Name="GreenWhiteBackground_heben" Type="GreenWhiteBackground_Function" x="5933.33" y="3533.33">
 		</SubApp>
-		<SubApp Name="GreenWhiteBackground_senken" Type="GreenWhiteBackground_Function" Comment="" x="5933.33" y="4466.67">
+		<SubApp Name="GreenWhiteBackground_senken" Type="GreenWhiteBackground_Function" x="5933.33" y="4466.67">
 		</SubApp>
-		<SubApp Name="Sitzventile" Type="Sitzventile" Comment="" x="6793.33" y="2586.67">
+		<SubApp Name="Sitzventile" Type="Sitzventile" x="6793.33" y="2586.67">
 		</SubApp>
-		<SubApp Name="SoftKey_heben" Type="IN" Comment="" x="666.67" y="566.67">
+		<SubApp Name="SoftKey_heben" Type="IN" x="600" y="1300">
 		</SubApp>
-		<SubApp Name="AuxInput_heben" Type="IN" Comment="" x="666.67" y="1066.67">
+		<SubApp Name="AuxInput_heben" Type="IN" x="600" y="1800">
 		</SubApp>
-		<SubApp Name="SoftKey_senken" Type="IN" Comment="" x="666.67" y="1566.67">
+		<SubApp Name="SoftKey_senken" Type="IN" x="-200" y="2800">
 		</SubApp>
-		<SubApp Name="AuxInput_senken" Type="IN" Comment="" x="666.67" y="2066.67">
+		<SubApp Name="AuxInput_senken" Type="IN" x="-200" y="3300">
 		</SubApp>
 		<EventConnections>
-			<Connection Source="EI_heben" Destination="OR_2_heben.REQ" Comment="" dx1="3566.67"/>
-			<Connection Source="OR_2_heben.CNF" Destination="CNF_heben" Comment="" dx1="2980"/>
-			<Connection Source="EI_senken" Destination="OR_2_senken.REQ" Comment="" dx1="3406.67"/>
-			<Connection Source="OR_2_senken.CNF" Destination="CNF_senken" Comment="" dx1="7313.33"/>
-			<Connection Source="INIT" Destination="GreenWhiteBackground_heben.INIT" Comment="" dx1="2733.33">
+			<Connection Source="EI_heben" Destination="OR_2_heben.REQ" dx1="3566.67"/>
+			<Connection Source="OR_2_heben.CNF" Destination="CNF_heben" dx1="2980"/>
+			<Connection Source="EI_senken" Destination="OR_2_senken.REQ" dx1="3406.67"/>
+			<Connection Source="OR_2_senken.CNF" Destination="CNF_senken" dx1="7313.33"/>
+			<Connection Source="INIT" Destination="GreenWhiteBackground_heben.INIT" dx1="2733.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="OR_2_heben.CNF" Destination="GreenWhiteBackground_heben.EO" Comment="" dx1="680"/>
-			<Connection Source="INIT" Destination="GreenWhiteBackground_senken.INIT" Comment="" dx1="3200">
+			<Connection Source="OR_2_heben.CNF" Destination="GreenWhiteBackground_heben.EO" dx1="680"/>
+			<Connection Source="INIT" Destination="GreenWhiteBackground_senken.INIT" dx1="3200">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="OR_2_senken.CNF" Destination="GreenWhiteBackground_senken.EO" Comment="" dx1="1186.67"/>
-			<Connection Source="INIT" Destination="Sitzventile.INITO" Comment="" dx1="4060" dx2="4060" dy="0">
+			<Connection Source="OR_2_senken.CNF" Destination="GreenWhiteBackground_senken.EO" dx1="1186.67"/>
+			<Connection Source="INIT" Destination="Sitzventile.INITO" dx1="4060" dx2="4060" dy="0">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="OR_2_heben.CNF" Destination="Sitzventile.CNF_heben" Comment="" dx1="1553.33" dx2="1553.33" dy="0"/>
-			<Connection Source="OR_2_senken.CNF" Destination="Sitzventile.CNF_senken" Comment="" dx1="1580" dx2="1580" dy="0"/>
-			<Connection Source="INIT" Destination="SoftKey_heben.INIT" Comment="" dx1="1000" dx2="1000" dy="0">
+			<Connection Source="OR_2_heben.CNF" Destination="Sitzventile.CNF_heben" dx1="1553.33" dx2="1553.33" dy="0"/>
+			<Connection Source="OR_2_senken.CNF" Destination="Sitzventile.CNF_senken" dx1="1580" dx2="1580" dy="0"/>
+			<Connection Source="INIT" Destination="SoftKey_heben.INIT" dx1="2086.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="SoftKey_heben.IND" Destination="OR_2_heben.REQ" Comment="" dx1="940" dx2="940" dy="0"/>
-			<Connection Source="INIT" Destination="AuxInput_heben.INIT" Comment="" dx1="1000" dx2="1000" dy="0">
+			<Connection Source="SoftKey_heben.IND" Destination="OR_2_heben.REQ" dx1="966.67"/>
+			<Connection Source="INIT" Destination="AuxInput_heben.INIT" dx1="2000">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="AuxInput_heben.IND" Destination="OR_2_heben.REQ" Comment="" dx1="546.67" dx2="546.67" dy="0"/>
-			<Connection Source="INIT" Destination="SoftKey_senken.INIT" Comment="" dx1="1006.67" dx2="1006.67" dy="0">
+			<Connection Source="AuxInput_heben.IND" Destination="OR_2_heben.REQ" dx1="1053.33"/>
+			<Connection Source="INIT" Destination="SoftKey_senken.INIT" dx1="1646.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="SoftKey_senken.IND" Destination="OR_2_senken.REQ" Comment="" dx1="893.33" dx2="893.33" dy="0"/>
-			<Connection Source="INIT" Destination="AuxInput_senken.INIT" Comment="" dx1="1000" dx2="1000" dy="0">
+			<Connection Source="SoftKey_senken.IND" Destination="OR_2_senken.REQ" dx1="1366.67"/>
+			<Connection Source="INIT" Destination="AuxInput_senken.INIT" dx1="1906.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="AuxInput_senken.IND" Destination="OR_2_senken.REQ" Comment="" dx1="600" dx2="600" dy="0"/>
+			<Connection Source="AuxInput_senken.IND" Destination="OR_2_senken.REQ" dx1="1106.67"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="IN_heben" Destination="OR_2_heben.IN2" Comment="" dx1="3246.67"/>
-			<Connection Source="OR_2_heben.OUT" Destination="OUT_heben" Comment="" dx1="3073.33"/>
-			<Connection Source="IN_senken" Destination="OR_2_senken.IN2" Comment="" dx1="173.33"/>
-			<Connection Source="OR_2_senken.OUT" Destination="OUT_senken" Comment="" dx1="7533.33"/>
-			<Connection Source="OR_2_heben.OUT" Destination="GreenWhiteBackground_heben.Q" Comment="" dx1="680"/>
-			<Connection Source="OR_2_senken.OUT" Destination="GreenWhiteBackground_senken.Q" Comment="" dx1="1186.67"/>
-			<Connection Source="u16ObjId_heben" Destination="GreenWhiteBackground_heben.u16ObjId" Comment="" dx1="2733.33">
+			<Connection Source="IN_heben" Destination="OR_2_heben.IN2" dx1="2993.33"/>
+			<Connection Source="OR_2_heben.OUT" Destination="OUT_heben" dx1="3073.33"/>
+			<Connection Source="IN_senken" Destination="OR_2_senken.IN2" dx1="173.33"/>
+			<Connection Source="OR_2_senken.OUT" Destination="OUT_senken" dx1="7533.33"/>
+			<Connection Source="OR_2_heben.OUT" Destination="GreenWhiteBackground_heben.Q" dx1="680"/>
+			<Connection Source="OR_2_senken.OUT" Destination="GreenWhiteBackground_senken.Q" dx1="1186.67"/>
+			<Connection Source="u16ObjId_heben" Destination="GreenWhiteBackground_heben.u16ObjId" dx1="2733.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="u16ObjId_senken" Destination="GreenWhiteBackground_senken.u16ObjId" Comment="" dx1="2733.33">
+			<Connection Source="u16ObjId_senken" Destination="GreenWhiteBackground_senken.u16ObjId" dx1="2733.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="u16ObjIdA_heben" Destination="GreenWhiteBackground_heben.u16ObjIdA" Comment="" dx1="2733.33">
+			<Connection Source="u16ObjIdA_heben" Destination="GreenWhiteBackground_heben.u16ObjIdA" dx1="2733.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="u16ObjIdA_senken" Destination="GreenWhiteBackground_senken.u16ObjIdA" Comment="" dx1="2733.33">
+			<Connection Source="u16ObjIdA_senken" Destination="GreenWhiteBackground_senken.u16ObjIdA" dx1="2733.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="OR_2_heben.OUT" Destination="Sitzventile.IN_heben" Comment="" dx1="1533.33" dx2="1533.33" dy="0"/>
-			<Connection Source="OR_2_senken.OUT" Destination="Sitzventile.IN_senken" Comment="" dx1="1580" dx2="1580" dy="0"/>
-			<Connection Source="SoftKey_heben.IN" Destination="OR_2_heben.IN1" Comment="" dx1="940" dx2="940" dy="0"/>
-			<Connection Source="AuxInput_heben.IN" Destination="OR_2_heben.IN3" Comment="" dx1="546.67" dx2="546.67" dy="0"/>
-			<Connection Source="SoftKey_senken.IN" Destination="OR_2_senken.IN1" Comment="" dx1="893.33" dx2="893.33" dy="0"/>
-			<Connection Source="AuxInput_senken.IN" Destination="OR_2_senken.IN3" Comment="" dx1="246.67" dx2="246.67" dy="0"/>
+			<Connection Source="OR_2_heben.OUT" Destination="Sitzventile.IN_heben" dx1="1533.33" dx2="1533.33" dy="0"/>
+			<Connection Source="OR_2_senken.OUT" Destination="Sitzventile.IN_senken" dx1="1580" dx2="1580" dy="0"/>
+			<Connection Source="SoftKey_heben.IN" Destination="OR_2_heben.IN1" dx1="1620"/>
+			<Connection Source="AuxInput_heben.IN" Destination="OR_2_heben.IN3" dx1="1780"/>
+			<Connection Source="SoftKey_senken.IN" Destination="OR_2_senken.IN1" dx1="2233.33"/>
+			<Connection Source="AuxInput_senken.IN" Destination="OR_2_senken.IN3" dx1="2386.67"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
