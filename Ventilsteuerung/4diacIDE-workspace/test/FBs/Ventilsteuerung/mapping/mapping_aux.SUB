@@ -48,7 +48,7 @@
 			<Parameter Name="u16ObjId_8" Value="AuxInput_Licht"/>
 			<Parameter Name="DigitalInput_8" Value="'Ventilsteuerung.functions.Licht.AuxInput'"/>
 		</FB>
-		<FB Name="UT_AuxiliaryInputMapping_2" Type="UT_AuxiliaryInputMapping_Type_02_Bool_NonLatched" x="-2100" y="4400">
+		<FB Name="UT_AuxiliaryInputMapping_2" Type="UT_AuxiliaryInputMapping_Type_02_Bool_NonLatched_UP" x="-2100" y="4400">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u8SAMember" Value="GLOBAL"/>
 			<Parameter Name="u16ObjId_1" Value="PAGE_1_AUX"/>
@@ -63,7 +63,7 @@
 			<Connection Source="INIT" Destination="UT_AuxiliaryInputMapping_1.INIT" dx1="80" dx2="80" dy="0">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="INIT" Destination="UT_AuxiliaryInputMapping_2.INIT" dx1="80">
+			<Connection Source="INIT" Destination="UT_AuxiliaryInputMapping_2.INIT" dx1="80" dx2="80" dy="0">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 		</EventConnections>
