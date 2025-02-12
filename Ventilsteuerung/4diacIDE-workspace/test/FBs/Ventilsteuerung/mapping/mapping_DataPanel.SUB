@@ -14,7 +14,7 @@
 		<FB Name="DataPanel_xDB_16_DO_SAE_J1939" Type="DataPanel_xDB_16_DO_SAE_J1939" Comment="" x="1246.67" y="13.33">
 			<Parameter Name="QI" Value="TRUE" Comment=""/>
 			<Parameter Name="u8SAMember" Value="MI_00" Comment=""/>
-			<Parameter Name="u16ObjId" Value="ID_NULL" Comment=""/>
+			<Parameter Name="u16ObjId" Value="isobus::ID_NULL" Comment=""/>
 			<Parameter Name="DigitalOutput_1A" Value="'Ventilsteuerung.functions.Schneidwerk.rechtslauf'" Comment=""/>
 			<Parameter Name="DigitalOutput_1B" Value="'Ventilsteuerung.functions.Schneidwerk.linkslauf'" Comment=""/>
 			<Parameter Name="DigitalOutput_2A" Value="'Ventilsteuerung.functions.Vorsteuerventil_2A.QX'" Comment=""/>

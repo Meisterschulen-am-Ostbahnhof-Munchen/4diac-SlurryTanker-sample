@@ -23,25 +23,25 @@
 			<Attribute Name="GroupName" Type="STRING" Value="Vorgewendeautomatik"/>
 		</SubApp>
 		<SubApp Name="Dom" Type="TimedFunc" x="4340" y="393.34">
-			<Parameter Name="u16ObjId" Value="SoftKey_Dom"/>
+			<Parameter Name="u16ObjId" Value="DefaultPool::SoftKey_Dom"/>
 			<Parameter Name="u16ObjIdA" Value="AuxInput_Dom"/>
 			<Attribute Name="GroupName" Type="STRING" Value="funktionen"/>
 		</SubApp>
 		<SubApp Name="Seitenschieber" Type="TimedFunc" x="4340" y="1466.66">
-			<Parameter Name="u16ObjId" Value="SoftKey_Seitenschieber"/>
+			<Parameter Name="u16ObjId" Value="DefaultPool::SoftKey_Seitenschieber"/>
 			<Parameter Name="u16ObjIdA" Value="AuxInput_Seitenschieber"/>
 			<Attribute Name="GroupName" Type="STRING" Value="funktionen"/>
 		</SubApp>
 		<SubApp Name="Klappen" Type="doppeltwirkend" x="3940" y="7193.33">
-			<Parameter Name="u16ObjId_heben" Value="SoftKey_Auseinanderklappen"/>
-			<Parameter Name="u16ObjId_senken" Value="SoftKey_Zusammenklappen"/>
+			<Parameter Name="u16ObjId_heben" Value="DefaultPool::SoftKey_Auseinanderklappen"/>
+			<Parameter Name="u16ObjId_senken" Value="DefaultPool::SoftKey_Zusammenklappen"/>
 			<Parameter Name="u16ObjIdA_heben" Value="AuxInput_Auseinanderklappen"/>
 			<Parameter Name="u16ObjIdA_senken" Value="AuxInput_Zusammenklappen"/>
 			<Attribute Name="GroupName" Type="STRING" Value="funktionen"/>
 		</SubApp>
 		<SubApp Name="Verteiler" Type="doppeltwirkend" x="7013.33" y="0">
-			<Parameter Name="u16ObjId_heben" Value="SoftKey_Verteiler_heben"/>
-			<Parameter Name="u16ObjId_senken" Value="SoftKey_Verteiler_senken"/>
+			<Parameter Name="u16ObjId_heben" Value="DefaultPool::SoftKey_Verteiler_heben"/>
+			<Parameter Name="u16ObjId_senken" Value="DefaultPool::SoftKey_Verteiler_senken"/>
 			<Parameter Name="u16ObjIdA_heben" Value="AuxInput_Verteiler_heben"/>
 			<Parameter Name="u16ObjIdA_senken" Value="AuxInput_Verteiler_senken"/>
 			<Attribute Name="GroupName" Type="STRING" Value="Vorgewendeautomatik"/>
@@ -53,29 +53,29 @@
 			<Attribute Name="GroupName" Type="STRING" Value="Vorsteuerventile"/>
 		</SubApp>
 		<SubApp Name="Knickdeichsel" Type="doppeltwirkend" x="3940" y="3326.67">
-			<Parameter Name="u16ObjId_heben" Value="SoftKey_Knickdeichsel_heben"/>
-			<Parameter Name="u16ObjId_senken" Value="SoftKey_Knickdeichsel_senken"/>
+			<Parameter Name="u16ObjId_heben" Value="DefaultPool::SoftKey_Knickdeichsel_heben"/>
+			<Parameter Name="u16ObjId_senken" Value="DefaultPool::SoftKey_Knickdeichsel_senken"/>
 			<Parameter Name="u16ObjIdA_heben" Value="AuxInput_Knickdeichsel_heben"/>
 			<Parameter Name="u16ObjIdA_senken" Value="AuxInput_Knickdeichsel_senken"/>
 			<Attribute Name="GroupName" Type="STRING" Value="funktionen"/>
 		</SubApp>
 		<SubApp Name="Licht" Type="Dauerfunktion" x="4046.67" y="5193.33">
-			<Parameter Name="u16ObjId" Value="SoftKey_Licht"/>
+			<Parameter Name="u16ObjId" Value="DefaultPool::SoftKey_Licht"/>
 			<Parameter Name="u16ObjIdA" Value="AuxInput_Licht"/>
 			<Attribute Name="GroupName" Type="STRING" Value="funktionen"/>
 		</SubApp>
 		<SubApp Name="Abscheider" Type="TimedFunc" x="4140" y="6260">
-			<Parameter Name="u16ObjId" Value="SoftKey_Abscheider"/>
+			<Parameter Name="u16ObjId" Value="DefaultPool::SoftKey_Abscheider"/>
 			<Parameter Name="u16ObjIdA" Value="AuxInput_Abscheider"/>
 			<Attribute Name="GroupName" Type="STRING" Value="funktionen"/>
 		</SubApp>
 		<SubApp Name="Schneidwerk" Type="Schneidwerk" x="7020" y="1460">
-			<Parameter Name="u16ObjId" Value="SoftKey_Schneidwerk"/>
+			<Parameter Name="u16ObjId" Value="DefaultPool::SoftKey_Schneidwerk"/>
 			<Parameter Name="u16ObjIdA" Value="AuxInput_Schneidwerk"/>
 			<Attribute Name="GroupName" Type="STRING" Value="Vorgewendeautomatik"/>
 		</SubApp>
 		<SubApp Name="Heckschieber" Type="Heckschieber" x="7020" y="3460">
-			<Parameter Name="u16ObjId" Value="SoftKey_Heckschieber"/>
+			<Parameter Name="u16ObjId" Value="DefaultPool::SoftKey_Heckschieber"/>
 			<Parameter Name="u16ObjIdA" Value="AuxInput_Heckschieber"/>
 			<Attribute Name="GroupName" Type="STRING" Value="Vorgewendeautomatik"/>
 		</SubApp>
