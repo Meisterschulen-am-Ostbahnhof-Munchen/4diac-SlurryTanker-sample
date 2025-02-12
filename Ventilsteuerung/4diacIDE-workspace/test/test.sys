@@ -29,6 +29,7 @@
 	<Segment Name="Ethernet" Type="Ethernet" x="3046.67" y="1353.33" dx1="2000">
 		<Attribute Name="Color" Type="STRING" Value="121,203,38"/>
 	</Segment>
+	<Mapping From="App.Control" To="FORTE_PC.EMB_RES"/>
 	<Link SegmentName="Ethernet" CommResource="FORTE_PC" Comment="">
 	</Link>
 </System>
