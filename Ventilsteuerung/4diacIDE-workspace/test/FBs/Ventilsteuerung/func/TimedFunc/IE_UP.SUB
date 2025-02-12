@@ -1,26 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="IE_UP" Comment="Subapplication Type">
+<SubAppType Name="IE_UP" Comment="Subapplication Type" >
 	<Identification Standard="61499-2">
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2023-02-06">
 	</VersionInfo>
 	<SubAppInterfaceList>
-		<SubAppEventInputs>
-			<SubAppEvent Name="INIT" Type="Event" Comment="">
-			</SubAppEvent>
-		</SubAppEventInputs>
 		<SubAppEventOutputs>
-			<SubAppEvent Name="IND" Type="Event" Comment="">
+			<SubAppEvent Name="IND" Type="Event">
 			</SubAppEvent>
 		</SubAppEventOutputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="IE" Type="IE" Comment="" x="0.0" y="100.0">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="IE" Type="IE" x="0" y="100">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="IE.INIT" Comment="" dx1="633.3333333333334"/>
-			<Connection Source="IE.IND" Destination="IND" Comment="" dx1="1613.3333333333335"/>
+			<Connection Source="IE.IND" Destination="IND" dx1="1613.33"/>
 		</EventConnections>
 	</SubAppNetwork>
 </SubAppType>

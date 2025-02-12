@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="AX_SPLIT3" Comment="SPLIT 1 AX into 3 AX" >
+	<Identification Standard="61499-2" Description="Copyright (c) 2025 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0" >
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2025-01-24">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<InterfaceList>
+		<Plugs>
+			<AdapterDeclaration Name="OUT0" Type="AX" x="753.33" y="33.33"/>
+			<AdapterDeclaration Name="OUT1" Type="AX" x="753.33" y="1593.33"/>
+			<AdapterDeclaration Name="OUT2" Type="AX" x="820" y="813.33"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="IN" Type="AX" x="133.33" y="813.33"/>
+		</Sockets>
+	</InterfaceList>
+	<FBNetwork>
+		<EventConnections>
+			<Connection Source="IN.E1" Destination="OUT0.E1" dx1="140"/>
+			<Connection Source="IN.E1" Destination="OUT1.E1" dx1="140"/>
+			<Connection Source="IN.E1" Destination="OUT2.E1"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="IN.D1" Destination="OUT0.D1" dx1="73.33"/>
+			<Connection Source="IN.D1" Destination="OUT1.D1" dx1="73.33"/>
+			<Connection Source="IN.D1" Destination="OUT2.D1"/>
+		</DataConnections>
+	</FBNetwork>
+</FBType>

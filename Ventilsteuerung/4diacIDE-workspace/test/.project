@@ -10,6 +10,11 @@
 			<arguments>
 			</arguments>
 		</buildCommand>
+		<buildCommand>
+			<name>org.eclipse.fordiac.ide.export.builder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
 	</buildSpec>
 	<natures>
 		<nature>org.eclipse.fordiac.ide.systemmanagement.FordiacNature</nature>
@@ -17,152 +22,162 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>Type Library/convert</name>
+			<name>External Libraries</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>Standard Libraries</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>Standard Libraries/convert</name>
 			<type>2</type>
 			<locationURI>ECLIPSE_HOME/typelibrary/convert-1.0.0/typelib</locationURI>
 		</link>
 		<link>
-			<name>Type Library/core</name>
+			<name>Standard Libraries/core</name>
 			<type>2</type>
 			<locationURI>ECLIPSE_HOME/typelibrary/core-1.0.0/typelib</locationURI>
 		</link>
 		<link>
-			<name>Type Library/devices</name>
+			<name>Standard Libraries/devices</name>
 			<type>2</type>
 			<locationURI>ECLIPSE_HOME/typelibrary/devices-1.0.0/typelib</locationURI>
 		</link>
 		<link>
-			<name>Type Library/events</name>
+			<name>Standard Libraries/events</name>
 			<type>2</type>
 			<locationURI>ECLIPSE_HOME/typelibrary/events-1.0.0/typelib</locationURI>
 		</link>
 		<link>
-			<name>Type Library/iec61131-3</name>
+			<name>Standard Libraries/iec61131-3</name>
 			<type>2</type>
 			<locationURI>ECLIPSE_HOME/typelibrary/iec61131-3-1.0.0/typelib</locationURI>
 		</link>
 		<link>
-			<name>Type Library/io</name>
+			<name>Standard Libraries/io</name>
 			<type>2</type>
 			<locationURI>ECLIPSE_HOME/typelibrary/io-1.0.0/typelib</locationURI>
 		</link>
 		<link>
-			<name>Type Library/math</name>
+			<name>Standard Libraries/math</name>
 			<type>2</type>
 			<locationURI>ECLIPSE_HOME/typelibrary/math-1.0.0/typelib</locationURI>
 		</link>
 		<link>
-			<name>Type Library/net</name>
+			<name>Standard Libraries/net</name>
 			<type>2</type>
 			<locationURI>ECLIPSE_HOME/typelibrary/net-1.0.0/typelib</locationURI>
 		</link>
 		<link>
-			<name>Type Library/reconfiguration</name>
+			<name>Standard Libraries/reconfiguration</name>
 			<type>2</type>
 			<locationURI>ECLIPSE_HOME/typelibrary/reconfiguration-1.0.0/typelib</locationURI>
 		</link>
 		<link>
-			<name>Type Library/resources</name>
+			<name>Standard Libraries/resources</name>
 			<type>2</type>
 			<locationURI>ECLIPSE_HOME/typelibrary/resources-1.0.0/typelib</locationURI>
 		</link>
 		<link>
-			<name>Type Library/rtevents</name>
+			<name>Standard Libraries/rtevents</name>
 			<type>2</type>
 			<locationURI>ECLIPSE_HOME/typelibrary/rtevents-1.0.0/typelib</locationURI>
 		</link>
 		<link>
-			<name>Type Library/segments</name>
+			<name>Standard Libraries/segments</name>
 			<type>2</type>
 			<locationURI>ECLIPSE_HOME/typelibrary/segments-1.0.0/typelib</locationURI>
 		</link>
 		<link>
-			<name>Type Library/signalprocessing</name>
+			<name>Standard Libraries/signalprocessing</name>
 			<type>2</type>
 			<locationURI>ECLIPSE_HOME/typelibrary/signalprocessing-1.0.0/typelib</locationURI>
 		</link>
 		<link>
-			<name>Type Library/storage</name>
+			<name>Standard Libraries/storage</name>
 			<type>2</type>
 			<locationURI>ECLIPSE_HOME/typelibrary/storage-1.0.0/typelib</locationURI>
 		</link>
 		<link>
-			<name>Type Library/utils</name>
+			<name>Standard Libraries/utils</name>
 			<type>2</type>
 			<locationURI>ECLIPSE_HOME/typelibrary/utils-1.0.0/typelib</locationURI>
 		</link>
 		<link>
-			<name>Type Library/convert/MANIFEST.MF</name>
+			<name>Standard Libraries/convert/MANIFEST.MF</name>
 			<type>1</type>
 			<locationURI>ECLIPSE_HOME/typelibrary/convert-1.0.0/MANIFEST.MF</locationURI>
 		</link>
 		<link>
-			<name>Type Library/core/MANIFEST.MF</name>
+			<name>Standard Libraries/core/MANIFEST.MF</name>
 			<type>1</type>
 			<locationURI>ECLIPSE_HOME/typelibrary/core-1.0.0/MANIFEST.MF</locationURI>
 		</link>
 		<link>
-			<name>Type Library/devices/MANIFEST.MF</name>
+			<name>Standard Libraries/devices/MANIFEST.MF</name>
 			<type>1</type>
 			<locationURI>ECLIPSE_HOME/typelibrary/devices-1.0.0/MANIFEST.MF</locationURI>
 		</link>
 		<link>
-			<name>Type Library/events/MANIFEST.MF</name>
+			<name>Standard Libraries/events/MANIFEST.MF</name>
 			<type>1</type>
 			<locationURI>ECLIPSE_HOME/typelibrary/events-1.0.0/MANIFEST.MF</locationURI>
 		</link>
 		<link>
-			<name>Type Library/iec61131-3/MANIFEST.MF</name>
+			<name>Standard Libraries/iec61131-3/MANIFEST.MF</name>
 			<type>1</type>
 			<locationURI>ECLIPSE_HOME/typelibrary/iec61131-3-1.0.0/MANIFEST.MF</locationURI>
 		</link>
 		<link>
-			<name>Type Library/io/MANIFEST.MF</name>
+			<name>Standard Libraries/io/MANIFEST.MF</name>
 			<type>1</type>
 			<locationURI>ECLIPSE_HOME/typelibrary/io-1.0.0/MANIFEST.MF</locationURI>
 		</link>
 		<link>
-			<name>Type Library/math/MANIFEST.MF</name>
+			<name>Standard Libraries/math/MANIFEST.MF</name>
 			<type>1</type>
 			<locationURI>ECLIPSE_HOME/typelibrary/math-1.0.0/MANIFEST.MF</locationURI>
 		</link>
 		<link>
-			<name>Type Library/net/MANIFEST.MF</name>
+			<name>Standard Libraries/net/MANIFEST.MF</name>
 			<type>1</type>
 			<locationURI>ECLIPSE_HOME/typelibrary/net-1.0.0/MANIFEST.MF</locationURI>
 		</link>
 		<link>
-			<name>Type Library/reconfiguration/MANIFEST.MF</name>
+			<name>Standard Libraries/reconfiguration/MANIFEST.MF</name>
 			<type>1</type>
 			<locationURI>ECLIPSE_HOME/typelibrary/reconfiguration-1.0.0/MANIFEST.MF</locationURI>
 		</link>
 		<link>
-			<name>Type Library/resources/MANIFEST.MF</name>
+			<name>Standard Libraries/resources/MANIFEST.MF</name>
 			<type>1</type>
 			<locationURI>ECLIPSE_HOME/typelibrary/resources-1.0.0/MANIFEST.MF</locationURI>
 		</link>
 		<link>
-			<name>Type Library/rtevents/MANIFEST.MF</name>
+			<name>Standard Libraries/rtevents/MANIFEST.MF</name>
 			<type>1</type>
 			<locationURI>ECLIPSE_HOME/typelibrary/rtevents-1.0.0/MANIFEST.MF</locationURI>
 		</link>
 		<link>
-			<name>Type Library/segments/MANIFEST.MF</name>
+			<name>Standard Libraries/segments/MANIFEST.MF</name>
 			<type>1</type>
 			<locationURI>ECLIPSE_HOME/typelibrary/segments-1.0.0/MANIFEST.MF</locationURI>
 		</link>
 		<link>
-			<name>Type Library/signalprocessing/MANIFEST.MF</name>
+			<name>Standard Libraries/signalprocessing/MANIFEST.MF</name>
 			<type>1</type>
 			<locationURI>ECLIPSE_HOME/typelibrary/signalprocessing-1.0.0/MANIFEST.MF</locationURI>
 		</link>
 		<link>
-			<name>Type Library/storage/MANIFEST.MF</name>
+			<name>Standard Libraries/storage/MANIFEST.MF</name>
 			<type>1</type>
 			<locationURI>ECLIPSE_HOME/typelibrary/storage-1.0.0/MANIFEST.MF</locationURI>
 		</link>
 		<link>
-			<name>Type Library/utils/MANIFEST.MF</name>
+			<name>Standard Libraries/utils/MANIFEST.MF</name>
 			<type>1</type>
 			<locationURI>ECLIPSE_HOME/typelibrary/utils-1.0.0/MANIFEST.MF</locationURI>
 		</link>

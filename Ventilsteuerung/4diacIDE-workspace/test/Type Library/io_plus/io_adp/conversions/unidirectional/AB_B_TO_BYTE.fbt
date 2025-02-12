@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="AB_B_TO_BYTE" Comment="Composite FB for convert AB to BYTE" >
+	<Identification Standard="61499-2" Description="Copyright (c) 2024 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0" >
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2024-04-24">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event" Comment="Confirmation from Adapter" >
+				<With Var="IN"/>
+				<Attribute Name="YPOSITION" Type="DINT" Value="46"/>
+			</Event>
+		</EventOutputs>
+		<OutputVars>
+			<VarDeclaration Name="IN" Type="BYTE" Comment="Input data from Adapter" >
+				<Attribute Name="YPOSITION" Type="DINT" Value="47"/>
+			</VarDeclaration>
+		</OutputVars>
+		<Sockets>
+			<AdapterDeclaration Name="AB_IN" Type="AB" Comment="Adapter Input"  x="0" y="-700"/>
+		</Sockets>
+	</InterfaceList>
+	<FBNetwork>
+		<EventConnections>
+			<Connection Source="AB_IN.E1" Destination="CNF" dx1="2293.33"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="AB_IN.D1" Destination="IN" dx1="2293.33"/>
+		</DataConnections>
+	</FBNetwork>
+</FBType>

@@ -1,45 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<FBType Name="E_SH_BOOL" Comment="Sample-and-Hold for BOOL">
-	<Identification Standard="61499-2" Description="Copyright (c) 2024 HR Agrartechnik GmbH &#10;   &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10;  &#10;SPDX-License-Identifier: EPL-2.0 " >
-	</Identification>
-	<VersionInfo Version="1.0" Author="franz" Date="2024-02-23">
-	</VersionInfo>
-	<CompilerInfo>
-	</CompilerInfo>
-	<InterfaceList>
-		<EventInputs>
-			<Event Name="REQ" Type="Event" Comment="Normal Execution Request">
-				<With Var="IN"/>
-			</Event>
-		</EventInputs>
-		<EventOutputs>
-			<Event Name="CNF" Type="Event" Comment="Execution Confirmation">
-				<With Var="OUT"/>
-			</Event>
-		</EventOutputs>
-		<InputVars>
-			<VarDeclaration Name="IN" Type="BOOL" Comment="Sample"/>
-		</InputVars>
-		<OutputVars>
-			<VarDeclaration Name="OUT" Type="BOOL" Comment="Hold"/>
-		</OutputVars>
-	</InterfaceList>
-	<BasicFB>
-		<ECC>
-			<ECState Name="START" Comment="Initial State" x="546.6666666666667" y="420.0">
-			</ECState>
-			<ECState Name="HOLD" Comment="" x="2620.0" y="493.33333333333337">
-				<ECAction Algorithm="HOLD" Output="CNF"/>
-			</ECState>
-			<ECTransition Source="START" Destination="HOLD" Condition="REQ[IN &lt;&gt; OUT]" Comment="" x="1780.0" y="140.0"/>
-			<ECTransition Source="HOLD" Destination="START" Condition="1" Comment="" x="1760.0" y="760.0"/>
-		</ECC>
-		<Algorithm Name="HOLD" Comment="">
-			<ST><![CDATA[ALGORITHM HOLD
-OUT := IN;
-END_ALGORITHM
-
-]]></ST>
-		</Algorithm>
-	</BasicFB>
-</FBType>

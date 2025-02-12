@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<JetView-ObjectPoolTree-State Version="1.0" ProductVersion="5.6.2.5533">
+<JetView-ObjectPoolTree-State Version="1.0" ProductVersion="5.7.0.6283">
 	<Property Name="Sorting">
 		<Value>ByObjectIDAsc</Value>
 	</Property>
@@ -212,25 +212,6 @@
 			<Item IsBookmarked="0"/>
 			<Item IsBookmarked="0"/>
 			<Item IsBookmarked="0"/>
-			<Item IsBookmarked="0"/>
-			<Item IsBookmarked="0"/>
-			<Item IsBookmarked="0"/>
-			<Item IsBookmarked="0"/>
-			<Item IsBookmarked="0"/>
-			<Item IsBookmarked="0"/>
-			<Item IsBookmarked="0"/>
-			<Item IsBookmarked="0"/>
-			<Item IsBookmarked="0"/>
-			<Item IsBookmarked="0"/>
-			<Item IsBookmarked="0"/>
-			<Item IsBookmarked="0"/>
-			<Item IsBookmarked="0"/>
-			<Item IsBookmarked="0"/>
-			<Item IsBookmarked="0"/>
-			<Item IsBookmarked="0"/>
-			<Item IsBookmarked="0"/>
-			<Item IsBookmarked="0"/>
-			<Item IsBookmarked="0"/>
 			<Item IsBookmarked="0">
 				<Item IsBookmarked="0">
 					<Item IsBookmarked="0"/>
@@ -321,6 +302,25 @@
 					<Item IsBookmarked="0"/>
 				</Item>
 			</Item>
+			<Item IsBookmarked="0"/>
+			<Item IsBookmarked="0"/>
+			<Item IsBookmarked="0"/>
+			<Item IsBookmarked="0"/>
+			<Item IsBookmarked="0"/>
+			<Item IsBookmarked="0"/>
+			<Item IsBookmarked="0"/>
+			<Item IsBookmarked="0"/>
+			<Item IsBookmarked="0"/>
+			<Item IsBookmarked="0"/>
+			<Item IsBookmarked="0"/>
+			<Item IsBookmarked="0"/>
+			<Item IsBookmarked="0"/>
+			<Item IsBookmarked="0"/>
+			<Item IsBookmarked="0"/>
+			<Item IsBookmarked="0"/>
+			<Item IsBookmarked="0"/>
+			<Item IsBookmarked="0"/>
+			<Item IsBookmarked="0"/>
 		</Item>
 	</SearchListItems>
 	<CategoryItems/>
