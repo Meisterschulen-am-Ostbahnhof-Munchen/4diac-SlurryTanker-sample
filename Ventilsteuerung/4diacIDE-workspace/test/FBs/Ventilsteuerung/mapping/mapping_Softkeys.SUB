@@ -7,24 +7,19 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="UT_SoftkeyMapping" Type="UT_SoftkeyMapping" x="1066.67" y="0">
+		<FB Name="UT_SoftkeyMapping" Type="UT_SoftkeyMapping" x="5300" y="4200">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u8SAMember" Value="isobus::GLOBAL"/>
 			<Parameter Name="u16ObjId_1" Value="DefaultPool::SoftKey_Automatik_ein"/>
 			<Parameter Name="u16ObjId_2" Value="DefaultPool::SoftKey_Auseinanderklappen"/>
 			<Parameter Name="u16ObjId_3" Value="DefaultPool::SoftKey_Verteiler_senken"/>
 			<Parameter Name="u16ObjId_4" Value="DefaultPool::SoftKey_Knickdeichsel_senken"/>
-			<Parameter Name="DigitalInput_4" Value="'App.Control.functions.Knickdeichsel.SoftKey_senken.IX'"/>
 			<Parameter Name="u16ObjId_5" Value="DefaultPool::SoftKey_Automatik_aus"/>
-			<Parameter Name="DigitalInput_5" Value="'App.Control.functions.Automatik.aus.SoftKey'"/>
 			<Parameter Name="u16ObjId_6" Value="DefaultPool::SoftKey_Zusammenklappen"/>
-			<Parameter Name="DigitalInput_6" Value="'App.Control.functions.Klappen.SoftKey_senken.IX'"/>
 			<Parameter Name="u16ObjId_7" Value="DefaultPool::SoftKey_Verteiler_heben"/>
-			<Parameter Name="DigitalInput_7" Value="'App.Control.functions.Verteiler.SoftKey_heben.IX'"/>
 			<Parameter Name="u16ObjId_8" Value="DefaultPool::SoftKey_Knickdeichsel_heben"/>
-			<Parameter Name="DigitalInput_8" Value="'App.Control.functions.Knickdeichsel.SoftKey_heben.IX'"/>
 		</FB>
-		<FB Name="UT_SoftkeyMapping_UP" Type="UT_SoftkeyMapping_UP" x="1066.67" y="2666.67">
+		<FB Name="UT_SoftkeyMapping_UP" Type="UT_SoftkeyMapping_UP" x="2293.33" y="580">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u8SAMember" Value="isobus::GLOBAL"/>
 			<Parameter Name="u16ObjId_2" Value="DefaultPool::SoftKey_Dom"/>
@@ -40,37 +35,38 @@
 			<Parameter Name="u16ObjId_8" Value="DefaultPool::SoftKey_Licht"/>
 			<Parameter Name="DigitalInput_8" Value="'App.Control.functions.Licht.SoftKey'"/>
 		</FB>
-		<SubApp Name="F" Type="F" x="-2800" y="300">
+		<SubApp Name="F" Type="F" x="900" y="4400">
 			<Parameter Name="QI" Value="'App.Control.functions.Automatik.ein.SoftKey'"/>
 		</SubApp>
-		<SubApp Name="F_1" Type="F" x="-2800" y="700">
+		<SubApp Name="F_1" Type="F" x="1100" y="4900">
 			<Parameter Name="QI" Value="'App.Control.functions.Klappen.SoftKey_heben.IX'"/>
 		</SubApp>
-		<SubApp Name="F_2" x="-2800" y="1100">
-			<SubAppInterfaceList>
-				<InputVars>
-					<VarDeclaration Name="QI" Type="STRING" InitialValue="'App.Control.functions.Verteiler.SoftKey_senken.IX'">
-						<Attribute Name="VarConfig" Value="false"/>
-					</VarDeclaration>
-				</InputVars>
-				<OutputVars>
-					<VarDeclaration Name="QO" Type="STRING">
-						<Attribute Name="VarConfig" Value="false"/>
-					</VarDeclaration>
-				</OutputVars>
-			</SubAppInterfaceList>
-			<SubAppNetwork>
-				<DataConnections>
-					<Connection Source="QI" Destination="QO"/>
-				</DataConnections>
-			</SubAppNetwork>
-			<Attribute Name="width" Type="LREAL" Value="200"/>
-			<Attribute Name="height" Type="LREAL" Value="100"/>
+		<SubApp Name="F_3" Type="F" x="1500" y="5100">
+			<Parameter Name="QI" Value="'App.Control.functions.Verteiler.SoftKey_senken.IX'"/>
+		</SubApp>
+		<SubApp Name="F_2" Type="F" x="2700" y="5300">
+			<Parameter Name="QI" Value="'App.Control.functions.Knickdeichsel.SoftKey_senken.IX'"/>
+		</SubApp>
+		<SubApp Name="F_4" Type="F" x="3100" y="5500">
+			<Parameter Name="QI" Value="'App.Control.functions.Automatik.aus.SoftKey'"/>
+		</SubApp>
+		<SubApp Name="F_5" Type="F" x="2700" y="5700">
+			<Parameter Name="QI" Value="'App.Control.functions.Klappen.SoftKey_senken.IX'"/>
+		</SubApp>
+		<SubApp Name="F_6" Type="F" x="3100" y="5900">
+			<Parameter Name="QI" Value="'App.Control.functions.Verteiler.SoftKey_heben.IX'"/>
+		</SubApp>
+		<SubApp Name="F_7" Type="F" x="2666.67" y="33.33">
+			<Parameter Name="QI" Value="'App.Control.functions.Knickdeichsel.SoftKey_heben.IX'"/>
 		</SubApp>
 		<DataConnections>
-			<Connection Source="F.QO" Destination="UT_SoftkeyMapping.DigitalInput_1" dx1="586.67"/>
+			<Connection Source="F.QO" Destination="UT_SoftkeyMapping.DigitalInput_1" dx1="2033.33"/>
 			<Connection Source="F_1.QO" Destination="UT_SoftkeyMapping.DigitalInput_2"/>
-			<Connection Source="F_2.QO" Destination="UT_SoftkeyMapping.DigitalInput_3" dx1="606.67"/>
+			<Connection Source="F_3.QO" Destination="UT_SoftkeyMapping.DigitalInput_3"/>
+			<Connection Source="F_2.QO" Destination="UT_SoftkeyMapping.DigitalInput_4"/>
+			<Connection Source="F_4.QO" Destination="UT_SoftkeyMapping.DigitalInput_5"/>
+			<Connection Source="F_5.QO" Destination="UT_SoftkeyMapping.DigitalInput_6"/>
+			<Connection Source="F_6.QO" Destination="UT_SoftkeyMapping.DigitalInput_7"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
