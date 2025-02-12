@@ -13,7 +13,7 @@
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 		</SubApp>
-		<SubApp Name="mapping_aux" Type="mapping_aux" x="0" y="800">
+		<SubApp Name="mapping_aux" Type="mapping_AuxFunction2" x="0" y="800">
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 		</SubApp>
