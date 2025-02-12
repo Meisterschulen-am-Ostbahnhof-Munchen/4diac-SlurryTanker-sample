@@ -15,10 +15,10 @@
 			<Parameter Name="QI" Value="TRUE" Comment=""/>
 			<Parameter Name="u8SAMember" Value="PKP_2200_DEFAULT" Comment=""/>
 			<Parameter Name="u16ObjId" Value="isobus::ID_NULL" Comment=""/>
-			<Parameter Name="DigitalInput_Key_1" Value="'Ventilsteuerung.functions.Knickdeichsel_heben.IX'" Comment=""/>
-			<Parameter Name="DigitalInput_Key_2" Value="'Ventilsteuerung.functions.Seitenschieber_Auf.IX'" Comment=""/>
-			<Parameter Name="DigitalInput_Key_3" Value="'Ventilsteuerung.functions.Knickdeichsel_senken.IX'" Comment=""/>
-			<Parameter Name="DigitalInput_Key_4" Value="'Ventilsteuerung.functions.Seitenschieber_Zu.IX'" Comment=""/>
+			<Parameter Name="DigitalInput_Key_1" Value="'App.Control.functions.Knickdeichsel_heben.IX'" Comment=""/>
+			<Parameter Name="DigitalInput_Key_2" Value="'App.Control.functions.Seitenschieber_Auf.IX'" Comment=""/>
+			<Parameter Name="DigitalInput_Key_3" Value="'App.Control.functions.Knickdeichsel_senken.IX'" Comment=""/>
+			<Parameter Name="DigitalInput_Key_4" Value="'App.Control.functions.Seitenschieber_Zu.IX'" Comment=""/>
 		</FB>
 		<EventConnections>
 			<Connection Source="INIT" Destination="PKP_2200_LI_4_DI.INIT" Comment="" dx1="1033.33">

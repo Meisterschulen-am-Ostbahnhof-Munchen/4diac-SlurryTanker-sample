@@ -15,21 +15,21 @@
 			<Parameter Name="QI" Value="TRUE" Comment=""/>
 			<Parameter Name="u8SAMember" Value="MI_00" Comment=""/>
 			<Parameter Name="u16ObjId" Value="isobus::ID_NULL" Comment=""/>
-			<Parameter Name="DigitalOutput_1A" Value="'Ventilsteuerung.functions.Schneidwerk.rechtslauf'" Comment=""/>
-			<Parameter Name="DigitalOutput_1B" Value="'Ventilsteuerung.functions.Schneidwerk.linkslauf'" Comment=""/>
-			<Parameter Name="DigitalOutput_2A" Value="'Ventilsteuerung.functions.Vorsteuerventil_2A.QX'" Comment=""/>
-			<Parameter Name="DigitalOutput_2B" Value="'Ventilsteuerung.functions.Vorsteuerventil_2B.QX'" Comment=""/>
-			<Parameter Name="DigitalOutput_3A" Value="'Ventilsteuerung.functions.Klappen.Sitzventile.QXA'" Comment=""/>
-			<Parameter Name="DigitalOutput_3B" Value="'Ventilsteuerung.functions.Klappen.Sitzventile.QXB'" Comment=""/>
-			<Parameter Name="DigitalOutput_4A" Value="'Ventilsteuerung.functions.Verteiler.Sitzventile.QXA'" Comment=""/>
-			<Parameter Name="DigitalOutput_4B" Value="'Ventilsteuerung.functions.Verteiler.Sitzventile.QXB'" Comment=""/>
-			<Parameter Name="DigitalOutput_5A" Value="'Ventilsteuerung.functions.Knickdeichsel.Sitzventile.QXA'" Comment=""/>
-			<Parameter Name="DigitalOutput_5B" Value="'Ventilsteuerung.functions.Knickdeichsel.Sitzventile.QXB'" Comment=""/>
-			<Parameter Name="DigitalOutput_6A" Value="'Ventilsteuerung.functions.Dom.QX'" Comment=""/>
-			<Parameter Name="DigitalOutput_6B" Value="'Ventilsteuerung.functions.Heckschieber.QXB'" Comment=""/>
-			<Parameter Name="DigitalOutput_7A" Value="'Ventilsteuerung.functions.Seitenschieber.QX'" Comment=""/>
-			<Parameter Name="DigitalOutput_7B" Value="'Ventilsteuerung.functions.Abscheider.QX'" Comment=""/>
-			<Parameter Name="DigitalOutput_8A" Value="'Ventilsteuerung.functions.Licht.QX'" Comment=""/>
+			<Parameter Name="DigitalOutput_1A" Value="'App.Control.functions.Schneidwerk.rechtslauf'" Comment=""/>
+			<Parameter Name="DigitalOutput_1B" Value="'App.Control.functions.Schneidwerk.linkslauf'" Comment=""/>
+			<Parameter Name="DigitalOutput_2A" Value="'App.Control.functions.Vorsteuerventil_2A.QX'" Comment=""/>
+			<Parameter Name="DigitalOutput_2B" Value="'App.Control.functions.Vorsteuerventil_2B.QX'" Comment=""/>
+			<Parameter Name="DigitalOutput_3A" Value="'App.Control.functions.Klappen.Sitzventile.QXA'" Comment=""/>
+			<Parameter Name="DigitalOutput_3B" Value="'App.Control.functions.Klappen.Sitzventile.QXB'" Comment=""/>
+			<Parameter Name="DigitalOutput_4A" Value="'App.Control.functions.Verteiler.Sitzventile.QXA'" Comment=""/>
+			<Parameter Name="DigitalOutput_4B" Value="'App.Control.functions.Verteiler.Sitzventile.QXB'" Comment=""/>
+			<Parameter Name="DigitalOutput_5A" Value="'App.Control.functions.Knickdeichsel.Sitzventile.QXA'" Comment=""/>
+			<Parameter Name="DigitalOutput_5B" Value="'App.Control.functions.Knickdeichsel.Sitzventile.QXB'" Comment=""/>
+			<Parameter Name="DigitalOutput_6A" Value="'App.Control.functions.Dom.QX'" Comment=""/>
+			<Parameter Name="DigitalOutput_6B" Value="'App.Control.functions.Heckschieber.QXB'" Comment=""/>
+			<Parameter Name="DigitalOutput_7A" Value="'App.Control.functions.Seitenschieber.QX'" Comment=""/>
+			<Parameter Name="DigitalOutput_7B" Value="'App.Control.functions.Abscheider.QX'" Comment=""/>
+			<Parameter Name="DigitalOutput_8A" Value="'App.Control.functions.Licht.QX'" Comment=""/>
 		</FB>
 		<EventConnections>
 			<Connection Source="INIT" Destination="DataPanel_xDB_16_DO_SAE_J1939.INIT" Comment="" dx1="640">
