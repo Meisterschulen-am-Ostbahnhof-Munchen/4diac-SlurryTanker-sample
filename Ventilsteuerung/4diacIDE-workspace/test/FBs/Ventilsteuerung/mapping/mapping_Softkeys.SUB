@@ -5,15 +5,11 @@
 	<VersionInfo Version="1.0" Author="Franz" Date="2023-01-29">
 	</VersionInfo>
 	<SubAppInterfaceList>
-		<SubAppEventInputs>
-			<SubAppEvent Name="INIT" Type="Event">
-			</SubAppEvent>
-		</SubAppEventInputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="UT_SoftkeyMapping" Type="UT_SoftkeyMapping" x="1066.67" y="0">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="u8SAMember" Value="GLOBAL"/>
+			<Parameter Name="u8SAMember" Value="isobus::GLOBAL"/>
 			<Parameter Name="u16ObjId_1" Value="DefaultPool::SoftKey_Automatik_ein"/>
 			<Parameter Name="DigitalInput_1" Value="'App.Control.functions.Automatik.ein.SoftKey'"/>
 			<Parameter Name="u16ObjId_2" Value="DefaultPool::SoftKey_Auseinanderklappen"/>
@@ -33,7 +29,7 @@
 		</FB>
 		<FB Name="UT_SoftkeyMapping_UP" Type="UT_SoftkeyMapping_UP" x="1066.67" y="2666.67">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="u8SAMember" Value="GLOBAL"/>
+			<Parameter Name="u8SAMember" Value="isobus::GLOBAL"/>
 			<Parameter Name="u16ObjId_2" Value="DefaultPool::SoftKey_Dom"/>
 			<Parameter Name="DigitalInput_2" Value="'App.Control.functions.Dom.SoftKey'"/>
 			<Parameter Name="u16ObjId_3" Value="DefaultPool::SoftKey_Heckschieber"/>
@@ -47,13 +43,5 @@
 			<Parameter Name="u16ObjId_8" Value="DefaultPool::SoftKey_Licht"/>
 			<Parameter Name="DigitalInput_8" Value="'App.Control.functions.Licht.SoftKey'"/>
 		</FB>
-		<EventConnections>
-			<Connection Source="INIT" Destination="UT_SoftkeyMapping.INIT" dx1="80">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="UT_SoftkeyMapping_UP.INIT" dx1="80">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-		</EventConnections>
 	</SubAppNetwork>
 </SubAppType>

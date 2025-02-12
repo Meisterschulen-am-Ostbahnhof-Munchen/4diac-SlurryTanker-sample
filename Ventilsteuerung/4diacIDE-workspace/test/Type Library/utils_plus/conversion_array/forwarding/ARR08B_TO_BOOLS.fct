@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Function Name="ARR08B_TO_BOOLS" Comment="">
-	<Identification Standard="61499-1">
+<Function Name="ARR08B_TO_BOOLS">
+	<Identification Standard="61499-1" Description="Copyright (c) 2024 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0" >
 	</Identification>
-	<VersionInfo Version="1.0" Author="franz" Date="2024-02-22">
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2024-02-22">
 	</VersionInfo>
 	<CompilerInfo>
 	</CompilerInfo>
 	<InterfaceList>
 		<EventInputs>
-			<Event Name="REQ" Type="Event" Comment="Normal Execution Request">
+			<Event Name="REQ" Type="Event" Comment="Normal Execution Request" >
 				<With Var="IN"/>
 			</Event>
 		</EventInputs>
 		<EventOutputs>
-			<Event Name="CNF" Type="Event" Comment="Execution Confirmation">
+			<Event Name="CNF" Type="Event" Comment="Execution Confirmation" >
 				<With Var="OUT_00"/>
 				<With Var="OUT_01"/>
 				<With Var="OUT_02"/>
@@ -25,17 +25,17 @@
 			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="IN" Type="BOOL" Comment="ARR08B Input" ArraySize="0..7"/>
+			<VarDeclaration Name="IN" Type="BOOL" Comment="ARR08B Input"  ArraySize="0..7"/>
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="OUT_00" Type="BOOL" Comment="BIT 00"/>
-			<VarDeclaration Name="OUT_01" Type="BOOL" Comment="BIT 01"/>
-			<VarDeclaration Name="OUT_02" Type="BOOL" Comment="BIT 02"/>
-			<VarDeclaration Name="OUT_03" Type="BOOL" Comment="BIT 03"/>
-			<VarDeclaration Name="OUT_04" Type="BOOL" Comment="BIT 04"/>
-			<VarDeclaration Name="OUT_05" Type="BOOL" Comment="BIT 05"/>
-			<VarDeclaration Name="OUT_06" Type="BOOL" Comment="BIT 06"/>
-			<VarDeclaration Name="OUT_07" Type="BOOL" Comment="BIT 07"/>
+			<VarDeclaration Name="OUT_00" Type="BOOL" Comment="BIT 00" />
+			<VarDeclaration Name="OUT_01" Type="BOOL" Comment="BIT 01" />
+			<VarDeclaration Name="OUT_02" Type="BOOL" Comment="BIT 02" />
+			<VarDeclaration Name="OUT_03" Type="BOOL" Comment="BIT 03" />
+			<VarDeclaration Name="OUT_04" Type="BOOL" Comment="BIT 04" />
+			<VarDeclaration Name="OUT_05" Type="BOOL" Comment="BIT 05" />
+			<VarDeclaration Name="OUT_06" Type="BOOL" Comment="BIT 06" />
+			<VarDeclaration Name="OUT_07" Type="BOOL" Comment="BIT 07" />
 		</OutputVars>
 	</InterfaceList>
 	<FunctionBody>

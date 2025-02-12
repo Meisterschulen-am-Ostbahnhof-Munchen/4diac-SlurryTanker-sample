@@ -1,52 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Sitzventile" Comment="Subapplication Type">
+<SubAppType Name="Sitzventile" Comment="Subapplication Type" >
 	<Identification Standard="61499-2">
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2023-02-11">
 	</VersionInfo>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
-			<SubAppEvent Name="INITO" Type="Event" Comment="">
-				<Attribute Name="YPOSITION" Type="INT" Value="20"/>
-			</SubAppEvent>
-			<SubAppEvent Name="CNF_heben" Type="Event" Comment="">
+			<SubAppEvent Name="CNF_heben" Type="Event">
 				<Attribute Name="YPOSITION" Type="INT" Value="0"/>
 			</SubAppEvent>
-			<SubAppEvent Name="CNF_senken" Type="Event" Comment="">
+			<SubAppEvent Name="CNF_senken" Type="Event">
 				<Attribute Name="YPOSITION" Type="INT" Value="0"/>
 			</SubAppEvent>
 		</SubAppEventInputs>
 		<InputVars>
-			<VarDeclaration Name="IN_heben" Type="BOOL" Comment="">
+			<VarDeclaration Name="IN_heben" Type="BOOL">
 				<Attribute Name="YPOSITION" Type="INT" Value="265"/>
 			</VarDeclaration>
-			<VarDeclaration Name="IN_senken" Type="BOOL" Comment="">
+			<VarDeclaration Name="IN_senken" Type="BOOL">
 				<Attribute Name="YPOSITION" Type="INT" Value="0"/>
 			</VarDeclaration>
 		</InputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="OR_2" Type="OR_2" Comment="" x="-713.3333333333334" y="526.6666666666667">
+		<FB Name="OR_2" Type="OR_2" x="-713.33" y="526.67">
 		</FB>
-		<FB Name="QXB" Type="QX" Comment="" x="293.33333333333337" y="526.6666666666667">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="QXB" Type="QX" x="293.33" y="526.67">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="QXA" Type="QX" Comment="" x="293.33333333333337" y="1366.6666666666667">
-			<Parameter Name="QI" Value="TRUE" Comment=""/>
+		<FB Name="QXA" Type="QX" x="293.33" y="1366.67">
+			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="OR_2.CNF" Destination="QXB.REQ" Comment="" dx1="253.33333333333334"/>
-			<Connection Source="OR_2.CNF" Destination="QXA.REQ" Comment="" dx1="106.66666666666667"/>
-			<Connection Source="CNF_heben" Destination="OR_2.REQ" Comment="" dx1="333.33333333333337"/>
-			<Connection Source="CNF_senken" Destination="OR_2.REQ" Comment="" dx1="226.66666666666669"/>
-			<Connection Source="INITO" Destination="QXB.INIT" Comment="" dx1="1353.3333333333335"/>
-			<Connection Source="INITO" Destination="QXA.INIT" Comment="" dx1="1253.3333333333335"/>
+			<Connection Source="OR_2.CNF" Destination="QXB.REQ" dx1="253.33"/>
+			<Connection Source="OR_2.CNF" Destination="QXA.REQ" dx1="106.67"/>
+			<Connection Source="CNF_heben" Destination="OR_2.REQ" dx1="333.33"/>
+			<Connection Source="CNF_senken" Destination="OR_2.REQ" dx1="226.67"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="OR_2.OUT" Destination="QXB.OUT" Comment="" dx1="193.33333333333334"/>
-			<Connection Source="OR_2.OUT" Destination="QXA.OUT" Comment="" dx1="66.66666666666667"/>
-			<Connection Source="IN_heben" Destination="OR_2.IN1" Comment="" dx1="93.33333333333334"/>
-			<Connection Source="IN_senken" Destination="OR_2.IN2" Comment="" dx1="200.0"/>
+			<Connection Source="OR_2.OUT" Destination="QXB.OUT" dx1="193.33"/>
+			<Connection Source="OR_2.OUT" Destination="QXA.OUT" dx1="66.67"/>
+			<Connection Source="IN_heben" Destination="OR_2.IN1" dx1="93.33"/>
+			<Connection Source="IN_senken" Destination="OR_2.IN2" dx1="200"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

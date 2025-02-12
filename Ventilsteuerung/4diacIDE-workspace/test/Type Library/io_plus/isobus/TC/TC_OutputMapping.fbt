@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<FBType Name="TC_OutputMapping" Comment="Service Interface Function Block Type">
-	<Identification Standard="ISO 11783-10" Function="All Outputs" Type="TC according to ISO 11783-10" Description="this maps to QD&#10;32 bit Process Data (PD)" >	</Identification>
+<FBType Name="TC_OutputMapping" Comment="Service Interface Function Block Type" >
+	<Identification Standard="ISO 11783-10" Function="All Outputs" Type="TC according to ISO 11783-10" Description="Copyright (c) 2018, 2023 Jose Cabral, HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0  &#10;   &#10;   &#10;this maps to QD &#10;32 bit Process Data (PD)" >
+	</Identification>
 	<VersionInfo Version="1.0" Author="Jose Cabral" Date="2018-12-05">
 	</VersionInfo>
 	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.1" Author="Franz Höpfinger" Date="2022-08-04">
@@ -9,7 +10,7 @@
 	</VersionInfo>
 	<InterfaceList>
 		<EventInputs>
-			<Event Name="INIT" Type="Event" Comment="Service Initialization">
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization" >
 				<With Var="QI"/>
 				<With Var="u8SAMember"/>
 				<With Var="u16ObjId"/>
@@ -40,46 +41,46 @@
 			</Event>
 		</EventInputs>
 		<EventOutputs>
-			<Event Name="INITO" Type="Event" Comment="Initialization Confirm">
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm" >
 				<With Var="QO"/>
 			</Event>
-			<Event Name="IND" Type="Event" Comment="Indication from Resource">
+			<Event Name="IND" Type="Event" Comment="Indication from Resource" >
 				<With Var="QO"/>
 				<With Var="STATUS"/>
 			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
-			<VarDeclaration Name="u8SAMember" Type="USINT" Comment="Dummy !, set to GLOBAL if in doubt. OFF deactivates FB." InitialValue="GLOBAL"/>
-			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Dummy ! set to ID_NULL if in Doubt. ID_OFF deactivates FB." InitialValue="ID_NULL"/>
-			<VarDeclaration Name="wDevElementNumb_1" Type="UINT" Comment="Requested element number of TC of Output 1"/>
-			<VarDeclaration Name="wDDI_1" Type="UINT" Comment="Data dictionary identifier of Output 1"/>
-			<VarDeclaration Name="Output_1" Type="STRING" Comment="Identifier for Output 1"/>
-			<VarDeclaration Name="wDevElementNumb_2" Type="UINT" Comment="Requested element number of TC of Output 2"/>
-			<VarDeclaration Name="wDDI_2" Type="UINT" Comment="Data dictionary identifier of Output 2"/>
-			<VarDeclaration Name="Output_2" Type="STRING" Comment="Identifier for Output 2"/>
-			<VarDeclaration Name="wDevElementNumb_3" Type="UINT" Comment="Requested element number of TC of Output 3"/>
-			<VarDeclaration Name="wDDI_3" Type="UINT" Comment="Data dictionary identifier of Output 3"/>
-			<VarDeclaration Name="Output_3" Type="STRING" Comment="Identifier for Output 3"/>
-			<VarDeclaration Name="wDevElementNumb_4" Type="UINT" Comment="Requested element number of TC of Output 4"/>
-			<VarDeclaration Name="wDDI_4" Type="UINT" Comment="Data dictionary identifier of Output 4"/>
-			<VarDeclaration Name="Output_4" Type="STRING" Comment="Identifier for Output 4"/>
-			<VarDeclaration Name="wDevElementNumb_5" Type="UINT" Comment="Requested element number of TC of Output 5"/>
-			<VarDeclaration Name="wDDI_5" Type="UINT" Comment="Data dictionary identifier of Output 5"/>
-			<VarDeclaration Name="Output_5" Type="STRING" Comment="Identifier for Output 5"/>
-			<VarDeclaration Name="wDevElementNumb_6" Type="UINT" Comment="Requested element number of TC of Output 6"/>
-			<VarDeclaration Name="wDDI_6" Type="UINT" Comment="Data dictionary identifier of Output 6"/>
-			<VarDeclaration Name="Output_6" Type="STRING" Comment="Identifier for Output 6"/>
-			<VarDeclaration Name="wDevElementNumb_7" Type="UINT" Comment="Requested element number of TC of Output 7"/>
-			<VarDeclaration Name="wDDI_7" Type="UINT" Comment="Data dictionary identifier of Output 7"/>
-			<VarDeclaration Name="Output_7" Type="STRING" Comment="Identifier for Output 7"/>
-			<VarDeclaration Name="wDevElementNumb_8" Type="UINT" Comment="Requested element number of TC of Output 8"/>
-			<VarDeclaration Name="wDDI_8" Type="UINT" Comment="Data dictionary identifier of Output 8"/>
-			<VarDeclaration Name="Output_8" Type="STRING" Comment="Identifier for Output 8"/>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier" />
+			<VarDeclaration Name="u8SAMember" Type="USINT" Comment="Dummy !, set to GLOBAL if in doubt. OFF deactivates FB."  InitialValue="isobus::GLOBAL"/>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Dummy ! set to ID_NULL if in Doubt. ID_OFF deactivates FB."  InitialValue="isobus::ID_NULL"/>
+			<VarDeclaration Name="wDevElementNumb_1" Type="UINT" Comment="Requested element number of TC of Output 1" />
+			<VarDeclaration Name="wDDI_1" Type="UINT" Comment="Data dictionary identifier of Output 1" />
+			<VarDeclaration Name="Output_1" Type="STRING" Comment="Identifier for Output 1" />
+			<VarDeclaration Name="wDevElementNumb_2" Type="UINT" Comment="Requested element number of TC of Output 2" />
+			<VarDeclaration Name="wDDI_2" Type="UINT" Comment="Data dictionary identifier of Output 2" />
+			<VarDeclaration Name="Output_2" Type="STRING" Comment="Identifier for Output 2" />
+			<VarDeclaration Name="wDevElementNumb_3" Type="UINT" Comment="Requested element number of TC of Output 3" />
+			<VarDeclaration Name="wDDI_3" Type="UINT" Comment="Data dictionary identifier of Output 3" />
+			<VarDeclaration Name="Output_3" Type="STRING" Comment="Identifier for Output 3" />
+			<VarDeclaration Name="wDevElementNumb_4" Type="UINT" Comment="Requested element number of TC of Output 4" />
+			<VarDeclaration Name="wDDI_4" Type="UINT" Comment="Data dictionary identifier of Output 4" />
+			<VarDeclaration Name="Output_4" Type="STRING" Comment="Identifier for Output 4" />
+			<VarDeclaration Name="wDevElementNumb_5" Type="UINT" Comment="Requested element number of TC of Output 5" />
+			<VarDeclaration Name="wDDI_5" Type="UINT" Comment="Data dictionary identifier of Output 5" />
+			<VarDeclaration Name="Output_5" Type="STRING" Comment="Identifier for Output 5" />
+			<VarDeclaration Name="wDevElementNumb_6" Type="UINT" Comment="Requested element number of TC of Output 6" />
+			<VarDeclaration Name="wDDI_6" Type="UINT" Comment="Data dictionary identifier of Output 6" />
+			<VarDeclaration Name="Output_6" Type="STRING" Comment="Identifier for Output 6" />
+			<VarDeclaration Name="wDevElementNumb_7" Type="UINT" Comment="Requested element number of TC of Output 7" />
+			<VarDeclaration Name="wDDI_7" Type="UINT" Comment="Data dictionary identifier of Output 7" />
+			<VarDeclaration Name="Output_7" Type="STRING" Comment="Identifier for Output 7" />
+			<VarDeclaration Name="wDevElementNumb_8" Type="UINT" Comment="Requested element number of TC of Output 8" />
+			<VarDeclaration Name="wDDI_8" Type="UINT" Comment="Data dictionary identifier of Output 8" />
+			<VarDeclaration Name="Output_8" Type="STRING" Comment="Identifier for Output 8" />
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
-			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier" />
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status" />
 		</OutputVars>
 	</InterfaceList>
 </FBType>

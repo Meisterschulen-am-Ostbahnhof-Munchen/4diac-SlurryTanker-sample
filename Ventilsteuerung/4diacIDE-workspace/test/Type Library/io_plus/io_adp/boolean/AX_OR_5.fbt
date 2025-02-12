@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="AX_OR_5" Comment="FB to calculate boolean OR" >
+	<Identification Standard="61499-2" Description="Copyright (c) 2024 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0" >
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2024-10-23">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<InterfaceList>
+		<Plugs>
+			<AdapterDeclaration Name="OUT" Type="AX" Comment="OR result"  x="1666.67" y="1593.33"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="IN1" Type="AX" Comment="OR input 1"  x="133.33" y="33.33"/>
+			<AdapterDeclaration Name="IN2" Type="AX" Comment="OR input 2"  x="133.33" y="813.33"/>
+			<AdapterDeclaration Name="IN3" Type="AX" Comment="OR input 3"  x="133.33" y="1593.33"/>
+			<AdapterDeclaration Name="IN4" Type="AX" Comment="OR input 4"  x="133.33" y="2373.33"/>
+			<AdapterDeclaration Name="IN5" Type="AX" Comment="OR input 5"  x="133.33" y="3153.33"/>
+		</Sockets>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="OR_4" Type="OR_5" x="886.67" y="1593.33">
+		</FB>
+		<EventConnections>
+			<Connection Source="IN1.E1" Destination="OR_4.REQ" dx1="73.33"/>
+			<Connection Source="IN2.E1" Destination="OR_4.REQ" dx1="73.33"/>
+			<Connection Source="OR_4.CNF" Destination="OUT.E1"/>
+			<Connection Source="IN3.E1" Destination="OR_4.REQ"/>
+			<Connection Source="IN4.E1" Destination="OR_4.REQ" dx1="73.33"/>
+			<Connection Source="IN5.E1" Destination="OR_4.REQ" dx1="73.33"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="IN1.D1" Destination="OR_4.IN1" dx1="273.33"/>
+			<Connection Source="IN2.D1" Destination="OR_4.IN2" dx1="206.67"/>
+			<Connection Source="OR_4.OUT" Destination="OUT.D1"/>
+			<Connection Source="IN3.D1" Destination="OR_4.IN3" dx1="140"/>
+			<Connection Source="IN4.D1" Destination="OR_4.IN4" dx1="140"/>
+			<Connection Source="IN5.D1" Destination="OR_4.IN5" dx1="206.67"/>
+		</DataConnections>
+	</FBNetwork>
+</FBType>

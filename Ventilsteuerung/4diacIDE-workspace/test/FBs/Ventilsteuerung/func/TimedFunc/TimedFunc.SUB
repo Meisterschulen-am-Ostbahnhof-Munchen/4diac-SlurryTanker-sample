@@ -6,8 +6,6 @@
 	</VersionInfo>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
-			<SubAppEvent Name="INIT" Type="Event">
-			</SubAppEvent>
 			<SubAppEvent Name="S" Type="Event" Comment="Set output Q" >
 			</SubAppEvent>
 			<SubAppEvent Name="R" Type="Event" Comment="Reset output Q" >
@@ -53,20 +51,12 @@
 			<Connection Source="E_PULSE.CNF" Destination="AND_2.REQ" dx1="473.33"/>
 			<Connection Source="E_PULSE.CNF" Destination="QX.REQ" dx1="760"/>
 			<Connection Source="AND_2.CNF" Destination="CNF" dx1="1866.67"/>
-			<Connection Source="INIT" Destination="QX.INIT" dx1="6086.67">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="GreenWhiteBackground.INIT" dx1="8386.67" dx2="3960" dy="0">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="E_T_FF_SR.EO" Destination="E_PULSE.REQ" dx1="980" dx2="1233.33" dy="0"/>
-			<Connection Source="E_T_FF_SR.EO" Destination="GreenWhiteBackground.EO" dx1="1253.33" dx2="1253.33" dy="0"/>
+			<Connection Source="E_T_FF_SR.EO" Destination="E_PULSE.REQ" dx1="980"/>
+			<Connection Source="E_T_FF_SR.EO" Destination="GreenWhiteBackground.EO" dx1="1253.33"/>
 			<Connection Source="S" Destination="E_T_FF_SR.S" dx1="2900"/>
 			<Connection Source="R" Destination="E_T_FF_SR.R" dx1="2720"/>
 			<Connection Source="CLK" Destination="E_T_FF_SR.CLK" dx1="2613.33"/>
-			<Connection Source="INIT" Destination="SoftKey.INIT" dx1="2073.33"/>
 			<Connection Source="SoftKey.IND" Destination="E_T_FF_SR.CLK" dx1="480"/>
-			<Connection Source="INIT" Destination="AuxInput.INIT" dx1="1880"/>
 			<Connection Source="AuxInput.IND" Destination="E_T_FF_SR.CLK" dx1="673.33"/>
 		</EventConnections>
 		<DataConnections>
@@ -77,10 +67,10 @@
 			<Connection Source="u16ObjIdA" Destination="GreenWhiteBackground.u16ObjIdA" dx1="2020">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="E_PULSE.Q" Destination="QX.OUT" dx1="580" dx2="580" dy="0"/>
-			<Connection Source="E_PULSE.Q" Destination="AND_2.IN1" dx1="366.67" dx2="366.67" dy="0"/>
-			<Connection Source="E_T_FF_SR.Q" Destination="AND_2.IN2" dx1="406.67" dx2="2300" dy="0"/>
-			<Connection Source="E_T_FF_SR.Q" Destination="GreenWhiteBackground.Q" dx1="1253.33" dx2="1253.33" dy="0"/>
+			<Connection Source="E_PULSE.Q" Destination="QX.OUT" dx1="580"/>
+			<Connection Source="E_PULSE.Q" Destination="AND_2.IN1" dx1="366.67"/>
+			<Connection Source="E_T_FF_SR.Q" Destination="AND_2.IN2" dx1="406.67"/>
+			<Connection Source="E_T_FF_SR.Q" Destination="GreenWhiteBackground.Q" dx1="1253.33"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

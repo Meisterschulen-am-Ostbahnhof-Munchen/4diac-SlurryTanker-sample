@@ -5,24 +5,15 @@
 	<VersionInfo Version="1.0" Author="Franz" Date="2023-01-29">
 	</VersionInfo>
 	<SubAppInterfaceList>
-		<SubAppEventInputs>
-			<SubAppEvent Name="INIT" Type="Event">
-			</SubAppEvent>
-		</SubAppEventInputs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="UT_ButtonMapping_UP" Type="UT_ButtonMapping_UP" x="900" y="900">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="u8SAMember" Value="GLOBAL"/>
-			<Parameter Name="u16ObjId_1" Value="PAGE_1_BTN"/>
+			<Parameter Name="u8SAMember" Value="isobus::GLOBAL"/>
+			<Parameter Name="u16ObjId_1" Value="DefaultPool::PAGE_1_BTN"/>
 			<Parameter Name="DigitalInput_1" Value="'Ventilsteuerung.PAGES.PAGE_1.BTN'"/>
-			<Parameter Name="u16ObjId_2" Value="PAGE_2_BTN"/>
+			<Parameter Name="u16ObjId_2" Value="DefaultPool::PAGE_2_BTN"/>
 			<Parameter Name="DigitalInput_2" Value="'Ventilsteuerung.PAGES.PAGE_2.BTN'"/>
 		</FB>
-		<EventConnections>
-			<Connection Source="INIT" Destination="UT_ButtonMapping_UP.INIT" dx1="520" dx2="520" dy="0">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-		</EventConnections>
 	</SubAppNetwork>
 </SubAppType>

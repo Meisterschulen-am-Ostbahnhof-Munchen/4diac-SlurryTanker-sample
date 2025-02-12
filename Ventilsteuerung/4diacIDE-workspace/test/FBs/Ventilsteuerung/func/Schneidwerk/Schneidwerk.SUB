@@ -6,8 +6,6 @@
 	</VersionInfo>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
-			<SubAppEvent Name="INIT" Type="Event">
-			</SubAppEvent>
 			<SubAppEvent Name="S_ON" Type="Event">
 			</SubAppEvent>
 			<SubAppEvent Name="S_OFF" Type="Event">
@@ -44,23 +42,8 @@
 			<Connection Source="S_OFF" Destination="E_T_FF_SR.R" dx1="3300">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="INIT" Destination="linkslauf.INIT" dx1="80">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="rechtslauf.INIT" dx1="80">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="INIT" Destination="GreenWhiteBackground_Function.INIT" dx1="4646.67">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
 			<Connection Source="E_T_FF_SR.EO" Destination="GreenWhiteBackground_Function.EO" dx1="1400"/>
-			<Connection Source="INIT" Destination="SoftKey.INIT" dx1="80" dx2="80" dy="0">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
 			<Connection Source="SoftKey.IND" Destination="E_T_FF_SR.CLK" dx1="1206.67"/>
-			<Connection Source="INIT" Destination="AuxInput.INIT" dx1="1746.67" dx2="1746.67" dy="0">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
 			<Connection Source="AuxInput.IND" Destination="E_T_FF_SR.CLK" dx1="1206.67"/>
 		</EventConnections>
 		<DataConnections>

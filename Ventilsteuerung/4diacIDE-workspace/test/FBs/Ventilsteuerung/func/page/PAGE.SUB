@@ -5,11 +5,6 @@
 	<VersionInfo Version="1.0" Author="franz" Date="2023-02-07">
 	</VersionInfo>
 	<SubAppInterfaceList>
-		<SubAppEventInputs>
-			<SubAppEvent Name="INIT" Type="Event">
-				<Attribute Name="YPOSITION" Type="INT" Value="210"/>
-			</SubAppEvent>
-		</SubAppEventInputs>
 		<SubAppEventOutputs>
 			<SubAppEvent Name="IND" Type="Event">
 				<Attribute Name="YPOSITION" Type="INT" Value="255"/>
@@ -24,8 +19,6 @@
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="BTN.INIT" dx1="600" dx2="600" dy="0"/>
-			<Connection Source="INIT" Destination="AUX.INIT" dx1="600" dx2="600" dy="0"/>
 			<Connection Source="AUX.IND" Destination="IND" dx1="2673.33"/>
 			<Connection Source="BTN.IND" Destination="IND" dx1="2673.33"/>
 		</EventConnections>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<FBType Name="ESP32_Testboard_8_DI_LONG_PRESS_HOLD" Comment="Service Interface Function Block Type">
-	<Identification Function="All Inputs" Description="this maps to IE" >
+<FBType Name="ESP32_Testboard_8_DI_LONG_PRESS_HOLD" Comment="Service Interface Function Block Type" >
+	<Identification Function="All Inputs" Description="Copyright (c) 2018, 2023 Jose Cabral, HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0&#10;&#10;this maps to IE" >
 	</Identification>
 	<VersionInfo Version="1.0" Author="Jose Cabral" Date="2018-12-05">
 	</VersionInfo>
@@ -10,7 +10,7 @@
 	</VersionInfo>
 	<InterfaceList>
 		<EventInputs>
-			<Event Name="INIT" Type="Event" Comment="Service Initialization">
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization" >
 				<With Var="QI"/>
 				<With Var="u8SAMember"/>
 				<With Var="u16ObjId"/>
@@ -22,34 +22,33 @@
 				<With Var="DigitalInput_IX05"/>
 				<With Var="DigitalInput_IX06"/>
 				<With Var="DigitalInput_IX07"/>
-
 			</Event>
 		</EventInputs>
 		<EventOutputs>
-			<Event Name="INITO" Type="Event" Comment="Initialization Confirm">
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm" >
 				<With Var="QO"/>
 			</Event>
-			<Event Name="IND" Type="Event" Comment="Indication from Resource">
+			<Event Name="IND" Type="Event" Comment="Indication from Resource" >
 				<With Var="QO"/>
 				<With Var="STATUS"/>
 			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
-			<VarDeclaration Name="u8SAMember" Type="USINT" Comment="Dummy !, set to GLOBAL if in doubt. OFF deactivates FB." InitialValue="GLOBAL"/>
-			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Dummy ! set to ID_NULL if in Doubt. ID_OFF deactivates FB." InitialValue="ID_NULL"/>
-			<VarDeclaration Name="DigitalInput_IX00" Type="STRING" Comment="Identifier for Input 0"/>
-			<VarDeclaration Name="DigitalInput_IX01" Type="STRING" Comment="Identifier for Input 1"/>
-			<VarDeclaration Name="DigitalInput_IX02" Type="STRING" Comment="Identifier for Input 2"/>
-			<VarDeclaration Name="DigitalInput_IX03" Type="STRING" Comment="Identifier for Input 3"/>
-			<VarDeclaration Name="DigitalInput_IX04" Type="STRING" Comment="Identifier for Input 4"/>
-			<VarDeclaration Name="DigitalInput_IX05" Type="STRING" Comment="Identifier for Input 5"/>
-			<VarDeclaration Name="DigitalInput_IX06" Type="STRING" Comment="Identifier for Input 6"/>
-			<VarDeclaration Name="DigitalInput_IX07" Type="STRING" Comment="Identifier for Input 7"/>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier" />
+			<VarDeclaration Name="u8SAMember" Type="USINT" Comment="Dummy !, set to GLOBAL if in doubt. OFF deactivates FB."  InitialValue="isobus::GLOBAL"/>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Dummy ! set to ID_NULL if in Doubt. ID_OFF deactivates FB."  InitialValue="isobus::ID_NULL"/>
+			<VarDeclaration Name="DigitalInput_IX00" Type="STRING" Comment="Identifier for Input 0" />
+			<VarDeclaration Name="DigitalInput_IX01" Type="STRING" Comment="Identifier for Input 1" />
+			<VarDeclaration Name="DigitalInput_IX02" Type="STRING" Comment="Identifier for Input 2" />
+			<VarDeclaration Name="DigitalInput_IX03" Type="STRING" Comment="Identifier for Input 3" />
+			<VarDeclaration Name="DigitalInput_IX04" Type="STRING" Comment="Identifier for Input 4" />
+			<VarDeclaration Name="DigitalInput_IX05" Type="STRING" Comment="Identifier for Input 5" />
+			<VarDeclaration Name="DigitalInput_IX06" Type="STRING" Comment="Identifier for Input 6" />
+			<VarDeclaration Name="DigitalInput_IX07" Type="STRING" Comment="Identifier for Input 7" />
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
-			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier" />
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status" />
 		</OutputVars>
 	</InterfaceList>
 </FBType>
