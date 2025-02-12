@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="F" Comment="Subapplication Type" >
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2025-02-12">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="STRING" Comment="Input event qualifier" />
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="STRING" Comment="Output event qualifier" />
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<DataConnections>
+			<Connection Source="QI" Destination="QO"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

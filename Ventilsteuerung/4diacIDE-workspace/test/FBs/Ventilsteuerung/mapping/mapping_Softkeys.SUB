@@ -11,11 +11,8 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u8SAMember" Value="isobus::GLOBAL"/>
 			<Parameter Name="u16ObjId_1" Value="DefaultPool::SoftKey_Automatik_ein"/>
-			<Parameter Name="DigitalInput_1" Value="'App.Control.functions.Automatik.ein.SoftKey'"/>
 			<Parameter Name="u16ObjId_2" Value="DefaultPool::SoftKey_Auseinanderklappen"/>
-			<Parameter Name="DigitalInput_2" Value="'App.Control.functions.Klappen.SoftKey_heben.IX'"/>
 			<Parameter Name="u16ObjId_3" Value="DefaultPool::SoftKey_Verteiler_senken"/>
-			<Parameter Name="DigitalInput_3" Value="'App.Control.functions.Verteiler.SoftKey_senken.IX'"/>
 			<Parameter Name="u16ObjId_4" Value="DefaultPool::SoftKey_Knickdeichsel_senken"/>
 			<Parameter Name="DigitalInput_4" Value="'App.Control.functions.Knickdeichsel.SoftKey_senken.IX'"/>
 			<Parameter Name="u16ObjId_5" Value="DefaultPool::SoftKey_Automatik_aus"/>
@@ -43,5 +40,19 @@
 			<Parameter Name="u16ObjId_8" Value="DefaultPool::SoftKey_Licht"/>
 			<Parameter Name="DigitalInput_8" Value="'App.Control.functions.Licht.SoftKey'"/>
 		</FB>
+		<SubApp Name="F" Type="F" x="-2800" y="300">
+			<Parameter Name="QI" Value="'App.Control.functions.Automatik.ein.SoftKey'"/>
+		</SubApp>
+		<SubApp Name="F_1" Type="F" x="-2800" y="700">
+			<Parameter Name="QI" Value="'App.Control.functions.Klappen.SoftKey_heben.IX'"/>
+		</SubApp>
+		<SubApp Name="F_2" Type="F" x="-2800" y="1100">
+			<Parameter Name="QI" Value="'App.Control.functions.Verteiler.SoftKey_senken.IX'"/>
+		</SubApp>
+		<DataConnections>
+			<Connection Source="F.QO" Destination="UT_SoftkeyMapping.DigitalInput_1" dx1="586.67"/>
+			<Connection Source="F_1.QO" Destination="UT_SoftkeyMapping.DigitalInput_2"/>
+			<Connection Source="F_2.QO" Destination="UT_SoftkeyMapping.DigitalInput_3" dx1="606.67"/>
+		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
