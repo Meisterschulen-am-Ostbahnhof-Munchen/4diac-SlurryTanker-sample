@@ -18,6 +18,6 @@
     <Required SymbolicName="utils" Version="1.0.0"/>
   </Dependencies>
   <Product>
-    <VersionInfo Author="" Date="2024-09-20" Version="1.0.0"/>
+    <VersionInfo Author="" Date="2024-11-24" Version="1.0.0"/>
   </Product>
 </Manifest>

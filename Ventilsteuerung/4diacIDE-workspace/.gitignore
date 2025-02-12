@@ -1,2 +1,9 @@
-/.metadata/
+/.metadata/*
+!/.metadata/.plugins/
+/.metadata/.plugins/*
+!/.metadata/.plugins/org.eclipse.core.runtime/
+/.metadata/.plugins/org.eclipse.core.runtime/*
+!/.metadata/.plugins/org.eclipse.core.runtime/.settings/
+/.metadata/.plugins/org.eclipse.core.runtime/.settings/*
+!/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.fordiac.ide.gef.prefs
 /Tool Library/
