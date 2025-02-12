@@ -6,9 +6,6 @@
 	</VersionInfo>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
-			<SubAppEvent Name="INIT" Type="Event">
-				<Attribute Name="YPOSITION" Type="INT" Value="20"/>
-			</SubAppEvent>
 			<SubAppEvent Name="EO" Type="Event">
 				<Attribute Name="YPOSITION" Type="INT" Value="272"/>
 			</SubAppEvent>
@@ -27,11 +24,10 @@
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 		</SubApp>
 		<EventConnections>
-			<Connection Source="EO" Destination="GreenWhiteBackground.REQ" dx1="573.33" dx2="573.33" dy="0"/>
-			<Connection Source="INIT" Destination="GreenWhiteBackground.INIT" dx1="766.67" dx2="766.67" dy="0"/>
+			<Connection Source="EO" Destination="GreenWhiteBackground.REQ" dx1="573.33"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="Q" Destination="GreenWhiteBackground.DI1" dx1="680" dx2="680" dy="0"/>
+			<Connection Source="Q" Destination="GreenWhiteBackground.DI1" dx1="680"/>
 			<Connection Source="u16ObjId" Destination="GreenWhiteBackground.u16ObjId" dx1="733.33"/>
 			<Connection Source="u16ObjIdA" Destination="GreenWhiteBackground.u16ObjIdA" dx1="833.33"/>
 		</DataConnections>

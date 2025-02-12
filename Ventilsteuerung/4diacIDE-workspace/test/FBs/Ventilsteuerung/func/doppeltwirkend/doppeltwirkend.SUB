@@ -6,8 +6,6 @@
 	</VersionInfo>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
-			<SubAppEvent Name="INIT" Type="Event">
-			</SubAppEvent>
 			<SubAppEvent Name="EI_heben" Type="Event">
 			</SubAppEvent>
 			<SubAppEvent Name="EI_senken" Type="Event">
@@ -56,34 +54,13 @@
 			<Connection Source="OR_2_heben.CNF" Destination="CNF_heben" dx1="2980"/>
 			<Connection Source="EI_senken" Destination="OR_2_senken.REQ" dx1="3406.67"/>
 			<Connection Source="OR_2_senken.CNF" Destination="CNF_senken" dx1="7313.33"/>
-			<Connection Source="INIT" Destination="GreenWhiteBackground_heben.INIT" dx1="2733.33">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
 			<Connection Source="OR_2_heben.CNF" Destination="GreenWhiteBackground_heben.EO" dx1="680"/>
-			<Connection Source="INIT" Destination="GreenWhiteBackground_senken.INIT" dx1="3200">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
 			<Connection Source="OR_2_senken.CNF" Destination="GreenWhiteBackground_senken.EO" dx1="1186.67"/>
-			<Connection Source="INIT" Destination="Sitzventile.INITO" dx1="4060" dx2="4060" dy="0">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
-			<Connection Source="OR_2_heben.CNF" Destination="Sitzventile.CNF_heben" dx1="1553.33" dx2="1553.33" dy="0"/>
-			<Connection Source="OR_2_senken.CNF" Destination="Sitzventile.CNF_senken" dx1="1580" dx2="1580" dy="0"/>
-			<Connection Source="INIT" Destination="SoftKey_heben.INIT" dx1="2086.67">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
+			<Connection Source="OR_2_heben.CNF" Destination="Sitzventile.CNF_heben" dx1="1553.33"/>
+			<Connection Source="OR_2_senken.CNF" Destination="Sitzventile.CNF_senken" dx1="1580"/>
 			<Connection Source="SoftKey_heben.IND" Destination="OR_2_heben.REQ" dx1="966.67"/>
-			<Connection Source="INIT" Destination="AuxInput_heben.INIT" dx1="2000">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
 			<Connection Source="AuxInput_heben.IND" Destination="OR_2_heben.REQ" dx1="1053.33"/>
-			<Connection Source="INIT" Destination="SoftKey_senken.INIT" dx1="1646.67">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
 			<Connection Source="SoftKey_senken.IND" Destination="OR_2_senken.REQ" dx1="1366.67"/>
-			<Connection Source="INIT" Destination="AuxInput_senken.INIT" dx1="1906.67">
-				<Attribute Name="Visible" Value="false"/>
-			</Connection>
 			<Connection Source="AuxInput_senken.IND" Destination="OR_2_senken.REQ" dx1="1106.67"/>
 		</EventConnections>
 		<DataConnections>
@@ -105,8 +82,8 @@
 			<Connection Source="u16ObjIdA_senken" Destination="GreenWhiteBackground_senken.u16ObjIdA" dx1="2733.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="OR_2_heben.OUT" Destination="Sitzventile.IN_heben" dx1="1533.33" dx2="1533.33" dy="0"/>
-			<Connection Source="OR_2_senken.OUT" Destination="Sitzventile.IN_senken" dx1="1580" dx2="1580" dy="0"/>
+			<Connection Source="OR_2_heben.OUT" Destination="Sitzventile.IN_heben" dx1="1533.33"/>
+			<Connection Source="OR_2_senken.OUT" Destination="Sitzventile.IN_senken" dx1="1580"/>
 			<Connection Source="SoftKey_heben.IN" Destination="OR_2_heben.IN1" dx1="1620"/>
 			<Connection Source="AuxInput_heben.IN" Destination="OR_2_heben.IN3" dx1="1780"/>
 			<Connection Source="SoftKey_senken.IN" Destination="OR_2_senken.IN1" dx1="2233.33"/>
