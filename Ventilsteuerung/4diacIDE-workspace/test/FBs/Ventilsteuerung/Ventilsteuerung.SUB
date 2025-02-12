@@ -9,11 +9,11 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<SubApp Name="mapping" Type="mapping" x="-446.67" y="126.66">
+		<SubApp Name="mapping" Type="mapping" x="-500" y="200">
 		</SubApp>
-		<SubApp Name="functions" Type="SlurryTanker" x="-446.67" y="660">
+		<SubApp Name="functions" Type="SlurryTanker" x="-500" y="500">
 		</SubApp>
-		<SubApp Name="PAGES" Type="PAGES" x="-446.67" y="1193.33">
+		<SubApp Name="PAGES" Type="PAGES" x="-400" y="1000">
 		</SubApp>
 	</SubAppNetwork>
 </SubAppType>
