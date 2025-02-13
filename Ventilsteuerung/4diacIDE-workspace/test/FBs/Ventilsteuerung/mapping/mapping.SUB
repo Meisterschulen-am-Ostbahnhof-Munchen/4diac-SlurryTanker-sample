@@ -9,23 +9,21 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<SubApp Name="mapping_Buttons" Type="mapping_Buttons" x="0" y="1233.33">
-			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
-			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
+		<SubApp Name="mapping_AuxFunction2_IE" Type="mapping_AuxFunction2_IE" x="-1800" y="1400">
 		</SubApp>
-		<SubApp Name="mapping_aux" Type="mapping_AuxFunction2" x="0" y="800">
-			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
-			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
+		<SubApp Name="mapping_AuxFunction2_IX" Type="mapping_AuxFunction2_IX" x="-1800" y="1700">
 		</SubApp>
-		<SubApp Name="mapping_Softkeys" Type="mapping_Softkeys" x="0" y="400">
-			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
-			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
+		<SubApp Name="mapping_blink" Type="mapping_blink" x="-1800" y="2000">
 		</SubApp>
-		<SubApp Name="mapping_DataPanel" Type="mapping_DataPanel" x="0" y="0">
-			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
-			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
+		<SubApp Name="mapping_Buttons_IE" Type="mapping_Buttons_IE" x="-1800" y="2300">
 		</SubApp>
-		<SubApp Name="mapping_blink" Type="mapping_blink" x="0" y="1920">
+		<SubApp Name="mapping_Buttons_IX" Type="mapping_Buttons_IX" x="-1800" y="2600">
+		</SubApp>
+		<SubApp Name="mapping_DataPanel_QX" Type="mapping_DataPanel_QX" x="-1800" y="2900">
+		</SubApp>
+		<SubApp Name="mapping_Softkeys_IE" Type="mapping_Softkeys_IE" x="-1800" y="3200">
+		</SubApp>
+		<SubApp Name="mapping_Softkeys_IX" Type="mapping_Softkeys_IX" x="-1800" y="3500">
 		</SubApp>
 	</SubAppNetwork>
 </SubAppType>
