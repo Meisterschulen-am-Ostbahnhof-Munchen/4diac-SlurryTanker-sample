@@ -19,7 +19,7 @@
 		</SubApp>
 		<SubApp Name="mapping_Buttons_IX" Type="mapping_Buttons_IX" x="-1800" y="2600">
 		</SubApp>
-		<SubApp Name="mapping_DataPanel_QX" Type="mapping_DataPanel_QX" x="-1800" y="2900">
+		<SubApp Name="mapping_DataPanel_QX" Type="mapping_DO_QX" x="-1800" y="2900">
 		</SubApp>
 		<SubApp Name="mapping_Softkeys_IE" Type="mapping_Softkeys_IE" x="-1800" y="3200">
 		</SubApp>
