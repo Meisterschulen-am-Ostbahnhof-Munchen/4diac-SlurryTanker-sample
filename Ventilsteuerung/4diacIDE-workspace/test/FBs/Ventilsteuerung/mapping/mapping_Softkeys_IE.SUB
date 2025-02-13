@@ -23,7 +23,7 @@
 			<Parameter Name="u16ObjId_8" Value="DefaultPool::SoftKey_Licht"/>
 			<Parameter Name="DigitalInput_8" Value="'App.Control.functions.Licht.SoftKey'"/>
 		</FB>
-		<SubApp Name="F_7" Type="F" x="2666.67" y="33.33">
+		<SubApp Name="F_7" Type="F" x="0" y="700">
 			<Parameter Name="QI" Value="'App.Control.functions.Knickdeichsel.SoftKey_heben.IX'"/>
 		</SubApp>
 	</SubAppNetwork>

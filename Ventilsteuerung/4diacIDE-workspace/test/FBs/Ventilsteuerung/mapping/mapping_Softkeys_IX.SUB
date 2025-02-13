@@ -7,7 +7,7 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="UT_SoftkeyMapping" Type="UT_SoftkeyMapping" x="5353.33" y="3026.67">
+		<FB Name="UT_SoftkeyMapping" Type="UT_SoftkeyMapping" x="5000" y="2600">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u8SAMember" Value="isobus::GLOBAL"/>
 			<Parameter Name="u16ObjId_1" Value="DefaultPool::SoftKey_Automatik_ein"/>
@@ -19,25 +19,39 @@
 			<Parameter Name="u16ObjId_7" Value="DefaultPool::SoftKey_Verteiler_heben"/>
 			<Parameter Name="u16ObjId_8" Value="DefaultPool::SoftKey_Knickdeichsel_heben"/>
 		</FB>
-		<SubApp Name="MF" Type="MF" x="2713.33" y="3873.33">
-			<Parameter Name="DI1" Value="'App.Control.functions.Automatik.ein.SoftKey'"/>
-			<Parameter Name="DI2" Value="'App.Control.functions.Klappen.SoftKey_heben.IX'"/>
-			<Parameter Name="DI3" Value="'App.Control.functions.Verteiler.SoftKey_senken.IX'"/>
-			<Parameter Name="DI4" Value="'App.Control.functions.Knickdeichsel.SoftKey_senken.IX'"/>
-			<Parameter Name="DI5" Value="'App.Control.functions.Automatik.aus.SoftKey'"/>
-			<Parameter Name="DI6" Value="'App.Control.functions.Klappen.SoftKey_senken.IX'"/>
-			<Parameter Name="DI7" Value="'App.Control.functions.Verteiler.SoftKey_heben.IX'"/>
-			<Parameter Name="DI8" Value="'App.Control.functions.Knickdeichsel.SoftKey_heben.IX'"/>
+		<SubApp Name="F" Type="F" x="2200" y="3000">
+			<Parameter Name="QI" Value="'App.Control.functions.Automatik.ein.SoftKey'"/>
+		</SubApp>
+		<SubApp Name="F_1" Type="F" x="1500" y="3300">
+			<Parameter Name="QI" Value="'App.Control.functions.Klappen.SoftKey_heben.IX'"/>
+		</SubApp>
+		<SubApp Name="F_2" Type="F" x="2100" y="3600">
+			<Parameter Name="QI" Value="'App.Control.functions.Verteiler.SoftKey_senken.IX'"/>
+		</SubApp>
+		<SubApp Name="F_3" Type="F" x="1700" y="3900">
+			<Parameter Name="QI" Value="'App.Control.functions.Knickdeichsel.SoftKey_senken.IX'"/>
+		</SubApp>
+		<SubApp Name="F_4" Type="F" x="1000" y="4200">
+			<Parameter Name="QI" Value="'App.Control.functions.Automatik.aus.SoftKey'"/>
+		</SubApp>
+		<SubApp Name="F_5" Type="F" x="1400" y="4500">
+			<Parameter Name="QI" Value="'App.Control.functions.Klappen.SoftKey_senken.IX'"/>
+		</SubApp>
+		<SubApp Name="F_6" Type="F" x="1900" y="4800">
+			<Parameter Name="QI" Value="'App.Control.functions.Verteiler.SoftKey_heben.IX'"/>
+		</SubApp>
+		<SubApp Name="F_7" Type="F" x="1600" y="5300">
+			<Parameter Name="QI" Value="'App.Control.functions.Knickdeichsel.SoftKey_heben.IX'"/>
 		</SubApp>
 		<DataConnections>
-			<Connection Source="MF.DO1" Destination="UT_SoftkeyMapping.DigitalInput_1" dx1="73.33"/>
-			<Connection Source="MF.DO2" Destination="UT_SoftkeyMapping.DigitalInput_2" dx1="140"/>
-			<Connection Source="MF.DO3" Destination="UT_SoftkeyMapping.DigitalInput_3" dx1="206.67"/>
-			<Connection Source="MF.DO4" Destination="UT_SoftkeyMapping.DigitalInput_4" dx1="73.33"/>
-			<Connection Source="MF.DO5" Destination="UT_SoftkeyMapping.DigitalInput_5" dx1="73.33"/>
-			<Connection Source="MF.DO6" Destination="UT_SoftkeyMapping.DigitalInput_6" dx1="206.67"/>
-			<Connection Source="MF.DO7" Destination="UT_SoftkeyMapping.DigitalInput_7" dx1="140"/>
-			<Connection Source="MF.DO8" Destination="UT_SoftkeyMapping.DigitalInput_8" dx1="73.33"/>
+			<Connection Source="F.QO" Destination="UT_SoftkeyMapping.DigitalInput_1" dx1="553.33"/>
+			<Connection Source="F_1.QO" Destination="UT_SoftkeyMapping.DigitalInput_2" dx1="120"/>
+			<Connection Source="F_2.QO" Destination="UT_SoftkeyMapping.DigitalInput_3" dx1="260"/>
+			<Connection Source="F_3.QO" Destination="UT_SoftkeyMapping.DigitalInput_4" dx1="573.33"/>
+			<Connection Source="F_4.QO" Destination="UT_SoftkeyMapping.DigitalInput_5" dx1="1293.33"/>
+			<Connection Source="F_5.QO" Destination="UT_SoftkeyMapping.DigitalInput_6" dx1="960"/>
+			<Connection Source="F_6.QO" Destination="UT_SoftkeyMapping.DigitalInput_7" dx1="586.67"/>
+			<Connection Source="F_7.QO" Destination="UT_SoftkeyMapping.DigitalInput_8" dx1="1053.33"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
