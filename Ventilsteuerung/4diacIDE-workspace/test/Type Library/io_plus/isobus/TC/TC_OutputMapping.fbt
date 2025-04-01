@@ -12,8 +12,6 @@
 		<EventInputs>
 			<Event Name="INIT" Type="EInit" Comment="Service Initialization" >
 				<With Var="QI"/>
-				<With Var="u8SAMember"/>
-				<With Var="u16ObjId"/>
 				<With Var="wDevElementNumb_1"/>
 				<With Var="wDDI_1"/>
 				<With Var="Output_1"/>
@@ -51,8 +49,6 @@
 		</EventOutputs>
 		<InputVars>
 			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier" />
-			<VarDeclaration Name="u8SAMember" Type="USINT" Comment="Dummy !, set to GLOBAL if in doubt. OFF deactivates FB."  InitialValue="isobus::GLOBAL"/>
-			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Dummy ! set to ID_NULL if in Doubt. ID_OFF deactivates FB."  InitialValue="isobus::ID_NULL"/>
 			<VarDeclaration Name="wDevElementNumb_1" Type="UINT" Comment="Requested element number of TC of Output 1" />
 			<VarDeclaration Name="wDDI_1" Type="UINT" Comment="Data dictionary identifier of Output 1" />
 			<VarDeclaration Name="Output_1" Type="STRING" Comment="Identifier for Output 1" />
