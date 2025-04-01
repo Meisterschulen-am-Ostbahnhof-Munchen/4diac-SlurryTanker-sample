@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="mapping_AuxFunction2_IX" Comment="Mapping for all AuxFunction2" >
+<SubAppType Name="mapping_AuxFunction2_IX" Comment="Mapping for all AuxFunction2">
 	<Identification Standard="61499-2">
 	</Identification>
 	<VersionInfo Version="1.0" Author="Franz" Date="2023-01-29">
@@ -9,7 +9,6 @@
 	<SubAppNetwork>
 		<FB Name="UT_AuxiliaryInputMapping" Type="UT_AuxiliaryInputMapping_Type_02_Bool_NonLatched" x="-1600" y="-1066.67">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="u8SAMember" Value="isobus::GLOBAL"/>
 			<Parameter Name="u16ObjId_1" Value="DefaultPool::AuxInput_Automatik_ein"/>
 			<Parameter Name="DigitalInput_1" Value="'App.Control.functions.Automatik.ein.AuxInput'"/>
 			<Parameter Name="u16ObjId_2" Value="DefaultPool::AuxInput_Auseinanderklappen"/>

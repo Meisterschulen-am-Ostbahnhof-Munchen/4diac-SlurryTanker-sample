@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="mapping_Softkeys_IX" Comment="Mapping for all Softkey" >
+<SubAppType Name="mapping_Softkeys_IX" Comment="Mapping for all Softkey">
 	<Identification Standard="61499-2">
 	</Identification>
 	<VersionInfo Version="1.0" Author="Franz" Date="2023-01-29">
@@ -9,7 +9,6 @@
 	<SubAppNetwork>
 		<FB Name="UT_SoftkeyMapping" Type="UT_SoftkeyMapping" x="5000" y="2600">
 			<Parameter Name="QI" Value="TRUE"/>
-			<Parameter Name="u8SAMember" Value="isobus::GLOBAL"/>
 			<Parameter Name="u16ObjId_1" Value="DefaultPool::SoftKey_Automatik_ein"/>
 			<Parameter Name="u16ObjId_2" Value="DefaultPool::SoftKey_Auseinanderklappen"/>
 			<Parameter Name="u16ObjId_3" Value="DefaultPool::SoftKey_Verteiler_senken"/>
@@ -44,7 +43,7 @@
 			<Parameter Name="QI" Value="'App.Control.functions.Knickdeichsel.SoftKey_heben.IX'"/>
 		</SubApp>
 		<DataConnections>
-			<Connection Source="F_2.QO" Destination="UT_SoftkeyMapping.DigitalInput_3"/>
+			<Connection Source="F_2.QO" Destination="UT_SoftkeyMapping.DigitalInput_3" dx1="1286.67"/>
 			<Connection Source="F_3.QO" Destination="UT_SoftkeyMapping.DigitalInput_4" dx1="226.67"/>
 			<Connection Source="F_4.QO" Destination="UT_SoftkeyMapping.DigitalInput_5" dx1="313.33"/>
 			<Connection Source="F_5.QO" Destination="UT_SoftkeyMapping.DigitalInput_6" dx1="433.33"/>
