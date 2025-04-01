@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<FBType Name="PKP_2200_LI_4_DI" Comment="Service Interface Function Block Type" >
-	<Identification Standard="SAE J1939" Function="Combo Block: 8 Inputs/8 Outputs (includes all input/output types)" Type="DP-34044-1-000" Description="Copyright (c) 2018, 2023 Jose Cabral, HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0&#10;&#10;this maps to IX/QX" >
+<FBType Name="PKP_2200_LI_4_DI" Comment="Service Interface Function Block Type">
+	<Identification Standard="SAE J1939" Function="4 Input Buttons" Type="PKP-2200-LI" Description="Copyright (c) 2018, 2023 Jose Cabral, HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0&#10;&#10;this maps to IX&#10;&#10;LEDs not functional currently, TODO.">
 	</Identification>
 	<VersionInfo Version="1.0" Author="Jose Cabral" Date="2018-12-05">
 	</VersionInfo>
@@ -10,10 +10,9 @@
 	</VersionInfo>
 	<InterfaceList>
 		<EventInputs>
-			<Event Name="INIT" Type="EInit" Comment="Service Initialization" >
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
 				<With Var="QI"/>
 				<With Var="u8SAMember"/>
-				<With Var="u16ObjId"/>
 				<With Var="DigitalInput_Key_1"/>
 				<With Var="DigitalInput_Key_2"/>
 				<With Var="DigitalInput_Key_3"/>
@@ -21,27 +20,26 @@
 			</Event>
 		</EventInputs>
 		<EventOutputs>
-			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm" >
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
 				<With Var="QO"/>
 			</Event>
-			<Event Name="IND" Type="Event" Comment="Indication from Resource" >
+			<Event Name="IND" Type="Event" Comment="Indication from Resource">
 				<With Var="QO"/>
 				<With Var="STATUS"/>
 				<With Var="qTimedOut"/>
 			</Event>
 		</EventOutputs>
 		<InputVars>
-			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier" />
-			<VarDeclaration Name="u8SAMember" Type="USINT" Comment="Node SA (Default 21h = PKP_2200_DEFAULT)"  InitialValue="PKP_2200::DEFAULT"/>
-			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Dummy ! set to ID_NULL if in Doubt. ID_OFF deactivates FB."  InitialValue="isobus::ID_NULL"/>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
+			<VarDeclaration Name="u8SAMember" Type="USINT" Comment="Node SA (Default 21h = PKP_2200_DEFAULT)" InitialValue="PKP_2200::PKP_2200_DEFAULT"/>
 			<VarDeclaration Name="DigitalInput_Key_1" Type="STRING"/>
 			<VarDeclaration Name="DigitalInput_Key_2" Type="STRING"/>
 			<VarDeclaration Name="DigitalInput_Key_3" Type="STRING"/>
 			<VarDeclaration Name="DigitalInput_Key_4" Type="STRING"/>
 		</InputVars>
 		<OutputVars>
-			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier" />
-			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status" />
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
 			<VarDeclaration Name="qTimedOut" Type="BOOL"/>
 		</OutputVars>
 	</InterfaceList>

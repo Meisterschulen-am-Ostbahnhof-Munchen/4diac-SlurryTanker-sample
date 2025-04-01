@@ -13,7 +13,6 @@
 			<Event Name="INIT" Type="EInit" Comment="Service Initialization" >
 				<With Var="QI"/>
 				<With Var="u8SAMember"/>
-				<With Var="u16ObjId"/>
 				<With Var="DigitalOutput_1A"/>
 				<With Var="DigitalOutput_1B"/>
 				<With Var="DigitalOutput_2A"/>
@@ -56,7 +55,6 @@
 		<InputVars>
 			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier" />
 			<VarDeclaration Name="u8SAMember" Type="USINT" Comment="Node SA 217..224"  InitialValue="LO::LO_00"/>
-			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Dummy ! set to ID_NULL if in Doubt. ID_OFF deactivates FB."  InitialValue="isobus::ID_NULL"/>
 			<VarDeclaration Name="DigitalOutput_1A" Type="STRING"/>
 			<VarDeclaration Name="DigitalOutput_1B" Type="STRING"/>
 			<VarDeclaration Name="DigitalOutput_2A" Type="STRING"/>
