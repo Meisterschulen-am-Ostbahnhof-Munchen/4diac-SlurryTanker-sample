@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="COGSOGRapidUpdate" Comment="This parameter group is a single frame parameter group that provides Course Over Ground (COG) and Speed Over Ground (SOG)">
+	<Identification Standard="NMEA 2000" Classification="PGN 129026" Function="COG &amp; SOG, Rapid Update" Description="Copyright (c) 2024 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0&#10;">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Moritz Ortmeier" Date="07.02.2025">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+				<With Var="QI"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+			</Event>
+			<Event Name="IND" Type="Event" Comment="Indication from Resource">
+				<With Var="QO"/>
+				<With Var="timestamp_data"/>
+				<With Var="SID"/>
+				<With Var="COGReference"/>
+				<With Var="STATUS"/>
+				<With Var="Q_timeout"/>
+				<With Var="CourseOverGround"/>
+				<With Var="SpeedOverGround"/>
+			</Event>
+			<Event Name="TIMEOUT" Type="Event">
+				<With Var="timestamp_timeout"/>
+				<With Var="STATUS"/>
+				<With Var="Q_timeout"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
+			<VarDeclaration Name="STATUS" Type="STRING"/>
+			<VarDeclaration Name="Q_timeout" Type="BOOL"/>
+			<VarDeclaration Name="timestamp_timeout" Type="DINT"/>
+			<VarDeclaration Name="timestamp_data" Type="DINT"/>
+			<VarDeclaration Name="SID" Type="USINT" Comment="Sequence ID identifies the sequence this data is associated with so that the data can be synchronized with other vessel data for this same sequence being sent in another PGN."/>
+			<VarDeclaration Name="COGReference" Type="BYTE" Comment="COG Reference--this field is used to indicate the direction reference of the course over ground. True North reference = 0."/>
+			<VarDeclaration Name="CourseOverGround" Type="UINT" Comment="Course Over Ground--this field is used to indicate the course over ground (COG) in resolution of 1x10-4 radians."/>
+			<VarDeclaration Name="SpeedOverGround" Type="UINT" Comment="Speed Over Ground--this field is used to indicate the speed over ground (SOG) in resolution of 1x10-2 meters/second."/>
+		</OutputVars>
+	</InterfaceList>
+</FBType>

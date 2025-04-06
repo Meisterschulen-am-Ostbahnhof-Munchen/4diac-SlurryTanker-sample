@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="mapping_AuxFunction2_IX" Comment="Mapping for all AuxFunction2">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="Franz" Date="2023-01-29">
+	</VersionInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="UT_AuxiliaryInputMapping" Type="UT_AuxiliaryInputMapping_Type_02_Bool_NonLatched" x="-1600" y="-1066.67">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId_1" Value="DefaultPool::AuxInput_Automatik_ein"/>
+			<Parameter Name="DigitalInput_1" Value="'App.Control.functions.Automatik.ein.AuxInput'"/>
+			<Parameter Name="u16ObjId_2" Value="DefaultPool::AuxInput_Auseinanderklappen"/>
+			<Parameter Name="DigitalInput_2" Value="'App.Control.functions.Klappen.AuxInput_heben.IX'"/>
+			<Parameter Name="u16ObjId_3" Value="DefaultPool::AuxInput_Verteiler_senken"/>
+			<Parameter Name="DigitalInput_3" Value="'App.Control.functions.Verteiler.AuxInput_senken.IX'"/>
+			<Parameter Name="u16ObjId_4" Value="DefaultPool::AuxInput_Knickdeichsel_senken"/>
+			<Parameter Name="DigitalInput_4" Value="'App.Control.functions.Knickdeichsel.AuxInput_senken.IX'"/>
+			<Parameter Name="u16ObjId_5" Value="DefaultPool::AuxInput_Automatik_aus"/>
+			<Parameter Name="DigitalInput_5" Value="'App.Control.functions.Automatik.aus.AuxInput'"/>
+			<Parameter Name="u16ObjId_6" Value="DefaultPool::AuxInput_Zusammenklappen"/>
+			<Parameter Name="DigitalInput_6" Value="'App.Control.functions.Klappen.AuxInput_senken.IX'"/>
+			<Parameter Name="u16ObjId_7" Value="DefaultPool::AuxInput_Verteiler_heben"/>
+			<Parameter Name="DigitalInput_7" Value="'App.Control.functions.Verteiler.AuxInput_heben.IX'"/>
+			<Parameter Name="u16ObjId_8" Value="DefaultPool::AuxInput_Knickdeichsel_heben"/>
+			<Parameter Name="DigitalInput_8" Value="'App.Control.functions.Knickdeichsel.AuxInput_heben.IX'"/>
+		</FB>
+	</SubAppNetwork>
+</SubAppType>

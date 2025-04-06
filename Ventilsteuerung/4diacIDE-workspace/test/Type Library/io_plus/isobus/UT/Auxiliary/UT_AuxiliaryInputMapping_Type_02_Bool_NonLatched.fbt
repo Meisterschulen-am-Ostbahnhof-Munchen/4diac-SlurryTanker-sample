@@ -12,7 +12,6 @@
 		<EventInputs>
 			<Event Name="INIT" Type="EInit" Comment="Service Initialization" >
 				<With Var="QI"/>
-				<With Var="u8SAMember"/>
 				<With Var="u16ObjId_1"/>
 				<With Var="DigitalInput_1"/>
 				<With Var="u16ObjId_2"/>
@@ -42,7 +41,6 @@
 		</EventOutputs>
 		<InputVars>
 			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier" />
-			<VarDeclaration Name="u8SAMember" Type="USINT" Comment="Dummy !, set to GLOBAL if in doubt. OFF deactivates FB."  InitialValue="isobus::GLOBAL"/>
 			<VarDeclaration Name="u16ObjId_1" Type="UINT" Comment="Object ID of Input 1" />
 			<VarDeclaration Name="DigitalInput_1" Type="STRING" Comment="Identifier for Input 1" />
 			<VarDeclaration Name="u16ObjId_2" Type="UINT" Comment="Object ID of Input 2" />

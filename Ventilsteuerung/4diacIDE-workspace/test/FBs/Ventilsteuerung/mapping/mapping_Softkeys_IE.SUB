@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="mapping_Softkeys_IE" Comment="Mapping for all Softkey">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="Franz" Date="2023-01-29">
+	</VersionInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="UT_SoftkeyMapping_UP" Type="UT_SoftkeyMapping_UP" x="2293.33" y="580">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId_2" Value="DefaultPool::SoftKey_Dom"/>
+			<Parameter Name="DigitalInput_2" Value="'App.Control.functions.Dom.SoftKey'"/>
+			<Parameter Name="u16ObjId_3" Value="DefaultPool::SoftKey_Heckschieber"/>
+			<Parameter Name="DigitalInput_3" Value="'App.Control.functions.Heckschieber.SoftKey'"/>
+			<Parameter Name="u16ObjId_5" Value="DefaultPool::SoftKey_Schneidwerk"/>
+			<Parameter Name="DigitalInput_5" Value="'App.Control.functions.Schneidwerk.SoftKey'"/>
+			<Parameter Name="u16ObjId_6" Value="DefaultPool::SoftKey_Seitenschieber"/>
+			<Parameter Name="DigitalInput_6" Value="'App.Control.functions.Seitenschieber.SoftKey'"/>
+			<Parameter Name="u16ObjId_7" Value="DefaultPool::SoftKey_Abscheider"/>
+			<Parameter Name="DigitalInput_7" Value="'App.Control.functions.Abscheider.SoftKey'"/>
+			<Parameter Name="u16ObjId_8" Value="DefaultPool::SoftKey_Licht"/>
+			<Parameter Name="DigitalInput_8" Value="'App.Control.functions.Licht.SoftKey'"/>
+		</FB>
+	</SubAppNetwork>
+</SubAppType>

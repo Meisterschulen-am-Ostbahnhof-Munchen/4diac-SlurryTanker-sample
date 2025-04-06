@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="mapping_AuxFunction2_IE" Comment="Mapping for all AuxFunction2">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="Franz" Date="2023-01-29">
+	</VersionInfo>
+	<SubAppInterfaceList>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="UT_AuxiliaryInputMapping_1" Type="UT_AuxiliaryInputMapping_Type_02_Bool_NonLatched_UP" x="-1600" y="1600">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId_2" Value="DefaultPool::AuxInput_Dom"/>
+			<Parameter Name="DigitalInput_2" Value="'App.Control.functions.Dom.AuxInput'"/>
+			<Parameter Name="u16ObjId_3" Value="DefaultPool::AuxInput_Heckschieber"/>
+			<Parameter Name="DigitalInput_3" Value="'App.Control.functions.Heckschieber.AuxInput'"/>
+			<Parameter Name="u16ObjId_5" Value="DefaultPool::AuxInput_Schneidwerk"/>
+			<Parameter Name="DigitalInput_5" Value="'App.Control.functions.Schneidwerk.AuxInput'"/>
+			<Parameter Name="u16ObjId_6" Value="DefaultPool::AuxInput_Seitenschieber"/>
+			<Parameter Name="DigitalInput_6" Value="'App.Control.functions.Seitenschieber.AuxInput'"/>
+			<Parameter Name="u16ObjId_7" Value="DefaultPool::AuxInput_Abscheider"/>
+			<Parameter Name="DigitalInput_7" Value="'App.Control.functions.Abscheider.AuxInput'"/>
+			<Parameter Name="u16ObjId_8" Value="DefaultPool::AuxInput_Licht"/>
+			<Parameter Name="DigitalInput_8" Value="'App.Control.functions.Licht.AuxInput'"/>
+		</FB>
+		<FB Name="UT_AuxiliaryInputMapping_2" Type="UT_AuxiliaryInputMapping_Type_02_Bool_NonLatched_UP" x="-2100" y="4400">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId_1" Value="DefaultPool::PAGE_1_AUX"/>
+			<Parameter Name="DigitalInput_1" Value="'App.Control.functions.PAGES.PAGE_1.AUX'"/>
+			<Parameter Name="u16ObjId_2" Value="DefaultPool::PAGE_2_AUX"/>
+			<Parameter Name="DigitalInput_2" Value="'App.Control.functions.PAGES.PAGE_2.AUX'"/>
+		</FB>
+	</SubAppNetwork>
+</SubAppType>
