@@ -10,9 +10,9 @@
 		<FB Name="UT_ButtonMapping_UP" Type="UT_ButtonMapping_UP" x="900" y="900">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u16ObjId_1" Value="DefaultPool::PAGE_1_BTN"/>
-			<Parameter Name="DigitalInput_1" Value="'Ventilsteuerung.PAGES.PAGE_1.BTN'"/>
+			<Parameter Name="DigitalInput_1" Value="'App.Control.PAGES.PAGE_1.BTN'"/>
 			<Parameter Name="u16ObjId_2" Value="DefaultPool::PAGE_2_BTN"/>
-			<Parameter Name="DigitalInput_2" Value="'Ventilsteuerung.PAGES.PAGE_2.BTN'"/>
+			<Parameter Name="DigitalInput_2" Value="'App.Control.PAGES.PAGE_2.BTN'"/>
 		</FB>
 	</SubAppNetwork>
 </SubAppType>
