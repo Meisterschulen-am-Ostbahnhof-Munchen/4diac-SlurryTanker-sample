@@ -4,6 +4,9 @@
 	</Identification>
 	<VersionInfo Version="1.0" Author="Franz" Date="2023-01-29">
 	</VersionInfo>
+	<CompilerInfo>
+		<Import declaration="isobus::UT::io::Softkey::SoftKeyActivationCode::SK_RELEASED"/>
+	</CompilerInfo>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
 			<SubAppEvent Name="S" Type="Event" Comment="Set output Q" >
@@ -41,8 +44,9 @@
 		</SubApp>
 		<FB Name="E_T_FF_SR" Type="E_T_FF_SR" x="-260" y="-700">
 		</FB>
-		<FB Name="SoftKey" Type="IE" x="-2300" y="0">
+		<FB Name="SoftKey" Type="isobus::UT::io::Softkey::Softkey_IE" x="-2300" y="0">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="InputEvent" Value="SK_RELEASED"/>
 		</FB>
 		<FB Name="AuxInput" Type="IE" x="-2300" y="900">
 			<Parameter Name="QI" Value="TRUE"/>
@@ -60,6 +64,9 @@
 			<Connection Source="AuxInput.IND" Destination="E_T_FF_SR.CLK" dx1="673.33"/>
 		</EventConnections>
 		<DataConnections>
+			<Connection Source="u16ObjId" Destination="SoftKey.u16ObjId" dx1="1000">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
 			<Connection Source="AND_2.OUT" Destination="OUT" dx1="613.33"/>
 			<Connection Source="u16ObjId" Destination="GreenWhiteBackground.u16ObjId" dx1="2020">
 				<Attribute Name="Visible" Value="false"/>

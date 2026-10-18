@@ -21,9 +21,5 @@
 		</SubApp>
 		<SubApp Name="mapping_DataPanel_QX" Type="mapping_DO_QX" x="-1800" y="2900">
 		</SubApp>
-		<SubApp Name="mapping_Softkeys_IE" Type="mapping_Softkeys_IE" x="-1800" y="3200">
-		</SubApp>
-		<SubApp Name="mapping_Softkeys_IX" Type="mapping_Softkeys_IX" x="-1800" y="3500">
-		</SubApp>
 	</SubAppNetwork>
 </SubAppType>

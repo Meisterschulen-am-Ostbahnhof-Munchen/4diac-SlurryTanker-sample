@@ -4,6 +4,10 @@
 	</Identification>
 	<VersionInfo Version="1.0" Author="Franz" Date="2023-01-29">
 	</VersionInfo>
+	<CompilerInfo>
+		<Import declaration="DefaultPool::SoftKey_Licht"/>
+		<Import declaration="isobus::UT::io::Softkey::SoftKeyActivationCode::SK_RELEASED"/>
+	</CompilerInfo>
 	<SubAppInterfaceList>
 		<InputVars>
 			<VarDeclaration Name="u16ObjId" Type="UINT"/>
@@ -18,8 +22,10 @@
 		</FB>
 		<SubApp Name="GreenWhiteBackground_Function" Type="GreenWhiteBackground_Function" x="4400" y="0">
 		</SubApp>
-		<FB Name="SoftKey" Type="IE" x="-600" y="-400">
+		<FB Name="SoftKey" Type="isobus::UT::io::Softkey::Softkey_IE" x="-600" y="-400">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="SoftKey_Licht"/>
+			<Parameter Name="InputEvent" Value="SK_RELEASED"/>
 		</FB>
 		<FB Name="AuxInput" Type="IE" x="-600" y="700">
 			<Parameter Name="QI" Value="TRUE"/>

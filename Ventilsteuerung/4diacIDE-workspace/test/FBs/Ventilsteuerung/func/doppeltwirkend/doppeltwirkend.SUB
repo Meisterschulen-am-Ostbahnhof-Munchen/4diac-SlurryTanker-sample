@@ -41,12 +41,14 @@
 		</SubApp>
 		<SubApp Name="Sitzventile" Type="Sitzventile" x="6793.33" y="2586.67">
 		</SubApp>
-		<SubApp Name="SoftKey_heben" Type="IN" x="600" y="1300">
-		</SubApp>
+		<FB Name="SoftKey_heben" Type="isobus::UT::io::Softkey::Softkey_IX" x="600" y="1300">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
 		<SubApp Name="AuxInput_heben" Type="IN" x="600" y="1800">
 		</SubApp>
-		<SubApp Name="SoftKey_senken" Type="IN" x="-200" y="2800">
-		</SubApp>
+		<FB Name="SoftKey_senken" Type="isobus::UT::io::Softkey::Softkey_IX" x="-200" y="2800">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
 		<SubApp Name="AuxInput_senken" Type="IN" x="-200" y="3300">
 		</SubApp>
 		<EventConnections>
@@ -64,6 +66,12 @@
 			<Connection Source="AuxInput_senken.IND" Destination="OR_2_senken.REQ" dx1="1106.67"/>
 		</EventConnections>
 		<DataConnections>
+			<Connection Source="u16ObjId_heben" Destination="SoftKey_heben.u16ObjId" dx1="300">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId_senken" Destination="SoftKey_senken.u16ObjId" dx1="300">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
 			<Connection Source="IN_heben" Destination="OR_2_heben.IN2" dx1="2993.33"/>
 			<Connection Source="OR_2_heben.OUT" Destination="OUT_heben" dx1="3073.33"/>
 			<Connection Source="IN_senken" Destination="OR_2_senken.IN2" dx1="173.33"/>
