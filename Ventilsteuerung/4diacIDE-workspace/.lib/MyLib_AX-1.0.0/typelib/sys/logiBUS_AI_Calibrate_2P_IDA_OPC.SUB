@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="logiBUS_AI_Calibrate_2P_IDA_OPC" Comment="logiBUS_AI_IDA (Analog-Eingang) mit 2-Punkt-Kalibrierung (AR_CALIBRATE_2P_REF,&#10;unabhaengig gespeicherte Rohwerte X_LOW/X_HIGH + Referenzwerte LOW_REF/HIGH_REF&#10;alle INI-persistiert) auf VT-Zahlenfelder (Rohwert + kalibrierter Wert, je&#10;eigene CNumberVariable) + Bargraph (kalibriert) + 2 VT-Tasten (CO/CS) + OPC-UA&#10;(Rohwert DWORD + kalibrierter Wert REAL, generisch, ein Kanal)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-08-31" Remarks="initial API and implementation and/or initial documentation - Kalibrierlogik nach Vorbild Uebung_028c3_AR.SUB, aber AR_CALIBRATE_SQ (korrigierte Offset-Formel, ECC-erzwungene CO-vor-CS-Reihenfolge) statt AR_CALIBRATE">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-11" Remarks="Migriert auf AR_CALIBRATE_2P_REF: CO/CS speichern jetzt unabhaengig X_LOW/X_HIGH (wie AR_CALIBRATE_3P/_REF), keine ECC-erzwungene Reihenfolge mehr noetig, da CS mathematisch nie von CO abhing - nur die alte OFFSET/SCALE-Inkrementalrechnung erzwang das kuenstlich. Aeussere Schnittstelle (InputVars, VT-Tasten CO/CS, GCF-IDs) unveraendert, nur interne INI-Keys OFFSET/SCALE/ZERO/SPAN -&gt; X_LOW/X_HIGH/LOW_REF/HIGH_REF umbenannt (Klarheit, keine bestehenden Feldgeraete betroffen).">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.2" Author="Franz Höpfinger" Date="2026-09-17" Remarks="Franz: 'die Tasten vom OPC-UA Webpanel aus sollen Methoden aufrufen auf dem Steuergeraet das die Kalibrierung macht' - CO/CS bekommen einen dritten, gleichberechtigten Ausloeser: eine argumentlose OPC-UA-Methode (ID_CO_METHOD/ID_CS_METHOD, ACTION=CREATE_METHOD via SERVER_0), analog zum bereits etablierten Softkey_Aux_Method_IE-Muster (Softkey/AUX/lokale-Methode gleichberechtigt gemergt). IND-&gt;RSP-Selfloop zwingend (siehe OPC_UA_VERNETZUNG.md Punkt 12 - sonst 4s Server-Lock). Bestehende Instanzen (Ultraschall) muessen einen echten, wenn auch vorerst ungenutzten Methoden-Namen bekommen - InputVars sind nicht optional (kein WSTRING-Aequivalent zu ID_NULL).">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.3" Author="Franz Höpfinger" Date="2026-09-17" Remarks="AR_CALIBRATE_2P_REF.C_LOW/C_HIGH von AX-Sockets auf reine EventInputs umgestellt (Franz: der AX-Flankenwaechter war akademisch, jeder echte Aufrufer liefert ohnehin ein atomares Event) - AX_BOOL_TO_X_CO/_CS entfallen ersatzlos, die Merge-Ketten (E_MERGE_CO_C/E_MERGE_CS_C) verbinden jetzt direkt per EventConnection mit CALIBRATE.C_LOW/C_HIGH.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.4" Author="Franz Höpfinger" Date="2026-09-18" Remarks="AX_SUBSCRIBE_CO/CS + AX_RF_TRIG_CO/CS (Toggle-Subscribe-Weiterleitung, ID_CO_READ/ID_CS_READ) ersatzlos entfernt - Cross-Station-Weiterleitung einer VT-Taste lief bisher ueber Event-&gt;Pegel(Toggle)-&gt;Event, obwohl mit ID_CO_METHOD/ID_CS_METHOD bereits ein echter Methodenaufruf existiert. Siehe OPC_UA_VERNETZUNG.md Punkt 14. E_MERGE_CO/CS schrumpfen von 4 auf 2 Quellen (lokale VT-Taste + Methode) - CO/CS-Merge-Ketten (3x E_MERGE_2 in Reihe) durch je einen einzelnen E_MERGE_2 ersetzt.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.5" Author="Franz Höpfinger" Date="2026-09-18" Remarks="Button_CO/Button_CS + METHOD_SERVER_CO/CS + E_MERGE_CO/CS (je 1x pro Taste) durch je eine Instanz des neuen wiederverwendbaren Bausteins Button_Method_IE ersetzt - identisches Muster kam 2x identisch vor, analog zu Softkey_Aux_Method_IE herausgeloest.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.6" Author="Franz Höpfinger" Date="2026-09-18" Remarks="Franz: 'kann eine SUB sein' - logiBUS_AI_IDA+AD_SPLIT_2+AD_PUBLISH_RAW+AD_TO_AUDI+AUDI_SPLIT_2+Q_NumericValue_RAW+AUDI_TO_AR durch neue SubApp logiBUS_AI_Raw_VT_AR_OPC ersetzt, AR_SPLIT_2+AR_PUBLISH_CAL+Q_NumericValue_CAL durch die bereits bestehende SubApp AR_TO_Q_Publish_OPC (dort um optionales INITO ergaenzt) - beide Muster kamen identisch auch in logiBUS_AI_Calibrate_3P_IDA_OPC vor.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.7" Author="Franz Höpfinger" Date="2026-09-20" Remarks="Rohwert-Anzeige an den Kalibrierpunkten (Zero-Raw/Span-Raw) ergaenzt, Franz: 'im Web-Panel und im IOP die Roh-Werte mit anzeigen'. CALIBRATE.X_LOW/X_HIGH (AR2, bisher nur an INI_X_LOW/INI_X_HIGH angeschlossen) werden ueber neue TapZeroRaw/TapSpanRaw (MyLib::sys::AR2_TAP_TO_AR) abgezapft, ohne die bestehende Persistenz-/Restore-Kette zu aendern, und ueber neue PublishZeroRaw/PublishSpanRaw (MyLib::sys::AR_TO_Q_Publish_OPC) als reine Nur-Lese-Anzeige (VT CNumberVariable + OPC-UA Publish) exponiert. Neue InputVars stObjZeroRaw/stObjSpanRaw (VT-Objekt) + ID_ZERO_RAW_WRITE/ID_SPAN_RAW_WRITE (OPC-UA-Adresse).">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.9" Author="Franz Höpfinger" Date="2026-09-21" Remarks="Code-Review-Fund (PR #260): INI_X_HIGH.DEFAULT_VALUE stand auf REAL#1.0 statt 0.0 - AR_CALIBRATE_2P_REF's neuer xHighCal-Kalibriert-Flag (v1.3, prueft X_HIGH.DI1 &lt;&gt; 0.0) latchte dadurch bei JEDEM Boot sofort TRUE, obwohl HIGH nie kalibriert wurde (fabricated reference statt Partial-Kalibrierung-Fallback). Default auf REAL#0.0 korrigiert, passend zu INI_X_LOW und zum Flag-Vergleich.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.8" Author="Franz Höpfinger" Date="2026-09-21" Remarks="AR_CALIBRATE_2P_REF hat jetzt ein INIT/QI/QO-Enable-Pattern (genauso wie AR_CALIBRATE_3P_REF: Bugfix Garbage-Interpolation bei nur einem kalibrierten Punkt + xClipping) - CALIBRATE bekommt Parameter QI=TRUE (wie die INI_X_LOW/X_HIGH-Instanzen), sonst bleibt die FB im START-Zustand haengen und REQ laeuft nie.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.10" Author="Franz Hoepfinger" Date="2026-09-23" Remarks="INI_LOW_REF.DEFAULT_VALUE/INI_HIGH_REF.DEFAULT_VALUE waren fest verdrahtet (0.0/100.0) - neue InputVars rLowRefDefault/rHighRefDefault machen die Erstinbetriebnahme-Referenzwerte pro Instanz konfigurierbar (Druck braucht 250.0 statt Fuellbands 100.0), bestehende Instanzen unveraendert per Default.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.12" Author="Franz Höpfinger" Date="2026-10-14" Remarks="AND_QO_A (AND_BOOL_5) + AND_QO (AND_BOOL_9) Kaskade (13 QO-Quellen) durch einen einzelnen AND_QO (AND_BOOL_13) ersetzt - AND_BOOL_11-21 jetzt verfuegbar, Kaskadierung nicht mehr noetig.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.11" Author="Franz Höpfinger" Date="2026-09-27" Remarks="Neuer Plug CAL_OUT (kalibrierter Wert, lokal AR) - bisher verliess der kalibrierte Wert diesen Typ nur per OPC-UA-Publish, was fuer lokale Weiterverarbeitung auf einer VT-losen Station (z.B. Fuellband-oben-Schwellwert) einen unnoetigen Remote-Roundtrip erzwang. CALIBRATE.Y jetzt per neuem AR_SPLIT_2 auf PublishCal UND CAL_OUT verzweigt (Fan-out-Regel: nie direkt).">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+		<Import declaration="logiBUS::io::AI::logiBUS_AI"/>
+		<Import declaration="logiBUS::io::AI::logiBUS_AI_S"/>
+		<Import declaration="logiBUS::utils::conversion::phys::NumericObjectPool_S"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="u16ObjId_RAWVAR" Type="UINT" Comment="Object ID CNumberVariable (Rohwert 0-4095, unkalibriert, reine Diagnose-Anzeige)" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="stObjCal" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object ID + Scale/Offset/Decimals CNumberVariable (kalibrierter Wert, eigene, unabhaengige CNumberVariable)" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 1)"/>
+			<VarDeclaration Name="u16ObjId_CO" Type="UINT" Comment="Object ID Taste &apos;CO&apos; (Kalibrier-Nullpunkt: Referenz 1 anlegen, dann druecken)" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObjId_CS" Type="UINT" Comment="Object ID Taste &apos;CS&apos; (Kalibrier-Spanne: Referenz 2 anlegen, dann druecken - erst nach CO moeglich)" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="Input" Type="logiBUS::io::AI::logiBUS_AI_S" Comment="Identify the Input AnalogInput_I1..I8" InitialValue="logiBUS_AI::Invalid"/>
+			<VarDeclaration Name="sSection" Type="STRING" Comment="INI-Sektionsname fuer OFFSET/SCALE-Persistenz - pro Kanal eindeutig (z.B. &apos;AI_Calibrate_I1&apos;), sonst kollidieren die Kanaele in settings.ini"/>
+			<VarDeclaration Name="ID_RAW_WRITE" Type="WSTRING" Comment="Rohwert-Ruckmelde-Adresse (DWORD 0-4095, ACTION=PUBLISH)"/>
+			<VarDeclaration Name="ID_CAL_WRITE" Type="WSTRING" Comment="Kalibrierter-Wert-Ruckmelde-Adresse (REAL, ACTION=PUBLISH)"/>
+			<VarDeclaration Name="ID_CO_METHOD" Type="WSTRING" Comment="Methodenadresse (ACTION=CREATE_METHOD) fuer den argumentlosen CO-Trigger - gleichberechtigt zur lokalen VT-Taste aufrufbar, sowohl vom OPC-UA-Dashboard als auch per CLIENT_0 von einer anderen Station (Cross-Station-Weiterleitung einer dortigen VT-Taste, siehe OPC_UA_VERNETZUNG.md Punkt 14 - kein Toggle/Subscribe-Umweg mehr)"/>
+			<VarDeclaration Name="ID_CS_METHOD" Type="WSTRING" Comment="Methodenadresse (ACTION=CREATE_METHOD) fuer den argumentlosen CS-Trigger - siehe ID_CO_METHOD"/>
+			<VarDeclaration Name="stObjZero" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object ID + Scale/Offset/Decimals CNumberVariable (ZERO-Referenzwert, VT-Eingabefeld + OPC-UA)" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 1)"/>
+			<VarDeclaration Name="stObjSpan" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object ID + Scale/Offset/Decimals CNumberVariable (SPAN-Referenzwert, VT-Eingabefeld + OPC-UA)" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 1)"/>
+			<VarDeclaration Name="ID_ZERO_READ" Type="WSTRING" Comment="Remote-Subscribe-Adresse ZERO-Referenzwert (REAL, ACTION=SUBSCRIBE)"/>
+			<VarDeclaration Name="ID_ZERO_WRITE" Type="WSTRING" Comment="Remote-Echo-Adresse ZERO-Referenzwert (REAL, ACTION=PUBLISH)"/>
+			<VarDeclaration Name="ID_SPAN_READ" Type="WSTRING" Comment="Remote-Subscribe-Adresse SPAN-Referenzwert (REAL, ACTION=SUBSCRIBE)"/>
+			<VarDeclaration Name="ID_SPAN_WRITE" Type="WSTRING" Comment="Remote-Echo-Adresse SPAN-Referenzwert (REAL, ACTION=PUBLISH)"/>
+			<VarDeclaration Name="stObjZeroRaw" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object ID + Scale/Offset/Decimals CNumberVariable (Rohwert am ZERO-Kalibrierpunkt, reine Diagnose-Anzeige)" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 1)"/>
+			<VarDeclaration Name="stObjSpanRaw" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object ID + Scale/Offset/Decimals CNumberVariable (Rohwert am SPAN-Kalibrierpunkt, reine Diagnose-Anzeige)" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 1)"/>
+			<VarDeclaration Name="ID_ZERO_RAW_WRITE" Type="WSTRING" Comment="Rohwert-am-ZERO-Kalibrierpunkt-Publish-Adresse (REAL, ACTION=PUBLISH)"/>
+			<VarDeclaration Name="ID_SPAN_RAW_WRITE" Type="WSTRING" Comment="Rohwert-am-SPAN-Kalibrierpunkt-Publish-Adresse (REAL, ACTION=PUBLISH)"/>
+			<VarDeclaration Name="rLowRefDefault" Type="REAL" Comment="Erstinbetriebnahme-Standardwert LOW_REF (INI_LOW_REF.DEFAULT_VALUE), bevor der Bediener selbst kalibriert - Fuellband/die meisten Sensoren: 0.0" InitialValue="REAL#0.0"/>
+			<VarDeclaration Name="rHighRefDefault" Type="REAL" Comment="Erstinbetriebnahme-Standardwert HIGH_REF (INI_HIGH_REF.DEFAULT_VALUE), bevor der Bediener selbst kalibriert - z.B. 250.0 fuer Druck (0-250bar), 100.0 fuer Fuellband-Winkel (Prozent)" InitialValue="REAL#100.0"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="CAL_OUT" Type="adapter::types::unidirectional::AR" Comment="Kalibrierter Wert, lokal (= CALIBRATE.Y) - fuer Weiterverarbeitung auf derselben Station ohne OPC-UA-Roundtrip"/>
+		</Plugs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<SubApp Name="InputRaw" Type="MyLib::sys::logiBUS_AI_Raw_VT_AR_OPC" x="-2900" y="1300">
+		</SubApp>
+		<FB Name="CALIBRATE" Type="adapter::Engineering::measurements::AR_CALIBRATE_2P_REF" x="-200" y="200">
+			<Parameter Name="xClipping" Value="FALSE"/>
+		</FB>
+		<SubApp Name="Y_OFFSET_LIT" Type="MyLib::sys::NumericValue_TO_AR2_OPC" x="-2800" y="2200">
+		</SubApp>
+		<SubApp Name="Y_SCALE_LIT" Type="MyLib::sys::NumericValue_TO_AR2_OPC" x="-2800" y="3200">
+		</SubApp>
+		<SubApp Name="TriggerCO" Type="MyLib::sys::Button_Method_IE" x="-2500" y="-800">
+		</SubApp>
+		<SubApp Name="TriggerCS" Type="MyLib::sys::Button_Method_IE" x="-2500" y="0">
+		</SubApp>
+		<FB Name="INI_X_LOW" Type="eclipse4diac::storage::INI_AR2" x="4500" y="1100">
+			<Parameter Name="SETM" Value="TRUE"/>
+			<Parameter Name="KEY" Value="'X_LOW'"/>
+			<Parameter Name="DEFAULT_VALUE" Value="REAL#0.0"/>
+		</FB>
+		<FB Name="INI_X_HIGH" Type="eclipse4diac::storage::INI_AR2" x="6500" y="1200">
+			<Parameter Name="SETM" Value="TRUE"/>
+			<Parameter Name="KEY" Value="'X_HIGH'"/>
+			<Parameter Name="DEFAULT_VALUE" Value="REAL#0.0"/>
+		</FB>
+		<FB Name="INI_LOW_REF" Type="eclipse4diac::storage::INI_AR2" x="4500" y="2200">
+			<Parameter Name="SETM" Value="TRUE"/>
+			<Parameter Name="KEY" Value="'LOW_REF'"/>
+		</FB>
+		<FB Name="INI_HIGH_REF" Type="eclipse4diac::storage::INI_AR2" x="6500" y="2300">
+			<Parameter Name="SETM" Value="TRUE"/>
+			<Parameter Name="KEY" Value="'HIGH_REF'"/>
+		</FB>
+		<SubApp Name="PublishCal" Type="MyLib::sys::AR_TO_Q_Publish_OPC" x="4100" y="-1600">
+		</SubApp>
+		<FB Name="TapZeroRaw" Type="adapter::events::bidirectional::AR2_SPLIT_FWD_REV" x="1800" y="1100">
+		</FB>
+		<FB Name="TapSpanRaw" Type="adapter::events::bidirectional::AR2_SPLIT_FWD_REV" x="1800" y="1700">
+		</FB>
+		<SubApp Name="PublishZeroRaw" Type="MyLib::sys::AR_TO_Q_Publish_OPC" x="4100" y="-800">
+		</SubApp>
+		<SubApp Name="PublishSpanRaw" Type="MyLib::sys::AR_TO_Q_Publish_OPC" x="4100" y="0">
+		</SubApp>
+		<FB Name="AR_SPLIT_2_Cal" Type="adapter::events::unidirectional::AR_SPLIT_2" x="1800" y="-1200">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_13" x="9300" y="1100">
+		</FB>
+		<EventConnections>
+			<Connection Source="TriggerCO.IND" Destination="CALIBRATE.C_LOW" dx1="313.33"/>
+			<Connection Source="TriggerCS.IND" Destination="CALIBRATE.C_HIGH" dx1="173.33"/>
+			<Connection Source="INIT" Destination="CALIBRATE.INIT" dx1="80" dx2="80" dy="-213.33"/>
+			<Connection Source="CALIBRATE.INITO" Destination="INI_X_LOW.INIT" dx1="1833.33"/>
+			<Connection Source="INI_X_LOW.INITO" Destination="INI_X_HIGH.INIT" dx1="506.67"/>
+			<Connection Source="INI_X_HIGH.INITO" Destination="INI_LOW_REF.INIT" dx1="80" dx2="80" dy="500"/>
+			<Connection Source="INI_LOW_REF.INITO" Destination="INI_HIGH_REF.INIT" dx1="506.67"/>
+			<Connection Source="INI_HIGH_REF.INITO" Destination="InputRaw.INIT"/>
+			<Connection Source="InputRaw.INITO" Destination="Y_OFFSET_LIT.INIT"/>
+			<Connection Source="Y_OFFSET_LIT.INITO" Destination="Y_SCALE_LIT.INIT"/>
+			<Connection Source="Y_SCALE_LIT.INITO" Destination="TriggerCO.INIT"/>
+			<Connection Source="TriggerCO.INITO" Destination="TriggerCS.INIT"/>
+			<Connection Source="TriggerCS.INITO" Destination="PublishCal.INIT"/>
+			<Connection Source="PublishCal.INITO" Destination="PublishZeroRaw.INIT"/>
+			<Connection Source="PublishZeroRaw.INITO" Destination="PublishSpanRaw.INIT"/>
+			<Connection Source="PublishSpanRaw.INITO" Destination="INITO"/>
+			<Connection Source="PublishSpanRaw.INITO" Destination="AND_QO.REQ"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="Input" Destination="InputRaw.Input" dx1="1460">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId_RAWVAR" Destination="InputRaw.u16ObjId_RAWVAR" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="stObjCal" Destination="PublishCal.stObj" dx1="4086.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId_CO" Destination="TriggerCO.u16ObjId" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId_CS" Destination="TriggerCS.u16ObjId" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="sSection" Destination="INI_X_LOW.SECTION" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="sSection" Destination="INI_X_HIGH.SECTION" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="sSection" Destination="INI_LOW_REF.SECTION" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="sSection" Destination="INI_HIGH_REF.SECTION" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="rLowRefDefault" Destination="INI_LOW_REF.DEFAULT_VALUE" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="rHighRefDefault" Destination="INI_HIGH_REF.DEFAULT_VALUE" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_RAW_WRITE" Destination="InputRaw.ID_RAW_WRITE" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_CAL_WRITE" Destination="PublishCal.ID_WRITE" dx1="4286.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_CO_METHOD" Destination="TriggerCO.ID_METHOD" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_CS_METHOD" Destination="TriggerCS.ID_METHOD" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="stObjZero" Destination="Y_OFFSET_LIT.stObj" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_ZERO_READ" Destination="Y_OFFSET_LIT.ID_READ" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_ZERO_WRITE" Destination="Y_OFFSET_LIT.ID_WRITE" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="stObjSpan" Destination="Y_SCALE_LIT.stObj" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_SPAN_READ" Destination="Y_SCALE_LIT.ID_READ" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_SPAN_WRITE" Destination="Y_SCALE_LIT.ID_WRITE" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="stObjZeroRaw" Destination="PublishZeroRaw.stObj" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_ZERO_RAW_WRITE" Destination="PublishZeroRaw.ID_WRITE" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="stObjSpanRaw" Destination="PublishSpanRaw.stObj" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_SPAN_RAW_WRITE" Destination="PublishSpanRaw.ID_WRITE" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="CALIBRATE.QI" dx1="80" dx2="80" dy="-53.33"/>
+			<Connection Source="QI" Destination="INI_X_LOW.QI" dx1="1820"/>
+			<Connection Source="QI" Destination="INI_X_HIGH.QI" dx1="2820"/>
+			<Connection Source="QI" Destination="INI_LOW_REF.QI" dx1="1820"/>
+			<Connection Source="QI" Destination="INI_HIGH_REF.QI" dx1="2820"/>
+			<Connection Source="QI" Destination="InputRaw.QI"/>
+			<Connection Source="QI" Destination="Y_OFFSET_LIT.QI"/>
+			<Connection Source="QI" Destination="Y_SCALE_LIT.QI"/>
+			<Connection Source="QI" Destination="TriggerCO.QI"/>
+			<Connection Source="QI" Destination="TriggerCS.QI"/>
+			<Connection Source="QI" Destination="PublishCal.QI"/>
+			<Connection Source="QI" Destination="PublishZeroRaw.QI"/>
+			<Connection Source="QI" Destination="PublishSpanRaw.QI"/>
+			<Connection Source="CALIBRATE.QO" Destination="AND_QO.IN1" dx1="4080"/>
+			<Connection Source="INI_X_LOW.QO" Destination="AND_QO.IN2" dx1="1760"/>
+			<Connection Source="INI_X_HIGH.QO" Destination="AND_QO.IN3" dx1="760"/>
+			<Connection Source="INI_LOW_REF.QO" Destination="AND_QO.IN4" dx1="1760"/>
+			<Connection Source="INI_HIGH_REF.QO" Destination="AND_QO.IN5" dx1="760"/>
+			<Connection Source="InputRaw.QO" Destination="AND_QO.IN6"/>
+			<Connection Source="Y_OFFSET_LIT.QO" Destination="AND_QO.IN7"/>
+			<Connection Source="Y_SCALE_LIT.QO" Destination="AND_QO.IN8"/>
+			<Connection Source="TriggerCO.QO" Destination="AND_QO.IN9"/>
+			<Connection Source="TriggerCS.QO" Destination="AND_QO.IN10"/>
+			<Connection Source="PublishCal.QO" Destination="AND_QO.IN11"/>
+			<Connection Source="PublishZeroRaw.QO" Destination="AND_QO.IN12"/>
+			<Connection Source="PublishSpanRaw.QO" Destination="AND_QO.IN13"/>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="2746.67"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="InputRaw.AR_OUT" Destination="CALIBRATE.X" dx1="300"/>
+			<Connection Source="CALIBRATE.X_LOW" Destination="TapZeroRaw.IN" dx1="580"/>
+			<Connection Source="TapZeroRaw.OUT" Destination="INI_X_LOW.VAL" dx1="1026.67"/>
+			<Connection Source="TapZeroRaw.REV_OUT" Destination="PublishZeroRaw.AR_IN" dx1="200"/>
+			<Connection Source="CALIBRATE.X_HIGH" Destination="TapSpanRaw.IN" dx1="340"/>
+			<Connection Source="TapSpanRaw.OUT" Destination="INI_X_HIGH.VAL" dx1="846.67"/>
+			<Connection Source="TapSpanRaw.REV_OUT" Destination="PublishSpanRaw.AR_IN" dx1="306.67"/>
+			<Connection Source="CALIBRATE.LOW_REF" Destination="INI_LOW_REF.VAL" dx1="253.33"/>
+			<Connection Source="CALIBRATE.HIGH_REF" Destination="INI_HIGH_REF.VAL" dx1="180"/>
+			<Connection Source="Y_OFFSET_LIT.VALUEO" Destination="CALIBRATE.Y_LOW" dx1="793.33"/>
+			<Connection Source="Y_SCALE_LIT.VALUEO" Destination="CALIBRATE.Y_HIGH" dx1="1160"/>
+			<Connection Source="CALIBRATE.Y" Destination="AR_SPLIT_2_Cal.IN" dx1="300"/>
+			<Connection Source="AR_SPLIT_2_Cal.OUT1" Destination="PublishCal.AR_IN" dx1="300"/>
+			<Connection Source="AR_SPLIT_2_Cal.OUT2" Destination="CAL_OUT" dx1="300"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

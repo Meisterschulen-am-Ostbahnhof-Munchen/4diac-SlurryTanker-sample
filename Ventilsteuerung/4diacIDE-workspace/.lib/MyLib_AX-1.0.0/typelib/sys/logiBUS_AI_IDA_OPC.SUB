@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="logiBUS_AI_IDA_OPC" Comment="logiBUS_AI_IDA (Analog-Eingang) auf VT-Zahlenfeld (Rohwert+Prozent, geteilte&#10;CNumberVariable) + Bargraph + OPC-UA (Rohwert DWORD + Prozent REAL, generisch,&#10;ein Kanal)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-08-30" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+		<Import declaration="logiBUS::io::AI::logiBUS_AI"/>
+		<Import declaration="logiBUS::io::AI::logiBUS_AI_S"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="u16ObjId_VALUEVAR" Type="UINT" Comment="Object ID CNumberVariable (Rohwert 0-4095, gemeinsam gebunden an Rohwert-Zahlenfeld, Prozent-Zahlenfeld und Bargraph - Prozent/Bargraph nutzen ihre eigene VT-Scale auf denselben Rohwert)" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="Input" Type="logiBUS::io::AI::logiBUS_AI_S" Comment="Identify the Input AnalogInput_I1..I8" InitialValue="logiBUS_AI::Invalid"/>
+			<VarDeclaration Name="ID_RAW_WRITE" Type="WSTRING" Comment="Rohwert-Ruckmelde-Adresse (DWORD 0-4095, ACTION=PUBLISH)"/>
+			<VarDeclaration Name="ID_PERCENT_WRITE" Type="WSTRING" Comment="Prozent-Ruckmelde-Adresse (REAL 0.0-100.0, ACTION=PUBLISH, linear ohne physikalische Kalibrierung)"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="logiBUS_AI_IDA" Type="logiBUS::io::AI::logiBUS_AI_IDA" x="-5600" y="-1700">
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="AnalogInput_hysteresis" Value="DWORD#50"/>
+			<Parameter Name="TimeDelta" Value="DWORD#250"/>
+			<Parameter Name="TimeRateLimit" Value="DWORD#100"/>
+		</FB>
+		<FB Name="AD_SPLIT_2" Type="adapter::events::unidirectional::AD_SPLIT_3" x="-3300" y="-1000">
+		</FB>
+		<FB Name="AD_PUBLISH_RAW" Type="adapter::net::AD_PUBLISH_1" x="2000" y="-1700">
+		</FB>
+		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="1900" y="-800">
+		</FB>
+		<SubApp Name="F_AI_RAW_TO_PERCENT" Type="MyLib::sys::F_AI_RAW_TO_PERCENT_AD" x="-900" y="600">
+		</SubApp>
+		<FB Name="AR_PUBLISH_PERCENT" Type="adapter::net::AR_PUBLISH_1" x="1900" y="200">
+		</FB>
+		<FB Name="AD_TO_AUDI" Type="adapter::conversion::unidirectional::AD_TO_AUDI" x="0" y="-400">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_4" x="4100" y="-500">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="logiBUS_AI_IDA.INIT" dx1="80" dx2="80" dy="-1066.67"/>
+			<Connection Source="logiBUS_AI_IDA.INITO" Destination="AD_PUBLISH_RAW.INIT"/>
+			<Connection Source="AD_PUBLISH_RAW.INITO" Destination="AR_PUBLISH_PERCENT.INIT" dx1="80" dx2="80" dy="946.67"/>
+			<Connection Source="AR_PUBLISH_PERCENT.INITO" Destination="Q_NumericValue.INIT" dx1="80" dx2="80" dy="-500"/>
+			<Connection Source="Q_NumericValue.INITO" Destination="INITO" dx1="4933.33"/>
+			<Connection Source="Q_NumericValue.INITO" Destination="AND_QO.REQ" dx1="480"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="Input" Destination="logiBUS_AI_IDA.Input" dx1="1460">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId_VALUEVAR" Destination="Q_NumericValue.u16ObjId" dx1="2680">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_RAW_WRITE" Destination="AD_PUBLISH_RAW.ID" dx1="4280">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_PERCENT_WRITE" Destination="AR_PUBLISH_PERCENT.ID" dx1="4280">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="Q_NumericValue.QI" dx1="520"/>
+			<Connection Source="QI" Destination="logiBUS_AI_IDA.QI" dx1="80" dx2="80" dy="-960"/>
+			<Connection Source="QI" Destination="AD_PUBLISH_RAW.QI" dx1="566.67"/>
+			<Connection Source="QI" Destination="AR_PUBLISH_PERCENT.QI" dx1="520"/>
+			<Connection Source="Q_NumericValue.QO" Destination="AND_QO.IN1" dx1="480"/>
+			<Connection Source="logiBUS_AI_IDA.QO" Destination="AND_QO.IN2" dx1="2306.67"/>
+			<Connection Source="AD_PUBLISH_RAW.QO" Destination="AND_QO.IN3" dx1="626.67"/>
+			<Connection Source="AR_PUBLISH_PERCENT.QO" Destination="AND_QO.IN4" dx1="673.33"/>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="2740"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="logiBUS_AI_IDA.IN" Destination="AD_SPLIT_2.IN" dx1="420"/>
+			<Connection Source="AD_SPLIT_2.OUT1" Destination="AD_PUBLISH_RAW.IN" dx1="173.33"/>
+			<Connection Source="AD_SPLIT_2.OUT3" Destination="F_AI_RAW_TO_PERCENT.RAW_IN" dx1="153.33"/>
+			<Connection Source="F_AI_RAW_TO_PERCENT.PERCENT_OUT" Destination="AR_PUBLISH_PERCENT.IN" dx1="360"/>
+			<Connection Source="AD_TO_AUDI.AUDI_OUT" Destination="Q_NumericValue.u32NewValue" dx1="540"/>
+			<Connection Source="AD_SPLIT_2.OUT2" Destination="AD_TO_AUDI.AD_IN" dx1="1273.33"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

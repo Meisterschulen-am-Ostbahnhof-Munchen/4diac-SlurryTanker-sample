@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="SingleSelect" Comment="Subapplication Type">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.1" Author="Franz Höpfinger" Date="2026-09-27" Remarks="Layout aufgeraeumt: AUI_DEMUX_4 in AUI_DEMUX umbenannt (der '_4' hatte keine Bedeutung), Baustein vertikal auf die Mitte der 5 ILOCK_T_FF_SR_AX-Kette zentriert, Event-Routing gleichmaessig aufgefaechert.">
+	</VersionInfo>
+	<VersionInfo Version="1.0" Author="franz" Date="2026-09-27">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<Plugs>
+			<AdapterDeclaration Name="OUT1" Type="adapter::types::unidirectional::AX"/>
+			<AdapterDeclaration Name="OUT2" Type="adapter::types::unidirectional::AX"/>
+			<AdapterDeclaration Name="OUT3" Type="adapter::types::unidirectional::AX"/>
+			<AdapterDeclaration Name="OUT4" Type="adapter::types::unidirectional::AX"/>
+			<AdapterDeclaration Name="OUT5" Type="adapter::types::unidirectional::AX"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AUI"/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="ILOCK_T_FF_SR_AX_1" Type="logiBUS::signalprocessing::interlock::ILOCK_T_FF_SR_AX" x="6500" y="300">
+		</FB>
+		<FB Name="ILOCK_T_FF_SR_AX_2" Type="logiBUS::signalprocessing::interlock::ILOCK_T_FF_SR_AX" x="6500" y="1100">
+		</FB>
+		<FB Name="ILOCK_T_FF_SR_AX_3" Type="logiBUS::signalprocessing::interlock::ILOCK_T_FF_SR_AX" x="6500" y="1900">
+		</FB>
+		<FB Name="ILOCK_T_FF_SR_AX_4" Type="logiBUS::signalprocessing::interlock::ILOCK_T_FF_SR_AX" x="6500" y="2700">
+		</FB>
+		<FB Name="ILOCK_T_FF_SR_AX_5" Type="logiBUS::signalprocessing::interlock::ILOCK_T_FF_SR_AX" x="6500" y="3500">
+		</FB>
+		<FB Name="AUI_DEMUX" Type="adapter::events::unidirectional::AUI_DEMUX_5" x="4000" y="1800">
+		</FB>
+		<EventConnections>
+			<Connection Source="AUI_DEMUX.EO1" Destination="ILOCK_T_FF_SR_AX_1.S" dx1="406.67"/>
+			<Connection Source="AUI_DEMUX.EO2" Destination="ILOCK_T_FF_SR_AX_2.S" dx1="580"/>
+			<Connection Source="AUI_DEMUX.EO3" Destination="ILOCK_T_FF_SR_AX_3.S" dx1="660"/>
+			<Connection Source="AUI_DEMUX.EO4" Destination="ILOCK_T_FF_SR_AX_4.S" dx1="846.67"/>
+			<Connection Source="AUI_DEMUX.EO5" Destination="ILOCK_T_FF_SR_AX_5.S" dx1="500"/>
+		</EventConnections>
+		<AdapterConnections>
+			<Connection Source="ILOCK_T_FF_SR_AX_1.Q" Destination="OUT1" dx1="4073.33"/>
+			<Connection Source="ILOCK_T_FF_SR_AX_2.Q" Destination="OUT2" dx1="4280"/>
+			<Connection Source="ILOCK_T_FF_SR_AX_3.Q" Destination="OUT3" dx1="4426.67"/>
+			<Connection Source="ILOCK_T_FF_SR_AX_4.Q" Destination="OUT4" dx1="4573.33"/>
+			<Connection Source="ILOCK_T_FF_SR_AX_5.Q" Destination="OUT5" dx1="4740"/>
+			<Connection Source="ILOCK_T_FF_SR_AX_1.ILOCK_OUT" Destination="ILOCK_T_FF_SR_AX_2.ILOCK_IN" dx1="80" dx2="80" dy="400"/>
+			<Connection Source="ILOCK_T_FF_SR_AX_2.ILOCK_OUT" Destination="ILOCK_T_FF_SR_AX_3.ILOCK_IN" dx1="80" dx2="80" dy="400"/>
+			<Connection Source="ILOCK_T_FF_SR_AX_3.ILOCK_OUT" Destination="ILOCK_T_FF_SR_AX_4.ILOCK_IN" dx1="80" dx2="80" dy="400"/>
+			<Connection Source="ILOCK_T_FF_SR_AX_4.ILOCK_OUT" Destination="ILOCK_T_FF_SR_AX_5.ILOCK_IN" dx1="80" dx2="80" dy="400"/>
+			<Connection Source="IN" Destination="AUI_DEMUX.K" dx1="1900"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

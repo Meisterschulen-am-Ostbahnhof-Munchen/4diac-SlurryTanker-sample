@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="SF_ResetButton" Comment="PLCopen Safety SF_ResetButton (Part 1 v2.10, Ch. 6.1) - Trailing-Edge Reset">
+	<Identification Standard="61499-2" Function="Adds Trailing-Edge functionality (LOW-HIGH-LOW) to Reset inputs, per EN ISO 13849-1:2015 5.2.2. ResetOut pulses TRUE for 1 cycle after a valid press-and-release within [TrailingMinimum, TrailingMaximum]." Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-10-09" Remarks="Added EResetOut event output (fires once alongside ResetOut=TRUE). Non-literal 61499 extension of the PLCopen interface (REQ/CNF-only is a 61131-3-scan idiom; a dedicated event lets consumers wire the reset pulse directly instead of re-deriving it from CNF+ResetOut via an external gate).">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-09" Remarks="Modeled after logiBUS::utils::sequence::timed::sequence_T_05 (ECC + ATimeOut Plug pattern). Source: PLCopen TC5 Safety Part 1 - Concepts and Function Blocks, Version 2.10, Nov. 7 2023, Chapter 6.1 Reset Button.">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::safety::PLCopen">
+		<Import declaration="logiBUS::safety::PLCopen::const::DiagCodes"/>
+		<Import declaration="logiBUS::safety::PLCopen::const::ResetButtonDiagCodes"/>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event" Comment="Cyclic evaluation request">
+				<With Var="ResetRequested"/>
+				<With Var="ResetIn"/>
+				<With Var="TrailingMinimum"/>
+				<With Var="TrailingMaximum"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+				<With Var="Ready"/>
+				<With Var="ResetOut"/>
+				<With Var="Error"/>
+				<With Var="DiagCode"/>
+			</Event>
+			<Event Name="EResetOut" Type="Event" Comment="Dedicated event, fires once in the exact cycle a valid trailing-edge reset is detected (same cycle as ResetOut=TRUE)"/>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="ResetRequested" Type="BOOL" Comment="From the paired FB's ResetRequest output. TRUE=monitor ResetIn, FALSE=inactive" InitialValue="TRUE"/>
+			<VarDeclaration Name="ResetIn" Type="BOOL" Comment="Reset button input. FALSE=released, TRUE=actuated" InitialValue="FALSE"/>
+			<VarDeclaration Name="TrailingMinimum" Type="TIME" Comment="Min. actuation time (absolute min 100ms). Shorter presses are ignored" InitialValue="T#350ms"/>
+			<VarDeclaration Name="TrailingMaximum" Type="TIME" Comment="Max. actuation time. Longer presses are ignored" InitialValue="T#2s"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="Ready" Type="BOOL" Comment="FB active, outputs valid" InitialValue="FALSE"/>
+			<VarDeclaration Name="ResetOut" Type="BOOL" Comment="1-cycle pulse: valid trailing-edge reset detected" InitialValue="FALSE"/>
+			<VarDeclaration Name="Error" Type="BOOL" Comment="TRUE while in an error state, see DiagCode" InitialValue="FALSE"/>
+			<VarDeclaration Name="DiagCode" Type="WORD" Comment="FB-specific status/error code, see PLCopen Safety Part 1 Ch. 6.1.6" InitialValue="16#0000"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="minTimeOut" Type="iec61499::events::ATimeOut" Comment="TrailingMinimum timer"/>
+			<AdapterDeclaration Name="maxTimeOut" Type="iec61499::events::ATimeOut" Comment="TrailingMaximum timer"/>
+		</Plugs>
+	</InterfaceList>
+	<BasicFB>
+		<InternalVars>
+			<VarDeclaration Name="xPrevResetIn" Type="BOOL" InitialValue="FALSE" Comment="ResetIn value as of the previous scan, for edge detection"/>
+			<VarDeclaration Name="xMinOk" Type="BOOL" InitialValue="FALSE" Comment="Latched TRUE once TrailingMinimum has elapsed since the rising edge"/>
+			<VarDeclaration Name="xParamOk" Type="BOOL" InitialValue="FALSE" Comment="TrailingMinimum/TrailingMaximum are within the valid range"/>
+		</InternalVars>
+		<ECC>
+			<ECState Name="xSTART" Comment="Initial State" x="-5600" y="0">
+			</ECState>
+			<ECState Name="sIdle" x="-4000" y="0">
+				<ECAction Algorithm="Idle_C" Output="CNF"/>
+				<ECAction Output="minTimeOut.STOP"/>
+				<ECAction Output="maxTimeOut.STOP"/>
+			</ECState>
+			<ECState Name="sParamError" x="-2400" y="-1600">
+				<ECAction Algorithm="ParamError_C" Output="CNF"/>
+			</ECState>
+			<ECState Name="sResetError" x="-2400" y="1600">
+				<ECAction Algorithm="ResetError_C" Output="CNF"/>
+			</ECState>
+			<ECState Name="sWaitRTrig" x="-2400" y="0">
+				<ECAction Algorithm="WaitRTrig_C" Output="CNF"/>
+			</ECState>
+			<ECState Name="sArmTimers" Comment="One-shot: (re)start both timers, then fall through to sWaitFTrig" x="-800" y="0">
+				<ECAction Algorithm="ArmTimers_C" Output="CNF"/>
+				<ECAction Output="minTimeOut.START"/>
+				<ECAction Output="maxTimeOut.START"/>
+			</ECState>
+			<ECState Name="sWaitFTrig" x="800" y="0">
+				<ECAction Algorithm="WaitFTrig_C" Output="CNF"/>
+			</ECState>
+			<ECState Name="sMinElapsed" Comment="One-shot: latch xMinOk, then fall through back to sWaitFTrig" x="800" y="-1600">
+				<ECAction Algorithm="MinElapsed_C" Output="CNF"/>
+			</ECState>
+			<ECState Name="sErrorMin" x="2400" y="-1600">
+				<ECAction Algorithm="ErrorMin_C" Output="CNF"/>
+				<ECAction Output="minTimeOut.STOP"/>
+				<ECAction Output="maxTimeOut.STOP"/>
+			</ECState>
+			<ECState Name="sErrorMax" x="2400" y="1600">
+				<ECAction Algorithm="ErrorMax_C" Output="CNF"/>
+				<ECAction Output="minTimeOut.STOP"/>
+				<ECAction Output="maxTimeOut.STOP"/>
+			</ECState>
+			<ECState Name="sResetDetected" x="2400" y="0">
+				<ECAction Algorithm="ResetDetected_C" Output="CNF"/>
+				<ECAction Output="EResetOut"/>
+				<ECAction Output="minTimeOut.STOP"/>
+				<ECAction Output="maxTimeOut.STOP"/>
+			</ECState>
+
+			<ECTransition Source="xSTART" Destination="sIdle" Condition="1" x="-4800" y="-160"/>
+
+			<ECTransition Source="sIdle" Destination="sIdle" Condition="REQ[NOT ResetRequested]" x="-4000" y="-320"/>
+			<ECTransition Source="sIdle" Destination="sWaitRTrig" Condition="REQ[ResetRequested]" x="-3200" y="0"/>
+
+			<ECTransition Source="sParamError" Destination="sIdle" Condition="REQ[NOT ResetRequested]" x="-3200" y="-1200"/>
+			<ECTransition Source="sParamError" Destination="sParamError" Condition="REQ[ResetRequested AND NOT xParamOk]" x="-2400" y="-2000"/>
+			<ECTransition Source="sParamError" Destination="sWaitRTrig" Condition="REQ[ResetRequested AND xParamOk]" x="-2400" y="-800"/>
+
+			<ECTransition Source="sResetError" Destination="sIdle" Condition="REQ[NOT ResetRequested]" x="-3200" y="1200"/>
+			<ECTransition Source="sResetError" Destination="sResetError" Condition="REQ[ResetRequested AND ResetIn]" x="-2400" y="2000"/>
+			<ECTransition Source="sResetError" Destination="sWaitRTrig" Condition="REQ[ResetRequested AND NOT ResetIn]" x="-2400" y="800"/>
+
+			<!-- Fig. 15 branches "Wait for R_TRIG" into: bad params (0), stuck ResetIn without a
+			     fresh edge (1), a fresh rising edge (2, -> sArmTimers/sWaitFTrig), else self-loop. -->
+			<ECTransition Source="sWaitRTrig" Destination="sIdle" Condition="REQ[NOT ResetRequested]" x="-3200" y="-160"/>
+			<ECTransition Source="sWaitRTrig" Destination="sParamError" Condition="REQ[ResetRequested AND NOT xParamOk]" x="-3200" y="-480"/>
+			<ECTransition Source="sWaitRTrig" Destination="sResetError" Condition="REQ[ResetRequested AND xParamOk AND ResetIn AND xPrevResetIn]" x="-3200" y="480"/>
+			<ECTransition Source="sWaitRTrig" Destination="sArmTimers" Condition="REQ[ResetRequested AND xParamOk AND ResetIn AND NOT xPrevResetIn]" x="-1600" y="-160"/>
+			<ECTransition Source="sWaitRTrig" Destination="sWaitRTrig" Condition="REQ[ResetRequested AND xParamOk AND NOT ResetIn]" x="-2400" y="320"/>
+
+			<ECTransition Source="sArmTimers" Destination="sWaitFTrig" Condition="1" x="0" y="-160"/>
+
+			<ECTransition Source="sWaitFTrig" Destination="sIdle" Condition="REQ[NOT ResetRequested]" x="-1600" y="-2400"/>
+			<ECTransition Source="sWaitFTrig" Destination="sResetDetected" Condition="REQ[ResetRequested AND NOT ResetIn AND xPrevResetIn AND xMinOk]" x="1600" y="-160"/>
+			<ECTransition Source="sWaitFTrig" Destination="sErrorMin" Condition="REQ[ResetRequested AND NOT ResetIn AND xPrevResetIn AND NOT xMinOk]" x="1600" y="-800"/>
+			<ECTransition Source="sWaitFTrig" Destination="sWaitFTrig" Condition="REQ[ResetRequested AND ResetIn]" x="800" y="320"/>
+			<ECTransition Source="sWaitFTrig" Destination="sMinElapsed" Condition="minTimeOut.TimeOut" x="800" y="-800"/>
+			<ECTransition Source="sWaitFTrig" Destination="sErrorMax" Condition="maxTimeOut.TimeOut" x="1600" y="800"/>
+			<ECTransition Source="sMinElapsed" Destination="sWaitFTrig" Condition="1" x="800" y="-1200"/>
+
+			<ECTransition Source="sErrorMin" Destination="sIdle" Condition="REQ[NOT ResetRequested]" x="-1600" y="-2000"/>
+			<ECTransition Source="sErrorMin" Destination="sParamError" Condition="REQ[ResetRequested AND ResetIn AND NOT xPrevResetIn AND NOT xParamOk]" x="-800" y="-1200"/>
+			<ECTransition Source="sErrorMin" Destination="sArmTimers" Condition="REQ[ResetRequested AND xParamOk AND ResetIn AND NOT xPrevResetIn]" x="0" y="-800"/>
+			<ECTransition Source="sErrorMin" Destination="sErrorMin" Condition="REQ[ResetRequested AND NOT (ResetIn AND NOT xPrevResetIn)]" x="2400" y="-2000"/>
+
+			<ECTransition Source="sErrorMax" Destination="sIdle" Condition="REQ[NOT ResetRequested]" x="-1600" y="2000"/>
+			<ECTransition Source="sErrorMax" Destination="sParamError" Condition="REQ[ResetRequested AND ResetIn AND NOT xPrevResetIn AND NOT xParamOk]" x="-800" y="1200"/>
+			<ECTransition Source="sErrorMax" Destination="sArmTimers" Condition="REQ[ResetRequested AND xParamOk AND ResetIn AND NOT xPrevResetIn]" x="0" y="800"/>
+			<ECTransition Source="sErrorMax" Destination="sErrorMax" Condition="REQ[ResetRequested AND NOT (ResetIn AND NOT xPrevResetIn)]" x="2400" y="2000"/>
+
+			<ECTransition Source="sResetDetected" Destination="sWaitRTrig" Condition="1" x="-800" y="-160"/>
+		</ECC>
+		<Algorithm Name="Idle_C">
+			<ST><![CDATA[ // 0000 Idle - FB not active
+xParamOk := (TrailingMinimum <= TrailingMaximum) AND (TrailingMinimum >= T#100ms);
+Ready := BOOL#FALSE;
+ResetOut := BOOL#FALSE;
+Error := BOOL#FALSE;
+DiagCode := DiagCodes::IDLE;
+xPrevResetIn := ResetIn;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="ParamError_C">
+			<ST><![CDATA[ // C000 Parameter Error - TrailingMinimum > TrailingMaximum OR TrailingMinimum < 100ms
+xParamOk := (TrailingMinimum <= TrailingMaximum) AND (TrailingMinimum >= T#100ms);
+Ready := BOOL#TRUE;
+ResetOut := BOOL#FALSE;
+Error := BOOL#TRUE;
+DiagCode := ResetButtonDiagCodes::PARAMETER_ERROR;
+xPrevResetIn := ResetIn;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="ResetError_C">
+			<ST><![CDATA[ // C001 Reset Error - ResetIn was already TRUE when ResetRequested became TRUE
+xParamOk := (TrailingMinimum <= TrailingMaximum) AND (TrailingMinimum >= T#100ms);
+Ready := BOOL#TRUE;
+ResetOut := BOOL#FALSE;
+Error := BOOL#TRUE;
+DiagCode := ResetButtonDiagCodes::RESET_ERROR;
+xPrevResetIn := ResetIn;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="WaitRTrig_C">
+			<ST><![CDATA[ // 83E2 Wait for R_TRIG - enabled, waiting for the operator to press the button
+xParamOk := (TrailingMinimum <= TrailingMaximum) AND (TrailingMinimum >= T#100ms);
+Ready := BOOL#TRUE;
+ResetOut := BOOL#FALSE;
+Error := BOOL#FALSE;
+DiagCode := ResetButtonDiagCodes::WAIT_R_TRIG;
+xPrevResetIn := ResetIn;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="ArmTimers_C">
+			<ST><![CDATA[ // 83F2 (entry) - rising edge detected, (re)start both trailing-edge timers
+minTimeOut.DT := TrailingMinimum;
+maxTimeOut.DT := TrailingMaximum;
+xMinOk := BOOL#FALSE;
+Ready := BOOL#TRUE;
+ResetOut := BOOL#FALSE;
+Error := BOOL#FALSE;
+DiagCode := ResetButtonDiagCodes::WAIT_F_TRIG;
+xPrevResetIn := ResetIn;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="WaitFTrig_C">
+			<ST><![CDATA[ // 83F2 Wait for F_TRIG - ResetIn is TRUE, waiting for release
+Ready := BOOL#TRUE;
+ResetOut := BOOL#FALSE;
+Error := BOOL#FALSE;
+DiagCode := ResetButtonDiagCodes::WAIT_F_TRIG;
+xPrevResetIn := ResetIn;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="MinElapsed_C">
+			<ST><![CDATA[ // TrailingMinimum elapsed while still waiting for F_TRIG - latch it, state stays 83F2
+xMinOk := BOOL#TRUE;
+Ready := BOOL#TRUE;
+ResetOut := BOOL#FALSE;
+Error := BOOL#FALSE;
+DiagCode := ResetButtonDiagCodes::WAIT_F_TRIG;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="ErrorMin_C">
+			<ST><![CDATA[ // C3F0 Error Trailing Minimum - F_TRIG before TrailingMinimum elapsed. Waiting for R_TRIG
+xParamOk := (TrailingMinimum <= TrailingMaximum) AND (TrailingMinimum >= T#100ms);
+Ready := BOOL#TRUE;
+ResetOut := BOOL#FALSE;
+Error := BOOL#TRUE;
+DiagCode := ResetButtonDiagCodes::ERROR_TRAILING_MINIMUM;
+xPrevResetIn := ResetIn;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="ErrorMax_C">
+			<ST><![CDATA[ // C3E0 Error Trailing Maximum - TrailingMaximum elapsed before F_TRIG. Waiting for R_TRIG
+xParamOk := (TrailingMinimum <= TrailingMaximum) AND (TrailingMinimum >= T#100ms);
+Ready := BOOL#TRUE;
+ResetOut := BOOL#FALSE;
+Error := BOOL#TRUE;
+DiagCode := ResetButtonDiagCodes::ERROR_TRAILING_MAXIMUM;
+xPrevResetIn := ResetIn;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="ResetDetected_C">
+			<ST><![CDATA[ // 8000 Reset Detected - valid trailing-edge reset, 1-cycle pulse on ResetOut
+Ready := BOOL#TRUE;
+ResetOut := BOOL#TRUE;
+Error := BOOL#FALSE;
+DiagCode := ResetButtonDiagCodes::RESET_DETECTED;
+xPrevResetIn := ResetIn;
+]]></ST>
+		</Algorithm>
+	</BasicFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

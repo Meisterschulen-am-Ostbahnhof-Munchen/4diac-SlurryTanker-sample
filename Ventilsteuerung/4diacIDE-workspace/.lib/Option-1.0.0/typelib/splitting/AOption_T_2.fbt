@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="AOption_T_2" Comment="Options-T-Stueck: 1 AOption-Socket IN auf 2 AOption-Plugs OUT1/OUT2 - aktiviert SEQUENZIELL (erst OUT2, nach dessen INIT_CNF erst OUT1), nicht parallel wie AX_SPLIT_2/AR_SPLIT_2. OUT1 kann an den IN-Socket eines weiteren AOption_T_2 angeschlossen werden, um die Kette zu kaskadieren.">
+	<Identification Standard="61499-1" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-14" Remarks="initial implementation - generisches, kaskadierbares Gegenstueck zum Ad-hoc-PLUG1-Daisy-Chain-Muster aus OptionalGroup_001a (siehe Uebung_094b3c_AX): statt eine Optionsgruppe selbst um einen Weiterleitungs-Plug zu erweitern, sitzt dieses T-Stueck extern zwischen einem AOption-Ausgang (z.B. eines DEMUX) und beliebig vielen nachgeschalteten Optionsgruppen. Composite statt ECC-BasicFB (Franz) - reines Weiterreichen von Events/QI_OUT, keine eigene Zustandslogik noetig, IEC 61499 Event-Reihenfolge reicht aus.">
+	</VersionInfo>
+	<CompilerInfo packageName="Option::splitting">
+	</CompilerInfo>
+	<InterfaceList>
+		<Plugs>
+			<AdapterDeclaration Name="OUT1" Type="Option::AOption" Comment="Wird erst nach OUT2.INIT_CNF aktiviert bzw. zuerst deaktiviert - zum Kaskadieren an den IN-Socket eines weiteren AOption_T_2 anschliessbar" x="4000" y="100"/>
+			<AdapterDeclaration Name="OUT2" Type="Option::AOption" Comment="Wird zuerst aktiviert (INIT_REQ+) bzw. zuletzt deaktiviert (INIT_REQ-)" x="2600" y="-400"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="IN" Type="Option::AOption" Comment="Von einem AOption-Ausgang (z.B. DEMUX.OUTn) gespeist" x="700" y="-400"/>
+		</Sockets>
+	</InterfaceList>
+	<FBNetwork>
+		<EventConnections>
+			<Connection Source="IN.INIT_REQ" Destination="OUT2.INIT_REQ"/>
+			<Connection Source="OUT2.INIT_CNF" Destination="OUT1.INIT_REQ" dx1="253.33"/>
+			<Connection Source="OUT1.INIT_CNF" Destination="IN.INIT_CNF" dx1="80" dx2="80" dy="-1040"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="IN.QI_OUT" Destination="OUT2.QI_OUT"/>
+			<Connection Source="IN.QI_OUT" Destination="OUT1.QI_OUT" dx1="506.67"/>
+		</DataConnections>
+	</FBNetwork>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h2>Sequenzielles T-Stueck fuer AOption</h2>
+<p>Nimmt EINEN eingehenden AOption-Request (Socket <code>IN</code>) entgegen und aktiviert daraus ZWEI nachgeschaltete AOption-Verbraucher (Plugs <code>OUT2</code>/<code>OUT1</code>) <strong>nacheinander</strong>, nicht gleichzeitig: erst <code>OUT2</code>, und erst nachdem dessen <code>INIT_CNF</code> eingetroffen ist, wird <code>OUT1</code> aktiviert. <code>IN</code> wird erst bestaetigt, wenn BEIDE Ausgaenge bestaetigt haben.</p>
+<p>Deaktivierung laeuft ueber dieselbe Verdrahtung in derselben Reihenfolge (erst <code>OUT2</code>, dann <code>OUT1</code>) - <code>QI_OUT</code> traegt dabei einfach TRUE statt FALSE, die Event-Kette selbst unterscheidet nicht zwischen Aktivierung und Deaktivierung.</p>
+<h2>Kaskadierung</h2>
+<p><code>OUT1</code> kann statt an eine Optionsgruppe an den <code>IN</code>-Socket eines weiteren <code>AOption_T_2</code> angeschlossen werden - so lassen sich beliebig viele Gruppen streng nacheinander hochfahren, ohne dass eine einzelne Optionsgruppe (wie bisher <code>OptionalGroup_001a</code>) selbst einen Weiterleitungs-Plug mitbringen muss.</p>
+<h2>Unterschied zu AX_SPLIT_2/AR_SPLIT_2</h2>
+<p>Die bestehenden <code>*_SPLIT_2</code>-Bausteine spiegeln EIN Ereignis/einen Wert PARALLEL auf mehrere Ausgaenge - alle Empfaenger feuern gleichzeitig. Dieses T-Stueck ist bewusst anders: es serialisiert die Aktivierung, damit z.B. eine Gruppe mit Abhaengigkeiten zu einer vorher aktivierten Gruppe sicher erst startet, wenn diese tatsaechlich fertig ist (siehe Uebung_094b3d_AX).</p>
+<h2>Warum Composite statt ECC-BasicFB</h2>
+<p>Keine eigene Zustandslogik noetig: ein Event feuert erst, wenn sein Quell-Event gefeuert hat - die reine Verkettung <code>IN.INIT_REQ -&gt; OUT2.INIT_REQ -&gt; (wartet auf OUT2.INIT_CNF) -&gt; OUT1.INIT_REQ -&gt; (wartet auf OUT1.INIT_CNF) -&gt; IN.INIT_CNF</code> reicht aus, um dieselbe Sequenzialitaet zu erzwingen wie ein expliziter ECC-Zustandsautomat - ohne InternalVars, ohne Algorithmen.</p>
+]]></Attribute>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

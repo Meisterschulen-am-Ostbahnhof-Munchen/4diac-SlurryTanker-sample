@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="PWM_Konstanten" Comment="Global constants">
+	<Identification Standard="61499-1" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-27" Remarks="initial implementation - bisher an mehreren Stellen als Rohwert wiederholte PWM-Konstanten hierher ausgelagert: PWM_13BIT_SKALIERUNG (systemweit, keine Hardware-Korrektur) aus HebenSenken_ILOCK_QDA_PWM_OPC/Aufnahme_Automatik/Aufnahme_Entlastung_STG4; PWM_LASTTEILER_KORREKTUR (Korrekturfaktor speziell fuer die eingesetzte Danfoss-PVEA-Hardware) aus HebenSenken_ILOCK_QDA_PWM_OPC; VALUES_50_75_25_FACTOR_75/_25 (Multimeter-kalibrierte Korrekturfaktoren) neu aus values_50_75_25 v1.2 ausgelagert.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys::const">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="PWM_13BIT_SKALIERUNG" Type="REAL" Comment="Systemweit, KEIN Hardware-Korrekturfaktor: 0-100% -&gt; 0-8191 (13-Bit-PWM-Register, PWM 13 Bit Normierung.pdf: Faktor = 8191/100)" InitialValue="REAL#81.91"/>
+		<VarDeclaration Name="PWM_LASTTEILER_KORREKTUR" Type="REAL" Comment="Korrekturfaktor speziell fuer die eingesetzte Danfoss-PVEA-Hardware (Lastteiler), Multimeter-kalibriert - siehe HebenSenken_ILOCK_QDA_PWM_OPC" InitialValue="REAL#0.715"/>
+		<VarDeclaration Name="VALUES_50_75_25_FACTOR_75" Type="REAL" Comment="Multimeter-kalibrierter Korrekturfaktor auf die nominelle OUT_75-Spanne (25.0) in values_50_75_25 - Default ergibt den bisherigen eingebackenen Wert 40.0 (=25.0*1.6)" InitialValue="REAL#1.6"/>
+		<VarDeclaration Name="VALUES_50_75_25_FACTOR_25" Type="REAL" Comment="Multimeter-kalibrierter Korrekturfaktor auf die nominelle OUT_25-Spanne (25.0) in values_50_75_25 - Default ergibt den bisherigen eingebackenen Wert 35.0 (=25.0*1.4)" InitialValue="REAL#1.4"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE MyLib::sys::const;
+
+GLOBALCONSTANTS PWM_Konstanten
+	VAR_GLOBAL CONSTANT
+		PWM_13BIT_SKALIERUNG : REAL := REAL#81.91;
+		PWM_LASTTEILER_KORREKTUR : REAL := REAL#0.715;
+		VALUES_50_75_25_FACTOR_75 : REAL := REAL#1.6;
+		VALUES_50_75_25_FACTOR_25 : REAL := REAL#1.4;
+	END_VAR
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</GlobalConstants>

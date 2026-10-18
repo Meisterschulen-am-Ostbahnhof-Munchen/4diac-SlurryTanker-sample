@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="PoolDeleteVersion" Comment="Service Interface Block to delete a stored object pool version from VT flash">
+	<Identification Standard="ISO 11783-6" Description="Copyright (c) 2025 Meisterschulen am Ostbahnhof&#10;&#10;This program and the accompanying materials are made&#10;available under the terms of the Eclipse Public License 2.0&#10;which is available at https://www.eclipse.org/legal/epl-2.0/&#10;&#10;SPDX-License-Identifier: EPL-2.0&#10;&#10;&#10;&lt;p&gt;Service Interface Block to delete a stored object pool version from VT flash&lt;/p&gt;&#10;&#10;This block wraps the functionality of VTC_PoolDeleteVersion() from the ISOBUS driver samples.&#10;It allows deleting a stored object pool version from the VT&apos;s non-volatile memory.&#10;&#10;The block calls IsoVtcCmd_DeleteVersion() to remove the specified pool version.&#10;&#10;Parameters:&#10;- versionString: The version label of the pool to delete (max 32 bytes, zero-terminated)&#10;  Use spaces ( &apos;      &apos; ) to delete the last stored pool from flash&#10;- u8Instance: The VT client instance identifier&#10;&#10;Typical use cases:&#10;- Delete old pool versions before uploading a new one&#10;- Clean up flash memory on the VT&#10;- Remove corrupted pool versions&#10;&#10;Note: The version string must be zero-terminated or exactly 32 bytes long (ISO V11+).&#10;">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Generated" Date="2025-02-27" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::UT::util">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+				<With Var="QI"/>
+				<With Var="versionString"/>
+			</Event>
+			<Event Name="REQ" Type="Event" Comment="Service Request - Delete pool version">
+				<With Var="QI"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Confirmation - Pool deletion completed">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+				<With Var="s16Result"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service"/>
+			<VarDeclaration Name="versionString" Type="STRING" Comment="Version label to delete (use spaces for last stored pool)" InitialValue="'       '"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if deletion was successful"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
+			<VarDeclaration Name="s16Result" Type="INT" Comment="Return value: 0=E_NO_ERR (success), negative=error code"/>
+		</OutputVars>
+	</InterfaceList>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Manifest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="platform:/resource/org.eclipse.fordiac.ide.library.model/model/library.xsd" Scope="Library">
+  <Dependencies>
+    <Required SymbolicName="adapter_types" Version="3.0.0"/>
+    <Required SymbolicName="core" Version="3.0.0"/>
+    <Required SymbolicName="iec61131-3" Version="3.0.1"/>
+  </Dependencies>
+  <Product Comment="Typumwandlungs-Adapter-Wrapper (adapter::conversion::bidirectional/unidirectional) um iec61131::conversion::F_*_TO_*, herausgeloest aus adapter-3.0.0/typelib/conversion" Name="adapter_conversion" SymbolicName="adapter_conversion">
+    <VersionInfo Author="HR Agrartechnik GmbH" Date="2026-10-09" Version="3.0.0"/>
+  </Product>
+</Manifest>

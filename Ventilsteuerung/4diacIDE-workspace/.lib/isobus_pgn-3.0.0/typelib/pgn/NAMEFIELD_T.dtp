@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataType Name="NAMEFIELD_T" Comment="ISO Part 5 name field structure according to IFM conventions">
+	<Identification>
+	</Identification>
+	<VersionInfo Version="1.0" Author="Coding-Assistent" Date="2025-09-04" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::pgn">
+	</CompilerInfo>
+	<StructuredType>
+		<VarDeclaration Name="bSelfConf" Type="BOOL" Comment="Self-configurable-address ECU?" InitialValue="TRUE"/>
+		<VarDeclaration Name="bIndGroup" Type="BYTE" Comment="NAMES associated with industries (0..7)" InitialValue="16#FF"/>
+		<VarDeclaration Name="bDevClassInst" Type="BYTE" Comment="Identifier if a device class more than 1 times in net (0..15)" InitialValue="16#FF"/>
+		<VarDeclaration Name="bDevClass" Type="BYTE" Comment="ISO Defined (0..127)" InitialValue="16#FF"/>
+		<VarDeclaration Name="bReserved" Type="BOOL" Comment="Reserved (not used)" InitialValue="TRUE"/>
+		<VarDeclaration Name="bFunction" Type="BYTE" Comment="ISO defined, -&gt; SA (0..255)" InitialValue="16#FF"/>
+		<VarDeclaration Name="bFunctionInst" Type="BYTE" Comment="Subgroup of function (0..31)" InitialValue="16#FF"/>
+		<VarDeclaration Name="bEcuInstance" Type="BYTE" Comment="Which ECU associated with a given function (0..7)" InitialValue="16#FF"/>
+		<VarDeclaration Name="wManufCode" Type="WORD" Comment="ISO defined (0..2047)" InitialValue="16#FFFF"/>
+		<VarDeclaration Name="dwIdentNumb" Type="DWORD" Comment="Used when the NAME is not unique in same network (0..2047)" InitialValue="16#FFFFFFFF"/>
+	</StructuredType>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</DataType>

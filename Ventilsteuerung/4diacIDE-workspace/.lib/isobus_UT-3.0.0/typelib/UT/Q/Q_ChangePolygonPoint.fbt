@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="Q_ChangePolygonPoint" Comment="Command Change Polygon Point( Part 6 - F.52 )">
+	<Identification Standard="ISO 11783-6" Description="Copyright (c) 2022 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0  &#10;   &#10;   &#10;see Description Tab">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.2" Author="Franz Höpfinger" Date="2026-09-05" Remarks="Implement xScale scaling multiply">
+	</VersionInfo>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.1" Author="Franz Höpfinger" Date="2026-09-05" Remarks="Add xScale flag">
+	</VersionInfo>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2022-07-08">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::UT::Q">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+				<With Var="QI"/>
+				<With Var="u16ObjId"/>
+				<With Var="xScale"/>
+			</Event>
+			<Event Name="REQ" Type="Event" Comment="Service Request">
+				<With Var="QI"/>
+				<With Var="u8PointIndex"/>
+				<With Var="u16NewXValue"/>
+				<With Var="u16NewYValue"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+				<With Var="s16result"/>
+				<With Var="u8OldPointIndex"/>
+				<With Var="u16OldXValue"/>
+				<With Var="u16OldYValue"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID of the Output Polygon object to change " InitialValue="ID_NULL"/>
+			<VarDeclaration Name="xScale" Type="BOOL" Comment="FALSE (default) = bypass, send u16NewXValue/u16NewYValue through unchanged. TRUE = scale them by the DM/SKM factor for u16ObjId." InitialValue="FALSE"/>
+			<VarDeclaration Name="u8PointIndex" Type="USINT" Comment="Point index of the point to replace."/>
+			<VarDeclaration Name="u16NewXValue" Type="UINT" Comment="New X value of a point relative to the top left corner of the polygon "/>
+			<VarDeclaration Name="u16NewYValue" Type="UINT" Comment="New Y value of a point relative to the top left corner of the polygon "/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
+			<VarDeclaration Name="u8OldPointIndex" Type="USINT" Comment="Old point index of the point to replace."/>
+			<VarDeclaration Name="u16OldXValue" Type="UINT" Comment="Old X value of a point relative to the top left corner of the polygon "/>
+			<VarDeclaration Name="u16OldYValue" Type="UINT" Comment="Old Y value of a point relative to the top left corner of the polygon "/>
+			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description"/>
+		</OutputVars>
+	</InterfaceList>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>Command Change Polygon Point( Part 6 - F.52 )</h1>
+
+<p>This command is used by a Working Set to modify a point in an Output Polygon object.</p>
+
+<p>The Change Polygon Point command (F.52) is a <strong>fixed 8-byte message</strong> that replaces <strong>one point per command</strong> (point index in Byte 4, new X/Y in Bytes 5 – 8; no Transport Protocol involved). To change several points without repetitive polygon redraws, ISO 11783-6 recommends wrapping the changes with the Lock/Unlock Mask command (F.46, see Annex F.52 NOTE 2).</p>
+
+<h2>Valid values for u16ObjId</h2>
+
+<p>A polygon point Object ID is valid if it falls within the following ISO 11783-6 ID range:</p>
+<ul>
+	<li><strong>TypPolygon</strong>: 16000 – 16999</li>
+</ul>
+
+<p>ID_NULL (65535) is not a command target but can be used in INIT to deactivate the FB. Any ID outside this range is invalid for commanding.</p>
+
+<h2>Activate / Deactivate</h2>
+
+<p>The FB is deactivated by default. It becomes active when INIT provides a valid polygon Object ID. Sending INIT with ID_NULL (65535) deactivates the FB again. This toggle can be repeated arbitrarily.</p>
+
+<ul>
+	<li><strong>INIT + ID_NULL (65535)</strong>: FB deactivated, STATUS="DEACTIVATED", s16result=VT_E_DEACTIVATED (-40)</li>
+	<li><strong>INIT + valid polygon ID</strong>: FB activated, STATUS="initialized", s16result=VT_E_NO_ERR (0). If a REQ was buffered before, it is executed immediately.</li>
+	<li><strong>INIT + invalid ID</strong>: STATUS="ERROR: Invalid Object ID (not a polygon object)", s16result=VT_E_INVALID_OBJECT_ID (-132)</li>
+</ul>
+
+<h2>REQ Handling</h2>
+
+<ul>
+	<li><strong>REQ before any INIT</strong>: Buffered, STATUS="Buffered: INIT not yet completed", s16result=VT_E_NOT_READY (-131)</li>
+	<li><strong>REQ while deactivated (INIT came with NULL or invalid ID)</strong>: STATUS shows the actual deactivation reason, s16result=VT_E_DEACTIVATED (-40) or VT_E_INVALID_OBJECT_ID (-132)</li>
+	<li><strong>REQ while active</strong>: Command sent to VT, result reflected in CNF</li>
+</ul>
+
+<h2>param[in] {objectID, uint16_t}</h2>
+
+<p>Object ID of the Output Polygon object to change. Use ID_NULL (65535) to deactivate the FB. Use a valid polygon object ID to activate.</p>
+
+<h2>param[in] {pointIndex, uint8_t}</h2>
+
+<p>Point index of the point to replace.</p>
+
+<h2>param[in] {newXValue, uint16_t}</h2>
+
+<p>New X value of a point relative to the top left corner of the polygon</p>
+
+<h2>param[in] {newYValue, uint16_t}</h2>
+
+<p>New Y value of a point relative to the top left corner of the polygon</p>
+
+<h2>Return Values (s16result):</h2>
+
+<h3>int16_t</h3>
+
+<ul>
+	<li><span style="color:#27ae60">VT_E_NO_ERR (0)</span> - OK</li>
+	<li><span style="color:#f39c12">VT_E_DEACTIVATED (-40)</span> - FB deactivated (INIT received with ID_NULL)</li>
+	<li><span style="color:#e74c3c">VT_E_INVALID_OBJECT_ID (-132)</span> - Object ID is invalid (not a polygon object)</li>
+	<li><span style="color:#e74c3c">VT_E_NOT_READY (-131)</span> - Buffered: INIT not yet completed</li>
+	<li><span style="color:#e74c3c">VT_E_OVERFLOW (-6)</span> - buffer overflow</li>
+	<li><span style="color:#e74c3c">VT_E_NOACT (-8)</span> - Command not possible in current state</li>
+	<li><span style="color:#e74c3c">VT_E_NO_INSTANCE (-21)</span> - No VT client available</li>
+	<li><span style="color:#e74c3c">VT_E_ISO_INSTANCE_INVALID (-129)</span> - Identifier for instance (connection) invalid</li>
+	<li><span style="color:#e74c3c">VT_E_NOT_ALIVE (-130)</span> - Identifier for instance valid, but VT Dead.</li>
+</ul>
+<h2>Instanz-Eindeutigkeit (Instance Uniqueness)</h2>
+
+<p>Dieser Baustein erfordert Instanz-Eindeutigkeit bezüglich <strong>u16ObjId</strong>. Es darf im gesamten Programm nur eine Instanz von <code>Q_ChangePolygonPoint</code> für dieselbe Ziel-Objekt-ID existieren. Eine zweite Instanz auf dieselbe Objekt-ID wird bei <code>INIT</code> deaktiviert (STATUS = "This objID is already in use").</p>
+]]></Attribute>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

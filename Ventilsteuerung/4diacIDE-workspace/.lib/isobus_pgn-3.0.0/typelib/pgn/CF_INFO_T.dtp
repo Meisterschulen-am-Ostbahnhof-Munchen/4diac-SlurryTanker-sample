@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataType Name="CF_INFO_T" Comment="Typedef of the ISO CF/user information data structure">
+	<Identification>
+	</Identification>
+	<VersionInfo Version="1.0" Author="Franz Höpfinger" Date="2025-09-04" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::pgn">
+		<Import declaration="isobus::pgn::HANDLE::UNVALID"/>
+		<Import declaration="isobus::pgn::ADDRESS::NULL_A"/>
+		<Import declaration="isobus::pgn::USERFUNC_e::undefined"/>
+	</CompilerInfo>
+	<StructuredType>
+		<VarDeclaration Name="s16Handle" Type="INT" Comment="Network member handle of the CF / user " InitialValue="UNVALID"/>
+		<VarDeclaration Name="u8SourceAddress" Type="BYTE" Comment="Source address (SA) of the control function (CF) / user" InitialValue="NULL_A"/>
+		<VarDeclaration Name="u8CanIdx" Type="BYTE" Comment="CAN-Bus node / index of the control function (CF) / user"/>
+		<VarDeclaration Name="au8Name" Type="isobus::pgn::CF_NAME_T" Comment="CF ISOBUS NAME"/>
+		<VarDeclaration Name="eIsoUserFunct" Type="SINT" Comment="Internal used CF function type" InitialValue="undefined"/>
+		<VarDeclaration Name="bExternalCf" Type="BOOL" Comment="External CF on the CAN network"/>
+		<VarDeclaration Name="bIsAnnounced" Type="BOOL" Comment="ISO_TRUE if the CF is active and full announced"/>
+		<VarDeclaration Name="bIsActive" Type="BOOL" Comment="NIU specific: ISO_TRUE if the CF is not in an error state or logged off"/>
+	</StructuredType>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</DataType>

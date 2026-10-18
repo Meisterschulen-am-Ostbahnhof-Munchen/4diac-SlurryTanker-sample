@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="logiBUS_DI_Events" Comment="logiBUS_DI constants">
+	<Identification Standard="61499-1" Description="Copyright (c) 2024 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2024-01-25">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::io::DI">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="BUTTON_PRESS_DOWN" Type="logiBUS::io::DI::logiBUS_DI_Events_S" Comment="Button pressed" InitialValue="(EType := 0)"/>
+		<VarDeclaration Name="BUTTON_PRESS_UP" Type="logiBUS::io::DI::logiBUS_DI_Events_S" Comment="Button released" InitialValue="(EType := 1)"/>
+		<VarDeclaration Name="BUTTON_PRESS_REPEAT" Type="logiBUS::io::DI::logiBUS_DI_Events_S" Comment="Button pressed repeat" InitialValue="(EType := 2)"/>
+		<VarDeclaration Name="BUTTON_PRESS_REPEAT_DONE" Type="logiBUS::io::DI::logiBUS_DI_Events_S" Comment="Button press repeat done" InitialValue="(EType := 3)"/>
+		<VarDeclaration Name="BUTTON_SINGLE_CLICK" Type="logiBUS::io::DI::logiBUS_DI_Events_S" Comment="Button single click" InitialValue="(EType := 4)"/>
+		<VarDeclaration Name="BUTTON_DOUBLE_CLICK" Type="logiBUS::io::DI::logiBUS_DI_Events_S" Comment="Button double click" InitialValue="(EType := 5)"/>
+		<VarDeclaration Name="BUTTON_MULTIPLE_CLICK" Type="logiBUS::io::DI::logiBUS_DI_Events_S" Comment="Button multiple click" InitialValue="(EType := 6)"/>
+		<VarDeclaration Name="BUTTON_LONG_PRESS_START" Type="logiBUS::io::DI::logiBUS_DI_Events_S" Comment="Button long press start" InitialValue="(EType := 7)"/>
+		<VarDeclaration Name="BUTTON_LONG_PRESS_HOLD" Type="logiBUS::io::DI::logiBUS_DI_Events_S" Comment="Button long press hold" InitialValue="(EType := 8)"/>
+		<VarDeclaration Name="BUTTON_LONG_PRESS_UP" Type="logiBUS::io::DI::logiBUS_DI_Events_S" Comment="Button long press up" InitialValue="(EType := 9)"/>
+		<VarDeclaration Name="BUTTON_PRESS_END" Type="logiBUS::io::DI::logiBUS_DI_Events_S" Comment="Button Press end" InitialValue="(EType := 10)"/>
+		<VarDeclaration Name="BUTTON_EVENT_MAX" Type="logiBUS::io::DI::logiBUS_DI_Events_S" InitialValue="(EType := 11)"/>
+		<VarDeclaration Name="BUTTON_NONE_PRESS" Type="logiBUS::io::DI::logiBUS_DI_Events_S" InitialValue="(EType := 12)"/>
+		<VarDeclaration Name="Invalid" Type="logiBUS::io::DI::logiBUS_DI_Events_S" InitialValue="(EType := 255)"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE logiBUS::io::DI;
+
+GLOBALCONSTANTS logiBUS_DI_Events
+	VAR_GLOBAL CONSTANT
+		BUTTON_PRESS_DOWN : logiBUS_DI_Events_S := (EType := 0); // Button pressed
+		BUTTON_PRESS_UP : logiBUS_DI_Events_S := (EType := 1); // Button released
+		BUTTON_PRESS_REPEAT : logiBUS_DI_Events_S := (EType := 2); // Button pressed repeat
+		BUTTON_PRESS_REPEAT_DONE : logiBUS_DI_Events_S := (EType := 3); // Button press repeat done
+		BUTTON_SINGLE_CLICK : logiBUS_DI_Events_S := (EType := 4); // Button single click
+		BUTTON_DOUBLE_CLICK : logiBUS_DI_Events_S := (EType := 5); // Button double click
+		BUTTON_MULTIPLE_CLICK : logiBUS_DI_Events_S := (EType := 6); // Button multiple click
+		BUTTON_LONG_PRESS_START : logiBUS_DI_Events_S := (EType := 7); // Button long press start
+		BUTTON_LONG_PRESS_HOLD : logiBUS_DI_Events_S := (EType := 8); // Button long press hold
+		BUTTON_LONG_PRESS_UP : logiBUS_DI_Events_S := (EType := 9); // Button long press up
+		BUTTON_PRESS_END : logiBUS_DI_Events_S := (EType := 10); // Button Press end
+		BUTTON_EVENT_MAX : logiBUS_DI_Events_S := (EType := 11);
+		BUTTON_NONE_PRESS : logiBUS_DI_Events_S := (EType := 12);
+		Invalid : logiBUS_DI_Events_S := (EType := 255);
+	END_VAR
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</GlobalConstants>

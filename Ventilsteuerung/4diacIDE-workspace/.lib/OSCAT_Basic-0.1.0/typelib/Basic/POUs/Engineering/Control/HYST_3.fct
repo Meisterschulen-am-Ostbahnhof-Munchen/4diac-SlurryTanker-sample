@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Function Name="HYST_3" Comment="Hystereses function">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Version="1.0" Author="Franz Höpfinger" Date="2025-12-21">
+	</VersionInfo>
+	<CompilerInfo packageName="OSCAT::Basic::POUs::Engineering::Control">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event">
+				<With Var="in"/>
+				<With Var="hyst"/>
+				<With Var="val1"/>
+				<With Var="val2"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event">
+				<With Var="Q1"/>
+				<With Var="Q2"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="in" Type="REAL"/>
+			<VarDeclaration Name="hyst" Type="REAL"/>
+			<VarDeclaration Name="val1" Type="REAL"/>
+			<VarDeclaration Name="val2" Type="REAL"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="Q1" Type="BOOL"/>
+			<VarDeclaration Name="Q2" Type="BOOL"/>
+		</OutputVars>
+	</InterfaceList>
+	<FunctionBody>
+		<ST><![CDATA[PACKAGE OSCAT::Basic::POUs::Engineering::Control;
+
+(* Hystereses function *)
+FUNCTION HYST_3
+VAR_INPUT
+	in : REAL;
+	hyst : REAL;
+	val1 : REAL;
+	val2 : REAL;
+END_VAR
+VAR_OUTPUT
+	Q1 : BOOL;
+	Q2 : BOOL;
+END_VAR
+VAR
+	X : REAL;
+END_VAR
+
+(*
+ * version 1.2	5 jan 2008 programmer 	oscat tested BY	oscat
+ * *
+ * this is a double hysteresis function. Out1 follows a hysteresis function defined by val1and hyst,
+ * while out 2 follows val2 and hyst.
+ * if the input signal is between the two hysteresis switches (val1 and val2) then non of the
+ * outputs is active.
+ *)
+X := hyst * 0.5;
+IF in < val1 - X THEN
+	Q1 := TRUE;
+ELSIF in > val1 + X THEN
+	Q1 := FALSE;
+END_IF;
+IF in < val2 - X THEN
+	Q2 := FALSE;
+ELSIF in > val2 + X THEN
+	Q2 := TRUE;
+END_IF;
+
+END_FUNCTION
+
+(* revision history hm	22. jan 2007	rev 1.0 original version
+ * *
+ * hm	27. dec 2007	rev 1.1 changed code for better performance
+ * *
+ * hm	5. jan 2008	rev 1.2 further performance iprovements *)
+]]></ST>
+	</FunctionBody>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</Function>

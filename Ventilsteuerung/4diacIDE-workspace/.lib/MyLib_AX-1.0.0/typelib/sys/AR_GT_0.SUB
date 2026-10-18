@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="AR_GT_0" Comment="Prüft ob AR-Adapter Wert &gt; 0.0 ist (AX-Adapter Ausgang) - analog AX_GT_0_UINT,&#10;aber fuer adapter-native AR_GT (2 AR-Sockets) statt REQ/CNF-F_GT: die feste&#10;Vergleichskonstante 0.0 kann bei einem Adapter-Socket nicht als FB-Parameter&#10;gesetzt werden, deshalb intern ueber LIT_0 (initval_AR) eingespeist. Kapselt&#10;dieses Muster, damit Aufrufer nicht jedes Mal selbst einen LIT_0-FB anlegen&#10;und verdrahten muessen (Franz: &apos;AR_GT_Aktiv kreuzt die beiden Eingaenge&apos;).">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Büngener Schuder GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Büngener Schuder GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-10-15" Remarks="initial implementation - aus Aufnahme_PVEA/Igelband_PVEA/Elevator_PVEA.SUB herausgeloest (dort AR_GT_Aktiv+LIT_0 jeweils einzeln verdrahtet, mit sich kreuzenden Leitungen in der IDE-Ansicht).">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<Plugs>
+			<AdapterDeclaration Name="AX_OUT" Type="adapter::types::unidirectional::AX" Comment="TRUE wenn IN &gt; 0.0"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AR" Comment="Wert, der gegen 0.0 verglichen wird"/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="LIT_0" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="100" y="400">
+			<Parameter Name="INIT_VAL" Value="0.0"/>
+		</FB>
+		<FB Name="AR_GT" Type="adapter::iec61131::comparison::AR_GT" x="1700" y="0">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="LIT_0.INIT" dx1="1206.67"/>
+			<Connection Source="LIT_0.INITO" Destination="INITO" dx1="2086.67"/>
+		</EventConnections>
+		<AdapterConnections>
+			<Connection Source="IN" Destination="AR_GT.IN1" dx1="600"/>
+			<Connection Source="LIT_0.OUT" Destination="AR_GT.IN2" dx1="600"/>
+			<Connection Source="AR_GT.OUT" Destination="AX_OUT" dx1="600"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

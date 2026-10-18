@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Manifest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="platform:/resource/org.eclipse.fordiac.ide.library.model/model/library.xsd" Scope="Library">
+  <Dependencies>
+    <Required SymbolicName="adapter_conversion" Version="3.0.0"/>
+    <Required SymbolicName="adapter_events" Version="3.0.0"/>
+    <Required SymbolicName="adapter_types" Version="3.0.0"/>
+    <Required SymbolicName="core" Version="3.0.0"/>
+    <Required SymbolicName="events" Version="3.0.0"/>
+    <Required SymbolicName="iec61131-3" Version="3.0.1"/>
+  </Dependencies>
+  <Product Comment="IEC61131-Adapter-Wrapper (arithmetic, bistableElements, bitwiseOperators, comparison, counters, edgeDetection, selection, timers) um iec61131-3, herausgeloest aus adapter-3.0.0/typelib/iec61131-3 - AX_ATM_FB_TON_REST nutzt zusaetzlich adapter_events und adapter_conversion" Name="adapter_iec61131-3" SymbolicName="adapter_iec61131-3">
+    <VersionInfo Author="HR Agrartechnik GmbH" Date="2026-10-09" Version="3.0.0"/>
+  </Product>
+</Manifest>

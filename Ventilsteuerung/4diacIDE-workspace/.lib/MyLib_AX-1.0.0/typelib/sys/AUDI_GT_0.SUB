@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="AUDI_GT_0" Comment="Prüft ob UDINT-Adapter Wert &gt; 0 ist (AX-Adapter Ausgang)">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="franz" Date="2026-10-15">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<Plugs>
+			<AdapterDeclaration Name="AX_OUT" Type="adapter::types::unidirectional::AX"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AUDI"/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="AUDI_GT" Type="adapter::iec61131::comparison::AUDI_GT" x="3500" y="-800">
+		</FB>
+		<FB Name="initval_AUDI" Type="adapter::types::unidirectional::AUDI::initval::initval_AUDI" x="2200" y="-200">
+			<Parameter Name="INIT_VAL" Value="UDINT#0"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="initval_AUDI.INIT" dx1="1020"/>
+			<Connection Source="initval_AUDI.INITO" Destination="INITO" dx1="3580"/>
+		</EventConnections>
+		<AdapterConnections>
+			<Connection Source="IN" Destination="AUDI_GT.IN1" dx1="1546.67"/>
+			<Connection Source="AUDI_GT.OUT" Destination="AX_OUT" dx1="513.33"/>
+			<Connection Source="initval_AUDI.OUT" Destination="AUDI_GT.IN2" dx1="246.67"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

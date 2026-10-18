@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Q_ChildPosition_AR_Horizontal" Comment="Command change child position (X via AR adapter, Y fixed to 0)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-27" Remarks="initial API and implementation: AR adapter input to X position, Y fixed to 0 (AR_TO_AI + initval_AI + Q_ChildPosition_AI)">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Service Initialization"/>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm"/>
+			<SubAppEvent Name="CNF" Type="Event" Comment="Confirmation of Requested Service"/>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObjIdParent" Type="UINT" Comment="Parent object ID" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="xScale" Type="BOOL" Comment="FALSE (default) = bypass, send s16Xposition/s16Yposition through unchanged. TRUE = scale them by the DM/SKM factor for u16ObjIdParent." InitialValue="FALSE"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status - passthrough from the internal Q_ChildPosition"/>
+			<VarDeclaration Name="s16OldXposition" Type="INT" Comment="Old X position - passthrough from the internal Q_ChildPosition"/>
+			<VarDeclaration Name="s16OldYposition" Type="INT" Comment="Old Y position - passthrough from the internal Q_ChildPosition"/>
+			<VarDeclaration Name="s16result" Type="INT" Comment="retval - passthrough from the internal Q_ChildPosition, see Q_ChildPosition"/>
+		</OutputVars>
+		<Sockets>
+			<AdapterDeclaration Name="rPhys" Type="adapter::types::unidirectional::AR" Comment="Physical REAL value input (converted to INT and mapped to X position)"/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="AR_TO_AI" Type="adapter::conversion::unidirectional::AR_TO_AI" x="-1000" y="0">
+		</FB>
+		<FB Name="initval_AI" Type="adapter::types::unidirectional::AI::initval::initval_AI" x="-1000" y="700">
+			<Parameter Name="INIT_VAL" Value="0"/>
+		</FB>
+		<FB Name="Q_ChildPosition_AI" Type="isobus::UT::Q::Q_ChildPosition_AI" x="500" y="0">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="initval_AI.INIT" dx1="500"/>
+			<Connection Source="initval_AI.INITO" Destination="Q_ChildPosition_AI.INIT" dx1="500"/>
+			<Connection Source="Q_ChildPosition_AI.INITO" Destination="INITO" dx1="500"/>
+			<Connection Source="Q_ChildPosition_AI.CNF" Destination="CNF" dx1="500"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="u16ObjId" Destination="Q_ChildPosition_AI.u16ObjId" dx1="500"/>
+			<Connection Source="u16ObjIdParent" Destination="Q_ChildPosition_AI.u16ObjIdParent" dx1="500"/>
+			<Connection Source="xScale" Destination="Q_ChildPosition_AI.xScale" dx1="500"/>
+			<Connection Source="Q_ChildPosition_AI.STATUS" Destination="STATUS" dx1="500"/>
+			<Connection Source="Q_ChildPosition_AI.s16OldXposition" Destination="s16OldXposition" dx1="500"/>
+			<Connection Source="Q_ChildPosition_AI.s16OldYposition" Destination="s16OldYposition" dx1="500"/>
+			<Connection Source="Q_ChildPosition_AI.s16result" Destination="s16result" dx1="500"/>
+			<Connection Source="QI" Destination="Q_ChildPosition_AI.QI"/>
+			<Connection Source="Q_ChildPosition_AI.QO" Destination="QO"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="rPhys" Destination="AR_TO_AI.AR_IN" dx1="500"/>
+			<Connection Source="AR_TO_AI.AI_OUT" Destination="Q_ChildPosition_AI.s16Xposition" dx1="500"/>
+			<Connection Source="initval_AI.OUT" Destination="Q_ChildPosition_AI.s16Yposition" dx1="500"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

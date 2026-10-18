@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="AX_MIN_TP" Comment="Minimum-Pulsbreite: AX_Q folgt AX_IN, ist aber mindestens PT lang - kuerzere&#10;Pulse werden auf PT gestreckt, laengere Pulse unveraendert durchgereicht&#10;(Gegenstueck zu AX_TP, das immer exakt PT macht, und AX_TLIM, das auf maximal PT&#10;kappt). Franz: Bunkerboden-Vorlauf im Automatikbetrieb braucht eine Mindestzeit.&#10;Sicherheitshinweis (Martin Schuder): dieser Baustein selbst hat KEINEN&#10;Hard-Abbruch - ein Endschalter, der den Puls jederzeit sofort unterbrechen soll,&#10;muss extern per AX_AND(AX_Q, NOT Endschalter) NACH diesem Baustein verknuepft&#10;werden, nicht ueber diesen Baustein selbst.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.2" Author="Franz Höpfinger" Date="2026-09-29" Remarks="Franz-Vereinfachung (verworfen: v1.1 mit ACTIVE/AX_TON/AX_R_TRIG-Latch-Konstruktion): AX_Q = AX_IN OR AX_TP_MinZeit.Q reicht - AX_TP ist non-retriggerable und laeuft nach der steigenden Flanke von AX_IN immer exakt PT durch, egal ob AX_IN vorher schon wieder abfaellt. Kuerzere Pulse werden dadurch automatisch auf PT gestreckt (AX_TP.Q haelt bis PT), laengere Pulse bleiben unveraendert (AX_IN selbst haelt Q hoch, auch nachdem AX_TP.Q laengst auf PT abgelaufen ist). Kein Latch, kein AX_TON noetig. Neuer SubAppEventInput R (Reset) auf AX_TP.R durchgereicht.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-29" Remarks="Franz: 'sind in allen Faellen E_SWITCH richtig, oder waere es ein R_TRIG und F_TRIG?' - komplett neu, ohne E_SWITCH/E_RF_TRIG/rohe E_-Bausteine: durchgehend das im Projekt etablierte AX-Adapter-Idiom. Reset-Bedingung ist ein simples AX_AND (NOT(AX_IN) AND AX_TON.Q, wobei AX_TON an ACTIVE.Q haengt - 'seit mindestens PT aktiv'), dessen steigende Flanke (AX_R_TRIG) ACTIVE.R ausloest, egal welche der beiden Seiten zuletzt eintrifft. Bleibt komplett auf Adapter-Ebene, keine IN_TO_BOOL/BOOL_TO_Q-Konverter mehr noetig. (Verworfen, siehe v1.2 - noch einfacher.)">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-29" Remarks="initial implementation (verworfen, siehe v1.1) - E_SWITCH-basiert.">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::events::unidirectional::timers">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="R" Type="Event" Comment="Reset">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<InputVars>
+			<VarDeclaration Name="PT" Type="TIME" Comment="Mindest-Pulsbreite"/>
+		</InputVars>
+		<Plugs>
+			<AdapterDeclaration Name="AX_Q" Type="adapter::types::unidirectional::AX" Comment="Auf mindestens PT gestreckter Ausgang"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="AX_IN" Type="adapter::types::unidirectional::AX" Comment="Roher Eingangspuls"/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="AX_SPLIT_2_In" Type="adapter::events::unidirectional::AX_SPLIT_2" Comment="AX_IN wird fuer AX_TP_MinZeit.IN UND direkt fuer AX_OR_Halten gebraucht" x="-1400" y="-500">
+		</FB>
+		<FB Name="AX_TP_MinZeit" Type="adapter::events::unidirectional::timers::AX_TP" Comment="Non-retriggerable - laeuft nach der steigenden Flanke von AX_IN immer exakt PT durch, unabhaengig davon ob AX_IN vorher schon wieder abfaellt" x="200" y="-900">
+		</FB>
+		<FB Name="AX_OR_Halten" Type="adapter::booleanOperators::AX_OR_2" Comment="AX_IN OR AX_TP_MinZeit.Q - haelt den Ausgang, solange entweder der rohe Puls noch da ist (laengere Pulse) oder die Mindestzeit noch laeuft (kuerzere Pulse)" x="1500" y="-500">
+		</FB>
+		<EventConnections>
+			<Connection Source="R" Destination="AX_TP_MinZeit.R" dx1="2400"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="PT" Destination="AX_TP_MinZeit.PT" dx1="2053.33"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="AX_IN" Destination="AX_SPLIT_2_In.IN" dx1="853.33"/>
+			<Connection Source="AX_SPLIT_2_In.OUT1" Destination="AX_TP_MinZeit.IN" dx1="173.33"/>
+			<Connection Source="AX_SPLIT_2_In.OUT2" Destination="AX_OR_Halten.IN2"/>
+			<Connection Source="AX_TP_MinZeit.Q" Destination="AX_OR_Halten.IN1" dx1="300"/>
+			<Connection Source="AX_OR_Halten.OUT" Destination="AX_Q" dx1="653.33"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

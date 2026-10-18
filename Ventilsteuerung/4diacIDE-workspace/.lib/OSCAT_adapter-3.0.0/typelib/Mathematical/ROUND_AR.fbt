@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="ROUND_AR" Comment="AR-Adapter-Wrapper um OSCAT ROUND - bruckt zwischen adapter und OSCAT, ohne dass&#10;eine der beiden Basisbibliotheken von der anderen abhaengt. N (Nachkommastellen)&#10;als Klartext-InputVar durchgereicht (Default 2)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-20" Remarks="Bugfix: N wurde nur per plain DataConnection an ROUND durchgereicht, ausgeloest einzig ueber AR_IN.E1 - dieser Wrapper hatte ueberhaupt kein EventInput und damit keine Moeglichkeit fuer eine With-Verknuepfung (IEC 61499 - ungebundene Vars werden nicht zuverlaessig gelesen). Neues explizites REQ-EventInput ergaenzt (parallel zu AR_IN.E1, beide -&gt; ROUND.REQ) mit With N.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-17" Remarks="Initial implementation of ROUND_AR wrapper FB - E_D_FF_ANY_1 als Aenderungsfilter (EO/AR_OUT.E1 nur bei tatsaechlicher Wertaenderung), analog CTRL_PI_AR/FT_DERIV_AR in diesem Projekt">
+	</VersionInfo>
+	<CompilerInfo packageName="OSCAT_adapter::Mathematical">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event" Comment="Explizite Ausfuehrungsanforderung (durchgereicht an ROUND.REQ, zusaetzlich zu AR_IN.E1)">
+				<With Var="N"/>
+			</Event>
+		</EventInputs>
+		<InputVars>
+			<VarDeclaration Name="N" Type="INT" Comment="Nachkommastellen (durchgereicht an ROUND.N) - Platzhalter-Default 2, keine funktionale Vorgabe, per Parameter ueberschreibbar" InitialValue="2"/>
+		</InputVars>
+		<Plugs>
+			<AdapterDeclaration Name="AR_OUT" Type="adapter::types::unidirectional::AR" Comment="Auf N Nachkommastellen gerundeter Wert (REAL)" x="5300" y="200"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="AR_IN" Type="adapter::types::unidirectional::AR" Comment="Eingangssignal (REAL)" x="-800" y="-700"/>
+		</Sockets>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="ROUND" Type="OSCAT::Basic::POUs::Mathematical::ROUND" x="800" y="0">
+		</FB>
+		<FB Name="E_D_FF_ANY_1" Type="iec61499::events::E_D_FF_ANY" x="2400" y="200">
+		</FB>
+		<EventConnections>
+			<Connection Source="AR_IN.E1" Destination="ROUND.REQ" dx1="626.67"/>
+			<Connection Source="REQ" Destination="ROUND.REQ" dx1="626.67"/>
+			<Connection Source="ROUND.CNF" Destination="E_D_FF_ANY_1.CLK" dx1="453.33"/>
+			<Connection Source="E_D_FF_ANY_1.EO" Destination="AR_OUT.E1" dx1="906.67"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="AR_IN.D1" Destination="ROUND.in" dx1="540"/>
+			<Connection Source="N" Destination="ROUND.N" dx1="540"/>
+			<Connection Source="ROUND." Destination="E_D_FF_ANY_1.D" dx1="453.33"/>
+			<Connection Source="E_D_FF_ANY_1.Q" Destination="AR_OUT.D1" dx1="940"/>
+		</DataConnections>
+	</FBNetwork>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>ROUND_AR</h1>
+
+<h2>🇩🇪 Deutsch</h2>
+
+<p>AR-Adapter-Wrapper um <code>OSCAT::Basic::POUs::Mathematical::ROUND</code> (rundet <code>in</code> auf <code>N</code> Nachkommastellen, 0 bis 8 Stellen). <code>N</code> ist als Klartext-<code>InputVar</code> (Default 2) deklariert. Ein explizites <code>REQ</code>-EventInput (mit <code>With N</code>) erlaubt den manuellen/periodischen Aufruf zusaetzlich zum automatischen Ausloesen ueber <code>AR_IN.E1</code> (IEC 61499 - With-Verknuepfung fuer zuverlaessiges Einlesen der Parameter).</p>
+
+<h3>Reine Adapter-Grenze</h3>
+
+<ul>
+	<li><strong>AR_IN</strong> (Socket, <code>AR</code>): Eingangssignal (REAL)</li>
+	<li><strong>AR_OUT</strong> (Plug, <code>AR</code>): gerundetes Ergebnis (REAL)</li>
+</ul>
+
+<p><code>E_D_FF_ANY_1</code> (Standardbibliothek <code>events-3.0.0</code>) filtert Aenderungen: <code>AR_OUT.E1</code> feuert nur, wenn sich das gerundete Ergebnis seit dem letzten Aufruf tatsaechlich geaendert hat - gleiches Muster wie bei den bestehenden <code>FT_DERIV_AR</code>/<code>CTRL_PI_AR</code>-Wrappern in diesem Projekt (dort mit <code>E_D_FF_ANY_3</code>/<code>_4</code> fuer mehrere Werte gleichzeitig).</p>
+
+<h3>Warum ein eigener Wrapper?</h3>
+
+<p><code>ROUND</code> ist eine reine OSCAT-<code>Function</code> ohne Adapter-Schnittstelle. <code>adapter</code> soll nicht von <code>OSCAT</code> abhaengen (und umgekehrt) - die Bruecke liegt daher in diesem dritten Bibliotheksprojekt (<code>OSCAT_adapter</code>), das von beiden abhaengt.</p>
+
+<h2>🇬🇧 English</h2>
+
+<p>AR-adapter wrapper around <code>OSCAT::Basic::POUs::Mathematical::ROUND</code> (rounds <code>in</code> to <code>N</code> decimal places, 0 to 8 digits). <code>N</code> is a plain <code>InputVar</code> (default 2). An explicit <code>REQ</code> event input (with <code>With N</code> binding) enables manual or periodic execution in addition to automatic triggering via <code>AR_IN.E1</code> (per IEC 61499, binding input variables via With for reliable reading).</p>
+
+<h3>Pure adapter boundary</h3>
+
+<ul>
+	<li><strong>AR_IN</strong> (socket, <code>AR</code>): input signal (REAL)</li>
+	<li><strong>AR_OUT</strong> (plug, <code>AR</code>): rounded result (REAL)</li>
+</ul>
+
+<p><code>E_D_FF_ANY_1</code> (standard library <code>events-3.0.0</code>) filters changes: <code>AR_OUT.E1</code> only fires when the rounded result actually changed since the last call - same pattern as the existing <code>FT_DERIV_AR</code>/<code>CTRL_PI_AR</code> wrappers in this project (there using <code>E_D_FF_ANY_3</code>/<code>_4</code> for several values at once).</p>
+]]></Attribute>
+</FBType>

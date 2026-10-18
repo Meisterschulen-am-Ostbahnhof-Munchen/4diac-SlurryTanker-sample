@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="SchieberControl_AX" Comment="Basic FB with Schieber ECC (AX Adapter Version)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2025 HR Agrartechnik GmbH &#10; &#10;This program and the accompanying materials are made &#10;available under the terms of the Eclipse Public License 2.0 &#10;which is available at https://www.eclipse.org/legal/epl-2.0/ &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2025-06-03">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::utils::sequence::schieber">
+		<Import declaration="logiBUS::utils::sequence::schieber::const::START"/>
+		<Import declaration="logiBUS::utils::sequence::schieber::const::STATES"/>
+		<Import declaration="logiBUS::utils::sequence::schieber::const::iSTATES"/>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Set all Values. Initialization Request. De-Init is not  fully supported. ">
+				<With Var="QI"/>
+				<With Var="DT_Opening"/>
+				<With Var="DT_Closing"/>
+				<With Var="START"/>
+			</Event>
+			<Event Name="Open" Type="Event" Comment="Open">
+			</Event>
+			<Event Name="Close" Type="Event" Comment="Close">
+			</Event>
+			<Event Name="RESET" Type="Event" Comment="Reset to unknown State">
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="All Values have been Set. Initialization Confirm.">
+				<With Var="QO"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Input event qualifier"/>
+			<VarDeclaration Name="DT_Opening" Type="TIME" Comment="TIME Setting"/>
+			<VarDeclaration Name="DT_Closing" Type="TIME" Comment="TIME Setting"/>
+			<VarDeclaration Name="START" Type="UINT" InitialValue="START::STARTUnknown"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Output event qualifier"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="Q_POWERED" Type="adapter::types::unidirectional::AX" Comment="Actuate &quot;Open&quot; Valve for Pneumatic"/>
+			<AdapterDeclaration Name="Q_OPEN" Type="adapter::types::unidirectional::AX" Comment="Actuate &quot;Open&quot; Valve"/>
+			<AdapterDeclaration Name="Q_CLOSE" Type="adapter::types::unidirectional::AX" Comment="Actuate &quot;Close&quot; Valve"/>
+			<AdapterDeclaration Name="timeOut" Type="iec61499::events::ATimeOut" Comment="timeOut Adapter"/>
+			<AdapterDeclaration Name="iSTATE" Type="adapter::types::unidirectional::AUS"/>
+			<AdapterDeclaration Name="STATE" Type="adapter::types::unidirectional::AIS"/>
+		</Plugs>
+	</InterfaceList>
+	<BasicFB>
+		<ECC>
+			<ECState Name="START" Comment="Initial State" x="475" y="1125">
+			</ECState>
+			<ECState Name="Closed" x="3520" y="1040">
+				<ECAction Algorithm="Closed"/>
+				<ECAction Output="Q_CLOSE.E1"/>
+			</ECState>
+			<ECState Name="DeInit" x="1140" y="1520">
+				<ECAction Algorithm="deInitialize" Output="INITO"/>
+			</ECState>
+			<ECState Name="Opened" x="7040" y="1040">
+				<ECAction Algorithm="Opened"/>
+				<ECAction Output="Q_OPEN.E1"/>
+			</ECState>
+			<ECState Name="Closing" x="5120" y="2560">
+				<ECAction Algorithm="Closing"/>
+				<ECAction Output="Q_CLOSE.E1"/>
+				<ECAction Output="Q_POWERED.E1"/>
+				<ECAction Output="timeOut.START"/>
+			</ECState>
+			<ECState Name="Opening" x="5280" y="160">
+				<ECAction Algorithm="Opening"/>
+				<ECAction Output="Q_OPEN.E1"/>
+				<ECAction Output="Q_POWERED.E1"/>
+				<ECAction Output="timeOut.START"/>
+			</ECState>
+			<ECState Name="Opening_STOP" x="5040" y="1120">
+				<ECAction Algorithm="STOP" Output="Q_OPEN.E1"/>
+				<ECAction Output="timeOut.STOP"/>
+			</ECState>
+			<ECState Name="Closing_STOP" x="4800" y="1520">
+				<ECAction Algorithm="STOP" Output="Q_CLOSE.E1"/>
+				<ECAction Output="timeOut.STOP"/>
+			</ECState>
+			<ECState Name="Unknown" x="4640" y="4480">
+				<ECAction Algorithm="Unknown"/>
+			</ECState>
+			<ECState Name="Opening_STOP_R" x="3600" y="2960">
+				<ECAction Algorithm="STOP" Output="Q_OPEN.E1"/>
+				<ECAction Output="timeOut.STOP"/>
+			</ECState>
+			<ECState Name="Closing_STOP_R" x="5440" y="3360">
+				<ECAction Algorithm="STOP" Output="Q_CLOSE.E1"/>
+				<ECAction Output="timeOut.STOP"/>
+			</ECState>
+			<ECState Name="Init" x="3493.33" y="13.33">
+				<ECAction Algorithm="initialize" Output="INITO"/>
+			</ECState>
+			<ECTransition Source="DeInit" Destination="START" Condition="1" x="940" y="1445"/>
+			<ECTransition Source="Closed" Destination="Opening" Condition="Open" x="4333.33" y="446.67"/>
+			<ECTransition Source="Closed" Destination="DeInit" Condition="INIT[FALSE = QI]" x="1986.67" y="1253.33"/>
+			<ECTransition Source="Opening" Destination="Opened" Condition="timeOut.TimeOut" x="6233.33" y="853.33"/>
+			<ECTransition Source="Opened" Destination="Closing" Condition="Close" x="6860" y="2113.33"/>
+			<ECTransition Source="Closing" Destination="Closed" Condition="timeOut.TimeOut" x="3993.33" y="2160"/>
+			<ECTransition Source="Opening" Destination="Opening_STOP" Condition="Close" x="5466.67" y="653.33"/>
+			<ECTransition Source="Closing" Destination="Closing_STOP" Condition="Open" x="5140" y="2080"/>
+			<ECTransition Source="Opening_STOP" Destination="Closing" Condition="1" x="5520" y="1800"/>
+			<ECTransition Source="Closing_STOP" Destination="Opening" Condition="1" x="4980" y="693.33"/>
+			<ECTransition Source="Opened" Destination="Unknown" Condition="RESET" x="7793.33" y="3026.67"/>
+			<ECTransition Source="Closed" Destination="Unknown" Condition="RESET" x="3160" y="2860"/>
+			<ECTransition Source="Opening" Destination="Opening_STOP_R" Condition="RESET" x="4426.67" y="766.67"/>
+			<ECTransition Source="Closing" Destination="Closing_STOP_R" Condition="RESET" x="5540" y="3026.67"/>
+			<ECTransition Source="Opening_STOP_R" Destination="Unknown" Condition="1" x="4493.33" y="3966.67"/>
+			<ECTransition Source="Closing_STOP_R" Destination="Unknown" Condition="1" x="5380" y="3980"/>
+			<ECTransition Source="Unknown" Destination="Opening" Condition="Open" x="9726.67" y="2206.67"/>
+			<ECTransition Source="Unknown" Destination="Closing" Condition="Close" x="5353.33" y="3540"/>
+			<ECTransition Source="Init" Destination="Closed" Condition="[START = START::STARTClosed]" x="3666.67" y="506.67"/>
+			<ECTransition Source="Init" Destination="Opened" Condition="[START = START::STARTOpened]" x="6813.33" y="-853.33"/>
+			<ECTransition Source="Init" Destination="Unknown" Condition="1" x="2840" y="3073.33"/>
+			<ECTransition Source="START" Destination="Init" Condition="INIT[TRUE = QI]" x="1984.17" y="569.17"/>
+		</ECC>
+		<Algorithm Name="initialize">
+			<ST><![CDATA[
+QO := QI;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="deInitialize">
+			<ST><![CDATA[
+QO := BOOL#FALSE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="Closed">
+			<ST><![CDATA[
+STATE.D1 := STATES::Closed;
+iSTATE.D1 := iSTATES::Closed;
+Q_POWERED.D1 := BOOL#FALSE;
+Q_OPEN.D1 := BOOL#FALSE;
+Q_CLOSE.D1 := BOOL#FALSE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="Opening">
+			<ST><![CDATA[
+STATE.D1 := STATES::Opening;
+iSTATE.D1 := iSTATES::Opening;
+timeOut.DT := DT_Opening;
+Q_POWERED.D1 := BOOL#TRUE;
+Q_OPEN.D1 := BOOL#TRUE;
+Q_CLOSE.D1 := BOOL#FALSE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="Opened">
+			<ST><![CDATA[
+STATE.D1 := STATES::Opened;
+iSTATE.D1 := iSTATES::Opened;
+Q_POWERED.D1 := BOOL#TRUE;
+Q_OPEN.D1 := BOOL#FALSE;
+Q_CLOSE.D1 := BOOL#FALSE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="Closing">
+			<ST><![CDATA[
+STATE.D1 := STATES::Closing;
+iSTATE.D1 := iSTATES::Closing;
+timeOut.DT := DT_Closing;
+Q_POWERED.D1 := BOOL#FALSE;
+Q_OPEN.D1 := BOOL#FALSE;
+Q_CLOSE.D1 := BOOL#TRUE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="STOP">
+			<ST><![CDATA[
+// Powered_unchanged
+Q_OPEN.D1 := BOOL#FALSE;
+Q_CLOSE.D1 := BOOL#FALSE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="Unknown">
+			<ST><![CDATA[
+STATE.D1 := STATES::Unknown;
+iSTATE.D1 := iSTATES::Unknown;
+Q_POWERED.D1 := BOOL#FALSE;
+Q_OPEN.D1 := BOOL#FALSE;
+Q_CLOSE.D1 := BOOL#FALSE;
+]]></ST>
+		</Algorithm>
+	</BasicFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

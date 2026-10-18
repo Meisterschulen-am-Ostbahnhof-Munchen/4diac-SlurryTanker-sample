@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="TOGGLE_RPC_MASTER_QXA_OPC" Comment="Klick-Toggle-'Kopf' fuer eine Gruppe von bis zu 6 gleichzeitig geschalteten&#10;Kanaelen OHNE eigenen physischen Ausgang: RPC-Trigger (CREATE_METHOD/SERVER_0)&#10;taktet ein AX_T_FF, dessen Zustand ueber 6 AX-Plugs (OUT1..OUT6) an&#10;Geschwister-SubApps (je ein AX_TON_MERGE_QXA_OPC pro Kanal) weitergereicht wird&#10;UND lokal publiziert wird, damit das Bedienmodul den Zustand als&#10;Hintergrundfarbe zeigen kann. Ungenutzte OUTn-Plugs bleiben einfach&#10;unverdrahtet. Fuer EINEN Ausgang stattdessen TOGGLE_RPC_MERGE_QXA_OPC verwenden&#10;(hat den physischen Ausgang schon eingebaut).">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.2" Author="Franz Höpfinger" Date="2026-09-09" Remarks="Fix: TRIGGER_SERVER.RSP war nie verdrahtet - blockierte den OPC-UA-Server-Thread bis zu 4s (haelt open62541s globalen serviceMutex), verzoegerte dadurch JEDE OPC-UA-Statusmeldung projektweit. IND-&gt;RSP direkt verdrahtet. Siehe OPC_UA_VERNETZUNG.md Punkt 12.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-07" Remarks="OUT-Plug durch OUT1..OUT6 (AX_SPLIT_7 statt AX_SPLIT_2) ersetzt - Adapter-Verbindungen sind 1:1, ein einzelner Plug kann nicht an mehrere Sockets gleichzeitig verdrahtet werden">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-07" Remarks="initial API and implementation and/or initial documentation - fuer Scheinwerfer (6 Kanaele, 1 SoftKey, versetztes Einschalten gegen kapazitive Einschaltstrom-Spitzen)">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="ID_TRIGGER_METHOD" Type="WSTRING" Comment="Lokale Methodenadresse (ACTION=CREATE_METHOD) fuer den argumentlosen Toggle-Trigger, wird vom Bedienmodul per CALL_METHOD aufgerufen"/>
+			<VarDeclaration Name="ID_STATE_WRITE" Type="WSTRING" Comment="Lokale Publish-Adresse (ACTION=WRITE) fuer den tatsaechlichen Toggle-Zustand - wird vom Bedienmodul remote abonniert (z.B. fuer GreenWhiteBackground)"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="OUT1" Type="adapter::types::unidirectional::AX" Comment="Toggle-Zustand fuer Kanal 1 (z.B. AX_TON_MERGE_QXA_OPC.MASTER)"/>
+			<AdapterDeclaration Name="OUT2" Type="adapter::types::unidirectional::AX" Comment="Toggle-Zustand fuer Kanal 2"/>
+			<AdapterDeclaration Name="OUT3" Type="adapter::types::unidirectional::AX" Comment="Toggle-Zustand fuer Kanal 3"/>
+			<AdapterDeclaration Name="OUT4" Type="adapter::types::unidirectional::AX" Comment="Toggle-Zustand fuer Kanal 4"/>
+			<AdapterDeclaration Name="OUT5" Type="adapter::types::unidirectional::AX" Comment="Toggle-Zustand fuer Kanal 5"/>
+			<AdapterDeclaration Name="OUT6" Type="adapter::types::unidirectional::AX" Comment="Toggle-Zustand fuer Kanal 6"/>
+		</Plugs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="TRIGGER_SERVER" Type="iec61499::net::SERVER_0" x="-6600" y="-1200">
+		</FB>
+		<FB Name="AX_T_FF" Type="adapter::events::unidirectional::AX_T_FF" x="-5000" y="-1100">
+		</FB>
+		<FB Name="SPLIT" Type="adapter::events::unidirectional::AX_SPLIT_7" x="-3200" y="-1100">
+		</FB>
+		<FB Name="PUBLISH_STATE" Type="adapter::net::AX_PUBLISH_1" x="-1600" y="1600">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_2">
+		</FB>
+		<EventConnections>
+			<Connection Source="TRIGGER_SERVER.IND" Destination="AX_T_FF.CLK" dx1="373.33"/>
+			<Connection Source="TRIGGER_SERVER.IND" Destination="TRIGGER_SERVER.RSP"/>
+			<Connection Source="INIT" Destination="TRIGGER_SERVER.INIT"/>
+			<Connection Source="TRIGGER_SERVER.INITO" Destination="PUBLISH_STATE.INIT"/>
+			<Connection Source="PUBLISH_STATE.INITO" Destination="INITO"/>
+			<Connection Source="PUBLISH_STATE.INITO" Destination="AND_QO.REQ"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="ID_TRIGGER_METHOD" Destination="TRIGGER_SERVER.ID" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_STATE_WRITE" Destination="PUBLISH_STATE.ID" dx1="1280">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="TRIGGER_SERVER.QI"/>
+			<Connection Source="QI" Destination="PUBLISH_STATE.QI"/>
+			<Connection Source="TRIGGER_SERVER.QO" Destination="AND_QO.IN1"/>
+			<Connection Source="PUBLISH_STATE.QO" Destination="AND_QO.IN2"/>
+			<Connection Source="AND_QO.OUT" Destination="QO"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="AX_T_FF.Q" Destination="SPLIT.IN" dx1="280"/>
+			<Connection Source="SPLIT.OUT1" Destination="OUT1" dx1="1200"/>
+			<Connection Source="SPLIT.OUT2" Destination="OUT2" dx1="1200"/>
+			<Connection Source="SPLIT.OUT3" Destination="OUT3" dx1="1200"/>
+			<Connection Source="SPLIT.OUT4" Destination="OUT4" dx1="1200"/>
+			<Connection Source="SPLIT.OUT5" Destination="OUT5" dx1="1200"/>
+			<Connection Source="SPLIT.OUT6" Destination="OUT6" dx1="1200"/>
+			<Connection Source="SPLIT.OUT7" Destination="PUBLISH_STATE.IN" dx1="600"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>Klick-Toggle-Kopf ohne eigenen Ausgang (fuer Kanalgruppen bis 6)</h1>
+
+<p>Wie <code>Softkey_Toggle_RPC_TO_Remote_BG_OPC</code>/<code>Toggle_RPC_FROM_Remote_QXA_OPC</code>,
+aber ohne physischen Ausgang - stattdessen wird der Toggle-Zustand ueber 6 eigene <code>OUTn</code>-Plugs
+an bis zu 6 Geschwister-SubApps im selben Netzwerk weitergegeben (z.B. mehrere
+<code>AX_TON_MERGE_QXA_OPC</code>-Instanzen, je eine pro physischem Kanal - Adapter-Verbindungen sind
+1:1, deshalb kein einzelner gemeinsamer Plug fuer alle Kanaele). So kann EIN SoftKey mehrere Ausgaenge
+gleichzeitig toggeln, jeder Kanal aber trotzdem individuell zeitversetzt hochfahren (siehe
+<code>AX_TON_MERGE_QXA_OPC.PT</code>) - z.B. Scheinwerfer-Bank gegen kapazitive Einschaltstrom-Spitzen.
+Werden weniger als 6 Kanaele gebraucht, bleiben die restlichen <code>OUTn</code>-Plugs einfach
+unverdrahtet.</p>
+]]></Attribute>
+</SubAppType>

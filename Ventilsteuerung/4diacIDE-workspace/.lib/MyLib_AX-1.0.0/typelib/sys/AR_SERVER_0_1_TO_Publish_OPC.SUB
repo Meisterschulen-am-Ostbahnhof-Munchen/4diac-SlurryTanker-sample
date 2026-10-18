@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="AR_SERVER_0_1_TO_Publish_OPC" Comment="Empfaengt einen REAL-Wert als Argument eines entfernten OPC-UA-Methodenaufrufs&#10;(CALL_METHOD, AR_SERVER_0_1) und publiziert ihn sofort lokal weiter&#10;(AR_PUBLISH_1) - kein VT-Anschluss, reine Weiterleitungsbruecke fuer Stationen&#10;ohne VT. Fuer &apos;VT-Eingabefeld auf einer anderen Station ODER Web-Dashboard rufen&#10;dieselbe Methode auf, nur bei echter Eingabe&apos; (Franz), z.B. Druck-Referenzwerte&#10;(B20).">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-23" Remarks="initial implementation - Franz: 'man macht auf STG4 2 METHODEN, die werden aufgerufen: vom Web-Dashboard oder von VT1, und zwar nur wenn jemand was eingibt'. Buendelt AR_SERVER_0_1 (Empfang) + AR_PUBLISH_1 (lokale Weiterleitung), fuer Sensor-Stationen ohne eigene VT (z.B. STG4), die trotzdem echte, editierbare Referenzwerte von einer anderen Station (VT) oder dem Dashboard entgegennehmen sollen.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="ID_METHOD" Type="WSTRING" Comment="Lokal erzeugte OPC-UA-Methode (ACTION=CREATE_METHOD, 1 REAL-Argument) - von einer anderen Station (AR_CLIENT_1_0) UND/ODER direkt vom OPC-Dashboard aufrufbar"/>
+			<VarDeclaration Name="ID_WRITE" Type="WSTRING" Comment="Lokale Publish-Adresse (REAL, ACTION=PUBLISH) fuer den empfangenen Wert - typischerweise von einem lokalen Self-Subscribe gegengelesen"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="RECEIVE" Type="adapter::net::AR_SERVER_0_1" x="-100" y="0">
+		</FB>
+		<FB Name="PUBLISH" Type="adapter::net::AR_PUBLISH_1" x="1700" y="0">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_2" x="5400" y="500">
+		</FB>
+		<EventConnections>
+			<Connection Source="RECEIVE.INITO" Destination="PUBLISH.INIT"/>
+			<Connection Source="INIT" Destination="RECEIVE.INIT" dx1="1040"/>
+			<Connection Source="PUBLISH.INITO" Destination="INITO" dx1="2613.33"/>
+			<Connection Source="PUBLISH.INITO" Destination="AND_QO.REQ" dx1="926.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="ID_METHOD" Destination="RECEIVE.ID" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_WRITE" Destination="PUBLISH.ID" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="RECEIVE.QI" dx1="1040">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="PUBLISH.QI" dx1="553.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="RECEIVE.QO" Destination="AND_QO.IN1" dx1="1700">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="PUBLISH.QO" Destination="AND_QO.IN2" dx1="926.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="1440"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="RECEIVE.OUT" Destination="PUBLISH.IN" dx1="300"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="logiBUS_IXA_TO_logiBUS_QXA" Comment="logiBUS_IXA auf logiBUS_QXA (generisch)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-18" Remarks="logiBUS_IXA.INITO auf logiBUS_IXA.REQ zurueckverdrahtet (Selfloop) - loest nach der Initialisierung sofort einen Service-Request aus, statt auf die erste echte Wertaenderung am Bus zu warten (Fix fuer 'Waiting for handle'-Status direkt nach Boot).">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2023-10-23" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_S"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO_S"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="Input" Type="logiBUS::io::DI::logiBUS_DI_S" Comment="Identify the Input Input_I1..I8" InitialValue="logiBUS_DI::Invalid"/>
+			<VarDeclaration Name="Output" Type="logiBUS::io::DQ::logiBUS_DO_S" Comment="Identify the Output Output_Q1..Q8" InitialValue="logiBUS_DO::Invalid"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="logiBUS_QXA" Type="logiBUS::io::DQ::logiBUS_QXA" x="-1900" y="-1000">
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+		<FB Name="logiBUS_IXA" Type="logiBUS::io::DI::logiBUS_IXA" x="-4600" y="-1000">
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_2">
+		</FB>
+		<EventConnections>
+			<Connection Source="logiBUS_IXA.INITO" Destination="logiBUS_IXA.REQ" dx1="80" dx2="80" dy="53.33"/>
+			<Connection Source="INIT" Destination="logiBUS_QXA.INIT"/>
+			<Connection Source="logiBUS_QXA.INITO" Destination="logiBUS_IXA.INIT"/>
+			<Connection Source="logiBUS_IXA.INITO" Destination="INITO"/>
+			<Connection Source="logiBUS_IXA.INITO" Destination="AND_QO.REQ"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="Input" Destination="logiBUS_IXA.Input" dx1="2926.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Output" Destination="logiBUS_QXA.Output" dx1="906.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="logiBUS_QXA.QI"/>
+			<Connection Source="QI" Destination="logiBUS_IXA.QI"/>
+			<Connection Source="logiBUS_QXA.QO" Destination="AND_QO.IN1"/>
+			<Connection Source="logiBUS_IXA.QO" Destination="AND_QO.IN2"/>
+			<Connection Source="AND_QO.OUT" Destination="QO"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="logiBUS_IXA.IN" Destination="logiBUS_QXA.OUT"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

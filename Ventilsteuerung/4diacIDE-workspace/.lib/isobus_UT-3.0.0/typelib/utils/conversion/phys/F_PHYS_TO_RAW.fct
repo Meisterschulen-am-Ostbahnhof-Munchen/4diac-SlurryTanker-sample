@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Function Name="F_PHYS_TO_RAW" Comment="Convert physical REAL value to ISOBUS raw UDINT with saturation and alarm outputs.&#10;ISOBUS formula: display = (raw + offset) * scale Inverse: raw = UDINT(DINT(phys / scale) -&#10;offset)&#10;&#10;Limits:&#10;  phys &lt; offset * scale          -&gt; udRaw = 0,           xUnder = TRUE phys &gt; (offset +&#10;4294967295) * scale -&gt; udRaw = UDINT#MAX,   xOver = TRUE&#10;&#10;Example: phys=-500.0, scale=0.01, offset=-100000 DINT(-500.0 / 0.01) = -50000&#10;  -50000 - (-100000) = 50000 UDINT(50000) = 50000 -&gt; UT displays (50000 + (-100000)) * 0.01 =&#10;-500.00">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-04-14">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::utils::conversion::phys">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event">
+				<With Var="rPhys"/>
+				<With Var="stObj"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event">
+				<With Var=""/>
+				<With Var="xOver"/>
+				<With Var="xUnder"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="rPhys" Type="REAL"/>
+			<VarDeclaration Name="stObj" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="" Type="UDINT"/>
+			<VarDeclaration Name="xOver" Type="BOOL"/>
+			<VarDeclaration Name="xUnder" Type="BOOL"/>
+		</OutputVars>
+	</InterfaceList>
+	<FunctionBody>
+		<ST><![CDATA[PACKAGE logiBUS::utils::conversion::phys;
+
+(* Convert physical REAL value to ISOBUS raw UDINT with saturation and alarm outputs.
+ * ISOBUS formula: display = (raw + offset) * scale Inverse: raw = UDINT(DINT(phys / scale) -
+ * offset)
+ * *
+ * Limits:
+ *   phys < offset * scale          -> udRaw = 0,           xUnder = TRUE phys > (offset +
+ * 4294967295) * scale -> udRaw = UDINT#MAX,   xOver = TRUE
+ * *
+ * Example: phys=-500.0, scale=0.01, offset=-100000 DINT(-500.0 / 0.01) = -50000
+ *   -50000 - (-100000) = 50000 UDINT(50000) = 50000 -> UT displays (50000 + (-100000)) * 0.01 =
+ * -500.00 *)
+FUNCTION F_PHYS_TO_RAW : UDINT
+
+VAR_INPUT
+	rPhys : REAL;
+	stObj : NumericObjectPool_S;
+END_VAR
+
+VAR_OUTPUT
+	xOver : BOOL;
+	xUnder : BOOL;
+END_VAR
+
+VAR
+	lrLower : REAL;
+	lrUpper : REAL;
+END_VAR
+
+lrLower := DINT_TO_REAL(stObj.i32Offset) * stObj.r32Scale;
+lrUpper := (DINT_TO_REAL(stObj.i32Offset) + REAL#4294967295.0) * stObj.r32Scale;
+
+IF rPhys > lrUpper THEN
+	F_PHYS_TO_RAW := UDINT#4294967295;
+	xOver := TRUE;
+	xUnder := FALSE;
+ELSIF rPhys < lrLower THEN
+	F_PHYS_TO_RAW := UDINT#0;
+	xOver := FALSE;
+	xUnder := TRUE;
+ELSE
+	F_PHYS_TO_RAW := DINT_TO_UDINT(REAL_TO_DINT(rPhys / stObj.r32Scale) - stObj.i32Offset);
+	xOver := FALSE;
+	xUnder := FALSE;
+END_IF;
+
+END_FUNCTION
+]]></ST>
+	</FunctionBody>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</Function>

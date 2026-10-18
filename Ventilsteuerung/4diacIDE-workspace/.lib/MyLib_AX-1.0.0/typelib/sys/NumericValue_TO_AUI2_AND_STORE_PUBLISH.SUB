@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="NumericValue_TO_AUI2_AND_STORE_PUBLISH" Comment="Kopie von NumericValue_TO_AUI2_AND_STORE, zusaetzlich mit M2M-Publish des&#10;bestaetigten Werts (AUI_SPLIT_2 -&gt; AUI_SPLIT_3: 3. Zweig fuer AUI_PUBLISH_1).&#10;Der M2M-Publish haengt damit am selben, bereits bewaehrten internen&#10;Confirm-Rueckpfad wie VT-Anzeige (AUI_TO_AUDI) und INI-Persistenz (INI_AUI) -&#10;kein fragiler externer Selfloop auf einem zusaetzlichen AUI2_TO_AUI-Bruecken-&#10;Baustein mehr noetig, der bei einem externen Umbau vergessen werden kann&#10;(Franz, nach Live-Debug einer genau solchen Regression: &apos;eine Kopie machen,&#10;und der PUBLISH kommt da innen rein&apos;).">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Büngener Schuder GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Büngener Schuder GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-10-14" Remarks="initial implementation - Kopie von NumericValue_TO_AUI2_AND_STORE v3.0, AUI_SPLIT_2 zu AUI_SPLIT_3 erweitert, neuer InputVar ID_WRITE + AUI_PUBLISH_1 (M2M) am 3. Split-Ausgang. Erster Aufrufer: BunkerKlappen_Fanghaken_Option.SUB (ersetzt den externen AUI2_TO_AUI+Selfloop+AUI_SPLIT_2 fuer den M2M-Pfad, der heute per Regression gebrochen war - der verbleibende externe AUI2_TO_AUI dort wird nur noch fuer den rein lokalen DEMUX-Tap gebraucht).">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="KEY" Type="STRING" Comment="Key name."/>
+			<VarDeclaration Name="SECTION" Type="STRING" Comment="Section name."/>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="ID_WRITE" Type="WSTRING" Comment="Lokale Publish-Adresse (ACTION=WRITE) fuer den bestaetigten Wert - M2M, wird remote abonniert"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="VALUEO" Type="adapter::types::bidirectional::AUI2"/>
+		</Plugs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="NumericValue_IDA" Type="isobus::UT::io::NumericValue::NumericValue_IDA" x="-9000" y="500">
+		</FB>
+		<FB Name="AD_TO_AUI" Type="adapter::conversion::unidirectional::AD_TO_AUI" x="-7400" y="1100">
+		</FB>
+		<FB Name="AUI_TO_AUI2" Type="adapter::conversion::bidirectional::AUI_TO_AUI2" Comment="Bruecke zum externen Consumer (z.B. AOption_AUI_DEMUX_N.K)" x="-4600" y="1100">
+		</FB>
+		<FB Name="AUI_TO_AUDI" Type="adapter::conversion::unidirectional::AUI_TO_AUDI" x="-1600" y="100">
+		</FB>
+		<FB Name="Q_NumericValue_AUDI" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="0" y="-300">
+		</FB>
+		<FB Name="AUI_LAST_2" Type="adapter::events::unidirectional::AUI_LAST_2" Comment="Last-Writer-Wins: beim Boot gewinnt der INI_AUI2-Wert (IN2), danach jede Live-VT-Aenderung (IN1)" x="-6000" y="1100">
+		</FB>
+		<Comment Comment="SETM=FALSE: INI_AUI2 quittiert nur beim Boot (INIT-&gt;INITO-&gt;GET-&gt;GETO) automatisch, NICHT bei jedem spaeteren Schreibvorgang ueber VAL (Vorwaertsrichtung). Der Boot-Wert laeuft ueber AUI_TO_AUI2_1.AUI_OUT zu AUI_LAST_2 (siehe oben) und gewinnt dort einmalig gegen die Live-VT-Lesung. Waere SETM=TRUE, wuerde jeder spaetere Schreibvorgang sofort ein neues Echo auf AUI_OUT ausloesen, das wieder bei AUI_LAST_2 ankaeme und erneut Richtung VALUEO geschickt wuerde - ein Dauerkreislauf." x="-1700" y="3200" width="3000" height="1300"/>
+		<FB Name="AUI_SPLIT_3" Type="adapter::events::unidirectional::AUI_SPLIT_3" Comment="3. Zweig (OUT3) fuer AUI_PUBLISH_1 - der bestaetigte Wert (aus AUI_TO_AUI2.AUI_OUT) wird jetzt auch direkt M2M published, am selben Confirm-Rueckpfad wie VT-Anzeige/INI-Persistenz" x="-3000" y="1200">
+		</FB>
+		<FB Name="INI_AUI" Type="eclipse4diac::storage::INI_AUI" x="0" y="1600">
+			<Parameter Name="SETM" Value="FALSE"/>
+			<Parameter Name="DEFAULT_VALUE" Value="UINT#0"/>
+		</FB>
+		<FB Name="AUI_PUBLISH_1" Type="adapter::net::AUI_PUBLISH_1" x="300" y="600">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_4" x="2700" y="100">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="NumericValue_IDA.INIT" dx1="80" dx2="80" dy="-213.33"/>
+			<Connection Source="NumericValue_IDA.INITO" Destination="INI_AUI.INIT" dx1="3980"/>
+			<Connection Source="INI_AUI.INITO" Destination="Q_NumericValue_AUDI.INIT" dx1="80" dx2="80" dy="-946.67"/>
+			<Connection Source="Q_NumericValue_AUDI.INITO" Destination="AUI_PUBLISH_1.INIT" dx1="80" dx2="80" dy="446.67"/>
+			<Connection Source="AUI_PUBLISH_1.INITO" Destination="INITO" dx1="7200"/>
+			<Connection Source="AUI_PUBLISH_1.INITO" Destination="AND_QO.REQ" dx1="753.33"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="KEY" Destination="INI_AUI.KEY" dx1="846.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="SECTION" Destination="INI_AUI.SECTION" dx1="846.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId" Destination="NumericValue_IDA.u16ObjId" dx1="880">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId" Destination="Q_NumericValue_AUDI.u16ObjId" dx1="8246.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_WRITE" Destination="AUI_PUBLISH_1.ID" dx1="846.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="Q_NumericValue_AUDI.QI" dx1="80" dx2="80" dy="-506.67"/>
+			<Connection Source="QI" Destination="NumericValue_IDA.QI" dx1="80" dx2="80" dy="-106.67"/>
+			<Connection Source="QI" Destination="INI_AUI.QI" dx1="80" dx2="80" dy="386.67"/>
+			<Connection Source="QI" Destination="AUI_PUBLISH_1.QI" dx1="80" dx2="80" dy="-60"/>
+			<Connection Source="Q_NumericValue_AUDI.QO" Destination="AND_QO.IN1" dx1="433.33"/>
+			<Connection Source="NumericValue_IDA.QO" Destination="AND_QO.IN2" dx1="3980"/>
+			<Connection Source="INI_AUI.QO" Destination="AND_QO.IN3" dx1="520"/>
+			<Connection Source="AUI_PUBLISH_1.QO" Destination="AND_QO.IN4" dx1="453.33"/>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="1393.33"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="NumericValue_IDA.IN" Destination="AD_TO_AUI.AD_IN" dx1="180"/>
+			<Connection Source="AD_TO_AUI.AUI_OUT" Destination="AUI_LAST_2.IN1"/>
+			<Connection Source="AUI_LAST_2.OUT" Destination="AUI_TO_AUI2.AUI_IN"/>
+			<Connection Source="AUI_TO_AUI2.AUI2_BIDIR" Destination="VALUEO" dx1="2220">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AUI_TO_AUDI.AUDI_OUT" Destination="Q_NumericValue_AUDI.u32NewValue" dx1="460"/>
+			<Connection Source="AUI_SPLIT_3.OUT1" Destination="AUI_TO_AUDI.AUI_IN" dx1="320"/>
+			<Connection Source="AUI_SPLIT_3.OUT3" Destination="INI_AUI.AUI_IN" dx1="400"/>
+			<Connection Source="INI_AUI.AUI_OUT" Destination="AUI_LAST_2.IN2" dx1="80" dx2="80" dy="280"/>
+			<Connection Source="AUI_TO_AUI2.AUI_OUT" Destination="AUI_SPLIT_3.IN" dx1="566.67"/>
+			<Connection Source="AUI_SPLIT_3.OUT2" Destination="AUI_PUBLISH_1.IN" dx1="1246.67"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="OPC_TO_AR2" Comment="Nur OPC-UA (kein VT-Eingabefeld): Remote-Wert lesen (Subscribe) und als AR2&#10;(bidirektional) an einen Consumer weiterreichen. Was der Consumer zurueckechot&#10;(z.B. CALIBRATE.ZERO/.SPAN Boot-/Live-Wert) wird per Publish auf dieselbe&#10;Remote-Adresse zurueckgemeldet.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-08-31" Remarks="OPC-UA-only sibling of NumericValue_TO_AR2 - no VT object involved, purely remote read+echo via AR2">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="ID_READ" Type="WSTRING" Comment="Remote-Subscribe-Adresse (REAL, ACTION=SUBSCRIBE)"/>
+			<VarDeclaration Name="ID_WRITE" Type="WSTRING" Comment="Remote-Echo-Adresse (REAL, ACTION=PUBLISH) - meldet zurueck, was der Consumer gerade als aktuellen/persistierten Wert liefert"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="VALUEO" Type="adapter::types::bidirectional::AR2"/>
+		</Plugs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="AR_SUBSCRIBE_1" Type="adapter::net::AR_SUBSCRIBE_1" x="-2800" y="-200">
+		</FB>
+		<FB Name="AR_TO_AR2" Type="adapter::conversion::bidirectional::AR_TO_AR2" x="400" y="0">
+		</FB>
+		<FB Name="AR_PUBLISH_1" Type="adapter::net::AR_PUBLISH_1" x="3700" y="0">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_2" x="5600" y="700">
+		</FB>
+		<EventConnections>
+			<Connection Source="AR_SUBSCRIBE_1.INITO" Destination="AR_PUBLISH_1.INIT" dx1="5480"/>
+			<Connection Source="INIT" Destination="AR_SUBSCRIBE_1.INIT" dx1="80" dx2="80" dy="-366.67"/>
+			<Connection Source="AR_PUBLISH_1.INITO" Destination="INITO" dx1="4186.67"/>
+			<Connection Source="AR_PUBLISH_1.INITO" Destination="AND_QO.REQ" dx1="793.33"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="ID_READ" Destination="AR_SUBSCRIBE_1.ID" dx1="1046.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_WRITE" Destination="AR_PUBLISH_1.ID" dx1="4046.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="AR_SUBSCRIBE_1.QI" dx1="80" dx2="80" dy="-260"/>
+			<Connection Source="QI" Destination="AR_PUBLISH_1.QI" dx1="1626.67"/>
+			<Connection Source="AR_SUBSCRIBE_1.QO" Destination="AND_QO.IN1" dx1="926.67"/>
+			<Connection Source="AR_PUBLISH_1.QO" Destination="AND_QO.IN2" dx1="526.67"/>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="1160"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="AR_SUBSCRIBE_1.OUT" Destination="AR_TO_AR2.AR_IN" dx1="513.33"/>
+			<Connection Source="AR_TO_AR2.AR2_BIDIR" Destination="VALUEO" dx1="2220">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AR_TO_AR2.AR_OUT" Destination="AR_PUBLISH_1.IN" dx1="360"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

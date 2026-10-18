@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="ALR_TO_ALR2" Comment="Composite FB for convert unidirectional ALR to bidirectional ALR2">
+	<Identification Standard="61499-2" Function="ALR_IN publishes its value onto the outgoing (EO1) side of ALR2_BIDIR. Whatever ALR2_BIDIR receives on its incoming (EI1) side is forwarded out again as a plain unidirectional signal via ALR_OUT." Description="Copyright (c) 2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-09-12" Remarks="Initial Version - Konvertierungsfamilie vervollstaendigt (analog zu AR2/AB2/AE2).">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::conversion::bidirectional">
+	</CompilerInfo>
+	<InterfaceList>
+		<Sockets>
+			<AdapterDeclaration Name="ALR_IN" Type="adapter::types::unidirectional::ALR" Comment="Adapter Input: unidirectional source" x="-1200" y="900"/>
+		</Sockets>
+		<Plugs>
+			<AdapterDeclaration Name="ALR2_BIDIR" Type="adapter::types::bidirectional::ALR2" Comment="Adapter Output: bidirectional tap, outgoing side driven by ALR_IN, incoming side forwarded to ALR_OUT" x="200" y="900"/>
+			<AdapterDeclaration Name="ALR_OUT" Type="adapter::types::unidirectional::ALR" Comment="Adapter Output: mirrors ALR2_BIDIR's incoming (request) side" x="1600" y="900"/>
+		</Plugs>
+	</InterfaceList>
+	<FBNetwork>
+		<EventConnections>
+			<Connection Source="ALR_IN.E1" Destination="ALR2_BIDIR.EO1"/>
+			<Connection Source="ALR2_BIDIR.EI1" Destination="ALR_OUT.E1"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="ALR_IN.D1" Destination="ALR2_BIDIR.DO1"/>
+			<Connection Source="ALR2_BIDIR.DI1" Destination="ALR_OUT.D1"/>
+		</DataConnections>
+	</FBNetwork>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Fahrwerk_Mittelpunkt_Anzeige" Comment="Reine Anzeige-Haelfte von Fahrwerk_Mittelpunkt_Automatik, herausgeloest: 2&#10;Bargraphen + Status-Center-Hintergrundfarbe fuer einen Winkelsensor mit&#10;Mittelstellung (Achslenkung/Hangausgleich), gespeist von einem lokal bereits&#10;verfuegbaren AR-Plug (CAL_IN) statt einem eigenen OPC-UA-Self-Subscribe. Fuer&#10;Faelle, in denen die eigentliche Automatik (AUTO_LINKS/RECHTS-Regelung) auf&#10;einer anderen Station laeuft als die VT (z.B. Hangausgleich seit dem Umzug nach&#10;STG4), dort aber trotzdem eine Anzeige gebraucht wird - Franz: 'Bargraph braucht&#10;es. Wobei die Frage ist ob das ein extra forwarding sein muss? Fuer die CAL&#10;Maske bei Eingaenge brauchen wir den kalibrierten Wert ohnehin schon.' Kein&#10;extra Forwarding noetig: der Kalibrierkanal-Konsument&#10;(logiBUS_AI_Calibrated_Subscribe_VT_(3P_)OPC) hat den Wert bereits lokal als&#10;CAL_OUT-Plug, genau der wird hier direkt weiterverdrahtet.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-26" Remarks="initial implementation - herausgeloest aus Fahrwerk_Mittelpunkt_Automatik.SUB (SUBSCRIBE_Y/SPLIT_Y/CENTER_CMP/SplitBar/STATUS_CENTER_BG kamen dort bereits genauso vor), fuer Hangausgleich: die Automatik selbst laeuft seit v3.0 auf STG4 (kein VT dort, u16ObjId_Status_Center/stObjBargraphSplit dort bewusst ID_NULL), diese SubApp laeuft stattdessen auf STG1, gespeist vom ohnehin schon lokal vorhandenen CAL_OUT-Plug der Kalibrierkanal-Konsumenten-Instanz - kein zusaetzlicher Remote-Round-Trip.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="WINDOW_MIN" Type="REAL" Comment="Untere Fenstergrenze (%), ab wann &apos;links ausgelenkt&apos; gilt - muss zum WINDOW_MIN der zugehoerigen Fahrwerk_Mittelpunkt_Automatik-Instanz passen" InitialValue="-2.0"/>
+			<VarDeclaration Name="WINDOW_MAX" Type="REAL" Comment="Obere Fenstergrenze (%), ab wann &apos;rechts ausgelenkt&apos; gilt - siehe WINDOW_MIN" InitialValue="2.0"/>
+			<VarDeclaration Name="u16ObjId_Status_Center" Type="UINT" Comment="Object ID Status_Center-Button (Achslenkung_Status_Center bzw. Hangausgleich_Status_Center, &apos;&gt;&lt;&apos;-Indikator)"/>
+			<VarDeclaration Name="stObjBargraphSplit" Type="isobus::utils::bargraph::BargraphSplit_S" Comment="Object IDs der 2 Bargraphen + gemeinsame Betrags-Grenzen, siehe FBs::const::DefaultPool_BargraphSplit::Bargraph_Achslenkung_BargraphSplit bzw. _Hangausgleich_BargraphSplit"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+		<Sockets>
+			<AdapterDeclaration Name="CAL_IN" Type="adapter::types::unidirectional::AR" Comment="Kalibrierter Winkel von aussen (z.B. AnalogChannel_Hangausgleich_Winkel.CAL_OUT), statt eigenem lokalen OPC-UA-Self-Subscribe"/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="SPLIT_Y" Type="adapter::events::unidirectional::AR_SPLIT_2" x="-11400" y="-4600">
+		</FB>
+		<FB Name="CENTER_CMP" Type="adapter::Engineering::measurements::AR_DEADBAND_COMPARE" x="-8300" y="-4700">
+		</FB>
+		<FB Name="LIT_WINDOW_MIN" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-9300" y="-4200">
+		</FB>
+		<FB Name="LIT_WINDOW_MAX" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-9400" y="-5000">
+		</FB>
+		<FB Name="SplitBar" Type="isobus::UT::Q::BargraphSplitFS_AR" x="-9500" y="-3600">
+		</FB>
+		<SubApp Name="STATUS_CENTER_BG" Type="MyLib::sys::GreenWhiteBackground1_AX" x="-4800" y="-4400">
+		</SubApp>
+		<EventConnections>
+			<Connection Source="INIT" Destination="STATUS_CENTER_BG.INIT"/>
+			<Connection Source="STATUS_CENTER_BG.INITO" Destination="INITO"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="WINDOW_MIN" Destination="LIT_WINDOW_MIN.INIT_VAL" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="WINDOW_MAX" Destination="LIT_WINDOW_MAX.INIT_VAL" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId_Status_Center" Destination="STATUS_CENTER_BG.u16ObjId" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="stObjBargraphSplit" Destination="SplitBar.stObj" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="STATUS_CENTER_BG.QI"/>
+			<Connection Source="STATUS_CENTER_BG.QO" Destination="QO"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="CAL_IN" Destination="SPLIT_Y.IN" dx1="600"/>
+			<Connection Source="LIT_WINDOW_MIN.OUT" Destination="CENTER_CMP.WINDOW_MIN" dx1="120"/>
+			<Connection Source="LIT_WINDOW_MAX.OUT" Destination="CENTER_CMP.WINDOW_MAX" dx1="166.67"/>
+			<Connection Source="SPLIT_Y.OUT1" Destination="CENTER_CMP.Y" dx1="600"/>
+			<Connection Source="SPLIT_Y.OUT2" Destination="SplitBar.rPhys" dx1="573.33"/>
+			<Connection Source="CENTER_CMP.CENTERED" Destination="STATUS_CENTER_BG.DI1" dx1="466.67"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="NumericValue_TO_AD2" Comment="VT-Eingabefeld (CInputNumber) lesen und als AD2 (bidirektional, DWORD/Bitmaske)&#10;an einen Consumer weiterreichen (z.B. AOption_AD_DEMUX_N.K). Speichert NICHT&#10;selbst - der Consumer meldet die tatsaechlich uebernommene Bitmaske ueber&#10;denselben AD2-Plug zurueck, das Echo wird auf das VT-Feld zurueckgeschrieben.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-13" Remarks="DWORD/Bitmasken-Pendant zu MyLib::sys::NumericValue_TO_AUI2 - fuer AOption_AD_DEMUX_N (Multi-Select) statt AOption_AUI_DEMUX_N (Single-Select). Kein AD_TO_AUI-Zwischenschritt noetig, da AD2 bereits direkt DWORD ist.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID" InitialValue="ID_NULL"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="VALUEO" Type="adapter::types::bidirectional::AD2"/>
+		</Plugs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="NumericValue_IDA" Type="isobus::UT::io::NumericValue::NumericValue_IDA" x="-2800" y="-300">
+		</FB>
+		<FB Name="AD_TO_AD2" Type="adapter::conversion::bidirectional::AD_TO_AD2" x="700" y="200">
+		</FB>
+		<FB Name="AD_TO_AUDI" Type="adapter::conversion::unidirectional::AD_TO_AUDI" x="1900" y="700">
+		</FB>
+		<FB Name="Q_NumericValue_AUDI" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="3000" y="-100">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_2">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="NumericValue_IDA.INIT"/>
+			<Connection Source="NumericValue_IDA.INITO" Destination="Q_NumericValue_AUDI.INIT"/>
+			<Connection Source="Q_NumericValue_AUDI.INITO" Destination="INITO"/>
+			<Connection Source="Q_NumericValue_AUDI.INITO" Destination="AND_QO.REQ"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="u16ObjId" Destination="NumericValue_IDA.u16ObjId" dx1="1046.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId" Destination="Q_NumericValue_AUDI.u16ObjId" dx1="6046.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="Q_NumericValue_AUDI.QI"/>
+			<Connection Source="QI" Destination="NumericValue_IDA.QI"/>
+			<Connection Source="Q_NumericValue_AUDI.QO" Destination="AND_QO.IN1"/>
+			<Connection Source="NumericValue_IDA.QO" Destination="AND_QO.IN2"/>
+			<Connection Source="AND_QO.OUT" Destination="QO"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="NumericValue_IDA.IN" Destination="AD_TO_AD2.AD_IN" dx1="586.67"/>
+			<Connection Source="AD_TO_AD2.AD2_BIDIR" Destination="VALUEO" dx1="2220">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AD_TO_AD2.AD_OUT" Destination="AD_TO_AUDI.AD_IN" dx1="873.33"/>
+			<Connection Source="AD_TO_AUDI.AUDI_OUT" Destination="Q_NumericValue_AUDI.u32NewValue" dx1="520"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

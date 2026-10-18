@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="DataPanel_MI_IW_4_20mA" Comment="Input service interface function block for analog input data (4-20mA)">
+	<Identification Description="Copyright (c) 2026 HR Agrartechnik GmbH">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="generated" Date="2026-01-17">
+	</VersionInfo>
+	<CompilerInfo packageName="DataPanel::io::MI::AI">
+		<Import declaration="DataPanel::io::MI::const::MI"/>
+		<Import declaration="DataPanel::io::MI::AI::DataPanel_MI_AI::Invalid"/>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+				<With Var="QI"/>
+				<With Var="PARAMS"/>
+				<With Var="u8SAMember"/>
+				<With Var="Input"/>
+				<With Var="AnalogInput_hysteresis"/>
+			</Event>
+			<Event Name="REQ" Type="Event" Comment="Service Request">
+				<With Var="QI"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+				<With Var="IN"/>
+			</Event>
+			<Event Name="IND" Type="Event" Comment="Indication from Resource">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+				<With Var="IN"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
+			<VarDeclaration Name="PARAMS" Type="STRING" Comment="Service Parameters"/>
+			<VarDeclaration Name="u8SAMember" Type="USINT" Comment="Node SA 224..239" InitialValue="MI::MI_00"/>
+			<VarDeclaration Name="Input" Type="DataPanel::io::MI::AI::DataPanel_MI_AI_S" Comment="Identify the Input AnalogInput_1A..8B" InitialValue="Invalid"/>
+			<VarDeclaration Name="AnalogInput_hysteresis" Type="WORD"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
+			<VarDeclaration Name="IN" Type="WORD" Comment="Input data from resource"/>
+		</OutputVars>
+	</InterfaceList>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="colours" Comment="Global constants">
+	<Identification Standard="61499-1" Description="Copyright (c) 2023 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2023-10-22">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::UT::Q::const">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="COLOR_BLACK" Type="USINT" Comment="#000000, rgb(0, 0, 0), black, Schwarz" InitialValue="USINT#0"/>
+		<VarDeclaration Name="COLOR_WHITE" Type="USINT" Comment="#FFFFFF, rgb(255, 255, 255), white, Weiß" InitialValue="USINT#1"/>
+		<VarDeclaration Name="COLOR_GREEN" Type="USINT" Comment="#009900, rgb(0, 153, 0), japanese laurel, Grün" InitialValue="USINT#2"/>
+		<VarDeclaration Name="COLOR_TEAL" Type="USINT" Comment="#009999, rgb(0, 153, 153), persian green, Blaugrün" InitialValue="USINT#3"/>
+		<VarDeclaration Name="COLOR_MAROON" Type="USINT" Comment="#990000, rgb(153, 0, 0), red berry, Kastanienbraun" InitialValue="USINT#4"/>
+		<VarDeclaration Name="COLOR_PURPLE" Type="USINT" Comment="#990099, rgb(153, 0, 153), flirt, Violett" InitialValue="USINT#5"/>
+		<VarDeclaration Name="COLOR_OLIVE" Type="USINT" Comment="#999900, rgb(153, 153, 0), olive, Olivgrün" InitialValue="USINT#6"/>
+		<VarDeclaration Name="COLOR_SILVER" Type="USINT" Comment="#CCCCCC, rgb(204, 204, 204), silver, Silber" InitialValue="USINT#7"/>
+		<VarDeclaration Name="COLOR_GREY" Type="USINT" Comment="#999999, rgb(153, 153, 153), quick silver, Grau" InitialValue="USINT#8"/>
+		<VarDeclaration Name="COLOR_BLUE" Type="USINT" Comment="#0000FF, rgb(0, 0, 255), blue, Blau" InitialValue="USINT#9"/>
+		<VarDeclaration Name="COLOR_LIME" Type="USINT" Comment="#00FF00, rgb(0, 255, 0), lime, Hellgrün" InitialValue="USINT#10"/>
+		<VarDeclaration Name="COLOR_CYAN" Type="USINT" Comment="#00FFFF, rgb(0, 255, 255), cyan / aqua, Türkis" InitialValue="USINT#11"/>
+		<VarDeclaration Name="COLOR_RED" Type="USINT" Comment="#FF0000, rgb(255, 0, 0), red, Rot" InitialValue="USINT#12"/>
+		<VarDeclaration Name="COLOR_MAGENTA" Type="USINT" Comment="#FF00FF, rgb(255, 0, 255), magenta / fuchsia, Magenta" InitialValue="USINT#13"/>
+		<VarDeclaration Name="COLOR_YELLOW" Type="USINT" Comment="#FFFF00, rgb(255, 255, 0), yellow, Gelb" InitialValue="USINT#14"/>
+		<VarDeclaration Name="COLOR_NAVY" Type="USINT" Comment="#000099, rgb(0, 0, 153), blue gray, Marineblau" InitialValue="USINT#15"/>
+		<VarDeclaration Name="COLOR_WS_RED" Type="USINT" Comment="#FF0000, rgb(255, 0, 0), Red, Rot" InitialValue="USINT#196"/>
+		<VarDeclaration Name="COLOR_WS_DARK_RED" Type="USINT" Comment="#CC0000, rgb(204, 0, 0), Dark Red, Dunkelrot" InitialValue="USINT#160"/>
+		<VarDeclaration Name="COLOR_WS_DEEP_RED" Type="USINT" Comment="#990000, rgb(153, 0, 0), Deep Red, Tiefrot" InitialValue="USINT#124"/>
+		<VarDeclaration Name="COLOR_WS_VERY_DARK_RED" Type="USINT" Comment="#330000, rgb(51, 0, 0), Very Dark Red, Sehr dunkles Rot" InitialValue="USINT#52"/>
+		<VarDeclaration Name="COLOR_WS_MAGENTA" Type="USINT" Comment="#FF00FF, rgb(255, 0, 255), Magenta / Fuchsia, Magenta / Pink" InitialValue="USINT#201"/>
+		<VarDeclaration Name="COLOR_WS_PINK" Type="USINT" Comment="#FF99CC, rgb(255, 153, 204), Pink, Rosa" InitialValue="USINT#218"/>
+		<VarDeclaration Name="COLOR_WS_LIGHT_PINK" Type="USINT" Comment="#FFCCCC, rgb(255, 204, 204), Light Pink, Hellrosa" InitialValue="USINT#224"/>
+		<VarDeclaration Name="COLOR_WS_LIME" Type="USINT" Comment="#00FF00, rgb(0, 255, 0), Lime, Helles Grün / Limette" InitialValue="USINT#46"/>
+		<VarDeclaration Name="COLOR_WS_GREEN" Type="USINT" Comment="#00CC00, rgb(0, 204, 0), Green, Sattes Grün" InitialValue="USINT#40"/>
+		<VarDeclaration Name="COLOR_WS_DARK_GREEN" Type="USINT" Comment="#006600, rgb(0, 102, 0), Dark Green, Dunkelgrün" InitialValue="USINT#28"/>
+		<VarDeclaration Name="COLOR_WS_VERY_DARK_GREEN" Type="USINT" Comment="#003300, rgb(0, 51, 0), Very Dark Green, Waldgrün" InitialValue="USINT#22"/>
+		<VarDeclaration Name="COLOR_WS_SEA_GREEN" Type="USINT" Comment="#339933, rgb(51, 153, 51), Sea Green, Seegrün" InitialValue="USINT#71"/>
+		<VarDeclaration Name="COLOR_WS_YELLOW_GREEN" Type="USINT" Comment="#669900, rgb(102, 153, 0), Yellow Green, Gelbgrün / Oliv" InitialValue="USINT#106"/>
+		<VarDeclaration Name="COLOR_WS_PALE_GREEN" Type="USINT" Comment="#CCFFCC, rgb(204, 255, 204), Pale Green, Blassgrün" InitialValue="USINT#194"/>
+		<VarDeclaration Name="COLOR_WS_BLUE" Type="USINT" Comment="#0000FF, rgb(0, 0, 255), Blue, Blau" InitialValue="USINT#21"/>
+		<VarDeclaration Name="COLOR_WS_MEDIUM_BLUE" Type="USINT" Comment="#000099, rgb(0, 0, 153), Medium Blue, Mittelblau" InitialValue="USINT#19"/>
+		<VarDeclaration Name="COLOR_WS_DARK_BLUE" Type="USINT" Comment="#000066, rgb(0, 0, 102), Dark Blue, Dunkelblau" InitialValue="USINT#18"/>
+		<VarDeclaration Name="COLOR_WS_NAVY_BLUE" Type="USINT" Comment="#000033, rgb(0, 0, 51), Navy Blue, Marineblau" InitialValue="USINT#17"/>
+		<VarDeclaration Name="COLOR_WS_CYAN" Type="USINT" Comment="#00FFFF, rgb(0, 255, 255), Cyan / Aqua, Türkis / Cyan" InitialValue="USINT#51"/>
+		<VarDeclaration Name="COLOR_WS_DEEP_SKY_BLUE" Type="USINT" Comment="#00CCFF, rgb(0, 204, 255), Deep Sky Blue, Kräftiges Himmelblau" InitialValue="USINT#45"/>
+		<VarDeclaration Name="COLOR_WS_LIGHT_BLUE" Type="USINT" Comment="#99CCFF, rgb(153, 204, 255), Light Blue, Hellblau" InitialValue="USINT#153"/>
+		<VarDeclaration Name="COLOR_WS_YELLOW" Type="USINT" Comment="#FFFF00, rgb(255, 255, 0), Yellow, Gelb" InitialValue="USINT#226"/>
+		<VarDeclaration Name="COLOR_WS_GOLD" Type="USINT" Comment="#FFCC00, rgb(255, 204, 0), Gold, Goldgelb" InitialValue="USINT#220"/>
+		<VarDeclaration Name="COLOR_WS_ORANGE" Type="USINT" Comment="#FF9900, rgb(255, 153, 0), Orange, Orange" InitialValue="USINT#214"/>
+		<VarDeclaration Name="COLOR_WS_DARK_ORANGE" Type="USINT" Comment="#FF6600, rgb(255, 102, 0), Dark Orange, Dunkelorange" InitialValue="USINT#208"/>
+		<VarDeclaration Name="COLOR_WS_LIGHT_YELLOW" Type="USINT" Comment="#FFFFCC, rgb(255, 255, 204), Light Yellow, Hellgelb / Creme" InitialValue="USINT#230"/>
+		<VarDeclaration Name="COLOR_WS_LIGHT_BROWN" Type="USINT" Comment="#996633, rgb(153, 102, 51), Light Brown, Hellbraun" InitialValue="USINT#137"/>
+		<VarDeclaration Name="COLOR_WS_BROWN" Type="USINT" Comment="#663300, rgb(102, 51, 0), Brown, Braun" InitialValue="USINT#94"/>
+		<VarDeclaration Name="COLOR_WS_PURPLE" Type="USINT" Comment="#990099, rgb(153, 0, 153), Purple, Violett" InitialValue="USINT#127"/>
+		<VarDeclaration Name="COLOR_WS_DARK_PURPLE" Type="USINT" Comment="#660066, rgb(102, 0, 102), Dark Purple, Dunkelviolett" InitialValue="USINT#90"/>
+		<VarDeclaration Name="COLOR_WS_VERY_DARK_PURPLE" Type="USINT" Comment="#330033, rgb(51, 0, 51), Very Dark Purple, Tiefviolett" InitialValue="USINT#53"/>
+		<VarDeclaration Name="COLOR_WS_BLACK" Type="USINT" Comment="#000000, rgb(0, 0, 0), Black, Schwarz (Doppelt als Websafe)" InitialValue="USINT#16"/>
+		<VarDeclaration Name="COLOR_WS_DARK_SLATE_GRAY" Type="USINT" Comment="#333333, rgb(51, 51, 51), Dark Slate Gray, Dunkelgrau" InitialValue="USINT#59"/>
+		<VarDeclaration Name="COLOR_WS_DIM_GRAY" Type="USINT" Comment="#666666, rgb(102, 102, 102), Dim Gray, Grau" InitialValue="USINT#102"/>
+		<VarDeclaration Name="COLOR_WS_GRAY" Type="USINT" Comment="#999999, rgb(153, 153, 153), Gray, Mittelgrau" InitialValue="USINT#145"/>
+		<VarDeclaration Name="COLOR_WS_LIGHT_GRAY" Type="USINT" Comment="#CCCCCC, rgb(204, 204, 204), Light Gray, Hellgrau" InitialValue="USINT#188"/>
+		<VarDeclaration Name="COLOR_WS_WHITE" Type="USINT" Comment="#FFFFFF, rgb(255, 255, 255), White, Weiß (Doppelt als Websafe)" InitialValue="USINT#231"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE isobus::UT::Q::const;
+
+GLOBALCONSTANTS colours
+	VAR_GLOBAL CONSTANT
+		// --- 16 ISOBUS/VGA-Standardfarben (0-15) ---
+		COLOR_BLACK : USINT := USINT#0; // #000000, rgb(0, 0, 0), black, Schwarz
+		COLOR_WHITE : USINT := USINT#1; // #FFFFFF, rgb(255, 255, 255), white, Weiß
+		COLOR_GREEN : USINT := USINT#2; // #009900, rgb(0, 153, 0), japanese laurel, Grün
+		COLOR_TEAL : USINT := USINT#3; // #009999, rgb(0, 153, 153), persian green, Blaugrün
+		COLOR_MAROON : USINT := USINT#4; // #990000, rgb(153, 0, 0), red berry, Kastanienbraun
+		COLOR_PURPLE : USINT := USINT#5; // #990099, rgb(153, 0, 153), flirt, Violett
+		COLOR_OLIVE : USINT := USINT#6; // #999900, rgb(153, 153, 0), olive, Olivgrün
+		COLOR_SILVER : USINT := USINT#7; // #CCCCCC, rgb(204, 204, 204), silver, Silber
+		COLOR_GREY : USINT := USINT#8; // #999999, rgb(153, 153, 153), quick silver, Grau
+		COLOR_BLUE : USINT := USINT#9; // #0000FF, rgb(0, 0, 255), blue, Blau
+		COLOR_LIME : USINT := USINT#10; // #00FF00, rgb(0, 255, 0), lime, Hellgrün
+		COLOR_CYAN : USINT := USINT#11; // #00FFFF, rgb(0, 255, 255), cyan / aqua, Türkis
+		COLOR_RED : USINT := USINT#12; // #FF0000, rgb(255, 0, 0), red, Rot
+		COLOR_MAGENTA : USINT := USINT#13; // #FF00FF, rgb(255, 0, 255), magenta / fuchsia, Magenta
+		COLOR_YELLOW : USINT := USINT#14; // #FFFF00, rgb(255, 255, 0), yellow, Gelb
+		COLOR_NAVY : USINT := USINT#15; // #000099, rgb(0, 0, 153), blue gray, Marineblau
+
+		// --- Websafe 6x6x6 Farben (16-231), exakt berechnet für ISOBUS ---
+		// 🔴 Rottöne & Pink
+		COLOR_WS_RED : USINT := USINT#196; // #FF0000, rgb(255, 0, 0), Red, Rot
+		COLOR_WS_DARK_RED : USINT := USINT#160; // #CC0000, rgb(204, 0, 0), Dark Red, Dunkelrot
+		COLOR_WS_DEEP_RED : USINT := USINT#124; // #990000, rgb(153, 0, 0), Deep Red, Tiefrot
+		COLOR_WS_VERY_DARK_RED : USINT := USINT#52; // #330000, rgb(51, 0, 0), Very Dark Red, Sehr dunkles Rot
+		COLOR_WS_MAGENTA : USINT := USINT#201; // #FF00FF, rgb(255, 0, 255), Magenta / Fuchsia, Magenta / Pink
+		COLOR_WS_PINK : USINT := USINT#218; // #FF99CC, rgb(255, 153, 204), Pink, Rosa
+		COLOR_WS_LIGHT_PINK : USINT := USINT#224; // #FFCCCC, rgb(255, 204, 204), Light Pink, Hellrosa
+
+		// 🟢 Grüntöne
+		COLOR_WS_LIME : USINT := USINT#46; // #00FF00, rgb(0, 255, 0), Lime, Helles Grün / Limette
+		COLOR_WS_GREEN : USINT := USINT#40; // #00CC00, rgb(0, 204, 0), Green, Sattes Grün
+		COLOR_WS_DARK_GREEN : USINT := USINT#28; // #006600, rgb(0, 102, 0), Dark Green, Dunkelgrün
+		COLOR_WS_VERY_DARK_GREEN : USINT := USINT#22; // #003300, rgb(0, 51, 0), Very Dark Green, Waldgrün
+		COLOR_WS_SEA_GREEN : USINT := USINT#71; // #339933, rgb(51, 153, 51), Sea Green, Seegrün
+		COLOR_WS_YELLOW_GREEN : USINT := USINT#106; // #669900, rgb(102, 153, 0), Yellow Green, Gelbgrün / Oliv
+		COLOR_WS_PALE_GREEN : USINT := USINT#194; // #CCFFCC, rgb(204, 255, 204), Pale Green, Blassgrün
+
+		// 🔵 Blautöne & Türkis
+		COLOR_WS_BLUE : USINT := USINT#21; // #0000FF, rgb(0, 0, 255), Blue, Blau
+		COLOR_WS_MEDIUM_BLUE : USINT := USINT#19; // #000099, rgb(0, 0, 153), Medium Blue, Mittelblau
+		COLOR_WS_DARK_BLUE : USINT := USINT#18; // #000066, rgb(0, 0, 102), Dark Blue, Dunkelblau
+		COLOR_WS_NAVY_BLUE : USINT := USINT#17; // #000033, rgb(0, 0, 51), Navy Blue, Marineblau
+		COLOR_WS_CYAN : USINT := USINT#51; // #00FFFF, rgb(0, 255, 255), Cyan / Aqua, Türkis / Cyan
+		COLOR_WS_DEEP_SKY_BLUE : USINT := USINT#45; // #00CCFF, rgb(0, 204, 255), Deep Sky Blue, Kräftiges Himmelblau
+		COLOR_WS_LIGHT_BLUE : USINT := USINT#153; // #99CCFF, rgb(153, 204, 255), Light Blue, Hellblau
+
+		// 🟡 Gelb & Orange
+		COLOR_WS_YELLOW : USINT := USINT#226; // #FFFF00, rgb(255, 255, 0), Yellow, Gelb
+		COLOR_WS_GOLD : USINT := USINT#220; // #FFCC00, rgb(255, 204, 0), Gold, Goldgelb
+		COLOR_WS_ORANGE : USINT := USINT#214; // #FF9900, rgb(255, 153, 0), Orange, Orange
+		COLOR_WS_DARK_ORANGE : USINT := USINT#208; // #FF6600, rgb(255, 102, 0), Dark Orange, Dunkelorange
+		COLOR_WS_LIGHT_YELLOW : USINT := USINT#230; // #FFFFCC, rgb(255, 255, 204), Light Yellow, Hellgelb / Creme
+
+		// 🟤 Braun & Violett
+		COLOR_WS_LIGHT_BROWN : USINT := USINT#137; // #996633, rgb(153, 102, 51), Light Brown, Hellbraun
+		COLOR_WS_BROWN : USINT := USINT#94; // #663300, rgb(102, 51, 0), Brown, Braun
+		COLOR_WS_PURPLE : USINT := USINT#127; // #990099, rgb(153, 0, 153), Purple, Violett
+		COLOR_WS_DARK_PURPLE : USINT := USINT#90; // #660066, rgb(102, 0, 102), Dark Purple, Dunkelviolett
+		COLOR_WS_VERY_DARK_PURPLE : USINT := USINT#53; // #330033, rgb(51, 0, 51), Very Dark Purple, Tiefviolett
+
+		// ⚪ Graustufen
+		COLOR_WS_BLACK : USINT := USINT#16; // #000000, rgb(0, 0, 0), Black, Schwarz (Doppelt als Websafe)
+		COLOR_WS_DARK_SLATE_GRAY : USINT := USINT#59; // #333333, rgb(51, 51, 51), Dark Slate Gray, Dunkelgrau
+		COLOR_WS_DIM_GRAY : USINT := USINT#102; // #666666, rgb(102, 102, 102), Dim Gray, Grau
+		COLOR_WS_GRAY : USINT := USINT#145; // #999999, rgb(153, 153, 153), Gray, Mittelgrau
+		COLOR_WS_LIGHT_GRAY : USINT := USINT#188; // #CCCCCC, rgb(204, 204, 204), Light Gray, Hellgrau
+		COLOR_WS_WHITE : USINT := USINT#231; // #FFFFFF, rgb(255, 255, 255), White, Weiß (Doppelt als Websafe)
+
+	END_VAR
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</GlobalConstants>

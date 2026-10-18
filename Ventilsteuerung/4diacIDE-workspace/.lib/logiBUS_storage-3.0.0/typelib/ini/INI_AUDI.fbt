@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="INI_AUDI" Comment="Load and Store UDINT Data from settings.ini by Section and Key (AUDI Adapter&#10;Interface)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-04-13" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="eclipse4diac::storage">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+				<With Var="QI"/>
+				<With Var="SETM"/>
+				<With Var="SECTION"/>
+				<With Var="KEY"/>
+				<With Var="DEFAULT_VALUE"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
+			<VarDeclaration Name="SETM" Type="BOOL" Comment="Enable Mirroring on SET"/>
+			<VarDeclaration Name="SECTION" Type="STRING" Comment="Section name."/>
+			<VarDeclaration Name="KEY" Type="STRING" Comment="Key name."/>
+			<VarDeclaration Name="DEFAULT_VALUE" Type="UDINT" Comment="The value to read if there is nothing in the settings.ini"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="AUDI_OUT" Type="adapter::types::unidirectional::AUDI" Comment="Stored value output (GETO)" x="5100" y="2800"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="AUDI_IN" Type="adapter::types::unidirectional::AUDI" Comment="Value to store (SET)" x="-100" y="1000"/>
+		</Sockets>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="INI" Type="eclipse4diac::storage::INI" x="1433.33" y="1940">
+		</FB>
+		<FB Name="SET_PERMIT" Type="iec61499::events::E_PERMIT" x="3600" y="2100">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="INI.INIT" dx1="400"/>
+			<Connection Source="INI.INITO" Destination="INITO" dx1="200"/>
+			<Connection Source="INI.INITO" Destination="INI.GET" dx1="133.33" dx2="133.33" dy="-226.67"/>
+			<Connection Source="AUDI_IN.E1" Destination="INI.SET" dx1="313.33"/>
+			<Connection Source="SET_PERMIT.EO" Destination="AUDI_OUT.E1" dx1="120"/>
+			<Connection Source="INI.GETO" Destination="AUDI_OUT.E1" dx1="766.67"/>
+			<Connection Source="INI.SETO" Destination="SET_PERMIT.EI" dx1="433.33"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="QI" Destination="INI.QI" dx1="333.33"/>
+			<Connection Source="SETM" Destination="SET_PERMIT.PERMIT" dx1="2746.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="SECTION" Destination="INI.SECTION" dx1="266.67"/>
+			<Connection Source="KEY" Destination="INI.KEY" dx1="200"/>
+			<Connection Source="DEFAULT_VALUE" Destination="INI.DEFAULT_VALUE" dx1="66.67"/>
+			<Connection Source="AUDI_IN.D1" Destination="INI.VALUE" dx1="113.33"/>
+			<Connection Source="INI.VALUEO" Destination="AUDI_OUT.D1" dx1="240"/>
+			<Connection Source="INI.QO" Destination="QO" dx1="2580"/>
+			<Connection Source="INI.STATUS" Destination="STATUS" dx1="2580"/>
+		</DataConnections>
+	</FBNetwork>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

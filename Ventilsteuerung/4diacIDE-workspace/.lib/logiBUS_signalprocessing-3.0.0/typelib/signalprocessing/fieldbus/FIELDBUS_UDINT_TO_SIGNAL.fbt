@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="FIELDBUS_UDINT_TO_SIGNAL" Comment="Mirrors IN-&gt;OUT if Signal Valid.">
+	<Identification Standard="61499-1" Description="Copyright (c) 2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0 ">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-05-31">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::signalprocessing::fieldbus">
+		<Import declaration="eclipse4diac::signalprocessing::FIELDBUS_SIGNAL::NOT_AVAILABLE_DWM"/>
+		<Import declaration="eclipse4diac::signalprocessing::FIELDBUS_SIGNAL::VALID_SIGNAL_DW"/>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event" Comment="Normal Execution Request">
+				<With Var="IN"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event" Comment="Execution Confirmation">
+				<With Var="OUT"/>
+				<With Var="VALID"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="IN" Type="UDINT" Comment="Input" InitialValue="DWORD_TO_UDINT(NOT_AVAILABLE_DWM)"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="OUT" Type="UDINT" Comment="Output Filtered" InitialValue="16#00000000"/>
+			<VarDeclaration Name="VALID" Type="BOOL" Comment="TRUE if Signal is VALID" InitialValue="FALSE"/>
+		</OutputVars>
+	</InterfaceList>
+	<SimpleFB>
+		<ECState Name="REQ">
+			<ECAction Algorithm="REQ" Output="CNF"/>
+		</ECState>
+		<Algorithm Name="REQ" Comment="Executed algorithm">
+			<ST><![CDATA[
+
+IF (IN <= DWORD_TO_UDINT(VALID_SIGNAL_DW)) THEN
+	OUT := IN;
+	VALID := BOOL#TRUE;
+ELSE
+	OUT := UDINT#0;
+	VALID := BOOL#FALSE;
+END_IF;
+
+]]></ST>
+		</Algorithm>
+	</SimpleFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

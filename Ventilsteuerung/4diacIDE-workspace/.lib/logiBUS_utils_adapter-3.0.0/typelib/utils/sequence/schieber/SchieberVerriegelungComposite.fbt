@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="SchieberVerriegelungComposite" Comment="Composite FB wrapping other FBs">
+	<Identification Standard="61499-2" Description="Copyright (c) 2025 HR Agrartechnik GmbH &#10; &#10;This program and the accompanying materials are made &#10;available under the terms of the Eclipse Public License 2.0 &#10;which is available at https://www.eclipse.org/legal/epl-2.0/ &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2025-06-04">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::utils::sequence::schieber">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Initialization Request">
+				<With Var="QI"/>
+				<With Var="DI_LINKS_GESPERRT"/>
+				<With Var="DI_RECHTS_GESPERRT"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Input event qualifier"/>
+			<VarDeclaration Name="DI_LINKS_GESPERRT" Type="BOOL"/>
+			<VarDeclaration Name="DI_RECHTS_GESPERRT" Type="BOOL"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Output event qualifier"/>
+		</OutputVars>
+		<Sockets>
+			<AdapterDeclaration Name="Hauptschieber" Type="adapter::types::bidirectional::ASR2" x="813.33" y="366.67"/>
+			<AdapterDeclaration Name="SchieberLinks" Type="adapter::types::bidirectional::ASR2" x="680" y="1153.33"/>
+			<AdapterDeclaration Name="SchieberRechts" Type="adapter::types::bidirectional::ASR2" x="480" y="1933.33"/>
+		</Sockets>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="SchieberVerriegelung" Type="logiBUS::utils::sequence::schieber::SchieberVerriegelung" x="2000" y="753.33">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="SchieberVerriegelung.INIT" dx1="540" dx2="540" dy="533.33"/>
+			<Connection Source="SchieberVerriegelung.INITO" Destination="INITO" dx1="273.33"/>
+			<Connection Source="Hauptschieber.EO_SET" Destination="SchieberVerriegelung.EI_Hauptschieber_Open" dx1="206.67"/>
+			<Connection Source="Hauptschieber.EO_RESET" Destination="SchieberVerriegelung.EI_Hauptschieber_Close" dx1="73.33"/>
+			<Connection Source="SchieberRechts.EO_SET" Destination="SchieberVerriegelung.EI_SchieberRechts_Open" dx1="273.33"/>
+			<Connection Source="SchieberRechts.EO_RESET" Destination="SchieberVerriegelung.EI_SchieberRechts_Close" dx1="340"/>
+			<Connection Source="SchieberLinks.EO_SET" Destination="SchieberVerriegelung.EI_SchieberLinks_Open" dx1="220"/>
+			<Connection Source="SchieberLinks.EO_RESET" Destination="SchieberVerriegelung.EI_SchieberLinks_Close" dx1="220"/>
+			<Connection Source="SchieberVerriegelung.EO_Hauptschieber_Open" Destination="Hauptschieber.EI_SET" dx1="73.33" dx2="73.33" dy="-920"/>
+			<Connection Source="SchieberVerriegelung.EO_Hauptschieber_Close" Destination="Hauptschieber.EI_RESET" dx1="140" dx2="140" dy="-820"/>
+			<Connection Source="SchieberVerriegelung.EO_SchieberLinks_Open" Destination="SchieberLinks.EI_SET" dx1="206.67" dx2="206.67" dy="-853.33"/>
+			<Connection Source="SchieberVerriegelung.EO_SchieberLinks_Close" Destination="SchieberLinks.EI_RESET" dx1="340" dx2="340" dy="-1086.67"/>
+			<Connection Source="SchieberVerriegelung.EO_SchieberRechts_Open" Destination="SchieberRechts.EI_SET" dx1="473.33" dx2="473.33" dy="1500"/>
+			<Connection Source="SchieberVerriegelung.EO_SchieberRechts_Close" Destination="SchieberRechts.EI_RESET" dx1="406.67" dx2="406.67" dy="-1353.33"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="QI" Destination="SchieberVerriegelung.QI" dx1="273.33" dx2="273.33" dy="1900"/>
+			<Connection Source="SchieberVerriegelung.QO" Destination="QO" dx1="540"/>
+			<Connection Source="DI_LINKS_GESPERRT" Destination="SchieberVerriegelung.DI_LINKS_GESPERRT" dx1="206.67" dx2="206.67" dy="1966.67"/>
+			<Connection Source="DI_RECHTS_GESPERRT" Destination="SchieberVerriegelung.DI_RECHTS_GESPERRT" dx1="140" dx2="140" dy="2033.33"/>
+		</DataConnections>
+	</FBNetwork>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

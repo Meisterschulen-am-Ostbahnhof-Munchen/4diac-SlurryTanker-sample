@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Bool8_TO_logiBUS_QXA8" Comment="8 generische digitale Ausgaenge (Kanal frei waehlbar), gemeinsam getriggert&#10;durch 1 CNF-Event, adapter-basiert. Generisch fuer jede 8-Bit-Ausgangsgruppe.&#10;Schwester-Baustein zu MyLib::sys::Bool8_TO_logiBUS_QX8 (dort logiBUS_QX statt&#10;QXA-Adapter).">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-09" Remarks="Angelegt beim Portieren von Uebung_060 nach test_AX zur Wiederverwendung.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO_S"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+			<SubAppEvent Name="CNF" Type="Event">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="Q_00" Type="BOOL"/>
+			<VarDeclaration Name="Q_01" Type="BOOL"/>
+			<VarDeclaration Name="Q_02" Type="BOOL"/>
+			<VarDeclaration Name="Q_03" Type="BOOL"/>
+			<VarDeclaration Name="Q_04" Type="BOOL"/>
+			<VarDeclaration Name="Q_05" Type="BOOL"/>
+			<VarDeclaration Name="Q_06" Type="BOOL"/>
+			<VarDeclaration Name="Q_07" Type="BOOL"/>
+			<VarDeclaration Name="Output_1" Type="logiBUS::io::DQ::logiBUS_DO_S" Comment="Identify the Output Output_Q1..Q8" InitialValue="logiBUS_DO::Invalid"/>
+			<VarDeclaration Name="Output_2" Type="logiBUS::io::DQ::logiBUS_DO_S" Comment="Identify the Output Output_Q1..Q8" InitialValue="logiBUS_DO::Invalid"/>
+			<VarDeclaration Name="Output_3" Type="logiBUS::io::DQ::logiBUS_DO_S" Comment="Identify the Output Output_Q1..Q8" InitialValue="logiBUS_DO::Invalid"/>
+			<VarDeclaration Name="Output_4" Type="logiBUS::io::DQ::logiBUS_DO_S" Comment="Identify the Output Output_Q1..Q8" InitialValue="logiBUS_DO::Invalid"/>
+			<VarDeclaration Name="Output_5" Type="logiBUS::io::DQ::logiBUS_DO_S" Comment="Identify the Output Output_Q1..Q8" InitialValue="logiBUS_DO::Invalid"/>
+			<VarDeclaration Name="Output_6" Type="logiBUS::io::DQ::logiBUS_DO_S" Comment="Identify the Output Output_Q1..Q8" InitialValue="logiBUS_DO::Invalid"/>
+			<VarDeclaration Name="Output_7" Type="logiBUS::io::DQ::logiBUS_DO_S" Comment="Identify the Output Output_Q1..Q8" InitialValue="logiBUS_DO::Invalid"/>
+			<VarDeclaration Name="Output_8" Type="logiBUS::io::DQ::logiBUS_DO_S" Comment="Identify the Output Output_Q1..Q8" InitialValue="logiBUS_DO::Invalid"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalOutput_Q4" Type="logiBUS::io::DQ::logiBUS_QXA" x="-3373.33" y="1953.33">
+		</FB>
+		<FB Name="DigitalOutput_Q7" Type="logiBUS::io::DQ::logiBUS_QXA" x="-3373.33" y="4893.33">
+		</FB>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="-3373.33" y="-986.67">
+		</FB>
+		<FB Name="DigitalOutput_Q5" Type="logiBUS::io::DQ::logiBUS_QXA" x="-3373.33" y="2933.33">
+		</FB>
+		<FB Name="DigitalOutput_Q2" Type="logiBUS::io::DQ::logiBUS_QXA" x="-3373.33" y="-6.67">
+		</FB>
+		<FB Name="DigitalOutput_Q6" Type="logiBUS::io::DQ::logiBUS_QXA" x="-3373.33" y="3913.33">
+		</FB>
+		<FB Name="DigitalOutput_Q8" Type="logiBUS::io::DQ::logiBUS_QXA" x="-3373.33" y="5873.33">
+		</FB>
+		<FB Name="DigitalOutput_Q3" Type="logiBUS::io::DQ::logiBUS_QXA" x="-3373.33" y="973.33">
+		</FB>
+		<FB Name="AX_BOOL_TO_X_1" Type="adapter::conversion::unidirectional::AX_BOOL_TO_X" x="-5000" y="-986.67">
+		</FB>
+		<FB Name="AX_BOOL_TO_X_2" Type="adapter::conversion::unidirectional::AX_BOOL_TO_X" x="-5000" y="-6.67">
+		</FB>
+		<FB Name="AX_BOOL_TO_X_3" Type="adapter::conversion::unidirectional::AX_BOOL_TO_X" x="-5000" y="973.33">
+		</FB>
+		<FB Name="AX_BOOL_TO_X_4" Type="adapter::conversion::unidirectional::AX_BOOL_TO_X" x="-5000" y="1953.33">
+		</FB>
+		<FB Name="AX_BOOL_TO_X_5" Type="adapter::conversion::unidirectional::AX_BOOL_TO_X" x="-5000" y="2933.33">
+		</FB>
+		<FB Name="AX_BOOL_TO_X_6" Type="adapter::conversion::unidirectional::AX_BOOL_TO_X" x="-5000" y="3913.33">
+		</FB>
+		<FB Name="AX_BOOL_TO_X_7" Type="adapter::conversion::unidirectional::AX_BOOL_TO_X" x="-5000" y="4893.33">
+		</FB>
+		<FB Name="AX_BOOL_TO_X_8" Type="adapter::conversion::unidirectional::AX_BOOL_TO_X" x="-5000" y="5873.33">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_8">
+		</FB>
+		<EventConnections>
+			<Connection Source="CNF" Destination="AX_BOOL_TO_X_4.REQ" dx1="720">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="CNF" Destination="AX_BOOL_TO_X_7.REQ" dx1="720">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="CNF" Destination="AX_BOOL_TO_X_1.REQ" dx1="660">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="CNF" Destination="AX_BOOL_TO_X_5.REQ" dx1="720">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="CNF" Destination="AX_BOOL_TO_X_2.REQ" dx1="873.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="CNF" Destination="AX_BOOL_TO_X_6.REQ" dx1="720">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="CNF" Destination="AX_BOOL_TO_X_8.REQ" dx1="720">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="CNF" Destination="AX_BOOL_TO_X_3.REQ" dx1="720">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="INIT" Destination="DigitalOutput_Q4.INIT"/>
+			<Connection Source="DigitalOutput_Q4.INITO" Destination="DigitalOutput_Q7.INIT"/>
+			<Connection Source="DigitalOutput_Q7.INITO" Destination="DigitalOutput_Q1.INIT"/>
+			<Connection Source="DigitalOutput_Q1.INITO" Destination="DigitalOutput_Q5.INIT"/>
+			<Connection Source="DigitalOutput_Q5.INITO" Destination="DigitalOutput_Q2.INIT"/>
+			<Connection Source="DigitalOutput_Q2.INITO" Destination="DigitalOutput_Q6.INIT"/>
+			<Connection Source="DigitalOutput_Q6.INITO" Destination="DigitalOutput_Q8.INIT"/>
+			<Connection Source="DigitalOutput_Q8.INITO" Destination="DigitalOutput_Q3.INIT"/>
+			<Connection Source="DigitalOutput_Q3.INITO" Destination="INITO"/>
+			<Connection Source="DigitalOutput_Q3.INITO" Destination="AND_QO.REQ"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="Q_06" Destination="AX_BOOL_TO_X_7.OUT" dx1="766.67"/>
+			<Connection Source="Q_00" Destination="AX_BOOL_TO_X_1.OUT" dx1="966.67"/>
+			<Connection Source="Q_04" Destination="AX_BOOL_TO_X_5.OUT" dx1="833.33"/>
+			<Connection Source="Q_01" Destination="AX_BOOL_TO_X_2.OUT" dx1="933.33"/>
+			<Connection Source="Q_05" Destination="AX_BOOL_TO_X_6.OUT" dx1="800"/>
+			<Connection Source="Q_02" Destination="AX_BOOL_TO_X_3.OUT" dx1="900"/>
+			<Connection Source="Q_03" Destination="AX_BOOL_TO_X_4.OUT" dx1="866.67"/>
+			<Connection Source="Q_07" Destination="AX_BOOL_TO_X_8.OUT" dx1="733.33"/>
+			<Connection Source="Output_1" Destination="DigitalOutput_Q1.Output" dx1="966.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Output_2" Destination="DigitalOutput_Q2.Output" dx1="933.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Output_3" Destination="DigitalOutput_Q3.Output" dx1="900">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Output_4" Destination="DigitalOutput_Q4.Output" dx1="866.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Output_5" Destination="DigitalOutput_Q5.Output" dx1="833.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Output_6" Destination="DigitalOutput_Q6.Output" dx1="800">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Output_7" Destination="DigitalOutput_Q7.Output" dx1="766.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Output_8" Destination="DigitalOutput_Q8.Output" dx1="733.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="DigitalOutput_Q4.QI"/>
+			<Connection Source="QI" Destination="DigitalOutput_Q7.QI"/>
+			<Connection Source="QI" Destination="DigitalOutput_Q1.QI"/>
+			<Connection Source="QI" Destination="DigitalOutput_Q5.QI"/>
+			<Connection Source="QI" Destination="DigitalOutput_Q2.QI"/>
+			<Connection Source="QI" Destination="DigitalOutput_Q6.QI"/>
+			<Connection Source="QI" Destination="DigitalOutput_Q8.QI"/>
+			<Connection Source="QI" Destination="DigitalOutput_Q3.QI"/>
+			<Connection Source="DigitalOutput_Q4.QO" Destination="AND_QO.IN1"/>
+			<Connection Source="DigitalOutput_Q7.QO" Destination="AND_QO.IN2"/>
+			<Connection Source="DigitalOutput_Q1.QO" Destination="AND_QO.IN3"/>
+			<Connection Source="DigitalOutput_Q5.QO" Destination="AND_QO.IN4"/>
+			<Connection Source="DigitalOutput_Q2.QO" Destination="AND_QO.IN5"/>
+			<Connection Source="DigitalOutput_Q6.QO" Destination="AND_QO.IN6"/>
+			<Connection Source="DigitalOutput_Q8.QO" Destination="AND_QO.IN7"/>
+			<Connection Source="DigitalOutput_Q3.QO" Destination="AND_QO.IN8"/>
+			<Connection Source="AND_QO.OUT" Destination="QO"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="AX_BOOL_TO_X_1.AX_OUT" Destination="DigitalOutput_Q1.OUT" dx1="966.67"/>
+			<Connection Source="AX_BOOL_TO_X_2.AX_OUT" Destination="DigitalOutput_Q2.OUT" dx1="933.33"/>
+			<Connection Source="AX_BOOL_TO_X_3.AX_OUT" Destination="DigitalOutput_Q3.OUT" dx1="900"/>
+			<Connection Source="AX_BOOL_TO_X_4.AX_OUT" Destination="DigitalOutput_Q4.OUT" dx1="866.67"/>
+			<Connection Source="AX_BOOL_TO_X_5.AX_OUT" Destination="DigitalOutput_Q5.OUT" dx1="833.33"/>
+			<Connection Source="AX_BOOL_TO_X_6.AX_OUT" Destination="DigitalOutput_Q6.OUT" dx1="800"/>
+			<Connection Source="AX_BOOL_TO_X_7.AX_OUT" Destination="DigitalOutput_Q7.OUT" dx1="766.67"/>
+			<Connection Source="AX_BOOL_TO_X_8.AX_OUT" Destination="DigitalOutput_Q8.OUT" dx1="733.33"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Function Name="SUM" Comment="Array Sum">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Organization="Andreas Demmler Fahrzeugbau" Version="1.0" Author="Franz Höpfinger" Date="2026-01-22" Remarks="inspired by SUM in IEC 61131 Paper">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::utils::dyn_arr">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event">
+				<With Var="A"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event">
+				<With Var=""/>
+				<With Var="A"/>
+			</Event>
+		</EventOutputs>
+		<OutputVars>
+			<VarDeclaration Name="" Type="DINT"/>
+		</OutputVars>
+		<InOutVars>
+			<VarDeclaration Name="A" Type="INT" Comment="Input" ArraySize="*"/>
+		</InOutVars>
+	</InterfaceList>
+	<FunctionBody>
+		<ST><![CDATA[PACKAGE logiBUS::utils::dyn_arr;
+
+(* Array Sum *)
+FUNCTION SUM : DINT
+
+VAR_IN_OUT
+	A : ARRAY[*] OF INT; // Input
+END_VAR
+
+VAR_TEMP
+	i : INT;
+	sum2 : DINT;
+END_VAR
+
+sum2 := 0;
+
+FOR i := LOWER_BOUND(A,1) TO UPPER_BOUND(A,1) DO
+	sum2 := sum2 + A[i];
+END_FOR;
+
+SUM := sum2;
+
+END_FUNCTION
+
+]]></ST>
+	</FunctionBody>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</Function>

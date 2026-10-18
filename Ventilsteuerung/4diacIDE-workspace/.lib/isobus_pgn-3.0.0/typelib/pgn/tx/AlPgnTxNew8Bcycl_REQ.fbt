@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="AlPgnTxNew8Bcycl_REQ" Comment="Send data cyclic with Callback">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="Franz Höpfinger" Date="2025-09-04" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::pgn::tx">
+		<Import declaration="isobus::pgn::ISONETEVENT_T"/>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+			</Event>
+			<Event Name="install" Type="Event" Comment="installs a Transmit PGN (TX) ">
+				<With Var="u32Pgn"/>
+				<With Var="NmDestin"/>
+				<With Var="u16DaSize"/>
+				<With Var="u8Priority"/>
+				<With Var="u16DefRepRate"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</Event>
+			<Event Name="installO" Type="Event" Comment="install Done">
+				<With Var="PGN_handle"/>
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Data was sent">
+			</Event>
+			<Event Name="dataERR" Type="Event">
+				<With Var="dataERRC"/>
+			</Event>
+			<Event Name="pgnERR" Type="Event">
+				<With Var="pgnERRC"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="u32Pgn" Type="UDINT" Comment="PGN - Range: 0 - 0x3FFFF "/>
+			<VarDeclaration Name="NmDestin" Type="isobus::pgn::ISONETEVENT_T" Comment="Define the Communication Partner"/>
+			<VarDeclaration Name="u16DaSize" Type="UINT" Comment="Data length of this PGN (0..8)"/>
+			<VarDeclaration Name="u8Priority" Type="USINT" Comment="Default priority of this PGN (0..7) 0=highest" InitialValue="7"/>
+			<VarDeclaration Name="u16DefRepRate" Type="UINT" Comment="0 ... 0xFDFF ms for time interval of cyclic transmission" InitialValue="0"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="PGN_handle" Type="INT" Comment="PGN-handle on success, HANDLE_UNVALID in case of an error "/>
+			<VarDeclaration Name="dataERRC" Type="INT" Comment="dataERR error Code"/>
+			<VarDeclaration Name="pgnERRC" Type="INT" Comment="pgnERR error Code"/>
+		</OutputVars>
+		<Sockets>
+			<AdapterDeclaration Name="CB" Type="isobus::pgn::tx::Callback"/>
+		</Sockets>
+	</InterfaceList>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

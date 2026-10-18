@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="F_MUX_32" Comment="multiplexer">
+	<Identification Standard="61131-3" Classification="standard selection function" Description="Copyright (c) 2013 TU Wien ACIN\n \nThis program and the accompanying materials are made\navailable under the terms of the Eclipse Public License 2.0\nwhich is available at https://www.eclipse.org/legal/epl-2.0/\n\nSPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="3.1" Author="Franz Höpfinger" Date="2026-10-11" Remarks="Verschoben von iec61131-3-bool nach iec61131-3 (ANY/ANY_INT sind nicht BOOL-spezifisch, gehoert fachlich zur Basisbibliothek, nicht zur BOOL-Erweiterung). Organization-Attribut ergaenzt (XSD-Pflichtfeld).">
+	</VersionInfo>
+	<VersionInfo Organization="Eclipse 4diac" Version="3.0" Author="Patrick Aigner" Date="2025-04-14" Remarks="changed package">
+	</VersionInfo>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.1" Author="Franz Höpfinger" Date="2024-07-15" Remarks="F_MUX_3 copy and added 1 IN">
+	</VersionInfo>
+	<VersionInfo Organization="TU Wien ACIN" Version="1.0" Author="Monika Wenger" Date="2013-08-30">
+	</VersionInfo>
+	<CompilerInfo packageName="iec61131::selection">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event" Comment="Service Request">
+				<With Var="IN1"/>
+				<With Var="IN2"/>
+				<With Var="IN3"/>
+				<With Var="IN4"/>
+				<With Var="IN5"/>
+				<With Var="IN6"/>
+				<With Var="IN7"/>
+				<With Var="IN8"/>
+				<With Var="IN9"/>
+				<With Var="IN10"/>
+				<With Var="IN11"/>
+				<With Var="IN12"/>
+				<With Var="IN13"/>
+				<With Var="IN14"/>
+				<With Var="IN15"/>
+				<With Var="IN16"/>
+				<With Var="IN17"/>
+				<With Var="IN18"/>
+				<With Var="IN19"/>
+				<With Var="IN20"/>
+				<With Var="IN21"/>
+				<With Var="IN22"/>
+				<With Var="IN23"/>
+				<With Var="IN24"/>
+				<With Var="IN25"/>
+				<With Var="IN26"/>
+				<With Var="IN27"/>
+				<With Var="IN28"/>
+				<With Var="IN29"/>
+				<With Var="IN30"/>
+				<With Var="IN31"/>
+				<With Var="IN32"/>
+				<With Var="K"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+				<With Var="OUT"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="K" Type="ANY_INT" Comment="Select one of n inputs"/>
+			<VarDeclaration Name="IN1" Type="ANY" Comment="Input value 1 (selected when K = 0)"/>
+			<VarDeclaration Name="IN2" Type="ANY" Comment="Input value 2 (selected when K = 1)"/>
+			<VarDeclaration Name="IN3" Type="ANY" Comment="Input value 3 (selected when K = 2)"/>
+			<VarDeclaration Name="IN4" Type="ANY" Comment="Input value 4 (selected when K = 3)"/>
+			<VarDeclaration Name="IN5" Type="ANY" Comment="Input value 5 (selected when K = 4)"/>
+			<VarDeclaration Name="IN6" Type="ANY" Comment="Input value 6 (selected when K = 5)"/>
+			<VarDeclaration Name="IN7" Type="ANY" Comment="Input value 7 (selected when K = 6)"/>
+			<VarDeclaration Name="IN8" Type="ANY" Comment="Input value 8 (selected when K = 7)"/>
+			<VarDeclaration Name="IN9" Type="ANY" Comment="Input value 9 (selected when K = 8)"/>
+			<VarDeclaration Name="IN10" Type="ANY" Comment="Input value 10 (selected when K = 9)"/>
+			<VarDeclaration Name="IN11" Type="ANY" Comment="Input value 11 (selected when K = 10)"/>
+			<VarDeclaration Name="IN12" Type="ANY" Comment="Input value 12 (selected when K = 11)"/>
+			<VarDeclaration Name="IN13" Type="ANY" Comment="Input value 13 (selected when K = 12)"/>
+			<VarDeclaration Name="IN14" Type="ANY" Comment="Input value 14 (selected when K = 13)"/>
+			<VarDeclaration Name="IN15" Type="ANY" Comment="Input value 15 (selected when K = 14)"/>
+			<VarDeclaration Name="IN16" Type="ANY" Comment="Input value 16 (selected when K = 15)"/>
+			<VarDeclaration Name="IN17" Type="ANY" Comment="Input value 17 (selected when K = 16)"/>
+			<VarDeclaration Name="IN18" Type="ANY" Comment="Input value 18 (selected when K = 17)"/>
+			<VarDeclaration Name="IN19" Type="ANY" Comment="Input value 19 (selected when K = 18)"/>
+			<VarDeclaration Name="IN20" Type="ANY" Comment="Input value 20 (selected when K = 19)"/>
+			<VarDeclaration Name="IN21" Type="ANY" Comment="Input value 21 (selected when K = 20)"/>
+			<VarDeclaration Name="IN22" Type="ANY" Comment="Input value 22 (selected when K = 21)"/>
+			<VarDeclaration Name="IN23" Type="ANY" Comment="Input value 23 (selected when K = 22)"/>
+			<VarDeclaration Name="IN24" Type="ANY" Comment="Input value 24 (selected when K = 23)"/>
+			<VarDeclaration Name="IN25" Type="ANY" Comment="Input value 25 (selected when K = 24)"/>
+			<VarDeclaration Name="IN26" Type="ANY" Comment="Input value 26 (selected when K = 25)"/>
+			<VarDeclaration Name="IN27" Type="ANY" Comment="Input value 27 (selected when K = 26)"/>
+			<VarDeclaration Name="IN28" Type="ANY" Comment="Input value 28 (selected when K = 27)"/>
+			<VarDeclaration Name="IN29" Type="ANY" Comment="Input value 29 (selected when K = 28)"/>
+			<VarDeclaration Name="IN30" Type="ANY" Comment="Input value 30 (selected when K = 29)"/>
+			<VarDeclaration Name="IN31" Type="ANY" Comment="Input value 31 (selected when K = 30)"/>
+			<VarDeclaration Name="IN32" Type="ANY" Comment="Input value 32 (selected when K = 31)"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="OUT" Type="ANY" Comment="IN1 for K = 0, IN2 for K = 1, IN3 for K = 2, IN4 for K = 3, IN5 for K = 4, IN6 for K = 5, IN7 for K = 6, IN8 for K = 7, IN9 for K = 8, IN10 for K = 9, IN11 for K = 10, IN12 for K = 11, IN13 for K = 12, IN14 for K = 13, IN15 for K = 14, IN16 for K = 15, IN17 for K = 16, IN18 for K = 17, IN19 for K = 18, IN20 for K = 19, IN21 for K = 20, IN22 for K = 21, IN23 for K = 22, IN24 for K = 23, IN25 for K = 24, IN26 for K = 25, IN27 for K = 26, IN28 for K = 27, IN29 for K = 28, IN30 for K = 29, IN31 for K = 30, IN32 for K = 31"/>
+		</OutputVars>
+	</InterfaceList>
+	<Attribute Name="eclipse4diac::core::GenericClassName" Value="'GEN_F_MUX'"/>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

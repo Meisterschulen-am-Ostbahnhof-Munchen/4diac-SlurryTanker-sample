@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Function Name="F_ClampReal" Comment="Clamp a REAL value into [rMin, rMax] with over/under flags.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-05" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::signalprocessing::clamp">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event">
+				<With Var="rIn"/>
+				<With Var="rMin"/>
+				<With Var="rMax"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event">
+				<With Var=""/>
+				<With Var="xOver"/>
+				<With Var="xUnder"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="rIn" Type="REAL"/>
+			<VarDeclaration Name="rMin" Type="REAL"/>
+			<VarDeclaration Name="rMax" Type="REAL"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="" Type="REAL"/>
+			<VarDeclaration Name="xOver" Type="BOOL"/>
+			<VarDeclaration Name="xUnder" Type="BOOL"/>
+		</OutputVars>
+	</InterfaceList>
+	<FunctionBody>
+		<ST><![CDATA[PACKAGE logiBUS::signalprocessing::clamp;
+
+(* Clamp a REAL value into [rMin, rMax] with over/under flags. *)
+FUNCTION F_ClampReal : REAL
+
+VAR_INPUT
+	rIn : REAL;
+	rMin : REAL;
+	rMax : REAL;
+END_VAR
+
+VAR_OUTPUT
+	xOver : BOOL;
+	xUnder : BOOL;
+END_VAR
+
+IF rIn > rMax THEN
+	F_ClampReal := rMax;
+	xOver := TRUE;
+	xUnder := FALSE;
+ELSIF rIn < rMin THEN
+	F_ClampReal := rMin;
+	xOver := FALSE;
+	xUnder := TRUE;
+ELSE
+	F_ClampReal := rIn;
+	xOver := FALSE;
+	xUnder := FALSE;
+END_IF;
+
+END_FUNCTION
+]]></ST>
+	</FunctionBody>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</Function>

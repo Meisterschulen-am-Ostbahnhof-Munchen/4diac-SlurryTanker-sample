@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="zaehlstand" Comment="Anzahl aktuell laufender Motoren als SINT (0..6), fuer AnlagenSequenz_06.ZAEHLSTAND, s. KONZEPT_Anlagensequenz.md">
+	<Identification Standard="61499-1" Description="Copyright (c) 2026 HR Agrartechnik GmbH &#10; &#10;This program and the accompanying materials are made &#10;available under the terms of the Eclipse Public License 2.0 &#10;which is available at https://www.eclipse.org/legal/epl-2.0/ &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-08-25">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::utils::sequence::const">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="ZAEHLSTAND_0" Type="SINT" Comment="0 Motoren laufen (S_AUS)" InitialValue="SINT#0"/>
+		<VarDeclaration Name="ZAEHLSTAND_1" Type="SINT" Comment="1 Motor laeuft" InitialValue="SINT#1"/>
+		<VarDeclaration Name="ZAEHLSTAND_2" Type="SINT" Comment="2 Motoren laufen" InitialValue="SINT#2"/>
+		<VarDeclaration Name="ZAEHLSTAND_3" Type="SINT" Comment="3 Motoren laufen" InitialValue="SINT#3"/>
+		<VarDeclaration Name="ZAEHLSTAND_4" Type="SINT" Comment="4 Motoren laufen" InitialValue="SINT#4"/>
+		<VarDeclaration Name="ZAEHLSTAND_5" Type="SINT" Comment="5 Motoren laufen" InitialValue="SINT#5"/>
+		<VarDeclaration Name="ZAEHLSTAND_6" Type="SINT" Comment="6 Motoren laufen (S_LAEUFT, alle)" InitialValue="SINT#6"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE logiBUS::utils::sequence::const;
+
+GLOBALCONSTANTS zaehlstand
+	VAR_GLOBAL CONSTANT
+		ZAEHLSTAND_0 : SINT := SINT#0; // 0 Motoren laufen (S_AUS)
+		ZAEHLSTAND_1 : SINT := SINT#1; // 1 Motor laeuft
+		ZAEHLSTAND_2 : SINT := SINT#2; // 2 Motoren laufen
+		ZAEHLSTAND_3 : SINT := SINT#3; // 3 Motoren laufen
+		ZAEHLSTAND_4 : SINT := SINT#4; // 4 Motoren laufen
+		ZAEHLSTAND_5 : SINT := SINT#5; // 5 Motoren laufen
+		ZAEHLSTAND_6 : SINT := SINT#6; // 6 Motoren laufen (S_LAEUFT, alle)
+	END_VAR
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</GlobalConstants>

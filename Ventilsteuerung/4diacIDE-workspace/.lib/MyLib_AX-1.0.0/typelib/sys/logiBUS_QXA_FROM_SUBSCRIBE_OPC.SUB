@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="logiBUS_QXA_FROM_SUBSCRIBE_OPC" Comment="Digitaler Ausgang, gesteuert von einem lokal ueberwachten OPC-UA-Knoten (von&#10;einem ANDEREN Geraet per CLIENT_1_0 remote beschrieben) - &apos;SUB style&apos;: das&#10;Protokoll (AX_SUBSCRIBE_1) steckt IM Baustein selbst, nicht in der Resource des&#10;Geraets">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-02" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO_S"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="Output" Type="logiBUS::io::DQ::logiBUS_DO_S" Comment="Identify the Output Output_Q1..Q8" InitialValue="logiBUS_DO::Invalid"/>
+			<VarDeclaration Name="ID" Type="WSTRING" Comment="Lokal ueberwachte Adresse (BOOL, ACTION=READ) - wird von einem anderen Geraet per CLIENT_1_0 remote beschrieben"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="AX_SUBSCRIBE_1" Type="adapter::net::AX_SUBSCRIBE_1" x="-2800" y="-200">
+		</FB>
+		<FB Name="logiBUS_QXA" Type="logiBUS::io::DQ::logiBUS_QXA" x="-500" y="100">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_2" x="1200" y="-400">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="AX_SUBSCRIBE_1.INIT" dx1="80" dx2="80" dy="-366.67"/>
+			<Connection Source="AX_SUBSCRIBE_1.INITO" Destination="logiBUS_QXA.INIT" dx1="680"/>
+			<Connection Source="logiBUS_QXA.INITO" Destination="INITO" dx1="3686.67"/>
+			<Connection Source="logiBUS_QXA.INITO" Destination="AND_QO.REQ" dx1="446.67"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="Output" Destination="logiBUS_QXA.Output" dx1="1460">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID" Destination="AX_SUBSCRIBE_1.ID" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="AX_SUBSCRIBE_1.QI" dx1="80" dx2="80" dy="-260"/>
+			<Connection Source="QI" Destination="logiBUS_QXA.QI" dx1="80" dx2="80" dy="-106.67"/>
+			<Connection Source="AX_SUBSCRIBE_1.QO" Destination="AND_QO.IN1" dx1="926.67"/>
+			<Connection Source="logiBUS_QXA.QO" Destination="AND_QO.IN2" dx1="566.67"/>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="2973.33"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="AX_SUBSCRIBE_1.OUT" Destination="logiBUS_QXA.OUT" dx1="1000"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

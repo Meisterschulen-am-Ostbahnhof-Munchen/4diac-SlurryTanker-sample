@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="INI_IN_AND_STORE_AR2_OVERRIDE" Comment="Wie INI_IN_AND_STORE_AR2, aber MIT Override-Moeglichkeit: Socket OVERRIDE_ACTIVE&#10;(AX) erzwingt bei TRUE kontinuierlich einen konfigurierten Wert (Parameter&#10;INIT_VAL an LIT_Override, Default 0.0) statt des Live-VT-Werts. Bei&#10;OVERRIDE_ACTIVE=FALSE (unbenutzt) identisches Verhalten wie INI_IN_AND_STORE_AR2.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-13" Remarks="AR2-Pendant zu INI_IN_AND_STORE_AUDI2_OVERRIDE: NumericValue_PHYSA + SEL_Override (AR_AX_SEL_AR, G=OVERRIDE_ACTIVE) + AR_TO_AR2 + INI_AR2, AR_TO_AR2.AR_OUT gesplittet auf Q_NumericValue_PHYSA (VT-Anzeige) und VALUEO (weiterer Consumer). Im Unterschied zu AUDI2 (Enum/Dropdown, 1=Deaktiviert) ist AR ein kontinuierlicher physikalischer Wert - der Override-Wert hat hier keine feste Business-Bedeutung, sondern ist ueber INIT_VAL an LIT_Override frei konfigurierbar (Default 0.0).">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+		<Import declaration="logiBUS::utils::conversion::phys::NumericObjectPool_S"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="KEY" Type="STRING" Comment="Key name."/>
+			<VarDeclaration Name="SECTION" Type="STRING" Comment="Section name."/>
+			<VarDeclaration Name="stObj" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 0)"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="VALUEO" Type="adapter::types::unidirectional::AR"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="OVERRIDE_ACTIVE" Type="adapter::types::unidirectional::AX" Comment="Kontinuierlich TRUE erzwingt den ueber LIT_Override.INIT_VAL konfigurierten Wert, unabhaengig vom Live-VT-Wert. FALSE (unbenutzt, Default bei den meisten Aufrufern) = unveraendertes Verhalten."/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="NumericValue_PHYSA" Type="isobus::UT::io::NumericValue::NumericValue_PHYSA" x="-3000" y="-900">
+		</FB>
+		<FB Name="LIT_Override" Type="adapter::types::unidirectional::AR::initval::initval_AR" Comment="Override-Wert, per Parameter konfigurierbar" x="-2800" y="100">
+			<Parameter Name="INIT_VAL" Value="REAL#0.0"/>
+		</FB>
+		<FB Name="SEL_Override" Type="adapter::iec61131::selection::AR_AX_SEL_AR" Comment="IN0=Live-VT-Wert (unveraendert), IN1=Override-Wert, G=OVERRIDE_ACTIVE" x="-500" y="400">
+		</FB>
+		<FB Name="AR_TO_AR2" Type="adapter::conversion::bidirectional::AR_TO_AR2" x="1000" y="300">
+		</FB>
+		<FB Name="INI_AR2" Type="eclipse4diac::storage::INI_AR2" x="4900" y="-400">
+			<Parameter Name="SETM" Value="TRUE"/>
+			<Parameter Name="DEFAULT_VALUE" Value="REAL#0.0"/>
+		</FB>
+		<FB Name="AR_SPLIT_2" Type="adapter::events::unidirectional::AR_SPLIT_2" x="3900" y="700">
+		</FB>
+		<FB Name="Q_NumericValue_PHYSA" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="6500" y="1300">
+		</FB>
+		<Comment Comment="SETM=TRUE - der Boot-Wert laedt so oder so automatisch (INIT -&gt; INITO -&gt; GET -&gt; GETO, unabhaengig von SETM). SETM=TRUE sorgt dafuer, dass auch eine LIVE-Aenderung waehrend des laufenden Betriebs sofort bestaetigt/zurueckgemeldet wird - wichtig, falls der frische Wert noch im selben Lauf weiterverwendet werden soll (z.B. hier ueber VALUEO)." x="2400" y="-700" width="2400" height="500"/>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_3" x="8300" y="-200">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="NumericValue_PHYSA.INIT" dx1="80" dx2="80" dy="-713.33"/>
+			<Connection Source="NumericValue_PHYSA.INITO" Destination="INI_AR2.INIT" dx1="3433.33"/>
+			<Connection Source="INI_AR2.INITO" Destination="Q_NumericValue_PHYSA.INIT" dx1="306.67"/>
+			<Connection Source="Q_NumericValue_PHYSA.INITO" Destination="INITO" dx1="4026.67"/>
+			<Connection Source="Q_NumericValue_PHYSA.INITO" Destination="AND_QO.REQ" dx1="380">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="stObj" Destination="Q_NumericValue_PHYSA.stObj" dx1="8246.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="KEY" Destination="INI_AR2.KEY" dx1="2846.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="SECTION" Destination="INI_AR2.SECTION" dx1="2846.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="stObj" Destination="NumericValue_PHYSA.stObj" dx1="1046.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="Q_NumericValue_PHYSA.QI" dx1="2846.67"/>
+			<Connection Source="QI" Destination="NumericValue_PHYSA.QI" dx1="80" dx2="80" dy="-606.67"/>
+			<Connection Source="QI" Destination="INI_AR2.QI" dx1="2046.67"/>
+			<Connection Source="Q_NumericValue_PHYSA.QO" Destination="AND_QO.IN1" dx1="380">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="NumericValue_PHYSA.QO" Destination="AND_QO.IN2" dx1="980">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="INI_AR2.QO" Destination="AND_QO.IN3" dx1="1206.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="1126.67"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="NumericValue_PHYSA.rPhys" Destination="SEL_Override.IN0" dx1="986.67"/>
+			<Connection Source="LIT_Override.OUT" Destination="SEL_Override.IN1" dx1="440"/>
+			<Connection Source="OVERRIDE_ACTIVE" Destination="SEL_Override.G" dx1="440"/>
+			<Connection Source="SEL_Override.OUT" Destination="AR_TO_AR2.AR_IN" dx1="326.67"/>
+			<Connection Source="AR_TO_AR2.AR2_BIDIR" Destination="INI_AR2.VAL" dx1="460"/>
+			<Connection Source="AR_TO_AR2.AR_OUT" Destination="AR_SPLIT_2.IN" dx1="1106.67"/>
+			<Connection Source="AR_SPLIT_2.OUT1" Destination="VALUEO" dx1="2220"/>
+			<Connection Source="AR_SPLIT_2.OUT2" Destination="Q_NumericValue_PHYSA.rPhys" dx1="873.33"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

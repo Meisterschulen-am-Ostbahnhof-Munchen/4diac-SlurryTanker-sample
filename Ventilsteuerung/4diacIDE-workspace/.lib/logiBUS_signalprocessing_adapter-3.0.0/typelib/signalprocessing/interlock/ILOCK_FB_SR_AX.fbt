@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="ILOCK_FB_SR_AX" Comment="Realizes a bistable set-dominat latch with AX interface and AX2 Interlock">
+	<Identification Standard="61499-1" Description="Copyright (c) 2026 HR Agrartechnik GmbH&#10; &#10;This program and the accompanying materials are made&#10;available under the terms of the Eclipse Public License 2.0&#10;which is available at https://www.eclipse.org/legal/epl-2.0/&#10;&#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Gemini CLI" Date="2026-05-07" Remarks="initial version">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::signalprocessing::interlock">
+	</CompilerInfo>
+	<InterfaceList>
+		<Plugs>
+			<AdapterDeclaration Name="Q1" Type="adapter::types::unidirectional::AX" Comment="Output"/>
+			<AdapterDeclaration Name="ILOCK_OUT" Type="adapter::types::bidirectional::AX2" Comment="Interlock to below"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="SET1" Type="adapter::types::unidirectional::AX" Comment="Set"/>
+			<AdapterDeclaration Name="RESET" Type="adapter::types::unidirectional::AX" Comment="Reset"/>
+			<AdapterDeclaration Name="ILOCK_IN" Type="adapter::types::bidirectional::AX2" Comment="Interlock from above"/>
+		</Sockets>
+	</InterfaceList>
+	<BasicFB>
+		<ECC>
+			<ECState Name="REQ" x="1000" y="500">
+				<ECAction Algorithm="REQ" Output="Q1.E1"/>
+				<ECAction Output="ILOCK_IN.EI1"/>
+				<ECAction Output="ILOCK_OUT.EO1"/>
+			</ECState>
+			<ECTransition Source="REQ" Destination="REQ" Condition="SET1.E1" x="220" y="1726.67"/>
+			<ECTransition Source="REQ" Destination="REQ" Condition="RESET.E1" x="-286.67" y="1220"/>
+			<ECTransition Source="REQ" Destination="REQ" Condition="ILOCK_IN.EO1" x="1420" y="1780"/>
+			<ECTransition Source="REQ" Destination="REQ" Condition="ILOCK_OUT.EI1" x="973.33" y="1873.33"/>
+		</ECC>
+		<Algorithm Name="REQ">
+			<ST><![CDATA[
+Q1.D1 := SET1.D1 OR ILOCK_IN.DO1 OR ILOCK_OUT.DI1 OR ((NOT RESET.D1) AND Q1.D1);
+
+(* Propagate Set signal *)
+ILOCK_IN.DI1 := SET1.D1 OR ILOCK_OUT.DI1;
+ILOCK_OUT.DO1 := SET1.D1 OR ILOCK_IN.DO1;
+]]></ST>
+		</Algorithm>
+	</BasicFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

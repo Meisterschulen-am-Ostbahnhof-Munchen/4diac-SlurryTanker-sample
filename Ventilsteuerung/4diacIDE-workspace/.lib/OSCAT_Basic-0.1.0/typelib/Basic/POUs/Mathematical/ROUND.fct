@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Function Name="ROUND" Comment="this function rounds a real to n digits behind the comma (0 to 8 digits).">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Version="1.0" Author="Franz Höpfinger" Date="2026-09-17" Remarks="Portiert aus OSCAT_basic ROUND.TcPOU - EXPT(10.0, LIMIT(0, N, 8)) (begrenzt auf 0..8 Nachkommastellen) und Bereichspruefung (ABS(in * X) &gt;= 2.147e9) schuetzen vor DINT-Ueberlauf bei grossen Eingangs- oder Skalierungswerten.">
+	</VersionInfo>
+	<CompilerInfo packageName="OSCAT::Basic::POUs::Mathematical">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event">
+				<With Var="in"/>
+				<With Var="N"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event">
+				<With Var=""/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="in" Type="REAL"/>
+			<VarDeclaration Name="N" Type="INT"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="" Type="REAL"/>
+		</OutputVars>
+	</InterfaceList>
+	<FunctionBody>
+		<ST><![CDATA[PACKAGE OSCAT::Basic::POUs::Mathematical;
+
+(* this function rounds a real to n digits behind the comma (0 to 8 digits). *)
+FUNCTION ROUND : REAL
+VAR_INPUT
+	in : REAL;
+	N : INT;
+END_VAR
+VAR
+	X : REAL;
+END_VAR
+
+(*
+ * version 1.5	25. oct. 2008 programmer 	hugo tested by	tobias
+ * *
+ * this function rounds a real to n digits behind the comma (0 to 8 digits).
+ * Portiert 2026-09-17: EXPT(10.0, LIMIT(0, N, 8)) und Bereichspruefung (ABS(in * X) >= 2.147e9) schuetzen vor DINT-Ueberlauf.
+ *)
+X := EXPT(10.0, LIMIT(0, N, 8));
+IF ABS(in * X) >= 2147483647.0 THEN
+	ROUND := in;
+ELSE
+	ROUND := DINT_TO_REAL(REAL_TO_DINT(in * X)) / X;
+END_IF;
+
+END_FUNCTION
+
+(* revision history hm	1. sep 2006	rev 1.0 original version
+ * *
+ * hm	2. dec 2007	rev 1.1 changed code for better performance
+ * *
+ * hm	8. jan 2008	rev 1.2 further improvement in performance
+ * *
+ * hm 11. mar. 2008	rev 1.3 corrected an error with negative numbers, use real_to_dint instead of trunc
+ * *
+ * hm	16. mar 2008	rev 1.4 added type conversion to avoid warning under codesys 3.0
+ * *
+ * hm	25. oct. 2008	rev 1.5 new code using global constants decades (hier ersetzt durch EXPT, siehe oben) *) ]]></ST>
+	</FunctionBody>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</Function>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="DataPanel_MI_IW_CNT" Comment="Input service interface function block for counter input data (7A/8A)">
+	<Identification Description="Copyright (c) 2026 HR Agrartechnik GmbH">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="generated" Date="2026-01-17">
+	</VersionInfo>
+	<CompilerInfo packageName="DataPanel::io::MI::DI">
+		<Import declaration="DataPanel::io::MI::const::MI"/>
+		<Import declaration="DataPanel::io::MI::DI::DataPanel_MI_DI::Invalid"/>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+				<With Var="QI"/>
+				<With Var="PARAMS"/>
+				<With Var="u8SAMember"/>
+				<With Var="Input"/>
+				<With Var="ImpulseDelta"/>
+				<With Var="TimeDelta"/>
+			</Event>
+			<Event Name="REQ" Type="Event" Comment="Service Request">
+				<With Var="QI"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+				<With Var="IN"/>
+			</Event>
+			<Event Name="IND" Type="Event" Comment="Indication from Resource">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+				<With Var="IN"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
+			<VarDeclaration Name="PARAMS" Type="STRING" Comment="Service Parameters"/>
+			<VarDeclaration Name="u8SAMember" Type="USINT" Comment="Node SA 224..239" InitialValue="MI::MI_00"/>
+			<VarDeclaration Name="Input" Type="DataPanel::io::MI::DI::DataPanel_MI_DI_S" Comment="Identify the Input (must be 7A or 8A)" InitialValue="Invalid"/>
+			<VarDeclaration Name="ImpulseDelta" Type="WORD" Comment="After How many Impulses an IND"/>
+			<VarDeclaration Name="TimeDelta" Type="DWORD" Comment="After How many ms an IND"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
+			<VarDeclaration Name="IN" Type="WORD" Comment="Counter data"/>
+		</OutputVars>
+	</InterfaceList>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

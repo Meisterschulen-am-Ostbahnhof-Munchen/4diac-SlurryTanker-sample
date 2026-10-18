@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="GreenRedBackground2SC" Comment="Hintergrundfarbe (TRUE -&gt; Grün, FALSE -&gt; Rot) für 2 Objekte (Kompakt)">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="franz" Date="2026-07-21">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::types::s2ObjectIDs"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+			<SubAppEvent Name="EO" Type="Event">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="u16ObjIds" Type="isobus::UT::Q::types::s2ObjectIDs"/>
+			<VarDeclaration Name="DI1" Type="BOOL" Comment="Selector"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<SubApp Name="GreenRedBackground2" Type="MyLib::sys::GreenRedBackground2S" x="2100" y="-1000">
+		</SubApp>
+		<EventConnections>
+			<Connection Source="EO" Destination="GreenRedBackground2.REQ" dx1="806.67"/>
+			<Connection Source="INIT" Destination="GreenRedBackground2.INIT"/>
+			<Connection Source="GreenRedBackground2.INITO" Destination="INITO"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="u16ObjIds" Destination="GreenRedBackground2.u16ObjIds" dx1="700"/>
+			<Connection Source="DI1" Destination="GreenRedBackground2.DI1" dx1="700"/>
+			<Connection Source="QI" Destination="GreenRedBackground2.QI"/>
+			<Connection Source="GreenRedBackground2.QO" Destination="QO"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="sequence_T_08_ADAPTER" Comment="Composite wrapper around sequence_T_08: Event/BOOL outputs bundled into AX/AS&#10;adapters, DT_Sx_Sy times each fed via its own ATM adapter socket. timeOut stays&#10;internal, not exposed.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-08-14" Remarks="initial API and implementation">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::utils::sequence::timed">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="START_S1" Type="Event" Comment="jump from START to State_01">
+			</Event>
+			<Event Name="RESET" Type="Event" Comment="Reset from any State to START">
+			</Event>
+		</EventInputs>
+		<Plugs>
+			<AdapterDeclaration Name="STATE_NR" Type="adapter::types::unidirectional::AS" Comment="State Number Adapter" x="3773.33" y="-446.67"/>
+			<AdapterDeclaration Name="DO_S1" Type="adapter::types::unidirectional::AX" Comment="Output if State_01 is active" x="3906.67" y="346.67"/>
+			<AdapterDeclaration Name="DO_S2" Type="adapter::types::unidirectional::AX" Comment="Output if State_02 is active" x="4040" y="1140"/>
+			<AdapterDeclaration Name="DO_S3" Type="adapter::types::unidirectional::AX" Comment="Output if State_03 is active" x="4173.33" y="1933.33"/>
+			<AdapterDeclaration Name="DO_S4" Type="adapter::types::unidirectional::AX" Comment="Output if State_04 is active" x="4306.67" y="2726.67"/>
+			<AdapterDeclaration Name="DO_S5" Type="adapter::types::unidirectional::AX" Comment="Output if State_05 is active" x="4506.67" y="3520"/>
+			<AdapterDeclaration Name="DO_S6" Type="adapter::types::unidirectional::AX" Comment="Output if State_06 is active" x="4506.67" y="4313.33"/>
+			<AdapterDeclaration Name="DO_S7" Type="adapter::types::unidirectional::AX" Comment="Output if State_07 is active" x="4373.33" y="5106.67"/>
+			<AdapterDeclaration Name="DO_S8" Type="adapter::types::unidirectional::AX" Comment="Output if State_08 is active" x="4240" y="5900"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="ATM_S1_S2" Type="adapter::types::unidirectional::ATM" Comment="State_01 to State_02 timed" x="1100" y="2300"/>
+			<AdapterDeclaration Name="ATM_S2_S3" Type="adapter::types::unidirectional::ATM" Comment="State_02 to State_03 timed" x="1100" y="3093.33"/>
+			<AdapterDeclaration Name="ATM_S3_S4" Type="adapter::types::unidirectional::ATM" Comment="State_03 to State_04 timed" x="1100" y="3886.67"/>
+			<AdapterDeclaration Name="ATM_S4_S5" Type="adapter::types::unidirectional::ATM" Comment="State_04 to State_05 timed" x="1100" y="4680"/>
+			<AdapterDeclaration Name="ATM_S5_S6" Type="adapter::types::unidirectional::ATM" Comment="State_05 to State_06 timed" x="1100" y="5473.33"/>
+			<AdapterDeclaration Name="ATM_S6_S7" Type="adapter::types::unidirectional::ATM" Comment="State_06 to State_07 timed" x="1100" y="6266.67"/>
+			<AdapterDeclaration Name="ATM_S7_S8" Type="adapter::types::unidirectional::ATM" Comment="State_07 to State_08 timed" x="1100" y="7060"/>
+			<AdapterDeclaration Name="ATM_S8_START" Type="adapter::types::unidirectional::ATM" Comment="State_08 to START timed" x="1100" y="7853.33"/>
+		</Sockets>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="Sequence" Type="logiBUS::utils::sequence::timed::sequence_T_08" x="2500" y="3000">
+		</FB>
+		<FB Name="E_TimeOut" Type="iec61499::events::E_TimeOut" x="4300" y="6500">
+		</FB>
+		<EventConnections>
+			<Connection Source="START_S1" Destination="Sequence.START_S1" dx1="4293.33"/>
+			<Connection Source="RESET" Destination="Sequence.RESET" dx1="4260"/>
+			<Connection Source="ATM_S1_S2.E1" Destination="Sequence.SET_DT_S1_S2" dx1="453.33"/>
+			<Connection Source="ATM_S2_S3.E1" Destination="Sequence.SET_DT_S2_S3" dx1="420"/>
+			<Connection Source="ATM_S3_S4.E1" Destination="Sequence.SET_DT_S3_S4" dx1="360"/>
+			<Connection Source="ATM_S4_S5.E1" Destination="Sequence.SET_DT_S4_S5" dx1="393.33"/>
+			<Connection Source="ATM_S5_S6.E1" Destination="Sequence.SET_DT_S5_S6" dx1="426.67"/>
+			<Connection Source="ATM_S6_S7.E1" Destination="Sequence.SET_DT_S6_S7" dx1="460"/>
+			<Connection Source="ATM_S7_S8.E1" Destination="Sequence.SET_DT_S7_S8" dx1="493.33"/>
+			<Connection Source="ATM_S8_START.E1" Destination="Sequence.SET_DT_S8_START" dx1="386.67"/>
+			<Connection Source="Sequence.CNF" Destination="STATE_NR.E1" dx1="86.67"/>
+			<Connection Source="Sequence.EO_S1" Destination="DO_S1.E1" dx1="153.33"/>
+			<Connection Source="Sequence.EO_S2" Destination="DO_S2.E1" dx1="240"/>
+			<Connection Source="Sequence.EO_S3" Destination="DO_S3.E1" dx1="400"/>
+			<Connection Source="Sequence.EO_S4" Destination="DO_S4.E1" dx1="466.67"/>
+			<Connection Source="Sequence.EO_S5" Destination="DO_S5.E1" dx1="533.33"/>
+			<Connection Source="Sequence.EO_S6" Destination="DO_S6.E1" dx1="333.33"/>
+			<Connection Source="Sequence.EO_S7" Destination="DO_S7.E1" dx1="300"/>
+			<Connection Source="Sequence.EO_S8" Destination="DO_S8.E1" dx1="233.33"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="ATM_S1_S2.D1" Destination="Sequence.DT_S1_S2" dx1="326.67"/>
+			<Connection Source="ATM_S2_S3.D1" Destination="Sequence.DT_S2_S3" dx1="293.33"/>
+			<Connection Source="ATM_S3_S4.D1" Destination="Sequence.DT_S3_S4" dx1="260"/>
+			<Connection Source="ATM_S4_S5.D1" Destination="Sequence.DT_S4_S5" dx1="560"/>
+			<Connection Source="ATM_S5_S6.D1" Destination="Sequence.DT_S5_S6" dx1="593.33"/>
+			<Connection Source="ATM_S6_S7.D1" Destination="Sequence.DT_S6_S7" dx1="626.67"/>
+			<Connection Source="ATM_S7_S8.D1" Destination="Sequence.DT_S7_S8" dx1="660"/>
+			<Connection Source="ATM_S8_START.D1" Destination="Sequence.DT_S8_START" dx1="553.33"/>
+			<Connection Source="Sequence.STATE_NR" Destination="STATE_NR.D1" dx1="120"/>
+			<Connection Source="Sequence.DO_S1" Destination="DO_S1.D1" dx1="186.67"/>
+			<Connection Source="Sequence.DO_S2" Destination="DO_S2.D1" dx1="366.67"/>
+			<Connection Source="Sequence.DO_S3" Destination="DO_S3.D1" dx1="433.33"/>
+			<Connection Source="Sequence.DO_S4" Destination="DO_S4.D1" dx1="500"/>
+			<Connection Source="Sequence.DO_S5" Destination="DO_S5.D1" dx1="533.33"/>
+			<Connection Source="Sequence.DO_S6" Destination="DO_S6.D1" dx1="566.67"/>
+			<Connection Source="Sequence.DO_S7" Destination="DO_S7.D1" dx1="266.67"/>
+			<Connection Source="Sequence.DO_S8" Destination="DO_S8.D1" dx1="200"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="Sequence.timeOut" Destination="E_TimeOut.TimeOutSocket" dx1="166.67"/>
+		</AdapterConnections>
+	</FBNetwork>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

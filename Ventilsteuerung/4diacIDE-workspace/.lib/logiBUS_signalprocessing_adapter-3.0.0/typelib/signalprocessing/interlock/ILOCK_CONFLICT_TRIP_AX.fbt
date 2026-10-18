@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="ILOCK_CONFLICT_TRIP_AX" Comment="Prioritizes the first active input and trips on conflict. Requires RESET&#10;(Adapter Version).">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-04-19" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::signalprocessing::interlock">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="EI_RESET" Type="Event">
+			</Event>
+		</EventInputs>
+		<Plugs>
+			<AdapterDeclaration Name="UP_OUT" Type="adapter::types::unidirectional::AX" Comment="Output for forward/up direction"/>
+			<AdapterDeclaration Name="DOWN_OUT" Type="adapter::types::unidirectional::AX" Comment="Output for backward/down direction"/>
+			<AdapterDeclaration Name="TRIP_OUT" Type="adapter::types::unidirectional::AX" Comment="Trip State Output"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="UP_IN" Type="adapter::types::unidirectional::AX" Comment="Input for forward/up direction"/>
+			<AdapterDeclaration Name="DOWN_IN" Type="adapter::types::unidirectional::AX" Comment="Input for backward/down direction"/>
+		</Sockets>
+	</InterfaceList>
+	<BasicFB>
+		<ECC>
+			<ECState Name="STOP" x="2800" y="1440">
+				<ECAction Algorithm="STOP" Output="UP_OUT.E1"/>
+				<ECAction Output="DOWN_OUT.E1"/>
+				<ECAction Output="TRIP_OUT.E1"/>
+			</ECState>
+			<ECState Name="UP" x="5120" y="640">
+				<ECAction Algorithm="UP" Output="UP_OUT.E1"/>
+			</ECState>
+			<ECState Name="DOWN" x="4800" y="1920">
+				<ECAction Algorithm="DOWN" Output="DOWN_OUT.E1"/>
+			</ECState>
+			<ECState Name="TRIP" x="7200" y="1440">
+				<ECAction Algorithm="TRIP" Output="UP_OUT.E1"/>
+				<ECAction Output="DOWN_OUT.E1"/>
+				<ECAction Output="TRIP_OUT.E1"/>
+			</ECState>
+			<ECTransition Source="STOP" Destination="UP" Condition="UP_IN.E1[UP_IN.D1 AND NOT DOWN_IN.D1]" x="4173.33" y="1020"/>
+			<ECTransition Source="STOP" Destination="DOWN" Condition="DOWN_IN.E1[DOWN_IN.D1 AND NOT UP_IN.D1]" x="4133.33" y="1733.33"/>
+			<ECTransition Source="STOP" Destination="TRIP" Condition="UP_IN.E1[UP_IN.D1 AND DOWN_IN.D1]" x="5000" y="1200"/>
+			<ECTransition Source="STOP" Destination="TRIP" Condition="DOWN_IN.E1[UP_IN.D1 AND DOWN_IN.D1]" x="5000" y="1400"/>
+			<ECTransition Source="UP" Destination="STOP" Condition="UP_IN.E1[NOT UP_IN.D1]" x="4000" y="800"/>
+			<ECTransition Source="UP" Destination="TRIP" Condition="DOWN_IN.E1[DOWN_IN.D1]" x="6200" y="1000"/>
+			<ECTransition Source="DOWN" Destination="STOP" Condition="DOWN_IN.E1[NOT DOWN_IN.D1]" x="3800" y="1800"/>
+			<ECTransition Source="DOWN" Destination="TRIP" Condition="UP_IN.E1[UP_IN.D1]" x="6000" y="1600"/>
+			<ECTransition Source="TRIP" Destination="STOP" Condition="EI_RESET[NOT UP_IN.D1 AND NOT DOWN_IN.D1]" x="5000" y="2400"/>
+		</ECC>
+		<Algorithm Name="UP">
+			<ST><![CDATA[
+UP_OUT.D1 := BOOL#TRUE;
+DOWN_OUT.D1 := BOOL#FALSE;
+TRIP_OUT.D1 := BOOL#FALSE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="DOWN">
+			<ST><![CDATA[
+UP_OUT.D1 := BOOL#FALSE;
+DOWN_OUT.D1 := BOOL#TRUE;
+TRIP_OUT.D1 := BOOL#FALSE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="STOP">
+			<ST><![CDATA[
+UP_OUT.D1 := BOOL#FALSE;
+DOWN_OUT.D1 := BOOL#FALSE;
+TRIP_OUT.D1 := BOOL#FALSE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="TRIP">
+			<ST><![CDATA[
+UP_OUT.D1 := BOOL#FALSE;
+DOWN_OUT.D1 := BOOL#FALSE;
+TRIP_OUT.D1 := BOOL#TRUE;
+]]></ST>
+		</Algorithm>
+	</BasicFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

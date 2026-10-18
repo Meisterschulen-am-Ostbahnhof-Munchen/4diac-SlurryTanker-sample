@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="DataPanel_MI_QX" Comment="Output service interface function block for boolean output data (Digital Mode 1)">
+	<Identification Description="Copyright (c) 2014, 2015 fortiss GmbH, HR Agrartechnik GmbH&#10; &#10;This program and the accompanying materials are made&#10;available under the terms of the Eclipse Public License 2.0&#10;which is available at https://www.eclipse.org/legal/epl-2.0/&#10;&#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="fortiss GmbH" Version="1.0" Author="Waldemar Eisenmenger" Date="2014-08-26" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<VersionInfo Organization="fortiss GmbH" Version="1.1" Author="Alois Zoitl" Date="2014-08-30">
+	</VersionInfo>
+	<VersionInfo Organization="fortiss GmbH" Version="1.2" Author="Monika Wenger" Date="2015-06-10">
+	</VersionInfo>
+	<CompilerInfo packageName="DataPanel::io::MI::DQ">
+		<Import declaration="DataPanel::io::MI::DQ::DataPanel_MI_DO::Invalid"/>
+		<Import declaration="DataPanel::io::MI::const::MI"/>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+				<With Var="QI"/>
+				<With Var="PARAMS"/>
+				<With Var="u8SAMember"/>
+				<With Var="Output"/>
+			</Event>
+			<Event Name="REQ" Type="Event" Comment="Service Request">
+				<With Var="QI"/>
+				<With Var="OUT"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
+			<VarDeclaration Name="PARAMS" Type="STRING" Comment="Service Parameters"/>
+			<VarDeclaration Name="OUT" Type="BOOL" Comment="Output data to resource"/>
+			<VarDeclaration Name="u8SAMember" Type="USINT" Comment="Node SA 224..239" InitialValue="MI::MI_00"/>
+			<VarDeclaration Name="Output" Type="DataPanel::io::MI::DQ::DataPanel_MI_DO_S" Comment="Identify the Output DigitalOutput_1A..8B and Input_Power_Port_5..8" InitialValue="Invalid"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
+		</OutputVars>
+	</InterfaceList>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

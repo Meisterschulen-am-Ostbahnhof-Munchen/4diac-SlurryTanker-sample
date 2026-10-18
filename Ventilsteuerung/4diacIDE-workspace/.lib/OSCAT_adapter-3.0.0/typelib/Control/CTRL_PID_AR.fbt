@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="CTRL_PID_AR" Comment="AR-Adapter-Wrapper um OSCAT CTRL_PID - bruckt zwischen adapter und OSCAT&#10;PID-Regler. Istwert, Sollwert, Hand-Umschaltung, Handwert, Reglerparameter&#10;UND Rauschunterdrueckung/Offset/Grenzwerte vollstaendig als Adapter-Sockets -&#10;kein explizites REQ mehr noetig.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.4" Author="Franz Höpfinger" Date="2026-10-03" Remarks="Franz: 'die Eingaenge sollen identisch sortiert sein wie bei dem enthaltenen FB' - Sockets (inkl. EventConnections/DataConnections/Dokumentation) auf die Reihenfolge von CTRL_PID.InputVars umsortiert: AR_ACT, SET, SUP, OFS, M_I, AX_MAN, KP, TN, TV, LL, LH (vorher: AR_ACT, SET, AX_MAN, M_I, KP, TN, TV, SUP, OFS, LL, LH - SUP/OFS/LL/LH waren beim v1.3-Umbau einfach hinten angehaengt worden). Rein kosmetisch/strukturell, keine funktionale Aenderung.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.3" Author="Franz Höpfinger" Date="2026-10-03" Remarks="Franz: 'SUP, OFS, LL, LH muessen auch AR Adapter werden, wie KP und TN. REQ faellt dann weg, RST bleibt. CNF entfaellt auch.' - SUP/OFS/LL/LH von InputVars (REAL, With-gebunden an REQ) auf AR-Adapter-Sockets umgestellt (gleiches Muster wie KP/TN/TV/M_I: *.E1 loest CTRL_PID.REQ aus, *.D1 liefert den Wert). Explizites REQ-EventInput (inkl. With-Bindungen) und CNF-EventOutput komplett entfernt - CTRL_PID.CNF->E_D_FF_ANY.CLK bleibt intern bestehen (fuer das Latch von Y/DIFF/LIM), nur der externe CNF-Durchgriff entfaellt. RST unveraendert.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.2" Author="Franz Höpfinger" Date="2026-09-19" Remarks="Bugfix: REQ hatte keine With-Verknuepfung zu SUP/OFS/LL/LH (IEC 61499 - ungebundene Vars werden nicht zuverlaessig gelesen), jetzt ergaenzt, gespiegelt vom inneren CTRL_PID. M_I/KP/TN/TV von InputVars auf AR-Adapter-Sockets umgestellt (Konsistenz mit AR_ACT/SET).">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-12" Remarks="INIT/INITO entfernt (CTRL_PID kennt kein INIT, nur REQ/RST) - stattdessen echtes REQ-EventInput/CNF-EventOutput ergaenzt, direkt auf CTRL_PID.REQ/CNF gemappt. SET von InputVar auf AR-Socket umgestellt (dynamisch berechneter Sollwert, wie AR_ACT) - SET.E1 triggert CTRL_PID.REQ zusaetzlich zu AR_ACT.E1/AX_MAN.E1.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-12" Remarks="Initial implementation of CTRL_PID_AR wrapper FB">
+	</VersionInfo>
+	<CompilerInfo packageName="OSCAT_adapter::Control">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="RST" Type="Event" Comment="Reset des Integrators (durchgereicht an CTRL_PID.RST)">
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+		</EventOutputs>
+		<Plugs>
+			<AdapterDeclaration Name="AR_Y" Type="adapter::types::unidirectional::AR" Comment="Stellwert (REAL)" x="5300" y="200"/>
+			<AdapterDeclaration Name="AR_DIFF" Type="adapter::types::unidirectional::AR" Comment="Regelabweichung / Differenz (REAL)" x="5100" y="700"/>
+			<AdapterDeclaration Name="AB_LIM" Type="adapter::types::unidirectional::AB" Comment="Begrenzung aktiv Flag (BOOL)" x="5100" y="1200"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="AR_ACT" Type="adapter::types::unidirectional::AR" Comment="Istwert (REAL)" x="-1400" y="-1400"/>
+			<AdapterDeclaration Name="SET" Type="adapter::types::unidirectional::AR" Comment="Sollwert (REAL, dynamisch berechnet)" x="-1400" y="-900"/>
+			<AdapterDeclaration Name="SUP" Type="adapter::types::unidirectional::AR" Comment="Rauschunterdrueckung (REAL, dynamisch)" x="-1400" y="-400"/>
+			<AdapterDeclaration Name="OFS" Type="adapter::types::unidirectional::AR" Comment="Offset (REAL, dynamisch)" x="-1400" y="100"/>
+			<AdapterDeclaration Name="M_I" Type="adapter::types::unidirectional::AR" Comment="Handwert (REAL, dynamisch)" x="-1400" y="600"/>
+			<AdapterDeclaration Name="AX_MAN" Type="adapter::types::unidirectional::AX" Comment="Handbetrieb Umschaltung (BOOL/Event, optional)" x="-1400" y="1100"/>
+			<AdapterDeclaration Name="KP" Type="adapter::types::unidirectional::AR" Comment="Proportionalbeiwert (REAL, dynamisch)" x="-1400" y="1600"/>
+			<AdapterDeclaration Name="TN" Type="adapter::types::unidirectional::AR" Comment="Nachstellzeit (REAL, dynamisch)" x="-1400" y="2100"/>
+			<AdapterDeclaration Name="TV" Type="adapter::types::unidirectional::AR" Comment="Vorhaltzeit (REAL, dynamisch)" x="-1400" y="2600"/>
+			<AdapterDeclaration Name="LL" Type="adapter::types::unidirectional::AR" Comment="Unterer Grenzwert (REAL, dynamisch)" x="-1400" y="3100"/>
+			<AdapterDeclaration Name="LH" Type="adapter::types::unidirectional::AR" Comment="Oberer Grenzwert (REAL, dynamisch)" x="-1400" y="3600"/>
+		</Sockets>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="CTRL_PID" Type="OSCAT::Basic::POUs::Engineering::Control::CTRL_PID" x="800" y="0">
+		</FB>
+		<FB Name="E_D_FF_ANY" Type="iec61499::events::E_D_FF_ANY_3" x="2400" y="200">
+		</FB>
+		<EventConnections>
+			<Connection Source="RST" Destination="CTRL_PID.RST" dx1="5413.33"/>
+			<Connection Source="AR_ACT.E1" Destination="CTRL_PID.REQ" dx1="1386.67"/>
+			<Connection Source="SET.E1" Destination="CTRL_PID.REQ" dx1="1386.67"/>
+			<Connection Source="SUP.E1" Destination="CTRL_PID.REQ" dx1="1320"/>
+			<Connection Source="OFS.E1" Destination="CTRL_PID.REQ" dx1="1320"/>
+			<Connection Source="M_I.E1" Destination="CTRL_PID.REQ" dx1="1320"/>
+			<Connection Source="AX_MAN.E1" Destination="CTRL_PID.REQ" dx1="1386.67"/>
+			<Connection Source="KP.E1" Destination="CTRL_PID.REQ" dx1="1320"/>
+			<Connection Source="TN.E1" Destination="CTRL_PID.REQ" dx1="1320"/>
+			<Connection Source="TV.E1" Destination="CTRL_PID.REQ" dx1="1320"/>
+			<Connection Source="LL.E1" Destination="CTRL_PID.REQ" dx1="1320"/>
+			<Connection Source="LH.E1" Destination="CTRL_PID.REQ" dx1="1320"/>
+			<Connection Source="CTRL_PID.CNF" Destination="E_D_FF_ANY.CLK" dx1="453.33"/>
+			<Connection Source="E_D_FF_ANY.EO" Destination="AR_Y.E1"/>
+			<Connection Source="E_D_FF_ANY.EO" Destination="AR_DIFF.E1" dx1="906.67"/>
+			<Connection Source="E_D_FF_ANY.EO" Destination="AB_LIM.E1" dx1="906.67"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="AR_ACT.D1" Destination="CTRL_PID.ACT" dx1="1253.33"/>
+			<Connection Source="SET.D1" Destination="CTRL_PID.SET" dx1="1220"/>
+			<Connection Source="SUP.D1" Destination="CTRL_PID.SUP" dx1="1420"/>
+			<Connection Source="OFS.D1" Destination="CTRL_PID.OFS" dx1="1453.33"/>
+			<Connection Source="M_I.D1" Destination="CTRL_PID.M_I" dx1="1120"/>
+			<Connection Source="AX_MAN.D1" Destination="CTRL_PID.MAN" dx1="493.33"/>
+			<Connection Source="KP.D1" Destination="CTRL_PID.KP" dx1="1120"/>
+			<Connection Source="TN.D1" Destination="CTRL_PID.TN" dx1="1353.33"/>
+			<Connection Source="TV.D1" Destination="CTRL_PID.TV" dx1="1386.67"/>
+			<Connection Source="LL.D1" Destination="CTRL_PID.LL" dx1="1486.67"/>
+			<Connection Source="LH.D1" Destination="CTRL_PID.LH" dx1="1520"/>
+			<Connection Source="CTRL_PID.Y" Destination="E_D_FF_ANY.D1" dx1="453.33"/>
+			<Connection Source="CTRL_PID.DIFF" Destination="E_D_FF_ANY.D2" dx1="453.33"/>
+			<Connection Source="CTRL_PID.LIM" Destination="E_D_FF_ANY.D3" dx1="453.33"/>
+			<Connection Source="E_D_FF_ANY.Q1" Destination="AR_Y.D1"/>
+			<Connection Source="E_D_FF_ANY.Q2" Destination="AR_DIFF.D1" dx1="940"/>
+			<Connection Source="E_D_FF_ANY.Q3" Destination="AB_LIM.D1" dx1="873.33"/>
+		</DataConnections>
+	</FBNetwork>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>CTRL_PID_AR</h1>
+
+<h2>🇩🇪 Deutsch</h2>
+
+<p>AR-Adapter-Wrapper um <code>OSCAT::Basic::POUs::Engineering::Control::CTRL_PID</code>. Istwert (<code>AR_ACT</code>), Sollwert (<code>SET</code>), Rauschunterdrueckung/Offset (<code>SUP</code>/<code>OFS</code>), Handwert (<code>M_I</code>), Handbetrieb-Umschaltung (<code>AX_MAN</code>), Reglerparameter (<code>KP</code>/<code>TN</code>/<code>TV</code>) UND Grenzwerte (<code>LL</code>/<code>LH</code>) sind als Adapter-Sockets ausgefuehrt, in derselben Reihenfolge wie die InputVars des umschlossenen CTRL_PID - jeder loest bei Ankunft eines neuen Werts <code>CTRL_PID.REQ</code> aus. Kein explizites <code>REQ</code>-Event mehr noetig, da jeder Socket selbst triggert. <code>RST</code> (Reset des Integrators) bleibt als eigenes Event erhalten.</p>
+
+<h3>Reine Adapter-Grenze</h3>
+
+<ul>
+	<li><strong>AR_ACT</strong> (Socket, <code>AR</code>): Istwert (REAL, z. B. von <code>FT_DERIV_10_AR.AR_OUT</code>)</li>
+	<li><strong>SET</strong> (Socket, <code>AR</code>): Sollwert (REAL, dynamisch berechnet, z. B. Fahrgeschwindigkeit*Voreilung)</li>
+	<li><strong>SUP</strong> (Socket, <code>AR</code>): Rauschunterdrueckung (REAL, dynamisch)</li>
+	<li><strong>OFS</strong> (Socket, <code>AR</code>): Offset (REAL, dynamisch)</li>
+	<li><strong>M_I</strong> (Socket, <code>AR</code>): Handwert (REAL, dynamisch)</li>
+	<li><strong>AX_MAN</strong> (Socket, <code>AX</code>): Handbetrieb-Umschaltung (optional, z. B. von <code>AX_T_FF.Q</code>)</li>
+	<li><strong>KP</strong>/<strong>TN</strong>/<strong>TV</strong> (Socket, <code>AR</code>): Reglerparameter (REAL, dynamisch)</li>
+	<li><strong>LL</strong>/<strong>LH</strong> (Socket, <code>AR</code>): unterer/oberer Grenzwert (REAL, dynamisch)</li>
+	<li><strong>AR_Y</strong> (Plug, <code>AR</code>): Stellwert (REAL, z. B. zur Weitergabe an <code>AR_TO_AD_NUM.AR_IN</code>)</li>
+	<li><strong>AR_DIFF</strong> (Plug, <code>AR</code>): Regelabweichung (<code>DIFF = SET - ACT</code>, REAL)</li>
+	<li><strong>AB_LIM</strong> (Plug, <code>AB</code>): Begrenzung aktiv Flag (<code>LIM</code>, BOOL)</li>
+</ul>
+
+<h2>🇬🇧 English</h2>
+
+<p>AR-adapter wrapper around <code>OSCAT::Basic::POUs::Engineering::Control::CTRL_PID</code>. Actual value (<code>AR_ACT</code>), set point (<code>SET</code>), noise suppression/offset (<code>SUP</code>/<code>OFS</code>), manual value (<code>M_I</code>), manual mode switch (<code>AX_MAN</code>), controller gains (<code>KP</code>/<code>TN</code>/<code>TV</code>) AND limits (<code>LL</code>/<code>LH</code>) are all adapter sockets, in the same order as the wrapped CTRL_PID's own InputVars, each triggering <code>CTRL_PID.REQ</code> on arrival - no explicit <code>REQ</code> event needed any more, since every socket triggers itself. <code>RST</code> (integrator reset) remains its own event. Control output (<code>AR_Y</code>), control error (<code>AR_DIFF</code>) and limit flag (<code>AB_LIM</code>) are adapter plugs.</p>
+]]></Attribute>
+</FBType>

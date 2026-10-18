@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Manifest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="platform:/resource/org.eclipse.fordiac.ide.library.model/model/library.xsd" Scope="Library">
+  <Dependencies>
+    <Required SymbolicName="adapter_types" Version="3.0.0"/>
+    <Required SymbolicName="events" Version="3.0.0"/>
+  </Dependencies>
+  <Product Comment="I/O-Treiber-Bausteine (AI, DI, DO_LED, DO_SERVO, DQ, PI), herausgeloest aus logiBUS-3.0.0/typelib/io - entspricht dem FORTE-Modul logiBUS-io" Name="logiBUS_io" SymbolicName="logiBUS_io">
+    <VersionInfo Author="HR Agrartechnik GmbH" Date="2026-10-09" Version="3.0.0"/>
+  </Product>
+</Manifest>

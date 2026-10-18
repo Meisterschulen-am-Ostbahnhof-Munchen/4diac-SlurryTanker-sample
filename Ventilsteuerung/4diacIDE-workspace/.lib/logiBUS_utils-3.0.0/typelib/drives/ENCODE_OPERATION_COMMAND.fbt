@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="ENCODE_OPERATION_COMMAND" Comment="Encodes an Operation Command word from RUN/DIRECTION, or a Fault Reset code on&#10;an explicit event">
+	<Identification Standard="61499-1" Description="Copyright (c) 2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0  &#10; &#10;Generic building block for any VFD/drive whose Operation Command word follows the  &#10;common Run/Direction/Stop + explicit Fault-Reset-override pattern (Modbus,  &#10;CANopen PZD1, Profibus PPO, etc.). Named &apos;Operation Command&apos;, not &apos;Control Word&apos; -  &#10;the latter is CANopen-specific terminology, whereas &apos;Operation Command&apos; is the  &#10;vendor-neutral term used by e.g. the DELIXI H300 manual. All command codes  &#10;are supplied by the caller via Parameter, so the block itself carries no  &#10;brand-specific knowledge - only the encoding shape.">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="2.0" Author="Franz Höpfinger" Date="2026-08-26" Remarks="renamed from ENCODE_CONTROLWORD / CW_* / CONTROL_WORD to ENCODE_OPERATION_COMMAND / OC_* / OPERATION_COMMAND - Control Word is CANopen terminology">
+	</VersionInfo>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-08-26" Remarks="generalized from H300_ENCODE_CONTROLWORD - initial API and implementation">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::drives">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Init Request">
+				<With Var="OC_NO_COMMAND"/>
+				<With Var="OC_FORWARD"/>
+				<With Var="OC_REVERSE"/>
+				<With Var="OC_DECEL_STOP"/>
+				<With Var="OC_FAULT_RESET"/>
+			</Event>
+			<Event Name="REQ" Type="Event" Comment="RUN/DIRECTION evaluated">
+				<With Var="RUN"/>
+				<With Var="DIRECTION"/>
+				<With Var="OC_FORWARD"/>
+				<With Var="OC_REVERSE"/>
+				<With Var="OC_DECEL_STOP"/>
+			</Event>
+			<Event Name="FAULT_RESET" Type="Event" Comment="Request the Fault Reset command code">
+				<With Var="OC_FAULT_RESET"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Init Confirmation">
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Operation Command updated">
+				<With Var="OPERATION_COMMAND"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="RUN" Type="BOOL" Comment="Run command"/>
+			<VarDeclaration Name="DIRECTION" Type="BOOL" Comment="FALSE=Forward, TRUE=Reverse"/>
+			<VarDeclaration Name="OC_NO_COMMAND" Type="INT" Comment="Operation Command code for No Command / safe default (drive-specific, via Parameter)"/>
+			<VarDeclaration Name="OC_FORWARD" Type="INT" Comment="Operation Command code for Forward Run (drive-specific, via Parameter)"/>
+			<VarDeclaration Name="OC_REVERSE" Type="INT" Comment="Operation Command code for Reverse Run (drive-specific, via Parameter)"/>
+			<VarDeclaration Name="OC_DECEL_STOP" Type="INT" Comment="Operation Command code for Decelerated Stop (drive-specific, via Parameter)"/>
+			<VarDeclaration Name="OC_FAULT_RESET" Type="INT" Comment="Operation Command code for Fault Reset (drive-specific, via Parameter)"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="OPERATION_COMMAND" Type="INT" Comment="Encoded Operation Command (target register content)"/>
+		</OutputVars>
+	</InterfaceList>
+	<SimpleFB>
+		<ECState Name="INIT">
+			<ECAction Algorithm="INIT" Output="INITO"/>
+		</ECState>
+		<ECState Name="REQ">
+			<ECAction Algorithm="REQ" Output="CNF"/>
+		</ECState>
+		<ECState Name="FAULT_RESET">
+			<ECAction Algorithm="FAULT_RESET" Output="CNF"/>
+		</ECState>
+		<Algorithm Name="INIT" Comment="Sets OPERATION_COMMAND to No Command before the first REQ/FAULT_RESET">
+			<ST><![CDATA[
+OPERATION_COMMAND := OC_NO_COMMAND;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="REQ" Comment="Encodes RUN/DIRECTION as Forward/Reverse/Decelerated Stop command">
+			<ST><![CDATA[
+IF RUN THEN
+	IF DIRECTION THEN
+		OPERATION_COMMAND := OC_REVERSE;
+	ELSE
+		OPERATION_COMMAND := OC_FORWARD;
+	END_IF;
+ELSE
+	OPERATION_COMMAND := OC_DECEL_STOP;
+END_IF;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="FAULT_RESET" Comment="Overwrites OPERATION_COMMAND once with the Fault Reset code, independent of RUN/DIRECTION">
+			<ST><![CDATA[
+OPERATION_COMMAND := OC_FAULT_RESET;
+]]></ST>
+		</Algorithm>
+	</SimpleFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

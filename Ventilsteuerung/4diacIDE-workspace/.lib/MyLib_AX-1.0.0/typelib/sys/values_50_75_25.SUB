@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="values_50_75_25" Comment="AR-Adapter-Ausgaenge fuer eine AR_AUI_MUX_3-Sollwertauswahl (K=0-&gt;OUT_50&#10;Neutral, K=1-&gt;OUT_75, K=2-&gt;OUT_25). OUT_50 ist fest (50.0), OUT_75/OUT_25 sind&#10;proportional zum PWM_POW-Socket (0.0-1.0): bei PWM_POW=1.0 ergeben sich exakt&#10;die mit dem Multimeter kalibrierten Rohwerte 90.0/15.0 (unveraendert gegenueber&#10;der vorherigen Version mit festen Konstanten) - kleinere PWM_POW-Werte fahren&#10;proportional dazwischen, Vorbereitung fuer eine kuenftige Joystick-Ansteuerung.&#10;Name/Plug-Bezeichnungen (_75/_25) sind historisch, die tatsaechlichen&#10;kalibrierten Werte sind 90.0/15.0.">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.2" Author="Franz Höpfinger" Date="2026-09-27" Remarks="Franz: 'initval_AR_75_SPAN/initval_AR_25_SPAN muessten ja beide 25 sein, nur dass wir beide korrigiert haben' - initval_AR_75_SPAN/initval_AR_25_SPAN von den bereits eingebackenen Multimeter-Werten (40.0/35.0) auf die nominelle Spanne 25.0 zurueckgesetzt, die reale Korrektur laeuft jetzt ueber 2 neue InputVars FACTOR_75/FACTOR_25 (REAL, per Parameter gesetzt) + je ein MyLib::sys::AR_R_MUL dazwischen (25.0 x FACTOR_75/_25 = 40.0/35.0 bei den bisherigen Default-Werten - unveraendertes Verhalten, nur nicht mehr eingebacken). Default-Werte in MyLib::sys::const::PWM_Konstanten::VALUES_50_75_25_FACTOR_75/_25.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-19" Remarks="OUT_75/OUT_25 von festen Konstanten auf PWM_POW-proportionale Werte umgestellt (50 +/- PWM_POW*Spanne) - Vorbereitung fuer proportionale Heben/Senken-Ansteuerung per Joystick. Bei PWM_POW=1.0 unveraendert exakt die alten, mit dem Multimeter kalibrierten Rohwerte (90.0/15.0).">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-08">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<InputVars>
+			<VarDeclaration Name="FACTOR_75" Type="REAL" Comment="Multimeter-kalibrierter Korrekturfaktor auf die nominelle OUT_75-Spanne (25.0) - Default entspricht dem bisherigen eingebackenen Wert 40.0 (=25.0*1.6). Siehe MyLib::sys::const::PWM_Konstanten::VALUES_50_75_25_FACTOR_75." InitialValue="REAL#1.6"/>
+			<VarDeclaration Name="FACTOR_25" Type="REAL" Comment="Multimeter-kalibrierter Korrekturfaktor auf die nominelle OUT_25-Spanne (25.0) - Default entspricht dem bisherigen eingebackenen Wert 35.0 (=25.0*1.4). Siehe MyLib::sys::const::PWM_Konstanten::VALUES_50_75_25_FACTOR_25." InitialValue="REAL#1.4"/>
+		</InputVars>
+		<Plugs>
+			<AdapterDeclaration Name="OUT_50" Type="adapter::types::unidirectional::AR" Comment="Fester Wert 50.0 (Neutral)"/>
+			<AdapterDeclaration Name="OUT_75" Type="adapter::types::unidirectional::AR" Comment="50.0 + PWM_POW*(25.0*FACTOR_75) - bei PWM_POW=1.0 und Default-FACTOR_75 der mit dem Multimeter kalibrierte Rohwert 90.0"/>
+			<AdapterDeclaration Name="OUT_25" Type="adapter::types::unidirectional::AR" Comment="50.0 - PWM_POW*(25.0*FACTOR_25) - bei PWM_POW=1.0 und Default-FACTOR_25 der mit dem Multimeter kalibrierte Rohwert 15.0"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="PWM_POW" Type="adapter::types::unidirectional::AR" Comment="PWM Power 1.0 = Maximale Power. 0.0 Aus 0.5 Halb."/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="initval_AR_50" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-6400" y="-600">
+			<Parameter Name="INIT_VAL" Value="REAL#50.0"/>
+		</FB>
+		<FB Name="initval_AR_75_SPAN" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-5300" y="500">
+			<Parameter Name="INIT_VAL" Value="REAL#25.0"/>
+		</FB>
+		<FB Name="initval_AR_25_SPAN" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-4300" y="1700">
+			<Parameter Name="INIT_VAL" Value="REAL#25.0"/>
+		</FB>
+		<SubApp Name="Korrektur_75" Type="MyLib::sys::AR_R_MUL" Comment="Nominelle Spanne 25.0 x FACTOR_75 (Multimeter-Korrektur)" x="-2000" y="700">
+		</SubApp>
+		<SubApp Name="Korrektur_25" Type="MyLib::sys::AR_R_MUL" Comment="Nominelle Spanne 25.0 x FACTOR_25 (Multimeter-Korrektur)" x="-2000" y="1600">
+		</SubApp>
+		<FB Name="AR_ADD_2" Type="adapter::iec61131::arithmetic::AR_ADD_2" x="500" y="400">
+		</FB>
+		<FB Name="AR_SUB_2" Type="adapter::iec61131::arithmetic::AR_SUB_2" x="600" y="1300">
+		</FB>
+		<FB Name="AR_SPLIT_3" Type="adapter::events::unidirectional::AR_SPLIT_3" x="-5100" y="-300">
+		</FB>
+		<FB Name="AR_MUL_2" Type="adapter::iec61131::arithmetic::AR_MUL_2" x="-500" y="900">
+		</FB>
+		<FB Name="AR_MUL_3" Type="adapter::iec61131::arithmetic::AR_MUL_2" x="-300" y="2000">
+		</FB>
+		<FB Name="AR_SPLIT_2" Type="adapter::events::unidirectional::AR_SPLIT_2" x="-5700" y="1600">
+		</FB>
+		<DataConnections>
+			<Connection Source="FACTOR_75" Destination="Korrektur_75.FACTOR" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="FACTOR_25" Destination="Korrektur_25.FACTOR" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="AR_SPLIT_3.OUT1" Destination="OUT_50" dx1="820"/>
+			<Connection Source="AR_ADD_2.OUT" Destination="OUT_75" dx1="1153.33"/>
+			<Connection Source="AR_SUB_2.OUT" Destination="OUT_25" dx1="1760"/>
+			<Connection Source="initval_AR_50.OUT" Destination="AR_SPLIT_3.IN" dx1="273.33"/>
+			<Connection Source="AR_SPLIT_3.OUT2" Destination="AR_ADD_2.IN1" dx1="1173.33"/>
+			<Connection Source="initval_AR_75_SPAN.OUT" Destination="Korrektur_75.IN1" dx1="273.33"/>
+			<Connection Source="Korrektur_75.OUT" Destination="AR_MUL_2.IN1" dx1="273.33"/>
+			<Connection Source="AR_SPLIT_3.OUT3" Destination="AR_SUB_2.IN1" dx1="420"/>
+			<Connection Source="initval_AR_25_SPAN.OUT" Destination="Korrektur_25.IN1" dx1="320"/>
+			<Connection Source="Korrektur_25.OUT" Destination="AR_MUL_3.IN1" dx1="320"/>
+			<Connection Source="PWM_POW" Destination="AR_SPLIT_2.IN" dx1="2300"/>
+			<Connection Source="AR_MUL_2.OUT" Destination="AR_ADD_2.IN2" dx1="166.67"/>
+			<Connection Source="AR_MUL_3.OUT" Destination="AR_SUB_2.IN2" dx1="160"/>
+			<Connection Source="AR_SPLIT_2.OUT1" Destination="AR_MUL_2.IN2" dx1="80"/>
+			<Connection Source="AR_SPLIT_2.OUT2" Destination="AR_MUL_3.IN2" dx1="80"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

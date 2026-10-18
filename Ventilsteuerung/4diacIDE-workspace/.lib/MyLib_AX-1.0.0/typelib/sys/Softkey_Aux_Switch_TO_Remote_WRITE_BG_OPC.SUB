@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Softkey_Aux_Switch_TO_Remote_WRITE_BG_OPC" Comment="VT-SoftKey lesen ODER AUX-Zuweisung (Joystick) lesen ODER lokaler Web-Override&#10;ODER physischer Remote-Taster auf einem dritten Modul + Remote-OPC-UA-Write an&#10;Zielmodul + VT-Hintergrundfarbe (SoftKey UND AUX) aus Remote-Subscribe&#10;(4-Quellen-Variante von Softkey_Aux_IXA_TO_Remote_WRITE_BG_OPC, fuer Funktionen&#10;mit einem zusaetzlichen fest verbauten Taster auf einem dritten Modul, z.B.&#10;Schnittverstellung)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-07" Remarks="initial API and implementation and/or initial documentation - 4-Quellen-Variante fuer Schnittverstellung (V14)">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID SoftKey/Hintergrund (VT)"/>
+			<VarDeclaration Name="u16ObjIdA" Type="UINT" Comment="Object ID AuxFunction2/Hintergrund (VT)"/>
+			<VarDeclaration Name="ID_SUBSCRIBE" Type="WSTRING" Comment="Remote-Subscribe-Adresse (Status/Farbe, ACTION=SUBSCRIBE)"/>
+			<VarDeclaration Name="ID_WRITE_REMOTE" Type="WSTRING" Comment="Remote-Write-Adresse zum Zielmodul (Befehl, ACTION=WRITE, CLIENT)"/>
+			<VarDeclaration Name="ID_WEB_READ" Type="WSTRING" Comment="Lokale Subscribe-Adresse fuer einen Web-Client (z.B. vt-ui-mirror) auf demselben Modul, ODER-verknuepft mit SoftKey und AUX"/>
+			<VarDeclaration Name="ID_SWITCH_REMOTE" Type="WSTRING" Comment="Remote-Subscribe-Adresse eines zusaetzlichen physischen Tasters auf einem ANDEREN Modul, ODER-verknuepft mit SoftKey/AUX/Web"/>
+			<VarDeclaration Name="ID_STATUS_WEB" Type="WSTRING" Comment="Lokale Publish-Adresse (auf diesem Modul) fuer den vom Zielmodul zurueckgemeldeten Zustand - damit ein Web-Client (z.B. vt-ui-mirror) dieselbe Hintergrundfarbe wie das echte VT zeigen kann"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<SubApp Name="Command" Type="MyLib::sys::Softkey_Aux_Switch_TO_Remote_WRITE" x="100" y="0">
+		</SubApp>
+		<SubApp Name="Status" Type="MyLib::sys::AX_SUBSCRIBE_BG3_WEB_OPC" x="100" y="1500">
+		</SubApp>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_2" x="4800" y="400">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="Command.INIT" dx1="1760"/>
+			<Connection Source="Command.INITO" Destination="Status.INIT" dx1="860" dx2="80" dy="1166.67"/>
+			<Connection Source="Status.INITO" Destination="INITO" dx1="2000"/>
+			<Connection Source="Status.INITO" Destination="AND_QO.REQ" dx1="1046.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="u16ObjId" Destination="Command.u16ObjId" dx1="366.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjIdA" Destination="Command.u16ObjIdA" dx1="366.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_WRITE_REMOTE" Destination="Command.ID_WRITE_REMOTE" dx1="366.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_WEB_READ" Destination="Command.ID_WEB_READ" dx1="366.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_SWITCH_REMOTE" Destination="Command.ID_SWITCH_REMOTE" dx1="366.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId" Destination="Status.u16ObjId" dx1="366.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjIdA" Destination="Status.u16ObjIdA" dx1="366.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_SUBSCRIBE" Destination="Status.ID_SUBSCRIBE" dx1="366.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_STATUS_WEB" Destination="Status.ID_STATUS_WEB" dx1="366.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="Command.QI" dx1="973.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="Status.QI" dx1="973.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Command.QO" Destination="AND_QO.IN1" dx1="813.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Status.QO" Destination="AND_QO.IN2" dx1="1046.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="2040"/>
+		</DataConnections>
+	</SubAppNetwork>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>SoftKey UND Aux UND Web UND Remote-Taster → Remote-OPC-UA-Write mit Status-Feedback (ein Kanal)</h1>
+
+<p>Duennwandiger Wrapper, der <code>Softkey_Aux_Switch_TO_Remote_WRITE</code> (Kommando: 4 Quellen
+→ Remote-Write) und <code>AX_SUBSCRIBE_BG3_WEB_OPC</code> (Status: Remote-Subscribe →
+Hintergrundfarbe auf SoftKey UND Aux + lokaler Web-Republish, unveraendert von der
+Standard-3-Quellen-Variante wiederverwendet) nebeneinanderstellt.</p>
+
+<p>Fuer den Standardfall (3 Quellen: SoftKey/AUX/Web, kein zusaetzlicher Taster auf einem dritten
+Modul) weiterhin <code>Softkey_Aux_IXA_TO_Remote_WRITE_BG_OPC</code> verwenden.</p>
+]]></Attribute>
+</SubAppType>

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="CALIBRATE_3P" Comment="BOOL-triggered 3-point calibration for joysticks (Min, Mid, Max)">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Version="1.0" Author="Meisterschulen am Ostbahnhof" Date="2026-06-01">
+	</VersionInfo>
+	<CompilerInfo packageName="OSCAT::Basic::POUs::Engineering::measurements">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event" Comment="Normal Execution Request">
+				<With Var="X"/>
+				<With Var="C_MIN"/>
+				<With Var="C_MID"/>
+				<With Var="C_MAX"/>
+				<With Var="MIN_REF"/>
+				<With Var="MID_REF"/>
+				<With Var="MAX_REF"/>
+				<With Var="X_MIN"/>
+				<With Var="X_MID"/>
+				<With Var="X_MAX"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event" Comment="Execution Confirmation">
+				<With Var="Y"/>
+				<With Var="X_MIN"/>
+				<With Var="X_MID"/>
+				<With Var="X_MAX"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="X" Type="REAL" Comment="Raw Input"/>
+			<VarDeclaration Name="C_MIN" Type="BOOL" Comment="Calibrate Min Point"/>
+			<VarDeclaration Name="C_MID" Type="BOOL" Comment="Calibrate Mid Point (Center)"/>
+			<VarDeclaration Name="C_MAX" Type="BOOL" Comment="Calibrate Max Point"/>
+			<VarDeclaration Name="MIN_REF" Type="REAL" Comment="Target value for Min" InitialValue="0.0"/>
+			<VarDeclaration Name="MID_REF" Type="REAL" Comment="Target value for Mid" InitialValue="50.0"/>
+			<VarDeclaration Name="MAX_REF" Type="REAL" Comment="Target value for Max" InitialValue="100.0"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="Y" Type="REAL" Comment="Calibrated Output"/>
+		</OutputVars>
+		<InOutVars>
+			<VarDeclaration Name="X_MIN" Type="REAL" Comment="Stored Min Value" InitialValue="0.0"/>
+			<VarDeclaration Name="X_MID" Type="REAL" Comment="Stored Mid Value" InitialValue="50.0"/>
+			<VarDeclaration Name="X_MAX" Type="REAL" Comment="Stored Max Value" InitialValue="100.0"/>
+		</InOutVars>
+	</InterfaceList>
+	<SimpleFB>
+		<ECState Name="REQ">
+			<ECAction Algorithm="REQ" Output="CNF"/>
+		</ECState>
+		<Algorithm Name="REQ">
+			<ST><![CDATA[
+(* calibration: store current raw input for the active point *)
+IF C_MIN THEN
+	X_MIN := X;
+ELSIF C_MID THEN
+	X_MID := X;
+ELSIF C_MAX THEN
+	X_MAX := X;
+END_IF;
+
+(* piecewise linear interpolation between stored calibration points *)
+IF X < X_MID THEN
+	IF X_MID > X_MIN THEN
+		Y := MIN_REF + (X - X_MIN) * (MID_REF - MIN_REF) / (X_MID - X_MIN);
+	ELSE
+		Y := MIN_REF;
+	END_IF;
+ELSE
+	IF X_MAX > X_MID THEN
+		Y := MID_REF + (X - X_MID) * (MAX_REF - MID_REF) / (X_MAX - X_MID);
+	ELSE
+		Y := MID_REF;
+	END_IF;
+END_IF;
+
+(* clip output to reference range *)
+IF Y < MIN_REF THEN
+	Y := MIN_REF;
+ELSIF Y > MAX_REF THEN
+	Y := MAX_REF;
+END_IF;
+]]></ST>
+		</Algorithm>
+	</SimpleFB>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h2>Formula</h2>
+
+<pre>
+Y = piecewise linear interpolation between stored calibration points</pre>
+
+<h2>Calibration (3-Point)</h2>
+
+<ol>
+	<li><strong>Min (C_MIN=TRUE):</strong> Move joystick to minimum position, set C_MIN=TRUE<br />
+	X_MIN := X &rarr; stores current raw value as Min point</li>
+	<li><strong>Mid (C_MID=TRUE):</strong> Move joystick to center, set C_MID=TRUE<br />
+	X_MID := X &rarr; stores current raw value as Mid point (center)</li>
+	<li><strong>Max (C_MAX=TRUE):</strong> Move joystick to maximum position, set C_MAX=TRUE<br />
+	X_MAX := X &rarr; stores current raw value as Max point</li>
+</ol>
+
+<p><strong>Note:</strong> The calibration points can be calibrated in <strong>any order</strong> and can be repeated individually. Only one point per REQ event (ELSIF chain).</p>
+
+<h2>Output Calculation</h2>
+
+<ul>
+	<li>If X &lt; X_MID: linear interpolation between (X_MIN, MIN_REF) and (X_MID, MID_REF)</li>
+	<li>If X &gt;= X_MID: linear interpolation between (X_MID, MID_REF) and (X_MAX, MAX_REF)</li>
+	<li>Output is clipped to MIN_REF..MAX_REF</li>
+</ul>
+
+<h2>Example</h2>
+
+<p><strong>Scenario:</strong> Joystick with center drift. Raw range 0..1000, desired output -100..0..100.</p>
+
+<table border="1" cellpadding="4" cellspacing="0" style="border-collapse:collapse">
+	<tbody>
+		<tr>
+			<th>Step</th>
+			<th>Action</th>
+			<th>Result</th>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>Move joystick to <strong>min</strong>, set C_MIN=TRUE</td>
+			<td>X_MIN = 50 (drifted from ideal 0)</td>
+		</tr>
+		<tr>
+			<td>2</td>
+			<td>Move joystick to <strong>center</strong>, set C_MID=TRUE</td>
+			<td>X_MID = 520 (drifted from ideal 500)</td>
+		</tr>
+		<tr>
+			<td>3</td>
+			<td>Move joystick to <strong>max</strong>, set C_MAX=TRUE</td>
+			<td>X_MAX = 980 (drifted from ideal 1000)</td>
+		</tr>
+	</tbody>
+</table>
+
+<p><strong>Output:</strong> Interpolated between MIN_REF=-100, MID_REF=0, MAX_REF=100 with clipping.</p>
+]]></Attribute>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

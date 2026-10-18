@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Manifest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="platform:/resource/org.eclipse.fordiac.ide.library.model/model/library.xsd" Scope="Library">
+  <Dependencies>
+    <Required SymbolicName="core" Version="3.0.0"/>
+    <Required SymbolicName="isobus_UT" Version="3.1.1"/>
+  </Dependencies>
+  <Product Comment="ISOBUS UT-IO-Bausteine (Attribute, Auxiliary, Button, NumericValue, Softkey, StringValue - isobus::UT::io), herausgeloest aus isobus_UT-3.0.0/typelib/UT/io - entspricht dem eigenstaendigen, optional zuschaltbaren FORTE-Modul isobus-UT-io (haengt laut CMake von isobus_UT ab, nicht umgekehrt: NumericObjectPool_S/F_PHYS_TO_RAW/F_PHYS_LREAL_TO_RAW/F_RAW_TO_PHYS_LREAL blieben deshalb bei isobus_UT, da sie dort IDs::ID_NULL referenzieren)" Name="isobus_UT_io" SymbolicName="isobus_UT_io">
+    <VersionInfo Author="HR Agrartechnik GmbH" Date="2026-10-11" Version="3.0.1"/>
+  </Product>
+</Manifest>

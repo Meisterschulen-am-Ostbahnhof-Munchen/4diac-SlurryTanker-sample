@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="AID_AO" Comment="Animation object attribute ids">
+	<Identification Standard="61499-1" Description="Copyright (c) 2023 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-06-20">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::UT::Q::const::AID">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="WIDTH" Type="USINT" Comment="1: AID_AO_WIDTH - Width in pixels." InitialValue="USINT#1"/>
+		<VarDeclaration Name="HEIGHT" Type="USINT" Comment="2: AID_AO_HEIGHT - Height in pixels." InitialValue="USINT#2"/>
+		<VarDeclaration Name="REFRESHINT" Type="USINT" Comment="3: AID_AO_REFRESHINT" InitialValue="USINT#3"/>
+		<VarDeclaration Name="VALUE" Type="USINT" Comment="4: AID_AO_VALUE - Current value." InitialValue="USINT#4"/>
+		<VarDeclaration Name="ENABLED" Type="USINT" Comment="5: AID_AO_ENABLED - 0 = Stopped, 1 = Animating." InitialValue="USINT#5"/>
+		<VarDeclaration Name="FICHILDINDEX" Type="USINT" Comment="6: AID_AO_FICHILDINDEX" InitialValue="USINT#6"/>
+		<VarDeclaration Name="LACHILDINDEX" Type="USINT" Comment="7: AID_AO_LACHILDINDEX" InitialValue="USINT#7"/>
+		<VarDeclaration Name="DEFCHILDINDEX" Type="USINT" Comment="8: AID_AO_DEFCHILDINDEX" InitialValue="USINT#8"/>
+		<VarDeclaration Name="OBJECTS" Type="USINT" Comment="9: AID_AO_OBJECTS - OPTIONS - Bit 0: Animation Sequence (0=Single Shot, 1=Loop). Bits 1-2: Disabled Behaviour (0=Pause, 1=Reset to First, 2=Default Object, 3=Blank)." InitialValue="USINT#9"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE isobus::UT::Q::const::AID;
+
+// animation object attribute ids
+GLOBALCONSTANTS AID_AO
+	VAR_GLOBAL CONSTANT
+		WIDTH : USINT := USINT#1; // 1: AID_AO_WIDTH - Width in pixels.
+		HEIGHT : USINT := USINT#2; // 2: AID_AO_HEIGHT - Height in pixels.
+		REFRESHINT : USINT := USINT#3; // 3: AID_AO_REFRESHINT
+		VALUE : USINT := USINT#4; // 4: AID_AO_VALUE - Current value.
+		ENABLED : USINT := USINT#5; // 5: AID_AO_ENABLED - 0 = Stopped, 1 = Animating.
+		FICHILDINDEX : USINT := USINT#6; // 6: AID_AO_FICHILDINDEX
+		LACHILDINDEX : USINT := USINT#7; // 7: AID_AO_LACHILDINDEX
+		DEFCHILDINDEX : USINT := USINT#8; // 8: AID_AO_DEFCHILDINDEX
+		OBJECTS : USINT := USINT#9; // 9: AID_AO_OBJECTS - OPTIONS - Bit 0: Animation Sequence (0=Single Shot, 1=Loop). Bits 1-2:
+		                            // Disabled Behaviour (0=Pause, 1=Reset to First, 2=Default Object, 3=Blank). (ISO 11783-6 attribute: Options).
+	END_VAR
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</GlobalConstants>

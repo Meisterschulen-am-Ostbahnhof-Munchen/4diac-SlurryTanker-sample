@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="ASR_CLIENT_0" Comment="Trigger 2 independent remote OPC-UA method calls via CLIENT_0, driven by an ASR&#10;adapter Socket (Set/Reset)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 HR Agrartechnik GmbH &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-09-03" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::net">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Initialization">
+				<With Var="QI"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="QO/STATUS updated">
+				<With Var="QO"/>
+				<With Var="STATUS_SET"/>
+				<With Var="STATUS_RESET"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL"/>
+			<VarDeclaration Name="ID_SET" Type="WSTRING" Comment="Remote-Methodenadresse fuer den Set-Aufruf"/>
+			<VarDeclaration Name="ID_RESET" Type="WSTRING" Comment="Remote-Methodenadresse fuer den Reset-Aufruf"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="TRUE nur wenn SET_CLIENT und RESET_CLIENT aktuell beide QO=TRUE melden"/>
+			<VarDeclaration Name="STATUS_SET" Type="WSTRING" Comment="STATUS von SET_CLIENT"/>
+			<VarDeclaration Name="STATUS_RESET" Type="WSTRING" Comment="STATUS von RESET_CLIENT"/>
+		</OutputVars>
+		<Sockets>
+			<AdapterDeclaration Name="S_R" Type="adapter::types::unidirectional::ASR" Comment="Set/Reset" x="-1900" y="-300"/>
+		</Sockets>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="SET_CLIENT" Type="iec61499::net::CLIENT_0" x="-300" y="-500">
+		</FB>
+		<FB Name="RESET_CLIENT" Type="iec61499::net::CLIENT_0" x="-300" y="500">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_2" x="1600" y="1100">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="SET_CLIENT.INIT" dx1="4073.33"/>
+			<Connection Source="SET_CLIENT.INITO" Destination="RESET_CLIENT.INIT" dx1="66.67" dx2="66.67" dy="673.33"/>
+			<Connection Source="RESET_CLIENT.INITO" Destination="INITO" dx1="2133.33"/>
+			<Connection Source="RESET_CLIENT.INITO" Destination="AND_QO.REQ" dx1="613.33"/>
+			<Connection Source="S_R.SET" Destination="SET_CLIENT.REQ" dx1="633.33"/>
+			<Connection Source="S_R.RESET" Destination="RESET_CLIENT.REQ" dx1="566.67"/>
+			<Connection Source="SET_CLIENT.CNF" Destination="AND_QO.REQ" dx1="613.33"/>
+			<Connection Source="RESET_CLIENT.CNF" Destination="AND_QO.REQ" dx1="613.33"/>
+			<Connection Source="AND_QO.CNF" Destination="CNF" dx1="1133.33"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="QI" Destination="SET_CLIENT.QI" dx1="3973.33"/>
+			<Connection Source="QI" Destination="RESET_CLIENT.QI" dx1="3973.33"/>
+			<Connection Source="ID_SET" Destination="SET_CLIENT.ID" dx1="4040"/>
+			<Connection Source="ID_RESET" Destination="RESET_CLIENT.ID" dx1="3940"/>
+			<Connection Source="SET_CLIENT.QO" Destination="AND_QO.IN1" dx1="580"/>
+			<Connection Source="RESET_CLIENT.QO" Destination="AND_QO.IN2" dx1="546.67"/>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="1166.67"/>
+			<Connection Source="SET_CLIENT.STATUS" Destination="STATUS_SET" dx1="2166.67"/>
+			<Connection Source="RESET_CLIENT.STATUS" Destination="STATUS_RESET" dx1="646.67"/>
+		</DataConnections>
+	</FBNetwork>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

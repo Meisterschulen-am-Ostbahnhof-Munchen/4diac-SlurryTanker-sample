@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="SF_EmergencyStop" Comment="PLCopen Safety SF_EmergencyStop (Part 1 v2.10, Ch. 6.5) - Emergency Stop Monitoring">
+	<Identification Standard="61499-2" Function="Monitors an emergency stop sensor (S_EStopIn). S_EStopOut only returns TRUE after S_EStopIn is TRUE again AND an acknowledgment (S_StartReset/S_AutoReset/Reset) occurred, per EN ISO 13849-1:2015 5.2.2 / IEC 60204-1:2016 9.2.3.4." Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-10-09" Remarks="Added EReset event input (REQ[...] Reset-edge checks replaced by EReset[...], xPrevReset removed). Non-literal 61499 extension, pairs with SF_ResetButton.EResetOut: no external gate FB needed any more to synthesize the reset-edge event.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-09" Remarks="ECC reconstructed from PLCopen Safety Part 1 v2.10 Ch. 6.5.3 (Functional Description) and Ch. 6.5.6 (DiagCode table), not from Figure 23 directly (OCR of that state diagram was unreliable, same issue previously found and corrected in SF_ResetButton/Figure 15). Verify against the real Figure 23 image if available. Source: PLCopen TC5 Safety Part 1, Version 2.10, Nov. 7 2023, Chapter 6.5 Emergency Stop Function.">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::safety::PLCopen">
+		<Import declaration="logiBUS::safety::PLCopen::const::DiagCodes"/>
+		<Import declaration="logiBUS::safety::PLCopen::const::EmergencyStopDiagCodes"/>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event" Comment="Cyclic evaluation request">
+				<With Var="Activate"/>
+				<With Var="S_EStopIn"/>
+				<With Var="S_StartReset"/>
+				<With Var="S_AutoReset"/>
+				<With Var="Reset"/>
+			</Event>
+			<Event Name="EReset" Type="Event" Comment="Dedicated reset-edge event, in addition to REQ. Typically fed directly by SF_ResetButton.EResetOut">
+				<With Var="Activate"/>
+				<With Var="S_EStopIn"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+				<With Var="Ready"/>
+				<With Var="S_EStopOut"/>
+				<With Var="SafetyDemand"/>
+				<With Var="ResetRequest"/>
+				<With Var="Error"/>
+				<With Var="DiagCode"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="Activate" Type="BOOL" Comment="FB enable. FALSE=inactive (sIdle)" InitialValue="FALSE"/>
+			<VarDeclaration Name="S_EStopIn" Type="BOOL" Comment="Emergency stop sensor. FALSE=stop engaged (demand), TRUE=not engaged" InitialValue="FALSE"/>
+			<VarDeclaration Name="S_StartReset" Type="BOOL" Comment="TRUE=auto-acknowledge the first time this FB is activated" InitialValue="FALSE"/>
+			<VarDeclaration Name="S_AutoReset" Type="BOOL" Comment="TRUE=auto-acknowledge every later S_EStopIn recovery, no Reset needed" InitialValue="FALSE"/>
+			<VarDeclaration Name="Reset" Type="BOOL" Comment="Manual reset. Typically fed by the paired SF_ResetButton.ResetOut" InitialValue="FALSE"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="Ready" Type="BOOL" Comment="FB active, outputs valid" InitialValue="FALSE"/>
+			<VarDeclaration Name="S_EStopOut" Type="BOOL" Comment="TRUE=no demand, acknowledged, safe to run" InitialValue="FALSE"/>
+			<VarDeclaration Name="SafetyDemand" Type="BOOL" Comment="TRUE while waiting for S_EStopIn to recover" InitialValue="FALSE"/>
+			<VarDeclaration Name="ResetRequest" Type="BOOL" Comment="Feeds the paired SF_ResetButton.ResetRequested input" InitialValue="FALSE"/>
+			<VarDeclaration Name="Error" Type="BOOL" Comment="TRUE while in an error state, see DiagCode" InitialValue="FALSE"/>
+			<VarDeclaration Name="DiagCode" Type="WORD" Comment="FB-specific status/error code, see PLCopen Safety Part 1 Ch. 6.5.6" InitialValue="16#0000"/>
+		</OutputVars>
+	</InterfaceList>
+	<BasicFB>
+		<ECC>
+			<ECState Name="xSTART" Comment="Initial State" x="-6400" y="0">
+			</ECState>
+			<ECState Name="sIdle" x="-4800" y="0">
+				<ECAction Algorithm="Idle_C" Output="CNF"/>
+			</ECState>
+			<ECState Name="sInit" Comment="One-shot: branch on S_EStopIn/S_StartReset, then fall through" x="-3200" y="0">
+				<ECAction Algorithm="Init_C" Output="CNF"/>
+			</ECState>
+			<ECState Name="sWaitEStopIn1" Comment="First activation: waiting for S_EStopIn" x="-1600" y="-800">
+				<ECAction Algorithm="WaitEStopIn1_C" Output="CNF"/>
+			</ECState>
+			<ECState Name="sResetError1" x="-1600" y="-2400">
+				<ECAction Algorithm="ResetError1_C" Output="CNF"/>
+			</ECState>
+			<ECState Name="sWaitReset1" Comment="First activation: waiting for a rising edge on Reset" x="0" y="-800">
+				<ECAction Algorithm="WaitReset1_C" Output="CNF"/>
+			</ECState>
+			<ECState Name="sSafetyOutputEnabled" x="1600" y="0">
+				<ECAction Algorithm="SafetyOutputEnabled_C" Output="CNF"/>
+			</ECState>
+			<ECState Name="sWaitEStopIn2" Comment="Subsequent cycles: waiting for S_EStopIn" x="0" y="800">
+				<ECAction Algorithm="WaitEStopIn2_C" Output="CNF"/>
+			</ECState>
+			<ECState Name="sResetError2" x="-1600" y="2400">
+				<ECAction Algorithm="ResetError2_C" Output="CNF"/>
+			</ECState>
+			<ECState Name="sWaitReset2" Comment="Subsequent cycles: waiting for S_AutoReset or a Reset edge" x="-1600" y="800">
+				<ECAction Algorithm="WaitReset2_C" Output="CNF"/>
+			</ECState>
+
+			<ECTransition Source="xSTART" Destination="sIdle" Condition="1" x="-5600" y="-160"/>
+
+			<ECTransition Source="sIdle" Destination="sIdle" Condition="REQ[NOT Activate]" x="-4800" y="-320"/>
+			<ECTransition Source="sIdle" Destination="sInit" Condition="REQ[Activate]" x="-4000" y="0"/>
+
+			<!-- 6.5.3: S_StartReset only matters on this very first activation. If S_EStopIn is
+			     already TRUE and S_StartReset is set, go straight to Enabled; otherwise wait. -->
+			<ECTransition Source="sInit" Destination="sSafetyOutputEnabled" Condition="S_EStopIn AND S_StartReset" x="400" y="-1600"/>
+			<ECTransition Source="sInit" Destination="sWaitEStopIn1" Condition="NOT (S_EStopIn AND S_StartReset)" x="-2400" y="-800"/>
+
+			<ECTransition Source="sWaitEStopIn1" Destination="sIdle" Condition="REQ[NOT Activate]" x="-3200" y="-1600"/>
+			<ECTransition Source="sWaitEStopIn1" Destination="sResetError1" Condition="REQ[Activate AND Reset]" x="-1600" y="-1600"/>
+			<ECTransition Source="sWaitEStopIn1" Destination="sSafetyOutputEnabled" Condition="REQ[Activate AND NOT Reset AND S_EStopIn AND S_StartReset]" x="800" y="-1200"/>
+			<ECTransition Source="sWaitEStopIn1" Destination="sWaitReset1" Condition="REQ[Activate AND NOT Reset AND S_EStopIn AND NOT S_StartReset]" x="-800" y="-800"/>
+			<ECTransition Source="sWaitEStopIn1" Destination="sWaitEStopIn1" Condition="REQ[Activate AND NOT Reset AND NOT S_EStopIn]" x="-2400" y="-1200"/>
+
+			<ECTransition Source="sResetError1" Destination="sIdle" Condition="REQ[NOT Activate]" x="-3200" y="-2400"/>
+			<ECTransition Source="sResetError1" Destination="sResetError1" Condition="REQ[Activate AND Reset]" x="-800" y="-2400"/>
+			<ECTransition Source="sResetError1" Destination="sWaitEStopIn1" Condition="REQ[Activate AND NOT Reset]" x="-2400" y="-2000"/>
+
+			<ECTransition Source="sWaitReset1" Destination="sIdle" Condition="REQ[NOT Activate]" x="-1600" y="-400"/>
+			<ECTransition Source="sWaitReset1" Destination="sWaitEStopIn1" Condition="REQ[Activate AND NOT S_EStopIn]" x="-800" y="-400"/>
+			<ECTransition Source="sWaitReset1" Destination="sWaitReset1" Condition="REQ[Activate AND S_EStopIn]" x="400" y="-800"/>
+			<ECTransition Source="sWaitReset1" Destination="sSafetyOutputEnabled" Condition="EReset[Activate AND S_EStopIn]" x="800" y="-400"/>
+
+			<ECTransition Source="sSafetyOutputEnabled" Destination="sIdle" Condition="REQ[NOT Activate]" x="800" y="0"/>
+			<ECTransition Source="sSafetyOutputEnabled" Destination="sWaitEStopIn2" Condition="REQ[Activate AND NOT S_EStopIn]" x="800" y="400"/>
+			<ECTransition Source="sSafetyOutputEnabled" Destination="sSafetyOutputEnabled" Condition="REQ[Activate AND S_EStopIn]" x="2400" y="0"/>
+
+			<ECTransition Source="sWaitEStopIn2" Destination="sIdle" Condition="REQ[NOT Activate]" x="-1600" y="1600"/>
+			<ECTransition Source="sWaitEStopIn2" Destination="sResetError2" Condition="REQ[Activate AND Reset]" x="-1600" y="1600"/>
+			<ECTransition Source="sWaitEStopIn2" Destination="sSafetyOutputEnabled" Condition="REQ[Activate AND NOT Reset AND S_EStopIn AND S_AutoReset]" x="800" y="1200"/>
+			<ECTransition Source="sWaitEStopIn2" Destination="sWaitReset2" Condition="REQ[Activate AND NOT Reset AND S_EStopIn AND NOT S_AutoReset]" x="-800" y="800"/>
+			<ECTransition Source="sWaitEStopIn2" Destination="sWaitEStopIn2" Condition="REQ[Activate AND NOT Reset AND NOT S_EStopIn]" x="-2400" y="1200"/>
+
+			<ECTransition Source="sResetError2" Destination="sIdle" Condition="REQ[NOT Activate]" x="-3200" y="2400"/>
+			<ECTransition Source="sResetError2" Destination="sResetError2" Condition="REQ[Activate AND Reset]" x="-800" y="2400"/>
+			<ECTransition Source="sResetError2" Destination="sWaitEStopIn2" Condition="REQ[Activate AND NOT Reset]" x="-2400" y="2000"/>
+
+			<ECTransition Source="sWaitReset2" Destination="sIdle" Condition="REQ[NOT Activate]" x="-3200" y="400"/>
+			<ECTransition Source="sWaitReset2" Destination="sWaitEStopIn2" Condition="REQ[Activate AND NOT S_EStopIn]" x="-800" y="1600"/>
+			<ECTransition Source="sWaitReset2" Destination="sSafetyOutputEnabled" Condition="REQ[Activate AND S_EStopIn AND S_AutoReset]" x="800" y="800"/>
+			<ECTransition Source="sWaitReset2" Destination="sWaitReset2" Condition="REQ[Activate AND S_EStopIn AND NOT S_AutoReset]" x="-2400" y="400"/>
+			<ECTransition Source="sWaitReset2" Destination="sSafetyOutputEnabled" Condition="EReset[Activate AND S_EStopIn]" x="800" y="1200"/>
+		</ECC>
+		<Algorithm Name="Idle_C">
+			<ST><![CDATA[ // 0000 Idle - FB not active
+Ready := BOOL#FALSE;
+S_EStopOut := BOOL#FALSE;
+SafetyDemand := BOOL#FALSE;
+ResetRequest := BOOL#FALSE;
+Error := BOOL#FALSE;
+DiagCode := DiagCodes::IDLE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="Init_C">
+			<ST><![CDATA[ // 8001 Init - activated, checking S_StartReset
+Ready := BOOL#TRUE;
+S_EStopOut := BOOL#FALSE;
+SafetyDemand := BOOL#FALSE;
+ResetRequest := BOOL#FALSE;
+Error := BOOL#FALSE;
+DiagCode := EmergencyStopDiagCodes::INIT;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="WaitEStopIn1_C">
+			<ST><![CDATA[ // 8802 Wait for S_EStopIn 1 - first activation, waiting for S_EStopIn
+Ready := BOOL#TRUE;
+S_EStopOut := BOOL#FALSE;
+SafetyDemand := BOOL#TRUE;
+ResetRequest := BOOL#FALSE;
+Error := BOOL#FALSE;
+DiagCode := EmergencyStopDiagCodes::WAIT_ESTOP_IN_1;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="ResetError1_C">
+			<ST><![CDATA[ // C001 Reset Error 1 - Reset stuck TRUE while waiting for S_EStopIn
+Ready := BOOL#TRUE;
+S_EStopOut := BOOL#FALSE;
+SafetyDemand := BOOL#FALSE;
+ResetRequest := BOOL#FALSE;
+Error := BOOL#TRUE;
+DiagCode := EmergencyStopDiagCodes::RESET_ERROR_1;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="WaitReset1_C">
+			<ST><![CDATA[ // 8402 Wait for Reset 1 - S_EStopIn is TRUE, waiting for a rising edge on Reset
+Ready := BOOL#TRUE;
+S_EStopOut := BOOL#FALSE;
+SafetyDemand := BOOL#FALSE;
+ResetRequest := BOOL#TRUE;
+Error := BOOL#FALSE;
+DiagCode := EmergencyStopDiagCodes::WAIT_RESET_1;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="SafetyOutputEnabled_C">
+			<ST><![CDATA[ // 8000 Safety Output Enabled
+Ready := BOOL#TRUE;
+S_EStopOut := BOOL#TRUE;
+SafetyDemand := BOOL#FALSE;
+ResetRequest := BOOL#FALSE;
+Error := BOOL#FALSE;
+DiagCode := EmergencyStopDiagCodes::SAFETY_OUTPUT_ENABLED;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="WaitEStopIn2_C">
+			<ST><![CDATA[ // 8804 Wait for S_EStopIn 2 - safety demand detected, waiting for S_EStopIn
+Ready := BOOL#TRUE;
+S_EStopOut := BOOL#FALSE;
+SafetyDemand := BOOL#TRUE;
+ResetRequest := NOT Reset;
+Error := BOOL#FALSE;
+DiagCode := EmergencyStopDiagCodes::WAIT_ESTOP_IN_2;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="ResetError2_C">
+			<ST><![CDATA[ // C011 Reset Error 2 - Reset stuck TRUE while waiting for S_EStopIn
+Ready := BOOL#TRUE;
+S_EStopOut := BOOL#FALSE;
+SafetyDemand := BOOL#FALSE;
+ResetRequest := BOOL#FALSE;
+Error := BOOL#TRUE;
+DiagCode := EmergencyStopDiagCodes::RESET_ERROR_2;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="WaitReset2_C">
+			<ST><![CDATA[ // 8404 Wait for Reset 2 - waiting for S_AutoReset or a rising edge on Reset
+Ready := BOOL#TRUE;
+S_EStopOut := BOOL#FALSE;
+SafetyDemand := BOOL#FALSE;
+ResetRequest := NOT Reset;
+Error := BOOL#FALSE;
+DiagCode := EmergencyStopDiagCodes::WAIT_RESET_2;
+]]></ST>
+		</Algorithm>
+	</BasicFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

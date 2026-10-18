@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="Funk_DI" Comment="Funk_DI constants">
+	<Identification Standard="61499-1" Description="Copyright (c) 2024 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2024-01-25">
+	</VersionInfo>
+	<CompilerInfo packageName="Funk::io::DI">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="DigitalInput_Key_01" Type="Funk::io::DI::Funk_DI_S" InitialValue="(Pin := 1)"/>
+		<VarDeclaration Name="DigitalInput_Key_02" Type="Funk::io::DI::Funk_DI_S" InitialValue="(Pin := 2)"/>
+		<VarDeclaration Name="DigitalInput_Key_03" Type="Funk::io::DI::Funk_DI_S" InitialValue="(Pin := 3)"/>
+		<VarDeclaration Name="DigitalInput_Key_04" Type="Funk::io::DI::Funk_DI_S" InitialValue="(Pin := 4)"/>
+		<VarDeclaration Name="DigitalInput_Key_05" Type="Funk::io::DI::Funk_DI_S" InitialValue="(Pin := 5)"/>
+		<VarDeclaration Name="DigitalInput_Key_06" Type="Funk::io::DI::Funk_DI_S" InitialValue="(Pin := 6)"/>
+		<VarDeclaration Name="DigitalInput_Key_07" Type="Funk::io::DI::Funk_DI_S" InitialValue="(Pin := 7)"/>
+		<VarDeclaration Name="DigitalInput_Key_08" Type="Funk::io::DI::Funk_DI_S" InitialValue="(Pin := 8)"/>
+		<VarDeclaration Name="DigitalInput_Key_09" Type="Funk::io::DI::Funk_DI_S" InitialValue="(Pin := 9)"/>
+		<VarDeclaration Name="DigitalInput_Key_10" Type="Funk::io::DI::Funk_DI_S" InitialValue="(Pin := 10)"/>
+		<VarDeclaration Name="DigitalInput_Key_11" Type="Funk::io::DI::Funk_DI_S" InitialValue="(Pin := 11)"/>
+		<VarDeclaration Name="DigitalInput_Key_12" Type="Funk::io::DI::Funk_DI_S" InitialValue="(Pin := 12)"/>
+		<VarDeclaration Name="DigitalInput_Key_13" Type="Funk::io::DI::Funk_DI_S" InitialValue="(Pin := 13)"/>
+		<VarDeclaration Name="DigitalInput_Key_14" Type="Funk::io::DI::Funk_DI_S" InitialValue="(Pin := 14)"/>
+		<VarDeclaration Name="DigitalInput_Key_15" Type="Funk::io::DI::Funk_DI_S" InitialValue="(Pin := 15)"/>
+		<VarDeclaration Name="DigitalInput_Key_START" Type="Funk::io::DI::Funk_DI_S" InitialValue="(Pin := 25)"/>
+		<VarDeclaration Name="DigitalInput_Key_STOP" Type="Funk::io::DI::Funk_DI_S" InitialValue="(Pin := 0)"/>
+		<VarDeclaration Name="DigitalInput_Key_STATUS" Type="Funk::io::DI::Funk_DI_S" InitialValue="(Pin := -1)"/>
+		<VarDeclaration Name="DigitalInput_Key_COUNTER" Type="Funk::io::DI::Funk_DI_S" InitialValue="(Pin := -6)"/>
+		<VarDeclaration Name="Invalid" Type="Funk::io::DI::Funk_DI_S" InitialValue="(Pin := 127)"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE Funk::io::DI;
+
+GLOBALCONSTANTS Funk_DI
+	VAR_GLOBAL CONSTANT
+		DigitalInput_Key_01 : Funk_DI_S := (Pin := 1);
+		DigitalInput_Key_02 : Funk_DI_S := (Pin := 2);
+		DigitalInput_Key_03 : Funk_DI_S := (Pin := 3);
+		DigitalInput_Key_04 : Funk_DI_S := (Pin := 4);
+		DigitalInput_Key_05 : Funk_DI_S := (Pin := 5);
+		DigitalInput_Key_06 : Funk_DI_S := (Pin := 6);
+		DigitalInput_Key_07 : Funk_DI_S := (Pin := 7);
+		DigitalInput_Key_08 : Funk_DI_S := (Pin := 8);
+		DigitalInput_Key_09 : Funk_DI_S := (Pin := 9);
+		DigitalInput_Key_10 : Funk_DI_S := (Pin := 10);
+		DigitalInput_Key_11 : Funk_DI_S := (Pin := 11);
+		DigitalInput_Key_12 : Funk_DI_S := (Pin := 12);
+		DigitalInput_Key_13 : Funk_DI_S := (Pin := 13);
+		DigitalInput_Key_14 : Funk_DI_S := (Pin := 14);
+		DigitalInput_Key_15 : Funk_DI_S := (Pin := 15);
+		DigitalInput_Key_START : Funk_DI_S := (Pin := 25);
+		DigitalInput_Key_STOP : Funk_DI_S := (Pin := 0);
+		DigitalInput_Key_STATUS : Funk_DI_S := (Pin := -1);
+		DigitalInput_Key_COUNTER : Funk_DI_S := (Pin := -6);
+		Invalid : Funk_DI_S := (Pin := 127);
+	END_VAR
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</GlobalConstants>

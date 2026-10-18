@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="Hysteresis_AR_AX" Comment="Analog to Digital with Hysteresis (Switch-on = THRESHOLD + (HYSTERESIS / 2.0),&#10;Switch-off = THRESHOLD - (HYSTERESIS / 2.0))">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 HR Agrartechnik GmbH&#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0 ">
+	</Identification>
+	<VersionInfo Version="1.2" Author="Gemini CLI" Date="2026-06-01" Remarks="Changed switch-off condition to strict inequality to prevent oscillation.">
+	</VersionInfo>
+	<VersionInfo Version="1.1" Author="Gemini CLI" Date="2026-06-01" Remarks="Updated hysteresis documentation and formula clarity.">
+	</VersionInfo>
+	<VersionInfo Version="1.0" Author="4diac IDE" Date="2026-05-08">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::signalprocessing::hysteresis">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Initialization Request">
+				<With Var="QI"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Input event qualifier"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="OUTPUT" Type="adapter::types::unidirectional::AX" Comment="Hysteresis output"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="INPUT" Type="adapter::types::unidirectional::AR" Comment="Input value"/>
+			<AdapterDeclaration Name="THRESHOLD" Type="adapter::types::unidirectional::AR" Comment="Center of the hysteresis band (Switch-on = THRESHOLD + (HYSTERESIS / 2.0), Switch-off = THRESHOLD - (HYSTERESIS / 2.0))"/>
+			<AdapterDeclaration Name="HYSTERESIS" Type="adapter::types::unidirectional::AR" Comment="Hysteresis value (Full width of the hysteresis band)"/>
+		</Sockets>
+	</InterfaceList>
+	<BasicFB>
+		<ECC>
+			<ECState Name="START" Comment="Initial State" x="840" y="2460">
+			</ECState>
+			<ECState Name="Init" Comment="Initialization" x="1520" y="1760">
+				<ECAction Algorithm="initialize" Output="INITO"/>
+			</ECState>
+			<ECState Name="sOFF" x="2266.67" y="2480">
+				<ECAction Algorithm="alOff" Output="OUTPUT.E1"/>
+			</ECState>
+			<ECState Name="DeInit" x="1506.67" y="2860">
+				<ECAction Algorithm="deInitialize" Output="INITO"/>
+			</ECState>
+			<ECState Name="sON" x="5920" y="1360">
+				<ECAction Algorithm="alOn" Output="OUTPUT.E1"/>
+			</ECState>
+			<ECTransition Source="START" Destination="Init" Condition="INIT[TRUE = QI]" x="1206.67" y="2260"/>
+			<ECTransition Source="Init" Destination="sOFF" Condition="INPUT.E1" x="2093.33" y="2100"/>
+			<ECTransition Source="sOFF" Destination="DeInit" Condition="INIT[FALSE = QI]" x="2053.33" y="2680"/>
+			<ECTransition Source="sOFF" Destination="sON" Condition="INPUT.E1[INPUT.D1 &gt;= THRESHOLD.D1 + (ABS(HYSTERESIS.D1) / 2.0)]" Comment="Switch-on (inclusive)" x="5040" y="1173.33"/>
+			<ECTransition Source="DeInit" Destination="START" Condition="1" x="1306.67" y="2780"/>
+			<ECTransition Source="sON" Destination="sOFF" Condition="INPUT.E1[INPUT.D1 &lt; THRESHOLD.D1 - (ABS(HYSTERESIS.D1) / 2.0)]" Comment="Switch-off (strict)" x="5173.33" y="2026.67"/>
+		</ECC>
+		<Algorithm Name="initialize">
+			<ST><![CDATA[
+QO := QI;
+OUTPUT.D1 := BOOL#FALSE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="deInitialize">
+			<ST><![CDATA[
+QO := BOOL#FALSE;
+OUTPUT.D1 := BOOL#FALSE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="alOff">
+			<ST><![CDATA[
+QO := QI;
+OUTPUT.D1 := BOOL#FALSE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="alOn">
+			<ST><![CDATA[
+QO := QI;
+IF TRUE = QI THEN
+	OUTPUT.D1 := BOOL#TRUE;
+END_IF;
+]]></ST>
+		</Algorithm>
+	</BasicFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="ISO_CAN_NODE" Comment="Global constants">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Version="1.0" Author="Franz Höpfinger" Date="2025-10-05">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::pgn">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="NODE1" Type="USINT" Comment="CAN 1" InitialValue="0"/>
+		<VarDeclaration Name="NODE2" Type="USINT" Comment="CAN 2" InitialValue="1"/>
+		<VarDeclaration Name="NODE3" Type="USINT" Comment="CAN 3" InitialValue="2"/>
+		<VarDeclaration Name="NODE4" Type="USINT" Comment="CAN 4" InitialValue="3"/>
+		<VarDeclaration Name="INVALID" Type="USINT" Comment="CAN Invalid" InitialValue="USINT#16#FF"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE isobus::pgn;
+
+(* CAN Node configuration *)
+GLOBALCONSTANTS ISO_CAN_NODE
+	VAR_GLOBAL CONSTANT
+		NODE1 : USINT := 0; // CAN 1
+		NODE2 : USINT := 1; // CAN 2
+		NODE3 : USINT := 2; // CAN 3
+		NODE4 : USINT := 3; // CAN 4
+		INVALID : USINT := USINT#16#FF; // CAN Invalid
+	END_VAR
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</GlobalConstants>

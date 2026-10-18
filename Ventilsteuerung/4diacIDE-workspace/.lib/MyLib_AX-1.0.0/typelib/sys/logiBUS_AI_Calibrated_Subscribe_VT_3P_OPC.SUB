@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="logiBUS_AI_Calibrated_Subscribe_VT_3P_OPC" Comment="3-Punkt-Pendant zu logiBUS_AI_Calibrated_Subscribe_VT_OPC (fuer Sensoren mit&#10;Mittelstellung, z.B. Neigungswinkel Hangausgleich B14): Remote-Subscribe eines&#10;bereits kalibrierten physikalischen Werts (M2M, von der Sensor-Station) -&gt;&#10;VT-Anzeige + lokaler Re-Publish. Die physischen VT-Elemente bleiben hier (dort&#10;wo die VT ist): C_MIN/C_MID/C_MAX-Tasten rufen per CLIENT_0 direkt die&#10;ID_MIN_METHOD/ID_MID_TRIGGER_METHOD/ID_MAX_METHOD auf der Sensor-Station auf&#10;(logiBUS_AI_Calibrate_3P_IDA_OPC) - echter Event-zu-Event-Methodenaufruf, kein&#10;Toggle/Publish/Subscribe-Umweg (siehe OPC_UA_VERNETZUNG.md Punkt 14).&#10;MIN_REF/MID_REF/MAX_REF-Referenzwert-Eingabefelder bleiben bewusst aussen vor&#10;dieser SubApp (siehe Schnitthoehe_Winkel_Zero/SpanInput-Vorbild in&#10;Inputs_STG1.SUB) - eigene NumericValue_TO_CLIENT_1_0_OPC-Instanzen je Aufrufer.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-26" Remarks="Neuer Plug CAL_OUT (AR) ergaenzt, analog logiBUS_AI_Calibrated_Subscribe_VT_OPC.CAL_OUT - Franz: 'ist das ein extra forwarding noetig? Fuer die CAL-Maske brauchen wir den kalibrierten Wert ohnehin schon' - genau dieser Plug spiegelt den bereits remote abonnierten Wert als lokalen AR-Plug fuer weitere Konsumenten auf STG1 (z.B. Fahrwerk_Mittelpunkt_Anzeige fuer Bargraph/Status-Center), kein zusaetzliches Self-Subscribe noetig.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-26" Remarks="initial implementation - 3-Punkt-Pendant zu logiBUS_AI_Calibrated_Subscribe_VT_OPC v1.8, fuer Hangausgleich-Winkel B14 (Kalibrierung zieht von STG1 nach STG3 um). Franz: 'Klar B. Alles mit call method'.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+		<Import declaration="isobus::UT::io::Button::ButtonActivationCode::BT_PRESSED_LATCHED"/>
+		<Import declaration="logiBUS::utils::conversion::phys::NumericObjectPool_S"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="ID_CAL_M2M_READ" Type="WSTRING" Comment="Remote-Subscribe-Adresse des bereits kalibrierten physikalischen Werts (REAL) - Gegenstueck zu ID_CAL_WRITE auf der Sensor-Station (logiBUS_AI_Calibrate_3P_IDA_OPC)"/>
+			<VarDeclaration Name="stObjCal" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object ID + Scale/Offset/Decimals CNumberVariable (kalibrierter Wert)" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 1)"/>
+			<VarDeclaration Name="ID_WRITE" Type="WSTRING" Comment="Lokale Re-Publish-Adresse (REAL, ACTION=PUBLISH) fuer weitere lokale Konsumenten auf dieser Station"/>
+			<VarDeclaration Name="u16ObjId_C_MIN" Type="UINT" Comment="Object ID Taste &apos;C_MIN&apos; - physisch hier auf der VT" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObjId_C_MID" Type="UINT" Comment="Object ID Taste &apos;C_MID&apos; - physisch hier auf der VT" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObjId_C_MAX" Type="UINT" Comment="Object ID Taste &apos;C_MAX&apos; - physisch hier auf der VT" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="ID_MIN_CALL" Type="WSTRING" Comment="Remote-Methodenadresse (ACTION=CALL_METHOD) fuer den C_MIN-Trigger - ruft ID_MIN_METHOD direkt auf der Sensor-Station auf (logiBUS_AI_Calibrate_3P_IDA_OPC)"/>
+			<VarDeclaration Name="ID_MID_TRIGGER_CALL" Type="WSTRING" Comment="Remote-Methodenadresse (ACTION=CALL_METHOD) fuer den C_MID-Trigger - ruft ID_MID_TRIGGER_METHOD direkt auf der Sensor-Station auf"/>
+			<VarDeclaration Name="ID_MAX_CALL" Type="WSTRING" Comment="Remote-Methodenadresse (ACTION=CALL_METHOD) fuer den C_MAX-Trigger - ruft ID_MAX_METHOD direkt auf der Sensor-Station auf"/>
+			<VarDeclaration Name="ID_RAW_M2M_READ" Type="WSTRING" Comment="Remote-Subscribe-Adresse des unkalibrierten Rohwerts (DWORD 0-4095, reine Diagnose-Anzeige) - Gegenstueck zu ID_RAW_WRITE auf der Sensor-Station"/>
+			<VarDeclaration Name="stObjRaw" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object ID + Scale/Offset/Decimals CNumberVariable (Rohwert-Anzeige)" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 0)"/>
+			<VarDeclaration Name="ID_RAW_WRITE" Type="WSTRING" Comment="Lokale Re-Publish-Adresse (DWORD, ACTION=PUBLISH) fuer weitere lokale Konsumenten auf dieser Station"/>
+			<VarDeclaration Name="ID_MINRAW_M2M_READ" Type="WSTRING" Comment="Remote-Subscribe-Adresse des Rohwerts am MIN-Kalibrierpunkt (reine Diagnose-Anzeige) - Gegenstueck zu ID_MIN_RAW_WRITE auf der Sensor-Station"/>
+			<VarDeclaration Name="stObjMinRaw" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object ID + Scale/Offset/Decimals CNumberVariable (Rohwert-Anzeige am MIN-Kalibrierpunkt)" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 0)"/>
+			<VarDeclaration Name="ID_MINRAW_WRITE" Type="WSTRING" Comment="Lokale Re-Publish-Adresse (DWORD, ACTION=PUBLISH) fuer weitere lokale Konsumenten auf dieser Station"/>
+			<VarDeclaration Name="ID_MIDRAW_M2M_READ" Type="WSTRING" Comment="Remote-Subscribe-Adresse des Rohwerts am MID-Kalibrierpunkt (reine Diagnose-Anzeige) - Gegenstueck zu ID_MID_RAW_WRITE auf der Sensor-Station"/>
+			<VarDeclaration Name="stObjMidRaw" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object ID + Scale/Offset/Decimals CNumberVariable (Rohwert-Anzeige am MID-Kalibrierpunkt)" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 0)"/>
+			<VarDeclaration Name="ID_MIDRAW_WRITE" Type="WSTRING" Comment="Lokale Re-Publish-Adresse (DWORD, ACTION=PUBLISH) fuer weitere lokale Konsumenten auf dieser Station"/>
+			<VarDeclaration Name="ID_MAXRAW_M2M_READ" Type="WSTRING" Comment="Remote-Subscribe-Adresse des Rohwerts am MAX-Kalibrierpunkt (reine Diagnose-Anzeige) - Gegenstueck zu ID_MAX_RAW_WRITE auf der Sensor-Station"/>
+			<VarDeclaration Name="stObjMaxRaw" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object ID + Scale/Offset/Decimals CNumberVariable (Rohwert-Anzeige am MAX-Kalibrierpunkt)" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 0)"/>
+			<VarDeclaration Name="ID_MAXRAW_WRITE" Type="WSTRING" Comment="Lokale Re-Publish-Adresse (DWORD, ACTION=PUBLISH) fuer weitere lokale Konsumenten auf dieser Station"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="CAL_OUT" Type="adapter::types::unidirectional::AR" Comment="Nur-Lese-Spiegel des kalibrierten Werts (= ValueDisplay.VALUE_OUT) fuer weitere lokale Konsumenten auf dieser Station, statt eigenem OPC-UA-Self-Subscribe"/>
+		</Plugs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<SubApp Name="ValueDisplay" Type="MyLib::sys::AR_M2M_Subscribe_TO_Q_Publish_OPC" x="0" y="-200">
+		</SubApp>
+		<SubApp Name="TriggerMIN" Type="MyLib::sys::Button_CLIENT_Method_IE" x="400" y="700">
+			<Parameter Name="InputEvent" Value="BT_PRESSED_LATCHED"/>
+		</SubApp>
+		<SubApp Name="TriggerMID" Type="MyLib::sys::Button_CLIENT_Method_IE" x="400" y="1500">
+			<Parameter Name="InputEvent" Value="BT_PRESSED_LATCHED"/>
+		</SubApp>
+		<SubApp Name="TriggerMAX" Type="MyLib::sys::Button_CLIENT_Method_IE" x="400" y="2300">
+			<Parameter Name="InputEvent" Value="BT_PRESSED_LATCHED"/>
+		</SubApp>
+		<SubApp Name="RawDisplay" Type="MyLib::sys::AR_M2M_Subscribe_TO_Q_Publish_OPC" x="400" y="3100">
+		</SubApp>
+		<SubApp Name="MinRawDisplay" Type="MyLib::sys::AR_M2M_Subscribe_TO_Q_Publish_OPC" x="400" y="4000">
+		</SubApp>
+		<SubApp Name="MidRawDisplay" Type="MyLib::sys::AR_M2M_Subscribe_TO_Q_Publish_OPC" x="400" y="4900">
+		</SubApp>
+		<SubApp Name="MaxRawDisplay" Type="MyLib::sys::AR_M2M_Subscribe_TO_Q_Publish_OPC" x="400" y="5800">
+		</SubApp>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_8" x="4200" y="1600">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="ValueDisplay.INIT" dx1="853.33"/>
+			<Connection Source="ValueDisplay.INITO" Destination="TriggerMIN.INIT" dx1="80" dx2="80" dy="346.67"/>
+			<Connection Source="TriggerMIN.INITO" Destination="TriggerMID.INIT" dx1="80" dx2="80" dy="300"/>
+			<Connection Source="TriggerMID.INITO" Destination="TriggerMAX.INIT" dx1="80" dx2="80" dy="300"/>
+			<Connection Source="TriggerMAX.INITO" Destination="RawDisplay.INIT" dx1="80" dx2="80" dy="346.67"/>
+			<Connection Source="RawDisplay.INITO" Destination="MinRawDisplay.INIT" dx1="80" dx2="80" dy="346.67"/>
+			<Connection Source="MinRawDisplay.INITO" Destination="MidRawDisplay.INIT" dx1="80" dx2="80" dy="346.67"/>
+			<Connection Source="MidRawDisplay.INITO" Destination="MaxRawDisplay.INIT" dx1="80" dx2="80" dy="346.67"/>
+			<Connection Source="MaxRawDisplay.INITO" Destination="INITO" dx1="2860"/>
+			<Connection Source="MaxRawDisplay.INITO" Destination="AND_QO.REQ" dx1="933.33"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="ID_CAL_M2M_READ" Destination="ValueDisplay.ID_M2M_READ" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="stObjCal" Destination="ValueDisplay.stObj" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_WRITE" Destination="ValueDisplay.ID_WRITE" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId_C_MIN" Destination="TriggerMIN.u16ObjId" dx1="973.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId_C_MID" Destination="TriggerMID.u16ObjId" dx1="973.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId_C_MAX" Destination="TriggerMAX.u16ObjId" dx1="973.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_MIN_CALL" Destination="TriggerMIN.ID_CALL" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_MID_TRIGGER_CALL" Destination="TriggerMID.ID_CALL" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_MAX_CALL" Destination="TriggerMAX.ID_CALL" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_RAW_M2M_READ" Destination="RawDisplay.ID_M2M_READ" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="stObjRaw" Destination="RawDisplay.stObj" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_RAW_WRITE" Destination="RawDisplay.ID_WRITE" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_MINRAW_M2M_READ" Destination="MinRawDisplay.ID_M2M_READ" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="stObjMinRaw" Destination="MinRawDisplay.stObj" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_MINRAW_WRITE" Destination="MinRawDisplay.ID_WRITE" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_MIDRAW_M2M_READ" Destination="MidRawDisplay.ID_M2M_READ" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="stObjMidRaw" Destination="MidRawDisplay.stObj" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_MIDRAW_WRITE" Destination="MidRawDisplay.ID_WRITE" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_MAXRAW_M2M_READ" Destination="MaxRawDisplay.ID_M2M_READ" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="stObjMaxRaw" Destination="MaxRawDisplay.stObj" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_MAXRAW_WRITE" Destination="MaxRawDisplay.ID_WRITE" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="ValueDisplay.QI" dx1="853.33"/>
+			<Connection Source="QI" Destination="TriggerMIN.QI" dx1="80" dx2="80" dy="-213.33"/>
+			<Connection Source="QI" Destination="TriggerMID.QI" dx1="1106.67"/>
+			<Connection Source="QI" Destination="TriggerMAX.QI" dx1="1106.67"/>
+			<Connection Source="QI" Destination="RawDisplay.QI" dx1="906.67"/>
+			<Connection Source="QI" Destination="MinRawDisplay.QI" dx1="906.67"/>
+			<Connection Source="QI" Destination="MidRawDisplay.QI" dx1="906.67"/>
+			<Connection Source="QI" Destination="MaxRawDisplay.QI" dx1="906.67"/>
+			<Connection Source="ValueDisplay.QO" Destination="AND_QO.IN1" dx1="933.33"/>
+			<Connection Source="TriggerMIN.QO" Destination="AND_QO.IN2" dx1="966.67"/>
+			<Connection Source="TriggerMID.QO" Destination="AND_QO.IN3" dx1="966.67"/>
+			<Connection Source="TriggerMAX.QO" Destination="AND_QO.IN4" dx1="966.67"/>
+			<Connection Source="RawDisplay.QO" Destination="AND_QO.IN5" dx1="933.33"/>
+			<Connection Source="MinRawDisplay.QO" Destination="AND_QO.IN6" dx1="933.33"/>
+			<Connection Source="MidRawDisplay.QO" Destination="AND_QO.IN7" dx1="933.33"/>
+			<Connection Source="MaxRawDisplay.QO" Destination="AND_QO.IN8" dx1="933.33"/>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="2513.33"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="ValueDisplay.VALUE_OUT" Destination="CAL_OUT" dx1="300"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

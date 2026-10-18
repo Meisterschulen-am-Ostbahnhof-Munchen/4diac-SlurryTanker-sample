@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Function Name="ARR08X_TO_BYTE" Comment="this Function combines 8 Bools as Array to 1 Byte">
+	<Identification Standard="61499-1" Description="Copyright (c) 2024 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2024-02-22">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::utils::conversion::arr::assembling">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event">
+				<With Var="IN"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event">
+				<With Var=""/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="IN" Type="BOOL" Comment="ARR08B Input" ArraySize="0..7"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="" Type="BYTE"/>
+		</OutputVars>
+	</InterfaceList>
+	<FunctionBody>
+		<ST><![CDATA[PACKAGE logiBUS::utils::conversion::arr::assembling;
+
+(* this Function combines 8 Bools as Array to 1 Byte *)
+FUNCTION ARR08X_TO_BYTE : BYTE
+
+VAR_INPUT
+	IN : ARRAY[0..7] OF BOOL; // ARR08B Input
+END_VAR
+
+ARR08X_TO_BYTE.0 := IN[0];
+ARR08X_TO_BYTE.1 := IN[1];
+ARR08X_TO_BYTE.2 := IN[2];
+ARR08X_TO_BYTE.3 := IN[3];
+ARR08X_TO_BYTE.4 := IN[4];
+ARR08X_TO_BYTE.5 := IN[5];
+ARR08X_TO_BYTE.6 := IN[6];
+ARR08X_TO_BYTE.7 := IN[7];
+
+END_FUNCTION
+]]></ST>
+	</FunctionBody>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</Function>

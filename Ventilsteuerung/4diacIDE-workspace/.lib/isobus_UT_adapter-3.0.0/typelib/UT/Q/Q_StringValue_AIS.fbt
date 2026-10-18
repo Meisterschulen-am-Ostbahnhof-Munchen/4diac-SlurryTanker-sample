@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="Q_StringValue_AIS" Comment="Command Change String Value ( Part 6 - F.24 )">
+	<Identification Standard="ISO 11783-6" Description="Copyright (c) 2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-04-13">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::UT::Q">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+				<With Var="QI"/>
+				<With Var="u16ObjId"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+				<With Var="s16result"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID" InitialValue="ID_NULL"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
+			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description"/>
+		</OutputVars>
+		<Sockets>
+			<AdapterDeclaration Name="pau8String" Type="adapter::types::unidirectional::AIS" Comment="New string value" x="-600" y="1200"/>
+		</Sockets>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="Q_StringValue" Type="isobus::UT::Q::Q_StringValue" x="533.33" y="420">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="Q_StringValue.INIT" dx1="1306.67"/>
+			<Connection Source="Q_StringValue.INITO" Destination="INITO" dx1="1506.67"/>
+			<Connection Source="Q_StringValue.CNF" Destination="CNF" dx1="1760"/>
+			<Connection Source="pau8String.E1" Destination="Q_StringValue.REQ" dx1="320"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="u16ObjId" Destination="Q_StringValue.u16ObjId" dx1="973.33"/>
+			<Connection Source="pau8String.D1" Destination="Q_StringValue.pau8String" dx1="486.67"/>
+			<Connection Source="Q_StringValue.STATUS" Destination="STATUS" dx1="2000"/>
+			<Connection Source="Q_StringValue.s16result" Destination="s16result" dx1="2573.33"/>
+			<Connection Source="QI" Destination="Q_StringValue.QI"/>
+			<Connection Source="Q_StringValue.QO" Destination="QO"/>
+		</DataConnections>
+	</FBNetwork>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>Command change string value ( Part 6 - F.24 )</h1>
+
+<p>This command is used to change the value of an object. It applies only to objects that have a string value attribute. This FB is an AIS adapter wrapper around <strong>Q_StringValue</strong> — the same object-type validity rules and the F.24 variable data length / transport protocol behaviour apply.</p>
+
+<h2>Valid Object IDs</h2>
+
+<p>u16ObjId is valid if it falls within one of the following ISO 11783-6 ID ranges (see Q_StringValue, Annex F.24):</p>
+<ul>
+	<li><strong>InputStringField</strong>: 8000 – 8999</li>
+	<li><strong>OutputStringField</strong>: 11000 – 11999</li>
+	<li><strong>StringVariable</strong>: 22000 – 22999</li>
+	<li><strong>InputAttributesObject</strong>: 26000 – 26999</li>
+</ul>
+
+<p>ID_NULL (65535) is not a command target but can be used in INIT to deactivate the FB. Any ID outside these ranges is invalid for commanding.</p>
+]]></Attribute>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

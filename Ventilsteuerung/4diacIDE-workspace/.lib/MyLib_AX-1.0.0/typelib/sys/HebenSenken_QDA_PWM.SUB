@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="HebenSenken_QDA_PWM" Comment="Waehlt per 2 AX-Booleans (HEBEN/SENKEN) zwischen 3 ratiometrischen PWM-Stufen&#10;(Danfoss PVEA: 25%=Senken, 50%=Neutral, 75%=Heben, Lastteiler-korrigiert) und&#10;gibt sie auf einen physischen PWM-Ausgang aus. Reiner&#10;Mux+Skalierungs+Ausgabe-Teil von HebenSenken_ILOCK_QDA_PWM_OPC, OHNE&#10;Remote-Subscribe/ILOCK/Publish - fuer Aufrufer, die HEBEN/SENKEN bereits&#10;anderweitig liefern (z.B. schon gegated/exklusiv, oder wie bei Bunkerboden_PWM&#10;nur eine der beiden Richtungen ueberhaupt nutzen, die andere dauerhaft FALSE).&#10;Aufrufer muss selbst sicherstellen, dass HEBEN und SENKEN nie gleichzeitig TRUE&#10;sind (kein ILOCK hier drin) - sonst liefert AR_AUI_MUX_3 fuer K=3 ein&#10;undefiniertes Verhalten.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.3" Author="Franz Höpfinger" Date="2026-10-13" Remarks="Neuer SubAppEventOutput INITO (Type EInit), durchgereicht von DigitalOutput_PWM.INITO - analog ILOCK_SWITCH_2_QXA_OPC v1.3, fuer Aufnahme_Option.SUB (Option::AOption-Socket-Wrapper, echtes INIT_CNF statt Timing-Delay).">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.2" Author="Franz Höpfinger" Date="2026-10-11" Remarks="Neuer SubAppEventInput INIT (Type EInit), durchgereicht an DigitalOutput_PWM.INIT statt Auto-Verteilung - analog ILOCK_SWITCH_2_QXA_OPC v1.2, 'Init wie bei Tecu' (Franz).">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-10-11" Remarks="Neuer QI-InputVar (Default TRUE, rueckwaertskompatibel) durchgereicht an DigitalOutput_PWM.QI statt fest verdrahtetem TRUE - analog ILOCK_SWITCH_2_QXA_OPC v1.1, erlaubt komplette Inaktivitaet wenn derselbe physische Kanal je nach Maschinenvariante anderweitig genutzt wird.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-27" Remarks="initial implementation - Mux/Skalierungs/Ausgabe-Teilnetz aus HebenSenken_ILOCK_QDA_PWM_OPC herausgeloest (ASSEMBLE_AB_FROM_AX/AB_TO_AUI/values_50_75_25/AR_AUI_MUX_3/AR_R_MUL_Korrektur/AR_R_MUL_PWM13BIT/AR_TO_AD_NUM/DigitalOutput_PWM), HEBEN/SENKEN jetzt direkte AX-Sockets statt Remote-Subscribe+ILOCK. Erster Aufrufer: Bunkerboden_PWM.SUB (nutzt nur SENKEN=Vollgas, HEBEN dauerhaft FALSE - Konvention 75/Heben ist dort unbenutzt).">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO_S"/>
+		<Import declaration="MyLib::sys::const::PWM_Konstanten::PWM_LASTTEILER_KORREKTUR"/>
+		<Import declaration="MyLib::sys::const::PWM_Konstanten::PWM_13BIT_SKALIERUNG"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialisierung - vom Aufrufer sequenziert statt per Auto-Verteilung, damit QI vor der physischen Kanalbindung feststeht">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialisierung abgeschlossen - echtes Confirm von DigitalOutput_PWM.INITO">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="Output_PWM" Type="logiBUS::io::DQ::logiBUS_DO_S" Comment="Physischer PWM-Ausgang: 25/50/75% Tastgrad, ratiometrisch" InitialValue="logiBUS_DO::Invalid"/>
+			<VarDeclaration Name="FACTOR_75" Type="REAL" Comment="Multimeter-kalibrierter Korrekturfaktor auf die nominelle OUT_75-Spanne (25.0), durchgereicht an values_50_75_25.FACTOR_75 - siehe MyLib::sys::const::PWM_Konstanten::VALUES_50_75_25_FACTOR_75" InitialValue="REAL#1.0"/>
+			<VarDeclaration Name="FACTOR_25" Type="REAL" Comment="Multimeter-kalibrierter Korrekturfaktor auf die nominelle OUT_25-Spanne (25.0), durchgereicht an values_50_75_25.FACTOR_25 - siehe MyLib::sys::const::PWM_Konstanten::VALUES_50_75_25_FACTOR_25" InitialValue="REAL#1.0"/>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Qualifier fuer den physischen PWM-Ausgang - FALSE haelt diese Instanz komplett inaktiv (keine Hardware-Bindung), fuer den Fall dass derselbe physische Kanal je nach Maschinenvariante anderweitig genutzt wird" InitialValue="TRUE"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+		<Sockets>
+			<AdapterDeclaration Name="HEBEN" Type="adapter::types::unidirectional::AX" Comment="TRUE waehlt OUT_75 (Heben) - dauerhaft FALSE verdrahten, wenn nicht gebraucht"/>
+			<AdapterDeclaration Name="SENKEN" Type="adapter::types::unidirectional::AX" Comment="TRUE waehlt OUT_25 (Senken) - dauerhaft FALSE verdrahten, wenn nicht gebraucht"/>
+			<AdapterDeclaration Name="PWM_POW" Type="adapter::types::unidirectional::AR" Comment="PWM Power 1.0 = Maximale Power, 0.0 = Aus, 0.5 = Halb - durchgereicht an values_50_75_25.PWM_POW"/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="ASSEMBLE_AB_FROM_AX" Type="adapter::assembling::ASSEMBLE_AB_FROM_AX" x="-3700" y="100">
+		</FB>
+		<FB Name="AB_TO_AUI" Type="adapter::conversion::unidirectional::AB_TO_AUI" x="-2100" y="-1000">
+		</FB>
+		<SubApp Name="values_50_75_25" Type="MyLib::sys::values_50_75_25" x="-3500" y="1400">
+		</SubApp>
+		<FB Name="AR_AUI_MUX_3" Type="adapter::selection::unidirectional::AR_AUI_MUX_3" x="100" y="-1000">
+		</FB>
+		<SubApp Name="AR_R_MUL_Korrektur" Type="MyLib::sys::AR_R_MUL" x="700" y="-100">
+			<Parameter Name="FACTOR" Value="PWM_LASTTEILER_KORREKTUR"/>
+		</SubApp>
+		<SubApp Name="AR_R_MUL_PWM13BIT" Type="MyLib::sys::AR_R_MUL" x="700" y="600">
+			<Parameter Name="FACTOR" Value="PWM_13BIT_SKALIERUNG"/>
+		</SubApp>
+		<FB Name="AR_TO_AD_NUM" Type="adapter::conversion::unidirectional::AR_TO_AD_NUM" x="600" y="1200">
+		</FB>
+		<FB Name="DigitalOutput_PWM" Type="logiBUS::io::DQ::logiBUS_QDA_PWM" x="600" y="1700">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="DigitalOutput_PWM.INIT" dx1="4080">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="DigitalOutput_PWM.INITO" Destination="INITO" dx1="2906.67"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="Output_PWM" Destination="DigitalOutput_PWM.Output" dx1="6913.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="DigitalOutput_PWM.QI" dx1="6913.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="DigitalOutput_PWM.QO" Destination="QO" dx1="3240"/>
+			<Connection Source="FACTOR_75" Destination="values_50_75_25.FACTOR_75" dx1="1980">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="FACTOR_25" Destination="values_50_75_25.FACTOR_25" dx1="1980">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="HEBEN" Destination="ASSEMBLE_AB_FROM_AX.BIT_00" dx1="920"/>
+			<Connection Source="SENKEN" Destination="ASSEMBLE_AB_FROM_AX.BIT_01" dx1="600"/>
+			<Connection Source="ASSEMBLE_AB_FROM_AX.OUT" Destination="AB_TO_AUI.AB_IN" dx1="173.33"/>
+			<Connection Source="AB_TO_AUI.AUI_OUT" Destination="AR_AUI_MUX_3.K" dx1="453.33"/>
+			<Connection Source="PWM_POW" Destination="values_50_75_25.PWM_POW" dx1="320"/>
+			<Connection Source="values_50_75_25.OUT_50" Destination="AR_AUI_MUX_3.IN1" dx1="333.33"/>
+			<Connection Source="values_50_75_25.OUT_75" Destination="AR_AUI_MUX_3.IN2" dx1="886.67"/>
+			<Connection Source="values_50_75_25.OUT_25" Destination="AR_AUI_MUX_3.IN3" dx1="1553.33"/>
+			<Connection Source="AR_AUI_MUX_3.OUT" Destination="AR_R_MUL_Korrektur.IN1" dx1="80" dx2="1420" dy="446.67"/>
+			<Connection Source="AR_R_MUL_Korrektur.OUT" Destination="AR_R_MUL_PWM13BIT.IN1" dx1="80" dx2="1380" dy="246.67"/>
+			<Connection Source="AR_R_MUL_PWM13BIT.OUT" Destination="AR_TO_AD_NUM.AR_IN" dx1="80" dx2="80" dy="160"/>
+			<Connection Source="AR_TO_AD_NUM.AD_OUT" Destination="DigitalOutput_PWM.OUT" dx1="80" dx2="546.67" dy="186.67"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

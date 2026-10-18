@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="BYPASS_AX_AX" Comment="Bypass FB">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2026-05-07">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::signalprocessing::bypass">
+	</CompilerInfo>
+	<InterfaceList>
+		<Plugs>
+			<AdapterDeclaration Name="OUT" Type="adapter::types::unidirectional::AX" Comment="Signal Output" x="2500" y="2500"/>
+			<AdapterDeclaration Name="BY_OUT" Type="adapter::types::unidirectional::AX" Comment="Bypass out" x="2500" y="1600"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="BY_IN" Type="adapter::types::unidirectional::AX" Comment="Bypass in" x="-1600" y="1600"/>
+			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AX" Comment="Signal Input" x="-1600" y="2500"/>
+		</Sockets>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="OR_BOOL_2" Type="iec61131::booleanOperators::OR_BOOL_2" x="-300" y="1600">
+		</FB>
+		<FB Name="E_D_FF" Type="iec61499::events::E_D_FF" x="1000" y="1600">
+		</FB>
+		<EventConnections>
+			<Connection Source="IN.E1" Destination="OUT.E1"/>
+			<Connection Source="BY_IN.E1" Destination="OR_BOOL_2.REQ" dx1="460"/>
+			<Connection Source="IN.E1" Destination="OR_BOOL_2.REQ" dx1="460"/>
+			<Connection Source="OR_BOOL_2.CNF" Destination="E_D_FF.CLK" dx1="353.33"/>
+			<Connection Source="E_D_FF.EO" Destination="BY_OUT.E1"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="IN.D1" Destination="OUT.D1"/>
+			<Connection Source="BY_IN.D1" Destination="OR_BOOL_2.IN1"/>
+			<Connection Source="IN.D1" Destination="OR_BOOL_2.IN2" dx1="673.33"/>
+			<Connection Source="OR_BOOL_2.OUT" Destination="E_D_FF.D"/>
+			<Connection Source="E_D_FF.Q" Destination="BY_OUT.D1"/>
+		</DataConnections>
+	</FBNetwork>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

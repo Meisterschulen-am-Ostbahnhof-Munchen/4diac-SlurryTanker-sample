@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="E_FB_DELAY" Comment="Delayed event propagation">
+	<Identification Standard="61499-1 Annex A" Description="Copyright (c) 2017 fortiss GmbH&#10;&#10;This program and the accompanying materials are made&#10;available under the terms of the Eclipse Public License 2.0&#10;which is available at https://www.eclipse.org/legal/epl-2.0/&#10;&#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="3.1" Author="Franz Höpfinger" Date="2026-08-14" Remarks="FB_TON like cyclic Interface">
+	</VersionInfo>
+	<VersionInfo Version="3.0" Author="Patrick Aigner" Date="2025-04-14" Remarks="changed package">
+	</VersionInfo>
+	<VersionInfo Organization="fortiss GmbH" Version="1.0" Author="Alois Zoitl" Date="2017-09-21" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::events::TimeOut">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event" Comment="Normal Execution Request">
+			</Event>
+			<Event Name="START" Type="Event" Comment="Start delayed event propagation">
+				<With Var="DT"/>
+			</Event>
+			<Event Name="STOP" Type="Event" Comment="Stop the delayed event propagation">
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event" Comment="Execution Confirmation">
+				<With Var="ET"/>
+				<With Var="REST"/>
+			</Event>
+			<Event Name="STARTO" Type="Event">
+				<With Var="Q"/>
+				<With Var="ET"/>
+				<With Var="PT"/>
+				<With Var="REST"/>
+			</Event>
+			<Event Name="STOPO" Type="Event">
+				<With Var="Q"/>
+				<With Var="ET"/>
+			</Event>
+			<Event Name="EO" Type="Event" Comment="Delayed event">
+				<With Var="Q"/>
+				<With Var="ET"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="DT" Type="TIME" Comment="Delay time, &gt;0"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="Q" Type="BOOL" Comment="Output is started = TRUE"/>
+			<VarDeclaration Name="PT" Type="TIME" Comment="Preset time (SOLL), = DT at START"/>
+			<VarDeclaration Name="ET" Type="TIME" Comment="Elapsed time"/>
+			<VarDeclaration Name="REST" Type="TIME" Comment="Remaining time = PT - ET"/>
+		</OutputVars>
+	</InterfaceList>
+	<BasicFB>
+		<InternalVars>
+			<VarDeclaration Name="StartTime" Type="TIME"/>
+		</InternalVars>
+		<ECC>
+			<ECState Name="Initial_State" Comment="Initial State" x="-1760" y="-80">
+			</ECState>
+			<ECState Name="REQ" x="640" y="-480">
+				<ECAction Algorithm="REQ" Output="CNF"/>
+			</ECState>
+			<ECState Name="START" x="560" y="240">
+				<ECAction Algorithm="START" Output="STARTO"/>
+			</ECState>
+			<ECState Name="STOP" x="560" y="960">
+				<ECAction Algorithm="STOP" Output="STOPO"/>
+			</ECState>
+			<ECState Name="EO" x="3360" y="160">
+				<ECAction Algorithm="EO" Output="EO"/>
+			</ECState>
+			<ECTransition Source="Initial_State" Destination="REQ" Condition="REQ" x="-173.33" y="-466.67"/>
+			<ECTransition Source="Initial_State" Destination="START" Condition="START" x="-100" y="80"/>
+			<ECTransition Source="Initial_State" Destination="STOP" Condition="STOP" x="-533.33" y="680"/>
+			<ECTransition Source="REQ" Destination="EO" Condition="[ET &gt;= DT]" x="1886.67" y="-573.33"/>
+			<ECTransition Source="REQ" Destination="Initial_State" Condition="1" x="-220" y="-253.33"/>
+			<ECTransition Source="STOP" Destination="Initial_State" Condition="1" x="-600" y="846.67"/>
+			<ECTransition Source="START" Destination="EO" Condition="[ET &gt;= DT]" x="1953.33" y="66.67"/>
+			<ECTransition Source="START" Destination="Initial_State" Condition="1" x="-226.67" y="253.33"/>
+			<ECTransition Source="EO" Destination="Initial_State" Condition="1" x="533.33" y="2113.33"/>
+		</ECC>
+		<Algorithm Name="REQ" Comment="Poll elapsed time while armed (Q=TRUE); no-op otherwise. Meant to be driven cyclically (e.g. by an external E_CYCLE) so ET stays live while the delay is running.">
+			<ST><![CDATA[
+VAR_TEMP
+	SysTime : TIME;
+END_VAR
+IF Q THEN
+	SysTime := NOW_MONOTONIC();
+	ET := SysTime - StartTime;
+	REST := PT - ET;
+END_IF;
+
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="START" Comment="Arm the timer: record the start time, reset ET to 0, set PT=DT (SOLL) and REST=PT, Q=TRUE so REQ begins advancing ET/REST.">
+			<ST><![CDATA[
+StartTime := NOW_MONOTONIC();
+Q := BOOL#TRUE;
+ET := T#0s;
+PT := DT;
+REST := PT;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="STOP" Comment="Cancel the timer without firing EO: clear Q and reset ET/REST to 0.">
+			<ST><![CDATA[
+Q := BOOL#FALSE;
+ET := T#0s;
+REST := T#0s;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="EO" Comment="Runs once when ET reaches DT (via the REQ/START -&gt; EO transition). Clears Q and resets ET/REST to 0, so ET stays below DT until the next START - a later REQ can no longer re-satisfy [ET&gt;=DT] and re-fire EO.">
+			<ST><![CDATA[
+Q := BOOL#FALSE;
+ET := T#0s;
+REST := T#0s;
+]]></ST>
+		</Algorithm>
+	</BasicFB>
+</FBType>

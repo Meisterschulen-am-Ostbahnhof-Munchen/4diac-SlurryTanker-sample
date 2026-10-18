@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="GEN_SIN" Comment="this signal generator generates a sine wave output">
+	<Identification Standard="61499-1" Description="version 1.6&#9;11. mar. 2009&#10;programmer &#9;oscat&#10;tested BY&#9;oscat&#10;&#10;this signal generator generates a sine wave output. The sine wave signal is defined by period time (PT), &#10;amplitude (AM), offset (OS) and a specific delay for the output signal (DL).&#10;The Output waveform will have its max peak at AM/2 + OS and its minimum peak at -AM/2 + OS. &#10;The delay input can delay a signal up to PT, this can be useful to synchronize different generators &#10;and generate interleaving signals. A Cos wave can be generated accordingly.&#10;in addition to a analog output Out there is a second boolean output Q with the corresponding binary signal.">
+	</Identification>
+	<VersionInfo Version="1.0" Author="Franz Höpfinger" Date="2025-12-21" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="OSCAT::Basic::POUs::Engineering::signal_generators">
+		<Import declaration="OSCAT::Basic::Globals::Constants::MATH"/>
+		<Import declaration="OSCAT::Basic::POUs::Mathematical::MODR"/>
+		<Import declaration="OSCAT::Basic::POUs::Mathematical::SIGN_R"/>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="EINIT" Type="EInit" Comment="Init Request">
+			</Event>
+			<Event Name="REQ" Type="Event" Comment="Normal Execution Request">
+				<With Var="PT"/>
+				<With Var="AM"/>
+				<With Var="OS"/>
+				<With Var="DL"/>
+			</Event>
+			<Event Name="RST" Type="Event" Comment="Reset">
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Init Confirmation">
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Execution Confirmation">
+				<With Var="Q"/>
+				<With Var="Out"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="PT" Type="TIME" Comment="Period Time"/>
+			<VarDeclaration Name="AM" Type="REAL" Comment="Amplitude" InitialValue="1.0"/>
+			<VarDeclaration Name="OS" Type="REAL" Comment="Offset"/>
+			<VarDeclaration Name="DL" Type="REAL" Comment="Delay"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="Q" Type="BOOL" Comment="Binary Output"/>
+			<VarDeclaration Name="Out" Type="REAL" Comment="Analog Output"/>
+		</OutputVars>
+	</InterfaceList>
+	<SimpleFB>
+		<InternalVars>
+			<VarDeclaration Name="tx" Type="TIME"/>
+			<VarDeclaration Name="last" Type="TIME"/>
+			<VarDeclaration Name="init" Type="BOOL"/>
+			<VarDeclaration Name="temp" Type="REAL"/>
+			<VarDeclaration Name="DL_M" Type="REAL"/>
+		</InternalVars>
+		<ECState Name="EINIT">
+			<ECAction Algorithm="EINIT" Output="INITO"/>
+		</ECState>
+		<ECState Name="REQ">
+			<ECAction Algorithm="REQ" Output="CNF"/>
+		</ECState>
+		<ECState Name="RST">
+			<ECAction Algorithm="RST" Output="CNF"/>
+		</ECState>
+		<Algorithm Name="EINIT">
+			<ST><![CDATA[
+init := FALSE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="RST">
+			<ST><![CDATA[
+init := TRUE;
+last := tx;
+tx := T#0s;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="REQ">
+			<ST><![CDATA[
+(* read system time and prepare input data *)
+tx := NOW_MONOTONIC() - last;
+DL_M := MODR(DL, 1.0);
+IF DL_M < 0.0 THEN
+	DL_M := 1.0 - DL_M;
+END_IF;
+
+(* init section *)
+IF NOT init THEN
+	this.RST();
+END_IF;
+
+(* add last if one cycle is finished *)
+IF tx >= PT THEN
+	last := last + PT;
+	tx := tx - PT;
+END_IF;
+
+(* generate sine wave *)
+IF PT > T#0s THEN
+	temp := SIN(MATH.PI2 * UDINT_TO_REAL(TIME_IN_MS_TO_UDINT(tx + (PT * DL))) / UDINT_TO_REAL(TIME_IN_MS_TO_UDINT(PT)));
+END_IF;
+Out := AM * 0.5 * temp + OS;
+
+(* boolean output Q *)
+Q := NOT SIGN_R(temp);
+]]></ST>
+		</Algorithm>
+	</SimpleFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

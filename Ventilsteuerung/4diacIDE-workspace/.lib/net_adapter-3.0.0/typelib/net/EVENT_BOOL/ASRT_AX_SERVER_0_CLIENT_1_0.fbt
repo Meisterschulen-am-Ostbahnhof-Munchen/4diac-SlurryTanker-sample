@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="ASRT_AX_SERVER_0_CLIENT_1_0" Comment="Receive 3 independent remote OPC-UA method calls via SERVER_0 (Set/Reset/Toggle)&#10;and write the resulting state back via CLIENT_1_0, driven by an ASRT_AX&#10;bidirectional adapter Plug">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 HR Agrartechnik GmbH &#10; &#10;This program and the accompanying materials are made &#10;available under the terms of the Eclipse Public License 2.0 &#10;which is available at https://www.eclipse.org/legal/epl-2.0/ &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-09-03" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::net">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Initialization">
+				<With Var="QI"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="QO/STATUS updated">
+				<With Var="QO"/>
+				<With Var="STATUS_SET"/>
+				<With Var="STATUS_RESET"/>
+				<With Var="STATUS_TOGGLE"/>
+				<With Var="STATUS_STATE"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL"/>
+			<VarDeclaration Name="ID_SET" Type="WSTRING" Comment="Lokale Methodenadresse (ACTION=CREATE_METHOD) fuer den Set-Methodenaufruf"/>
+			<VarDeclaration Name="ID_RESET" Type="WSTRING" Comment="Lokale Methodenadresse (ACTION=CREATE_METHOD) fuer den Reset-Methodenaufruf"/>
+			<VarDeclaration Name="ID_TOGGLE" Type="WSTRING" Comment="Lokale Methodenadresse (ACTION=CREATE_METHOD) fuer den Toggle-Methodenaufruf"/>
+			<VarDeclaration Name="ID_STATE" Type="WSTRING" Comment="Remote-Ziel-Adresse (ACTION=WRITE) fuer den Zustand"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="TRUE nur wenn SET_SERVER, RESET_SERVER, TOGGLE_SERVER und STATE_CLIENT aktuell alle QO=TRUE melden"/>
+			<VarDeclaration Name="STATUS_SET" Type="WSTRING" Comment="STATUS von SET_SERVER"/>
+			<VarDeclaration Name="STATUS_RESET" Type="WSTRING" Comment="STATUS von RESET_SERVER"/>
+			<VarDeclaration Name="STATUS_TOGGLE" Type="WSTRING" Comment="STATUS von TOGGLE_SERVER"/>
+			<VarDeclaration Name="STATUS_STATE" Type="WSTRING" Comment="STATUS von STATE_CLIENT"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="S_R_T" Type="adapter::types::bidirectional::ASRT_AX" Comment="Set/Reset/Toggle (in), Zustand (out)" x="4033.33" y="1060"/>
+		</Plugs>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="SET_SERVER" Type="iec61499::net::SERVER_0" x="1046.67" y="106.67">
+		</FB>
+		<FB Name="RESET_SERVER" Type="iec61499::net::SERVER_0" x="1953.33" y="1433.33">
+		</FB>
+		<FB Name="TOGGLE_SERVER" Type="iec61499::net::SERVER_0" x="3060" y="1380">
+		</FB>
+		<FB Name="E_D_FF" Type="iec61499::events::E_D_FF" x="4960" y="1273.33">
+		</FB>
+		<FB Name="STATE_CLIENT" Type="iec61499::net::CLIENT_1_0" x="5840" y="893.33">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_4" x="7040" y="1126.67">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="SET_SERVER.INIT" dx1="66.67"/>
+			<Connection Source="SET_SERVER.INITO" Destination="RESET_SERVER.INIT" dx1="133.33"/>
+			<Connection Source="RESET_SERVER.INITO" Destination="TOGGLE_SERVER.INIT" dx1="266.67"/>
+			<Connection Source="TOGGLE_SERVER.INITO" Destination="STATE_CLIENT.INIT" dx1="133.33" dx2="1080" dy="-553.33"/>
+			<Connection Source="STATE_CLIENT.INITO" Destination="INITO" dx1="66.67"/>
+			<Connection Source="STATE_CLIENT.INITO" Destination="AND_QO.REQ" dx1="66.67"/>
+			<Connection Source="SET_SERVER.IND" Destination="S_R_T.SET" dx1="66.67" dx2="66.67" dy="66.67"/>
+			<Connection Source="RESET_SERVER.IND" Destination="S_R_T.RESET" dx1="200" dx2="200" dy="-460"/>
+			<Connection Source="TOGGLE_SERVER.IND" Destination="S_R_T.TOGGLE" dx1="200"/>
+			<Connection Source="S_R_T.EI1" Destination="E_D_FF.CLK" dx1="66.67"/>
+			<Connection Source="E_D_FF.EO" Destination="STATE_CLIENT.REQ" dx1="66.67"/>
+			<Connection Source="SET_SERVER.IND" Destination="AND_QO.REQ" dx1="66.67" dx2="333.33" dy="66.67"/>
+			<Connection Source="RESET_SERVER.IND" Destination="AND_QO.REQ" dx1="200" dx2="333.33" dy="753.33"/>
+			<Connection Source="TOGGLE_SERVER.IND" Destination="AND_QO.REQ" dx1="200" dx2="333.33" dy="153.33"/>
+			<Connection Source="STATE_CLIENT.CNF" Destination="AND_QO.REQ" dx1="66.67"/>
+			<Connection Source="AND_QO.CNF" Destination="CNF" dx1="66.67"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="QI" Destination="SET_SERVER.QI" dx1="266.67"/>
+			<Connection Source="QI" Destination="RESET_SERVER.QI" dx1="266.67"/>
+			<Connection Source="QI" Destination="TOGGLE_SERVER.QI" dx1="266.67" dx2="66.67" dy="-1273.33"/>
+			<Connection Source="QI" Destination="STATE_CLIENT.QI" dx1="266.67" dx2="133.33" dy="-1273.33"/>
+			<Connection Source="ID_SET" Destination="SET_SERVER.ID" dx1="333.33"/>
+			<Connection Source="ID_RESET" Destination="RESET_SERVER.ID" dx1="200" dx2="1106.67" dy="533.33"/>
+			<Connection Source="ID_TOGGLE" Destination="TOGGLE_SERVER.ID" dx1="133.33" dx2="133.33" dy="573.33"/>
+			<Connection Source="ID_STATE" Destination="STATE_CLIENT.ID" dx1="66.67" dx2="200" dy="1106.67"/>
+			<Connection Source="S_R_T.DI1" Destination="E_D_FF.D"/>
+			<Connection Source="E_D_FF.Q" Destination="STATE_CLIENT.SD_1" dx1="133.33"/>
+			<Connection Source="SET_SERVER.QO" Destination="AND_QO.IN1" dx1="5153.33"/>
+			<Connection Source="RESET_SERVER.QO" Destination="AND_QO.IN2" dx1="133.33" dx2="133.33" dy="613.33"/>
+			<Connection Source="TOGGLE_SERVER.QO" Destination="AND_QO.IN3" dx1="133.33" dx2="66.67" dy="193.33"/>
+			<Connection Source="STATE_CLIENT.QO" Destination="AND_QO.IN4" dx1="200"/>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="66.67"/>
+			<Connection Source="SET_SERVER.STATUS" Destination="STATUS_SET" dx1="66.67" dx2="133.33" dy="-20"/>
+			<Connection Source="RESET_SERVER.STATUS" Destination="STATUS_RESET" dx1="66.67" dx2="200" dy="580"/>
+			<Connection Source="TOGGLE_SERVER.STATUS" Destination="STATUS_TOGGLE" dx1="66.67" dx2="133.33" dy="286.67"/>
+			<Connection Source="STATE_CLIENT.STATUS" Destination="STATUS_STATE" dx1="133.33" dx2="66.67" dy="493.33"/>
+		</DataConnections>
+	</FBNetwork>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

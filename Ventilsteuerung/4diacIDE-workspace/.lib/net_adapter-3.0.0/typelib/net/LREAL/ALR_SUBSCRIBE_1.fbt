@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="ALR_SUBSCRIBE_1" Comment="Subscribe to a PUBLISH_1 Block and buffer the received LREAL with a D_FF">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 HR Agrartechnik GmbH&#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-08-07" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::net">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Initialization">
+				<With Var="QI"/>
+				<With Var="ID"/>
+			</Event>
+			<Event Name="RSP" Type="Event" Comment="Response to the received data">
+				<With Var="QI"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+			</Event>
+			<Event Name="IND" Type="Event" Comment="New data available">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL"/>
+			<VarDeclaration Name="ID" Type="WSTRING"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL"/>
+			<VarDeclaration Name="STATUS" Type="WSTRING"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="OUT" Type="adapter::types::unidirectional::ALR" Comment="Buffered received LREAL" x="700" y="700"/>
+		</Plugs>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="SUBSCRIBE_1" Type="iec61499::net::SUBSCRIBE_1" x="-2900" y="0">
+		</FB>
+		<FB Name="E_D_FF_ANY" Type="iec61499::events::E_D_FF_ANY" x="-300" y="700">
+		</FB>
+		<FB Name="F_MOVE" Type="iec61131::selection::F_MOVE" x="-1200" y="700">
+			<Attribute Name="DataType" Value="LREAL"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="SUBSCRIBE_1.INIT" dx1="1593.33"/>
+			<Connection Source="RSP" Destination="SUBSCRIBE_1.RSP" dx1="1280"/>
+			<Connection Source="SUBSCRIBE_1.INITO" Destination="INITO" dx1="2686.67"/>
+			<Connection Source="SUBSCRIBE_1.IND" Destination="F_MOVE.REQ" dx1="673.33"/>
+			<Connection Source="SUBSCRIBE_1.IND" Destination="IND"/>
+			<Connection Source="E_D_FF_ANY.EO" Destination="OUT.E1"/>
+			<Connection Source="F_MOVE.CNF" Destination="E_D_FF_ANY.CLK"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="QI" Destination="SUBSCRIBE_1.QI" dx1="1060"/>
+			<Connection Source="ID" Destination="SUBSCRIBE_1.ID" dx1="800"/>
+			<Connection Source="SUBSCRIBE_1.QO" Destination="QO"/>
+			<Connection Source="SUBSCRIBE_1.STATUS" Destination="STATUS"/>
+			<Connection Source="SUBSCRIBE_1.RD_1" Destination="F_MOVE.IN" dx1="506.67"/>
+			<Connection Source="E_D_FF_ANY.Q" Destination="OUT.D1"/>
+			<Connection Source="F_MOVE.OUT" Destination="E_D_FF_ANY.D"/>
+		</DataConnections>
+	</FBNetwork>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

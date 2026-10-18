@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="START" Comment="START States">
+	<Identification Standard="61499-1" Description="Copyright (c) 2025 HR Agrartechnik GmbH &#10; &#10;This program and the accompanying materials are made &#10;available under the terms of the Eclipse Public License 2.0 &#10;which is available at https://www.eclipse.org/legal/epl-2.0/ &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2025-05-23">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::utils::sequence::schieber::const">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="STARTClosed" Type="UINT" InitialValue="UINT#5"/>
+		<VarDeclaration Name="STARTOpened" Type="UINT" InitialValue="UINT#6"/>
+		<VarDeclaration Name="STARTUnknown" Type="UINT" InitialValue="UINT#7"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE logiBUS::utils::sequence::schieber::const;
+
+GLOBALCONSTANTS START
+	VAR_GLOBAL CONSTANT
+		STARTClosed : UINT := UINT#5;
+		STARTOpened : UINT := UINT#6;
+		STARTUnknown : UINT := UINT#7;
+	END_VAR
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</GlobalConstants>

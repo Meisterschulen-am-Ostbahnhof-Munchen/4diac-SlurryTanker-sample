@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="AR_TO_Q_Publish_OPC" Comment="Physikalischer AR-Wert -&gt; VT-Anzeige (Q_NumericValue_PHYSA) UND per OPC-UA&#10;publiziert (AR_PUBLISH_1), aus 1 gemeinsamer Quelle (AR_SPLIT_2). Fuer jeden&#10;Wert, der sowohl am VT angezeigt als auch lokal (Self-Subscribe) oder&#10;stationsuebergreifend weiterverwendet werden soll.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.2" Author="Franz Höpfinger" Date="2026-10-03" Remarks="Franz: RateLimit_Anzeige (AR_D_FF_TMIN) vor AR_SPLIT_2 verschoben (Absicht, nicht versehentlich) - drosselt jetzt BEIDE Zweige (VT-Anzeige UND AR_PUBLISH/Self-Subscribe-Konsumenten wie CTRL_PID_AR.AR_ACT) auf max. 1 Update/Tmin, statt nur die Anzeige.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-10-03" Remarks="Franz: 'ich tendiere dazu weniger schnell die Anzeige zu aktualisieren und den Regler trotzdem schnell laufen zu lassen' (Kunde: traeges Verhalten bei eingeschalteter Aufnahme-Automatik, vermutlich VT-Bus-Last durch mehrere gleichzeitig schnell wechselnde Drehzahl-Anzeigen auf der Ernteseite) - 'AR_RATE_LIMIT haben wir schon, D_FF_TMIN': adapter::events::unidirectional::AR_D_FF_TMIN (Tmin=500ms) initial NUR auf dem VT-Anzeige-Zweig eingefuegt (v1.2 verschiebt ihn vor den Split, siehe dort).">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-12" Remarks="initial implementation - herausgeloest aus TECU_Speeds.SUB/TECU_RPTO.SUB (AR_SPLIT_2 + Q_NumericValue_PHYSA + AR_PUBLISH_1 kommt oft vor).">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="stObj" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object pool properties der VT-Zahlenvariable (u16ObjId, scale, offset, decimals) - z.B. FBs::const::DefaultPool_Numeric::NumberVariable_X_N"/>
+			<VarDeclaration Name="ID_WRITE" Type="WSTRING" Comment="Publish-Adresse (REAL, ACTION=PUBLISH), lokal oder stationsuebergreifend"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+		<Sockets>
+			<AdapterDeclaration Name="AR_IN" Type="adapter::types::unidirectional::AR" Comment="Physikalischer Wert (bereits skaliert)"/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="AR_SPLIT_2" Type="adapter::events::unidirectional::AR_SPLIT_2" x="1600" y="0">
+		</FB>
+		<FB Name="RateLimit_Anzeige" Type="adapter::events::unidirectional::AR_D_FF_TMIN" Comment="Drosselt vor dem Split BEIDE Zweige (VT-Anzeige UND AR_PUBLISH/Self-Subscribe, z.B. CTRL_PID_AR.AR_ACT) auf max. 1 Update/500ms - Absicht (Franz)." x="300" y="-200">
+			<Parameter Name="Tmin" Value="T#500ms"/>
+		</FB>
+		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="4200" y="-800">
+		</FB>
+		<FB Name="AR_PUBLISH" Type="adapter::net::AR_PUBLISH_1" x="4200" y="300">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_2" x="6700" y="-500">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="Q_NumericValue.INIT" dx1="1826.67"/>
+			<Connection Source="Q_NumericValue.INITO" Destination="AR_PUBLISH.INIT" dx1="513.33" dx2="386.67" dy="500"/>
+			<Connection Source="AR_PUBLISH.INITO" Destination="INITO" dx1="2646.67"/>
+			<Connection Source="AR_PUBLISH.INITO" Destination="AND_QO.REQ" dx1="626.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="stObj" Destination="Q_NumericValue.stObj" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_WRITE" Destination="AR_PUBLISH.ID" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="Q_NumericValue.QI" dx1="1826.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="AR_PUBLISH.QI" dx1="1880">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Q_NumericValue.QO" Destination="AND_QO.IN1" dx1="580">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AR_PUBLISH.QO" Destination="AND_QO.IN2" dx1="626.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="2806.67"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="AR_IN" Destination="RateLimit_Anzeige.I" dx1="600"/>
+			<Connection Source="AR_SPLIT_2.OUT2" Destination="AR_PUBLISH.IN" dx1="600"/>
+			<Connection Source="RateLimit_Anzeige.Q" Destination="AR_SPLIT_2.IN" dx1="226.67"/>
+			<Connection Source="AR_SPLIT_2.OUT1" Destination="Q_NumericValue.rPhys" dx1="1520"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

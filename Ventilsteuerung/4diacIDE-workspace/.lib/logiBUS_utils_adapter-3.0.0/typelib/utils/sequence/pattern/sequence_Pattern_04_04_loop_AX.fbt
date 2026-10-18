@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="sequence_Pattern_04_04_loop_AX" Comment="Pattern Sequence 4 Steps 4 Outputs (Cam Sequencer), AX Adapter">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-02-01">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::utils::sequence::pattern">
+		<Import declaration="logiBUS::utils::sequence::const::sequence"/>
+		<Import declaration="logiBUS::utils::sequence::const::sequence::NO_TIME"/>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="START_S1" Type="Event" Comment="jump from START to State_01">
+				<With Var="DT_S1_S2"/>
+				<With Var="DT_S2_S3"/>
+				<With Var="DT_S3_S4"/>
+				<With Var="DT_S4_S1"/>
+				<With Var="P_S1"/>
+				<With Var="P_S2"/>
+				<With Var="P_S3"/>
+				<With Var="P_S4"/>
+			</Event>
+			<Event Name="S1_S2" Type="Event" Comment="jump from State_01 to State_02">
+			</Event>
+			<Event Name="S2_S3" Type="Event" Comment="jump from State_02 to State_03">
+			</Event>
+			<Event Name="S3_S4" Type="Event" Comment="jump from State_03 to State_04">
+			</Event>
+			<Event Name="S4_S1" Type="Event" Comment="jump from State_04 to State_01">
+			</Event>
+			<Event Name="RESET" Type="Event" Comment="Reset from any State to START">
+			</Event>
+		</EventInputs>
+		<InputVars>
+			<VarDeclaration Name="DT_S1_S2" Type="TIME" Comment="State_01 to State_02 timed" InitialValue="NO_TIME"/>
+			<VarDeclaration Name="DT_S2_S3" Type="TIME" Comment="State_02 to State_03 timed" InitialValue="NO_TIME"/>
+			<VarDeclaration Name="DT_S3_S4" Type="TIME" Comment="State_03 to State_04 timed" InitialValue="NO_TIME"/>
+			<VarDeclaration Name="DT_S4_S1" Type="TIME" Comment="State_04 to State_01 timed" InitialValue="NO_TIME"/>
+			<VarDeclaration Name="P_S1" Type="BYTE" Comment="Pattern for State 01 (Bit0=Q1, Bit1=Q2...)" InitialValue="1"/>
+			<VarDeclaration Name="P_S2" Type="BYTE" Comment="Pattern for State 02" InitialValue="2"/>
+			<VarDeclaration Name="P_S3" Type="BYTE" Comment="Pattern for State 03" InitialValue="4"/>
+			<VarDeclaration Name="P_S4" Type="BYTE" Comment="Pattern for State 04" InitialValue="8"/>
+		</InputVars>
+		<Plugs>
+			<AdapterDeclaration Name="STATE_NR" Type="adapter::types::unidirectional::AS" Comment="State Number Adapter"/>
+<AdapterDeclaration Name="Q1" Type="adapter::types::unidirectional::AX" Comment="Output 1 (Bit 0)"/>
+			<AdapterDeclaration Name="Q2" Type="adapter::types::unidirectional::AX" Comment="Output 2 (Bit 1)"/>
+			<AdapterDeclaration Name="Q3" Type="adapter::types::unidirectional::AX" Comment="Output 3 (Bit 2)"/>
+			<AdapterDeclaration Name="Q4" Type="adapter::types::unidirectional::AX" Comment="Output 4 (Bit 3)"/>
+			<AdapterDeclaration Name="timeOut" Type="iec61499::events::ATimeOut" Comment="timeOut Adapter"/>
+		</Plugs>
+	</InterfaceList>
+	<BasicFB>
+		<ECC>
+			<ECState Name="xSTART" Comment="Initial State" x="0" y="800">
+			</ECState>
+			<ECState Name="sState_01" x="2800" y="1360">
+				<ECAction Output="timeOut.STOP"/>
+				<ECAction Algorithm="State_01_C" Output="STATE_NR.E1"/>
+				<ECAction Algorithm="State_01_E" Output="Q1.E1"/>
+				<ECAction Output="Q2.E1"/>
+				<ECAction Output="Q4.E1"/>
+				<ECAction Output="timeOut.START"/>
+				<ECAction Output="Q3.E1"/>
+			</ECState>
+			<ECState Name="sState_02" x="2800" y="2480">
+				<ECAction Output="timeOut.STOP"/>
+				<ECAction Algorithm="State_02_C" Output="STATE_NR.E1"/>
+				<ECAction Algorithm="State_02_E" Output="Q1.E1"/>
+				<ECAction Output="Q2.E1"/>
+				<ECAction Output="Q4.E1"/>
+				<ECAction Output="timeOut.START"/>
+				<ECAction Output="Q3.E1"/>
+			</ECState>
+			<ECState Name="sState_03" x="2800" y="3600">
+				<ECAction Output="timeOut.STOP"/>
+				<ECAction Algorithm="State_03_C" Output="STATE_NR.E1"/>
+				<ECAction Algorithm="State_03_E" Output="Q1.E1"/>
+				<ECAction Output="Q2.E1"/>
+				<ECAction Output="Q3.E1"/>
+				<ECAction Output="Q4.E1"/>
+				<ECAction Output="timeOut.START"/>
+			</ECState>
+			<ECState Name="sState_04" x="2800" y="4720">
+				<ECAction Output="timeOut.STOP"/>
+				<ECAction Algorithm="State_04_C" Output="STATE_NR.E1"/>
+				<ECAction Algorithm="State_04_E" Output="Q1.E1"/>
+				<ECAction Output="Q2.E1"/>
+				<ECAction Output="Q3.E1"/>
+				<ECAction Output="Q4.E1"/>
+				<ECAction Output="timeOut.START"/>
+			</ECState>
+			<ECState Name="sRESET" x="-666.67" y="2400">
+				<ECAction Output="timeOut.STOP"/>
+				<ECAction Algorithm="RESET_Outs" Output="Q1.E1"/>
+				<ECAction Output="Q2.E1"/>
+				<ECAction Output="Q3.E1"/>
+				<ECAction Output="Q4.E1"/>
+				<ECAction Algorithm="State_00_C" Output="STATE_NR.E1"/>
+			</ECState>
+			<ECTransition Source="sState_01" Destination="sState_02" Condition="S1_S2" x="2906.67" y="1680"/>
+			<ECTransition Source="sState_02" Destination="sState_03" Condition="S2_S3" x="3020" y="2826.67"/>
+			<ECTransition Source="sState_03" Destination="sState_04" Condition="S3_S4" x="2993.33" y="4240"/>
+			<ECTransition Source="sState_01" Destination="sState_02" Condition="timeOut.TimeOut" x="2646.67" y="1653.33"/>
+			<ECTransition Source="sState_02" Destination="sState_03" Condition="timeOut.TimeOut" x="2760" y="2800"/>
+			<ECTransition Source="sState_03" Destination="sState_04" Condition="timeOut.TimeOut" x="2733.33" y="4240"/>
+			<ECTransition Source="xSTART" Destination="sState_01" Condition="START_S1" x="2233.33" y="1046.67"/>
+			<ECTransition Source="sState_01" Destination="sRESET" Condition="RESET" x="873.33" y="1753.33"/>
+			<ECTransition Source="sState_04" Destination="sRESET" Condition="RESET" x="866.67" y="2360"/>
+			<ECTransition Source="sState_02" Destination="sRESET" Condition="RESET" x="906.67" y="2000"/>
+			<ECTransition Source="sState_03" Destination="sRESET" Condition="RESET" x="880" y="2213.33"/>
+			<ECTransition Source="sState_04" Destination="sState_01" Condition="S4_S1" x="1980" y="2280"/>
+			<ECTransition Source="sState_04" Destination="sState_01" Condition="timeOut.TimeOut" x="1800" y="2133.33"/>
+			<ECTransition Source="sRESET" Destination="xSTART" Condition="1" x="-740" y="746.67"/>
+		</ECC>
+		<Algorithm Name="State_00_C">
+			<ST><![CDATA[
+STATE_NR.D1 := sequence::State_00;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="State_01_C">
+			<ST><![CDATA[
+STATE_NR.D1 := sequence::State_01;
+timeOut.DT := DT_S1_S2;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="State_02_C">
+			<ST><![CDATA[
+STATE_NR.D1 := sequence::State_02;
+timeOut.DT := DT_S2_S3;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="State_03_C">
+			<ST><![CDATA[
+STATE_NR.D1 := sequence::State_03;
+timeOut.DT := DT_S3_S4;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="State_04_C">
+			<ST><![CDATA[
+STATE_NR.D1 := sequence::State_04;
+timeOut.DT := DT_S4_S1;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="State_01_E">
+			<ST><![CDATA[
+Q1.D1 := P_S1.0;
+Q2.D1 := P_S1.1;
+Q3.D1 := P_S1.2;
+Q4.D1 := P_S1.3;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="State_02_E">
+			<ST><![CDATA[
+Q1.D1 := P_S2.0;
+Q2.D1 := P_S2.1;
+Q3.D1 := P_S2.2;
+Q4.D1 := P_S2.3;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="State_03_E">
+			<ST><![CDATA[
+Q1.D1 := P_S3.0;
+Q2.D1 := P_S3.1;
+Q3.D1 := P_S3.2;
+Q4.D1 := P_S3.3;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="State_04_E">
+			<ST><![CDATA[
+Q1.D1 := P_S4.0;
+Q2.D1 := P_S4.1;
+Q3.D1 := P_S4.2;
+Q4.D1 := P_S4.3;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="RESET_Outs">
+			<ST><![CDATA[
+Q1.D1 := FALSE;
+Q2.D1 := FALSE;
+Q3.D1 := FALSE;
+Q4.D1 := FALSE;
+]]></ST>
+		</Algorithm>
+	</BasicFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

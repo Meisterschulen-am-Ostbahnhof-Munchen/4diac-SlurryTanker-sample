@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="ILOCK_CONFLICT_TRIP" Comment="Prioritizes the first active input and trips on conflict. Requires RESET.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-04-19" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::signalprocessing::interlock">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="EI_UP" Type="Event">
+				<With Var="DI_UP"/>
+			</Event>
+			<Event Name="EI_DOWN" Type="Event">
+				<With Var="DI_DOWN"/>
+			</Event>
+			<Event Name="EI_RESET" Type="Event">
+				<With Var="DI_UP"/>
+				<With Var="DI_DOWN"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="EO_UP" Type="Event">
+				<With Var="DO_UP"/>
+			</Event>
+			<Event Name="EO_DOWN" Type="Event">
+				<With Var="DO_DOWN"/>
+			</Event>
+			<Event Name="EO_TRIP" Type="Event">
+				<With Var="DO_TRIP"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="DI_UP" Type="BOOL" Comment="TRUE = forward, up, right, clockwise"/>
+			<VarDeclaration Name="DI_DOWN" Type="BOOL" Comment="TRUE = backward, down, left, counter-clockwise"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="DO_UP" Type="BOOL" Comment="TRUE = forward, up, right, clockwise"/>
+			<VarDeclaration Name="DO_DOWN" Type="BOOL" Comment="TRUE = backward, down, left, counter-clockwise"/>
+			<VarDeclaration Name="DO_TRIP" Type="BOOL" Comment="TRUE = Conflict/Trip state active"/>
+		</OutputVars>
+	</InterfaceList>
+	<BasicFB>
+		<ECC>
+			<ECState Name="STOP" x="2800" y="1440">
+				<ECAction Algorithm="STOP" Output="EO_UP"/>
+				<ECAction Output="EO_DOWN"/>
+				<ECAction Output="EO_TRIP"/>
+			</ECState>
+			<ECState Name="UP" x="5120" y="640">
+				<ECAction Algorithm="UP" Output="EO_UP"/>
+			</ECState>
+			<ECState Name="DOWN" x="5040" y="1920">
+				<ECAction Algorithm="DOWN" Output="EO_DOWN"/>
+			</ECState>
+			<ECState Name="TRIP" x="7200" y="1440">
+				<ECAction Algorithm="TRIP" Output="EO_UP"/>
+				<ECAction Output="EO_DOWN"/>
+				<ECAction Output="EO_TRIP"/>
+			</ECState>
+			<ECTransition Source="STOP" Destination="UP" Condition="EI_UP[DI_UP AND NOT DI_DOWN]" x="4173.33" y="1020"/>
+			<ECTransition Source="STOP" Destination="DOWN" Condition="EI_DOWN[DI_DOWN AND NOT DI_UP]" x="4133.33" y="1733.33"/>
+			<ECTransition Source="STOP" Destination="TRIP" Condition="EI_UP[DI_UP AND DI_DOWN]" x="5000" y="1200"/>
+			<ECTransition Source="STOP" Destination="TRIP" Condition="EI_DOWN[DI_UP AND DI_DOWN]" x="5000" y="1400"/>
+			<ECTransition Source="UP" Destination="STOP" Condition="EI_UP[NOT DI_UP]" x="4000" y="800"/>
+			<ECTransition Source="UP" Destination="TRIP" Condition="EI_DOWN[DI_DOWN]" x="6200" y="1000"/>
+			<ECTransition Source="DOWN" Destination="STOP" Condition="EI_DOWN[NOT DI_DOWN]" x="3800" y="1800"/>
+			<ECTransition Source="DOWN" Destination="TRIP" Condition="EI_UP[DI_UP]" x="6000" y="1600"/>
+			<ECTransition Source="TRIP" Destination="STOP" Condition="EI_RESET[NOT DI_UP AND NOT DI_DOWN]" x="5000" y="2400"/>
+		</ECC>
+		<Algorithm Name="UP">
+			<ST><![CDATA[
+DO_UP := BOOL#TRUE;
+DO_DOWN := BOOL#FALSE;
+DO_TRIP := BOOL#FALSE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="DOWN">
+			<ST><![CDATA[
+DO_UP := BOOL#FALSE;
+DO_DOWN := BOOL#TRUE;
+DO_TRIP := BOOL#FALSE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="STOP">
+			<ST><![CDATA[
+DO_UP := BOOL#FALSE;
+DO_DOWN := BOOL#FALSE;
+DO_TRIP := BOOL#FALSE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="TRIP">
+			<ST><![CDATA[
+DO_UP := BOOL#FALSE;
+DO_DOWN := BOOL#FALSE;
+DO_TRIP := BOOL#TRUE;
+]]></ST>
+		</Algorithm>
+	</BasicFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

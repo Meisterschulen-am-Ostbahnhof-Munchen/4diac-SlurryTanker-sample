@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="LOG_16" Comment="Ring Logger for ANY Datattype.">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="Franz Höpfinger" Date="2025-10-18" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::utils::logging">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event" Comment="Service Request">
+				<With Var="IN"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+				<With Var="OUT1"/>
+				<With Var="OUT2"/>
+				<With Var="OUT3"/>
+				<With Var="OUT4"/>
+				<With Var="OUT5"/>
+				<With Var="OUT6"/>
+				<With Var="OUT7"/>
+				<With Var="OUT8"/>
+				<With Var="OUT9"/>
+				<With Var="OUT10"/>
+				<With Var="OUT11"/>
+				<With Var="OUT12"/>
+				<With Var="OUT13"/>
+				<With Var="OUT14"/>
+				<With Var="OUT15"/>
+				<With Var="OUT16"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="IN" Type="ANY"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="OUT1" Type="ANY"/>
+			<VarDeclaration Name="OUT2" Type="ANY"/>
+			<VarDeclaration Name="OUT3" Type="ANY"/>
+			<VarDeclaration Name="OUT4" Type="ANY"/>
+			<VarDeclaration Name="OUT5" Type="ANY"/>
+			<VarDeclaration Name="OUT6" Type="ANY"/>
+			<VarDeclaration Name="OUT7" Type="ANY"/>
+			<VarDeclaration Name="OUT8" Type="ANY"/>
+			<VarDeclaration Name="OUT9" Type="ANY"/>
+			<VarDeclaration Name="OUT10" Type="ANY"/>
+			<VarDeclaration Name="OUT11" Type="ANY"/>
+			<VarDeclaration Name="OUT12" Type="ANY"/>
+			<VarDeclaration Name="OUT13" Type="ANY"/>
+			<VarDeclaration Name="OUT14" Type="ANY"/>
+			<VarDeclaration Name="OUT15" Type="ANY"/>
+			<VarDeclaration Name="OUT16" Type="ANY"/>
+		</OutputVars>
+	</InterfaceList>
+	<Attribute Name="eclipse4diac::core::GenericClassName" Value="'GEN_LOG'"/>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

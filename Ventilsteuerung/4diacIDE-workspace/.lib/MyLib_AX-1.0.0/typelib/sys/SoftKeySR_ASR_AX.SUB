@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="SoftKeySR_ASR_AX" Comment="2 SoftKeys (Set/Reset) und GreenWhiteBackground am Set-SoftKey, gebuendelt&#10;hinter einem einzigen ASR_AX-Plug (bidirektional: Set/Reset raus, Zustand rein)&#10;- HMI-Teil, ohne jeden OPC-UA-Bezug, wiederverwendbar">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-04" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+		<Import declaration="isobus::UT::io::Softkey::SoftKeyActivationCode::SK_RELEASED"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="u16ObjId_SET" Type="UINT" Comment="Object ID SoftKey Set (traegt auch das GreenWhiteBackground)" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObjId_RESET" Type="UINT" Comment="Object ID SoftKey Reset" InitialValue="ID_NULL"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="OUT" Type="adapter::types::bidirectional::ASR_AX" Comment="Set/Reset (out), Zustand (in)"/>
+		</Plugs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="SoftKey_SET" Type="isobus::UT::io::Softkey::Softkey_IE" x="-7400" y="-1000">
+			<Parameter Name="InputEvent" Value="SK_RELEASED"/>
+		</FB>
+		<FB Name="SoftKey_RESET" Type="isobus::UT::io::Softkey::Softkey_IE" x="-7400" y="0">
+			<Parameter Name="InputEvent" Value="SK_RELEASED"/>
+		</FB>
+		<FB Name="ASR_2EVENTS_TO_SR" Type="adapter::conversion::unidirectional::ASR_2EVENTS_TO_SR" x="-6100" y="0">
+		</FB>
+		<FB Name="SPLIT" Type="adapter::events::bidirectional::ASR_TO_ASR_AX_SPLIT" x="-4400" y="200">
+		</FB>
+		<SubApp Name="GreenWhiteBackground_AX" Type="MyLib::sys::GreenWhiteBackground1_AX" x="-1400" y="600">
+		</SubApp>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_3">
+		</FB>
+		<EventConnections>
+			<Connection Source="SoftKey_SET.IND" Destination="ASR_2EVENTS_TO_SR.SET" dx1="233.33"/>
+			<Connection Source="SoftKey_RESET.IND" Destination="ASR_2EVENTS_TO_SR.RESET" dx1="233.33"/>
+			<Connection Source="INIT" Destination="SoftKey_SET.INIT"/>
+			<Connection Source="SoftKey_SET.INITO" Destination="SoftKey_RESET.INIT"/>
+			<Connection Source="SoftKey_RESET.INITO" Destination="GreenWhiteBackground_AX.INIT"/>
+			<Connection Source="GreenWhiteBackground_AX.INITO" Destination="INITO"/>
+			<Connection Source="GreenWhiteBackground_AX.INITO" Destination="AND_QO.REQ"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="u16ObjId_SET" Destination="SoftKey_SET.u16ObjId" dx1="2446.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId_RESET" Destination="SoftKey_RESET.u16ObjId" dx1="2446.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId_SET" Destination="GreenWhiteBackground_AX.u16ObjId" dx1="3893.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="SoftKey_SET.QI"/>
+			<Connection Source="QI" Destination="SoftKey_RESET.QI"/>
+			<Connection Source="SoftKey_SET.QO" Destination="AND_QO.IN1"/>
+			<Connection Source="SoftKey_RESET.QO" Destination="AND_QO.IN2"/>
+			<Connection Source="AND_QO.OUT" Destination="QO"/>
+			<Connection Source="QI" Destination="GreenWhiteBackground_AX.QI"/>
+			<Connection Source="GreenWhiteBackground_AX.QO" Destination="AND_QO.IN3"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="ASR_2EVENTS_TO_SR.ASR_OUT" Destination="SPLIT.IN" dx1="540"/>
+			<Connection Source="SPLIT.OUT" Destination="OUT" dx1="900"/>
+			<Connection Source="SPLIT.AX_OUT" Destination="GreenWhiteBackground_AX.DI1" dx1="900"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

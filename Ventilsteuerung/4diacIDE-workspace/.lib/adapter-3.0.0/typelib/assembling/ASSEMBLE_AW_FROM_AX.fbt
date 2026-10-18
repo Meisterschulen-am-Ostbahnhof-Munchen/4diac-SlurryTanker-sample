@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="ASSEMBLE_AW_FROM_AX" Comment="this Function combines the 16 AX (BOOL) adapters to a AW (WORD)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof&#10;&#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-05-16" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::assembling">
+	</CompilerInfo>
+	<InterfaceList>
+		<Plugs>
+			<AdapterDeclaration Name="OUT" Type="adapter::types::unidirectional::AW" Comment="WORD Output" x="3100" y="100"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="BIT_00" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 0" x="-1200" y="-800"/>
+			<AdapterDeclaration Name="BIT_01" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 1" x="-1200" y="-300"/>
+			<AdapterDeclaration Name="BIT_02" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 2" x="-1200" y="200"/>
+			<AdapterDeclaration Name="BIT_03" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 3" x="-1200" y="700"/>
+			<AdapterDeclaration Name="BIT_04" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 4" x="-1200" y="1200"/>
+			<AdapterDeclaration Name="BIT_05" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 5" x="-1200" y="1700"/>
+			<AdapterDeclaration Name="BIT_06" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 6" x="-1200" y="2200"/>
+			<AdapterDeclaration Name="BIT_07" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 7" x="-1200" y="2700"/>
+			<AdapterDeclaration Name="BIT_08" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 8" x="-1200" y="3200"/>
+			<AdapterDeclaration Name="BIT_09" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 9" x="-1200" y="3700"/>
+			<AdapterDeclaration Name="BIT_10" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 10" x="-1200" y="4200"/>
+			<AdapterDeclaration Name="BIT_11" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 11" x="-1200" y="4700"/>
+			<AdapterDeclaration Name="BIT_12" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 12" x="-1200" y="5200"/>
+			<AdapterDeclaration Name="BIT_13" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 13" x="-1200" y="5700"/>
+			<AdapterDeclaration Name="BIT_14" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 14" x="-1200" y="6200"/>
+			<AdapterDeclaration Name="BIT_15" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 15" x="-1200" y="6700"/>
+		</Sockets>
+	</InterfaceList>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

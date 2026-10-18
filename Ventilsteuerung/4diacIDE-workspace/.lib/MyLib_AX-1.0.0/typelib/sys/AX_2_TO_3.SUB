@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="AX_2_TO_3" Comment="UP/DOWN durchgereicht + gemeinsames ODER (z.B. Treiber-Enable) als drittes&#10;Signal - kein generischer ODER+SPLIT-Baustein, siehe AX_2_3 dafuer">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH  " Version="1.0" Author="Franz Höpfinger" Date="2026-04-19">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<Plugs>
+			<AdapterDeclaration Name="UP_OUT" Type="adapter::types::unidirectional::AX"/>
+			<AdapterDeclaration Name="OR_OUT" Type="adapter::types::unidirectional::AX"/>
+			<AdapterDeclaration Name="DOWN_OUT" Type="adapter::types::unidirectional::AX"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="UP_IN" Type="adapter::types::unidirectional::AX"/>
+			<AdapterDeclaration Name="DOWN_IN" Type="adapter::types::unidirectional::AX"/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="AX_SPLIT_DOWN" Type="adapter::events::unidirectional::AX_SPLIT_2" x="900" y="-200">
+		</FB>
+		<FB Name="AX_SPLIT_UP" Type="adapter::events::unidirectional::AX_SPLIT_2" x="900" y="-1100">
+		</FB>
+		<FB Name="AX_OR_2" Type="adapter::booleanOperators::AX_OR_2" x="2300" y="-700">
+		</FB>
+		<AdapterConnections>
+			<Connection Source="AX_SPLIT_DOWN.OUT1" Destination="AX_OR_2.IN2" dx1="466.67"/>
+			<Connection Source="AX_SPLIT_UP.OUT2" Destination="AX_OR_2.IN1" dx1="500"/>
+			<Connection Source="DOWN_IN" Destination="AX_SPLIT_DOWN.IN" dx1="520"/>
+			<Connection Source="AX_SPLIT_DOWN.OUT2" Destination="DOWN_OUT" dx1="2026.67"/>
+			<Connection Source="UP_IN" Destination="AX_SPLIT_UP.IN" dx1="1346.67"/>
+			<Connection Source="AX_SPLIT_UP.OUT1" Destination="UP_OUT" dx1="813.33"/>
+			<Connection Source="AX_OR_2.OUT" Destination="OR_OUT" dx1="360"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>UP/DOWN-Passthrough plus gemeinsames ODER als drittes Signal</h1>
+
+<p><strong>Kein generischer ODER+SPLIT-Baustein</strong> wie AX_2_2/AX_2_3/ AX_3_2/AX_3_3, auch wenn der Name das nahelegt. F&uuml;r einen Zweirichtungs-Aktor (z.B. Rechtslauf/Linkslauf eines Motors):</p>
+
+<ul>
+	<li>UP_IN und DOWN_IN werden je einzeln unver&auml;ndert an UP_OUT bzw. DOWN_OUT durchgereicht (je ein eigener AX_SPLIT_2, damit beide Richtungen weiterhin getrennt an ihre jeweiligen physischen Ausg&auml;nge gehen).</li>
+	<li>Zus&auml;tzlich liefert OR_OUT das ODER aus UP_IN und DOWN_IN - &quot;l&auml;uft der Aktor gerade in irgendeine Richtung&quot; - z.B. um einen gemeinsamen Treiber/Enable-Ausgang (Low-Side-Treiber, Freigabe) zu schalten, der f&uuml;r beide Richtungen gebraucht wird.</li>
+</ul>
+
+<p>Reale Verwendung: Uebung_201b_AX&hellip;Uebung_205b_AX, dort speist ein Interlock (ILOCK_AX) UP_IN/DOWN_IN, und OR_OUT schaltet den gemeinsamen Treiber, w&auml;hrend UP_OUT/DOWN_OUT die einzelnen Richtungsausg&auml;nge (Rechtslauf/Linkslauf) treiben.</p>
+
+<p>F&uuml;r eine echte generische &quot;N Quellen ODER-verkn&uuml;pft auf M Ziele verteilt&quot;-Konvertierung ohne Passthrough-Semantik stattdessen AX_2_3 verwenden. Werden UP/DOWN im Rest der Schaltung als geb&uuml;ndeltes A2X statt als zwei einzelne AX-Signale gef&uuml;hrt, A2X_TO_A2X_AX verwenden (gleiches Prinzip, aber A2X-Ein-/Ausgang statt UP_IN/DOWN_IN und UP_OUT/DOWN_OUT).</p>
+]]></Attribute>
+</SubAppType>

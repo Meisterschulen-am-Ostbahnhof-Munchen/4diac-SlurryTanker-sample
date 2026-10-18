@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Function Name="F_NumericObjectPool_S_TO_OBJID" Comment="Extract the ISOBUS Object ID (u16ObjId) out of a NumericObjectPool_S struct.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-11">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::utils::conversion::phys">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event">
+				<With Var="stObj"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event">
+				<With Var=""/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="stObj" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="" Type="UINT"/>
+		</OutputVars>
+	</InterfaceList>
+	<FunctionBody>
+		<ST><![CDATA[PACKAGE logiBUS::utils::conversion::phys;
+
+(* Extract the ISOBUS Object ID (u16ObjId) out of a NumericObjectPool_S struct. *)
+FUNCTION F_NumericObjectPool_S_TO_OBJID : UINT
+
+VAR_INPUT
+	stObj : NumericObjectPool_S;
+END_VAR
+
+F_NumericObjectPool_S_TO_OBJID := stObj.u16ObjId;
+
+END_FUNCTION
+]]></ST>
+	</FunctionBody>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</Function>

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="IG4_NAME_Functions" Comment="Industry Group 4 specific function defines">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Organization="Demmler Andreas Fahrzeugbau" Version="1.0" Author="Franz Höpfinger" Date="2026-06-29">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::pgn::const">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="F_ALARM_SYSTEM_CONTROL_FOR_MARINE_ENGINES" Type="BYTE" Comment="Sys: Non-specific System, Func: Alarm System Control for Marine Engines - The ECU that controls" InitialValue="128"/>
+		<VarDeclaration Name="F_PROTECTION_SYSTEM_FOR_MARINE_ENGINES" Type="BYTE" Comment="Sys: Non-specific System, Func: Protection System for Marine Engines - The first ECU that" InitialValue="129"/>
+		<VarDeclaration Name="F_DISPLAY_FOR_PROTECTION_SYSTEM_FOR_MARINE_ENGINES" Type="BYTE" Comment="Sys: Non-specific System, Func: Display for Protection System for Marine Engines - The ECU that" InitialValue="130"/>
+		<VarDeclaration Name="F_NOT_AVAILABLE" Type="BYTE" Comment="Sys: Non-specific System, Func: Not Available - This assignment can be used until an explicit" InitialValue="255"/>
+		<VarDeclaration Name="F_SYSTEM_TOOLS_NOT_AVAILABLE" Type="BYTE" Comment="Sys: System tools, Func: Not Available" InitialValue="255"/>
+		<VarDeclaration Name="F_SAFETY_SYSTEMS_NOT_AVAILABLE" Type="BYTE" Comment="Sys: Safety systems, Func: Not Available" InitialValue="255"/>
+		<VarDeclaration Name="F_GATEWAY" Type="BYTE" Comment="Sys: Gateway, Func:" InitialValue="130"/>
+		<VarDeclaration Name="F_POWER_MGMT_LIGHTING_SWITCH" Type="BYTE" Comment="Sys: Power management and lighting systems, Func: Switch" InitialValue="130"/>
+		<VarDeclaration Name="F_POWER_MGMT_LIGHTING_LOAD" Type="BYTE" Comment="Sys: Power management and lighting systems, Func: Load" InitialValue="140"/>
+		<VarDeclaration Name="F_STEERING_SYSTEMS_FOLLOW_UP_CONTROLLER" Type="BYTE" Comment="Sys: Steering systems, Func: Follow-up Controller" InitialValue="130"/>
+		<VarDeclaration Name="F_STEERING_SYSTEMS_MODE_CONTROLLER" Type="BYTE" Comment="Sys: Steering systems, Func: Mode Controller" InitialValue="140"/>
+		<VarDeclaration Name="F_STEERING_SYSTEMS_AUTOMATIC_STEERING_CONTROLLER" Type="BYTE" Comment="Sys: Steering systems, Func: Automatic Steering Controller" InitialValue="150"/>
+		<VarDeclaration Name="F_STEERING_SYSTEMS_HEADING_SENSORS" Type="BYTE" Comment="Sys: Steering systems, Func: Heading Sensors" InitialValue="160"/>
+		<VarDeclaration Name="F_PROPULSION_SYSTEMS_ENGINEROOM_MONITORING" Type="BYTE" Comment="Sys: Propulsion systems, Func: Engineroom monitoring" InitialValue="130"/>
+		<VarDeclaration Name="F_PROPULSION_SYSTEMS_ENGINE_INTERFACE" Type="BYTE" Comment="Sys: Propulsion systems, Func: Engine Interface" InitialValue="140"/>
+		<VarDeclaration Name="F_PROPULSION_SYSTEMS_ENGINE_CONTROLLER" Type="BYTE" Comment="Sys: Propulsion systems, Func: Engine Controller" InitialValue="150"/>
+		<VarDeclaration Name="F_PROPULSION_SYSTEMS_ENGINE_GATEWAY" Type="BYTE" Comment="Sys: Propulsion systems, Func: Engine Gateway" InitialValue="160"/>
+		<VarDeclaration Name="F_PROPULSION_SYSTEMS_CONTROL_HEAD" Type="BYTE" Comment="Sys: Propulsion systems, Func: Control Head" InitialValue="170"/>
+		<VarDeclaration Name="F_PROPULSION_SYSTEMS_ACTUATOR" Type="BYTE" Comment="Sys: Propulsion systems, Func: Actuator" InitialValue="180"/>
+		<VarDeclaration Name="F_PROPULSION_SYSTEMS_GAUGE_INTERFACE" Type="BYTE" Comment="Sys: Propulsion systems, Func: Gauge Interface" InitialValue="190"/>
+		<VarDeclaration Name="F_PROPULSION_SYSTEMS_GAUGE_LARGE" Type="BYTE" Comment="Sys: Propulsion systems, Func: Gauge Large" InitialValue="200"/>
+		<VarDeclaration Name="F_PROPULSION_SYSTEMS_GAUGE_SMALL" Type="BYTE" Comment="Sys: Propulsion systems, Func: Gauge Small" InitialValue="210"/>
+		<VarDeclaration Name="F_PROPULSION_SYSTEMS_PROPULSION_SENSORS_GATEWAY" Type="BYTE" Comment="Sys: Propulsion systems, Func: Propulsion Sensors &amp; Gateway" InitialValue="220"/>
+		<VarDeclaration Name="F_NAVIGATION_SYSTEMS_SOUNDER_DEPTH" Type="BYTE" Comment="Sys: Navigation systems, Func: Sounder, depth" InitialValue="130"/>
+		<VarDeclaration Name="F_NAVIGATION_SYSTEMS" Type="BYTE" Comment="Sys: Navigation systems, Func:" InitialValue="140"/>
+		<VarDeclaration Name="F_NAVIGATION_SYSTEMS_GLOBAL_NAVIGATION_SATELLITE_SYSTEM_GNSS" Type="BYTE" Comment="Sys: Navigation systems, Func: Global Navigation Satellite System (GNSS)" InitialValue="145"/>
+		<VarDeclaration Name="F_NAVIGATION_SYSTEMS_LORAN_C" Type="BYTE" Comment="Sys: Navigation systems, Func: Loran C" InitialValue="150"/>
+		<VarDeclaration Name="F_NAVIGATION_SYSTEMS_SPEED_SENSORS" Type="BYTE" Comment="Sys: Navigation systems, Func: Speed Sensors" InitialValue="155"/>
+		<VarDeclaration Name="F_NAVIGATION_SYSTEMS_TURN_RATE_INDICATOR" Type="BYTE" Comment="Sys: Navigation systems, Func: Turn Rate Indicator" InitialValue="160"/>
+		<VarDeclaration Name="F_NAVIGATION_SYSTEMS_INTEGRATED_NAVIGATION" Type="BYTE" Comment="Sys: Navigation systems, Func: Integrated Navigation" InitialValue="170"/>
+		<VarDeclaration Name="F_NAVIGATION_SYSTEMS_RADAR_AND_OR_RADAR_PLOTTING" Type="BYTE" Comment="Sys: Navigation systems, Func: Radar and/or Radar Plotting" InitialValue="200"/>
+		<VarDeclaration Name="F_NAVIGATION_SYSTEMS_ELECTRONIC_CHART_DISPLAY_INFORMATION_SYSTEM_ECDIS" Type="BYTE" Comment="Sys: Navigation systems, Func: Electronic Chart Display &amp; Information System (ECDIS)" InitialValue="205"/>
+		<VarDeclaration Name="F_NAVIGATION_SYSTEMS_ELECTRONIC_CHART_SYSTEM_ECS" Type="BYTE" Comment="Sys: Navigation systems, Func: Electronic Chart System (ECS)" InitialValue="210"/>
+		<VarDeclaration Name="F_NAVIGATION_SYSTEMS_DIRECTION_FINDER" Type="BYTE" Comment="Sys: Navigation systems, Func: Direction Finder" InitialValue="220"/>
+		<VarDeclaration Name="F_COMMUNICATIONS_SYSTEMS_EMERGENCY_POSITION_INDICATING_BEACON_EPIRB" Type="BYTE" Comment="Sys: Communications systems, Func: Emergency Position Indicating Beacon (EPIRB)" InitialValue="130"/>
+		<VarDeclaration Name="F_COMMUNICATIONS_SYSTEMS_AUTOMATIC_IDENTIFICATION_SYSTEM" Type="BYTE" Comment="Sys: Communications systems, Func: Automatic Identification System" InitialValue="140"/>
+		<VarDeclaration Name="F_COMMUNICATIONS_SYSTEMS_DIGITAL_SELECTIVE_CALLING_DSC" Type="BYTE" Comment="Sys: Communications systems, Func: Digital Selective Calling (DSC)" InitialValue="150"/>
+		<VarDeclaration Name="F_COMMUNICATIONS_SYSTEMS_DATA_RECEIVER" Type="BYTE" Comment="Sys: Communications systems, Func: Data Receiver" InitialValue="160"/>
+		<VarDeclaration Name="F_COMMUNICATIONS_SYSTEMS_SATELLITE" Type="BYTE" Comment="Sys: Communications systems, Func: Satellite" InitialValue="170"/>
+		<VarDeclaration Name="F_COMMUNICATIONS_SYSTEMS_RADIO_TELEPHONE_MF_HF" Type="BYTE" Comment="Sys: Communications systems, Func: Radio-Telephone (MF/HF)" InitialValue="180"/>
+		<VarDeclaration Name="F_COMMUNICATIONS_SYSTEMS_RADIO_TELEPHONE_VHF" Type="BYTE" Comment="Sys: Communications systems, Func: Radio-Telephone (VHF)" InitialValue="190"/>
+		<VarDeclaration Name="F_INSTRUMENTATION_GENERAL_TIME_DATE_SYSTEMS" Type="BYTE" Comment="Sys: Instrumentation/general systems, Func: Time/Date systems" InitialValue="130"/>
+		<VarDeclaration Name="F_INSTRUMENTATION_GENERAL_VOYAGE_DATA_RECORDER" Type="BYTE" Comment="Sys: Instrumentation/general systems, Func: Voyage Data Recorder" InitialValue="140"/>
+		<VarDeclaration Name="F_INSTRUMENTATION_GENERAL_INTEGRATED_INSTRUMENTATION" Type="BYTE" Comment="Sys: Instrumentation/general systems, Func: Integrated Instrumentation" InitialValue="150"/>
+		<VarDeclaration Name="F_INSTRUMENTATION_GENERAL_GENERAL_PURPOSE_DISPLAYS" Type="BYTE" Comment="Sys: Instrumentation/general systems, Func: General Purpose Displays" InitialValue="160"/>
+		<VarDeclaration Name="F_INSTRUMENTATION_GENERAL_GENERAL_SENSOR_BOX" Type="BYTE" Comment="Sys: Instrumentation/general systems, Func: General Sensor Box" InitialValue="170"/>
+		<VarDeclaration Name="F_INSTRUMENTATION_GENERAL_WEATHER_INSTRUMENTS" Type="BYTE" Comment="Sys: Instrumentation/general systems, Func: Weather Instruments" InitialValue="180"/>
+		<VarDeclaration Name="F_INSTRUMENTATION_GENERAL_TRANSDUCER_GENERAL" Type="BYTE" Comment="Sys: Instrumentation/general systems, Func: Transducer/general" InitialValue="190"/>
+		<VarDeclaration Name="F_INSTRUMENTATION_GENERAL_NMEA_0183_CONVERTER" Type="BYTE" Comment="Sys: Instrumentation/general systems, Func: NMEA 0183 Converter" InitialValue="200"/>
+		<VarDeclaration Name="F_ENVIRONMENTAL_HVAC_NOT_AVAILABLE" Type="BYTE" Comment="Sys: Environmental (HVAC) systems, Func: Not Available" InitialValue="255"/>
+		<VarDeclaration Name="F_DECK_CARGO_FISHING_NOT_AVAILABLE" Type="BYTE" Comment="Sys: Deck, cargo, and fishing equipment systems, Func: Not Available" InitialValue="255"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE isobus::pgn::const;
+
+// Industry Group 4 specific function defines
+GLOBALCONSTANTS IG4_NAME_Functions
+	// Non-specific System (DC_NON_SPECIFIC_SYSTEM = 0)
+	VAR_GLOBAL CONSTANT
+		F_ALARM_SYSTEM_CONTROL_FOR_MARINE_ENGINES : BYTE := 128; // Sys: Non-specific System, Func: Alarm System Control for Marine Engines - The ECU that controls
+		                                                         // the Alarm functions on an engine of a Marine System.
+		F_PROTECTION_SYSTEM_FOR_MARINE_ENGINES : BYTE := 129; // Sys: Non-specific System, Func: Protection System for Marine Engines - The first ECU that
+		                                                      // controls the Protection functions on the first engine of a Marine System.
+		F_DISPLAY_FOR_PROTECTION_SYSTEM_FOR_MARINE_ENGINES : BYTE := 130; // Sys: Non-specific System, Func: Display for Protection System for Marine Engines - The ECU that
+		                                                                  // provides the display of information and/or indicators associated specifically with the protection
+		                                                                  // sys...
+		F_NOT_AVAILABLE : BYTE := 255; // Sys: Non-specific System, Func: Not Available - This assignment can be used until an explicit
+		                               // function has been assigned.
+	END_VAR
+
+	// System tools (DC_SYSTEM_TOOLS = 10)
+	VAR_GLOBAL CONSTANT
+		F_SYSTEM_TOOLS_NOT_AVAILABLE : BYTE := 255; // Sys: System tools, Func: Not Available
+	END_VAR
+
+	// Safety systems (DC_SAFETY_SYSTEMS = 20)
+	VAR_GLOBAL CONSTANT
+		F_SAFETY_SYSTEMS_NOT_AVAILABLE : BYTE := 255; // Sys: Safety systems, Func: Not Available
+	END_VAR
+
+	// Gateway (DC_GATEWAY = 25)
+	VAR_GLOBAL CONSTANT
+		F_GATEWAY : BYTE := 130; // Sys: Gateway, Func:
+	END_VAR
+
+	// Power management and lighting systems (DC_POWER_MGMT_LIGHTING = 30)
+	VAR_GLOBAL CONSTANT
+		F_POWER_MGMT_LIGHTING_SWITCH : BYTE := 130; // Sys: Power management and lighting systems, Func: Switch
+		F_POWER_MGMT_LIGHTING_LOAD : BYTE := 140; // Sys: Power management and lighting systems, Func: Load
+	END_VAR
+
+	// Steering systems (DC_STEERING_SYSTEMS = 40)
+	VAR_GLOBAL CONSTANT
+		F_STEERING_SYSTEMS_FOLLOW_UP_CONTROLLER : BYTE := 130; // Sys: Steering systems, Func: Follow-up Controller
+		F_STEERING_SYSTEMS_MODE_CONTROLLER : BYTE := 140; // Sys: Steering systems, Func: Mode Controller
+		F_STEERING_SYSTEMS_AUTOMATIC_STEERING_CONTROLLER : BYTE := 150; // Sys: Steering systems, Func: Automatic Steering Controller
+		F_STEERING_SYSTEMS_HEADING_SENSORS : BYTE := 160; // Sys: Steering systems, Func: Heading Sensors
+	END_VAR
+
+	// Propulsion systems (DC_PROPULSION_SYSTEMS = 50)
+	VAR_GLOBAL CONSTANT
+		F_PROPULSION_SYSTEMS_ENGINEROOM_MONITORING : BYTE := 130; // Sys: Propulsion systems, Func: Engineroom monitoring
+		F_PROPULSION_SYSTEMS_ENGINE_INTERFACE : BYTE := 140; // Sys: Propulsion systems, Func: Engine Interface
+		F_PROPULSION_SYSTEMS_ENGINE_CONTROLLER : BYTE := 150; // Sys: Propulsion systems, Func: Engine Controller
+		F_PROPULSION_SYSTEMS_ENGINE_GATEWAY : BYTE := 160; // Sys: Propulsion systems, Func: Engine Gateway
+		F_PROPULSION_SYSTEMS_CONTROL_HEAD : BYTE := 170; // Sys: Propulsion systems, Func: Control Head
+		F_PROPULSION_SYSTEMS_ACTUATOR : BYTE := 180; // Sys: Propulsion systems, Func: Actuator
+		F_PROPULSION_SYSTEMS_GAUGE_INTERFACE : BYTE := 190; // Sys: Propulsion systems, Func: Gauge Interface
+		F_PROPULSION_SYSTEMS_GAUGE_LARGE : BYTE := 200; // Sys: Propulsion systems, Func: Gauge Large
+		F_PROPULSION_SYSTEMS_GAUGE_SMALL : BYTE := 210; // Sys: Propulsion systems, Func: Gauge Small
+		F_PROPULSION_SYSTEMS_PROPULSION_SENSORS_GATEWAY : BYTE := 220; // Sys: Propulsion systems, Func: Propulsion Sensors & Gateway
+	END_VAR
+
+	// Navigation systems (DC_NAVIGATION_SYSTEMS = 60)
+	VAR_GLOBAL CONSTANT
+		F_NAVIGATION_SYSTEMS_SOUNDER_DEPTH : BYTE := 130; // Sys: Navigation systems, Func: Sounder, depth
+		F_NAVIGATION_SYSTEMS : BYTE := 140; // Sys: Navigation systems, Func:
+		F_NAVIGATION_SYSTEMS_GLOBAL_NAVIGATION_SATELLITE_SYSTEM_GNSS : BYTE := 145; // Sys: Navigation systems, Func: Global Navigation Satellite System (GNSS)
+		F_NAVIGATION_SYSTEMS_LORAN_C : BYTE := 150; // Sys: Navigation systems, Func: Loran C
+		F_NAVIGATION_SYSTEMS_SPEED_SENSORS : BYTE := 155; // Sys: Navigation systems, Func: Speed Sensors
+		F_NAVIGATION_SYSTEMS_TURN_RATE_INDICATOR : BYTE := 160; // Sys: Navigation systems, Func: Turn Rate Indicator
+		F_NAVIGATION_SYSTEMS_INTEGRATED_NAVIGATION : BYTE := 170; // Sys: Navigation systems, Func: Integrated Navigation
+		F_NAVIGATION_SYSTEMS_RADAR_AND_OR_RADAR_PLOTTING : BYTE := 200; // Sys: Navigation systems, Func: Radar and/or Radar Plotting
+		F_NAVIGATION_SYSTEMS_ELECTRONIC_CHART_DISPLAY_INFORMATION_SYSTEM_ECDIS : BYTE := 205; // Sys: Navigation systems, Func: Electronic Chart Display & Information System (ECDIS)
+		F_NAVIGATION_SYSTEMS_ELECTRONIC_CHART_SYSTEM_ECS : BYTE := 210; // Sys: Navigation systems, Func: Electronic Chart System (ECS)
+		F_NAVIGATION_SYSTEMS_DIRECTION_FINDER : BYTE := 220; // Sys: Navigation systems, Func: Direction Finder
+	END_VAR
+
+	// Communications systems (DC_COMMUNICATIONS_SYSTEMS = 70)
+	VAR_GLOBAL CONSTANT
+		F_COMMUNICATIONS_SYSTEMS_EMERGENCY_POSITION_INDICATING_BEACON_EPIRB : BYTE := 130; // Sys: Communications systems, Func: Emergency Position Indicating Beacon (EPIRB)
+		F_COMMUNICATIONS_SYSTEMS_AUTOMATIC_IDENTIFICATION_SYSTEM : BYTE := 140; // Sys: Communications systems, Func: Automatic Identification System
+		F_COMMUNICATIONS_SYSTEMS_DIGITAL_SELECTIVE_CALLING_DSC : BYTE := 150; // Sys: Communications systems, Func: Digital Selective Calling (DSC)
+		F_COMMUNICATIONS_SYSTEMS_DATA_RECEIVER : BYTE := 160; // Sys: Communications systems, Func: Data Receiver
+		F_COMMUNICATIONS_SYSTEMS_SATELLITE : BYTE := 170; // Sys: Communications systems, Func: Satellite
+		F_COMMUNICATIONS_SYSTEMS_RADIO_TELEPHONE_MF_HF : BYTE := 180; // Sys: Communications systems, Func: Radio-Telephone (MF/HF)
+		F_COMMUNICATIONS_SYSTEMS_RADIO_TELEPHONE_VHF : BYTE := 190; // Sys: Communications systems, Func: Radio-Telephone (VHF)
+	END_VAR
+
+	// Instrumentation/general systems (DC_INSTRUMENTATION_GENERAL = 80)
+	VAR_GLOBAL CONSTANT
+		F_INSTRUMENTATION_GENERAL_TIME_DATE_SYSTEMS : BYTE := 130; // Sys: Instrumentation/general systems, Func: Time/Date systems
+		F_INSTRUMENTATION_GENERAL_VOYAGE_DATA_RECORDER : BYTE := 140; // Sys: Instrumentation/general systems, Func: Voyage Data Recorder
+		F_INSTRUMENTATION_GENERAL_INTEGRATED_INSTRUMENTATION : BYTE := 150; // Sys: Instrumentation/general systems, Func: Integrated Instrumentation
+		F_INSTRUMENTATION_GENERAL_GENERAL_PURPOSE_DISPLAYS : BYTE := 160; // Sys: Instrumentation/general systems, Func: General Purpose Displays
+		F_INSTRUMENTATION_GENERAL_GENERAL_SENSOR_BOX : BYTE := 170; // Sys: Instrumentation/general systems, Func: General Sensor Box
+		F_INSTRUMENTATION_GENERAL_WEATHER_INSTRUMENTS : BYTE := 180; // Sys: Instrumentation/general systems, Func: Weather Instruments
+		F_INSTRUMENTATION_GENERAL_TRANSDUCER_GENERAL : BYTE := 190; // Sys: Instrumentation/general systems, Func: Transducer/general
+		F_INSTRUMENTATION_GENERAL_NMEA_0183_CONVERTER : BYTE := 200; // Sys: Instrumentation/general systems, Func: NMEA 0183 Converter
+	END_VAR
+
+	// Environmental (HVAC) systems (DC_ENVIRONMENTAL_HVAC = 90)
+	VAR_GLOBAL CONSTANT
+		F_ENVIRONMENTAL_HVAC_NOT_AVAILABLE : BYTE := 255; // Sys: Environmental (HVAC) systems, Func: Not Available
+	END_VAR
+
+	// Deck, cargo, and fishing equipment systems (DC_DECK_CARGO_FISHING = 100)
+	VAR_GLOBAL CONSTANT
+		F_DECK_CARGO_FISHING_NOT_AVAILABLE : BYTE := 255; // Sys: Deck, cargo, and fishing equipment systems, Func: Not Available
+	END_VAR
+
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</GlobalConstants>

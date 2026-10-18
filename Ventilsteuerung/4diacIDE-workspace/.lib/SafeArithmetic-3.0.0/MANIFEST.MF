@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Manifest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="platform:/resource/org.eclipse.fordiac.ide.library.model/model/library.xsd" Scope="Library">
+  <Dependencies>
+    <Required SymbolicName="core" Version="3.0.0"/>
+  </Dependencies>
+  <Product Comment="Saturating/checked arithmetic for measurement-technology use (clamping + LIMIT_HIT on overflow/underflow/division-by-zero)" Name="SafeArithmetic" SymbolicName="SafeArithmetic">
+    <VersionInfo Author="Franz Höpfinger" Date="2026-08-27" Version="3.0.0"/>
+  </Product>
+</Manifest>

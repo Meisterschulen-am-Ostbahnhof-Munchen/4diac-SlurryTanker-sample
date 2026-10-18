@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="AE_TO_AE2" Comment="Composite FB for convert unidirectional AE to bidirectional AE2">
+	<Identification Standard="61499-2" Function="AE_IN publishes its event onto the outgoing (EO1) side of AE2_BIDIR. Whatever AE2_BIDIR receives on its incoming (EI1) side is forwarded out again as a plain unidirectional event via AE_OUT." Description="Copyright (c) 2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-08-31" Remarks="Initial Version">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::conversion::bidirectional">
+	</CompilerInfo>
+	<InterfaceList>
+		<Sockets>
+			<AdapterDeclaration Name="AE_IN" Type="adapter::types::unidirectional::AE" Comment="Adapter Input: unidirectional source" x="-1200" y="900"/>
+		</Sockets>
+		<Plugs>
+			<AdapterDeclaration Name="AE2_BIDIR" Type="adapter::types::bidirectional::AE2" Comment="Adapter Output: bidirectional tap, outgoing side driven by AE_IN, incoming side forwarded to AE_OUT" x="200" y="900"/>
+			<AdapterDeclaration Name="AE_OUT" Type="adapter::types::unidirectional::AE" Comment="Adapter Output: mirrors AE2_BIDIR's incoming (request) side" x="1600" y="900"/>
+		</Plugs>
+	</InterfaceList>
+	<FBNetwork>
+		<EventConnections>
+			<Connection Source="AE_IN.E1" Destination="AE2_BIDIR.EO1"/>
+			<Connection Source="AE2_BIDIR.EI1" Destination="AE_OUT.E1"/>
+		</EventConnections>
+	</FBNetwork>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataType Name="BargraphSplit_S" Comment="ISOBUS UT split-bargraph object pool properties (two adjacent Linear Bar Graphs visualizing one signed value as two unsigned magnitude fills)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-05" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::utils::bargraph">
+		<Import declaration="logiBUS::utils::conversion::phys::NumericObjectPool_S"/>
+	</CompilerInfo>
+	<StructuredType>
+		<VarDeclaration Name="stLeft" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object pool properties of the Linear Bar Graph filling outward for negative values"/>
+		<VarDeclaration Name="stRight" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object pool properties of the Linear Bar Graph filling outward for positive values"/>
+		<VarDeclaration Name="r32MinMagnitude" Type="REAL" Comment="Shared lower clamp bound for both sides' magnitude, matches both Bargraphs' own Min" InitialValue="0.0"/>
+		<VarDeclaration Name="r32MaxMagnitude" Type="REAL" Comment="Shared upper clamp bound for both sides' magnitude, matches both Bargraphs' own Max" InitialValue="0.0"/>
+	</StructuredType>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</DataType>

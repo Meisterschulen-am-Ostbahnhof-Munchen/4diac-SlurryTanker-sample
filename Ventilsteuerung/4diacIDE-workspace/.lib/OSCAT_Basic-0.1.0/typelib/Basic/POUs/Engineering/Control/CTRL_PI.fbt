@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="CTRL_PI" Comment="FT_PI is a PI controller with manual functionality.">
+	<Identification Standard="61499-2" Description="version 2.0&#9;30. jun 2008&#10;programmer &#9;hugo&#10;tested by&#9;oscat&#10;&#10;FT_PI is a PI controller with manual functionality.&#10;The PID controller works according to the fomula Y = e *(KP+ KI * INTEG(e) ) + offset, while e = set_point - actual.&#10;a rst will reset all internal data, while a switch to manual will cause the controller to follow the function Y = manual_in + offset.&#10;limit_h and Limit_l set the possible output range of Y.&#10;the output flags lim will signal that the output limits are active and overflow will signal that the integrator has reached its limits.&#10;&#10;since rev 1.1 the &quot;trapezregel is used for more accuracy.&#10;rev 1.2 added selective integratin which means the integrative component is only active within a small range of the target value &#10;this avoids the integrator to go to limits while an input setpoint change happened and is only causing overshoots.&#10;the int_band is by default 100 which means the int is active all the time and if set to for example to 0.1 the integrator is only active&#10;while the input is between 0.9 and 1.1 of the set_point value.&#10;&#10;default values for KP = 1, TN = 1, TV = 1, LIMIT_L = -1000, LIMIT_H = +1000.">
+	</Identification>
+	<VersionInfo Version="1.0" Author="Franz Höpfinger" Date="2025-12-19" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="OSCAT::Basic::POUs::Engineering::Control">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event" Comment="Normal Execution Request">
+				<With Var="ACT"/>
+				<With Var="SET"/>
+				<With Var="SUP"/>
+				<With Var="OFS"/>
+				<With Var="M_I"/>
+				<With Var="MAN"/>
+				<With Var="KP"/>
+				<With Var="KI"/>
+				<With Var="LL"/>
+				<With Var="LH"/>
+			</Event>
+			<Event Name="RST" Type="Event" Comment="Reset">
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event" Comment="Execution Confirmation">
+				<With Var="Y"/>
+				<With Var="DIFF"/>
+				<With Var="LIM"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="ACT" Type="REAL" Comment="Actual Value"/>
+			<VarDeclaration Name="SET" Type="REAL" Comment="Set Point"/>
+			<VarDeclaration Name="SUP" Type="REAL" Comment="Noise Suppression"/>
+			<VarDeclaration Name="OFS" Type="REAL" Comment="Offset"/>
+			<VarDeclaration Name="M_I" Type="REAL" Comment="Manual Input Value"/>
+			<VarDeclaration Name="MAN" Type="BOOL" Comment="Manual Mode"/>
+			<VarDeclaration Name="KP" Type="REAL" Comment="Proportional Gain" InitialValue="1.0"/>
+			<VarDeclaration Name="KI" Type="REAL" Comment="Integral Gain" InitialValue="1.0"/>
+			<VarDeclaration Name="LL" Type="REAL" Comment="Lower Limit" InitialValue="-1000.0"/>
+			<VarDeclaration Name="LH" Type="REAL" Comment="Upper Limit" InitialValue="1000.0"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="Y" Type="REAL" Comment="Control Output"/>
+			<VarDeclaration Name="DIFF" Type="REAL" Comment="Difference (Error)"/>
+			<VarDeclaration Name="LIM" Type="BOOL" Comment="Limit Reached Flag"/>
+		</OutputVars>
+	</InterfaceList>
+	<SimpleFB>
+		<InternalVars>
+			<FB Name="pi" Type="OSCAT::Basic::POUs::Engineering::Control::FT_PIWL" Comment="Internal PI controller">
+			</FB>
+			<FB Name="co" Type="OSCAT::Basic::POUs::Engineering::Control::CTRL_OUT" Comment="Internal Control Output Instance">
+			</FB>
+		</InternalVars>
+		<ECState Name="REQ">
+			<ECAction Algorithm="REQ" Output="CNF"/>
+		</ECState>
+		<ECState Name="RST">
+			<ECAction Algorithm="RST" Output="CNF"/>
+		</ECState>
+		<Algorithm Name="RST">
+			<ST><![CDATA[
+pi.RST();
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="REQ">
+			<ST><![CDATA[
+DIFF := CTRL_IN(SET, ACT, SUP);
+pi.REQ(in := DIFF, kp := KP, ki := KI, lim_l := LL, lim_h := LH);
+co(ci := pi.Y, OFFSET := OFS, man_in := M_I, lim_l := LL, lim_h := LH, MANUAL := MAN);
+Y := co.Y;
+LIM := co.LIM;
+]]></ST>
+		</Algorithm>
+	</SimpleFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

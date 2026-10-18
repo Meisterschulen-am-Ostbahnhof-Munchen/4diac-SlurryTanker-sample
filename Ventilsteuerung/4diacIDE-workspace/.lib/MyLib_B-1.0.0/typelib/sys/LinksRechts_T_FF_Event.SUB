@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="LinksRechts_T_FF_Event" Comment="Links/Rechts Umschaltung mittels Toggle-Flip-Flop (E_T_FF, Event/BOOL-basiert,&#10;keine Adapter). Schwester-Baustein zu MyLib::sys::AX_LinksRechts_T_FF (dort&#10;AX-Adapter-basiert).">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-09" Remarks="Ausgelagert aus Uebung_006a3_sub zur Wiederverwendung.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="EI" Type="Event">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="EO" Type="Event">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="DI" Type="BOOL"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="Rechts" Type="BOOL"/>
+			<VarDeclaration Name="Links" Type="BOOL"/>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="E_T_FF" Type="iec61499::events::E_T_FF" x="1100" y="-100">
+		</FB>
+		<FB Name="E_SWITCH" Type="iec61499::events::E_SWITCH" x="0" y="-200">
+		</FB>
+		<FB Name="F_NOT" Type="iec61131::bitwiseOperators::F_NOT" x="2100" y="-100">
+		</FB>
+		<EventConnections>
+			<Connection Source="E_T_FF.EO" Destination="F_NOT.REQ"/>
+			<Connection Source="EI" Destination="E_SWITCH.EI" dx1="1700"/>
+			<Connection Source="F_NOT.CNF" Destination="EO" dx1="973.33"/>
+			<Connection Source="E_SWITCH.EO1" Destination="E_T_FF.CLK" dx1="220"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="E_T_FF.Q" Destination="F_NOT.IN"/>
+			<Connection Source="E_T_FF.Q" Destination="Rechts" dx1="153.33"/>
+			<Connection Source="DI" Destination="E_SWITCH.G" dx1="980"/>
+			<Connection Source="F_NOT.OUT" Destination="Links" dx1="1386.67"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

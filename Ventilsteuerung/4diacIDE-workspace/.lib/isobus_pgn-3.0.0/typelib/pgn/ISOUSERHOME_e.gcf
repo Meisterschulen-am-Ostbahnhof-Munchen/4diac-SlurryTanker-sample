@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="ISOUSERHOME_e" Comment="CF / User network location">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Version="1.0" Author="Franz Höpfinger" Date="2025-10-18">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::pgn">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="intern" Type="SINT" InitialValue="0"/>
+		<VarDeclaration Name="network" Type="SINT" Comment="&lt; Internal CF / user" InitialValue="1"/>
+		<VarDeclaration Name="thisMember" Type="SINT" Comment="&lt; External CF / user" InitialValue="2"/>
+		<VarDeclaration Name="notdef" Type="SINT" Comment="&lt; Event is for this internal CF / user" InitialValue="-1"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE isobus::pgn;
+
+GLOBALCONSTANTS ISOUSERHOME_e // CF / User network location
+	VAR_GLOBAL CONSTANT
+		intern : SINT := 0; (* *< Internal CF / user *)
+		network : SINT := 1; (* *< External CF / user *)
+		thisMember : SINT := 2; (* *< Event is for this internal CF / user *)
+		notdef : SINT := -1; (* *< Value not valid *)
+	END_VAR
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</GlobalConstants>

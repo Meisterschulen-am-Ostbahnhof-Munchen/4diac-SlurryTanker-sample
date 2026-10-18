@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="E_FB_TimeOut" Comment="Simple implementation of the timeout services">
+	<Identification Standard="61499-1" Description="Copyright (c) 2017 fortiss GmbH&#10; &#10;This program and the accompanying materials are made&#10;available under the terms of the Eclipse Public License 2.0&#10;which is available at https://www.eclipse.org/legal/epl-2.0/&#10;&#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="3.1" Author="Franz Höpfinger" Date="2026-08-14" Remarks="FB_TON like cyclic Interface">
+	</VersionInfo>
+	<VersionInfo Version="3.0" Author="Patrick Aigner" Date="2025-04-14" Remarks="changed package">
+	</VersionInfo>
+	<VersionInfo Organization="fortiss GmbH" Version="1.0" Author="Alois Zoitl" Date="2017-09-22" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::events::TimeOut">
+	</CompilerInfo>
+	<InterfaceList>
+		<Sockets>
+			<AdapterDeclaration Name="TimeTickSocket" Type="adapter::events::TimeOut::ATimeTick" x="0" y="0"/>
+			<AdapterDeclaration Name="TimeOutSocket" Type="iec61499::events::ATimeOut" x="0" y="900"/>
+		</Sockets>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="DLY" Type="adapter::events::TimeOut::E_FB_DELAY" x="1500" y="300">
+		</FB>
+		<EventConnections>
+			<Connection Source="TimeOutSocket.START" Destination="DLY.START" dx1="220"/>
+			<Connection Source="TimeOutSocket.STOP" Destination="DLY.STOP" dx1="340"/>
+			<Connection Source="DLY.EO" Destination="TimeOutSocket.TimeOut" dx1="1306.67" dx2="1306.67" dy="-1706.67"/>
+			<Connection Source="TimeTickSocket.REQ" Destination="DLY.REQ" dx1="353.33"/>
+			<Connection Source="DLY.CNF" Destination="TimeTickSocket.CNF" dx1="80" dx2="80" dy="-1146.67"/>
+			<Connection Source="DLY.STARTO" Destination="TimeTickSocket.STARTO_IN" dx1="180" dx2="180" dy="-1320"/>
+			<Connection Source="DLY.STOPO" Destination="TimeTickSocket.STOPO_IN" dx1="293.33" dx2="293.33" dy="-1513.33"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="TimeOutSocket.DT" Destination="DLY.DT" dx1="453.33"/>
+			<Connection Source="DLY.ET" Destination="TimeTickSocket.ET" dx1="426.67" dx2="426.67" dy="433.33"/>
+			<Connection Source="DLY.Q" Destination="TimeTickSocket.Q" dx1="880" dx2="880" dy="606.67"/>
+			<Connection Source="DLY.PT" Destination="TimeTickSocket.PT" dx1="686.67" dx2="686.67" dy="426.67"/>
+		</DataConnections>
+	</FBNetwork>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

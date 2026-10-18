@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="BargraphSplitFS" Comment="Visualizes a signed REAL value as two adjacent Linear Bar Graphs (unsigned&#10;magnitude fills meeting at a shared zero point)">
+	<Identification Standard="ISO 11783-6" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0&#10;&#10;Wraps two Q_NumericValue_PHYS instances (ISO 11783-6 F.22) that command a pair of adjacent Linear Bar Graph objects (Annex B.11.3), given an arbitrary signed REAL value. stObj is snapshotted once at INIT via F_MOVE, matching the ScrollFS/PositionMarkerFS pattern. rValue &gt; 0 clamps to [0, r32MaxMagnitude] and is written to the right side; the left side receives 0. rValue &lt; 0 is negated (F_MUL by -1.0), clamped the same way, and written to the left side; the right side receives 0. xOverRight/xOverLeft report a magnitude exceeding r32MaxMagnitude on the respective side. There are deliberately no xUnder outputs: falling below r32MinMagnitude (0) on the currently-inactive side is the normal resting state during ordinary operation, not a diagnostic condition.">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-05" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::UT::Q">
+		<Import declaration="isobus::utils::bargraph::BargraphSplit_S"/>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+				<With Var="stObj"/>
+			</Event>
+			<Event Name="REQ" Type="Event" Comment="Display a new signed value">
+				<With Var="rValue"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+				<With Var="STATUSRight"/>
+				<With Var="s16resultRight"/>
+				<With Var="xOverRight"/>
+				<With Var="STATUSLeft"/>
+				<With Var="s16resultLeft"/>
+				<With Var="xOverLeft"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="stObj" Type="isobus::utils::bargraph::BargraphSplit_S" Comment="Split-bargraph object pool properties (left/right Bargraph refs, shared magnitude bounds), snapshotted at INIT"/>
+			<VarDeclaration Name="rValue" Type="REAL" Comment="Signed physical value to display - from any source, not limited to NumericValue_PHYS"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="STATUSRight" Type="STRING" Comment="Service Status - passthrough from the internal right-side Q_NumericValue_PHYS"/>
+			<VarDeclaration Name="s16resultRight" Type="INT" Comment="retval - passthrough from the internal right-side Q_NumericValue_PHYS"/>
+			<VarDeclaration Name="xOverRight" Type="BOOL" Comment="rValue exceeded stObj.r32MaxMagnitude and the right side was clamped"/>
+			<VarDeclaration Name="STATUSLeft" Type="STRING" Comment="Service Status - passthrough from the internal left-side Q_NumericValue_PHYS"/>
+			<VarDeclaration Name="s16resultLeft" Type="INT" Comment="retval - passthrough from the internal left-side Q_NumericValue_PHYS"/>
+			<VarDeclaration Name="xOverLeft" Type="BOOL" Comment="-rValue exceeded stObj.r32MaxMagnitude and the left side was clamped"/>
+		</OutputVars>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="Snap" Type="iec61131::selection::F_MOVE" x="-7600" y="500">
+			<Attribute Name="DataType" Value="isobus::utils::bargraph::BargraphSplit_S"/>
+			<Parameter Name="OUT.stLeft" Value="">
+				<Attribute Name="Visible" Value="true"/>
+			</Parameter>
+			<Parameter Name="OUT.stRight" Value="">
+				<Attribute Name="Visible" Value="true"/>
+			</Parameter>
+			<Parameter Name="OUT.r32MinMagnitude" Value="">
+				<Attribute Name="Visible" Value="true"/>
+			</Parameter>
+			<Parameter Name="OUT.r32MaxMagnitude" Value="">
+				<Attribute Name="Visible" Value="true"/>
+			</Parameter>
+		</FB>
+		<FB Name="ClampRight" Type="logiBUS::signalprocessing::clamp::F_ClampReal" x="0" y="2000">
+		</FB>
+		<FB Name="NumRight" Type="isobus::UT::Q::Q_NumericValue_PHYS" x="1700" y="1900">
+		</FB>
+		<FB Name="NegateValue" Type="iec61131::arithmetic::F_MUL" x="-2000" y="900">
+			<Parameter Name="IN2" Value="REAL#-1.0"/>
+		</FB>
+		<FB Name="ClampLeft" Type="logiBUS::signalprocessing::clamp::F_ClampReal" x="0" y="900">
+		</FB>
+		<FB Name="NumLeft" Type="isobus::UT::Q::Q_NumericValue_PHYS" x="1600" y="800">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="Snap.REQ" dx1="420"/>
+			<Connection Source="Snap.CNF" Destination="NumRight.INIT" dx1="1800">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="NumRight.INITO" Destination="NumLeft.INIT" dx1="80" dx2="80" dy="-546.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="NumLeft.INITO" Destination="INITO" dx1="1800">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="REQ" Destination="ClampRight.REQ" dx1="633.33"/>
+			<Connection Source="ClampRight.CNF" Destination="NumRight.REQ" dx1="220"/>
+			<Connection Source="NumRight.CNF" Destination="NegateValue.REQ" dx1="80" dx2="80" dy="-600"/>
+			<Connection Source="NegateValue.CNF" Destination="ClampLeft.REQ"/>
+			<Connection Source="ClampLeft.CNF" Destination="NumLeft.REQ" dx1="526.67"/>
+			<Connection Source="NumLeft.CNF" Destination="CNF" dx1="1060"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="stObj" Destination="Snap.IN" dx1="386.67"/>
+			<Connection Source="Snap.OUT.stRight" Destination="NumRight.stObj" dx1="1800">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Snap.OUT.stLeft" Destination="NumLeft.stObj" dx1="1800">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="rValue" Destination="ClampRight.rIn" dx1="1000"/>
+			<Connection Source="Snap.OUT.r32MinMagnitude" Destination="ClampRight.rMin" dx1="400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Snap.OUT.r32MaxMagnitude" Destination="ClampRight.rMax" dx1="400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ClampRight." Destination="NumRight.rPhys" dx1="220"/>
+			<Connection Source="rValue" Destination="NegateValue.IN1" dx1="4633.33"/>
+			<Connection Source="NegateValue.OUT" Destination="ClampLeft.rIn"/>
+			<Connection Source="Snap.OUT.r32MinMagnitude" Destination="ClampLeft.rMin" dx1="1000">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Snap.OUT.r32MaxMagnitude" Destination="ClampLeft.rMax" dx1="1000">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ClampLeft." Destination="NumLeft.rPhys" dx1="526.67"/>
+			<Connection Source="NumRight.STATUS" Destination="STATUSRight" dx1="1266.67"/>
+			<Connection Source="NumRight.s16result" Destination="s16resultRight" dx1="1366.67"/>
+			<Connection Source="ClampRight.xOver" Destination="xOverRight" dx1="3706.67"/>
+			<Connection Source="NumLeft.STATUS" Destination="STATUSLeft" dx1="1266.67"/>
+			<Connection Source="NumLeft.s16result" Destination="s16resultLeft" dx1="1366.67"/>
+			<Connection Source="ClampLeft.xOver" Destination="xOverLeft" dx1="3606.67"/>
+		</DataConnections>
+	</FBNetwork>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

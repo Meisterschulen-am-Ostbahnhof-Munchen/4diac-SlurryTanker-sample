@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="ASRT_AX_T_FF_SR_2" Comment="Event-driven bistable and Toggle, bidirectional Socket (Set/Reset/Toggle in,&#10;state back out via the same adapter)">
+	<Identification Standard="61499-1 Annex A" Description="Copyright (c) 2026 HR Agrartechnik GmbH&#10; &#10;This program and the accompanying materials are made&#10;available under the terms of the Eclipse Public License 2.0&#10;which is available at https://www.eclipse.org/legal/epl-2.0/&#10;&#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-09-03" Remarks="wie ASRT_AX_T_FF_SR, aber mit bidirektionalem ASRT_AX-Socket statt unidirektionalem ASRT-Socket + separatem AX-Plug - der Zustand geht ueber denselben Adapter zurueck">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::events::bidirectional">
+	</CompilerInfo>
+	<InterfaceList>
+		<Sockets>
+			<AdapterDeclaration Name="S_R_T" Type="adapter::types::bidirectional::ASRT_AX" Comment="Set/Reset/Toggle (in), Zustand (out)"/>
+		</Sockets>
+	</InterfaceList>
+	<BasicFB>
+		<ECC>
+			<ECState Name="START" Comment="Initial State" x="500" y="385">
+			</ECState>
+			<ECState Name="SET" x="1200" y="400">
+				<ECAction Algorithm="SET" Output="S_R_T.EI1"/>
+			</ECState>
+			<ECState Name="RESET" x="1165" y="845">
+				<ECAction Algorithm="RESET" Output="S_R_T.EI1"/>
+			</ECState>
+			<ECTransition Source="START" Destination="SET" Condition="S_R_T.SET" x="995" y="455"/>
+			<ECTransition Source="SET" Destination="RESET" Condition="S_R_T.RESET" x="1205" y="685"/>
+			<ECTransition Source="RESET" Destination="SET" Condition="S_R_T.SET" x="1460" y="675"/>
+			<ECTransition Source="SET" Destination="RESET" Condition="S_R_T.TOGGLE" x="1673.33" y="666.67"/>
+			<ECTransition Source="RESET" Destination="SET" Condition="S_R_T.TOGGLE" x="886.67" y="693.33"/>
+			<ECTransition Source="START" Destination="SET" Condition="S_R_T.TOGGLE" x="966.67" y="200"/>
+		</ECC>
+		<Algorithm Name="SET">
+			<ST><![CDATA[
+S_R_T.DI1 := TRUE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="RESET">
+			<ST><![CDATA[
+S_R_T.DI1 := FALSE;
+]]></ST>
+		</Algorithm>
+	</BasicFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Manifest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="platform:/resource/org.eclipse.fordiac.ide.library.model/model/library.xsd" Scope="Library">
+  <Dependencies>
+    <Required SymbolicName="core" Version="3.0.0"/>
+  </Dependencies>
+  <Product Comment="ISOBUS VT-Objektpool-Bausteine (UT/I, UT/Q, UT/io, UT/status, UT/util, utils/bargraph+childposition+scroll+conversion), herausgeloest aus isobus-3.0.0 - entspricht den FORTE-Modulen isobus_UT + isobus-UT-io (dort nur reine IOHandle-Infrastruktur ohne eigene 4diac-Typen, deshalb hier zusammengefasst, um die wechselseitige IDs/NumericObjectPool_S-Abhaengigkeit nicht zu zerreissen)" Name="isobus_UT" SymbolicName="isobus_UT">
+    <VersionInfo Author="HR Agrartechnik GmbH" Date="2026-10-14" Version="3.1.1"/>
+  </Product>
+</Manifest>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Manifest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="platform:/resource/org.eclipse.fordiac.ide.library.model/model/library.xsd" Scope="Library">
+  <Dependencies>
+    <Required SymbolicName="OSCAT_Basic" Version="0.1.0"/>
+    <Required SymbolicName="adapter_events" Version="3.0.0"/>
+    <Required SymbolicName="adapter_iec61131-3" Version="3.0.0"/>
+    <Required SymbolicName="adapter_types" Version="3.0.0"/>
+    <Required SymbolicName="events" Version="3.0.0"/>
+  </Dependencies>
+  <Product Comment="Bridges OSCAT and adapter without either depending on the other - AR/AD-adapter wrappers around OSCAT function blocks" Name="OSCAT_adapter" SymbolicName="OSCAT_adapter">
+    <VersionInfo Author="Franz Höpfinger" Date="2026-08-30" Version="3.0.0"/>
+  </Product>
+</Manifest>

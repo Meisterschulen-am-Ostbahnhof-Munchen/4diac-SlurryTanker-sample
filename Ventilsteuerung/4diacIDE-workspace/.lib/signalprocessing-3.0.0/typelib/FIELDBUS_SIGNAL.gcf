@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="FIELDBUS_SIGNAL" Comment="Certain Constants especially for valid, error and not available">
+	<Identification Standard="SAE J1939; ISO 11783" Description="Copyright (c) 2023 HR Agrartechnik GmbH   &#10;   &#10;This program and the accompanying materials are made    &#10;available under the terms of the Eclipse Public License 2.0    &#10;which is available at https://www.eclipse.org/legal/epl-2.0/    &#10;    &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="3.1" Author="Franz Höpfinger" Date="2026-06-01">
+	</VersionInfo>
+	<VersionInfo Version="3.0" Author="Patrick Aigner" Date="2025-04-14" Remarks="changed package">
+	</VersionInfo>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2023-06-06">
+	</VersionInfo>
+	<CompilerInfo packageName="eclipse4diac::signalprocessing">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="REVERSE" Type="BYTE" Comment="Direction reverse (0)" InitialValue="BYTE#16#0"/>
+		<VarDeclaration Name="DISABLED" Type="BYTE" Comment="Not enabled (0)" InitialValue="BYTE#16#0"/>
+		<VarDeclaration Name="DISENGAGED" Type="BYTE" Comment="Switched off (0)" InitialValue="BYTE#16#0"/>
+		<VarDeclaration Name="FORWARD" Type="BYTE" Comment="Direction forward (1)" InitialValue="BYTE#16#1"/>
+		<VarDeclaration Name="ENABLED" Type="BYTE" Comment="Enabled (1)" InitialValue="BYTE#16#1"/>
+		<VarDeclaration Name="ENGAGED" Type="BYTE" Comment="Switched on (1)" InitialValue="BYTE#16#1"/>
+		<VarDeclaration Name="ERROR_INDI_2bit" Type="BYTE" Comment="2 bit error indicator (2 / 0x2)" InitialValue="BYTE#16#2"/>
+		<VarDeclaration Name="NOT_AVAILABLE_2bit" Type="BYTE" Comment="2 bit not available (3 / 0x3)" InitialValue="BYTE#16#3"/>
+		<VarDeclaration Name="DONT_CARE_2bit" Type="BYTE" Comment="2 bit dont care (3 / 0x3)" InitialValue="BYTE#16#3"/>
+		<VarDeclaration Name="ERROR_INDI_3bit" Type="BYTE" Comment="3 bit error indicator (6 / 0x6)" InitialValue="BYTE#16#6"/>
+		<VarDeclaration Name="NOT_AVAILABLE_3bit" Type="BYTE" Comment="3 bit not available (7 / 0x7)" InitialValue="BYTE#16#7"/>
+		<VarDeclaration Name="DONT_CARE_3bit" Type="BYTE" Comment="3 bit dont care (7 / 0x7)" InitialValue="BYTE#16#7"/>
+		<VarDeclaration Name="ERROR_INDI_4bit" Type="BYTE" Comment="4 bit error indicator (14 / 0xE)" InitialValue="BYTE#16#E"/>
+		<VarDeclaration Name="NOT_AVAILABLE_4bit" Type="BYTE" Comment="4 bit not available (15 / 0xF)" InitialValue="BYTE#16#F"/>
+		<VarDeclaration Name="DONT_CARE_4bit" Type="BYTE" Comment="4 bit dont care (15 / 0xF)" InitialValue="BYTE#16#F"/>
+		<VarDeclaration Name="VALID_SIGNAL_B" Type="BYTE" Comment="8 bit valid signal: 0x00..0xFA (0..250)" InitialValue="BYTE#16#FA"/>
+		<VarDeclaration Name="ERROR_INDI_B" Type="BYTE" Comment="8 bit error indicator (254 / 0xFE)" InitialValue="BYTE#16#FE"/>
+		<VarDeclaration Name="NOT_AVAILABLE_B" Type="BYTE" Comment="8 bit not available (255 / 0xFF)" InitialValue="BYTE#16#FF"/>
+		<VarDeclaration Name="DONT_CARE_B" Type="BYTE" Comment="8 bit dont care (255 / 0xFF)" InitialValue="BYTE#16#FF"/>
+		<VarDeclaration Name="VALID_SIGNAL_W" Type="WORD" Comment="16 bit valid signal: 0x0000..0xFAFF (0..64255)" InitialValue="WORD#16#FAFF"/>
+		<VarDeclaration Name="ERROR_INDI_W" Type="WORD" Comment="16 bit error indicator min: 0xFE00 (65024)" InitialValue="WORD#16#FE00"/>
+		<VarDeclaration Name="NOT_AVAILABLE_W" Type="WORD" Comment="16 bit not available min: 0xFF00 (65280)" InitialValue="WORD#16#FF00"/>
+		<VarDeclaration Name="ERROR_INDI_WM" Type="WORD" Comment="16 bit error indicator max: 0xFEFF (65279)" InitialValue="WORD#16#FEFF"/>
+		<VarDeclaration Name="NOT_AVAILABLE_WM" Type="WORD" Comment="16 bit not available max: 0xFFFF (65535)" InitialValue="WORD#16#FFFF"/>
+		<VarDeclaration Name="DONT_CARE_W" Type="WORD" Comment="16 bit dont care (65535 / 0xFFFF)" InitialValue="WORD#16#FFFF"/>
+		<VarDeclaration Name="VALID_SIGNAL_DW" Type="DWORD" Comment="32 bit valid signal: 0x00000000..0xFAFFFFFF (0..4211081215)" InitialValue="DWORD#16#FAFFFFFF"/>
+		<VarDeclaration Name="ERROR_INDI_DW" Type="DWORD" Comment="32 bit error indicator min: 0xFE000000" InitialValue="DWORD#16#FE000000"/>
+		<VarDeclaration Name="NOT_AVAILABLE_DW" Type="DWORD" Comment="32 bit not available min: 0xFF000000" InitialValue="DWORD#16#FF000000"/>
+		<VarDeclaration Name="ERROR_INDI_DWM" Type="DWORD" Comment="32 bit error indicator max: 0xFEFFFFFF" InitialValue="DWORD#16#FEFFFFFF"/>
+		<VarDeclaration Name="NOT_AVAILABLE_DWM" Type="DWORD" Comment="32 bit not available max: 0xFFFFFFFF" InitialValue="DWORD#16#FFFFFFFF"/>
+		<VarDeclaration Name="DONT_CARE_DW" Type="DWORD" Comment="32 bit dont care (0xFFFFFFFF)" InitialValue="DWORD#16#FFFFFFFF"/>
+		<VarDeclaration Name="VALID_SIGNAL_LW" Type="LWORD" Comment="64 bit valid signal: 0x0..0xFAFFFFFFFFFFFFFF (0..18086456103481911935)" InitialValue="LWORD#16#FAFFFFFFFFFFFFFF"/>
+		<VarDeclaration Name="ERROR_INDI_LW" Type="LWORD" Comment="64 bit error indicator min: 0xFE00000000000000" InitialValue="LWORD#16#FE00000000000000"/>
+		<VarDeclaration Name="NOT_AVAILABLE_LW" Type="LWORD" Comment="64 bit not available min: 0xFF00000000000000" InitialValue="LWORD#16#FF00000000000000"/>
+		<VarDeclaration Name="ERROR_INDI_LWM" Type="LWORD" Comment="64 bit error indicator max: 0xFEFFFFFFFFFFFFFF" InitialValue="LWORD#16#FEFFFFFFFFFFFFFF"/>
+		<VarDeclaration Name="NOT_AVAILABLE_LWM" Type="LWORD" Comment="64 bit not available max: 0xFFFFFFFFFFFFFFFF" InitialValue="LWORD#16#FFFFFFFFFFFFFFFF"/>
+		<VarDeclaration Name="DONT_CARE_LW" Type="LWORD" Comment="64 bit dont care (0xFFFFFFFFFFFFFFFF)" InitialValue="LWORD#16#FFFFFFFFFFFFFFFF"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE eclipse4diac::signalprocessing;
+
+GLOBALCONSTANTS FIELDBUS_SIGNAL
+	VAR_GLOBAL CONSTANT
+		(* 1-2 bit *)
+		(* |0|1|2|3| - |0=REV/DIS/DISENG, 1=FWD/EN/ENG| *)
+		REVERSE : BYTE := BYTE#16#0; // Direction reverse (0)
+		DISABLED : BYTE := BYTE#16#0; // Not enabled (0)
+		DISENGAGED : BYTE := BYTE#16#0; // Switched off (0)
+		FORWARD : BYTE := BYTE#16#1; // Direction forward (1)
+		ENABLED : BYTE := BYTE#16#1; // Enabled (1)
+		ENGAGED : BYTE := BYTE#16#1; // Switched on (1)
+
+		(* 2 bit *)
+		(* |0|1|2|3| - |0=OK, 2=ERR, 3=N/A| *)
+		ERROR_INDI_2bit : BYTE := BYTE#16#2; // 2 bit error indicator (2 / 0x2)
+		NOT_AVAILABLE_2bit : BYTE := BYTE#16#3; // 2 bit not available (3 / 0x3)
+		DONT_CARE_2bit : BYTE := BYTE#16#3; // 2 bit dont care (3 / 0x3)
+
+		(* 3 bit *)
+		(* |0..5|6|7| - |0-5=OK, 6=ERR, 7=N/A| *)
+		ERROR_INDI_3bit : BYTE := BYTE#16#6; // 3 bit error indicator (6 / 0x6)
+		NOT_AVAILABLE_3bit : BYTE := BYTE#16#7; // 3 bit not available (7 / 0x7)
+		DONT_CARE_3bit : BYTE := BYTE#16#7; // 3 bit dont care (7 / 0x7)
+
+		(* 4 bit *)
+		(* |0..D|E|F| - |0-D=OK, E=ERR, F=N/A| *)
+		ERROR_INDI_4bit : BYTE := BYTE#16#E; // 4 bit error indicator (14 / 0xE)
+		NOT_AVAILABLE_4bit : BYTE := BYTE#16#F; // 4 bit not available (15 / 0xF)
+		DONT_CARE_4bit : BYTE := BYTE#16#F; // 4 bit dont care (15 / 0xF)
+
+		(* 8 bit *)
+		(* |0x00..0xFA|0xFB..0xFD|0xFE|0xFF| - |valid|res.|ERR|N/A| *)
+		VALID_SIGNAL_B : BYTE := BYTE#16#FA; // 8 bit valid signal: 0x00..0xFA (0..250)
+		ERROR_INDI_B : BYTE := BYTE#16#FE; // 8 bit error indicator (254 / 0xFE)
+		NOT_AVAILABLE_B : BYTE := BYTE#16#FF; // 8 bit not available (255 / 0xFF)
+		DONT_CARE_B : BYTE := BYTE#16#FF; // 8 bit dont care (255 / 0xFF)
+
+		(* 16 bit *)
+		(* |0x0000..0xFAFF|0xFB00..0xFDFF|0xFE00..0xFEFF|0xFF00..0xFFFF| - |valid|res.|ERR|N/A| *)
+		VALID_SIGNAL_W : WORD := WORD#16#FAFF; // 16 bit valid signal: 0x0000..0xFAFF (0..64255)
+		ERROR_INDI_W : WORD := WORD#16#FE00; // 16 bit error indicator min: 0xFE00 (65024)
+		NOT_AVAILABLE_W : WORD := WORD#16#FF00; // 16 bit not available min: 0xFF00 (65280)
+		ERROR_INDI_WM : WORD := WORD#16#FEFF; // 16 bit error indicator max: 0xFEFF (65279)
+		NOT_AVAILABLE_WM : WORD := WORD#16#FFFF; // 16 bit not available max: 0xFFFF (65535)
+		DONT_CARE_W : WORD := WORD#16#FFFF; // 16 bit dont care (65535 / 0xFFFF)
+
+		(* 32 bit *)
+		(* |0x00000000..0xFAFFFFFF|0xFB000000..0xFDFFFFFF|0xFE000000..0xFEFFFFFF|0xFF000000..0xFFFFFFFF|
+		 * - |valid|res.|ERR|N/A| *)
+		VALID_SIGNAL_DW : DWORD := DWORD#16#FAFFFFFF; // 32 bit valid signal: 0x00000000..0xFAFFFFFF (0..4211081215)
+		ERROR_INDI_DW : DWORD := DWORD#16#FE000000; // 32 bit error indicator min: 0xFE000000
+		NOT_AVAILABLE_DW : DWORD := DWORD#16#FF000000; // 32 bit not available min: 0xFF000000
+		ERROR_INDI_DWM : DWORD := DWORD#16#FEFFFFFF; // 32 bit error indicator max: 0xFEFFFFFF
+		NOT_AVAILABLE_DWM : DWORD := DWORD#16#FFFFFFFF; // 32 bit not available max: 0xFFFFFFFF
+		DONT_CARE_DW : DWORD := DWORD#16#FFFFFFFF; // 32 bit dont care (0xFFFFFFFF)
+
+		(* 64 bit *)
+		(* |0x0..0xFAFFFFFFFFFFFFFF|0xFB00000000000000..0xFDFFFFFFFFFFFFFF|0xFE00000000000000..0xFEFFFFFFFFFFFFFF|0xFF00000000000000..0xFFFFFFFFFFFFFFFF|
+		 * - |valid|res.|ERR|N/A| *)
+		VALID_SIGNAL_LW : LWORD := LWORD#16#FAFFFFFFFFFFFFFF; // 64 bit valid signal: 0x0..0xFAFFFFFFFFFFFFFF (0..18086456103481911935)
+		ERROR_INDI_LW : LWORD := LWORD#16#FE00000000000000; // 64 bit error indicator min: 0xFE00000000000000
+		NOT_AVAILABLE_LW : LWORD := LWORD#16#FF00000000000000; // 64 bit not available min: 0xFF00000000000000
+		ERROR_INDI_LWM : LWORD := LWORD#16#FEFFFFFFFFFFFFFF; // 64 bit error indicator max: 0xFEFFFFFFFFFFFFFF
+		NOT_AVAILABLE_LWM : LWORD := LWORD#16#FFFFFFFFFFFFFFFF; // 64 bit not available max: 0xFFFFFFFFFFFFFFFF
+		DONT_CARE_LW : LWORD := LWORD#16#FFFFFFFFFFFFFFFF; // 64 bit dont care (0xFFFFFFFFFFFFFFFF)
+	END_VAR
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</GlobalConstants>

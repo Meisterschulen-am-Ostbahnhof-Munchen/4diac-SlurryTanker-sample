@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="I_Lighting" Comment="Lighting Data LD">
+	<Identification Standard="ISO 11783-7" Classification="PGN 65088" Function="Lighting Data LD" Description="Copyright (c) 2024 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0&#10;&#10;Message providing the status of all lighting functions of a tractor and connected implements.&#10;&#10;https://docs.ms-muc-docs.de/projects/isobus-other-docs/de/latest/PGN/PGN_65088.html">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2024-07-09">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::tecu">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+				<With Var="QI"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+			</Event>
+			<Event Name="IND" Type="Event" Comment="Indication from Resource - feuert bei jedem Zyklus ohne aktiven Timeout und publiziert dabei auch den Reset von Q_timeout auf false.">
+				<With Var="QO"/>
+				<With Var="timestamp_data"/>
+				<With Var="STATUS"/>
+				<With Var="Q_timeout"/>
+				<With Var="DAYTIME_RUNNING_LIGHTS"/>
+				<With Var="ALTERNATE_HEADLIGHTS"/>
+				<With Var="LOW_BEAM_HEADLIGHTS"/>
+				<With Var="HIGH_BEAM_HEADLIGHTS"/>
+				<With Var="TRACTOR_FRONT_FOG_LIGHTS"/>
+				<With Var="ROTATING_BEACON_LIGHT"/>
+				<With Var="RIGHT_TURN_SIGNAL_LIGHTS"/>
+				<With Var="LEFT_TURN_SIGNAL_LIGHTS"/>
+				<With Var="BACK_UP_LIGHTS_AND_ALARM_HORN"/>
+				<With Var="CENTER_STOP_LIGHTS"/>
+				<With Var="RIGHT_STOP_LIGHTS"/>
+				<With Var="LEFT_STOP_LIGHTS"/>
+				<With Var="IMPLEMENT_CLEARANCE_LIGHTS"/>
+				<With Var="TRACTOR_CLEARANCE_LIGHTS"/>
+				<With Var="IMPLEMENT_MARKER_LIGHTS"/>
+				<With Var="TRACTOR_MARKER_LIGHTS"/>
+				<With Var="REAR_FOG_LIGHTS"/>
+				<With Var="TRACTOR_UNDERSIDE_MOUNTED_WORK_LIGHTS"/>
+				<With Var="TRACTOR_REAR_LOW_MOUNTED_WORK_LIGHTS"/>
+				<With Var="TRACTOR_REAR_HIGH_MOUNTED_WORK_LIGHTS"/>
+				<With Var="TRACTOR_SIDE_LOW_MOUNTED_WORK_LIGHTS"/>
+				<With Var="TRACTOR_SIDE_HIGH_MOUNTED_WORK_LIGHTS"/>
+				<With Var="TRACTOR_FRONT_LOW_MOUNTED_WORK_LIGHTS"/>
+				<With Var="TRACTOR_FRONT_HIGH_MOUNTED_WORK_LIGHTS"/>
+				<With Var="IMPLEMENT_OEM_OPTION_2_LIGHT"/>
+				<With Var="IMPLEMENT_OEM_OPTION_1_LIGHT"/>
+				<With Var="IMPLEMENT_RIGHT_FORWARD_WORK_LIGHTS"/>
+				<With Var="IMPLEMENT_LEFT_FORWARD_WORK_LIGHTS"/>
+				<With Var="IMPLEMENT_RIGHT_FACING_WORK_LIGHTS"/>
+				<With Var="IMPLEMENT_LEFT_FACING_WORK_LIGHTS"/>
+				<With Var="IMPLEMENT_REAR_WORK_LIGHTS"/>
+			</Event>
+			<Event Name="TIMEOUT" Type="Event" Comment="Feuert ausschliesslich beim tatsaechlichen Eintreten eines Timeouts (Entry-Trigger). Das Zuruecksetzen von Q_timeout auf false wird NICHT hier, sondern ueber IND gemeldet.">
+				<With Var="timestamp_timeout"/>
+				<With Var="STATUS"/>
+				<With Var="Q_timeout"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
+			<VarDeclaration Name="STATUS" Type="STRING"/>
+			<VarDeclaration Name="Q_timeout" Type="BOOL"/>
+			<VarDeclaration Name="timestamp_timeout" Type="DINT"/>
+			<VarDeclaration Name="timestamp_data" Type="DINT"/>
+			<VarDeclaration Name="DAYTIME_RUNNING_LIGHTS" Type="BYTE" Comment="Daytime running lights 2-bit QUARTER value (see Attributes for Details)" InitialValue="BYTE#16#FF">
+				<Attribute Name="SPN" Type="INT" Value="2404"/>
+				<Attribute Name="SP_Name" Type="STRING" Value="'Daytime running lights'"/>
+				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'1.1'"/>
+				<Attribute Name="SP_Length" Type="INT" Value="2" Comment="2 bits"/>
+				<Attribute Name="Scaling" Type="STRING" Value="'4 states/2 bit'"/>
+				<Attribute Name="Offset" Type="INT" Value=""/>
+				<Attribute Name="Link" Type="STRING" Value="'https://docs.ms-muc-docs.de/projects/isobus-other-docs/de/latest/PGN/PGN_65088.html#spn-2404-daytime-running-lights'"/>
+			</VarDeclaration>
+			<VarDeclaration Name="ALTERNATE_HEADLIGHTS" Type="BYTE" Comment="Alternate headlights 2-bit QUARTER value (see Attributes for Details)" InitialValue="BYTE#16#FF">
+				<Attribute Name="SPN" Type="INT" Value="2352"/>
+				<Attribute Name="SP_Name" Type="STRING" Value="'Alternate headlights'"/>
+				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'1.3'"/>
+				<Attribute Name="SP_Length" Type="INT" Value="2" Comment="2 bits"/>
+				<Attribute Name="Scaling" Type="STRING" Value="'4 states/2 bit'"/>
+				<Attribute Name="Offset" Type="INT" Value=""/>
+				<Attribute Name="Link" Type="STRING" Value="'https://docs.ms-muc-docs.de/projects/isobus-other-docs/de/latest/PGN/PGN_65088.html#spn-2352-alternate-headlights'"/>
+			</VarDeclaration>
+			<VarDeclaration Name="LOW_BEAM_HEADLIGHTS" Type="BYTE" Comment="Low-beam headlights 2-bit QUARTER value (see Attributes for Details)" InitialValue="BYTE#16#FF">
+				<Attribute Name="SPN" Type="INT" Value="2350"/>
+				<Attribute Name="SP_Name" Type="STRING" Value="'Low-beam headlights'"/>
+				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'1.5'"/>
+				<Attribute Name="SP_Length" Type="INT" Value="2" Comment="2 bits"/>
+				<Attribute Name="Scaling" Type="STRING" Value="'4 states/2 bit'"/>
+				<Attribute Name="Offset" Type="INT" Value=""/>
+				<Attribute Name="Link" Type="STRING" Value="'https://docs.ms-muc-docs.de/projects/isobus-other-docs/de/latest/PGN/PGN_65088.html#spn-2350-low-beam-headlights'"/>
+			</VarDeclaration>
+			<VarDeclaration Name="HIGH_BEAM_HEADLIGHTS" Type="BYTE" Comment="High-beam headlights 2-bit QUARTER value (see Attributes for Details)" InitialValue="BYTE#16#FF">
+				<Attribute Name="SPN" Type="INT" Value="2348"/>
+				<Attribute Name="SP_Name" Type="STRING" Value="'High-beam headlights'"/>
+				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'1.7'"/>
+				<Attribute Name="SP_Length" Type="INT" Value="2" Comment="2 bits"/>
+				<Attribute Name="Scaling" Type="STRING" Value="'4 states/2 bit'"/>
+				<Attribute Name="Offset" Type="INT" Value=""/>
+				<Attribute Name="Link" Type="STRING" Value="'https://docs.ms-muc-docs.de/projects/isobus-other-docs/de/latest/PGN/PGN_65088.html#spn-2348-high-beam-headlights'"/>
+			</VarDeclaration>
+			<VarDeclaration Name="TRACTOR_FRONT_FOG_LIGHTS" Type="BYTE" Comment="Tractor front fog lights 2-bit QUARTER value (see Attributes for Details)" InitialValue="BYTE#16#FF">
+				<Attribute Name="SPN" Type="INT" Value="2388"/>
+				<Attribute Name="SP_Name" Type="STRING" Value="'Tractor front fog lights'"/>
+				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'2.1'"/>
+				<Attribute Name="SP_Length" Type="INT" Value="2" Comment="2 bits"/>
+				<Attribute Name="Scaling" Type="STRING" Value="'4 states/2 bit'"/>
+				<Attribute Name="Offset" Type="INT" Value=""/>
+				<Attribute Name="Link" Type="STRING" Value="'https://docs.ms-muc-docs.de/projects/isobus-other-docs/de/latest/PGN/PGN_65088.html#spn-2388-tractor-front-fog-lights'"/>
+			</VarDeclaration>
+			<VarDeclaration Name="ROTATING_BEACON_LIGHT" Type="BYTE" Comment="Rotating beacon light 2-bit QUARTER value (see Attributes for Details)" InitialValue="BYTE#16#FF">
+				<Attribute Name="SPN" Type="INT" Value="2386"/>
+				<Attribute Name="SP_Name" Type="STRING" Value="'Rotating beacon light'"/>
+				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'2.3'"/>
+				<Attribute Name="SP_Length" Type="INT" Value="2" Comment="2 bits"/>
+				<Attribute Name="Scaling" Type="STRING" Value="'4 states/2 bit'"/>
+				<Attribute Name="Offset" Type="INT" Value=""/>
+				<Attribute Name="Link" Type="STRING" Value="'https://docs.ms-muc-docs.de/projects/isobus-other-docs/de/latest/PGN/PGN_65088.html#spn-2386-rotating-beacon-light'"/>
+			</VarDeclaration>
+			<VarDeclaration Name="RIGHT_TURN_SIGNAL_LIGHTS" Type="BYTE" Comment="Right-turn signal lights 2-bit QUARTER value (see Attributes for Details)" InitialValue="BYTE#16#FF">
+				<Attribute Name="SPN" Type="INT" Value="2370"/>
+				<Attribute Name="SP_Name" Type="STRING" Value="'Right-turn signal lights'"/>
+				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'2.5'"/>
+				<Attribute Name="SP_Length" Type="INT" Value="2" Comment="2 bits"/>
+				<Attribute Name="Scaling" Type="STRING" Value="'4 states/2 bit'"/>
+				<Attribute Name="Offset" Type="INT" Value=""/>
+				<Attribute Name="Link" Type="STRING" Value="'https://docs.ms-muc-docs.de/projects/isobus-other-docs/de/latest/PGN/PGN_65088.html#spn-2370-right-turn-signal-lights'"/>
+			</VarDeclaration>
+			<VarDeclaration Name="LEFT_TURN_SIGNAL_LIGHTS" Type="BYTE" Comment="Left-turn signal lights 2-bit QUARTER value (see Attributes for Details)" InitialValue="BYTE#16#FF">
+				<Attribute Name="SPN" Type="INT" Value="2368"/>
+				<Attribute Name="SP_Name" Type="STRING" Value="'Left-turn signal lights'"/>
+				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'2.7'"/>
+				<Attribute Name="SP_Length" Type="INT" Value="2" Comment="2 bits"/>
+				<Attribute Name="Scaling" Type="STRING" Value="'4 states/2 bit'"/>
+				<Attribute Name="Offset" Type="INT" Value=""/>
+				<Attribute Name="Link" Type="STRING" Value="'https://docs.ms-muc-docs.de/projects/isobus-other-docs/de/latest/PGN/PGN_65088.html#spn-2368-left-turn-signal-lights'"/>
+			</VarDeclaration>
+			<VarDeclaration Name="BACK_UP_LIGHTS_AND_ALARM_HORN" Type="BYTE" Comment="Back-up lights and alarm horn 2-bit QUARTER value (see Attributes for Details)" InitialValue="BYTE#16#FF">
+				<Attribute Name="SPN" Type="INT" Value="2392"/>
+				<Attribute Name="SP_Name" Type="STRING" Value="'Back-up lights and alarm horn'"/>
+				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'3.1'"/>
+				<Attribute Name="SP_Length" Type="INT" Value="2" Comment="2 bits"/>
+				<Attribute Name="Scaling" Type="STRING" Value="'4 states/2 bit'"/>
+				<Attribute Name="Offset" Type="INT" Value=""/>
+				<Attribute Name="Link" Type="STRING" Value="'https://docs.ms-muc-docs.de/projects/isobus-other-docs/de/latest/PGN/PGN_65088.html#spn-2392-back-up-lights-and-alarm-horn'"/>
+			</VarDeclaration>
+			<VarDeclaration Name="CENTER_STOP_LIGHTS" Type="BYTE" Comment="Center stop lights 2-bit QUARTER value (see Attributes for Details)" InitialValue="BYTE#16#FF">
+				<Attribute Name="SPN" Type="INT" Value="2376"/>
+				<Attribute Name="SP_Name" Type="STRING" Value="'Center stop lights'"/>
+				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'3.3'"/>
+				<Attribute Name="SP_Length" Type="INT" Value="2" Comment="2 bits"/>
+				<Attribute Name="Scaling" Type="STRING" Value="'4 states/2 bit'"/>
+				<Attribute Name="Offset" Type="INT" Value=""/>
+				<Attribute Name="Link" Type="STRING" Value="'https://docs.ms-muc-docs.de/projects/isobus-other-docs/de/latest/PGN/PGN_65088.html#spn-2376-center-stop-lights'"/>
+			</VarDeclaration>
+			<VarDeclaration Name="RIGHT_STOP_LIGHTS" Type="BYTE" Comment="Right stop lights 2-bit QUARTER value (see Attributes for Details)" InitialValue="BYTE#16#FF">
+				<Attribute Name="SPN" Type="INT" Value="2374"/>
+				<Attribute Name="SP_Name" Type="STRING" Value="'Right stop lights'"/>
+				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'3.5'"/>
+				<Attribute Name="SP_Length" Type="INT" Value="2" Comment="2 bits"/>
+				<Attribute Name="Scaling" Type="STRING" Value="'4 states/2 bit'"/>
+				<Attribute Name="Offset" Type="INT" Value=""/>
+				<Attribute Name="Link" Type="STRING" Value="'https://docs.ms-muc-docs.de/projects/isobus-other-docs/de/latest/PGN/PGN_65088.html#spn-2374-right-stop-lights'"/>
+			</VarDeclaration>
+			<VarDeclaration Name="LEFT_STOP_LIGHTS" Type="BYTE" Comment="Left stop lights 2-bit QUARTER value (see Attributes for Details)" InitialValue="BYTE#16#FF">
+				<Attribute Name="SPN" Type="INT" Value="2372"/>
+				<Attribute Name="SP_Name" Type="STRING" Value="'Left stop lights'"/>
+				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'3.7'"/>
+				<Attribute Name="SP_Length" Type="INT" Value="2" Comment="2 bits"/>
+				<Attribute Name="Scaling" Type="STRING" Value="'4 states/2 bit'"/>
+				<Attribute Name="Offset" Type="INT" Value=""/>
+				<Attribute Name="Link" Type="STRING" Value="'https://docs.ms-muc-docs.de/projects/isobus-other-docs/de/latest/PGN/PGN_65088.html#spn-2372-left-stop-lights'"/>
+			</VarDeclaration>
+			<VarDeclaration Name="IMPLEMENT_CLEARANCE_LIGHTS" Type="BYTE" Comment="Implement clearance lights 2-bit QUARTER value (see Attributes for Details)" InitialValue="BYTE#16#FF">
+				<Attribute Name="SPN" Type="INT" Value="2384"/>
+				<Attribute Name="SP_Name" Type="STRING" Value="'Implement clearance lights'"/>
+				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'4.1'"/>
+				<Attribute Name="SP_Length" Type="INT" Value="2" Comment="2 bits"/>
+				<Attribute Name="Scaling" Type="STRING" Value="'4 states/2 bit'"/>
+				<Attribute Name="Offset" Type="INT" Value=""/>
+				<Attribute Name="Link" Type="STRING" Value="'https://docs.ms-muc-docs.de/projects/isobus-other-docs/de/latest/PGN/PGN_65088.html#spn-2384-implement-clearance-lights'"/>
+			</VarDeclaration>
+			<VarDeclaration Name="TRACTOR_CLEARANCE_LIGHTS" Type="BYTE" Comment="Tractor clearance lights 2-bit QUARTER value (see Attributes for Details)" InitialValue="BYTE#16#FF">
+				<Attribute Name="SPN" Type="INT" Value="2382"/>
+				<Attribute Name="SP_Name" Type="STRING" Value="'Tractor clearance lights'"/>
+				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'4.3'"/>
+				<Attribute Name="SP_Length" Type="INT" Value="2" Comment="2 bits"/>
+				<Attribute Name="Scaling" Type="STRING" Value="'4 states/2 bit'"/>
+				<Attribute Name="Offset" Type="INT" Value=""/>
+				<Attribute Name="Link" Type="STRING" Value="'https://docs.ms-muc-docs.de/projects/isobus-other-docs/de/latest/PGN/PGN_65088.html#spn-2382-tractor-clearance-lights'"/>
+			</VarDeclaration>
+			<VarDeclaration Name="IMPLEMENT_MARKER_LIGHTS" Type="BYTE" Comment="Implement marker (position) lights 2-bit QUARTER value (see Attributes for Details)" InitialValue="BYTE#16#FF">
+				<Attribute Name="SPN" Type="INT" Value="2380"/>
+				<Attribute Name="SP_Name" Type="STRING" Value="'Implement marker (position) lights'"/>
+				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'4.5'"/>
+				<Attribute Name="SP_Length" Type="INT" Value="2" Comment="2 bits"/>
+				<Attribute Name="Scaling" Type="STRING" Value="'4 states/2 bit'"/>
+				<Attribute Name="Offset" Type="INT" Value=""/>
+				<Attribute Name="Link" Type="STRING" Value="'https://docs.ms-muc-docs.de/projects/isobus-other-docs/de/latest/PGN/PGN_65088.html#spn-2380-implement-marker-position-lights'"/>
+			</VarDeclaration>
+			<VarDeclaration Name="TRACTOR_MARKER_LIGHTS" Type="BYTE" Comment="Tractor marker (position) lights 2-bit QUARTER value (see Attributes for Details)" InitialValue="BYTE#16#FF">
+				<Attribute Name="SPN" Type="INT" Value="2378"/>
+				<Attribute Name="SP_Name" Type="STRING" Value="'Tractor marker (position) lights'"/>
+				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'4.7'"/>
+				<Attribute Name="SP_Length" Type="INT" Value="2" Comment="2 bits"/>
+				<Attribute Name="Scaling" Type="STRING" Value="'4 states/2 bit'"/>
+				<Attribute Name="Offset" Type="INT" Value=""/>
+				<Attribute Name="Link" Type="STRING" Value="'https://docs.ms-muc-docs.de/projects/isobus-other-docs/de/latest/PGN/PGN_65088.html#spn-2378-tractor-marker-position-lights'"/>
+			</VarDeclaration>
+			<VarDeclaration Name="REAR_FOG_LIGHTS" Type="BYTE" Comment="Rear fog lights 2-bit QUARTER value (see Attributes for Details)" InitialValue="BYTE#16#FF">
+				<Attribute Name="SPN" Type="INT" Value="2390"/>
+				<Attribute Name="SP_Name" Type="STRING" Value="'Rear fog lights'"/>
+				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'5.1'"/>
+				<Attribute Name="SP_Length" Type="INT" Value="2" Comment="2 bits"/>
+				<Attribute Name="Scaling" Type="STRING" Value="'4 states/2 bit'"/>
+				<Attribute Name="Offset" Type="INT" Value=""/>
+				<Attribute Name="Link" Type="STRING" Value="'https://docs.ms-muc-docs.de/projects/isobus-other-docs/de/latest/PGN/PGN_65088.html#spn-2390-rear-fog-lights'"/>
+			</VarDeclaration>
+			<VarDeclaration Name="TRACTOR_UNDERSIDE_MOUNTED_WORK_LIGHTS" Type="BYTE" Comment="Tractor underside-mounted work lights 2-bit QUARTER value (see Attributes for Details)" InitialValue="BYTE#16#FF">
+				<Attribute Name="SPN" Type="INT" Value="2358"/>
+				<Attribute Name="SP_Name" Type="STRING" Value="'Tractor underside-mounted work lights'"/>
+				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'5.3'"/>
+				<Attribute Name="SP_Length" Type="INT" Value="2" Comment="2 bits"/>
+				<Attribute Name="Scaling" Type="STRING" Value="'4 states/2 bit'"/>
+				<Attribute Name="Offset" Type="INT" Value=""/>
+				<Attribute Name="Link" Type="STRING" Value="'https://docs.ms-muc-docs.de/projects/isobus-other-docs/de/latest/PGN/PGN_65088.html#spn-2358-tractor-underside-mounted-work-lights'"/>
+			</VarDeclaration>
+			<VarDeclaration Name="TRACTOR_REAR_LOW_MOUNTED_WORK_LIGHTS" Type="BYTE" Comment="Tractor rear low-mounted work lights 2-bit QUARTER value (see Attributes for Details)" InitialValue="BYTE#16#FF">
+				<Attribute Name="SPN" Type="INT" Value="2360"/>
+				<Attribute Name="SP_Name" Type="STRING" Value="'Tractor rear low-mounted work lights'"/>
+				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'5.5'"/>
+				<Attribute Name="SP_Length" Type="INT" Value="2" Comment="2 bits"/>
+				<Attribute Name="Scaling" Type="STRING" Value="'4 states/2 bit'"/>
+				<Attribute Name="Offset" Type="INT" Value=""/>
+				<Attribute Name="Link" Type="STRING" Value="'https://docs.ms-muc-docs.de/projects/isobus-other-docs/de/latest/PGN/PGN_65088.html#spn-2360-tractor-rear-low-mounted-work-lights'"/>
+			</VarDeclaration>
+			<VarDeclaration Name="TRACTOR_REAR_HIGH_MOUNTED_WORK_LIGHTS" Type="BYTE" Comment="Tractor rear high-mounted work lights 2-bit QUARTER value (see Attributes for Details)" InitialValue="BYTE#16#FF">
+				<Attribute Name="SPN" Type="INT" Value="2362"/>
+				<Attribute Name="SP_Name" Type="STRING" Value="'Tractor rear high-mounted work lights'"/>
+				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'5.7'"/>
+				<Attribute Name="SP_Length" Type="INT" Value="2" Comment="2 bits"/>
+				<Attribute Name="Scaling" Type="STRING" Value="'4 states/2 bit'"/>
+				<Attribute Name="Offset" Type="INT" Value=""/>
+				<Attribute Name="Link" Type="STRING" Value="'https://docs.ms-muc-docs.de/projects/isobus-other-docs/de/latest/PGN/PGN_65088.html#spn-2362-tractor-rear-high-mounted-work-lights'"/>
+			</VarDeclaration>
+			<VarDeclaration Name="TRACTOR_SIDE_LOW_MOUNTED_WORK_LIGHTS" Type="BYTE" Comment="Tractor side low-mounted work lights 2-bit QUARTER value (see Attributes for Details)" InitialValue="BYTE#16#FF">
+				<Attribute Name="SPN" Type="INT" Value="2364"/>
+				<Attribute Name="SP_Name" Type="STRING" Value="'Tractor side low-mounted work lights'"/>
+				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'6.1'"/>
+				<Attribute Name="SP_Length" Type="INT" Value="2" Comment="2 bits"/>
+				<Attribute Name="Scaling" Type="STRING" Value="'4 states/2 bit'"/>
+				<Attribute Name="Offset" Type="INT" Value=""/>
+				<Attribute Name="Link" Type="STRING" Value="'https://docs.ms-muc-docs.de/projects/isobus-other-docs/de/latest/PGN/PGN_65088.html#spn-2364-tractor-side-low-mounted-work-lights'"/>
+			</VarDeclaration>
+			<VarDeclaration Name="TRACTOR_SIDE_HIGH_MOUNTED_WORK_LIGHTS" Type="BYTE" Comment="Tractor side high-mounted work lights 2-bit QUARTER value (see Attributes for Details)" InitialValue="BYTE#16#FF">
+				<Attribute Name="SPN" Type="INT" Value="2366"/>
+				<Attribute Name="SP_Name" Type="STRING" Value="'Tractor side high-mounted work lights'"/>
+				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'6.3'"/>
+				<Attribute Name="SP_Length" Type="INT" Value="2" Comment="2 bits"/>
+				<Attribute Name="Scaling" Type="STRING" Value="'4 states/2 bit'"/>
+				<Attribute Name="Offset" Type="INT" Value=""/>
+				<Attribute Name="Link" Type="STRING" Value="'https://docs.ms-muc-docs.de/projects/isobus-other-docs/de/latest/PGN/PGN_65088.html#spn-2366-tractor-side-high-mounted-work-lights'"/>
+			</VarDeclaration>
+			<VarDeclaration Name="TRACTOR_FRONT_LOW_MOUNTED_WORK_LIGHTS" Type="BYTE" Comment="Tractor front low-mounted work lights 2-bit QUARTER value (see Attributes for Details)" InitialValue="BYTE#16#FF">
+				<Attribute Name="SPN" Type="INT" Value="2354"/>
+				<Attribute Name="SP_Name" Type="STRING" Value="'Tractor front low-mounted work lights'"/>
+				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'6.5'"/>
+				<Attribute Name="SP_Length" Type="INT" Value="2" Comment="2 bits"/>
+				<Attribute Name="Scaling" Type="STRING" Value="'4 states/2 bit'"/>
+				<Attribute Name="Offset" Type="INT" Value=""/>
+				<Attribute Name="Link" Type="STRING" Value="'https://docs.ms-muc-docs.de/projects/isobus-other-docs/de/latest/PGN/PGN_65088.html#spn-2354-tractor-front-low-mounted-work-lights'"/>
+			</VarDeclaration>
+			<VarDeclaration Name="TRACTOR_FRONT_HIGH_MOUNTED_WORK_LIGHTS" Type="BYTE" Comment="Tractor front high-mounted work lights 2-bit QUARTER value (see Attributes for Details)" InitialValue="BYTE#16#FF">
+				<Attribute Name="SPN" Type="INT" Value="2356"/>
+				<Attribute Name="SP_Name" Type="STRING" Value="'Tractor front high-mounted work lights'"/>
+				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'6.7'"/>
+				<Attribute Name="SP_Length" Type="INT" Value="2" Comment="2 bits"/>
+				<Attribute Name="Scaling" Type="STRING" Value="'4 states/2 bit'"/>
+				<Attribute Name="Offset" Type="INT" Value=""/>
+				<Attribute Name="Link" Type="STRING" Value="'https://docs.ms-muc-docs.de/projects/isobus-other-docs/de/latest/PGN/PGN_65088.html#spn-2356-tractor-front-high-mounted-work-lights'"/>
+			</VarDeclaration>
+			<VarDeclaration Name="IMPLEMENT_OEM_OPTION_2_LIGHT" Type="BYTE" Comment="Implement OEM option 2 light 2-bit QUARTER value (see Attributes for Details)" InitialValue="BYTE#16#FF">
+				<Attribute Name="SPN" Type="INT" Value="2398"/>
+				<Attribute Name="SP_Name" Type="STRING" Value="'Implement OEM option 2 light'"/>
+				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'7.1'"/>
+				<Attribute Name="SP_Length" Type="INT" Value="2" Comment="2 bits"/>
+				<Attribute Name="Scaling" Type="STRING" Value="'4 states/2 bit'"/>
+				<Attribute Name="Offset" Type="INT" Value=""/>
+				<Attribute Name="Link" Type="STRING" Value="'https://docs.ms-muc-docs.de/projects/isobus-other-docs/de/latest/PGN/PGN_65088.html#spn-2398-implement-oem-option-2-light'"/>
+			</VarDeclaration>
+			<VarDeclaration Name="IMPLEMENT_OEM_OPTION_1_LIGHT" Type="BYTE" Comment="Implement OEM option 1 light 2-bit QUARTER value (see Attributes for Details)" InitialValue="BYTE#16#FF">
+				<Attribute Name="SPN" Type="INT" Value="2396"/>
+				<Attribute Name="SP_Name" Type="STRING" Value="'Implement OEM option 1 light'"/>
+				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'7.3'"/>
+				<Attribute Name="SP_Length" Type="INT" Value="2" Comment="2 bits"/>
+				<Attribute Name="Scaling" Type="STRING" Value="'4 states/2 bit'"/>
+				<Attribute Name="Offset" Type="INT" Value=""/>
+				<Attribute Name="Link" Type="STRING" Value="'https://docs.ms-muc-docs.de/projects/isobus-other-docs/de/latest/PGN/PGN_65088.html#spn-2396-implement-oem-option-1-light'"/>
+			</VarDeclaration>
+			<VarDeclaration Name="IMPLEMENT_RIGHT_FORWARD_WORK_LIGHTS" Type="BYTE" Comment="Implement right forward work lights 2-bit QUARTER value (see Attributes for Details)" InitialValue="BYTE#16#FF">
+				<Attribute Name="SPN" Type="INT" Value="2407"/>
+				<Attribute Name="SP_Name" Type="STRING" Value="'Implement right forward work lights'"/>
+				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'7.5'"/>
+				<Attribute Name="SP_Length" Type="INT" Value="2" Comment="2 bits"/>
+				<Attribute Name="Scaling" Type="STRING" Value="'4 states/2 bit'"/>
+				<Attribute Name="Offset" Type="INT" Value=""/>
+				<Attribute Name="Link" Type="STRING" Value="'https://docs.ms-muc-docs.de/projects/isobus-other-docs/de/latest/PGN/PGN_65088.html#spn-2407-implement-right-forward-work-lights'"/>
+			</VarDeclaration>
+			<VarDeclaration Name="IMPLEMENT_LEFT_FORWARD_WORK_LIGHTS" Type="BYTE" Comment="Implement left forward work lights 2-bit QUARTER value (see Attributes for Details)" InitialValue="BYTE#16#FF">
+				<Attribute Name="SPN" Type="INT" Value="2598"/>
+				<Attribute Name="SP_Name" Type="STRING" Value="'Implement left forward work lights'"/>
+				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'7.7'"/>
+				<Attribute Name="SP_Length" Type="INT" Value="2" Comment="2 bits"/>
+				<Attribute Name="Scaling" Type="STRING" Value="'4 states/2 bit'"/>
+				<Attribute Name="Offset" Type="INT" Value=""/>
+				<Attribute Name="Link" Type="STRING" Value="'https://docs.ms-muc-docs.de/projects/isobus-other-docs/de/latest/PGN/PGN_65088.html#spn-2598-implement-left-forward-work-lights'"/>
+			</VarDeclaration>
+			<VarDeclaration Name="IMPLEMENT_RIGHT_FACING_WORK_LIGHTS" Type="BYTE" Comment="Implement right-facing work lights 2-bit QUARTER value (see Attributes for Details)" InitialValue="BYTE#16#FF">
+				<Attribute Name="SPN" Type="INT" Value="2402"/>
+				<Attribute Name="SP_Name" Type="STRING" Value="'Implement right-facing work lights'"/>
+				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'8.3'"/>
+				<Attribute Name="SP_Length" Type="INT" Value="2" Comment="2 bits"/>
+				<Attribute Name="Scaling" Type="STRING" Value="'4 states/2 bit'"/>
+				<Attribute Name="Offset" Type="INT" Value=""/>
+				<Attribute Name="Link" Type="STRING" Value="'https://docs.ms-muc-docs.de/projects/isobus-other-docs/de/latest/PGN/PGN_65088.html#spn-2402-implement-right-facing-work-lights'"/>
+			</VarDeclaration>
+			<VarDeclaration Name="IMPLEMENT_LEFT_FACING_WORK_LIGHTS" Type="BYTE" Comment="Implement left-facing work lights 2-bit QUARTER value (see Attributes for Details)" InitialValue="BYTE#16#FF">
+				<Attribute Name="SPN" Type="INT" Value="2400"/>
+				<Attribute Name="SP_Name" Type="STRING" Value="'Implement left-facing work lights'"/>
+				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'8.5'"/>
+				<Attribute Name="SP_Length" Type="INT" Value="2" Comment="2 bits"/>
+				<Attribute Name="Scaling" Type="STRING" Value="'4 states/2 bit'"/>
+				<Attribute Name="Offset" Type="INT" Value=""/>
+				<Attribute Name="Link" Type="STRING" Value="'https://docs.ms-muc-docs.de/projects/isobus-other-docs/de/latest/PGN/PGN_65088.html#spn-2400-implement-left-facing-work-lights'"/>
+			</VarDeclaration>
+			<VarDeclaration Name="IMPLEMENT_REAR_WORK_LIGHTS" Type="BYTE" Comment="Implement rear work lights 2-bit QUARTER value (see Attributes for Details)" InitialValue="BYTE#16#FF">
+				<Attribute Name="SPN" Type="INT" Value="2394"/>
+				<Attribute Name="SP_Name" Type="STRING" Value="'Implement rear work lights'"/>
+				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'8.7'"/>
+				<Attribute Name="SP_Length" Type="INT" Value="2" Comment="2 bits"/>
+				<Attribute Name="Scaling" Type="STRING" Value="'4 states/2 bit'"/>
+				<Attribute Name="Offset" Type="INT" Value=""/>
+				<Attribute Name="Link" Type="STRING" Value="'https://docs.ms-muc-docs.de/projects/isobus-other-docs/de/latest/PGN/PGN_65088.html#spn-2394-implement-rear-work-lights'"/>
+			</VarDeclaration>
+		</OutputVars>
+	</InterfaceList>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<p>Lighting Data LD</p>
+
+<p>&nbsp;</p>
+
+<p><strong>TIMEOUT / IND Vertrag:</strong> TIMEOUT feuert ausschliesslich beim tatsaechlichen Eintreten eines Timeouts (Q_timeout wird true). Das Zuruecksetzen von Q_timeout auf false (Timeout vorbei) wird bewusst NICHT nochmal separat ueber TIMEOUT gemeldet, sondern kommt ueber IND - das feuert bei jedem Zyklus ohne aktiven Timeout und publiziert Q_timeout mit. Nachgeschaltete Bausteine, die auf das Ende eines Timeouts reagieren muessen, werten dafuer IND mit Q_timeout==false aus, nicht ein zweites TIMEOUT-Event.</p>
+]]></Attribute>
+</FBType>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Button_Toggle_RPC_TO_Remote_BG_Option_OPC" Comment="Wie Button_Toggle_RPC_TO_Remote_BG_OPC (IO-Diag-Taster, Loslassen ruft per&#10;CLIENT_0 eine RPC-Toggle-Methode auf dem Zielmodul auf, Hintergrundfarbe aus&#10;Remote-Subscribe), aber per AOption aktiviert statt QI/INIT. AOption_OUT reicht&#10;die Aktivierung nach dem eigenen INIT weiter (Daisy-Chain).">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-17" Remarks="Kopie von Button_Toggle_RPC_TO_Remote_BG_OPC (Franz: 'kopieren, Variante mit AOption machen') - INIT/INITO/QI/QO ersetzt durch AOption_IN (AOption_X_TO_EVENT) und AOption_OUT (AOption_EVENT_TO_X, Daisy-Chain wie OptionalGroup_001a). AOption_OUT muss weiterverbunden sein (DummyGroup als Kettenende), sonst kommt kein INIT_CNF zurueck.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+		<Import declaration="isobus::UT::io::Button::ButtonActivationCode::BT_RELEASED_UNLATCHED"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<InputVars>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID Button/Background" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="ID_TRIGGER_CALL" Type="WSTRING" Comment="Remote-Methodenadresse (ACTION=CALL_METHOD) fuer den argumentlosen Trigger-Methodenaufruf auf dem Zielmodul"/>
+			<VarDeclaration Name="ID_STATE_READ" Type="WSTRING" Comment="Lokal ueberwachte Adresse (BOOL, ACTION=READ) fuer den Flipflop-Zustand, wird vom Zielmodul remote beschrieben"/>
+		</InputVars>
+		<Plugs>
+			<AdapterDeclaration Name="AOption_OUT" Type="Option::AOption" Comment="Reicht die Aktivierung nach dem eigenen INIT an das naechste Glied weiter (Daisy-Chain) - muss verbunden sein, Kettenende z.B. DummyGroup"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="AOption_IN" Type="Option::AOption" Comment="Treibt INIT/QI - anschliessen an AOption_AUI_DEMUX_N.OUTx oder AOption_OUT einer vorgeschalteten Instanz"/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="AOption_X_TO_EVENT" Type="Option::conversion::AOption_X_TO_EVENT" x="-9400" y="-400">
+		</FB>
+		<FB Name="Button_Toggle" Type="isobus::UT::io::Button::Button_IE" x="-7400" y="-400">
+			<Parameter Name="InputEvent" Value="BT_RELEASED_UNLATCHED"/>
+		</FB>
+		<FB Name="TRIGGER_CLIENT" Type="iec61499::net::CLIENT_0" x="-4000" y="100">
+		</FB>
+		<SubApp Name="GreenWhiteBackground_AX" Type="MyLib::sys::GreenWhiteBackground1_AX" x="-3000" y="900">
+		</SubApp>
+		<FB Name="STATE_SUBSCRIBE" Type="adapter::net::AX_SUBSCRIBE_1" x="-5600" y="900">
+		</FB>
+		<FB Name="AOption_EVENT_TO_X" Type="Option::conversion::AOption_EVENT_TO_X" x="-1000" y="900">
+		</FB>
+		<EventConnections>
+			<Connection Source="Button_Toggle.IND" Destination="TRIGGER_CLIENT.REQ" dx1="373.33"/>
+			<Connection Source="AOption_X_TO_EVENT.INIT_REQ" Destination="Button_Toggle.INIT"/>
+			<Connection Source="Button_Toggle.INITO" Destination="TRIGGER_CLIENT.INIT"/>
+			<Connection Source="TRIGGER_CLIENT.INITO" Destination="STATE_SUBSCRIBE.INIT"/>
+			<Connection Source="STATE_SUBSCRIBE.INITO" Destination="GreenWhiteBackground_AX.INIT"/>
+			<Connection Source="GreenWhiteBackground_AX.INITO" Destination="AOption_EVENT_TO_X.INIT_REQ"/>
+			<Connection Source="AOption_EVENT_TO_X.INIT_CNF" Destination="AOption_X_TO_EVENT.INIT_CNF" dx1="80" dx2="80" dy="-500"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="u16ObjId" Destination="Button_Toggle.u16ObjId" dx1="2373.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId" Destination="GreenWhiteBackground_AX.u16ObjId" dx1="3893.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_TRIGGER_CALL" Destination="TRIGGER_CLIENT.ID" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_STATE_READ" Destination="STATE_SUBSCRIBE.ID" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AOption_X_TO_EVENT.QI_OUT" Destination="Button_Toggle.QI"/>
+			<Connection Source="AOption_X_TO_EVENT.QI_OUT" Destination="TRIGGER_CLIENT.QI"/>
+			<Connection Source="AOption_X_TO_EVENT.QI_OUT" Destination="STATE_SUBSCRIBE.QI"/>
+			<Connection Source="AOption_X_TO_EVENT.QI_OUT" Destination="GreenWhiteBackground_AX.QI"/>
+			<Connection Source="AOption_X_TO_EVENT.QI_OUT" Destination="AOption_EVENT_TO_X.QI_OUT"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="AOption_IN" Destination="AOption_X_TO_EVENT.AOption_IN"/>
+			<Connection Source="AOption_EVENT_TO_X.AOption_OUT" Destination="AOption_OUT" dx1="600"/>
+			<Connection Source="STATE_SUBSCRIBE.OUT" Destination="GreenWhiteBackground_AX.DI1"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

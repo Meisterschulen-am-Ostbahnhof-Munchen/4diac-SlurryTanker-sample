@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="AX_FB_R_IO" Comment="Realizes a monostable reset-dominat (with Adapter)">
+	<Identification Standard="61499-1" Description="Copyright (c) 2023 Martin Erich Jobst, HR Agrartechnik GmbH&#10; &#10;This program and the accompanying materials are made&#10;available under the terms of the Eclipse Public License 2.0&#10;which is available at https://www.eclipse.org/legal/epl-2.0/&#10;&#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Version="3.0" Author="Patrick Aigner" Date="2025-04-14" Remarks="changed package">
+	</VersionInfo>
+	<VersionInfo Version="1.0" Author="Martin Jobst" Date="2023-04-28" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::monostableElements">
+	</CompilerInfo>
+	<InterfaceList>
+		<Plugs>
+			<AdapterDeclaration Name="OUT" Type="adapter::types::unidirectional::AX" Comment="Output"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="RESET1" Type="adapter::types::unidirectional::AX" Comment="Reset"/>
+			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AX" Comment="Input"/>
+		</Sockets>
+	</InterfaceList>
+	<BasicFB>
+		<ECC>
+			<ECState Name="REQ" x="0" y="0">
+				<ECAction Algorithm="REQ" Output="OUT.E1"/>
+			</ECState>
+			<ECTransition Source="REQ" Destination="REQ" Condition="RESET1.E1" x="200" y="713.33"/>
+			<ECTransition Source="REQ" Destination="REQ" Condition="IN.E1" x="-406.67" y="666.67"/>
+		</ECC>
+		<Algorithm Name="REQ" Comment="This algorithm passes the input signal (IN.D1) directly to the output (OUT.D1) during normal&#10;operation. However, if the prioritized reset signal (RESET1.D1) is active, it overrides the input&#10;and forces the output to FALSE.">
+			<ST><![CDATA[
+IF RESET1.D1 THEN
+	OUT.D1 := BOOL#FALSE;
+ELSE
+	OUT.D1 := IN.D1;
+END_IF;
+]]></ST>
+		</Algorithm>
+	</BasicFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

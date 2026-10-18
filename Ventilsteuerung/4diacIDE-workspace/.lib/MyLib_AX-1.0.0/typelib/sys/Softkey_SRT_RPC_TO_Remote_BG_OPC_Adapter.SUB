@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Softkey_SRT_RPC_TO_Remote_BG_OPC_Adapter" Comment="Geraet A (Station 11, 192.168.1.11): wie Softkey_SRT_RPC_TO_Remote_BG_OPC, aber&#10;HMI (3 SoftKeys + GreenWhiteBackground) und OPC-UA-Trigger sind getrennt -&#10;SoftKeySRT_ASRT_AX buendelt die HMI hinter einem ASRT_AX-Plug,&#10;ASRT_AX_CLIENT_0_SUBSCRIBE_1 buendelt die 3 CLIENT_0-Instanzen + AX_SUBSCRIBE_1&#10;hinter einem ASRT_AX-Socket - 'SUB style': das Protokoll steckt im&#10;MyLib::sys-Composite, nicht in der Resource des Geraets">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-04" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="u16ObjId_SET" Type="UINT" Comment="Object ID SoftKey Set" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObjId_RESET" Type="UINT" Comment="Object ID SoftKey Reset" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObjId_TOGGLE" Type="UINT" Comment="Object ID SoftKey Toggle (traegt auch das GreenWhiteBackground)" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="ID_SET_CALL" Type="WSTRING" Comment="Remote-Methodenadresse (ACTION=CALL_METHOD) fuer den Set-Methodenaufruf auf Geraet B"/>
+			<VarDeclaration Name="ID_RESET_CALL" Type="WSTRING" Comment="Remote-Methodenadresse (ACTION=CALL_METHOD) fuer den Reset-Methodenaufruf auf Geraet B"/>
+			<VarDeclaration Name="ID_TOGGLE_CALL" Type="WSTRING" Comment="Remote-Methodenadresse (ACTION=CALL_METHOD) fuer den Toggle-Methodenaufruf auf Geraet B"/>
+			<VarDeclaration Name="ID_STATE_READ" Type="WSTRING" Comment="Lokal ueberwachte Adresse (BOOL, ACTION=READ) fuer den Flipflop-Zustand, wird von Geraet B remote beschrieben"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<SubApp Name="SoftKeySRT_ASRT_AX" Type="MyLib::sys::SoftKeySRT_ASRT_AX" x="-4300" y="800">
+		</SubApp>
+		<FB Name="TRIGGER" Type="adapter::net::ASRT_AX_CLIENT_0_SUBSCRIBE_1" x="-2100" y="-300">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_2">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="TRIGGER.INIT"/>
+			<Connection Source="TRIGGER.INITO" Destination="SoftKeySRT_ASRT_AX.INIT"/>
+			<Connection Source="SoftKeySRT_ASRT_AX.INITO" Destination="INITO"/>
+			<Connection Source="SoftKeySRT_ASRT_AX.INITO" Destination="AND_QO.REQ"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="ID_SET_CALL" Destination="TRIGGER.ID_SET" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_RESET_CALL" Destination="TRIGGER.ID_RESET" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_TOGGLE_CALL" Destination="TRIGGER.ID_TOGGLE" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_STATE_READ" Destination="TRIGGER.ID_STATE" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId_SET" Destination="SoftKeySRT_ASRT_AX.u16ObjId_SET" dx1="1346.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId_RESET" Destination="SoftKeySRT_ASRT_AX.u16ObjId_RESET" dx1="1346.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId_TOGGLE" Destination="SoftKeySRT_ASRT_AX.u16ObjId_TOGGLE" dx1="1346.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="TRIGGER.QI"/>
+			<Connection Source="QI" Destination="SoftKeySRT_ASRT_AX.QI"/>
+			<Connection Source="TRIGGER.QO" Destination="AND_QO.IN1"/>
+			<Connection Source="SoftKeySRT_ASRT_AX.QO" Destination="AND_QO.IN2"/>
+			<Connection Source="AND_QO.OUT" Destination="QO"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="SoftKeySRT_ASRT_AX.OUT" Destination="TRIGGER.S_R_T" dx1="900"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

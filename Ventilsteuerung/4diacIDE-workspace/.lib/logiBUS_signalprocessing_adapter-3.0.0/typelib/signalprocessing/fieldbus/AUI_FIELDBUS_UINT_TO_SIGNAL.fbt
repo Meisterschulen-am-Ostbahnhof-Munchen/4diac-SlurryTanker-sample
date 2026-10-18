@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="AUI_FIELDBUS_UINT_TO_SIGNAL" Comment="Mirrors IN-&gt;OUT if Signal Valid.">
+	<Identification Standard="61499-1" Description="Copyright (c) 2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0 ">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-05-31">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::signalprocessing::fieldbus">
+	</CompilerInfo>
+	<InterfaceList>
+		<Plugs>
+			<AdapterDeclaration Name="OUT" Type="adapter::types::unidirectional::AUI" Comment="Output Filtered" x="3100" y="-700"/>
+			<AdapterDeclaration Name="VALID" Type="adapter::types::unidirectional::AX" Comment="TRUE if Signal is VALID" x="3300" y="0"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AUI" Comment="Input" x="-400" y="-700"/>
+		</Sockets>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="FIELDBUS_UINT_TO_SIGNAL" Type="logiBUS::signalprocessing::fieldbus::FIELDBUS_UINT_TO_SIGNAL" x="600" y="-700">
+		</FB>
+		<FB Name="E_D_FF" Type="iec61499::events::E_D_FF" x="2500" y="0">
+		</FB>
+		<EventConnections>
+			<Connection Source="IN.E1" Destination="FIELDBUS_UINT_TO_SIGNAL.REQ"/>
+			<Connection Source="FIELDBUS_UINT_TO_SIGNAL.CNF" Destination="OUT.E1"/>
+			<Connection Source="FIELDBUS_UINT_TO_SIGNAL.CNF" Destination="E_D_FF.CLK" dx1="266.67"/>
+			<Connection Source="E_D_FF.EO" Destination="VALID.E1"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="IN.D1" Destination="FIELDBUS_UINT_TO_SIGNAL.IN"/>
+			<Connection Source="FIELDBUS_UINT_TO_SIGNAL.OUT" Destination="OUT.D1"/>
+			<Connection Source="FIELDBUS_UINT_TO_SIGNAL.VALID" Destination="E_D_FF.D" dx1="80"/>
+			<Connection Source="E_D_FF.Q" Destination="VALID.D1"/>
+		</DataConnections>
+	</FBNetwork>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

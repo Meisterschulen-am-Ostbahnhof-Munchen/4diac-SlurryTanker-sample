@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="SwitchPic_5_1_aux" Comment="Bild umschalten AUX; 5 Zustände">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="franz" Date="2026-05-29">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+		<Import declaration="logiBUS::utils::sequence::schieber::SchieberStruct"/>
+		<Import declaration="logiBUS::utils::sequence::schieber::const::iSTATES::Unknown"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+			<SubAppEvent Name="EI" Type="Event">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="Picture" Type="UINT" Comment="Object ID of the ObjectPointer to the Picture"/>
+			<VarDeclaration Name="pictures" Type="logiBUS::utils::sequence::schieber::SchieberStruct" Comment="the single Pictures" InitialValue="(Unknown := ID_NULL, Closed := ID_NULL, Opening := ID_NULL, Opened := ID_NULL, Closing := ID_NULL)"/>
+			<VarDeclaration Name="iSTATE" Type="USINT" InitialValue="Unknown"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="F_MOVE" Type="iec61131::selection::F_MOVE" x="-100" y="100">
+			<Attribute Name="DataType" Value="logiBUS::utils::sequence::schieber::SchieberStruct"/>
+			<Parameter Name="OUT" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="OUT.Unknown" Value="">
+				<Attribute Name="Visible" Value="true"/>
+			</Parameter>
+			<Parameter Name="OUT.Closed" Value="">
+				<Attribute Name="Visible" Value="true"/>
+			</Parameter>
+			<Parameter Name="OUT.Opening" Value="">
+				<Attribute Name="Visible" Value="true"/>
+			</Parameter>
+			<Parameter Name="OUT.Opened" Value="">
+				<Attribute Name="Visible" Value="true"/>
+			</Parameter>
+			<Parameter Name="OUT.Closing" Value="">
+				<Attribute Name="Visible" Value="true"/>
+			</Parameter>
+		</FB>
+		<FB Name="F_MUX_5" Type="iec61131::selection::F_MUX_5" x="2100" y="0">
+		</FB>
+		<FB Name="Q_NumericValueAux" Type="isobus::UT::Q::Q_NumericValueAux" x="5400" y="-400">
+		</FB>
+		<EventConnections>
+			<Connection Source="EI" Destination="F_MUX_5.REQ" dx1="3206.67"/>
+			<Connection Source="INIT" Destination="F_MOVE.REQ" dx1="1246.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Q_NumericValueAux.INITO" Destination="INITO" dx1="500"/>
+			<Connection Source="F_MUX_5.CNF" Destination="Q_NumericValueAux.REQ" dx1="440"/>
+			<Connection Source="F_MOVE.CNF" Destination="Q_NumericValueAux.INIT" dx1="626.67"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="pictures" Destination="F_MOVE.IN" dx1="826.67"/>
+			<Connection Source="iSTATE" Destination="F_MUX_5.K" dx1="3106.67"/>
+			<Connection Source="F_MOVE.OUT.Unknown" Destination="F_MUX_5.IN1" dx1="673.33"/>
+			<Connection Source="F_MOVE.OUT.Closed" Destination="F_MUX_5.IN2" dx1="673.33"/>
+			<Connection Source="F_MOVE.OUT.Opening" Destination="F_MUX_5.IN3" dx1="673.33"/>
+			<Connection Source="F_MOVE.OUT.Opened" Destination="F_MUX_5.IN4" dx1="673.33"/>
+			<Connection Source="F_MOVE.OUT.Closing" Destination="F_MUX_5.IN5" dx1="673.33"/>
+			<Connection Source="F_MUX_5.OUT" Destination="Q_NumericValueAux.u32NewValue" dx1="706.67"/>
+			<Connection Source="Picture" Destination="Q_NumericValueAux.u16ObjId" dx1="6946.67"/>
+			<Connection Source="QI" Destination="Q_NumericValueAux.QI"/>
+			<Connection Source="Q_NumericValueAux.QO" Destination="QO"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

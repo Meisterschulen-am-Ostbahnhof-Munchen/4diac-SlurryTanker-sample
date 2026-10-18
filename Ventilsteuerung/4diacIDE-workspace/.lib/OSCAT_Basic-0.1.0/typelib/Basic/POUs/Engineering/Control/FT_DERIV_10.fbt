@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="FT_DERIV_10" Comment="Derivative with variable window size (0..9 periods)">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Version="1.0" Author="CodingAssistant" Date="2025-12-21" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="OSCAT::Basic::POUs::Engineering::Control">
+		<Import declaration="OSCAT::Basic::POUs::Engineering::measurements::T_PLC_US"/>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="EINIT" Type="EInit" Comment="Init Request">
+			</Event>
+			<Event Name="REQ" Type="Event" Comment="Normal Execution Request">
+				<With Var="in"/>
+				<With Var="K"/>
+				<With Var="Faktor"/>
+				<With Var="run"/>
+			</Event>
+			<Event Name="RST" Type="Event" Comment="Reset Buffer">
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Init Confirmation">
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Execution Confirmation">
+				<With Var="out"/>
+				<With Var="valid"/>
+				<With Var="DT_0"/>
+				<With Var="DI_0"/>
+				<With Var="DT_1"/>
+				<With Var="DI_1"/>
+				<With Var="DT_2"/>
+				<With Var="DI_2"/>
+				<With Var="DT_3"/>
+				<With Var="DI_3"/>
+				<With Var="DT_4"/>
+				<With Var="DI_4"/>
+				<With Var="DT_5"/>
+				<With Var="DI_5"/>
+				<With Var="DT_6"/>
+				<With Var="DI_6"/>
+				<With Var="DT_7"/>
+				<With Var="DI_7"/>
+				<With Var="DT_8"/>
+				<With Var="DI_8"/>
+				<With Var="DT_9"/>
+				<With Var="DI_9"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="in" Type="REAL" Comment="Input Signal"/>
+			<VarDeclaration Name="K" Type="UINT" Comment="Window Select: 0=1 Period, 9=10 Periods" InitialValue="0"/>
+			<VarDeclaration Name="Faktor" Type="REAL" Comment="Multiplication Factor (formerly K)" InitialValue="1.0"/>
+			<VarDeclaration Name="run" Type="BOOL" Comment="Enable calculation" InitialValue="1"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="out" Type="REAL" Comment="Resulting Derivative based on K"/>
+			<VarDeclaration Name="valid" Type="BOOL" Comment="True if buffer has enough data for K"/>
+			<VarDeclaration Name="DT_0" Type="UDINT" Comment="Delta T over 1 period"/>
+			<VarDeclaration Name="DI_0" Type="REAL" Comment="Delta In over 1 period"/>
+			<VarDeclaration Name="DT_1" Type="UDINT" Comment="Delta T over 2 period"/>
+			<VarDeclaration Name="DI_1" Type="REAL" Comment="Delta In over 2 period"/>
+			<VarDeclaration Name="DT_2" Type="UDINT" Comment="Delta T over 3 period"/>
+			<VarDeclaration Name="DI_2" Type="REAL" Comment="Delta In over 3 period"/>
+			<VarDeclaration Name="DT_3" Type="UDINT" Comment="Delta T over 4 period"/>
+			<VarDeclaration Name="DI_3" Type="REAL" Comment="Delta In over 4 period"/>
+			<VarDeclaration Name="DT_4" Type="UDINT" Comment="Delta T over 5 period"/>
+			<VarDeclaration Name="DI_4" Type="REAL" Comment="Delta In over 5 period"/>
+			<VarDeclaration Name="DT_5" Type="UDINT" Comment="Delta T over 6 period"/>
+			<VarDeclaration Name="DI_5" Type="REAL" Comment="Delta In over 6 period"/>
+			<VarDeclaration Name="DT_6" Type="UDINT" Comment="Delta T over 7 period"/>
+			<VarDeclaration Name="DI_6" Type="REAL" Comment="Delta In over 7 period"/>
+			<VarDeclaration Name="DT_7" Type="UDINT" Comment="Delta T over 8 period"/>
+			<VarDeclaration Name="DI_7" Type="REAL" Comment="Delta In over 8 period"/>
+			<VarDeclaration Name="DT_8" Type="UDINT" Comment="Delta T over 9 period"/>
+			<VarDeclaration Name="DI_8" Type="REAL" Comment="Delta In over 9 period"/>
+			<VarDeclaration Name="DT_9" Type="UDINT" Comment="Delta T over 10 period"/>
+			<VarDeclaration Name="DI_9" Type="REAL" Comment="Delta In over 10 period"/>
+		</OutputVars>
+	</InterfaceList>
+	<SimpleFB>
+		<InternalVars>
+			<VarDeclaration Name="buf_in" Type="REAL" Comment="Ringbuffer Input" ArraySize="11"/>
+			<VarDeclaration Name="buf_tx" Type="UDINT" Comment="Ringbuffer Time" ArraySize="11"/>
+			<VarDeclaration Name="ptr" Type="INT" Comment="Pointer to current newest" InitialValue="0"/>
+			<VarDeclaration Name="cnt" Type="INT" Comment="Count of valid samples" InitialValue="0"/>
+			<VarDeclaration Name="init_done" Type="BOOL" InitialValue="FALSE"/>
+			<VarDeclaration Name="tx_now" Type="UDINT"/>
+			<VarDeclaration Name="idx_old" Type="INT"/>
+			<VarDeclaration Name="temp_dt" Type="UDINT"/>
+			<VarDeclaration Name="temp_di" Type="REAL"/>
+		</InternalVars>
+		<InternalConstVars>
+			<VarDeclaration Name="MIN_PTR" Type="INT" Comment="ptr min" InitialValue="0"/>
+			<VarDeclaration Name="MAX_PTR" Type="INT" Comment="ptr max" InitialValue="10"/>
+			<VarDeclaration Name="MAX_CNT" Type="INT" Comment="cnt max" InitialValue="11"/>
+			<VarDeclaration Name="INCR" Type="INT" Comment="increment" InitialValue="1"/>
+		</InternalConstVars>
+		<ECState Name="EINIT">
+			<ECAction Algorithm="EINIT" Output="INITO"/>
+		</ECState>
+		<ECState Name="REQ">
+			<ECAction Algorithm="REQ" Output="CNF"/>
+		</ECState>
+		<ECState Name="RST">
+			<ECAction Algorithm="RST" Output="CNF"/>
+		</ECState>
+		<Algorithm Name="EINIT">
+			<ST><![CDATA[
+init_done := FALSE;
+cnt := 0;
+ptr := 0;
+out := 0.0;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="RST">
+			<ST><![CDATA[
+init_done := FALSE;
+cnt := 0;
+ptr := 0;
+out := 0.0;
+valid := FALSE;
+(* Arrays leeren ist in ST oft optional, hier setzen wir Zähler zurück *)
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="REQ">
+			<ST><![CDATA[
+
+VAR_TEMP
+	i : INT := 0;
+END_VAR
+
+(* 1. Initialisierung beim allerersten Durchlauf *)
+IF NOT init_done THEN
+	(* Erster Zyklus: Nur aktuellen Wert speichern, noch keine Berechnung möglich *)
+	tx_now := T_PLC_US();
+	buf_in[0] := in;
+	buf_tx[0] := tx_now;
+
+	ptr := 0;
+	cnt := 1; (* Wir haben 1 gültigen Wert *)
+	init_done := TRUE;
+
+	out := 0.0;
+	valid := FALSE;
+	RETURN; (* Abbruch, da wir noch keine Differenz bilden können *)
+END_IF;
+
+IF run THEN
+	(* 2. Neuen Wert in Ring-Buffer schreiben *)
+	tx_now := T_PLC_US();
+
+	(* Zeiger erhöhen (Ring: 0..10) *)
+	ptr := ptr + INCR;
+	IF ptr > MAX_PTR THEN
+		ptr := MIN_PTR;
+	END_IF;
+
+	(* Werte speichern *)
+	buf_in[ptr] := in;
+	buf_tx[ptr] := tx_now;
+
+	(* Gültige Samples hochzählen (Sättigung bei 11) *)
+	IF cnt < MAX_CNT THEN
+		cnt := cnt + INCR;
+	END_IF;
+
+	(* 3. Alle 10 Deltas berechnen und auf Ausgänge schreiben *)
+	(* Hinweis: Wir machen das explizit, damit alle Pins befüllt werden *)
+	(* Lokale Hilfsfunktion zur Indexberechnung: (ptr - steps + 11) MOD 11 *)
+	(* Da MOD in ST manchmal negativ sein kann bei (ptr - steps), addieren wir erst 11 *)
+	(* Berechnung Loop *)
+	FOR i := 0 TO 9 DO
+		(* Wir wollen i+1 Schritte zurückschauen. i=0 -> 1 Schritt zurück *)
+		idx_old := ptr - (i + 1);
+		IF idx_old < 0 THEN
+			idx_old := idx_old + 11;
+		END_IF;
+
+		IF cnt > (i + 1) THEN
+			(* Zeitdifferenz (UDINT Überlauf ist hier automatisch sicher) *)
+			temp_dt := buf_tx[ptr] - buf_tx[idx_old];
+			temp_di := buf_in[ptr] - buf_in[idx_old];
+		ELSE
+			temp_dt := 0;
+			temp_di := 0.0;
+		END_IF;
+
+		(* Zuweisung an die expliziten Ausgänge *)
+		CASE i OF
+			0 :
+				DT_0 := temp_dt;
+				DI_0 := temp_di;
+			1 :
+				DT_1 := temp_dt;
+				DI_1 := temp_di;
+			2 :
+				DT_2 := temp_dt;
+				DI_2 := temp_di;
+			3 :
+				DT_3 := temp_dt;
+				DI_3 := temp_di;
+			4 :
+				DT_4 := temp_dt;
+				DI_4 := temp_di;
+			5 :
+				DT_5 := temp_dt;
+				DI_5 := temp_di;
+			6 :
+				DT_6 := temp_dt;
+				DI_6 := temp_di;
+			7 :
+				DT_7 := temp_dt;
+				DI_7 := temp_di;
+			8 :
+				DT_8 := temp_dt;
+				DI_8 := temp_di;
+			9 :
+				DT_9 := temp_dt;
+				DI_9 := temp_di;
+		END_CASE;
+	END_FOR;
+
+	(* 4. Hauptausgang 'out' basierend auf Eingang 'K' berechnen *)
+	(* K=0 -> Wir nehmen DT_0 (1 Periode), K=9 -> DT_9 *)
+	IF K > 9 THEN
+		(* Fallback falls K ungültig hoch ist *)
+		valid := FALSE;
+		out := 0.0;
+	ELSIF cnt > (UINT_TO_INT(K) + 1) THEN
+		(* Wir haben genug Historie für die angeforderte Tiefe K *)
+		valid := TRUE;
+
+			(* Werte holen (über Switch/Case oder Arrayzugriff auf die Ausgänge ist in ST schwer,
+			 * daher berechnen wir den Index für 'K' noch einmal kurz) *)
+		idx_old := ptr - (UINT_TO_INT(K) + 1);
+		IF idx_old < 0 THEN
+			idx_old := idx_old + 11;
+		END_IF;
+
+		temp_dt := buf_tx[ptr] - buf_tx[idx_old];
+		temp_di := buf_in[ptr] - buf_in[idx_old];
+
+		IF temp_dt > 0 THEN
+			(* Skalierung: (Delta In / Delta T µs) * 1.000.000 * Faktor *)
+			out := (temp_di * 1000000.0) / UDINT_TO_REAL(temp_dt) * Faktor;
+		ELSE
+			out := 0.0;
+		END_IF;
+	ELSE
+		(* Puffer noch nicht voll genug für K *)
+		valid := FALSE;
+		out := 0.0;
+	END_IF;
+
+ELSE
+	out := 0.0;
+END_IF;
+
+]]></ST>
+		</Algorithm>
+	</SimpleFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

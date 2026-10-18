@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="ASRT_SR_AE_TO_SRT" Comment="Composite FB for convert ASR + AE to ASRT">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 HR Agrartechnik GmbH &#10; &#10;This program and the accompanying materials are made &#10;available under the terms of the Eclipse Public License 2.0 &#10;which is available at https://www.eclipse.org/legal/epl-2.0/ &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-09-06">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::conversion::unidirectional">
+	</CompilerInfo>
+	<InterfaceList>
+		<Plugs>
+			<AdapterDeclaration Name="ASRT_OUT" Type="adapter::types::unidirectional::ASRT" Comment="Adapter Output" x="-3900" y="-500"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="SR_IN" Type="adapter::types::unidirectional::ASR" Comment="Set/Reset Input" x="0" y="-900"/>
+			<AdapterDeclaration Name="TOGGLE_IN" Type="adapter::types::unidirectional::AE" Comment="Toggle / Switch output" x="0" y="700"/>
+		</Sockets>
+	</InterfaceList>
+	<FBNetwork>
+		<EventConnections>
+			<Connection Source="SR_IN.SET" Destination="ASRT_OUT.SET" dx1="2813.33"/>
+			<Connection Source="SR_IN.RESET" Destination="ASRT_OUT.RESET" dx1="2413.33"/>
+			<Connection Source="TOGGLE_IN.E1" Destination="ASRT_OUT.TOGGLE" dx1="2413.33"/>
+		</EventConnections>
+	</FBNetwork>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="AR_R_MUL" Comment="Multipliziert einen AR-Wert mit einem festen REAL-Faktor (kein zweiter AR-Socket&#10;noetig - der Faktor wird per Parameter bei der Instanziierung eingebacken)">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-08">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<InputVars>
+			<VarDeclaration Name="FACTOR" Type="REAL" Comment="Fester Multiplikator, ueber Parameter bei der Instanziierung gesetzt" InitialValue="REAL#1.0"/>
+		</InputVars>
+		<Sockets>
+			<AdapterDeclaration Name="IN1" Type="adapter::types::unidirectional::AR" Comment="Zu skalierender Wert"/>
+		</Sockets>
+		<Plugs>
+			<AdapterDeclaration Name="OUT" Type="adapter::types::unidirectional::AR" Comment="IN1 x FACTOR"/>
+		</Plugs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="initval_AR_FACTOR" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="0" y="0">
+		</FB>
+		<FB Name="AR_MUL_2" Type="adapter::iec61131::arithmetic::AR_MUL_2" x="1500" y="0">
+		</FB>
+		<DataConnections>
+			<Connection Source="FACTOR" Destination="initval_AR_FACTOR.INIT_VAL" dx1="500">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="IN1" Destination="AR_MUL_2.IN1" dx1="500"/>
+			<Connection Source="initval_AR_FACTOR.OUT" Destination="AR_MUL_2.IN2" dx1="500"/>
+			<Connection Source="AR_MUL_2.OUT" Destination="OUT" dx1="500"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

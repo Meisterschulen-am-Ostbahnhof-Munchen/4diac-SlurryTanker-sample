@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Button_IE_1" Comment="1 Button-Objekt, liest ein konfigurierbares Event (ButtonActivationCode, z.B.&#10;BT_PRESSED_LATCHED) als reines IND-Event - duenner Wrapper um Button_IE, analog&#10;zu Aux_IE_1/Softkey_IE_1 (Konvention in diesem Projekt: die isobus-IE-Bausteine&#10;werden nie roh inline verwendet, immer gewrappt).">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="Franz Höpfinger" Date="2026-09-29" Remarks="initial implementation, analog zu Aux_IE_1/Softkey_IE_1">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+		<Import declaration="isobus::UT::io::Button::ButtonActivationCode::Invalid"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+			<SubAppEvent Name="IND" Type="Event" Comment="Feuert wenn das konfigurierte InputEvent auftritt"/>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID Button" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="InputEvent" Type="isobus::UT::io::Button::ButtonActivationCode_S" Comment="z.B. BT_PRESSED_LATCHED, BT_RELEASED_UNLATCHED" InitialValue="Invalid"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="Button" Type="isobus::UT::io::Button::Button_IE" x="0" y="0">
+		</FB>
+		<EventConnections>
+			<Connection Source="Button.IND" Destination="IND" dx1="600"/>
+			<Connection Source="INIT" Destination="Button.INIT"/>
+			<Connection Source="Button.INITO" Destination="INITO"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="u16ObjId" Destination="Button.u16ObjId" dx1="600">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="InputEvent" Destination="Button.InputEvent" dx1="600">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="Button.QI"/>
+			<Connection Source="Button.QO" Destination="QO"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

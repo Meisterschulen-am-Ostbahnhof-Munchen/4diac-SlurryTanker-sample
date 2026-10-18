@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="BasicOne" Comment="Based on 4diac-Template for a Basic Function Block Type">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2026-05-05">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::utils::sequence::one">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Initialization Request">
+				<With Var="QI"/>
+			</Event>
+			<Event Name="REQ" Type="Event" Comment="Normal Execution Request">
+				<With Var="QI"/>
+				<With Var="DI1"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Execution Confirmation">
+				<With Var="QO"/>
+				<With Var="DO1"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Input event qualifier"/>
+			<VarDeclaration Name="DI1" Type="BOOL"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Output event qualifier"/>
+			<VarDeclaration Name="DO1" Type="BOOL"/>
+		</OutputVars>
+	</InterfaceList>
+	<BasicFB>
+		<ECC>
+			<ECState Name="START" Comment="Initial State" x="475" y="1125">
+			</ECState>
+			<ECState Name="Init" Comment="Initialization" x="1235" y="665">
+				<ECAction Algorithm="initialize" Output="INITO"/>
+			</ECState>
+			<ECState Name="NormalOp" Comment="Normal execution" x="2850" y="1140">
+				<ECAction Algorithm="normalOperation" Output="CNF"/>
+			</ECState>
+			<ECState Name="Initialized" x="1900" y="1140">
+			</ECState>
+			<ECState Name="DeInit" x="1140" y="1520">
+				<ECAction Algorithm="deInitialize" Output="INITO"/>
+			</ECState>
+			<ECTransition Source="START" Destination="Init" Condition="INIT[TRUE = QI]" x="840" y="920"/>
+			<ECTransition Source="Init" Destination="Initialized" Condition="1" x="1660" y="975"/>
+			<ECTransition Source="Initialized" Destination="NormalOp" Condition="REQ" x="2615" y="1000"/>
+			<ECTransition Source="NormalOp" Destination="Initialized" Condition="1" x="2575" y="1430"/>
+			<ECTransition Source="DeInit" Destination="START" Condition="1" x="940" y="1445"/>
+			<ECTransition Source="Initialized" Destination="DeInit" Condition="INIT[FALSE = QI]" x="1690" y="1340"/>
+		</ECC>
+		<Algorithm Name="initialize" Comment="Initialization algorithm">
+			<ST><![CDATA[
+QO := QI;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="deInitialize" Comment="Normally executed algorithm">
+			<ST><![CDATA[
+QO := BOOL#FALSE;
+DO1 := BOOL#FALSE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="normalOperation" Comment="new algorithm">
+			<ST><![CDATA[
+QO := QI;
+
+IF BOOL#TRUE = QI THEN
+	(* only perform normal operation of QI is true *)
+	DO1 := DI1;
+END_IF;
+]]></ST>
+		</Algorithm>
+	</BasicFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

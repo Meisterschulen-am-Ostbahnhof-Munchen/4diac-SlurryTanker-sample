@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Manifest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="platform:/resource/org.eclipse.fordiac.ide.library.model/model/library.xsd" Scope="Library">
+  <Dependencies>
+    <Required SymbolicName="core" Version="3.0.0"/>
+  </Dependencies>
+  <Product Comment="OPC-UA-Hilfsfunktionen fuer GCF-Konstanten: ID-Strings opc_ua[...] und OPC-Endpunkt aus der MGR_ID einer Station, ausgewertet beim Export." Name="MyLib_OPC" SymbolicName="MyLib_OPC">
+    <VersionInfo Author="Franz Höpfinger" Date="2026-10-17" Version="1.0.0"/>
+  </Product>
+</Manifest>

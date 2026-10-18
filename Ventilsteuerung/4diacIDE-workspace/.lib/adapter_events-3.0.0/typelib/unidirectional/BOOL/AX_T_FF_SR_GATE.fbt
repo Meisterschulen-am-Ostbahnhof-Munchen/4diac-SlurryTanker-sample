@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="AX_T_FF_SR_GATE" Comment="Wie AX_T_FF_SR, zusaetzlich mit Freigabe-Socket GATE:AX und eigenem Zustand&#10;GATE_CLOSED - ohne Verkettung (kein CHAIN_IN/CHAIN_OUT)">
+	<Identification Standard="61499-1 Annex A" Function="Wie AX_T_FF_SR (lokales S/R/CLK), zusaetzlich: GATE (Socket, AX) muss TRUE sein, sonst wird der Baustein in einen eigenen Zustand GATE_CLOSED gezwungen (Q.E1 mit FALSE). In GATE_CLOSED ist S/R/CLK komplett wirkungslos (keine Transition definiert - IEC 61499 verwirft das Event einfach) - der EINZIGE Ausweg ist GATE.E1[GATE.D1] zurueck nach RESET." Description="Copyright (c) 2017 fortiss GmbH, HR Agrartechnik GmbH&#10; &#10;This program and the accompanying materials are made&#10;available under the terms of the Eclipse Public License 2.0&#10;which is available at https://www.eclipse.org/legal/epl-2.0/&#10;&#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.2" Author="Franz Höpfinger" Date="2026-09-17" Remarks="Bugfix (Reihenfolge-Luecke): [NOT GATE.D1] stand in RESET/SET HINTER S/CLK - da S/CLK ohne Guard immer TRUE sind, hat IEC 61499-1 Table 1 Regel c) sie zuerst gekreuzt, die Gate-Sperre kam nie zum Zug (S/CLK haben trotz geschlossenem Gate eingeschaltet). Fix: [NOT GATE.D1] in JEDEM Zustand an erste Stelle der Deklarationsreihenfolge gesetzt - ist das Gate zu, greift die Sperre garantiert zuerst; ist es offen, ist ihr Guard FALSE, wird uebersprungen, S/CLK/R wirken normal.">
+	</VersionInfo>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.1" Author="Franz Höpfinger" Date="2026-09-17" Remarks="Ergaenzung (Franz: 'beim Betreten von START wollen wir doch dass er gleich auf GATE_CLOSED geht, falls D1 nicht da ist, egal ob ein Event GATE.E1 gekommen ist'): zusaetzliche Epsilon-Transition START-&gt;GATE_CLOSED Condition=&quot;[NOT GATE.D1]&quot; (ohne Event davor, wie bei AX_T_FF_INIT/AX_RS_SYM_INIT's Init-Zustand [FALSE = Q_INIT]) - wird SOFORT beim Betreten von START ausgewertet, deckt das Boot-Fenster ab (Gate schon zu, BEVOR je ein GATE.E1 gefeuert hat). Kein Duplikat zu GATE.E1[NOT GATE.D1]: die Epsilon-Variante deckt den Zustand VOR dem ersten GATE-Update ab, die event-getriggerte Variante das laufende Monitoring danach - beide zusammen noetig.">
+	</VersionInfo>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-09-17" Remarks="Neu (Franz: 'mach gleich noch einen AX_T_FF_SR.fbt GATE ohne die Verkettung'). Kopiert von AX_T_FF_SR, um GATE:AX-Socket + Zustand GATE_CLOSED erweitert - identisches Muster wie AX_T_FF_SR_SEQ_GATE, nur ohne CHAIN_IN/CHAIN_OUT, fuer Einsatzfaelle die nur die Gate-Sperre brauchen, keine Kettenverzoegerung.">
+	</VersionInfo>
+	<VersionInfo Version="3.0" Author="Patrick Aigner" Date="2025-04-14" Remarks="changed package">
+	</VersionInfo>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.1" Author="Franz Höpfinger" Date="2024-08-27" Remarks="Copy E_SR and make this FB">
+	</VersionInfo>
+	<VersionInfo Organization="fortiss GmbH" Version="1.0" Author="Alois Zoitl" Date="2017-09-22" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::events::unidirectional">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="S" Type="Event" Comment="Set output Q - wirkungslos waehrend GATE_CLOSED">
+			</Event>
+			<Event Name="R" Type="Event" Comment="Reset output Q - wirkungslos waehrend GATE_CLOSED (ist ohnehin schon aus)">
+			</Event>
+			<Event Name="CLK" Type="Event" Comment="Clock for triggering a output toggle - wirkungslos waehrend GATE_CLOSED">
+			</Event>
+		</EventInputs>
+		<Plugs>
+			<AdapterDeclaration Name="Q" Type="adapter::types::unidirectional::AX" Comment="value of flip flop"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="GATE" Type="adapter::types::unidirectional::AX" Comment="Freigabe: muss TRUE sein. Faellt GATE auf FALSE: sofort GATE_CLOSED (Zwangs-RESET + Sperre), verlassen nur ueber GATE.E1[GATE.D1]."/>
+		</Sockets>
+	</InterfaceList>
+	<BasicFB>
+		<ECC>
+			<ECState Name="START" Comment="Initial State" x="500" y="385">
+			</ECState>
+			<ECState Name="SET" x="3200" y="480">
+				<ECAction Algorithm="SET" Output="Q.E1"/>
+			</ECState>
+			<ECState Name="RESET" x="3360" y="1440">
+				<ECAction Algorithm="RESET" Output="Q.E1"/>
+			</ECState>
+			<ECState Name="GATE_CLOSED" Comment="Gesperrt: GATE.D1=FALSE. Q zwangsweise FALSE. S/R/CLK sind hier wirkungslos. Einziger Ausweg: GATE.E1[GATE.D1] zurueck nach RESET." x="480" y="2000">
+				<ECAction Algorithm="RESET" Output="Q.E1"/>
+			</ECState>
+			<ECTransition Source="START" Destination="GATE_CLOSED" Condition="[NOT GATE.D1]" x="346.67" y="1220"/>
+			<ECTransition Source="START" Destination="SET" Condition="S[GATE.D1]" x="1780" y="566.67"/>
+			<ECTransition Source="START" Destination="SET" Condition="CLK[GATE.D1]" x="2006.67" y="260"/>
+			<ECTransition Source="SET" Destination="GATE_CLOSED" Condition="[NOT GATE.D1]" x="1573.33" y="1340"/>
+			<ECTransition Source="SET" Destination="RESET" Condition="R" x="2860" y="1046.67"/>
+			<ECTransition Source="SET" Destination="RESET" Condition="CLK" x="3840" y="1033.33"/>
+			<ECTransition Source="RESET" Destination="GATE_CLOSED" Condition="[NOT GATE.D1]" x="2080" y="1473.33"/>
+			<ECTransition Source="RESET" Destination="SET" Condition="S[GATE.D1]" x="3053.33" y="1040"/>
+			<ECTransition Source="RESET" Destination="SET" Condition="CLK[GATE.D1]" x="3313.33" y="1020"/>
+			<ECTransition Source="GATE_CLOSED" Destination="RESET" Condition="GATE.E1[GATE.D1]" x="2393.33" y="1640"/>
+		</ECC>
+		<Algorithm Name="SET">
+			<ST><![CDATA[
+Q.D1 := TRUE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="RESET">
+			<ST><![CDATA[
+Q.D1 := FALSE;
+]]></ST>
+		</Algorithm>
+	</BasicFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

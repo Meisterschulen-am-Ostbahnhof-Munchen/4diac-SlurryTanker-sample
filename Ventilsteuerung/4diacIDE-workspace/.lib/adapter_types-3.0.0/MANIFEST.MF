@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Manifest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="platform:/resource/org.eclipse.fordiac.ide.library.model/model/library.xsd" Scope="Library">
+  <Dependencies>
+    <Required SymbolicName="core" Version="3.0.0"/>
+  </Dependencies>
+  <Product Comment="Reine Adapter-Typ-Deklarationen (unidirectional/bidirectional AX/AR/AD/.../Handshake/TokenRing + initval/constants), herausgeloest aus adapter-3.0.0/typelib/types - keine Imports, keine Abhaengigkeiten" Name="adapter_types" SymbolicName="adapter_types">
+    <VersionInfo Author="HR Agrartechnik GmbH" Date="2026-10-09" Version="3.0.0"/>
+  </Product>
+</Manifest>

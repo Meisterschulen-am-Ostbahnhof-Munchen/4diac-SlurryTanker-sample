@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="NOOP_INIT" Comment="No-Op, auch bekannt als &quot;No Operation&quot; mit INIT - wrapt NOOP, reicht INIT direkt auf INITO durch">
+	<Identification Standard="61131-3" Classification="standard boolean function" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof&#10; &#10;This program and the accompanying materials are made&#10;available under the terms of the Eclipse Public License 2.0&#10;which is available at https://www.eclipse.org/legal/epl-2.0/&#10;&#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-10-11" Remarks="Copyright-Header, Classification und Remarks nachgezogen; Doku ergaenzt. Interne Umsetzung wrapt jetzt NOOP statt iec61131::selection::F_MOVE - damit entfaellt dieser iec61131-3-Abhaengigkeitspfad.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="franz" Date="2026-05-05" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="iec61131::booleanOperators">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Initialization Request">
+			</Event>
+			<Event Name="REQ" Type="Event" Comment="Normal Execution Request">
+				<With Var="IN"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Execution Confirmation">
+				<With Var="OUT"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="IN" Type="BOOL" Comment="Input"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="OUT" Type="BOOL" Comment="Output"/>
+		</OutputVars>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="NOOP" Type="iec61131::booleanOperators::NOOP" x="1000" y="-900">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="INITO"/>
+			<Connection Source="INIT" Destination="NOOP.REQ" dx1="2500"/>
+			<Connection Source="REQ" Destination="NOOP.REQ" dx1="1706.67"/>
+			<Connection Source="NOOP.CNF" Destination="CNF" dx1="1766.67"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="IN" Destination="NOOP.IN" dx1="1706.67"/>
+			<Connection Source="NOOP.OUT" Destination="OUT" dx1="1766.67"/>
+		</DataConnections>
+	</FBNetwork>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

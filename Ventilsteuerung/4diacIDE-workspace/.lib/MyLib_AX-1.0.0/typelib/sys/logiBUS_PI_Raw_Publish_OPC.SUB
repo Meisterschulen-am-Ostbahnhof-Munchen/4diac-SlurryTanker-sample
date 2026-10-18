@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="logiBUS_PI_Raw_Publish_OPC" Comment="logiBUS_PI_IDA (Puls-Eingang) rein als Frequenz (Hz, REAL) lesen + per OPC-UA&#10;publizieren, OHNE jegliche VT-Interaktion und ohne Kanal-Enable/Status. Fuer&#10;Geschwindigkeitssensoren (Impulsgeber), deren physischer Puls-Eingang auf einer&#10;Station OHNE VT-Anschluss sitzt (z.B. Aufnahmegeschwindigkeit B03, Igelband&#10;B10/B11 auf APIXON STG2/STG3) - die km/h-Umrechnung + VT-Anzeige laufen dann auf&#10;der Station mit VT-Anschluss, gespeist per Remote-Subscribe dieser Frequenz&#10;(analog zu logiBUS_AI_Raw_Publish_OPC / logiBUS_AI_Calibrate_Remote_IDA_OPC).">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-12" Remarks="initial implementation - schlanke Frequenz-Rohwert-Haelfte von logiBUS_PI_IDA_OPC (ohne Kanal-Enable/VT-Status/Zaehler-Publish), fuer Sensoren auf einer Station ohne VT-Anschluss (B03/B10/B11).">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.3" Author="Franz Höpfinger" Date="2026-10-03" Remarks="Folgefix zu FT_DERIV_10_AR v1.2 (K jetzt AUI-Adapter-Socket statt Parameter): bisheriges Parameter Name='K' Value='9' auf FT_DERIV_10_AR entfernt (waere jetzt ein IDE-Fehler, da K kein plain InputVar mehr ist), ersetzt durch LIT_DerivK (initval_AUI, INIT_VAL=9) + AdapterConnection auf FT_DERIV_10_AR.K - gleicher Wert wie bisher, nur adapter-konform verdrahtet. Dieser Baustein hat aktuell keine aktiven Aufrufer im Projekt, bleibt aber auf Franzens Wunsch erhalten und muss daher weiterhin ladbar/valide sein.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.2" Author="Franz Höpfinger" Date="2026-10-03" Remarks="Franz (Zapfwelle B21 auf STG4): 'soll VORHER auf dieselbe Einheit gerundet werden wie RPTO, 0.125 U/min, genauer muss es nicht sein' - neuer OSCAT_adapter::Mathematical::ROUND_STEP_AR zwischen FT_PT1_AR und AR_PUBLISH_HZ eingefuegt, neuer InputVar RASTER_HZ (Default 0.0001 Hz = praktisch kein Runden, fuer bestehende Aufrufer Aufnahme B03/Igelband B10/B11 unveraendert) - Zapfwelle setzt per Parameter RASTER_HZ=0.00208333 (= 0.125 U/min / 60 Hz-&gt;U/min-Faktor).">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-22" Remarks="PT1-Filterzeit einstellbar + INI-persistiert statt hartcodiertem T#2s-Literal (initval_ATM entfernt) - Franz: 'Kunde will die Filter Zeit ohnehin Einstellbar haben (die 2S), Abspeichern in INI, 2S als Standardwert'. Neue FilterTimeS (NumericValue_TO_AR2_OPC, Sekunden REAL, VT+Web mergebar) + INI_FilterTimeS (INI_AR2, Section/Key='FilterTimeS', Default REAL#2.0) + neuer Baustein AR_S_TO_ATM (Sekunden-REAL -&gt; TIME, x1000 + numerische Konvertierung) speisen FT_PT1_AR.TM. FT_PT1_AR.INIT wird jetzt von INI_FilterTimeS.INITO ausgeloest (statt initval_ATM.INITO) - ein Wert, der zur Laufzeit per VT/Web geaendert wird, greift damit erst nach einem Neustart der Station (bewusste Vereinfachung, kein Live-Re-Init um Filter-Transienten waehrend des Betriebs zu vermeiden). Neue InputVars stObjFilterTimeS/ID_FILTER_TIME_READ/ID_FILTER_TIME_WRITE/sSection - bestehende Aufrufer muessen diese nachziehen (siehe Inputs_STG2/STG3.SUB), sonst laufen AR_SUBSCRIBE_1/AR_PUBLISH_1/INI_AR2 mit leeren IDs.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="logiBUS::io::PI::logiBUS_PI"/>
+		<Import declaration="logiBUS::io::PI::logiBUS_PI_S"/>
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+		<Import declaration="logiBUS::utils::conversion::phys::NumericObjectPool_S"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="Input" Type="logiBUS::io::PI::logiBUS_PI_S" Comment="Identify the Input PulseInput_I1..I9" InitialValue="logiBUS_PI::Invalid"/>
+			<VarDeclaration Name="ID_HZ_WRITE" Type="WSTRING" Comment="Frequenz-Publish-Adresse (REAL Hz, ACTION=PUBLISH), lokal auf dieser Station"/>
+			<VarDeclaration Name="stObjFilterTimeS" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object ID + Scale/Offset/Decimals CNumberVariable (PT1-Filterzeit in Sekunden, VT-Eingabefeld)" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 1)"/>
+			<VarDeclaration Name="ID_FILTER_TIME_READ" Type="WSTRING" Comment="Remote-Subscribe-Adresse (REAL Sekunden, ACTION=SUBSCRIBE) fuer Web-Override der Filterzeit"/>
+			<VarDeclaration Name="ID_FILTER_TIME_WRITE" Type="WSTRING" Comment="Lokale Echo/Re-Publish-Adresse (REAL Sekunden, ACTION=PUBLISH) der aktuellen Filterzeit"/>
+			<VarDeclaration Name="sSection" Type="STRING" Comment="INI settings.ini Section fuer die persistierte Filterzeit (eindeutig pro Sensor-Instanz)"/>
+			<VarDeclaration Name="RASTER_HZ" Type="REAL" Comment="Rundungsraster (Hz) vor AR_PUBLISH_HZ - Platzhalter-Default 0.0001 (praktisch kein Runden, fuer bestehende Aufrufer unveraendert), per Parameter auf die gewuenschte Aufloesung setzen (z.B. 0.00208333 = 0.125 U/min bei SCALE=60 Hz-&gt;U/min stromabwaerts)" InitialValue="0.0001"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="logiBUS_PI_IDA" Type="logiBUS::io::PI::logiBUS_PI_IDA" x="-9200" y="-1900">
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="ImpulseDelta" Value="DWORD#100"/>
+			<Parameter Name="TimeDelta" Value="DWORD#250"/>
+			<Parameter Name="TimeRateLimit" Value="DWORD#100"/>
+		</FB>
+		<FB Name="AD_TO_AR_NUM" Type="adapter::conversion::unidirectional::AD_TO_AR_NUM" x="-7400" y="-1300">
+		</FB>
+		<FB Name="FT_DERIV_10_AR" Type="OSCAT_adapter::Control::FT_DERIV_10_AR" x="-5600" y="-1900">
+			<Parameter Name="Faktor" Value="1.0"/>
+			<Parameter Name="run" Value="TRUE"/>
+		</FB>
+		<FB Name="LIT_DerivK" Type="adapter::types::unidirectional::AUI::initval::initval_AUI" x="-7400" y="-700">
+			<Parameter Name="INIT_VAL" Value="9"/>
+		</FB>
+		<FB Name="FT_PT1_AR" Type="OSCAT_adapter::Control::FT_PT1_AR" x="-2600" y="-1600">
+			<Parameter Name="K" Value="1.0"/>
+		</FB>
+		<SubApp Name="Round_Hz" Type="OSCAT_adapter::Mathematical::ROUND_STEP_AR" x="-1200" y="-1400">
+		</SubApp>
+		<FB Name="AR_PUBLISH_HZ" Type="adapter::net::AR_PUBLISH_1" x="600" y="-1700">
+		</FB>
+		<SubApp Name="FilterTimeS" Type="MyLib::sys::NumericValue_TO_AR2_OPC" x="-6800" y="-100">
+		</SubApp>
+		<FB Name="INI_FilterTimeS" Type="eclipse4diac::storage::INI_AR2" x="-4500" y="-500">
+			<Parameter Name="SETM" Value="TRUE"/>
+			<Parameter Name="KEY" Value="'FilterTimeS'"/>
+			<Parameter Name="DEFAULT_VALUE" Value="REAL#2.0"/>
+		</FB>
+		<SubApp Name="ToATM" Type="MyLib::sys::AR_S_TO_ATM" x="-4100" y="600">
+		</SubApp>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_4">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="logiBUS_PI_IDA.INIT"/>
+			<Connection Source="logiBUS_PI_IDA.INITO" Destination="AR_PUBLISH_HZ.INIT"/>
+			<Connection Source="AR_PUBLISH_HZ.INITO" Destination="INI_FilterTimeS.INIT"/>
+			<Connection Source="INI_FilterTimeS.INITO" Destination="FilterTimeS.INIT"/>
+			<Connection Source="FilterTimeS.INITO" Destination="INITO"/>
+			<Connection Source="FilterTimeS.INITO" Destination="AND_QO.REQ"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="Input" Destination="logiBUS_PI_IDA.Input" dx1="1460">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_HZ_WRITE" Destination="AR_PUBLISH_HZ.ID" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="stObjFilterTimeS" Destination="FilterTimeS.stObj" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_FILTER_TIME_READ" Destination="FilterTimeS.ID_READ" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_FILTER_TIME_WRITE" Destination="FilterTimeS.ID_WRITE" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="sSection" Destination="INI_FilterTimeS.SECTION" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="RASTER_HZ" Destination="Round_Hz.RASTER" dx1="300">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="logiBUS_PI_IDA.QI"/>
+			<Connection Source="QI" Destination="AR_PUBLISH_HZ.QI"/>
+			<Connection Source="QI" Destination="INI_FilterTimeS.QI"/>
+			<Connection Source="logiBUS_PI_IDA.QO" Destination="AND_QO.IN1"/>
+			<Connection Source="AR_PUBLISH_HZ.QO" Destination="AND_QO.IN2"/>
+			<Connection Source="INI_FilterTimeS.QO" Destination="AND_QO.IN3"/>
+			<Connection Source="AND_QO.OUT" Destination="QO"/>
+			<Connection Source="QI" Destination="FilterTimeS.QI"/>
+			<Connection Source="FilterTimeS.QO" Destination="AND_QO.IN4"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="logiBUS_PI_IDA.IN" Destination="AD_TO_AR_NUM.AD_IN" dx1="420"/>
+			<Connection Source="AD_TO_AR_NUM.AR_OUT" Destination="FT_DERIV_10_AR.AR_IN" dx1="420"/>
+			<Connection Source="FT_DERIV_10_AR.AR_OUT" Destination="FT_PT1_AR.AR_IN" dx1="420"/>
+			<Connection Source="LIT_DerivK.OUT" Destination="FT_DERIV_10_AR.K" dx1="400"/>
+			<Connection Source="FilterTimeS.VALUEO" Destination="INI_FilterTimeS.VAL" dx1="400"/>
+			<Connection Source="FilterTimeS.VALUE_OUT" Destination="ToATM.IN1" dx1="400"/>
+			<Connection Source="ToATM.OUT" Destination="FT_PT1_AR.TM" dx1="400"/>
+			<Connection Source="FT_PT1_AR.AR_OUT" Destination="Round_Hz.AR_IN" dx1="133.33"/>
+			<Connection Source="Round_Hz.AR_OUT" Destination="AR_PUBLISH_HZ.IN" dx1="133.33"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

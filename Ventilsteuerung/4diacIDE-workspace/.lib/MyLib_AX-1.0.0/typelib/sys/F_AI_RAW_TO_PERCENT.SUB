@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="F_AI_RAW_TO_PERCENT" Comment="Analog-Rohwert (DWORD 0-4095, 12-bit ESP32-P4-ADC-Vollausschlag) linear in&#10;Prozent (REAL 0.0-100.0) umrechnen - keine physikalische Kalibrierung (folgt&#10;spaeter)">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2026-08-30">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="REQ" Type="Event" Comment="Normal Execution Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="CNF" Type="Event" Comment="Execution Confirmation">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="IN" Type="DWORD" Comment="Analog-Rohwert 0-4095 (12 bit, logiBUS_AI_ID/_IDA.IN)"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="OUT" Type="REAL" Comment="Prozent 0.0-100.0, linear raw/4095*100, keine physikalische Einheit"/>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="F_DWORD_TO_UDINT" Type="iec61131::conversion::F_DWORD_TO_UDINT" x="-100" y="300">
+		</FB>
+		<FB Name="F_UDINT_TO_REAL" Type="iec61131::conversion::F_UDINT_TO_REAL" x="1400" y="300">
+		</FB>
+		<FB Name="F_MUL_TO_PERCENT" Type="iec61131::arithmetic::F_MUL" x="3600" y="300">
+			<Parameter Name="IN2" Value="REAL#0.0244200244"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="REQ" Destination="F_DWORD_TO_UDINT.REQ" dx1="1180"/>
+			<Connection Source="F_DWORD_TO_UDINT.CNF" Destination="F_UDINT_TO_REAL.REQ"/>
+			<Connection Source="F_UDINT_TO_REAL.CNF" Destination="F_MUL_TO_PERCENT.REQ"/>
+			<Connection Source="F_MUL_TO_PERCENT.CNF" Destination="CNF" dx1="2013.33"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="IN" Destination="F_DWORD_TO_UDINT.IN" dx1="960"/>
+			<Connection Source="F_DWORD_TO_UDINT.OUT" Destination="F_UDINT_TO_REAL.IN"/>
+			<Connection Source="F_UDINT_TO_REAL.OUT" Destination="F_MUL_TO_PERCENT.IN1"/>
+			<Connection Source="F_MUL_TO_PERCENT.OUT" Destination="OUT" dx1="2013.33"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

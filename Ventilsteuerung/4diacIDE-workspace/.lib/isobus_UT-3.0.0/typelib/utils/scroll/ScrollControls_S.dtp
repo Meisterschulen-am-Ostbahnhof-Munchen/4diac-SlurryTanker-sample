@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataType Name="ScrollControls_S" Comment="ISOBUS UT scroll list operator controls (6 buttons + direct-position input field)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-08-09" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::utils::scroll">
+		<Import declaration="isobus::UT::Q::const::IDs"/>
+	</CompilerInfo>
+	<StructuredType>
+		<VarDeclaration Name="u16BtnTopId" Type="UINT" Comment="Object ID of the softkey/button that fires the TOP event" InitialValue="IDs::ID_NULL"/>
+		<VarDeclaration Name="u16BtnPageUpId" Type="UINT" Comment="Object ID of the softkey/button that fires the UP_UP event" InitialValue="IDs::ID_NULL"/>
+		<VarDeclaration Name="u16BtnUpId" Type="UINT" Comment="Object ID of the softkey/button that fires the UP event" InitialValue="IDs::ID_NULL"/>
+		<VarDeclaration Name="u16BtnDownId" Type="UINT" Comment="Object ID of the softkey/button that fires the DOWN event" InitialValue="IDs::ID_NULL"/>
+		<VarDeclaration Name="u16BtnPageDownId" Type="UINT" Comment="Object ID of the softkey/button that fires the DOWN_DOWN event" InitialValue="IDs::ID_NULL"/>
+		<VarDeclaration Name="u16BtnBottomId" Type="UINT" Comment="Object ID of the softkey/button that fires the BOTTOM event" InitialValue="IDs::ID_NULL"/>
+		<VarDeclaration Name="u16GotoInputId" Type="UINT" Comment="Object ID of the InputNumber field for direct row-position entry (drives the POS/GOTO event's SET_POS value)" InitialValue="IDs::ID_NULL"/>
+		<VarDeclaration Name="u16BtnPageUpPtrId" Type="UINT" Comment="Object ID of the ObjectPointer (SoftKeyMask/Container child) that currently resolves to u16BtnPageUpId - redirected to ID_NULL to hide the button when qAtFirst, restored to u16BtnPageUpId otherwise" InitialValue="IDs::ID_NULL"/>
+		<VarDeclaration Name="u16BtnUpPtrId" Type="UINT" Comment="Object ID of the ObjectPointer that currently resolves to u16BtnUpId - redirected to ID_NULL to hide the button when qAtFirst, restored to u16BtnUpId otherwise" InitialValue="IDs::ID_NULL"/>
+		<VarDeclaration Name="u16BtnDownPtrId" Type="UINT" Comment="Object ID of the ObjectPointer that currently resolves to u16BtnDownId - redirected to ID_NULL to hide the button when qAtLast, restored to u16BtnDownId otherwise" InitialValue="IDs::ID_NULL"/>
+		<VarDeclaration Name="u16BtnPageDownPtrId" Type="UINT" Comment="Object ID of the ObjectPointer that currently resolves to u16BtnPageDownId - redirected to ID_NULL to hide the button when qAtLast, restored to u16BtnPageDownId otherwise" InitialValue="IDs::ID_NULL"/>
+	</StructuredType>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</DataType>

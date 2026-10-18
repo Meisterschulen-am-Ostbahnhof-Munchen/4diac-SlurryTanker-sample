@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="NumericValue_TO_CLIENT_1_0_OPC" Comment="VT-Eingabefeld (CInputNumber) - NUR bei echter Eingabe (NumericValue_PHYSA&#10;feuert on-commit) - ruft eine entfernte OPC-UA-Methode MIT dem eingegebenen&#10;REAL-Wert als Argument auf (CALL_METHOD, AR_CLIENT_1_0). Rueckweg (Anzeige des&#10;tatsaechlich wirksamen/bestaetigten Werts auf demselben VT-Feld) laeuft separat&#10;und unkritisch ueber einen normalen Subscribe (Q_NumericValue_PHYSA) - kein&#10;Zirkelbezug, kein Merge/Last-Writer-Wins noetig (nur EIN Aufrufer pro Methode&#10;auf der Empfaengerseite, serialisiert durch den Methodenaufruf selbst).">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-23" Remarks="initial implementation - Franz: 'man macht auf STG4 2 METHODEN, die werden aufgerufen: vom Web-Dashboard oder von VT1, und zwar nur wenn jemand was eingibt... der rueckweg laeuft ueber einen Subscribe und ist unkritisch'. Fuer Druck (B20) ZERO/SPAN-Referenzwerte fern der Sensor-Station eingebbar, ohne AR2/Web-Override-Merge-Komplexitaet und ohne 2-Quellen-Schreiben-Problem.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-25" Remarks="Call-Baustein AR_CLIENT_1_0 -&gt; AR_CLIENT_1_0_UNGATED (bestaetigter Review-Fund auf PR #267): AR_CLIENT_1_0's interner E_D_FF_ANY unterdrueckte eine erneute CALL_METHOD, wenn der neu eingegebene Wert zufaellig mit dem zuletzt gesendeten uebereinstimmte - dieses SubApp ruft aber laut Kommentar/Design 'NUR bei echter Eingabe', unabhaengig vom Wert.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+		<Import declaration="logiBUS::utils::conversion::phys::NumericObjectPool_S"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="stObj" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object ID + Scale/Offset/Decimals des VT-Eingabefelds (Ein- UND Ausgabe: bestaetigter Wert wird hier zurueckgeschrieben)" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 1)"/>
+			<VarDeclaration Name="ID_CALL" Type="WSTRING" Comment="Remote-Methodenadresse (ACTION=CALL_METHOD) - wird NUR bei einer echten VT-Eingabe (NumericValue_PHYSA-Commit) mit dem eingegebenen Wert als Argument aufgerufen"/>
+			<VarDeclaration Name="ID_M2M_READ" Type="WSTRING" Comment="Remote-Subscribe-Adresse (REAL, ACTION=SUBSCRIBE) - liefert den tatsaechlich wirksamen/bestaetigten Wert zur Anzeige auf demselben VT-Feld zurueck (unkritischer Rueckweg, reines Lesen)"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="Input" Type="isobus::UT::io::NumericValue::NumericValue_PHYSA" x="-4500" y="0">
+		</FB>
+		<FB Name="Call" Type="adapter::net::AR_CLIENT_1_0_UNGATED" x="-2000" y="0">
+		</FB>
+		<FB Name="Subscribe" Type="adapter::net::AR_SUBSCRIBE_1" x="-4500" y="1200">
+		</FB>
+		<FB Name="Display" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="-2000" y="1200">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_4">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="Input.INIT"/>
+			<Connection Source="Input.INITO" Destination="Subscribe.INIT"/>
+			<Connection Source="Subscribe.INITO" Destination="Call.INIT" dx1="1250">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Call.INITO" Destination="Display.INIT"/>
+			<Connection Source="Display.INITO" Destination="INITO"/>
+			<Connection Source="Display.INITO" Destination="AND_QO.REQ"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="stObj" Destination="Input.stObj" dx1="1100">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="stObj" Destination="Display.stObj" dx1="1100">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_CALL" Destination="Call.ID" dx1="1100">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_M2M_READ" Destination="Subscribe.ID" dx1="1100">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="Display.QI"/>
+			<Connection Source="QI" Destination="Input.QI"/>
+			<Connection Source="QI" Destination="Call.QI"/>
+			<Connection Source="QI" Destination="Subscribe.QI"/>
+			<Connection Source="Display.QO" Destination="AND_QO.IN1"/>
+			<Connection Source="Input.QO" Destination="AND_QO.IN2"/>
+			<Connection Source="Call.QO" Destination="AND_QO.IN3"/>
+			<Connection Source="Subscribe.QO" Destination="AND_QO.IN4"/>
+			<Connection Source="AND_QO.OUT" Destination="QO"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="Input.rPhys" Destination="Call.IN" dx1="1250"/>
+			<Connection Source="Subscribe.OUT" Destination="Display.rPhys" dx1="1250"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

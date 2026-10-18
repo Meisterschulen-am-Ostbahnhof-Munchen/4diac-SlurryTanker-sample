@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="IG1_Source_Addresses" Comment="Industry Group 1 specific source addresses">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Organization="Demmler Andreas Fahrzeugbau" Version="1.0" Author="Franz Höpfinger" Date="2026-06-29">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::pgn::const">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="SA_RESERVED_128" Type="BYTE" Comment="Source Address: thru 158 are reserved for future assignment by SAE but available for use by self" InitialValue="128"/>
+		<VarDeclaration Name="SA_AUTOMATED_DRIVING_CONTROLLER_2" Type="BYTE" Comment="Source Address: Automated Driving Controller 2 - Second Automated Driving Controller Notes: The" InitialValue="156"/>
+		<VarDeclaration Name="SA_ELECTRIC_PROPULSION_CONTROL_UNIT_3" Type="BYTE" Comment="Source Address: Electric Propulsion Control Unit #3 - Third on-board device converting torque" InitialValue="157"/>
+		<VarDeclaration Name="SA_AUTOMATED_DRIVING_CONTROLLER_1" Type="BYTE" Comment="Source Address: Automated Driving Controller 1 - Automated Driving Controller. Notes: The" InitialValue="158"/>
+		<VarDeclaration Name="SA_ROADWAY_INFORMATION_SYSTEM" Type="BYTE" Comment="Source Address: Roadway Information System - Controller applications that use this source address" InitialValue="159"/>
+		<VarDeclaration Name="SA_ADVANCED_EMERGENCY_BRAKING_SYSTEM" Type="BYTE" Comment="Source Address: Advanced emergency braking system - A system which can detect a potential forward" InitialValue="160"/>
+		<VarDeclaration Name="SA_FIFTH_WHEEL_SMART_SYSTEMS" Type="BYTE" Comment="Source Address: Fifth Wheel Smart Systems - Any systems relative to the operation &amp; status/safety" InitialValue="161"/>
+		<VarDeclaration Name="SA_SLOPE_SENSOR" Type="BYTE" Comment="Source Address: Slope Sensor - A device that measures the slope along an axis." InitialValue="162"/>
+		<VarDeclaration Name="SA_CATALYST_FLUID_SENSOR" Type="BYTE" Comment="Source Address: Catalyst Fluid Sensor - The Catalyst Fluid Sensor can measure the catalyst fluid" InitialValue="163"/>
+		<VarDeclaration Name="SA_ON_BOARD_DIAGNOSTIC_UNIT_2" Type="BYTE" Comment="Source Address: On Board Diagnostic Unit #2 - Controller used to report On Board Diagnostics" InitialValue="164"/>
+		<VarDeclaration Name="SA_REAR_STEERING_AXLE_CONTROLLER_2" Type="BYTE" Comment="Source Address: Rear Steering Axle Controller #2 - Rear steering controller 2 for axle group" InitialValue="165"/>
+		<VarDeclaration Name="SA_REAR_STEERING_AXLE_CONTROLLER_3" Type="BYTE" Comment="Source Address: Rear Steering Axle Controller #3 - Rear steering controller 3 for axle group" InitialValue="166"/>
+		<VarDeclaration Name="SA_INSTRUMENT_CLUSTER_2" Type="BYTE" Comment="Source Address: Instrument Cluster #2 - A second optional, or auxiliary, gauge display for a" InitialValue="167"/>
+		<VarDeclaration Name="SA_TRAILER_5_BRIDGE" Type="BYTE" Comment="Source Address: Trailer #5 Bridge - Bridge for fifth towed Vehicle System (e.g. trailer or dolly)" InitialValue="168"/>
+		<VarDeclaration Name="SA_TRAILER_5_LIGHTING_ELECTRICAL" Type="BYTE" Comment="Source Address: Trailer #5 Lighting-electrical" InitialValue="169"/>
+		<VarDeclaration Name="SA_TRAILER_5_BRAKES_ABS_EBS" Type="BYTE" Comment="Source Address: Trailer #5 Brakes (ABS-EBS)" InitialValue="170"/>
+		<VarDeclaration Name="SA_TRAILER_5_REEFER" Type="BYTE" Comment="Source Address: Trailer #5 Reefer" InitialValue="171"/>
+		<VarDeclaration Name="SA_TRAILER_5_CARGO" Type="BYTE" Comment="Source Address: Trailer #5 Cargo" InitialValue="172"/>
+		<VarDeclaration Name="SA_TRAILER_5_CHASSIS_SUSPENSION" Type="BYTE" Comment="Source Address: Trailer #5 Chassis-Suspension" InitialValue="173"/>
+		<VarDeclaration Name="SA_OTHER_TRAILER_5_DEVICES" Type="BYTE" Comment="Source Address: Other Trailer #5 Devices - Recommended address space for subnetwork devices" InitialValue="174"/>
+		<VarDeclaration Name="SA_OTHER_TRAILER_5_DEVICES_175" Type="BYTE" Comment="Source Address: Other Trailer #5 Devices - Recommended address space for subnetwork devices" InitialValue="175"/>
+		<VarDeclaration Name="SA_TRAILER_4_BRIDGE" Type="BYTE" Comment="Source Address: Trailer #4 Bridge - Bridge for fourth towed Vehicle System (e.g. trailer or" InitialValue="176"/>
+		<VarDeclaration Name="SA_TRAILER_4_LIGHTING_ELECTRICAL" Type="BYTE" Comment="Source Address: Trailer #4 Lighting-electrical" InitialValue="177"/>
+		<VarDeclaration Name="SA_TRAILER_4_BRAKES_ABS_EBS" Type="BYTE" Comment="Source Address: Trailer #4 Brakes (ABS-EBS)" InitialValue="178"/>
+		<VarDeclaration Name="SA_TRAILER_4_REEFER" Type="BYTE" Comment="Source Address: Trailer #4 Reefer" InitialValue="179"/>
+		<VarDeclaration Name="SA_TRAILER_4_CARGO" Type="BYTE" Comment="Source Address: Trailer #4 Cargo" InitialValue="180"/>
+		<VarDeclaration Name="SA_TRAILER_4_CHASSIS_SUSPENSION" Type="BYTE" Comment="Source Address: Trailer #4 Chassis-Suspension" InitialValue="181"/>
+		<VarDeclaration Name="SA_OTHER_TRAILER_4_DEVICES" Type="BYTE" Comment="Source Address: Other Trailer #4 Devices - Recommended address space for subnetwork devices" InitialValue="182"/>
+		<VarDeclaration Name="SA_OTHER_TRAILER_4_DEVICES_183" Type="BYTE" Comment="Source Address: Other Trailer #4 Devices - Recommended address space for subnetwork devices" InitialValue="183"/>
+		<VarDeclaration Name="SA_TRAILER_3_BRIDGE" Type="BYTE" Comment="Source Address: Trailer #3 Bridge - Bridge for third towed Vehicle System (e.g. trailer or dolly)" InitialValue="184"/>
+		<VarDeclaration Name="SA_TRAILER_3_LIGHTING_ELECTRICAL" Type="BYTE" Comment="Source Address: Trailer #3 Lighting-electrical" InitialValue="185"/>
+		<VarDeclaration Name="SA_TRAILER_3_BRAKES_ABS_EBS" Type="BYTE" Comment="Source Address: Trailer #3 Brakes (ABS-EBS)" InitialValue="186"/>
+		<VarDeclaration Name="SA_TRAILER_3_REEFER" Type="BYTE" Comment="Source Address: Trailer #3 Reefer" InitialValue="187"/>
+		<VarDeclaration Name="SA_TRAILER_3_CARGO" Type="BYTE" Comment="Source Address: Trailer #3 Cargo" InitialValue="188"/>
+		<VarDeclaration Name="SA_TRAILER_3_CHASSIS_SUSPENSION" Type="BYTE" Comment="Source Address: Trailer #3 Chassis-Suspension" InitialValue="189"/>
+		<VarDeclaration Name="SA_OTHER_TRAILER_3_DEVICES" Type="BYTE" Comment="Source Address: Other Trailer #3 Devices - Recommended address space for subnetwork devices" InitialValue="190"/>
+		<VarDeclaration Name="SA_OTHER_TRAILER_3_DEVICES_191" Type="BYTE" Comment="Source Address: Other Trailer #3 Devices - Recommended address space for subnetwork devices" InitialValue="191"/>
+		<VarDeclaration Name="SA_TRAILER_2_BRIDGE" Type="BYTE" Comment="Source Address: Trailer #2 Bridge - Bridge for second towed Vehicle System (e.g. trailer or" InitialValue="192"/>
+		<VarDeclaration Name="SA_TRAILER_2_LIGHTING_ELECTRICAL" Type="BYTE" Comment="Source Address: Trailer #2 Lighting-electrical" InitialValue="193"/>
+		<VarDeclaration Name="SA_TRAILER_2_BRAKES_ABS_EBS" Type="BYTE" Comment="Source Address: Trailer #2 Brakes (ABS-EBS)" InitialValue="194"/>
+		<VarDeclaration Name="SA_TRAILER_2_REEFER" Type="BYTE" Comment="Source Address: Trailer #2 Reefer" InitialValue="195"/>
+		<VarDeclaration Name="SA_TRAILER_2_CARGO" Type="BYTE" Comment="Source Address: Trailer #2 Cargo" InitialValue="196"/>
+		<VarDeclaration Name="SA_TRAILER_2_CHASSIS_SUSPENSION" Type="BYTE" Comment="Source Address: Trailer #2 Chassis-Suspension" InitialValue="197"/>
+		<VarDeclaration Name="SA_OTHER_TRAILER_2_DEVICES" Type="BYTE" Comment="Source Address: Other Trailer #2 Devices - Recommended address space for subnetwork devices" InitialValue="198"/>
+		<VarDeclaration Name="SA_OTHER_TRAILER_2_DEVICES_199" Type="BYTE" Comment="Source Address: Other Trailer #2 Devices - Recommended address space for subnetwork devices" InitialValue="199"/>
+		<VarDeclaration Name="SA_TRAILER_1_BRIDGE" Type="BYTE" Comment="Source Address: Trailer #1 Bridge - Bridge for first towed Vehicle System (e.g. trailer or dolly)" InitialValue="200"/>
+		<VarDeclaration Name="SA_TRAILER_1_LIGHTING_ELECTRICAL" Type="BYTE" Comment="Source Address: Trailer #1 Lighting-electrical" InitialValue="201"/>
+		<VarDeclaration Name="SA_TRAILER_1_BRAKES_ABS_EBS" Type="BYTE" Comment="Source Address: Trailer #1 Brakes (ABS-EBS)" InitialValue="202"/>
+		<VarDeclaration Name="SA_TRAILER_1_REEFER" Type="BYTE" Comment="Source Address: Trailer #1 Reefer" InitialValue="203"/>
+		<VarDeclaration Name="SA_TRAILER_1_CARGO" Type="BYTE" Comment="Source Address: Trailer #1 Cargo" InitialValue="204"/>
+		<VarDeclaration Name="SA_TRAILER_1_CHASSIS_SUSPENSION" Type="BYTE" Comment="Source Address: Trailer #1 Chassis-Suspension" InitialValue="205"/>
+		<VarDeclaration Name="SA_OTHER_TRAILER_1_DEVICES" Type="BYTE" Comment="Source Address: Other Trailer #1 Devices - Recommended address space for subnetwork devices" InitialValue="206"/>
+		<VarDeclaration Name="SA_OTHER_TRAILER_1_DEVICES_207" Type="BYTE" Comment="Source Address: Other Trailer #1 Devices - Recommended address space for subnetwork devices" InitialValue="207"/>
+		<VarDeclaration Name="SA_RESERVED_208" Type="BYTE" Comment="Source Address: thru 227 are reserved for future assignment by SAE - To be used for individual" InitialValue="208"/>
+		<VarDeclaration Name="SA_STEERING_INPUT_UNIT" Type="BYTE" Comment="Source Address: Steering Input Unit - May be used for measuring steering angle, steering torsion," InitialValue="228"/>
+		<VarDeclaration Name="SA_BODY_CONTROLLER_2" Type="BYTE" Comment="Source Address: Body Controller #2 - This is for the second instance of a body controller on a" InitialValue="229"/>
+		<VarDeclaration Name="SA_BODY_TO_VEHICLE_INTERFACE_CONTROL" Type="BYTE" Comment="Source Address: Body-to-Vehicle Interface Control - Interface controller managing interaction of" InitialValue="230"/>
+		<VarDeclaration Name="SA_ARTICULATION_TURNTABLE_CONTROL" Type="BYTE" Comment="Source Address: Articulation Turntable Control - Controller managing the articulation turntable" InitialValue="231"/>
+		<VarDeclaration Name="SA_FORWARD_ROAD_IMAGE_PROCESSOR" Type="BYTE" Comment="Source Address: Forward Road Image Processor - Views the road ahead for electronic recognition of" InitialValue="232"/>
+		<VarDeclaration Name="SA_DOOR_CONTROLLER_3" Type="BYTE" Comment="Source Address: Door Controller #3" InitialValue="233"/>
+		<VarDeclaration Name="SA_DOOR_CONTROLLER_4" Type="BYTE" Comment="Source Address: Door Controller #4" InitialValue="234"/>
+		<VarDeclaration Name="SA_TRACTOR_TRAILER_BRIDGE_2" Type="BYTE" Comment="Source Address: Tractor/Trailer Bridge #2 - Second tractor mounted bridge leading to trailer(s)" InitialValue="235"/>
+		<VarDeclaration Name="SA_DOOR_CONTROLLER_1" Type="BYTE" Comment="Source Address: Door Controller #1 - cab drivers side or first door" InitialValue="236"/>
+		<VarDeclaration Name="SA_DOOR_CONTROLLER_2" Type="BYTE" Comment="Source Address: Door Controller #2 - cab codrivers side or second door" InitialValue="237"/>
+		<VarDeclaration Name="SA_TACHOGRAPH" Type="BYTE" Comment="Source Address: Tachograph" InitialValue="238"/>
+		<VarDeclaration Name="SA_ELECTRIC_PROPULSION_CONTROL_UNIT_1" Type="BYTE" Comment="Source Address: Electric Propulsion Control Unit #1 - First or only on-board device converting" InitialValue="239"/>
+		<VarDeclaration Name="SA_ELECTRIC_PROPULSION_CONTROL_UNIT_2" Type="BYTE" Comment="Source Address: Electric Propulsion Control Unit #2 - Second on-board device converting torque" InitialValue="240"/>
+		<VarDeclaration Name="SA_WWH_OBD_TESTER" Type="BYTE" Comment="Source Address: WWH-OBD Tester - SA for OBD tester as defined in WWH-OBD ISO 15765-4. Note that" InitialValue="241"/>
+		<VarDeclaration Name="SA_ELECTRIC_PROPULSION_CONTROL_UNIT_4" Type="BYTE" Comment="Source Address: Electric Propulsion Control Unit #4 - Fourth on-board device converting torque" InitialValue="242"/>
+		<VarDeclaration Name="SA_BATTERY_PACK_MONITOR_1" Type="BYTE" Comment="Source Address: Battery Pack Monitor #1 - Device to monitor battery pack #1" InitialValue="243"/>
+		<VarDeclaration Name="SA_BATTERY_PACK_MONITOR_2_APU_4" Type="BYTE" Comment="Source Address: Battery Pack Monitor #2 / APU #4 - SA for either the device to monitor battery" InitialValue="244"/>
+		<VarDeclaration Name="SA_BATTERY_PACK_MONITOR_3_APU_3" Type="BYTE" Comment="Source Address: Battery Pack Monitor #3 / APU #3 - SA for either the device to monitor battery" InitialValue="245"/>
+		<VarDeclaration Name="SA_BATTERY_PACK_MONITOR_4_APU_2" Type="BYTE" Comment="Source Address: Battery Pack Monitor #4 / APU #2 - SA for either the device to monitor battery" InitialValue="246"/>
+		<VarDeclaration Name="SA_AUXILIARY_POWER_UNIT_APU_1" Type="BYTE" Comment="Source Address: Auxiliary Power Unit (APU) #1 - Device used to provide auxiliary power, such as" InitialValue="247"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE isobus::pgn::const;
+
+// Industry Group 1 specific source addresses
+GLOBALCONSTANTS IG1_Source_Addresses
+	VAR_GLOBAL CONSTANT
+		SA_RESERVED_128 : BYTE := 128; // Source Address: thru 158 are reserved for future assignment by SAE but available for use by self
+		                               // configurable ECUs - Used for dynamic address assignment
+		SA_AUTOMATED_DRIVING_CONTROLLER_2 : BYTE := 156; // Source Address: Automated Driving Controller 2 - Second Automated Driving Controller Notes: The
+		                                                 // hardware and software that are collectively capable of performing some or all of the dynamic
+		                                                 // driving ...
+		SA_ELECTRIC_PROPULSION_CONTROL_UNIT_3 : BYTE := 157; // Source Address: Electric Propulsion Control Unit #3 - Third on-board device converting torque
+		                                                     // commands to current commands in an electric vehicle system. Note that some applications have used
+		                                                     // SA 24...
+		SA_AUTOMATED_DRIVING_CONTROLLER_1 : BYTE := 158; // Source Address: Automated Driving Controller 1 - Automated Driving Controller. Notes: The
+		                                                 // hardware and software that are collectively capable of performing some or all of the dynamic
+		                                                 // driving task o...
+		SA_ROADWAY_INFORMATION_SYSTEM : BYTE := 159; // Source Address: Roadway Information System - Controller applications that use this source address
+		                                             // will provide information relevant to the roadway in which the vehicle is traveling. This includes
+		                                             // i...
+		SA_ADVANCED_EMERGENCY_BRAKING_SYSTEM : BYTE := 160; // Source Address: Advanced emergency braking system - A system which can detect a potential forward
+		                                                    // collision and automatically activate the vehicle braking system to decelerate the vehicle with
+		                                                    // the ...
+		SA_FIFTH_WHEEL_SMART_SYSTEMS : BYTE := 161; // Source Address: Fifth Wheel Smart Systems - Any systems relative to the operation & status/safety
+		                                            // monitoring of the fifth wheel coupler system (including mounting bracket).
+		SA_SLOPE_SENSOR : BYTE := 162; // Source Address: Slope Sensor - A device that measures the slope along an axis.
+		SA_CATALYST_FLUID_SENSOR : BYTE := 163; // Source Address: Catalyst Fluid Sensor - The Catalyst Fluid Sensor can measure the catalyst fluid
+		                                        // temperature, the catalyst fluid level and the catalyst fluid quality.
+		SA_ON_BOARD_DIAGNOSTIC_UNIT_2 : BYTE := 164; // Source Address: On Board Diagnostic Unit #2 - Controller used to report On Board Diagnostics
+		SA_REAR_STEERING_AXLE_CONTROLLER_2 : BYTE := 165; // Source Address: Rear Steering Axle Controller #2 - Rear steering controller 2 for axle group
+		SA_REAR_STEERING_AXLE_CONTROLLER_3 : BYTE := 166; // Source Address: Rear Steering Axle Controller #3 - Rear steering controller 3 for axle group
+		SA_INSTRUMENT_CLUSTER_2 : BYTE := 167; // Source Address: Instrument Cluster #2 - A second optional, or auxiliary, gauge display for a
+		                                       // vehicle
+		SA_TRAILER_5_BRIDGE : BYTE := 168; // Source Address: Trailer #5 Bridge - Bridge for fifth towed Vehicle System (e.g. trailer or dolly)
+		SA_TRAILER_5_LIGHTING_ELECTRICAL : BYTE := 169; // Source Address: Trailer #5 Lighting-electrical
+		SA_TRAILER_5_BRAKES_ABS_EBS : BYTE := 170; // Source Address: Trailer #5 Brakes (ABS-EBS)
+		SA_TRAILER_5_REEFER : BYTE := 171; // Source Address: Trailer #5 Reefer
+		SA_TRAILER_5_CARGO : BYTE := 172; // Source Address: Trailer #5 Cargo
+		SA_TRAILER_5_CHASSIS_SUSPENSION : BYTE := 173; // Source Address: Trailer #5 Chassis-Suspension
+		SA_OTHER_TRAILER_5_DEVICES : BYTE := 174; // Source Address: Other Trailer #5 Devices - Recommended address space for subnetwork devices
+		SA_OTHER_TRAILER_5_DEVICES_175 : BYTE := 175; // Source Address: Other Trailer #5 Devices - Recommended address space for subnetwork devices
+		SA_TRAILER_4_BRIDGE : BYTE := 176; // Source Address: Trailer #4 Bridge - Bridge for fourth towed Vehicle System (e.g. trailer or
+		                                   // dolly)
+		SA_TRAILER_4_LIGHTING_ELECTRICAL : BYTE := 177; // Source Address: Trailer #4 Lighting-electrical
+		SA_TRAILER_4_BRAKES_ABS_EBS : BYTE := 178; // Source Address: Trailer #4 Brakes (ABS-EBS)
+		SA_TRAILER_4_REEFER : BYTE := 179; // Source Address: Trailer #4 Reefer
+		SA_TRAILER_4_CARGO : BYTE := 180; // Source Address: Trailer #4 Cargo
+		SA_TRAILER_4_CHASSIS_SUSPENSION : BYTE := 181; // Source Address: Trailer #4 Chassis-Suspension
+		SA_OTHER_TRAILER_4_DEVICES : BYTE := 182; // Source Address: Other Trailer #4 Devices - Recommended address space for subnetwork devices
+		SA_OTHER_TRAILER_4_DEVICES_183 : BYTE := 183; // Source Address: Other Trailer #4 Devices - Recommended address space for subnetwork devices
+		SA_TRAILER_3_BRIDGE : BYTE := 184; // Source Address: Trailer #3 Bridge - Bridge for third towed Vehicle System (e.g. trailer or dolly)
+		SA_TRAILER_3_LIGHTING_ELECTRICAL : BYTE := 185; // Source Address: Trailer #3 Lighting-electrical
+		SA_TRAILER_3_BRAKES_ABS_EBS : BYTE := 186; // Source Address: Trailer #3 Brakes (ABS-EBS)
+		SA_TRAILER_3_REEFER : BYTE := 187; // Source Address: Trailer #3 Reefer
+		SA_TRAILER_3_CARGO : BYTE := 188; // Source Address: Trailer #3 Cargo
+		SA_TRAILER_3_CHASSIS_SUSPENSION : BYTE := 189; // Source Address: Trailer #3 Chassis-Suspension
+		SA_OTHER_TRAILER_3_DEVICES : BYTE := 190; // Source Address: Other Trailer #3 Devices - Recommended address space for subnetwork devices
+		SA_OTHER_TRAILER_3_DEVICES_191 : BYTE := 191; // Source Address: Other Trailer #3 Devices - Recommended address space for subnetwork devices
+		SA_TRAILER_2_BRIDGE : BYTE := 192; // Source Address: Trailer #2 Bridge - Bridge for second towed Vehicle System (e.g. trailer or
+		                                   // dolly)
+		SA_TRAILER_2_LIGHTING_ELECTRICAL : BYTE := 193; // Source Address: Trailer #2 Lighting-electrical
+		SA_TRAILER_2_BRAKES_ABS_EBS : BYTE := 194; // Source Address: Trailer #2 Brakes (ABS-EBS)
+		SA_TRAILER_2_REEFER : BYTE := 195; // Source Address: Trailer #2 Reefer
+		SA_TRAILER_2_CARGO : BYTE := 196; // Source Address: Trailer #2 Cargo
+		SA_TRAILER_2_CHASSIS_SUSPENSION : BYTE := 197; // Source Address: Trailer #2 Chassis-Suspension
+		SA_OTHER_TRAILER_2_DEVICES : BYTE := 198; // Source Address: Other Trailer #2 Devices - Recommended address space for subnetwork devices
+		SA_OTHER_TRAILER_2_DEVICES_199 : BYTE := 199; // Source Address: Other Trailer #2 Devices - Recommended address space for subnetwork devices
+		SA_TRAILER_1_BRIDGE : BYTE := 200; // Source Address: Trailer #1 Bridge - Bridge for first towed Vehicle System (e.g. trailer or dolly)
+		SA_TRAILER_1_LIGHTING_ELECTRICAL : BYTE := 201; // Source Address: Trailer #1 Lighting-electrical
+		SA_TRAILER_1_BRAKES_ABS_EBS : BYTE := 202; // Source Address: Trailer #1 Brakes (ABS-EBS)
+		SA_TRAILER_1_REEFER : BYTE := 203; // Source Address: Trailer #1 Reefer
+		SA_TRAILER_1_CARGO : BYTE := 204; // Source Address: Trailer #1 Cargo
+		SA_TRAILER_1_CHASSIS_SUSPENSION : BYTE := 205; // Source Address: Trailer #1 Chassis-Suspension
+		SA_OTHER_TRAILER_1_DEVICES : BYTE := 206; // Source Address: Other Trailer #1 Devices - Recommended address space for subnetwork devices
+		SA_OTHER_TRAILER_1_DEVICES_207 : BYTE := 207; // Source Address: Other Trailer #1 Devices - Recommended address space for subnetwork devices
+		SA_RESERVED_208 : BYTE := 208; // Source Address: thru 227 are reserved for future assignment by SAE - To be used for individual
+		                               // preassigned addresses
+		SA_STEERING_INPUT_UNIT : BYTE := 228; // Source Address: Steering Input Unit - May be used for measuring steering angle, steering torsion,
+		                                      // steering force feedback, etc.
+		SA_BODY_CONTROLLER_2 : BYTE := 229; // Source Address: Body Controller #2 - This is for the second instance of a body controller on a
+		                                    // chassis.
+		SA_BODY_TO_VEHICLE_INTERFACE_CONTROL : BYTE := 230; // Source Address: Body-to-Vehicle Interface Control - Interface controller managing interaction of
+		                                                    // vehicle functions and body functions. May be a combination of body signals and gateway
+		                                                    // functionalities.
+		SA_ARTICULATION_TURNTABLE_CONTROL : BYTE := 231; // Source Address: Articulation Turntable Control - Controller managing the articulation turntable
+		                                                 // for joined body buses.
+		SA_FORWARD_ROAD_IMAGE_PROCESSOR : BYTE := 232; // Source Address: Forward Road Image Processor - Views the road ahead for electronic recognition of
+		                                               // several items
+		SA_DOOR_CONTROLLER_3 : BYTE := 233; // Source Address: Door Controller #3
+		SA_DOOR_CONTROLLER_4 : BYTE := 234; // Source Address: Door Controller #4
+		SA_TRACTOR_TRAILER_BRIDGE_2 : BYTE := 235; // Source Address: Tractor/Trailer Bridge #2 - Second tractor mounted bridge leading to trailer(s)
+		SA_DOOR_CONTROLLER_1 : BYTE := 236; // Source Address: Door Controller #1 - cab drivers side or first door
+		SA_DOOR_CONTROLLER_2 : BYTE := 237; // Source Address: Door Controller #2 - cab codrivers side or second door
+		SA_TACHOGRAPH : BYTE := 238; // Source Address: Tachograph
+		SA_ELECTRIC_PROPULSION_CONTROL_UNIT_1 : BYTE := 239; // Source Address: Electric Propulsion Control Unit #1 - First or only on-board device converting
+		                                                     // torque commands to current commands in an electric vehicle system
+		SA_ELECTRIC_PROPULSION_CONTROL_UNIT_2 : BYTE := 240; // Source Address: Electric Propulsion Control Unit #2 - Second on-board device converting torque
+		                                                     // commands to current commands in an electric vehicle system
+		SA_WWH_OBD_TESTER : BYTE := 241; // Source Address: WWH-OBD Tester - SA for OBD tester as defined in WWH-OBD ISO 15765-4. Note that
+		                                 // some applications use this SA for Electric Propulsion Control Unit #3.
+		SA_ELECTRIC_PROPULSION_CONTROL_UNIT_4 : BYTE := 242; // Source Address: Electric Propulsion Control Unit #4 - Fourth on-board device converting torque
+		                                                     // commands to current commands in an electric vehicle system
+		SA_BATTERY_PACK_MONITOR_1 : BYTE := 243; // Source Address: Battery Pack Monitor #1 - Device to monitor battery pack #1
+		SA_BATTERY_PACK_MONITOR_2_APU_4 : BYTE := 244; // Source Address: Battery Pack Monitor #2 / APU #4 - SA for either the device to monitor battery
+		                                               // pack #2 or APU #4
+		SA_BATTERY_PACK_MONITOR_3_APU_3 : BYTE := 245; // Source Address: Battery Pack Monitor #3 / APU #3 - SA for either the device to monitor battery
+		                                               // pack #3 or APU #3
+		SA_BATTERY_PACK_MONITOR_4_APU_2 : BYTE := 246; // Source Address: Battery Pack Monitor #4 / APU #2 - SA for either the device to monitor battery
+		                                               // pack #4 or APU #2
+		SA_AUXILIARY_POWER_UNIT_APU_1 : BYTE := 247; // Source Address: Auxiliary Power Unit (APU) #1 - Device used to provide auxiliary power, such as
+		                                             // electrical, hydraulic, pneumatic, or rotary
+	END_VAR
+
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</GlobalConstants>

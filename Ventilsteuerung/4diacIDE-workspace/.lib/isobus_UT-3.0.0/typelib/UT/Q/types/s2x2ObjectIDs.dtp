@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataType Name="s2x2ObjectIDs" Comment="a Struct holding 2x2 Object IDs">
+	<Identification>
+	</Identification>
+	<VersionInfo Organization="Demmler Andreas Fahrzeugbau" Version="1.0" Author="Franz Höpfinger" Date="2026-05-28">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::UT::Q::types">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+	</CompilerInfo>
+	<StructuredType>
+		<VarDeclaration Name="up" Type="isobus::UT::Q::types::s2ObjectIDs" Comment="forward, up, right, clockwise" InitialValue="(u16ObjId := ID_NULL, u16ObjIdA := ID_NULL)"/>
+		<VarDeclaration Name="down" Type="isobus::UT::Q::types::s2ObjectIDs" Comment="backward, down, left, counter-clockwise" InitialValue="(u16ObjId := ID_NULL, u16ObjIdA := ID_NULL)"/>
+	</StructuredType>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</DataType>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="SoftKeySR_PC_B_OPC_Adapter_LOC" Comment="Wie SoftKeySR_PC_B_OPC_Adapter, aber Zustand lokal per PUBLISH (ein Geraet, Methoden per localhost)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-18" Remarks="Lokale Variante von SoftKeySR_PC_B_OPC_Adapter: lokales PUBLISH statt Remote-WRITE (CLIENT)">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-04" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO_S"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="Output" Type="logiBUS::io::DQ::logiBUS_DO_S" Comment="Identify the Output Output_Q1..Q8" InitialValue="logiBUS_DO::Invalid"/>
+			<VarDeclaration Name="ID_SET_METHOD" Type="WSTRING" Comment="Lokale Methodenadresse (ACTION=CREATE_METHOD) fuer den Set-Methodenaufruf, wird von Geraet A per CALL_METHOD aufgerufen"/>
+			<VarDeclaration Name="ID_RESET_METHOD" Type="WSTRING" Comment="Lokale Methodenadresse (ACTION=CREATE_METHOD) fuer den Reset-Methodenaufruf, wird von Geraet A per CALL_METHOD aufgerufen"/>
+			<VarDeclaration Name="ID_STATE_WRITE" Type="WSTRING" Comment="Lokale Knotenadresse (BOOL, ACTION=WRITE) fuer den Zustand"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<SubApp Name="TRIGGER" Type="MyLib::net::ASR_AX_SERVER_0_PUBLISH_1" x="-7200" y="-500">
+		</SubApp>
+		<FB Name="SPLIT" Type="adapter::events::bidirectional::ASR_AX_AX_SPLIT" x="-4600" y="-100">
+		</FB>
+		<FB Name="FLIPFLOP" Type="adapter::events::bidirectional::ASR_AX_SR_2" x="-1800" y="-800">
+		</FB>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="-1600" y="-200">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_2" x="1300" y="300">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="TRIGGER.INIT" dx1="1400"/>
+			<Connection Source="TRIGGER.INITO" Destination="DigitalOutput_Q1.INIT" dx1="2340"/>
+			<Connection Source="DigitalOutput_Q1.INITO" Destination="INITO" dx1="2960"/>
+			<Connection Source="DigitalOutput_Q1.INITO" Destination="AND_QO.REQ" dx1="400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="Output" Destination="DigitalOutput_Q1.Output" dx1="4046.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_SET_METHOD" Destination="TRIGGER.ID_SET" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_RESET_METHOD" Destination="TRIGGER.ID_RESET" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_STATE_WRITE" Destination="TRIGGER.ID_STATE" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="TRIGGER.QI" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="DigitalOutput_Q1.QI" dx1="4200">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="TRIGGER.QO" Destination="AND_QO.IN1" dx1="3140">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="DigitalOutput_Q1.QO" Destination="AND_QO.IN2" dx1="400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="2873.33"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="TRIGGER.S_R" Destination="SPLIT.IN" dx1="900"/>
+			<Connection Source="SPLIT.OUT" Destination="FLIPFLOP.S_R" dx1="580"/>
+			<Connection Source="SPLIT.AX_OUT" Destination="DigitalOutput_Q1.OUT" dx1="488.24"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

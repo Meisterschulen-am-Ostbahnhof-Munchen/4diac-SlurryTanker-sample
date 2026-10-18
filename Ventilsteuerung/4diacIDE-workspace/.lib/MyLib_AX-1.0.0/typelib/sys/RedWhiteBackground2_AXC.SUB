@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="RedWhiteBackground2_AXC" Comment="Hintergrundfarbe (TRUE -&gt; Rot, FALSE -&gt; Weiß) für 2 Objekte (AX-Adapter)&#10;(Kompakt)">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="franz" Date="2026-07-21">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="u16ObjIdA" Type="UINT"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+		<Sockets>
+			<AdapterDeclaration Name="DI1" Type="adapter::types::unidirectional::AX"/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<SubApp Name="RedWhiteBackground2" Type="MyLib::sys::RedWhiteBackground2_AX" x="1700" y="-800">
+		</SubApp>
+		<EventConnections>
+			<Connection Source="INIT" Destination="RedWhiteBackground2.INIT"/>
+			<Connection Source="RedWhiteBackground2.INITO" Destination="INITO"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="u16ObjIdA" Destination="RedWhiteBackground2.u16ObjIdA" dx1="700"/>
+			<Connection Source="QI" Destination="RedWhiteBackground2.QI"/>
+			<Connection Source="RedWhiteBackground2.QO" Destination="QO"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="DI1" Destination="RedWhiteBackground2.DI1" dx1="680"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

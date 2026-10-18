@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="E_CALIBRATE_2P" Comment="Event-driven two-point calibration (Low/High, independently stored - no&#10;EICO-before-EICS style ordering dependency)">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Version="1.0" Author="Meisterschulen am Ostbahnhof" Date="2026-09-11" Remarks="Ersatz fuer E_CALIBRATE_SQ: dieselbe Formel/dasselbe Ergebnis, aber ohne die EICO-vor-EICS-Abhaengigkeit - jeder Punkt speichert unabhaengig seinen Rohwert (wie E_CALIBRATE_3P), die Interpolation passiert erst live bei REQ, nicht mehr inkrementell beim Kalibrieren selbst.">
+	</VersionInfo>
+	<CompilerInfo packageName="OSCAT::Basic::POUs::Engineering::measurements">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event" Comment="Normal Execution Request (berechnet Y)">
+				<With Var="X"/>
+				<With Var="LOW_REF"/>
+				<With Var="HIGH_REF"/>
+				<With Var="X_LOW"/>
+				<With Var="X_HIGH"/>
+			</Event>
+			<Event Name="EI_LOW" Type="Event" Comment="Calibrate Low Point (speichert X_LOW := X)">
+				<With Var="X"/>
+			</Event>
+			<Event Name="EI_HIGH" Type="Event" Comment="Calibrate High Point (speichert X_HIGH := X)">
+				<With Var="X"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event" Comment="Execution Confirmed">
+				<With Var="Y"/>
+			</Event>
+			<Event Name="EO_LOW" Type="Event" Comment="Low Point Calibrated">
+				<With Var="X_LOW"/>
+			</Event>
+			<Event Name="EO_HIGH" Type="Event" Comment="High Point Calibrated">
+				<With Var="X_HIGH"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="X" Type="REAL" Comment="Raw input value"/>
+			<VarDeclaration Name="LOW_REF" Type="REAL" Comment="Target output Y at the low calibration point"/>
+			<VarDeclaration Name="HIGH_REF" Type="REAL" Comment="Target output Y at the high calibration point"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="Y" Type="REAL" Comment="Calibrated output"/>
+		</OutputVars>
+		<InOutVars>
+			<VarDeclaration Name="X_LOW" Type="REAL" Comment="Stored raw value at the low calibration point" InitialValue="0.0"/>
+			<VarDeclaration Name="X_HIGH" Type="REAL" Comment="Stored raw value at the high calibration point" InitialValue="1.0"/>
+		</InOutVars>
+	</InterfaceList>
+	<BasicFB>
+		<ECC>
+			<ECState Name="START" x="400" y="400">
+			</ECState>
+			<ECState Name="REQ" x="1200" y="400">
+				<ECAction Algorithm="REQ" Output="CNF"/>
+			</ECState>
+			<ECState Name="C_LOW" x="1200" y="0">
+				<ECAction Algorithm="C_LOW" Output="EO_LOW"/>
+			</ECState>
+			<ECState Name="C_HIGH" x="1200" y="800">
+				<ECAction Algorithm="C_HIGH" Output="EO_HIGH"/>
+			</ECState>
+			<ECTransition Source="START" Destination="REQ" Condition="REQ" x="800" y="400"/>
+			<ECTransition Source="REQ" Destination="START" Condition="1" x="800" y="500"/>
+			<ECTransition Source="START" Destination="C_LOW" Condition="EI_LOW" x="800" y="200"/>
+			<ECTransition Source="C_LOW" Destination="START" Condition="1" x="800" y="100"/>
+			<ECTransition Source="START" Destination="C_HIGH" Condition="EI_HIGH" x="800" y="600"/>
+			<ECTransition Source="C_HIGH" Destination="START" Condition="1" x="800" y="700"/>
+		</ECC>
+		<Algorithm Name="REQ">
+			<ST><![CDATA[
+(* live linear interpolation between the two independently stored points - no clipping, matching E_CALIBRATE_SQ's behaviour *)
+IF (X_HIGH - X_LOW) <> 0.0 THEN
+	Y := LOW_REF + (X - X_LOW) * (HIGH_REF - LOW_REF) / (X_HIGH - X_LOW);
+ELSE
+	Y := LOW_REF;
+END_IF;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="C_LOW">
+			<ST><![CDATA[
+(* store current raw input as the low calibration point *)
+X_LOW := X;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="C_HIGH">
+			<ST><![CDATA[
+(* store current raw input as the high calibration point *)
+X_HIGH := X;
+]]></ST>
+		</Algorithm>
+	</BasicFB>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h2>Formula</h2>
+
+<pre>
+Y = LOW_REF + (X - X_LOW) * (HIGH_REF - LOW_REF) / (X_HIGH - X_LOW)</pre>
+
+<h2>Why this replaces E_CALIBRATE_SQ</h2>
+
+<p><code>E_CALIBRATE_SQ</code> computes OFFSET/SCALE incrementally (EICO sets OFFSET from a live SCALE, EICS then recomputes both from an internal <code>X_LOW_INT</code>/<code>Y_LOW_INT</code> captured by EICO) - EICS is only mathematically valid <strong>after</strong> EICO has run at least once, which needed an ECC-enforced order to avoid a silent garbage-OFFSET calibration.</p>
+
+<p>This type stores <code>X_LOW</code>/<code>X_HIGH</code> completely independently (exactly like <code>E_CALIBRATE_3P</code> stores <code>X_MIN</code>/<code>X_MID</code>/<code>X_MAX</code>) and only combines them into a line at read-time (<code>REQ</code>), which runs regardless of calibration state. There is no data dependency between <code>EI_LOW</code> and <code>EI_HIGH</code>, so there is nothing an enforced order could protect against.</p>
+
+<h2>Calibration (Two-Point, Free Order)</h2>
+
+<ol>
+	<li><strong>Low (EI_LOW):</strong> Apply low reference, set LOW_REF to desired output, fire EI_LOW &rarr; <code>X_LOW := X</code></li>
+	<li><strong>High (EI_HIGH):</strong> Apply high reference, set HIGH_REF to desired output, fire EI_HIGH &rarr; <code>X_HIGH := X</code></li>
+</ol>
+
+<p>Either point can be recalibrated on its own at any later time without repeating the other.</p>
+
+<h2>ECC State Machine</h2>
+
+<pre>
+START --REQ--&gt; REQ --1--&gt; START        (normal operation)
+START -EI_LOW-&gt; C_LOW  --1--&gt; START    (calibrate low point)
+START -EI_HIGH-&gt; C_HIGH --1--&gt; START   (calibrate high point)</pre>
+
+<p>All calibration events are independently accessible from START - no enforced order.</p>
+]]></Attribute>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="IG3_Source_Addresses" Comment="Industry Group 3 specific source addresses">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Organization="Demmler Andreas Fahrzeugbau" Version="1.0" Author="Franz Höpfinger" Date="2026-06-29">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::pgn::const">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="SA_RESERVED_128" Type="BYTE" Comment="Source Address: thru 207 are reserved for future assignment by SAE - Used for dynamic address" InitialValue="128"/>
+		<VarDeclaration Name="SA_RESERVED_208" Type="BYTE" Comment="Source Address: thru 223 are reserved for future assignment - Used for individual preassigned" InitialValue="208"/>
+		<VarDeclaration Name="SA_ROTATION_SENSOR" Type="BYTE" Comment="Source Address: Rotation Sensor - A device that measures the rotational angle around an axis." InitialValue="224"/>
+		<VarDeclaration Name="SA_LIFT_ARM_CONTROLLER" Type="BYTE" Comment="Source Address: Lift Arm Controller - Controls the lift arms and tilt functions on a construction" InitialValue="225"/>
+		<VarDeclaration Name="SA_SLOPE_SENSOR" Type="BYTE" Comment="Source Address: Slope Sensor - A device that measures the slope along an axis." InitialValue="226"/>
+		<VarDeclaration Name="SA_MAIN_CONTROLLER_SKID_STEER_LOADER" Type="BYTE" Comment="Source Address: Main Controller - Skid Steer Loader - Primary system controller for skid steer" InitialValue="227"/>
+		<VarDeclaration Name="SA_LOADER_CONTROL" Type="BYTE" Comment="Source Address: Loader Control - Controls the hydraulic system of the loader attachment of a" InitialValue="228"/>
+		<VarDeclaration Name="SA_LASER_TRACER" Type="BYTE" Comment="Source Address: Laser Tracer - A device that receives a laser strike and reports the vertical and" InitialValue="229"/>
+		<VarDeclaration Name="SA_LAND_LEVELING_SYSTEM_DISPLAY" Type="BYTE" Comment="Source Address: Land Leveling System Display - This device displays position information at a" InitialValue="230"/>
+		<VarDeclaration Name="SA_SINGLE_LAND_LEVELING_SYSTEM_SUPERVISOR" Type="BYTE" Comment="Source Address: Single Land Leveling System Supervisor - This device is the Land Leveling System" InitialValue="231"/>
+		<VarDeclaration Name="SA_LAND_LEVELING_ELECTRIC_MAST" Type="BYTE" Comment="Source Address: Land Leveling Electric Mast - A device that moves a Sensor to maintain a specific" InitialValue="232"/>
+		<VarDeclaration Name="SA_SINGLE_LAND_LEVELING_SYSTEM_OPERATOR_INTERFACE" Type="BYTE" Comment="Source Address: Single Land Leveling System Operator Interface - A component that allows the user" InitialValue="233"/>
+		<VarDeclaration Name="SA_LASER_RECEIVER" Type="BYTE" Comment="Source Address: Laser Receiver - A device that receives a laser strike, and reports the specific" InitialValue="234"/>
+		<VarDeclaration Name="SA_SUPPLEMENTAL_SENSOR_PROCESSING_UNIT_1" Type="BYTE" Comment="Source Address: Supplemental Sensor Processing Unit #1" InitialValue="235"/>
+		<VarDeclaration Name="SA_SUPPLEMENTAL_SENSOR_PROCESSING_UNIT_2" Type="BYTE" Comment="Source Address: Supplemental Sensor Processing Unit #2" InitialValue="236"/>
+		<VarDeclaration Name="SA_SUPPLEMENTAL_SENSOR_PROCESSING_UNIT_3" Type="BYTE" Comment="Source Address: Supplemental Sensor Processing Unit #3" InitialValue="237"/>
+		<VarDeclaration Name="SA_SUPPLEMENTAL_SENSOR_PROCESSING_UNIT_4" Type="BYTE" Comment="Source Address: Supplemental Sensor Processing Unit #4" InitialValue="238"/>
+		<VarDeclaration Name="SA_SUPPLEMENTAL_SENSOR_PROCESSING_UNIT_5" Type="BYTE" Comment="Source Address: Supplemental Sensor Processing Unit #5" InitialValue="239"/>
+		<VarDeclaration Name="SA_SUPPLEMENTAL_SENSOR_PROCESSING_UNIT_6" Type="BYTE" Comment="Source Address: Supplemental Sensor Processing Unit #6" InitialValue="240"/>
+		<VarDeclaration Name="SA_ENGINE_MONITOR_1" Type="BYTE" Comment="Source Address: Engine Monitor #1" InitialValue="241"/>
+		<VarDeclaration Name="SA_ENGINE_MONITOR_2" Type="BYTE" Comment="Source Address: Engine Monitor #2" InitialValue="242"/>
+		<VarDeclaration Name="SA_ENGINE_MONITOR_3" Type="BYTE" Comment="Source Address: Engine Monitor #3" InitialValue="243"/>
+		<VarDeclaration Name="SA_ENGINE_MONITOR_4" Type="BYTE" Comment="Source Address: Engine Monitor #4" InitialValue="244"/>
+		<VarDeclaration Name="SA_ENGINE_MONITOR_5" Type="BYTE" Comment="Source Address: Engine Monitor #5" InitialValue="245"/>
+		<VarDeclaration Name="SA_ENGINE_MONITOR_6" Type="BYTE" Comment="Source Address: Engine Monitor #6" InitialValue="246"/>
+		<VarDeclaration Name="SA_ENGINE_MONITOR_7" Type="BYTE" Comment="Source Address: Engine Monitor #7" InitialValue="247"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE isobus::pgn::const;
+
+// Industry Group 3 specific source addresses
+GLOBALCONSTANTS IG3_Source_Addresses
+	VAR_GLOBAL CONSTANT
+		SA_RESERVED_128 : BYTE := 128; // Source Address: thru 207 are reserved for future assignment by SAE - Used for dynamic address
+		                               // assignment (self-configurable)
+		SA_RESERVED_208 : BYTE := 208; // Source Address: thru 223 are reserved for future assignment - Used for individual preassigned
+		                               // addresses
+		SA_ROTATION_SENSOR : BYTE := 224; // Source Address: Rotation Sensor - A device that measures the rotational angle around an axis.
+		SA_LIFT_ARM_CONTROLLER : BYTE := 225; // Source Address: Lift Arm Controller - Controls the lift arms and tilt functions on a construction
+		                                      // loader, skid steer loader, or similar machine. Refers to the main elevation and tilt functions of
+		                                      // t...
+		SA_SLOPE_SENSOR : BYTE := 226; // Source Address: Slope Sensor - A device that measures the slope along an axis.
+		SA_MAIN_CONTROLLER_SKID_STEER_LOADER : BYTE := 227; // Source Address: Main Controller - Skid Steer Loader - Primary system controller for skid steer
+		                                                    // loader
+		SA_LOADER_CONTROL : BYTE := 228; // Source Address: Loader Control - Controls the hydraulic system of the loader attachment of a
+		                                 // loader/backhoe, wheel loader, skid steer, or similar vehicle
+		SA_LASER_TRACER : BYTE := 229; // Source Address: Laser Tracer - A device that receives a laser strike and reports the vertical and
+		                               // horizontal position.
+		SA_LAND_LEVELING_SYSTEM_DISPLAY : BYTE := 230; // Source Address: Land Leveling System Display - This device displays position information at a
+		                                               // remote location.
+		SA_SINGLE_LAND_LEVELING_SYSTEM_SUPERVISOR : BYTE := 231; // Source Address: Single Land Leveling System Supervisor - This device is the Land Leveling System
+		                                                         // Supervisor for a single control loop.
+		SA_LAND_LEVELING_ELECTRIC_MAST : BYTE := 232; // Source Address: Land Leveling Electric Mast - A device that moves a Sensor to maintain a specific
+		                                              // position.
+		SA_SINGLE_LAND_LEVELING_SYSTEM_OPERATOR_INTERFACE : BYTE := 233; // Source Address: Single Land Leveling System Operator Interface - A component that allows the user
+		                                                                 // to control the Land Leveling System and display information about the operation of the system.
+		SA_LASER_RECEIVER : BYTE := 234; // Source Address: Laser Receiver - A device that receives a laser strike, and reports the specific
+		                                 // position.
+		SA_SUPPLEMENTAL_SENSOR_PROCESSING_UNIT_1 : BYTE := 235; // Source Address: Supplemental Sensor Processing Unit #1
+		SA_SUPPLEMENTAL_SENSOR_PROCESSING_UNIT_2 : BYTE := 236; // Source Address: Supplemental Sensor Processing Unit #2
+		SA_SUPPLEMENTAL_SENSOR_PROCESSING_UNIT_3 : BYTE := 237; // Source Address: Supplemental Sensor Processing Unit #3
+		SA_SUPPLEMENTAL_SENSOR_PROCESSING_UNIT_4 : BYTE := 238; // Source Address: Supplemental Sensor Processing Unit #4
+		SA_SUPPLEMENTAL_SENSOR_PROCESSING_UNIT_5 : BYTE := 239; // Source Address: Supplemental Sensor Processing Unit #5
+		SA_SUPPLEMENTAL_SENSOR_PROCESSING_UNIT_6 : BYTE := 240; // Source Address: Supplemental Sensor Processing Unit #6
+		SA_ENGINE_MONITOR_1 : BYTE := 241; // Source Address: Engine Monitor #1
+		SA_ENGINE_MONITOR_2 : BYTE := 242; // Source Address: Engine Monitor #2
+		SA_ENGINE_MONITOR_3 : BYTE := 243; // Source Address: Engine Monitor #3
+		SA_ENGINE_MONITOR_4 : BYTE := 244; // Source Address: Engine Monitor #4
+		SA_ENGINE_MONITOR_5 : BYTE := 245; // Source Address: Engine Monitor #5
+		SA_ENGINE_MONITOR_6 : BYTE := 246; // Source Address: Engine Monitor #6
+		SA_ENGINE_MONITOR_7 : BYTE := 247; // Source Address: Engine Monitor #7
+	END_VAR
+
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</GlobalConstants>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="ASRT_SPLIT_7" Comment="SPLIT 1 ASRT into 7 ASRT (generic FB)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-06">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::events::unidirectional">
+		<Import declaration="eclipse4diac::core::GenericClassName"/>
+	</CompilerInfo>
+	<InterfaceList>
+		<Plugs>
+			<AdapterDeclaration Name="OUT1" Type="adapter::types::unidirectional::ASRT"/>
+			<AdapterDeclaration Name="OUT2" Type="adapter::types::unidirectional::ASRT"/>
+			<AdapterDeclaration Name="OUT3" Type="adapter::types::unidirectional::ASRT"/>
+			<AdapterDeclaration Name="OUT4" Type="adapter::types::unidirectional::ASRT"/>
+			<AdapterDeclaration Name="OUT5" Type="adapter::types::unidirectional::ASRT"/>
+			<AdapterDeclaration Name="OUT6" Type="adapter::types::unidirectional::ASRT"/>
+			<AdapterDeclaration Name="OUT7" Type="adapter::types::unidirectional::ASRT"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::ASRT"/>
+		</Sockets>
+	</InterfaceList>
+	<Attribute Name="eclipse4diac::core::GenericClassName" Value="'GEN_ASRT_SPLIT'"/>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

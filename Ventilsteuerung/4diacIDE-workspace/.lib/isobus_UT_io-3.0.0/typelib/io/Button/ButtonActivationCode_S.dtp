@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataType Name="ButtonActivationCode_S" Comment="ButtonActivationCode Struct">
+	<Identification>
+	</Identification>
+	<VersionInfo Version="1.0" Author="Franz Höpfinger" Date="2025-07-21" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::UT::io::Button">
+	</CompilerInfo>
+	<StructuredType>
+		<VarDeclaration Name="code" Type="USINT" InitialValue="255"/>
+		<VarDeclaration Name="bCyclic" Type="BOOL" Comment="do not repeat every 200ms if this is set FALSE" InitialValue="TRUE"/>
+	</StructuredType>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</DataType>

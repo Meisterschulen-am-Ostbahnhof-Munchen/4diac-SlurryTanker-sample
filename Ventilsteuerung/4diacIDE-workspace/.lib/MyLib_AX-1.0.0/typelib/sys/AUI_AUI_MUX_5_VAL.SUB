@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="AUI_AUI_MUX_5_VAL" Comment="5-Wege-Multiplexer fuer AUI/UINT-Werte mit 5 internen initval_AUI und AUI_MUX_5&#10;/ AUI_AUI_MUX_5. Schaltet per Event-Input (EI1..EI5) zwischen val1..val5 um.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-10" Remarks="5-fach AUI/UINT MUX mit initval">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="EI1" Type="Event" Comment="Event zur Auswahl von val1">
+			</SubAppEvent>
+			<SubAppEvent Name="EI2" Type="Event" Comment="Event zur Auswahl von val2">
+			</SubAppEvent>
+			<SubAppEvent Name="EI3" Type="Event" Comment="Event zur Auswahl von val3">
+			</SubAppEvent>
+			<SubAppEvent Name="EI4" Type="Event" Comment="Event zur Auswahl von val4">
+			</SubAppEvent>
+			<SubAppEvent Name="EI5" Type="Event" Comment="Event zur Auswahl von val5">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<InputVars>
+			<VarDeclaration Name="val1" Type="UINT" Comment="Initialer Ausgabewert bei EI1"/>
+			<VarDeclaration Name="val2" Type="UINT" Comment="Initialer Ausgabewert bei EI2"/>
+			<VarDeclaration Name="val3" Type="UINT" Comment="Initialer Ausgabewert bei EI3"/>
+			<VarDeclaration Name="val4" Type="UINT" Comment="Initialer Ausgabewert bei EI4"/>
+			<VarDeclaration Name="val5" Type="UINT" Comment="Initialer Ausgabewert bei EI5"/>
+		</InputVars>
+		<Plugs>
+			<AdapterDeclaration Name="OUT" Type="adapter::types::unidirectional::AUI" Comment="Ausgewaehlter AUI-Adapter Output"/>
+		</Plugs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="AUI_MUX_5" Type="adapter::events::unidirectional::AUI_MUX_5" x="-2200" y="-1500">
+		</FB>
+		<FB Name="AUI_AUI_MUX_5" Type="adapter::selection::unidirectional::AUI_AUI_MUX_5" x="100" y="-800">
+		</FB>
+		<FB Name="initval_AUI_1" Type="adapter::types::unidirectional::AUI::initval::initval_AUI" x="-2300" y="-400">
+		</FB>
+		<FB Name="initval_AUI_2" Type="adapter::types::unidirectional::AUI::initval::initval_AUI" x="-2300" y="200">
+		</FB>
+		<FB Name="initval_AUI_3" Type="adapter::types::unidirectional::AUI::initval::initval_AUI" x="-2300" y="800">
+		</FB>
+		<FB Name="initval_AUI_4" Type="adapter::types::unidirectional::AUI::initval::initval_AUI" x="-2300" y="1400">
+		</FB>
+		<FB Name="initval_AUI_5" Type="adapter::types::unidirectional::AUI::initval::initval_AUI" x="-2300" y="2000">
+		</FB>
+		<EventConnections>
+			<Connection Source="EI1" Destination="AUI_MUX_5.EI1" dx1="1560"/>
+			<Connection Source="EI2" Destination="AUI_MUX_5.EI2" dx1="1526.67"/>
+			<Connection Source="EI3" Destination="AUI_MUX_5.EI3" dx1="1493.33"/>
+			<Connection Source="EI4" Destination="AUI_MUX_5.EI4" dx1="1460"/>
+			<Connection Source="EI5" Destination="AUI_MUX_5.EI5" dx1="1426.67"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="val1" Destination="initval_AUI_1.INIT_VAL" dx1="1393.33"/>
+			<Connection Source="val2" Destination="initval_AUI_2.INIT_VAL" dx1="1360"/>
+			<Connection Source="val3" Destination="initval_AUI_3.INIT_VAL" dx1="1326.67"/>
+			<Connection Source="val4" Destination="initval_AUI_4.INIT_VAL" dx1="1293.33"/>
+			<Connection Source="val5" Destination="initval_AUI_5.INIT_VAL" dx1="1260"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="AUI_MUX_5.K" Destination="AUI_AUI_MUX_5.K" dx1="780"/>
+			<Connection Source="initval_AUI_1.OUT" Destination="AUI_AUI_MUX_5.IN1" dx1="700"/>
+			<Connection Source="initval_AUI_2.OUT" Destination="AUI_AUI_MUX_5.IN2" dx1="733.33"/>
+			<Connection Source="initval_AUI_3.OUT" Destination="AUI_AUI_MUX_5.IN3" dx1="766.67"/>
+			<Connection Source="initval_AUI_4.OUT" Destination="AUI_AUI_MUX_5.IN4" dx1="800"/>
+			<Connection Source="initval_AUI_5.OUT" Destination="AUI_AUI_MUX_5.IN5" dx1="800"/>
+			<Connection Source="AUI_AUI_MUX_5.OUT" Destination="OUT" dx1="693.33"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

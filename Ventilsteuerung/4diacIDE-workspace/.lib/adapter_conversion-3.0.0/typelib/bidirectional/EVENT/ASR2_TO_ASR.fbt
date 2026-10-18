@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="ASR2_TO_ASR" Comment="Composite FB for convert bidirectional ASR2 to unidirectional ASR">
+	<Identification Standard="61499-2" Function="ASR2_BIDIR forwards its incoming (EO_SET/EO_RESET) side out as plain unidirectional SET/RESET events via ASR_OUT. ASR_IN publishes SET/RESET onto the outgoing (EI_SET/EI_RESET) side of ASR2_BIDIR." Description="Copyright (c) 2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-08-31" Remarks="Initial Version">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::conversion::bidirectional">
+	</CompilerInfo>
+	<InterfaceList>
+		<Sockets>
+			<AdapterDeclaration Name="ASR2_BIDIR" Type="adapter::types::bidirectional::ASR2" Comment="Adapter Input: bidirectional tap, incoming side forwarded to ASR_OUT, outgoing side driven by ASR_IN" x="-1200" y="900"/>
+			<AdapterDeclaration Name="ASR_IN" Type="adapter::types::unidirectional::ASR" Comment="Adapter Input: unidirectional source" x="-2200" y="900"/>
+		</Sockets>
+		<Plugs>
+			<AdapterDeclaration Name="ASR_OUT" Type="adapter::types::unidirectional::ASR" Comment="Adapter Output: mirrors ASR2_BIDIR's incoming (indication) side" x="100" y="900"/>
+		</Plugs>
+	</InterfaceList>
+	<FBNetwork>
+		<EventConnections>
+			<Connection Source="ASR2_BIDIR.EO_SET" Destination="ASR_OUT.SET"/>
+			<Connection Source="ASR2_BIDIR.EO_RESET" Destination="ASR_OUT.RESET"/>
+			<Connection Source="ASR_IN.SET" Destination="ASR2_BIDIR.EI_SET"/>
+			<Connection Source="ASR_IN.RESET" Destination="ASR2_BIDIR.EI_RESET"/>
+		</EventConnections>
+	</FBNetwork>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

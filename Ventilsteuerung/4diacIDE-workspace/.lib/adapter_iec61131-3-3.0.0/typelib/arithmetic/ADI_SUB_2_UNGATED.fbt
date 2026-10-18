@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="ADI_SUB_2_UNGATED" Comment="Wie ADI_SUB_2, aber OHNE Aenderungserkennung - reicht JEDES neu berechnete&#10;Ergebnis bedingungslos weiter (fuer Verbraucher, die eine periodische Kadenz&#10;unabhaengig von Wertaenderung brauchen, z.B. Ableitungs-/Frequenzberechnungen).">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-08-31" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::iec61131::arithmetic">
+		<Import declaration="eclipse4diac::core::GenericClassName"/>
+	</CompilerInfo>
+	<InterfaceList>
+		<Sockets>
+			<AdapterDeclaration Name="IN1" Type="adapter::types::unidirectional::ADI" Comment="SUB input 1"/>
+			<AdapterDeclaration Name="IN2" Type="adapter::types::unidirectional::ADI" Comment="SUB input 2"/>
+		</Sockets>
+		<Plugs>
+			<AdapterDeclaration Name="OUT" Type="adapter::types::unidirectional::ADI" Comment="SUB result"/>
+		</Plugs>
+	</InterfaceList>
+	<Attribute Name="eclipse4diac::core::GenericClassName" Value="'GEN_ADI_SUB'"/>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

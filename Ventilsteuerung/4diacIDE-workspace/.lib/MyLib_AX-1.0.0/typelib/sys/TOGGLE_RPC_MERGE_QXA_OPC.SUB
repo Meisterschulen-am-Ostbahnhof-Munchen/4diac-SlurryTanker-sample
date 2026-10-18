@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="TOGGLE_RPC_MERGE_QXA_OPC" Comment="1-Richtungs-Ausgang, klick-toggle statt tastend: ein per OPC-UA-Methodenaufruf&#10;(CREATE_METHOD/SERVER_0) empfangener Trigger taktet ein lokales AX_T_FF&#10;(Toggle-Flipflop) - dessen Zustand wird per AX_OR_2 mit dem bestehenden&#10;IO-Test-Kommando (Remote-Subscribe, gleiches Muster wie MERGE_SWITCH_1_QXA_OPC)&#10;zusammengefuehrt. Ausgang treibt den physischen logiBUS-Kanal UND meldet seinen&#10;Zustand sowohl an die bestehende IO-Test-Ueberwachung als auch an die echte&#10;Funktions-Rueckmeldung (z.B. GreenWhiteBackground am SoftKey, per lokalem&#10;Publish + Remote-Subscribe wie bei allen anderen Funktionen dieses Projekts -&#10;NICHT per aktivem Client-Write wie im urspruenglichen Uebungs-Vorbild, fuer&#10;Konsistenz mit ILOCK_SWITCH_2_QXA_OPC/MERGE_SWITCH_1_QXA_OPC). Fuer echte&#10;Klick-Toggle-Funktionen (z.B. Blitzlicht: 1x druecken AN, nochmal druecken AUS)&#10;statt tastender Doppelwirkungs-/Einzelausgaenge.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-09" Remarks="Fix: TRIGGER_SERVER.RSP war nie verdrahtet - blockierte den OPC-UA-Server-Thread bis zu 4s pro Aufruf (haelt open62541s globalen serviceMutex), verzoegerte dadurch JEDE OPC-UA-Statusmeldung projektweit. IND-&gt;RSP direkt verdrahtet (argumentloser Trigger, kein CNF noetig). Siehe OPC_UA_VERNETZUNG.md Punkt 12.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-07" Remarks="initial API and implementation and/or initial documentation - Klick-Toggle-Analogon zu MERGE_SWITCH_1_QXA_OPC, RPC-Trigger (SERVER_0/AX_T_FF) statt Pegel-Subscribe als echte Funktionsquelle">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO_S"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="Output" Type="logiBUS::io::DQ::logiBUS_DO_S" Comment="Physischer Ausgang" InitialValue="logiBUS_DO::Invalid"/>
+			<VarDeclaration Name="ID_TEST_READ" Type="WSTRING" Comment="Bestehende IO-Test-Subscribe-Adresse (z.B. STG5_Q0x_READ)"/>
+			<VarDeclaration Name="ID_TEST_WRITE" Type="WSTRING" Comment="Bestehende IO-Test-Publish-Adresse (z.B. STG5_Q0x_WRITE) - EIGENER Knoten, NICHT ID_TEST_READs Knoten (sonst Selbstrueckkopplung/Latch, siehe OPC_UA_VERNETZUNG.md Punkt 10+11)"/>
+			<VarDeclaration Name="ID_TRIGGER_METHOD" Type="WSTRING" Comment="Lokale Methodenadresse (ACTION=CREATE_METHOD) fuer den argumentlosen Toggle-Trigger, wird vom Bedienmodul per CALL_METHOD aufgerufen"/>
+			<VarDeclaration Name="ID_STATE_WRITE" Type="WSTRING" Comment="Lokale Publish-Adresse (ACTION=WRITE) fuer den tatsaechlichen Toggle-Zustand - wird vom Bedienmodul remote abonniert (z.B. fuer GreenWhiteBackground)"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="TRIGGER_SERVER" Type="iec61499::net::SERVER_0" x="-6500" y="-1200">
+		</FB>
+		<FB Name="AX_T_FF" Type="adapter::events::unidirectional::AX_T_FF" x="-5000" y="-1100">
+		</FB>
+		<FB Name="SUBSCRIBE_TEST" Type="adapter::net::AX_SUBSCRIBE_1" x="-6500" y="-200">
+		</FB>
+		<FB Name="OR_MERGE" Type="adapter::booleanOperators::AX_OR_2" x="-3600" y="-600">
+		</FB>
+		<FB Name="DigitalOutput" Type="logiBUS::io::DQ::logiBUS_QXA" x="-400" y="-1700">
+		</FB>
+		<FB Name="SPLIT" Type="adapter::events::unidirectional::AX_SPLIT_3" x="-2000" y="-600">
+		</FB>
+		<FB Name="PUBLISH_TEST" Type="adapter::net::AX_PUBLISH_1" x="-300" y="-700">
+		</FB>
+		<FB Name="PUBLISH_STATE" Type="adapter::net::AX_PUBLISH_1" x="-300" y="200">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_5" x="1800" y="-1400">
+		</FB>
+		<EventConnections>
+			<Connection Source="TRIGGER_SERVER.IND" Destination="AX_T_FF.CLK" dx1="373.33"/>
+			<Connection Source="TRIGGER_SERVER.IND" Destination="TRIGGER_SERVER.RSP" dx1="80" dx2="80" dy="160"/>
+			<Connection Source="INIT" Destination="TRIGGER_SERVER.INIT" dx1="1653.33"/>
+			<Connection Source="TRIGGER_SERVER.INITO" Destination="SUBSCRIBE_TEST.INIT" dx1="80" dx2="80" dy="500"/>
+			<Connection Source="SUBSCRIBE_TEST.INITO" Destination="DigitalOutput.INIT" dx1="2580"/>
+			<Connection Source="DigitalOutput.INITO" Destination="PUBLISH_TEST.INIT" dx1="80" dx2="80" dy="500"/>
+			<Connection Source="PUBLISH_TEST.INITO" Destination="PUBLISH_STATE.INIT" dx1="80" dx2="80" dy="446.67"/>
+			<Connection Source="PUBLISH_STATE.INITO" Destination="INITO" dx1="4380"/>
+			<Connection Source="PUBLISH_STATE.INITO" Destination="AND_QO.REQ" dx1="673.33"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="Output" Destination="DigitalOutput.Output" dx1="2913.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_TEST_READ" Destination="SUBSCRIBE_TEST.ID" dx1="280">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_TEST_WRITE" Destination="PUBLISH_TEST.ID" dx1="1280">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_TRIGGER_METHOD" Destination="TRIGGER_SERVER.ID" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_STATE_WRITE" Destination="PUBLISH_STATE.ID" dx1="1280">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="TRIGGER_SERVER.QI" dx1="1653.33"/>
+			<Connection Source="QI" Destination="SUBSCRIBE_TEST.QI" dx1="1653.33"/>
+			<Connection Source="QI" Destination="DigitalOutput.QI" dx1="4700"/>
+			<Connection Source="QI" Destination="PUBLISH_TEST.QI" dx1="4753.33"/>
+			<Connection Source="QI" Destination="PUBLISH_STATE.QI" dx1="4753.33"/>
+			<Connection Source="TRIGGER_SERVER.QO" Destination="AND_QO.IN1" dx1="2966.67"/>
+			<Connection Source="SUBSCRIBE_TEST.QO" Destination="AND_QO.IN2" dx1="2826.67"/>
+			<Connection Source="DigitalOutput.QO" Destination="AND_QO.IN3" dx1="746.67"/>
+			<Connection Source="PUBLISH_TEST.QO" Destination="AND_QO.IN4" dx1="673.33"/>
+			<Connection Source="PUBLISH_STATE.QO" Destination="AND_QO.IN5" dx1="673.33"/>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="2373.33"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="AX_T_FF.Q" Destination="OR_MERGE.IN1" dx1="280"/>
+			<Connection Source="SUBSCRIBE_TEST.OUT" Destination="OR_MERGE.IN2" dx1="280"/>
+			<Connection Source="OR_MERGE.OUT" Destination="SPLIT.IN" dx1="800"/>
+			<Connection Source="SPLIT.OUT1" Destination="DigitalOutput.OUT" dx1="600"/>
+			<Connection Source="SPLIT.OUT2" Destination="PUBLISH_TEST.IN" dx1="600"/>
+			<Connection Source="SPLIT.OUT3" Destination="PUBLISH_STATE.IN" dx1="466.67"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>Klick-Toggle-Ausgang: RPC-Trigger ODER IO-Test</h1>
+
+<p>Fuer Funktionen, die per einmaligem Tastendruck EIN/AUS schalten (Klick-Toggle, z.B.
+Blitzlicht) statt gehalten zu werden (tastend). Ein SoftKey-Tastendruck (Release-Event) auf
+dem Bedienmodul loest per <code>CLIENT_0</code>/<code>SERVER_0</code> einen argumentlosen
+RPC-Methodenaufruf aus (kein Wertwechsel-Trick, kein Polling noetig - siehe
+<code>Softkey_Toggle_RPC_TO_Remote_BG_OPC</code> fuer die Bedienmodul-Seite), der hier lokal
+ein <code>AX_T_FF</code> (Toggle-Flipflop) taktet.</p>
+
+<p>Der Flipflop-Zustand wird per <code>AX_OR_2</code> mit dem bestehenden IO-Test-Kommando
+zusammengefuehrt (IO-Test bleibt nutzbar) und treibt den physischen Ausgang. Wie bei
+<code>MERGE_SWITCH_1_QXA_OPC</code>/<code>ILOCK_SWITCH_2_QXA_OPC</code> bekommt der
+resultierende Zustand ZWEI eigene, von den jeweiligen Kommando-Knoten getrennte
+Rueckmelde-Knoten (<code>ID_TEST_WRITE</code> fuer IO-Diag, <code>ID_STATE_WRITE</code> fuer
+die echte Funktions-Rueckmeldung) - niemals denselben Knoten wie die zugehoerige
+Kommando-Adresse, sonst Selbstlatch (siehe <code>OPC_UA_VERNETZUNG.md</code> Punkt 10+11).</p>
+
+<p>Abweichend vom urspruenglichen Uebungs-Vorbild (<code>Toggle_RPC_FROM_Remote_QXA_OPC</code>,
+4diac_training1) wird der Zustand hier NICHT aktiv per <code>CLIENT_1_0</code> ans Bedienmodul
+zurueckgeschrieben, sondern lokal publiziert und vom Bedienmodul remote abonniert - konsistent
+mit allen anderen Funktionen dieses Projekts (Lenkdeichsel, Achslenkung, Hangausgleich).</p>
+]]></Attribute>
+</SubAppType>

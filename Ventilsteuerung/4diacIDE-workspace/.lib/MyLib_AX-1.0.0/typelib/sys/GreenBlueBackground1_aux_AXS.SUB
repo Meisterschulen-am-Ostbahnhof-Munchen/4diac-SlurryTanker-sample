@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="GreenBlueBackground1_aux_AXS" Comment="Hintergrundfarbe (TRUE -&gt; Blau, FALSE -&gt; Weiß) für 1 Objekt (AX-Adapter)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2022 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2022-11-10">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+		<Import declaration="isobus::UT::Q::const::colours::COLOR_BLUE"/>
+		<Import declaration="isobus::UT::Q::const::colours::COLOR_WHITE"/>
+		<Import declaration="isobus::UT::Q::types::s1ObjectID"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+			<SubAppEvent Name="CNF" Type="Event" Comment="Execution Confirmation">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="u16ObjIds" Type="isobus::UT::Q::types::s1ObjectID" Comment="Object ID" InitialValue="(u16ObjId := ID_NULL)"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+			<VarDeclaration Name="STATUS_1" Type="STRING" Comment="Service Status"/>
+			<VarDeclaration Name="u8OldColour_1" Type="USINT" Comment="Old value of ID"/>
+			<VarDeclaration Name="result_1" Type="INT" Comment="retval see description"/>
+		</OutputVars>
+		<Sockets>
+			<AdapterDeclaration Name="DI1" Type="adapter::types::unidirectional::AX" Comment="Selector"/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="Q_BackgroundColourAux" Type="isobus::UT::Q::Q_BackgroundColourAux" x="-3106.67" y="706.67">
+		</FB>
+		<FB Name="AX_SEL" Type="adapter::iec61131::selection::AX_SEL" x="-4306.67" y="2040">
+			<Parameter Name="IN0" Value="COLOR_WHITE"/>
+			<Parameter Name="IN1" Value="COLOR_BLUE"/>
+		</FB>
+		<FB Name="F_MOVE" Type="iec61131::selection::F_MOVE" x="-5500" y="700">
+			<Attribute Name="DataType" Value="isobus::UT::Q::types::s1ObjectID"/>
+			<Parameter Name="OUT.u16ObjId" Value="">
+				<Attribute Name="Visible" Value="true"/>
+			</Parameter>
+		</FB>
+		<EventConnections>
+			<Connection Source="Q_BackgroundColourAux.CNF" Destination="CNF" dx1="1840"/>
+			<Connection Source="F_MOVE.CNF" Destination="Q_BackgroundColourAux.REQ" dx1="786.67"/>
+			<Connection Source="AX_SEL.CNF" Destination="F_MOVE.REQ" dx1="66.67" dx2="66.67" dy="-546.67"/>
+			<Connection Source="INIT" Destination="Q_BackgroundColourAux.INIT"/>
+			<Connection Source="Q_BackgroundColourAux.INITO" Destination="INITO"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="Q_BackgroundColourAux.s16result" Destination="result_1" dx1="1940"/>
+			<Connection Source="Q_BackgroundColourAux.u8OldColour" Destination="u8OldColour_1" dx1="1906.67"/>
+			<Connection Source="Q_BackgroundColourAux.STATUS" Destination="STATUS_1" dx1="1873.33"/>
+			<Connection Source="AX_SEL.OUT" Destination="Q_BackgroundColourAux.u8Colour" dx1="300"/>
+			<Connection Source="u16ObjIds" Destination="F_MOVE.IN" dx1="1000"/>
+			<Connection Source="F_MOVE.OUT.u16ObjId" Destination="Q_BackgroundColourAux.u16ObjId" dx1="786.67"/>
+			<Connection Source="QI" Destination="Q_BackgroundColourAux.QI"/>
+			<Connection Source="Q_BackgroundColourAux.QO" Destination="QO"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="DI1" Destination="AX_SEL.G" dx1="593.33"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

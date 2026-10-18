@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="INI_IN_AND_STORE_AR2_TO_REAL" Comment="INI Laden und Speichern (wie INI_IN_AND_STORE_AR2), zusaetzlich per AR_R_TO_REAL&#10;auf einen plain-REAL-OutputVar konvertiert - fuer InputVars auf Ziel-FBs, die&#10;einen echten REAL-Parameter statt eines AR-Adapter-Sockets erwarten (z.B.&#10;CTRL_PID_AR.KP/TN/TV).">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-15" Remarks="initial implementation - aus Aufnahme_Automatik.SUB herausgeloest (dort 3x identisch fuer KP/TN/TV verdrahtet: INI_IN_AND_STORE_AR2 + AR_R_TO_REAL). INI_IN_AND_STORE_AR2.VALUEO (AR) -&gt; AR_R_TO_REAL.AR_IN -&gt; VALUE (REAL-OutputVar).">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+		<Import declaration="logiBUS::utils::conversion::phys::NumericObjectPool_S"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+			<SubAppEvent Name="CNF" Type="Event" Comment="Confirmation - feuert wenn ein (neuer oder initial geladener) Wert vorliegt. An einen REQ-Eingang eines Ziel-FB anschliessen (z.B. CTRL_PID_AR.REQ), damit dieser den frischen Wert sofort uebernimmt, statt auf den naechsten eigenen Adapter-Trigger zu warten.">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="KEY" Type="STRING" Comment="Key name."/>
+			<VarDeclaration Name="SECTION" Type="STRING" Comment="Section name."/>
+			<VarDeclaration Name="stObj" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 0)"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+			<VarDeclaration Name="VALUE" Type="REAL" Comment="Persistierter/geladener Wert, plain REAL (nicht AR-Adapter) - fuer InputVars auf Ziel-FBs, die einen echten REAL-Parameter erwarten."/>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<SubApp Name="INI" Type="MyLib::sys::INI_IN_AND_STORE_AR2" x="0" y="0">
+		</SubApp>
+		<FB Name="AR_R_TO_REAL_1" Type="adapter::conversion::unidirectional::AR_R_TO_REAL" x="2000" y="0">
+		</FB>
+		<DataConnections>
+			<Connection Source="KEY" Destination="INI.KEY" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="SECTION" Destination="INI.SECTION" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="stObj" Destination="INI.stObj" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AR_R_TO_REAL_1.IN" Destination="VALUE" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="INI.QI"/>
+			<Connection Source="INI.QO" Destination="QO"/>
+		</DataConnections>
+		<EventConnections>
+			<Connection Source="AR_R_TO_REAL_1.CNF" Destination="CNF" dx1="1400"/>
+			<Connection Source="INIT" Destination="INI.INIT"/>
+			<Connection Source="INI.INITO" Destination="INITO"/>
+		</EventConnections>
+		<AdapterConnections>
+			<Connection Source="INI.VALUEO" Destination="AR_R_TO_REAL_1.AR_IN" dx1="600"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

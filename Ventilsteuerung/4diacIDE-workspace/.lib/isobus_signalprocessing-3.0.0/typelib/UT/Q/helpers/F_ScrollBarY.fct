@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Function Name="F_ScrollBarY" Comment="Compute Container_Scrollbar_Content.Top (s16Yposition for Q_ChildPosition) from the current&#10;row position: i32BarBaseOffset + (i32Pos * i32BarTravel) / i32PosMax.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-08-09" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::UT::Q::helpers">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event">
+				<With Var="i32Pos"/>
+				<With Var="i32BarTravel"/>
+				<With Var="i32PosMax"/>
+				<With Var="i32BarBaseOffset"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event">
+				<With Var=""/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="i32Pos" Type="DINT"/>
+			<VarDeclaration Name="i32BarTravel" Type="DINT"/>
+			<VarDeclaration Name="i32PosMax" Type="DINT"/>
+			<VarDeclaration Name="i32BarBaseOffset" Type="DINT"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="" Type="INT"/>
+		</OutputVars>
+	</InterfaceList>
+	<FunctionBody>
+		<ST><![CDATA[PACKAGE isobus::UT::Q::helpers;
+
+(* Compute Container_Scrollbar_Content.Top (s16Yposition for Q_ChildPosition) from the current
+ * row position: i32BarBaseOffset + (i32Pos * i32BarTravel) / i32PosMax. *)
+FUNCTION F_ScrollBarY : INT
+
+VAR_INPUT
+	i32Pos : DINT;
+	i32BarTravel : DINT;
+	i32PosMax : DINT;
+	i32BarBaseOffset : DINT;
+END_VAR
+
+F_ScrollBarY := DINT_TO_INT(i32BarBaseOffset + (i32Pos * i32BarTravel) / i32PosMax);
+
+END_FUNCTION
+]]></ST>
+	</FunctionBody>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</Function>

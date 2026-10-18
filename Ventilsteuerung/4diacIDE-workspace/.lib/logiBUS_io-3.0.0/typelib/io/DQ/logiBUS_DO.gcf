@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="logiBUS_DO" Comment="logiBUS_DO constants">
+	<Identification Standard="61499-1" Description="Copyright (c) 2024 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2024-01-25">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::io::DQ">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="Output_Q1" Type="logiBUS::io::DQ::logiBUS_DO_S" InitialValue="(Pin := 1)"/>
+		<VarDeclaration Name="Output_Q2" Type="logiBUS::io::DQ::logiBUS_DO_S" InitialValue="(Pin := 2)"/>
+		<VarDeclaration Name="Output_Q3" Type="logiBUS::io::DQ::logiBUS_DO_S" InitialValue="(Pin := 3)"/>
+		<VarDeclaration Name="Output_Q4" Type="logiBUS::io::DQ::logiBUS_DO_S" InitialValue="(Pin := 4)"/>
+		<VarDeclaration Name="Output_Q5" Type="logiBUS::io::DQ::logiBUS_DO_S" InitialValue="(Pin := 5)"/>
+		<VarDeclaration Name="Output_Q6" Type="logiBUS::io::DQ::logiBUS_DO_S" InitialValue="(Pin := 6)"/>
+		<VarDeclaration Name="Output_Q7" Type="logiBUS::io::DQ::logiBUS_DO_S" InitialValue="(Pin := 7)"/>
+		<VarDeclaration Name="Output_Q8" Type="logiBUS::io::DQ::logiBUS_DO_S" InitialValue="(Pin := 8)"/>
+		<VarDeclaration Name="Output_Q9" Type="logiBUS::io::DQ::logiBUS_DO_S" InitialValue="(Pin := 9)"/>
+		<VarDeclaration Name="Output_Q10" Type="logiBUS::io::DQ::logiBUS_DO_S" InitialValue="(Pin := 10)"/>
+		<VarDeclaration Name="Output_Q11" Type="logiBUS::io::DQ::logiBUS_DO_S" InitialValue="(Pin := 11)"/>
+		<VarDeclaration Name="Output_Q12" Type="logiBUS::io::DQ::logiBUS_DO_S" InitialValue="(Pin := 12)"/>
+		<VarDeclaration Name="Output_Q56" Type="logiBUS::io::DQ::logiBUS_DO_S" InitialValue="(Pin := 56)"/>
+		<VarDeclaration Name="Output_Q78" Type="logiBUS::io::DQ::logiBUS_DO_S" InitialValue="(Pin := 78)"/>
+		<VarDeclaration Name="Invalid" Type="logiBUS::io::DQ::logiBUS_DO_S" InitialValue="(Pin := 255)"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE logiBUS::io::DQ;
+
+GLOBALCONSTANTS logiBUS_DO
+	VAR_GLOBAL CONSTANT
+		Output_Q1 : logiBUS_DO_S := (Pin := 1);
+		Output_Q2 : logiBUS_DO_S := (Pin := 2);
+		Output_Q3 : logiBUS_DO_S := (Pin := 3);
+		Output_Q4 : logiBUS_DO_S := (Pin := 4);
+		Output_Q5 : logiBUS_DO_S := (Pin := 5);
+		Output_Q6 : logiBUS_DO_S := (Pin := 6);
+		Output_Q7 : logiBUS_DO_S := (Pin := 7);
+		Output_Q8 : logiBUS_DO_S := (Pin := 8);
+		Output_Q9 : logiBUS_DO_S := (Pin := 9);
+		Output_Q10 : logiBUS_DO_S := (Pin := 10);
+		Output_Q11 : logiBUS_DO_S := (Pin := 11);
+		Output_Q12 : logiBUS_DO_S := (Pin := 12);
+		Output_Q56 : logiBUS_DO_S := (Pin := 56);
+		Output_Q78 : logiBUS_DO_S := (Pin := 78);
+		Invalid : logiBUS_DO_S := (Pin := 255);
+	END_VAR
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</GlobalConstants>

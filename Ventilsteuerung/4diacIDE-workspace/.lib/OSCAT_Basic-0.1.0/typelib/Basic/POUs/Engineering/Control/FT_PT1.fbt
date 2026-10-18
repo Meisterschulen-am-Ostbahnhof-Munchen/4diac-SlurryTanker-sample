@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="FT_PT1" Comment="Low Pass Filter (PT1)">
+	<Identification Standard="61499-1" Description="FT_PT1 is an low pass filter with a programmable time T and faktor K.">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.3" Author="Franz Höpfinger" Date="2026-09-26" Remarks="Bugfix (Review-Bot auf training1 PR #269, verifiziert): die neue TM.E1-&gt;RST-Verdrahtung (FT_PT1_AR v1.0) feuert RST bereits beim Start-Kaskaden-INIT (z.B. ueber initval_ATM/LatchFilterTime.INIT -&gt; OUT.E1 -&gt; TM.E1, siehe logiBUS_PI_Raw_Publish_OPC.SUB), also BEVOR je ein echtes REQ mit frisch abgetastetem 'in' lief. RST setzte bisher init:=TRUE UND out:=K*in mit dem zu diesem Zeitpunkt noch nie gesetzten 'in' (0.0) - das erste echte REQ sah dann init bereits TRUE und ramp'te per Euler-Schritt langsam von 0 auf den echten Wert hoch, statt sofort zu springen. RST setzt jetzt NUR NOCH init:=FALSE (kein 'in'-With-Var, kann also gar nicht sinnvoll seeden) - das naechste REQ (mit garantiert frischem 'in') macht das Seeding selbst inline (vorher this.RST(), jetzt direkt out:=K*in), genau wie beim allerersten Programmstart.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.2" Author="Franz Höpfinger" Date="2026-09-25" Remarks="Bugfix (Franz live am Geraet: 'ich hatte von 2s auf 0.1s geaendert, und schwupps spinnt er' - Zapfwelle-Filterzeit auf STG4 manuell auf 100ms gesenkt): die explizite Euler-Diskretisierung wird numerisch instabil, sobald TM kleiner als das tatsaechliche REQ-Aufrufintervall (delta_t) ist - Faktor delta_t/TM > 1 laesst den Fehler pro Zyklus exponentiell wachsen statt sich dem Zielwert anzunaehern, bis out ueberlaeuft (Inf) und danach dauerhaft NaN bleibt (Inf-Inf), da kein automatisches Re-Init/RST mehr verdrahtet war. TM wird in der REQ-Berechnung jetzt adaptiv auf mindestens delta_t hochgeklemmt (Franz' Vorschlag, F1/F2-Notation) - Faktor bleibt so immer &lt;= 1, unabhaengig von der tatsaechlichen Aufrufrate, kein fixer Magic-Number-Mindestwert noetig.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-17" Remarks="Bugfix (Review-Bot auf training1 PR #252, verifiziert): RST setzte init/out zurueck, aber nicht tx/last/delta_t - ein externer RST-Aufruf (jetzt ueber FT_PT1_AR.RST erreichbar) liess die naechste REQ-Ausfuehrung mit einem stehengebliebenen last einen riesigen delta_t berechnen und dadurch einen falschen Ausreisser-Schritt. RST liest jetzt T_PLC_US() neu und setzt last/delta_t entsprechend zurueck.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2025-12-21" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="OSCAT::Basic::POUs::Engineering::Control">
+		<Import declaration="OSCAT::Basic::POUs::Engineering::measurements::T_PLC_US"/>
+		<Import declaration="OSCAT::Basic::POUs::conversion::TIME_TO_REAL"/>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="EINIT" Type="EInit" Comment="Init Request">
+			</Event>
+			<Event Name="REQ" Type="Event" Comment="Normal Execution Request">
+				<With Var="in"/>
+				<With Var="TM"/>
+				<With Var="K"/>
+			</Event>
+			<Event Name="RST" Type="Event" Comment="Reset Filter">
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Init Confirmation">
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Execution Confirmation">
+				<With Var="delta_t"/>
+				<With Var="out"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="in" Type="REAL" Comment="Input Signal"/>
+			<VarDeclaration Name="TM" Type="TIME" Comment="Filter Time Constant"/>
+			<VarDeclaration Name="K" Type="REAL" Comment="Gain Factor" InitialValue="1.0"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="delta_t" Type="UDINT" Comment="Delta T since last call."/>
+			<VarDeclaration Name="out" Type="REAL" Comment="Output Signal"/>
+		</OutputVars>
+	</InterfaceList>
+	<SimpleFB>
+		<InternalVars>
+			<VarDeclaration Name="last" Type="UDINT" Comment="Last execution time"/>
+			<VarDeclaration Name="tx" Type="UDINT" Comment="Current execution time"/>
+			<VarDeclaration Name="init" Type="BOOL" Comment="Initialization flag" InitialValue="FALSE"/>
+			<VarDeclaration Name="F1" Type="REAL"/>
+			<VarDeclaration Name="F2" Type="REAL"/>
+		</InternalVars>
+		<ECState Name="EINIT" Comment="Initialization">
+			<ECAction Algorithm="EINIT" Output="INITO"/>
+		</ECState>
+		<ECState Name="REQ" Comment="Normal Operation">
+			<ECAction Algorithm="REQ" Output="CNF"/>
+		</ECState>
+		<ECState Name="RST">
+			<ECAction Algorithm="RST" Output="CNF"/>
+		</ECState>
+		<Algorithm Name="EINIT">
+			<ST><![CDATA[
+(* Reset logic *)
+init := FALSE;
+out := 0.0;
+last := UDINT#0;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="RST">
+			<ST><![CDATA[
+(* Nur den Zustand invalidieren - das naechste REQ seedet mit frisch
+   abgetastetem 'in' (With-Var, synchron zum REQ-Event). RST selbst hat
+   kein 'in'-With-Var und wuerde sonst mit einem veralteten oder (beim
+   allerersten Aufruf, z.B. durch TM.E1 vor der ersten echten Messung)
+   noch nie gesetzten Wert (0.0) faelschlich seeden. *)
+init := FALSE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="REQ">
+			<ST><![CDATA[
+(* Read system time *)
+tx := T_PLC_US();
+
+(* Startup initialization or T=0 *)
+IF NOT init OR TM = T#0s THEN
+	init := TRUE;
+	out := K * in;
+	delta_t := UDINT#0;
+ELSE
+	(* Calculate time delta since last call *)
+	delta_t := (tx - last);
+
+		(* PT1 Formula: out = out + (target - out) * (dt / T) *)
+	IF TIME_TO_REAL(TM) > 0.0 THEN
+		F1 := UDINT_TO_REAL(delta_t) * 1.0E-3; (* delta_t in ms *)
+		F2 := TIME_TO_REAL(TM); (* TM in ms *)
+		IF F2 < F1 THEN
+			F2 := F1;
+		END_IF;
+		out := out + (in * K - out) * F1 / F2;
+	END_IF;
+
+		(* Avoid denormalized numbers / underrun *)
+	IF ABS(out) < 1.0E-20 THEN
+		out := 0.0;
+	END_IF;
+END_IF;
+
+(* Save time for next cycle *)
+last := tx;
+
+]]></ST>
+		</Algorithm>
+	</SimpleFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

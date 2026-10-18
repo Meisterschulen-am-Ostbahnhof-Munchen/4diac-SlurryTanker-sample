@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="AUDI_FB_CTD" Comment="Down counter (UDINT) AUDI-Adapter Version">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0 &#10; &#10;NOTE: This block fires the AX output events (Q.E1, CV.E1, etc.) only on value changes using the internal E_D_FF_* change-driven wiring (e.g., E_D_FF_Q, E_D_FF_ANY_PV, E_D_FF_LD, E_D_FF_CD). External filtering is no longer required.">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-04-21" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::iec61131::counters">
+	</CompilerInfo>
+	<InterfaceList>
+		<Plugs>
+			<AdapterDeclaration Name="Q" Type="adapter::types::unidirectional::AX" Comment="Output" x="2800" y="100"/>
+			<AdapterDeclaration Name="CV" Type="adapter::types::unidirectional::AUDI" Comment="Count value" x="2800" y="893.33"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="CD" Type="adapter::types::unidirectional::AX" Comment="Count down" x="-2300" y="-1000"/>
+			<AdapterDeclaration Name="LD" Type="adapter::types::unidirectional::AX" Comment="Load" x="-2300" y="-200"/>
+			<AdapterDeclaration Name="PV" Type="adapter::types::unidirectional::AUDI" Comment="Preset value" x="-2300" y="600"/>
+		</Sockets>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="FB_CTD_UDINT" Type="iec61131::counters::FB_CTD_UDINT" x="300" y="100">
+		</FB>
+		<FB Name="E_D_FF_CD" Type="iec61499::events::E_D_FF" x="-1300" y="-1000">
+		</FB>
+		<FB Name="E_D_FF_LD" Type="iec61499::events::E_D_FF" x="-1300" y="-200">
+		</FB>
+		<FB Name="E_D_FF_ANY_PV" Type="iec61499::events::E_D_FF_ANY" x="-1300" y="600">
+		</FB>
+		<FB Name="E_D_FF_Q" Type="iec61499::events::E_D_FF" x="2000" y="100">
+		</FB>
+		<FB Name="E_D_FF_ANY_CV" Type="iec61499::events::E_D_FF_ANY" x="2000" y="893">
+		</FB>
+		<EventConnections>
+			<Connection Source="CD.E1" Destination="E_D_FF_CD.CLK"/>
+			<Connection Source="E_D_FF_CD.EO" Destination="FB_CTD_UDINT.REQ" dx1="513.33"/>
+			<Connection Source="LD.E1" Destination="E_D_FF_LD.CLK"/>
+			<Connection Source="E_D_FF_LD.EO" Destination="FB_CTD_UDINT.REQ" dx1="513.33"/>
+			<Connection Source="PV.E1" Destination="E_D_FF_ANY_PV.CLK"/>
+			<Connection Source="E_D_FF_ANY_PV.EO" Destination="FB_CTD_UDINT.REQ" dx1="420"/>
+			<Connection Source="FB_CTD_UDINT.CNF" Destination="E_D_FF_Q.CLK"/>
+			<Connection Source="E_D_FF_Q.EO" Destination="Q.E1"/>
+			<Connection Source="FB_CTD_UDINT.CNF" Destination="E_D_FF_ANY_CV.CLK" dx1="426.67"/>
+			<Connection Source="E_D_FF_ANY_CV.EO" Destination="CV.E1"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="CD.D1" Destination="E_D_FF_CD.D"/>
+			<Connection Source="E_D_FF_CD.Q" Destination="FB_CTD_UDINT.CD" dx1="433.33"/>
+			<Connection Source="LD.D1" Destination="E_D_FF_LD.D"/>
+			<Connection Source="E_D_FF_LD.Q" Destination="FB_CTD_UDINT.LD" dx1="346.67"/>
+			<Connection Source="PV.D1" Destination="E_D_FF_ANY_PV.D"/>
+			<Connection Source="E_D_FF_ANY_PV.Q" Destination="FB_CTD_UDINT.PV" dx1="513.33"/>
+			<Connection Source="FB_CTD_UDINT.Q" Destination="E_D_FF_Q.D"/>
+			<Connection Source="E_D_FF_Q.Q" Destination="Q.D1"/>
+			<Connection Source="FB_CTD_UDINT.CV" Destination="E_D_FF_ANY_CV.D" dx1="266.67"/>
+			<Connection Source="E_D_FF_ANY_CV.Q" Destination="CV.D1"/>
+		</DataConnections>
+	</FBNetwork>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

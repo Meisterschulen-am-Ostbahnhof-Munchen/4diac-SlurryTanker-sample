@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Function Name="RND" Comment="this function rounds a real to n significant digits (not digits behind the comma).">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Version="1.0" Author="Franz Höpfinger" Date="2026-09-17" Remarks="Portiert aus OSCAT_basic RND.TcPOU - EXPT(10.0, ...) mit Begrenzung N (1..8), Exponenten-LIMIT (-37..8) und Bereichspruefung (ABS(X * M) &gt;= 2.147e9) schuetzt vor DINT-Ueberlauf und Division durch 0.">
+	</VersionInfo>
+	<CompilerInfo packageName="OSCAT::Basic::POUs::Mathematical">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event">
+				<With Var="X"/>
+				<With Var="N"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event">
+				<With Var=""/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="X" Type="REAL"/>
+			<VarDeclaration Name="N" Type="INT"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="" Type="REAL"/>
+		</OutputVars>
+	</InterfaceList>
+	<FunctionBody>
+		<ST><![CDATA[PACKAGE OSCAT::Basic::POUs::Mathematical;
+
+(* this function rounds a real to n significant digits (not digits behind the comma). *)
+FUNCTION RND : REAL
+VAR_INPUT
+	X : REAL;
+	N : INT;
+END_VAR
+VAR
+	M : REAL;
+END_VAR
+
+(*
+ * version 1.1	4. apr. 2008 programmer 	hugo tested by	tobias
+ * *
+ * this function rounds x to n significant digits.
+ * unlike round(), n is not the number of digits behind the comma but the total number of
+ * significant digits.
+ * Portiert 2026-09-17: Begrenzung N (1..8), Exponenten-LIMIT (-37..8) und Bereichspruefung schuetzen vor DINT-Ueberlauf.
+ *)
+IF X = 0.0 THEN
+	RND := 0.0;
+ELSE
+	M := EXPT(10.0, LIMIT(-37.0, INT_TO_LREAL(LIMIT(1, N, 8)) - CEIL(LOG(ABS(X))), 8.0));
+	IF ABS(X * M) >= 2147483647.0 THEN
+		RND := X;
+	ELSE
+		RND := DINT_TO_REAL(REAL_TO_DINT(X * M)) / M;
+	END_IF;
+END_IF;
+
+END_FUNCTION
+
+(* revision history hm	1. sep 2006	rev 1.0 original version
+ * *
+ * hm	4. apr. 2008	rev 1.1 added type conversion to avoid warning under codesys 3.0 *) ]]></ST>
+	</FunctionBody>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</Function>

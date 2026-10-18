@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="NVS_IN_AND_STORE_AR" Comment="NVS Laden und Speichern von AR-Daten">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-04-24" Remarks="AR adapter variant for PHYS REAL NVS storage with Subapp">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+		<Import declaration="logiBUS::utils::conversion::phys::NumericObjectPool_S"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="KEY" Type="STRING" Comment="Key name."/>
+			<VarDeclaration Name="stObj" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 0)"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="VALUEO" Type="adapter::types::unidirectional::AR"/>
+		</Plugs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="NVS_AR" Type="logiBUS::storage::esp32_nvs::NVS_AR" x="800" y="-93.33">
+			<Parameter Name="SETM" Value="TRUE"/>
+			<Parameter Name="DEFAULT_VALUE" Value="REAL#0.0"/>
+		</FB>
+		<FB Name="NumericValue_PHYSA" Type="isobus::UT::io::NumericValue::NumericValue_PHYSA" x="-2800" y="-200">
+		</FB>
+		<FB Name="Q_NumericValue_PHYSA" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="5600" y="-93.33">
+		</FB>
+		<FB Name="AR_SPLIT_2" Type="adapter::events::unidirectional::AR_SPLIT_2" x="3100" y="226.67">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_3">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="Q_NumericValue_PHYSA.INIT"/>
+			<Connection Source="Q_NumericValue_PHYSA.INITO" Destination="NVS_AR.INIT"/>
+			<Connection Source="NVS_AR.INITO" Destination="NumericValue_PHYSA.INIT"/>
+			<Connection Source="NumericValue_PHYSA.INITO" Destination="INITO"/>
+			<Connection Source="NumericValue_PHYSA.INITO" Destination="AND_QO.REQ"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="stObj" Destination="Q_NumericValue_PHYSA.stObj" dx1="8246.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="KEY" Destination="NVS_AR.KEY" dx1="2846.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="stObj" Destination="NumericValue_PHYSA.stObj" dx1="1046.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="Q_NumericValue_PHYSA.QI"/>
+			<Connection Source="QI" Destination="NVS_AR.QI"/>
+			<Connection Source="QI" Destination="NumericValue_PHYSA.QI"/>
+			<Connection Source="Q_NumericValue_PHYSA.QO" Destination="AND_QO.IN1"/>
+			<Connection Source="NVS_AR.QO" Destination="AND_QO.IN2"/>
+			<Connection Source="NumericValue_PHYSA.QO" Destination="AND_QO.IN3"/>
+			<Connection Source="AND_QO.OUT" Destination="QO"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="NVS_AR.AR_OUT" Destination="AR_SPLIT_2.IN" dx1="106.67"/>
+			<Connection Source="NumericValue_PHYSA.rPhys" Destination="NVS_AR.AR_IN" dx1="1233.33"/>
+			<Connection Source="AR_SPLIT_2.OUT1" Destination="VALUEO" dx1="2220">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AR_SPLIT_2.OUT2" Destination="Q_NumericValue_PHYSA.rPhys"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

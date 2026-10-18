@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Manifest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="platform:/resource/org.eclipse.fordiac.ide.library.model/model/library.xsd" Scope="Library">
+  <Dependencies>
+    <Required SymbolicName="adapter_types" Version="3.0.0"/>
+    <Required SymbolicName="iec61131-3" Version="3.0.1"/>
+    <Required SymbolicName="isobus_signalprocessing" Version="3.0.0"/>
+    <Required SymbolicName="isobus_UT" Version="3.1.1"/>
+    <Required SymbolicName="logiBUS_signalprocessing" Version="3.0.0"/>
+  </Dependencies>
+  <Product Comment="AR/AX-Adapter-Wrapper um isobus_signalprocessing (BargraphSplitFS, PositionMarkerFS), herausgeloest aus isobus_UT_adapter-3.0.0/typelib/UT/Q - Franz: die beiden Typen loesten dort nicht auf, weil ihre gewrappten Inner-FBs (isobus::UT::Q::BargraphSplitFS/PositionMarkerFS) tatsaechlich in isobus_signalprocessing liegen, nicht in isobus_UT. 1:1-Gegenstueck zu isobus_signalprocessing, analog zu logiBUS_signalprocessing/logiBUS_signalprocessing_adapter. isobus_UT zusaetzlich noetig fuer die stObj-Structs (BargraphSplit_S/PositionMarker_S, liegen in isobus_UT/typelib/utils)" Name="isobus_signalprocessing_adapter" SymbolicName="isobus_signalprocessing_adapter">
+    <VersionInfo Author="HR Agrartechnik GmbH" Date="2026-10-10" Version="3.0.0"/>
+  </Product>
+</Manifest>

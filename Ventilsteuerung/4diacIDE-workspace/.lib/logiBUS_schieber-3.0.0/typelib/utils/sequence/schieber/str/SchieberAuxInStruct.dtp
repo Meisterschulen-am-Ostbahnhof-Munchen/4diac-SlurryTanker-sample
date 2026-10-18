@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataType Name="SchieberAuxInStruct" Comment="AUX Input Color and Picture">
+	<Identification Description="Copyright (c) 2025 HR Agrartechnik GmbH &#10; &#10;This program and the accompanying materials are made &#10;available under the terms of the Eclipse Public License 2.0 &#10;which is available at https://www.eclipse.org/legal/epl-2.0/ &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2025-06-12">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::utils::sequence::schieber">
+	</CompilerInfo>
+	<StructuredType>
+		<VarDeclaration Name="Picture" Type="logiBUS::utils::sequence::schieber::SchieberStruct" Comment="u16ObjId for Picture"/>
+		<VarDeclaration Name="u8Colour" Type="logiBUS::utils::sequence::schieber::SchieberColorStruct" Comment="Background Color of the AUX"/>
+	</StructuredType>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</DataType>

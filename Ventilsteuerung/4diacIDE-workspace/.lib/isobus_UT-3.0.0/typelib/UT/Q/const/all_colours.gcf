@@ -1,0 +1,533 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="all_colours" Comment="Global constants">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Organization="Demmler Andreas Fahrzeugbau" Version="1.0" Author="Franz Höpfinger" Date="2026-05-28">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::UT::Q::const">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="COLOR_0" Type="USINT" Comment="#000000, rgb(0, 0, 0), black, Schwarz" InitialValue="USINT#0"/>
+		<VarDeclaration Name="COLOR_1" Type="USINT" Comment="#FFFFFF, rgb(255, 255, 255), white, Weiß" InitialValue="USINT#1"/>
+		<VarDeclaration Name="COLOR_2" Type="USINT" Comment="#009900, rgb(0, 153, 0), japanese laurel" InitialValue="USINT#2"/>
+		<VarDeclaration Name="COLOR_3" Type="USINT" Comment="#009999, rgb(0, 153, 153), persian green" InitialValue="USINT#3"/>
+		<VarDeclaration Name="COLOR_4" Type="USINT" Comment="#990000, rgb(153, 0, 0), red berry" InitialValue="USINT#4"/>
+		<VarDeclaration Name="COLOR_5" Type="USINT" Comment="#990099, rgb(153, 0, 153), flirt" InitialValue="USINT#5"/>
+		<VarDeclaration Name="COLOR_6" Type="USINT" Comment="#999900, rgb(153, 153, 0), olive" InitialValue="USINT#6"/>
+		<VarDeclaration Name="COLOR_7" Type="USINT" Comment="#CCCCCC, rgb(204, 204, 204), silver, Silber" InitialValue="USINT#7"/>
+		<VarDeclaration Name="COLOR_8" Type="USINT" Comment="#999999, rgb(153, 153, 153), quick silver" InitialValue="USINT#8"/>
+		<VarDeclaration Name="COLOR_9" Type="USINT" Comment="#0000FF, rgb(0, 0, 255), blue, Blau" InitialValue="USINT#9"/>
+		<VarDeclaration Name="COLOR_10" Type="USINT" Comment="#00FF00, rgb(0, 255, 0), green, Grün" InitialValue="USINT#10"/>
+		<VarDeclaration Name="COLOR_11" Type="USINT" Comment="#00FFFF, rgb(0, 255, 255), cyan / aqua, Türkis" InitialValue="USINT#11"/>
+		<VarDeclaration Name="COLOR_12" Type="USINT" Comment="#FF0000, rgb(255, 0, 0), red, Rot" InitialValue="USINT#12"/>
+		<VarDeclaration Name="COLOR_13" Type="USINT" Comment="#FF00FF, rgb(255, 0, 255), magenta / fuchsia, Magenta" InitialValue="USINT#13"/>
+		<VarDeclaration Name="COLOR_14" Type="USINT" Comment="#FFFF00, rgb(255, 255, 0), yellow, Gelb" InitialValue="USINT#14"/>
+		<VarDeclaration Name="COLOR_15" Type="USINT" Comment="#000099, rgb(0, 0, 153), blue gray" InitialValue="USINT#15"/>
+		<VarDeclaration Name="COLOR_16" Type="USINT" Comment="#000000, rgb(0, 0, 0), black, Schwarz" InitialValue="USINT#16"/>
+		<VarDeclaration Name="COLOR_17" Type="USINT" Comment="#000033, rgb(0, 0, 51), stratos" InitialValue="USINT#17"/>
+		<VarDeclaration Name="COLOR_18" Type="USINT" Comment="#000066, rgb(0, 0, 102), fuzzy wuzzy" InitialValue="USINT#18"/>
+		<VarDeclaration Name="COLOR_19" Type="USINT" Comment="#000099, rgb(0, 0, 153), blue gray" InitialValue="USINT#19"/>
+		<VarDeclaration Name="COLOR_20" Type="USINT" Comment="#0000CC, rgb(0, 0, 204), dark blue" InitialValue="USINT#20"/>
+		<VarDeclaration Name="COLOR_21" Type="USINT" Comment="#0000FF, rgb(0, 0, 255), blue, Blau" InitialValue="USINT#21"/>
+		<VarDeclaration Name="COLOR_22" Type="USINT" Comment="#003300, rgb(0, 51, 0), deep fir" InitialValue="USINT#22"/>
+		<VarDeclaration Name="COLOR_23" Type="USINT" Comment="#003333, rgb(0, 51, 51), deep teal" InitialValue="USINT#23"/>
+		<VarDeclaration Name="COLOR_24" Type="USINT" Comment="#003366, rgb(0, 51, 102), midnight blue" InitialValue="USINT#24"/>
+		<VarDeclaration Name="COLOR_25" Type="USINT" Comment="#003399, rgb(0, 51, 153), smalt" InitialValue="USINT#25"/>
+		<VarDeclaration Name="COLOR_26" Type="USINT" Comment="#0033CC, rgb(0, 51, 204), absolute zero" InitialValue="USINT#26"/>
+		<VarDeclaration Name="COLOR_27" Type="USINT" Comment="#0033FF, rgb(0, 51, 255), canary" InitialValue="USINT#27"/>
+		<VarDeclaration Name="COLOR_28" Type="USINT" Comment="#006600, rgb(0, 102, 0), camarone" InitialValue="USINT#28"/>
+		<VarDeclaration Name="COLOR_29" Type="USINT" Comment="#006633, rgb(0, 102, 51), fun green" InitialValue="USINT#29"/>
+		<VarDeclaration Name="COLOR_30" Type="USINT" Comment="#006666, rgb(0, 102, 102), blue stone" InitialValue="USINT#30"/>
+		<VarDeclaration Name="COLOR_31" Type="USINT" Comment="#006699, rgb(0, 102, 153), bahama blue" InitialValue="USINT#31"/>
+		<VarDeclaration Name="COLOR_32" Type="USINT" Comment="#0066CC, rgb(0, 102, 204), science blue" InitialValue="USINT#32"/>
+		<VarDeclaration Name="COLOR_33" Type="USINT" Comment="#0066FF, rgb(0, 102, 255), blue ribbon" InitialValue="USINT#33"/>
+		<VarDeclaration Name="COLOR_34" Type="USINT" Comment="#009900, rgb(0, 153, 0), japanese laurel" InitialValue="USINT#34"/>
+		<VarDeclaration Name="COLOR_35" Type="USINT" Comment="#009933, rgb(0, 153, 51), fun green" InitialValue="USINT#35"/>
+		<VarDeclaration Name="COLOR_36" Type="USINT" Comment="#009966, rgb(0, 153, 102), green haze" InitialValue="USINT#36"/>
+		<VarDeclaration Name="COLOR_37" Type="USINT" Comment="#009999, rgb(0, 153, 153), persian green" InitialValue="USINT#37"/>
+		<VarDeclaration Name="COLOR_38" Type="USINT" Comment="#0099CC, rgb(0, 153, 204), pacific blue" InitialValue="USINT#38"/>
+		<VarDeclaration Name="COLOR_39" Type="USINT" Comment="#0099FF, rgb(0, 153, 255), azure radiance" InitialValue="USINT#39"/>
+		<VarDeclaration Name="COLOR_40" Type="USINT" Comment="#00CC00, rgb(0, 204, 0), green, Grün" InitialValue="USINT#40"/>
+		<VarDeclaration Name="COLOR_41" Type="USINT" Comment="#00CC33, rgb(0, 204, 51), malachite" InitialValue="USINT#41"/>
+		<VarDeclaration Name="COLOR_42" Type="USINT" Comment="#00CC66, rgb(0, 204, 102), jade" InitialValue="USINT#42"/>
+		<VarDeclaration Name="COLOR_43" Type="USINT" Comment="#00CC99, rgb(0, 204, 153), caribbean green" InitialValue="USINT#43"/>
+		<VarDeclaration Name="COLOR_44" Type="USINT" Comment="#00CCCC, rgb(0, 204, 204), robin&apos;s egg blue" InitialValue="USINT#44"/>
+		<VarDeclaration Name="COLOR_45" Type="USINT" Comment="#00CCFF, rgb(0, 204, 255), cyan / aqua" InitialValue="USINT#45"/>
+		<VarDeclaration Name="COLOR_46" Type="USINT" Comment="#00FF00, rgb(0, 255, 0), green, Grün" InitialValue="USINT#46"/>
+		<VarDeclaration Name="COLOR_47" Type="USINT" Comment="#00FF33, rgb(0, 255, 51), green" InitialValue="USINT#47"/>
+		<VarDeclaration Name="COLOR_48" Type="USINT" Comment="#00FF66, rgb(0, 255, 102), spring green" InitialValue="USINT#48"/>
+		<VarDeclaration Name="COLOR_49" Type="USINT" Comment="#00FF99, rgb(0, 255, 153), spring green" InitialValue="USINT#49"/>
+		<VarDeclaration Name="COLOR_50" Type="USINT" Comment="#00FFCC, rgb(0, 255, 204), bright turquoise" InitialValue="USINT#50"/>
+		<VarDeclaration Name="COLOR_51" Type="USINT" Comment="#00FFFF, rgb(0, 255, 255), cyan / aqua, Türkis" InitialValue="USINT#51"/>
+		<VarDeclaration Name="COLOR_52" Type="USINT" Comment="#330000, rgb(51, 0, 0), temptress" InitialValue="USINT#52"/>
+		<VarDeclaration Name="COLOR_53" Type="USINT" Comment="#330033, rgb(51, 0, 51), barossa" InitialValue="USINT#53"/>
+		<VarDeclaration Name="COLOR_54" Type="USINT" Comment="#330066, rgb(51, 0, 102), christalle" InitialValue="USINT#54"/>
+		<VarDeclaration Name="COLOR_55" Type="USINT" Comment="#330099, rgb(51, 0, 153), pigment indigo" InitialValue="USINT#55"/>
+		<VarDeclaration Name="COLOR_56" Type="USINT" Comment="#3300CC, rgb(51, 0, 204), dark blue" InitialValue="USINT#56"/>
+		<VarDeclaration Name="COLOR_57" Type="USINT" Comment="#3300FF, rgb(51, 0, 255), blue" InitialValue="USINT#57"/>
+		<VarDeclaration Name="COLOR_58" Type="USINT" Comment="#333300, rgb(51, 51, 0), madras" InitialValue="USINT#58"/>
+		<VarDeclaration Name="COLOR_59" Type="USINT" Comment="#333333, rgb(51, 51, 51), mine shaft" InitialValue="USINT#59"/>
+		<VarDeclaration Name="COLOR_60" Type="USINT" Comment="#333366, rgb(51, 51, 102), rhino" InitialValue="USINT#60"/>
+		<VarDeclaration Name="COLOR_61" Type="USINT" Comment="#333399, rgb(51, 51, 153), cosmic cobalt" InitialValue="USINT#61"/>
+		<VarDeclaration Name="COLOR_62" Type="USINT" Comment="#3333CC, rgb(51, 51, 204), governor bay" InitialValue="USINT#62"/>
+		<VarDeclaration Name="COLOR_63" Type="USINT" Comment="#3333FF, rgb(51, 51, 255), blue" InitialValue="USINT#63"/>
+		<VarDeclaration Name="COLOR_64" Type="USINT" Comment="#336600, rgb(51, 102, 0), verdun green" InitialValue="USINT#64"/>
+		<VarDeclaration Name="COLOR_65" Type="USINT" Comment="#336633, rgb(51, 102, 51), killarney" InitialValue="USINT#65"/>
+		<VarDeclaration Name="COLOR_66" Type="USINT" Comment="#336666, rgb(51, 102, 102), casal" InitialValue="USINT#66"/>
+		<VarDeclaration Name="COLOR_67" Type="USINT" Comment="#336699, rgb(51, 102, 153), bdazzled blue" InitialValue="USINT#67"/>
+		<VarDeclaration Name="COLOR_68" Type="USINT" Comment="#3366CC, rgb(51, 102, 204), denim" InitialValue="USINT#68"/>
+		<VarDeclaration Name="COLOR_69" Type="USINT" Comment="#3366FF, rgb(51, 102, 255), blue" InitialValue="USINT#69"/>
+		<VarDeclaration Name="COLOR_70" Type="USINT" Comment="#339900, rgb(51, 153, 0), limeade" InitialValue="USINT#70"/>
+		<VarDeclaration Name="COLOR_71" Type="USINT" Comment="#339933, rgb(51, 153, 51), apple" InitialValue="USINT#71"/>
+		<VarDeclaration Name="COLOR_72" Type="USINT" Comment="#339966, rgb(51, 153, 102), illuminating emerald" InitialValue="USINT#72"/>
+		<VarDeclaration Name="COLOR_73" Type="USINT" Comment="#339999, rgb(51, 153, 153), lochinvar" InitialValue="USINT#73"/>
+		<VarDeclaration Name="COLOR_74" Type="USINT" Comment="#3399CC, rgb(51, 153, 204), moonstone" InitialValue="USINT#74"/>
+		<VarDeclaration Name="COLOR_75" Type="USINT" Comment="#3399FF, rgb(51, 153, 255), dodger blue" InitialValue="USINT#75"/>
+		<VarDeclaration Name="COLOR_76" Type="USINT" Comment="#33CC00, rgb(51, 204, 0), harlequin" InitialValue="USINT#76"/>
+		<VarDeclaration Name="COLOR_77" Type="USINT" Comment="#33CC33, rgb(51, 204, 51), apple" InitialValue="USINT#77"/>
+		<VarDeclaration Name="COLOR_78" Type="USINT" Comment="#33CC66, rgb(51, 204, 102), emerald" InitialValue="USINT#78"/>
+		<VarDeclaration Name="COLOR_79" Type="USINT" Comment="#33CC99, rgb(51, 204, 153), shamrock" InitialValue="USINT#79"/>
+		<VarDeclaration Name="COLOR_80" Type="USINT" Comment="#33CCCC, rgb(51, 204, 204), turquoise pearl" InitialValue="USINT#80"/>
+		<VarDeclaration Name="COLOR_81" Type="USINT" Comment="#33CCFF, rgb(51, 204, 255), dodger blue" InitialValue="USINT#81"/>
+		<VarDeclaration Name="COLOR_82" Type="USINT" Comment="#33FF00, rgb(51, 255, 0), harlequin" InitialValue="USINT#82"/>
+		<VarDeclaration Name="COLOR_83" Type="USINT" Comment="#33FF33, rgb(51, 255, 51), harlequin" InitialValue="USINT#83"/>
+		<VarDeclaration Name="COLOR_84" Type="USINT" Comment="#33FF66, rgb(51, 255, 102), screamin&apos; green" InitialValue="USINT#84"/>
+		<VarDeclaration Name="COLOR_85" Type="USINT" Comment="#33FF99, rgb(51, 255, 153), spring green" InitialValue="USINT#85"/>
+		<VarDeclaration Name="COLOR_86" Type="USINT" Comment="#33FFCC, rgb(51, 255, 204), bright turquoise" InitialValue="USINT#86"/>
+		<VarDeclaration Name="COLOR_87" Type="USINT" Comment="#33FFFF, rgb(51, 255, 255), cyan / aqua" InitialValue="USINT#87"/>
+		<VarDeclaration Name="COLOR_88" Type="USINT" Comment="#660000, rgb(102, 0, 0), lonestar" InitialValue="USINT#88"/>
+		<VarDeclaration Name="COLOR_89" Type="USINT" Comment="#660033, rgb(102, 0, 51), tyrian purple" InitialValue="USINT#89"/>
+		<VarDeclaration Name="COLOR_90" Type="USINT" Comment="#660066, rgb(102, 0, 102), pompadour" InitialValue="USINT#90"/>
+		<VarDeclaration Name="COLOR_91" Type="USINT" Comment="#660099, rgb(102, 0, 153), purple" InitialValue="USINT#91"/>
+		<VarDeclaration Name="COLOR_92" Type="USINT" Comment="#6600CC, rgb(102, 0, 204), purple" InitialValue="USINT#92"/>
+		<VarDeclaration Name="COLOR_93" Type="USINT" Comment="#6600FF, rgb(102, 0, 255), electric violet" InitialValue="USINT#93"/>
+		<VarDeclaration Name="COLOR_94" Type="USINT" Comment="#663300, rgb(102, 51, 0), nutmeg wood finish" InitialValue="USINT#94"/>
+		<VarDeclaration Name="COLOR_95" Type="USINT" Comment="#663333, rgb(102, 51, 51), buccaneer" InitialValue="USINT#95"/>
+		<VarDeclaration Name="COLOR_96" Type="USINT" Comment="#663366, rgb(102, 51, 102), cosmic" InitialValue="USINT#96"/>
+		<VarDeclaration Name="COLOR_97" Type="USINT" Comment="#663399, rgb(102, 51, 153), royal purple" InitialValue="USINT#97"/>
+		<VarDeclaration Name="COLOR_98" Type="USINT" Comment="#6633CC, rgb(102, 51, 204), purple heart" InitialValue="USINT#98"/>
+		<VarDeclaration Name="COLOR_99" Type="USINT" Comment="#6633FF, rgb(102, 51, 255), electric violet" InitialValue="USINT#99"/>
+		<VarDeclaration Name="COLOR_100" Type="USINT" Comment="#666600, rgb(102, 102, 0), verdun green" InitialValue="USINT#100"/>
+		<VarDeclaration Name="COLOR_101" Type="USINT" Comment="#666633, rgb(102, 102, 51), costa del sol" InitialValue="USINT#101"/>
+		<VarDeclaration Name="COLOR_102" Type="USINT" Comment="#666666, rgb(102, 102, 102), granite gray" InitialValue="USINT#102"/>
+		<VarDeclaration Name="COLOR_103" Type="USINT" Comment="#666699, rgb(102, 102, 153), amethyst" InitialValue="USINT#103"/>
+		<VarDeclaration Name="COLOR_104" Type="USINT" Comment="#6666CC, rgb(102, 102, 204), indigo" InitialValue="USINT#104"/>
+		<VarDeclaration Name="COLOR_105" Type="USINT" Comment="#6666FF, rgb(102, 102, 255), blueberry" InitialValue="USINT#105"/>
+		<VarDeclaration Name="COLOR_106" Type="USINT" Comment="#669900, rgb(102, 153, 0), limeade" InitialValue="USINT#106"/>
+		<VarDeclaration Name="COLOR_107" Type="USINT" Comment="#669933, rgb(102, 153, 51), apple" InitialValue="USINT#107"/>
+		<VarDeclaration Name="COLOR_108" Type="USINT" Comment="#669966, rgb(102, 153, 102), highland" InitialValue="USINT#108"/>
+		<VarDeclaration Name="COLOR_109" Type="USINT" Comment="#669999, rgb(102, 153, 153), patina" InitialValue="USINT#109"/>
+		<VarDeclaration Name="COLOR_110" Type="USINT" Comment="#6699CC, rgb(102, 153, 204), danube" InitialValue="USINT#110"/>
+		<VarDeclaration Name="COLOR_111" Type="USINT" Comment="#6699FF, rgb(102, 153, 255), blueberry" InitialValue="USINT#111"/>
+		<VarDeclaration Name="COLOR_112" Type="USINT" Comment="#66CC00, rgb(102, 204, 0), alien armpit" InitialValue="USINT#112"/>
+		<VarDeclaration Name="COLOR_113" Type="USINT" Comment="#66CC33, rgb(102, 204, 51), atlantis" InitialValue="USINT#113"/>
+		<VarDeclaration Name="COLOR_114" Type="USINT" Comment="#66CC66, rgb(102, 204, 102), mantis" InitialValue="USINT#114"/>
+		<VarDeclaration Name="COLOR_115" Type="USINT" Comment="#66CC99, rgb(102, 204, 153), caribbean green pearl" InitialValue="USINT#115"/>
+		<VarDeclaration Name="COLOR_116" Type="USINT" Comment="#66CCCC, rgb(102, 204, 204), downy" InitialValue="USINT#116"/>
+		<VarDeclaration Name="COLOR_117" Type="USINT" Comment="#66CCFF, rgb(102, 204, 255), malibu" InitialValue="USINT#117"/>
+		<VarDeclaration Name="COLOR_118" Type="USINT" Comment="#66FF00, rgb(102, 255, 0), bright green" InitialValue="USINT#118"/>
+		<VarDeclaration Name="COLOR_119" Type="USINT" Comment="#66FF33, rgb(102, 255, 51), spring frost" InitialValue="USINT#119"/>
+		<VarDeclaration Name="COLOR_120" Type="USINT" Comment="#66FF66, rgb(102, 255, 102), screamin&apos; green" InitialValue="USINT#120"/>
+		<VarDeclaration Name="COLOR_121" Type="USINT" Comment="#66FF99, rgb(102, 255, 153), screamin green" InitialValue="USINT#121"/>
+		<VarDeclaration Name="COLOR_122" Type="USINT" Comment="#66FFCC, rgb(102, 255, 204), aquamarine" InitialValue="USINT#122"/>
+		<VarDeclaration Name="COLOR_123" Type="USINT" Comment="#66FFFF, rgb(102, 255, 255), aquamarine" InitialValue="USINT#123"/>
+		<VarDeclaration Name="COLOR_124" Type="USINT" Comment="#990000, rgb(153, 0, 0), red berry" InitialValue="USINT#124"/>
+		<VarDeclaration Name="COLOR_125" Type="USINT" Comment="#990033, rgb(153, 0, 51), paprika" InitialValue="USINT#125"/>
+		<VarDeclaration Name="COLOR_126" Type="USINT" Comment="#990066, rgb(153, 0, 102), fresh eggplant" InitialValue="USINT#126"/>
+		<VarDeclaration Name="COLOR_127" Type="USINT" Comment="#990099, rgb(153, 0, 153), flirt" InitialValue="USINT#127"/>
+		<VarDeclaration Name="COLOR_128" Type="USINT" Comment="#9900CC, rgb(153, 0, 204), electric violet" InitialValue="USINT#128"/>
+		<VarDeclaration Name="COLOR_129" Type="USINT" Comment="#9900FF, rgb(153, 0, 255), electric violet" InitialValue="USINT#129"/>
+		<VarDeclaration Name="COLOR_130" Type="USINT" Comment="#993300, rgb(153, 51, 0), oregon" InitialValue="USINT#130"/>
+		<VarDeclaration Name="COLOR_131" Type="USINT" Comment="#993333, rgb(153, 51, 51), stiletto" InitialValue="USINT#131"/>
+		<VarDeclaration Name="COLOR_132" Type="USINT" Comment="#993366, rgb(153, 51, 102), rouge" InitialValue="USINT#132"/>
+		<VarDeclaration Name="COLOR_133" Type="USINT" Comment="#993399, rgb(153, 51, 153), plum" InitialValue="USINT#133"/>
+		<VarDeclaration Name="COLOR_134" Type="USINT" Comment="#9933CC, rgb(153, 51, 204), purple heart" InitialValue="USINT#134"/>
+		<VarDeclaration Name="COLOR_135" Type="USINT" Comment="#9933FF, rgb(153, 51, 255), electric violet" InitialValue="USINT#135"/>
+		<VarDeclaration Name="COLOR_136" Type="USINT" Comment="#996600, rgb(153, 102, 0), chelsea gem" InitialValue="USINT#136"/>
+		<VarDeclaration Name="COLOR_137" Type="USINT" Comment="#996633, rgb(153, 102, 51), metallic sunburst" InitialValue="USINT#137"/>
+		<VarDeclaration Name="COLOR_138" Type="USINT" Comment="#996666, rgb(153, 102, 102), copper rose" InitialValue="USINT#138"/>
+		<VarDeclaration Name="COLOR_139" Type="USINT" Comment="#996699, rgb(153, 102, 153), strikemaster" InitialValue="USINT#139"/>
+		<VarDeclaration Name="COLOR_140" Type="USINT" Comment="#9966CC, rgb(153, 102, 204), amethyst" InitialValue="USINT#140"/>
+		<VarDeclaration Name="COLOR_141" Type="USINT" Comment="#9966FF, rgb(153, 102, 255), heliotrope" InitialValue="USINT#141"/>
+		<VarDeclaration Name="COLOR_142" Type="USINT" Comment="#999900, rgb(153, 153, 0), olive" InitialValue="USINT#142"/>
+		<VarDeclaration Name="COLOR_143" Type="USINT" Comment="#999933, rgb(153, 153, 51), sycamore" InitialValue="USINT#143"/>
+		<VarDeclaration Name="COLOR_144" Type="USINT" Comment="#999966, rgb(153, 153, 102), avocado" InitialValue="USINT#144"/>
+		<VarDeclaration Name="COLOR_145" Type="USINT" Comment="#999999, rgb(153, 153, 153), quick silver" InitialValue="USINT#145"/>
+		<VarDeclaration Name="COLOR_146" Type="USINT" Comment="#9999CC, rgb(153, 153, 204), blue bell" InitialValue="USINT#146"/>
+		<VarDeclaration Name="COLOR_147" Type="USINT" Comment="#9999FF, rgb(153, 153, 255), melrose" InitialValue="USINT#147"/>
+		<VarDeclaration Name="COLOR_148" Type="USINT" Comment="#99CC00, rgb(153, 204, 0), sheen green" InitialValue="USINT#148"/>
+		<VarDeclaration Name="COLOR_149" Type="USINT" Comment="#99CC33, rgb(153, 204, 51), atlantis" InitialValue="USINT#149"/>
+		<VarDeclaration Name="COLOR_150" Type="USINT" Comment="#99CC66, rgb(153, 204, 102), wild willow" InitialValue="USINT#150"/>
+		<VarDeclaration Name="COLOR_151" Type="USINT" Comment="#99CC99, rgb(153, 204, 153), de york" InitialValue="USINT#151"/>
+		<VarDeclaration Name="COLOR_152" Type="USINT" Comment="#99CCCC, rgb(153, 204, 204), sinbad" InitialValue="USINT#152"/>
+		<VarDeclaration Name="COLOR_153" Type="USINT" Comment="#99CCFF, rgb(153, 204, 255), anakiwa" InitialValue="USINT#153"/>
+		<VarDeclaration Name="COLOR_154" Type="USINT" Comment="#99FF00, rgb(153, 255, 0), chartreuse" InitialValue="USINT#154"/>
+		<VarDeclaration Name="COLOR_155" Type="USINT" Comment="#99FF33, rgb(153, 255, 51), green yellow" InitialValue="USINT#155"/>
+		<VarDeclaration Name="COLOR_156" Type="USINT" Comment="#99FF66, rgb(153, 255, 102), screamin green" InitialValue="USINT#156"/>
+		<VarDeclaration Name="COLOR_157" Type="USINT" Comment="#99FF99, rgb(153, 255, 153), mint green" InitialValue="USINT#157"/>
+		<VarDeclaration Name="COLOR_158" Type="USINT" Comment="#99FFCC, rgb(153, 255, 204), aquamarine" InitialValue="USINT#158"/>
+		<VarDeclaration Name="COLOR_159" Type="USINT" Comment="#99FFFF, rgb(153, 255, 255), winter wizard" InitialValue="USINT#159"/>
+		<VarDeclaration Name="COLOR_160" Type="USINT" Comment="#CC0000, rgb(204, 0, 0), guardsman red" InitialValue="USINT#160"/>
+		<VarDeclaration Name="COLOR_161" Type="USINT" Comment="#CC0033, rgb(204, 0, 51), monza" InitialValue="USINT#161"/>
+		<VarDeclaration Name="COLOR_162" Type="USINT" Comment="#CC0066, rgb(204, 0, 102), lipstick" InitialValue="USINT#162"/>
+		<VarDeclaration Name="COLOR_163" Type="USINT" Comment="#CC0099, rgb(204, 0, 153), hollywood cerise" InitialValue="USINT#163"/>
+		<VarDeclaration Name="COLOR_164" Type="USINT" Comment="#CC00CC, rgb(204, 0, 204), purple pizzazz" InitialValue="USINT#164"/>
+		<VarDeclaration Name="COLOR_165" Type="USINT" Comment="#CC00FF, rgb(204, 0, 255), electric violet" InitialValue="USINT#165"/>
+		<VarDeclaration Name="COLOR_166" Type="USINT" Comment="#CC3300, rgb(204, 51, 0), grenadier" InitialValue="USINT#166"/>
+		<VarDeclaration Name="COLOR_167" Type="USINT" Comment="#CC3333, rgb(204, 51, 51), persian red" InitialValue="USINT#167"/>
+		<VarDeclaration Name="COLOR_168" Type="USINT" Comment="#CC3366, rgb(204, 51, 102), jazzberry jam" InitialValue="USINT#168"/>
+		<VarDeclaration Name="COLOR_169" Type="USINT" Comment="#CC3399, rgb(204, 51, 153), medium red violet" InitialValue="USINT#169"/>
+		<VarDeclaration Name="COLOR_170" Type="USINT" Comment="#CC33CC, rgb(204, 51, 204), fuchsia pink" InitialValue="USINT#170"/>
+		<VarDeclaration Name="COLOR_171" Type="USINT" Comment="#CC33FF, rgb(204, 51, 255), heliotrope" InitialValue="USINT#171"/>
+		<VarDeclaration Name="COLOR_172" Type="USINT" Comment="#CC6600, rgb(204, 102, 0), tenn" InitialValue="USINT#172"/>
+		<VarDeclaration Name="COLOR_173" Type="USINT" Comment="#CC6633, rgb(204, 102, 51), tuscany" InitialValue="USINT#173"/>
+		<VarDeclaration Name="COLOR_174" Type="USINT" Comment="#CC6666, rgb(204, 102, 102), chestnut rose" InitialValue="USINT#174"/>
+		<VarDeclaration Name="COLOR_175" Type="USINT" Comment="#CC6699, rgb(204, 102, 153), hopbush" InitialValue="USINT#175"/>
+		<VarDeclaration Name="COLOR_176" Type="USINT" Comment="#CC66CC, rgb(204, 102, 204), fuchsia pink" InitialValue="USINT#176"/>
+		<VarDeclaration Name="COLOR_177" Type="USINT" Comment="#CC66FF, rgb(204, 102, 255), heliotrope" InitialValue="USINT#177"/>
+		<VarDeclaration Name="COLOR_178" Type="USINT" Comment="#CC9900, rgb(204, 153, 0), buddha gold" InitialValue="USINT#178"/>
+		<VarDeclaration Name="COLOR_179" Type="USINT" Comment="#CC9933, rgb(204, 153, 51), hokey pokey" InitialValue="USINT#179"/>
+		<VarDeclaration Name="COLOR_180" Type="USINT" Comment="#CC9966, rgb(204, 153, 102), antique brass" InitialValue="USINT#180"/>
+		<VarDeclaration Name="COLOR_181" Type="USINT" Comment="#CC9999, rgb(204, 153, 153), eunry" InitialValue="USINT#181"/>
+		<VarDeclaration Name="COLOR_182" Type="USINT" Comment="#CC99CC, rgb(204, 153, 204), lilac" InitialValue="USINT#182"/>
+		<VarDeclaration Name="COLOR_183" Type="USINT" Comment="#CC99FF, rgb(204, 153, 255), mauve" InitialValue="USINT#183"/>
+		<VarDeclaration Name="COLOR_184" Type="USINT" Comment="#CCCC00, rgb(204, 204, 0), rio grande" InitialValue="USINT#184"/>
+		<VarDeclaration Name="COLOR_185" Type="USINT" Comment="#CCCC33, rgb(204, 204, 51), earls green" InitialValue="USINT#185"/>
+		<VarDeclaration Name="COLOR_186" Type="USINT" Comment="#CCCC66, rgb(204, 204, 102), laser" InitialValue="USINT#186"/>
+		<VarDeclaration Name="COLOR_187" Type="USINT" Comment="#CCCC99, rgb(204, 204, 153), pine glade" InitialValue="USINT#187"/>
+		<VarDeclaration Name="COLOR_188" Type="USINT" Comment="#CCCCCC, rgb(204, 204, 204), silver, Silber" InitialValue="USINT#188"/>
+		<VarDeclaration Name="COLOR_189" Type="USINT" Comment="#CCCCFF, rgb(204, 204, 255), periwinkle" InitialValue="USINT#189"/>
+		<VarDeclaration Name="COLOR_190" Type="USINT" Comment="#CCFF00, rgb(204, 255, 0), electric lime" InitialValue="USINT#190"/>
+		<VarDeclaration Name="COLOR_191" Type="USINT" Comment="#CCFF33, rgb(204, 255, 51), electric lime" InitialValue="USINT#191"/>
+		<VarDeclaration Name="COLOR_192" Type="USINT" Comment="#CCFF66, rgb(204, 255, 102), canary" InitialValue="USINT#192"/>
+		<VarDeclaration Name="COLOR_193" Type="USINT" Comment="#CCFF99, rgb(204, 255, 153), reef" InitialValue="USINT#193"/>
+		<VarDeclaration Name="COLOR_194" Type="USINT" Comment="#CCFFCC, rgb(204, 255, 204), snowy mint" InitialValue="USINT#194"/>
+		<VarDeclaration Name="COLOR_195" Type="USINT" Comment="#CCFFFF, rgb(204, 255, 255), onahau" InitialValue="USINT#195"/>
+		<VarDeclaration Name="COLOR_196" Type="USINT" Comment="#FF0000, rgb(255, 0, 0), red, Rot" InitialValue="USINT#196"/>
+		<VarDeclaration Name="COLOR_197" Type="USINT" Comment="#FF0033, rgb(255, 0, 51), torch red" InitialValue="USINT#197"/>
+		<VarDeclaration Name="COLOR_198" Type="USINT" Comment="#FF0066, rgb(255, 0, 102), winter sky" InitialValue="USINT#198"/>
+		<VarDeclaration Name="COLOR_199" Type="USINT" Comment="#FF0099, rgb(255, 0, 153), hollywood cerise" InitialValue="USINT#199"/>
+		<VarDeclaration Name="COLOR_200" Type="USINT" Comment="#FF00CC, rgb(255, 0, 204), purple pizzazz" InitialValue="USINT#200"/>
+		<VarDeclaration Name="COLOR_201" Type="USINT" Comment="#FF00FF, rgb(255, 0, 255), magenta / fuchsia" InitialValue="USINT#201"/>
+		<VarDeclaration Name="COLOR_202" Type="USINT" Comment="#FF3300, rgb(255, 51, 0), scarlet" InitialValue="USINT#202"/>
+		<VarDeclaration Name="COLOR_203" Type="USINT" Comment="#FF3333, rgb(255, 51, 51), red orange" InitialValue="USINT#203"/>
+		<VarDeclaration Name="COLOR_204" Type="USINT" Comment="#FF3366, rgb(255, 51, 102), radical red" InitialValue="USINT#204"/>
+		<VarDeclaration Name="COLOR_205" Type="USINT" Comment="#FF3399, rgb(255, 51, 153), wild strawberry" InitialValue="USINT#205"/>
+		<VarDeclaration Name="COLOR_206" Type="USINT" Comment="#FF33CC, rgb(255, 51, 204), razzle dazzle rose" InitialValue="USINT#206"/>
+		<VarDeclaration Name="COLOR_207" Type="USINT" Comment="#FF33FF, rgb(255, 51, 255), purple pizzazz" InitialValue="USINT#207"/>
+		<VarDeclaration Name="COLOR_208" Type="USINT" Comment="#FF6600, rgb(255, 102, 0), blaze orange" InitialValue="USINT#208"/>
+		<VarDeclaration Name="COLOR_209" Type="USINT" Comment="#FF6633, rgb(255, 102, 51), outrageous orange" InitialValue="USINT#209"/>
+		<VarDeclaration Name="COLOR_210" Type="USINT" Comment="#FF6666, rgb(255, 102, 102), bittersweet" InitialValue="USINT#210"/>
+		<VarDeclaration Name="COLOR_211" Type="USINT" Comment="#FF6699, rgb(255, 102, 153), strawberry" InitialValue="USINT#211"/>
+		<VarDeclaration Name="COLOR_212" Type="USINT" Comment="#FF66CC, rgb(255, 102, 204), hot pink" InitialValue="USINT#212"/>
+		<VarDeclaration Name="COLOR_213" Type="USINT" Comment="#FF66FF, rgb(255, 102, 255), pink flamingo" InitialValue="USINT#213"/>
+		<VarDeclaration Name="COLOR_214" Type="USINT" Comment="#FF9900, rgb(255, 153, 0), orange peel" InitialValue="USINT#214"/>
+		<VarDeclaration Name="COLOR_215" Type="USINT" Comment="#FF9933, rgb(255, 153, 51), neon carrot" InitialValue="USINT#215"/>
+		<VarDeclaration Name="COLOR_216" Type="USINT" Comment="#FF9966, rgb(255, 153, 102), atomic tangerine" InitialValue="USINT#216"/>
+		<VarDeclaration Name="COLOR_217" Type="USINT" Comment="#FF9999, rgb(255, 153, 153), mona lisa" InitialValue="USINT#217"/>
+		<VarDeclaration Name="COLOR_218" Type="USINT" Comment="#FF99CC, rgb(255, 153, 204), carnation pink" InitialValue="USINT#218"/>
+		<VarDeclaration Name="COLOR_219" Type="USINT" Comment="#FF99FF, rgb(255, 153, 255), lavender rose" InitialValue="USINT#219"/>
+		<VarDeclaration Name="COLOR_220" Type="USINT" Comment="#FFCC00, rgb(255, 204, 0), supernova" InitialValue="USINT#220"/>
+		<VarDeclaration Name="COLOR_221" Type="USINT" Comment="#FFCC33, rgb(255, 204, 51), sunglow" InitialValue="USINT#221"/>
+		<VarDeclaration Name="COLOR_222" Type="USINT" Comment="#FFCC66, rgb(255, 204, 102), golden tainoi" InitialValue="USINT#222"/>
+		<VarDeclaration Name="COLOR_223" Type="USINT" Comment="#FFCC99, rgb(255, 204, 153), peach orange" InitialValue="USINT#223"/>
+		<VarDeclaration Name="COLOR_224" Type="USINT" Comment="#FFCCCC, rgb(255, 204, 204), your pink" InitialValue="USINT#224"/>
+		<VarDeclaration Name="COLOR_225" Type="USINT" Comment="#FFCCFF, rgb(255, 204, 255), bubble gum" InitialValue="USINT#225"/>
+		<VarDeclaration Name="COLOR_226" Type="USINT" Comment="#FFFF00, rgb(255, 255, 0), yellow, Gelb" InitialValue="USINT#226"/>
+		<VarDeclaration Name="COLOR_227" Type="USINT" Comment="#FFFF33, rgb(255, 255, 51), daffodil" InitialValue="USINT#227"/>
+		<VarDeclaration Name="COLOR_228" Type="USINT" Comment="#FFFF66, rgb(255, 255, 102), laser lemon" InitialValue="USINT#228"/>
+		<VarDeclaration Name="COLOR_229" Type="USINT" Comment="#FFFF99, rgb(255, 255, 153), pale canary" InitialValue="USINT#229"/>
+		<VarDeclaration Name="COLOR_230" Type="USINT" Comment="#FFFFCC, rgb(255, 255, 204), cream" InitialValue="USINT#230"/>
+		<VarDeclaration Name="COLOR_231" Type="USINT" Comment="#FFFFFF, rgb(255, 255, 255), white, Weiß" InitialValue="USINT#231"/>
+		<VarDeclaration Name="COLOR_232" Type="USINT" Comment="#808080, rgb(128, 128, 128), Proprietary" InitialValue="USINT#232"/>
+		<VarDeclaration Name="COLOR_233" Type="USINT" Comment="#808080, rgb(128, 128, 128), Proprietary" InitialValue="USINT#233"/>
+		<VarDeclaration Name="COLOR_234" Type="USINT" Comment="#808080, rgb(128, 128, 128), Proprietary" InitialValue="USINT#234"/>
+		<VarDeclaration Name="COLOR_235" Type="USINT" Comment="#808080, rgb(128, 128, 128), Proprietary" InitialValue="USINT#235"/>
+		<VarDeclaration Name="COLOR_236" Type="USINT" Comment="#808080, rgb(128, 128, 128), Proprietary" InitialValue="USINT#236"/>
+		<VarDeclaration Name="COLOR_237" Type="USINT" Comment="#808080, rgb(128, 128, 128), Proprietary" InitialValue="USINT#237"/>
+		<VarDeclaration Name="COLOR_238" Type="USINT" Comment="#808080, rgb(128, 128, 128), Proprietary" InitialValue="USINT#238"/>
+		<VarDeclaration Name="COLOR_239" Type="USINT" Comment="#808080, rgb(128, 128, 128), Proprietary" InitialValue="USINT#239"/>
+		<VarDeclaration Name="COLOR_240" Type="USINT" Comment="#808080, rgb(128, 128, 128), Proprietary" InitialValue="USINT#240"/>
+		<VarDeclaration Name="COLOR_241" Type="USINT" Comment="#808080, rgb(128, 128, 128), Proprietary" InitialValue="USINT#241"/>
+		<VarDeclaration Name="COLOR_242" Type="USINT" Comment="#808080, rgb(128, 128, 128), Proprietary" InitialValue="USINT#242"/>
+		<VarDeclaration Name="COLOR_243" Type="USINT" Comment="#808080, rgb(128, 128, 128), Proprietary" InitialValue="USINT#243"/>
+		<VarDeclaration Name="COLOR_244" Type="USINT" Comment="#808080, rgb(128, 128, 128), Proprietary" InitialValue="USINT#244"/>
+		<VarDeclaration Name="COLOR_245" Type="USINT" Comment="#808080, rgb(128, 128, 128), Proprietary" InitialValue="USINT#245"/>
+		<VarDeclaration Name="COLOR_246" Type="USINT" Comment="#808080, rgb(128, 128, 128), Proprietary" InitialValue="USINT#246"/>
+		<VarDeclaration Name="COLOR_247" Type="USINT" Comment="#808080, rgb(128, 128, 128), Proprietary" InitialValue="USINT#247"/>
+		<VarDeclaration Name="COLOR_248" Type="USINT" Comment="#808080, rgb(128, 128, 128), Proprietary" InitialValue="USINT#248"/>
+		<VarDeclaration Name="COLOR_249" Type="USINT" Comment="#808080, rgb(128, 128, 128), Proprietary" InitialValue="USINT#249"/>
+		<VarDeclaration Name="COLOR_250" Type="USINT" Comment="#808080, rgb(128, 128, 128), Proprietary" InitialValue="USINT#250"/>
+		<VarDeclaration Name="COLOR_251" Type="USINT" Comment="#808080, rgb(128, 128, 128), Proprietary" InitialValue="USINT#251"/>
+		<VarDeclaration Name="COLOR_252" Type="USINT" Comment="#808080, rgb(128, 128, 128), Proprietary" InitialValue="USINT#252"/>
+		<VarDeclaration Name="COLOR_253" Type="USINT" Comment="#808080, rgb(128, 128, 128), Proprietary" InitialValue="USINT#253"/>
+		<VarDeclaration Name="COLOR_254" Type="USINT" Comment="#808080, rgb(128, 128, 128), Proprietary" InitialValue="USINT#254"/>
+		<VarDeclaration Name="COLOR_255" Type="USINT" Comment="#808080, rgb(128, 128, 128), Proprietary" InitialValue="USINT#255"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE isobus::UT::Q::const;
+
+GLOBALCONSTANTS all_colours
+	VAR_GLOBAL CONSTANT
+		COLOR_0 : USINT := USINT#0; // #000000, rgb(0, 0, 0), black, Schwarz
+		COLOR_1 : USINT := USINT#1; // #FFFFFF, rgb(255, 255, 255), white, Weiß
+		COLOR_2 : USINT := USINT#2; // #009900, rgb(0, 153, 0), japanese laurel
+		COLOR_3 : USINT := USINT#3; // #009999, rgb(0, 153, 153), persian green
+		COLOR_4 : USINT := USINT#4; // #990000, rgb(153, 0, 0), red berry
+		COLOR_5 : USINT := USINT#5; // #990099, rgb(153, 0, 153), flirt
+		COLOR_6 : USINT := USINT#6; // #999900, rgb(153, 153, 0), olive
+		COLOR_7 : USINT := USINT#7; // #CCCCCC, rgb(204, 204, 204), silver, Silber
+		COLOR_8 : USINT := USINT#8; // #999999, rgb(153, 153, 153), quick silver
+		COLOR_9 : USINT := USINT#9; // #0000FF, rgb(0, 0, 255), blue, Blau
+		COLOR_10 : USINT := USINT#10; // #00FF00, rgb(0, 255, 0), green, Grün
+		COLOR_11 : USINT := USINT#11; // #00FFFF, rgb(0, 255, 255), cyan / aqua, Türkis
+		COLOR_12 : USINT := USINT#12; // #FF0000, rgb(255, 0, 0), red, Rot
+		COLOR_13 : USINT := USINT#13; // #FF00FF, rgb(255, 0, 255), magenta / fuchsia, Magenta
+		COLOR_14 : USINT := USINT#14; // #FFFF00, rgb(255, 255, 0), yellow, Gelb
+		COLOR_15 : USINT := USINT#15; // #000099, rgb(0, 0, 153), blue gray
+		COLOR_16 : USINT := USINT#16; // #000000, rgb(0, 0, 0), black, Schwarz
+		COLOR_17 : USINT := USINT#17; // #000033, rgb(0, 0, 51), stratos
+		COLOR_18 : USINT := USINT#18; // #000066, rgb(0, 0, 102), fuzzy wuzzy
+		COLOR_19 : USINT := USINT#19; // #000099, rgb(0, 0, 153), blue gray
+		COLOR_20 : USINT := USINT#20; // #0000CC, rgb(0, 0, 204), dark blue
+		COLOR_21 : USINT := USINT#21; // #0000FF, rgb(0, 0, 255), blue, Blau
+		COLOR_22 : USINT := USINT#22; // #003300, rgb(0, 51, 0), deep fir
+		COLOR_23 : USINT := USINT#23; // #003333, rgb(0, 51, 51), deep teal
+		COLOR_24 : USINT := USINT#24; // #003366, rgb(0, 51, 102), midnight blue
+		COLOR_25 : USINT := USINT#25; // #003399, rgb(0, 51, 153), smalt
+		COLOR_26 : USINT := USINT#26; // #0033CC, rgb(0, 51, 204), absolute zero
+		COLOR_27 : USINT := USINT#27; // #0033FF, rgb(0, 51, 255), canary
+		COLOR_28 : USINT := USINT#28; // #006600, rgb(0, 102, 0), camarone
+		COLOR_29 : USINT := USINT#29; // #006633, rgb(0, 102, 51), fun green
+		COLOR_30 : USINT := USINT#30; // #006666, rgb(0, 102, 102), blue stone
+		COLOR_31 : USINT := USINT#31; // #006699, rgb(0, 102, 153), bahama blue
+		COLOR_32 : USINT := USINT#32; // #0066CC, rgb(0, 102, 204), science blue
+		COLOR_33 : USINT := USINT#33; // #0066FF, rgb(0, 102, 255), blue ribbon
+		COLOR_34 : USINT := USINT#34; // #009900, rgb(0, 153, 0), japanese laurel
+		COLOR_35 : USINT := USINT#35; // #009933, rgb(0, 153, 51), fun green
+		COLOR_36 : USINT := USINT#36; // #009966, rgb(0, 153, 102), green haze
+		COLOR_37 : USINT := USINT#37; // #009999, rgb(0, 153, 153), persian green
+		COLOR_38 : USINT := USINT#38; // #0099CC, rgb(0, 153, 204), pacific blue
+		COLOR_39 : USINT := USINT#39; // #0099FF, rgb(0, 153, 255), azure radiance
+		COLOR_40 : USINT := USINT#40; // #00CC00, rgb(0, 204, 0), green, Grün
+		COLOR_41 : USINT := USINT#41; // #00CC33, rgb(0, 204, 51), malachite
+		COLOR_42 : USINT := USINT#42; // #00CC66, rgb(0, 204, 102), jade
+		COLOR_43 : USINT := USINT#43; // #00CC99, rgb(0, 204, 153), caribbean green
+		COLOR_44 : USINT := USINT#44; // #00CCCC, rgb(0, 204, 204), robin's egg blue
+		COLOR_45 : USINT := USINT#45; // #00CCFF, rgb(0, 204, 255), cyan / aqua
+		COLOR_46 : USINT := USINT#46; // #00FF00, rgb(0, 255, 0), green, Grün
+		COLOR_47 : USINT := USINT#47; // #00FF33, rgb(0, 255, 51), green
+		COLOR_48 : USINT := USINT#48; // #00FF66, rgb(0, 255, 102), spring green
+		COLOR_49 : USINT := USINT#49; // #00FF99, rgb(0, 255, 153), spring green
+		COLOR_50 : USINT := USINT#50; // #00FFCC, rgb(0, 255, 204), bright turquoise
+		COLOR_51 : USINT := USINT#51; // #00FFFF, rgb(0, 255, 255), cyan / aqua, Türkis
+		COLOR_52 : USINT := USINT#52; // #330000, rgb(51, 0, 0), temptress
+		COLOR_53 : USINT := USINT#53; // #330033, rgb(51, 0, 51), barossa
+		COLOR_54 : USINT := USINT#54; // #330066, rgb(51, 0, 102), christalle
+		COLOR_55 : USINT := USINT#55; // #330099, rgb(51, 0, 153), pigment indigo
+		COLOR_56 : USINT := USINT#56; // #3300CC, rgb(51, 0, 204), dark blue
+		COLOR_57 : USINT := USINT#57; // #3300FF, rgb(51, 0, 255), blue
+		COLOR_58 : USINT := USINT#58; // #333300, rgb(51, 51, 0), madras
+		COLOR_59 : USINT := USINT#59; // #333333, rgb(51, 51, 51), mine shaft
+		COLOR_60 : USINT := USINT#60; // #333366, rgb(51, 51, 102), rhino
+		COLOR_61 : USINT := USINT#61; // #333399, rgb(51, 51, 153), cosmic cobalt
+		COLOR_62 : USINT := USINT#62; // #3333CC, rgb(51, 51, 204), governor bay
+		COLOR_63 : USINT := USINT#63; // #3333FF, rgb(51, 51, 255), blue
+		COLOR_64 : USINT := USINT#64; // #336600, rgb(51, 102, 0), verdun green
+		COLOR_65 : USINT := USINT#65; // #336633, rgb(51, 102, 51), killarney
+		COLOR_66 : USINT := USINT#66; // #336666, rgb(51, 102, 102), casal
+		COLOR_67 : USINT := USINT#67; // #336699, rgb(51, 102, 153), bdazzled blue
+		COLOR_68 : USINT := USINT#68; // #3366CC, rgb(51, 102, 204), denim
+		COLOR_69 : USINT := USINT#69; // #3366FF, rgb(51, 102, 255), blue
+		COLOR_70 : USINT := USINT#70; // #339900, rgb(51, 153, 0), limeade
+		COLOR_71 : USINT := USINT#71; // #339933, rgb(51, 153, 51), apple
+		COLOR_72 : USINT := USINT#72; // #339966, rgb(51, 153, 102), illuminating emerald
+		COLOR_73 : USINT := USINT#73; // #339999, rgb(51, 153, 153), lochinvar
+		COLOR_74 : USINT := USINT#74; // #3399CC, rgb(51, 153, 204), moonstone
+		COLOR_75 : USINT := USINT#75; // #3399FF, rgb(51, 153, 255), dodger blue
+		COLOR_76 : USINT := USINT#76; // #33CC00, rgb(51, 204, 0), harlequin
+		COLOR_77 : USINT := USINT#77; // #33CC33, rgb(51, 204, 51), apple
+		COLOR_78 : USINT := USINT#78; // #33CC66, rgb(51, 204, 102), emerald
+		COLOR_79 : USINT := USINT#79; // #33CC99, rgb(51, 204, 153), shamrock
+		COLOR_80 : USINT := USINT#80; // #33CCCC, rgb(51, 204, 204), turquoise pearl
+		COLOR_81 : USINT := USINT#81; // #33CCFF, rgb(51, 204, 255), dodger blue
+		COLOR_82 : USINT := USINT#82; // #33FF00, rgb(51, 255, 0), harlequin
+		COLOR_83 : USINT := USINT#83; // #33FF33, rgb(51, 255, 51), harlequin
+		COLOR_84 : USINT := USINT#84; // #33FF66, rgb(51, 255, 102), screamin' green
+		COLOR_85 : USINT := USINT#85; // #33FF99, rgb(51, 255, 153), spring green
+		COLOR_86 : USINT := USINT#86; // #33FFCC, rgb(51, 255, 204), bright turquoise
+		COLOR_87 : USINT := USINT#87; // #33FFFF, rgb(51, 255, 255), cyan / aqua
+		COLOR_88 : USINT := USINT#88; // #660000, rgb(102, 0, 0), lonestar
+		COLOR_89 : USINT := USINT#89; // #660033, rgb(102, 0, 51), tyrian purple
+		COLOR_90 : USINT := USINT#90; // #660066, rgb(102, 0, 102), pompadour
+		COLOR_91 : USINT := USINT#91; // #660099, rgb(102, 0, 153), purple
+		COLOR_92 : USINT := USINT#92; // #6600CC, rgb(102, 0, 204), purple
+		COLOR_93 : USINT := USINT#93; // #6600FF, rgb(102, 0, 255), electric violet
+		COLOR_94 : USINT := USINT#94; // #663300, rgb(102, 51, 0), nutmeg wood finish
+		COLOR_95 : USINT := USINT#95; // #663333, rgb(102, 51, 51), buccaneer
+		COLOR_96 : USINT := USINT#96; // #663366, rgb(102, 51, 102), cosmic
+		COLOR_97 : USINT := USINT#97; // #663399, rgb(102, 51, 153), royal purple
+		COLOR_98 : USINT := USINT#98; // #6633CC, rgb(102, 51, 204), purple heart
+		COLOR_99 : USINT := USINT#99; // #6633FF, rgb(102, 51, 255), electric violet
+		COLOR_100 : USINT := USINT#100; // #666600, rgb(102, 102, 0), verdun green
+		COLOR_101 : USINT := USINT#101; // #666633, rgb(102, 102, 51), costa del sol
+		COLOR_102 : USINT := USINT#102; // #666666, rgb(102, 102, 102), granite gray
+		COLOR_103 : USINT := USINT#103; // #666699, rgb(102, 102, 153), amethyst
+		COLOR_104 : USINT := USINT#104; // #6666CC, rgb(102, 102, 204), indigo
+		COLOR_105 : USINT := USINT#105; // #6666FF, rgb(102, 102, 255), blueberry
+		COLOR_106 : USINT := USINT#106; // #669900, rgb(102, 153, 0), limeade
+		COLOR_107 : USINT := USINT#107; // #669933, rgb(102, 153, 51), apple
+		COLOR_108 : USINT := USINT#108; // #669966, rgb(102, 153, 102), highland
+		COLOR_109 : USINT := USINT#109; // #669999, rgb(102, 153, 153), patina
+		COLOR_110 : USINT := USINT#110; // #6699CC, rgb(102, 153, 204), danube
+		COLOR_111 : USINT := USINT#111; // #6699FF, rgb(102, 153, 255), blueberry
+		COLOR_112 : USINT := USINT#112; // #66CC00, rgb(102, 204, 0), alien armpit
+		COLOR_113 : USINT := USINT#113; // #66CC33, rgb(102, 204, 51), atlantis
+		COLOR_114 : USINT := USINT#114; // #66CC66, rgb(102, 204, 102), mantis
+		COLOR_115 : USINT := USINT#115; // #66CC99, rgb(102, 204, 153), caribbean green pearl
+		COLOR_116 : USINT := USINT#116; // #66CCCC, rgb(102, 204, 204), downy
+		COLOR_117 : USINT := USINT#117; // #66CCFF, rgb(102, 204, 255), malibu
+		COLOR_118 : USINT := USINT#118; // #66FF00, rgb(102, 255, 0), bright green
+		COLOR_119 : USINT := USINT#119; // #66FF33, rgb(102, 255, 51), spring frost
+		COLOR_120 : USINT := USINT#120; // #66FF66, rgb(102, 255, 102), screamin' green
+		COLOR_121 : USINT := USINT#121; // #66FF99, rgb(102, 255, 153), screamin green
+		COLOR_122 : USINT := USINT#122; // #66FFCC, rgb(102, 255, 204), aquamarine
+		COLOR_123 : USINT := USINT#123; // #66FFFF, rgb(102, 255, 255), aquamarine
+		COLOR_124 : USINT := USINT#124; // #990000, rgb(153, 0, 0), red berry
+		COLOR_125 : USINT := USINT#125; // #990033, rgb(153, 0, 51), paprika
+		COLOR_126 : USINT := USINT#126; // #990066, rgb(153, 0, 102), fresh eggplant
+		COLOR_127 : USINT := USINT#127; // #990099, rgb(153, 0, 153), flirt
+		COLOR_128 : USINT := USINT#128; // #9900CC, rgb(153, 0, 204), electric violet
+		COLOR_129 : USINT := USINT#129; // #9900FF, rgb(153, 0, 255), electric violet
+		COLOR_130 : USINT := USINT#130; // #993300, rgb(153, 51, 0), oregon
+		COLOR_131 : USINT := USINT#131; // #993333, rgb(153, 51, 51), stiletto
+		COLOR_132 : USINT := USINT#132; // #993366, rgb(153, 51, 102), rouge
+		COLOR_133 : USINT := USINT#133; // #993399, rgb(153, 51, 153), plum
+		COLOR_134 : USINT := USINT#134; // #9933CC, rgb(153, 51, 204), purple heart
+		COLOR_135 : USINT := USINT#135; // #9933FF, rgb(153, 51, 255), electric violet
+		COLOR_136 : USINT := USINT#136; // #996600, rgb(153, 102, 0), chelsea gem
+		COLOR_137 : USINT := USINT#137; // #996633, rgb(153, 102, 51), metallic sunburst
+		COLOR_138 : USINT := USINT#138; // #996666, rgb(153, 102, 102), copper rose
+		COLOR_139 : USINT := USINT#139; // #996699, rgb(153, 102, 153), strikemaster
+		COLOR_140 : USINT := USINT#140; // #9966CC, rgb(153, 102, 204), amethyst
+		COLOR_141 : USINT := USINT#141; // #9966FF, rgb(153, 102, 255), heliotrope
+		COLOR_142 : USINT := USINT#142; // #999900, rgb(153, 153, 0), olive
+		COLOR_143 : USINT := USINT#143; // #999933, rgb(153, 153, 51), sycamore
+		COLOR_144 : USINT := USINT#144; // #999966, rgb(153, 153, 102), avocado
+		COLOR_145 : USINT := USINT#145; // #999999, rgb(153, 153, 153), quick silver
+		COLOR_146 : USINT := USINT#146; // #9999CC, rgb(153, 153, 204), blue bell
+		COLOR_147 : USINT := USINT#147; // #9999FF, rgb(153, 153, 255), melrose
+		COLOR_148 : USINT := USINT#148; // #99CC00, rgb(153, 204, 0), sheen green
+		COLOR_149 : USINT := USINT#149; // #99CC33, rgb(153, 204, 51), atlantis
+		COLOR_150 : USINT := USINT#150; // #99CC66, rgb(153, 204, 102), wild willow
+		COLOR_151 : USINT := USINT#151; // #99CC99, rgb(153, 204, 153), de york
+		COLOR_152 : USINT := USINT#152; // #99CCCC, rgb(153, 204, 204), sinbad
+		COLOR_153 : USINT := USINT#153; // #99CCFF, rgb(153, 204, 255), anakiwa
+		COLOR_154 : USINT := USINT#154; // #99FF00, rgb(153, 255, 0), chartreuse
+		COLOR_155 : USINT := USINT#155; // #99FF33, rgb(153, 255, 51), green yellow
+		COLOR_156 : USINT := USINT#156; // #99FF66, rgb(153, 255, 102), screamin green
+		COLOR_157 : USINT := USINT#157; // #99FF99, rgb(153, 255, 153), mint green
+		COLOR_158 : USINT := USINT#158; // #99FFCC, rgb(153, 255, 204), aquamarine
+		COLOR_159 : USINT := USINT#159; // #99FFFF, rgb(153, 255, 255), winter wizard
+		COLOR_160 : USINT := USINT#160; // #CC0000, rgb(204, 0, 0), guardsman red
+		COLOR_161 : USINT := USINT#161; // #CC0033, rgb(204, 0, 51), monza
+		COLOR_162 : USINT := USINT#162; // #CC0066, rgb(204, 0, 102), lipstick
+		COLOR_163 : USINT := USINT#163; // #CC0099, rgb(204, 0, 153), hollywood cerise
+		COLOR_164 : USINT := USINT#164; // #CC00CC, rgb(204, 0, 204), purple pizzazz
+		COLOR_165 : USINT := USINT#165; // #CC00FF, rgb(204, 0, 255), electric violet
+		COLOR_166 : USINT := USINT#166; // #CC3300, rgb(204, 51, 0), grenadier
+		COLOR_167 : USINT := USINT#167; // #CC3333, rgb(204, 51, 51), persian red
+		COLOR_168 : USINT := USINT#168; // #CC3366, rgb(204, 51, 102), jazzberry jam
+		COLOR_169 : USINT := USINT#169; // #CC3399, rgb(204, 51, 153), medium red violet
+		COLOR_170 : USINT := USINT#170; // #CC33CC, rgb(204, 51, 204), fuchsia pink
+		COLOR_171 : USINT := USINT#171; // #CC33FF, rgb(204, 51, 255), heliotrope
+		COLOR_172 : USINT := USINT#172; // #CC6600, rgb(204, 102, 0), tenn
+		COLOR_173 : USINT := USINT#173; // #CC6633, rgb(204, 102, 51), tuscany
+		COLOR_174 : USINT := USINT#174; // #CC6666, rgb(204, 102, 102), chestnut rose
+		COLOR_175 : USINT := USINT#175; // #CC6699, rgb(204, 102, 153), hopbush
+		COLOR_176 : USINT := USINT#176; // #CC66CC, rgb(204, 102, 204), fuchsia pink
+		COLOR_177 : USINT := USINT#177; // #CC66FF, rgb(204, 102, 255), heliotrope
+		COLOR_178 : USINT := USINT#178; // #CC9900, rgb(204, 153, 0), buddha gold
+		COLOR_179 : USINT := USINT#179; // #CC9933, rgb(204, 153, 51), hokey pokey
+		COLOR_180 : USINT := USINT#180; // #CC9966, rgb(204, 153, 102), antique brass
+		COLOR_181 : USINT := USINT#181; // #CC9999, rgb(204, 153, 153), eunry
+		COLOR_182 : USINT := USINT#182; // #CC99CC, rgb(204, 153, 204), lilac
+		COLOR_183 : USINT := USINT#183; // #CC99FF, rgb(204, 153, 255), mauve
+		COLOR_184 : USINT := USINT#184; // #CCCC00, rgb(204, 204, 0), rio grande
+		COLOR_185 : USINT := USINT#185; // #CCCC33, rgb(204, 204, 51), earls green
+		COLOR_186 : USINT := USINT#186; // #CCCC66, rgb(204, 204, 102), laser
+		COLOR_187 : USINT := USINT#187; // #CCCC99, rgb(204, 204, 153), pine glade
+		COLOR_188 : USINT := USINT#188; // #CCCCCC, rgb(204, 204, 204), silver, Silber
+		COLOR_189 : USINT := USINT#189; // #CCCCFF, rgb(204, 204, 255), periwinkle
+		COLOR_190 : USINT := USINT#190; // #CCFF00, rgb(204, 255, 0), electric lime
+		COLOR_191 : USINT := USINT#191; // #CCFF33, rgb(204, 255, 51), electric lime
+		COLOR_192 : USINT := USINT#192; // #CCFF66, rgb(204, 255, 102), canary
+		COLOR_193 : USINT := USINT#193; // #CCFF99, rgb(204, 255, 153), reef
+		COLOR_194 : USINT := USINT#194; // #CCFFCC, rgb(204, 255, 204), snowy mint
+		COLOR_195 : USINT := USINT#195; // #CCFFFF, rgb(204, 255, 255), onahau
+		COLOR_196 : USINT := USINT#196; // #FF0000, rgb(255, 0, 0), red, Rot
+		COLOR_197 : USINT := USINT#197; // #FF0033, rgb(255, 0, 51), torch red
+		COLOR_198 : USINT := USINT#198; // #FF0066, rgb(255, 0, 102), winter sky
+		COLOR_199 : USINT := USINT#199; // #FF0099, rgb(255, 0, 153), hollywood cerise
+		COLOR_200 : USINT := USINT#200; // #FF00CC, rgb(255, 0, 204), purple pizzazz
+		COLOR_201 : USINT := USINT#201; // #FF00FF, rgb(255, 0, 255), magenta / fuchsia
+		COLOR_202 : USINT := USINT#202; // #FF3300, rgb(255, 51, 0), scarlet
+		COLOR_203 : USINT := USINT#203; // #FF3333, rgb(255, 51, 51), red orange
+		COLOR_204 : USINT := USINT#204; // #FF3366, rgb(255, 51, 102), radical red
+		COLOR_205 : USINT := USINT#205; // #FF3399, rgb(255, 51, 153), wild strawberry
+		COLOR_206 : USINT := USINT#206; // #FF33CC, rgb(255, 51, 204), razzle dazzle rose
+		COLOR_207 : USINT := USINT#207; // #FF33FF, rgb(255, 51, 255), purple pizzazz
+		COLOR_208 : USINT := USINT#208; // #FF6600, rgb(255, 102, 0), blaze orange
+		COLOR_209 : USINT := USINT#209; // #FF6633, rgb(255, 102, 51), outrageous orange
+		COLOR_210 : USINT := USINT#210; // #FF6666, rgb(255, 102, 102), bittersweet
+		COLOR_211 : USINT := USINT#211; // #FF6699, rgb(255, 102, 153), strawberry
+		COLOR_212 : USINT := USINT#212; // #FF66CC, rgb(255, 102, 204), hot pink
+		COLOR_213 : USINT := USINT#213; // #FF66FF, rgb(255, 102, 255), pink flamingo
+		COLOR_214 : USINT := USINT#214; // #FF9900, rgb(255, 153, 0), orange peel
+		COLOR_215 : USINT := USINT#215; // #FF9933, rgb(255, 153, 51), neon carrot
+		COLOR_216 : USINT := USINT#216; // #FF9966, rgb(255, 153, 102), atomic tangerine
+		COLOR_217 : USINT := USINT#217; // #FF9999, rgb(255, 153, 153), mona lisa
+		COLOR_218 : USINT := USINT#218; // #FF99CC, rgb(255, 153, 204), carnation pink
+		COLOR_219 : USINT := USINT#219; // #FF99FF, rgb(255, 153, 255), lavender rose
+		COLOR_220 : USINT := USINT#220; // #FFCC00, rgb(255, 204, 0), supernova
+		COLOR_221 : USINT := USINT#221; // #FFCC33, rgb(255, 204, 51), sunglow
+		COLOR_222 : USINT := USINT#222; // #FFCC66, rgb(255, 204, 102), golden tainoi
+		COLOR_223 : USINT := USINT#223; // #FFCC99, rgb(255, 204, 153), peach orange
+		COLOR_224 : USINT := USINT#224; // #FFCCCC, rgb(255, 204, 204), your pink
+		COLOR_225 : USINT := USINT#225; // #FFCCFF, rgb(255, 204, 255), bubble gum
+		COLOR_226 : USINT := USINT#226; // #FFFF00, rgb(255, 255, 0), yellow, Gelb
+		COLOR_227 : USINT := USINT#227; // #FFFF33, rgb(255, 255, 51), daffodil
+		COLOR_228 : USINT := USINT#228; // #FFFF66, rgb(255, 255, 102), laser lemon
+		COLOR_229 : USINT := USINT#229; // #FFFF99, rgb(255, 255, 153), pale canary
+		COLOR_230 : USINT := USINT#230; // #FFFFCC, rgb(255, 255, 204), cream
+		COLOR_231 : USINT := USINT#231; // #FFFFFF, rgb(255, 255, 255), white, Weiß
+		(* Colors 232-255 reserved for manufacturer proprietary use per ISOBUS standard *)
+		COLOR_232 : USINT := USINT#232; // #808080, rgb(128, 128, 128), Proprietary
+		COLOR_233 : USINT := USINT#233; // #808080, rgb(128, 128, 128), Proprietary
+		COLOR_234 : USINT := USINT#234; // #808080, rgb(128, 128, 128), Proprietary
+		COLOR_235 : USINT := USINT#235; // #808080, rgb(128, 128, 128), Proprietary
+		COLOR_236 : USINT := USINT#236; // #808080, rgb(128, 128, 128), Proprietary
+		COLOR_237 : USINT := USINT#237; // #808080, rgb(128, 128, 128), Proprietary
+		COLOR_238 : USINT := USINT#238; // #808080, rgb(128, 128, 128), Proprietary
+		COLOR_239 : USINT := USINT#239; // #808080, rgb(128, 128, 128), Proprietary
+		COLOR_240 : USINT := USINT#240; // #808080, rgb(128, 128, 128), Proprietary
+		COLOR_241 : USINT := USINT#241; // #808080, rgb(128, 128, 128), Proprietary
+		COLOR_242 : USINT := USINT#242; // #808080, rgb(128, 128, 128), Proprietary
+		COLOR_243 : USINT := USINT#243; // #808080, rgb(128, 128, 128), Proprietary
+		COLOR_244 : USINT := USINT#244; // #808080, rgb(128, 128, 128), Proprietary
+		COLOR_245 : USINT := USINT#245; // #808080, rgb(128, 128, 128), Proprietary
+		COLOR_246 : USINT := USINT#246; // #808080, rgb(128, 128, 128), Proprietary
+		COLOR_247 : USINT := USINT#247; // #808080, rgb(128, 128, 128), Proprietary
+		COLOR_248 : USINT := USINT#248; // #808080, rgb(128, 128, 128), Proprietary
+		COLOR_249 : USINT := USINT#249; // #808080, rgb(128, 128, 128), Proprietary
+		COLOR_250 : USINT := USINT#250; // #808080, rgb(128, 128, 128), Proprietary
+		COLOR_251 : USINT := USINT#251; // #808080, rgb(128, 128, 128), Proprietary
+		COLOR_252 : USINT := USINT#252; // #808080, rgb(128, 128, 128), Proprietary
+		COLOR_253 : USINT := USINT#253; // #808080, rgb(128, 128, 128), Proprietary
+		COLOR_254 : USINT := USINT#254; // #808080, rgb(128, 128, 128), Proprietary
+		COLOR_255 : USINT := USINT#255; // #808080, rgb(128, 128, 128), Proprietary
+
+	END_VAR
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</GlobalConstants>

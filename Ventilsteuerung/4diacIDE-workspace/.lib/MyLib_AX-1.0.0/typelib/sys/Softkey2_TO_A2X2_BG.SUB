@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Softkey2_TO_A2X2_BG" Comment="2 VT-SoftKeys (Softkey_IXA, Hoch/Runter) gebuendelt auf einen einzigen&#10;bidirektionalen A2X2-Adapterausgang: Tastendruecke gehen ueber A2X2_4AX_TO_2X&#10;nach draussen, der ueber denselben Adapter zurueckkommende, tatsaechlich&#10;erreichte Zustand faerbt beide SoftKeys per GreenWhiteBackground1_AX - 'SUB&#10;style': das Buendeln steckt im Composite, nicht in der Resource des Geraets.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-09-05" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="u16ObjId_UP" Type="UINT" Comment="Object ID SoftKey Hoch (traegt auch das GreenWhiteBackground)" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObjId_DOWN" Type="UINT" Comment="Object ID SoftKey Runter (traegt auch das GreenWhiteBackground)" InitialValue="ID_NULL"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="OUT" Type="adapter::types::bidirectional::A2X2" Comment="Gebuendelter Roundtrip: sendet UP/DOWN-Tastendruecke, empfaengt UP/DOWN-Rueckmeldezustand"/>
+		</Plugs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="UpKey" Type="isobus::UT::io::Softkey::Softkey_IXA" x="-4800" y="-1400">
+		</FB>
+		<FB Name="DownKey" Type="isobus::UT::io::Softkey::Softkey_IXA" x="-4800" y="-200">
+		</FB>
+		<FB Name="CONV" Type="adapter::conversion::bidirectional::A2X2_4AX_TO_2X" x="-2400" y="-700">
+		</FB>
+		<SubApp Name="BG_Up" Type="MyLib::sys::GreenWhiteBackground1_AX" x="700" y="-1200">
+		</SubApp>
+		<SubApp Name="BG_Down" Type="MyLib::sys::GreenWhiteBackground1_AX" x="700" y="0">
+		</SubApp>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_4">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="UpKey.INIT"/>
+			<Connection Source="UpKey.INITO" Destination="DownKey.INIT"/>
+			<Connection Source="DownKey.INITO" Destination="BG_Up.INIT"/>
+			<Connection Source="BG_Up.INITO" Destination="BG_Down.INIT"/>
+			<Connection Source="BG_Down.INITO" Destination="INITO"/>
+			<Connection Source="BG_Down.INITO" Destination="AND_QO.REQ"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="u16ObjId_UP" Destination="UpKey.u16ObjId" dx1="2446.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId_DOWN" Destination="DownKey.u16ObjId" dx1="2446.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId_UP" Destination="BG_Up.u16ObjId" dx1="3893.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId_DOWN" Destination="BG_Down.u16ObjId" dx1="3893.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="UpKey.QI"/>
+			<Connection Source="QI" Destination="DownKey.QI"/>
+			<Connection Source="UpKey.QO" Destination="AND_QO.IN1"/>
+			<Connection Source="DownKey.QO" Destination="AND_QO.IN2"/>
+			<Connection Source="AND_QO.OUT" Destination="QO"/>
+			<Connection Source="QI" Destination="BG_Up.QI"/>
+			<Connection Source="QI" Destination="BG_Down.QI"/>
+			<Connection Source="BG_Up.QO" Destination="AND_QO.IN3"/>
+			<Connection Source="BG_Down.QO" Destination="AND_QO.IN4"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="UpKey.IN" Destination="CONV.IND_UP" dx1="1200"/>
+			<Connection Source="DownKey.IN" Destination="CONV.IND_DOWN" dx1="1200"/>
+			<Connection Source="CONV.REQ_UP" Destination="BG_Up.DI1" dx1="1200"/>
+			<Connection Source="CONV.REQ_DOWN" Destination="BG_Down.DI1" dx1="1200"/>
+			<Connection Source="CONV.A2X2_OUT" Destination="OUT" dx1="560"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

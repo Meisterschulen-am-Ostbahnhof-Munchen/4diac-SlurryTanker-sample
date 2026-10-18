@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Button_IXA_TO_Remote_WRITE_BG_Option_OPC" Comment="Wie Button_IXA_TO_Remote_WRITE_BG_OPC (VT-Button lesen + Remote-Write +&#10;Hintergrundfarbe aus Remote-Subscribe), aber per AOption aktiviert statt QI/INIT.&#10;AOption_OUT reicht die Aktivierung nach dem eigenen INIT weiter (Daisy-Chain).">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-17" Remarks="Kopie von Button_IXA_TO_Remote_WRITE_BG_OPC (Franz: 'ruhig kopieren, und eine Variante mit AOption Plug machen') - INIT/INITO/QI/QO ersetzt durch AOption_IN (AOption_X_TO_EVENT) und AOption_OUT (AOption_EVENT_TO_X, Daisy-Chain wie OptionalGroup_001a). AOption_OUT muss weiterverbunden sein (DummyGroup als Kettenende), sonst kommt kein INIT_CNF zurueck.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<InputVars>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID Button/Hintergrund (VT)" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="ID_SUBSCRIBE" Type="WSTRING" Comment="Remote-Subscribe-Adresse (Status/Farbe, ACTION=SUBSCRIBE)"/>
+			<VarDeclaration Name="ID_WRITE_REMOTE" Type="WSTRING" Comment="Remote-Write-Adresse zum Zielmodul (Befehl, ACTION=WRITE, CLIENT)"/>
+		</InputVars>
+		<Plugs>
+			<AdapterDeclaration Name="AOption_OUT" Type="Option::AOption" Comment="Reicht die Aktivierung nach dem eigenen INIT an das naechste Glied weiter (Daisy-Chain) - muss verbunden sein, Kettenende z.B. DummyGroup"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="AOption_IN" Type="Option::AOption" Comment="Treibt INIT/QI - anschliessen an AOption_AUI_DEMUX_N.OUTx oder AOption_OUT einer vorgeschalteten Instanz"/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="AOption_X_TO_EVENT" Type="Option::conversion::AOption_X_TO_EVENT" x="-2000" y="0">
+		</FB>
+		<FB Name="Button_IXA" Type="isobus::UT::io::Button::Button_IXA" x="0" y="0">
+		</FB>
+		<FB Name="AX_CLIENT_1_0" Type="adapter::net::AX_CLIENT_1_0" x="1700" y="100">
+		</FB>
+		<FB Name="AX_SUBSCRIBE_1" Type="adapter::net::AX_SUBSCRIBE_1" x="0" y="1000">
+		</FB>
+		<SubApp Name="GreenWhiteBackground1_AX" Type="MyLib::sys::GreenWhiteBackground1_AX" x="1500" y="1000">
+		</SubApp>
+		<FB Name="AOption_EVENT_TO_X" Type="Option::conversion::AOption_EVENT_TO_X" x="4200" y="500">
+		</FB>
+		<EventConnections>
+			<Connection Source="AOption_X_TO_EVENT.INIT_REQ" Destination="Button_IXA.INIT"/>
+			<Connection Source="Button_IXA.INITO" Destination="AX_CLIENT_1_0.INIT" dx1="453.33"/>
+			<Connection Source="AX_CLIENT_1_0.INITO" Destination="AX_SUBSCRIBE_1.INIT" dx1="80" dx2="80" dy="446.67"/>
+			<Connection Source="AX_SUBSCRIBE_1.INITO" Destination="GreenWhiteBackground1_AX.INIT"/>
+			<Connection Source="GreenWhiteBackground1_AX.INITO" Destination="AOption_EVENT_TO_X.INIT_REQ"/>
+			<Connection Source="AOption_EVENT_TO_X.INIT_CNF" Destination="AOption_X_TO_EVENT.INIT_CNF" dx1="80" dx2="80" dy="-500"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="u16ObjId" Destination="Button_IXA.u16ObjId" dx1="80" dx2="80" dy="146.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId" Destination="GreenWhiteBackground1_AX.u16ObjId" dx1="366.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_SUBSCRIBE" Destination="AX_SUBSCRIBE_1.ID" dx1="80" dx2="80" dy="540">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_WRITE_REMOTE" Destination="AX_CLIENT_1_0.ID" dx1="613.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AOption_X_TO_EVENT.QI_OUT" Destination="Button_IXA.QI"/>
+			<Connection Source="AOption_X_TO_EVENT.QI_OUT" Destination="AX_CLIENT_1_0.QI"/>
+			<Connection Source="AOption_X_TO_EVENT.QI_OUT" Destination="AX_SUBSCRIBE_1.QI"/>
+			<Connection Source="AOption_X_TO_EVENT.QI_OUT" Destination="GreenWhiteBackground1_AX.QI"/>
+			<Connection Source="AOption_X_TO_EVENT.QI_OUT" Destination="AOption_EVENT_TO_X.QI_OUT"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="AOption_IN" Destination="AOption_X_TO_EVENT.AOption_IN"/>
+			<Connection Source="AOption_EVENT_TO_X.AOption_OUT" Destination="AOption_OUT" dx1="600"/>
+			<Connection Source="Button_IXA.IN" Destination="AX_CLIENT_1_0.IN" dx1="100"/>
+			<Connection Source="AX_SUBSCRIBE_1.OUT" Destination="GreenWhiteBackground1_AX.DI1" dx1="280"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="BaseMemberExternAdd" Comment="Adds an external member to the network list manually.">
+	<Identification Standard="61499-2" Description="         The use of this function is not ISO 11783 Part 5 conform. \n&#10;         Use this function only if you must communicate with an external CF, \n&#10;         that does not send a address claimed message. \n&#10;         An address claimed message of an external CF with the same source address \n&#10;         will replace this manual added member entry.  \n&#10;         The function works independent from the configuration of the #CFG_PARAM_EXTERNAL_ADDR_CLAIM parameter. \n&#10;         The added CF will be set to announced in the next iso_DlCyclicGlobal() run. ">
+	</Identification>
+	<VersionInfo Version="1.0" Author="Gemini" Date="2026-01-16" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::pgn">
+		<Import declaration="isobus::pgn::ISO_CAN_NODE::NODE1"/>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+			</Event>
+			<Event Name="REQ" Type="Event" Comment="Add external member">
+				<With Var="u8SA"/>
+				<With Var="u8CanIdx"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Confirmation">
+				<With Var="s16Handle"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="u8CanIdx" Type="USINT" Comment="CAN node index" InitialValue="NODE1"/>
+			<VarDeclaration Name="u8SA" Type="USINT" Comment="Source Address of the CF to add"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="s16Handle" Type="INT" Comment="Handle of the added member"/>
+		</OutputVars>
+	</InterfaceList>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

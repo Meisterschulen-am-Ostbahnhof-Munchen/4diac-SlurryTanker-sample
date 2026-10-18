@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="SwitchPic_2_1" Comment="Bild umschalten VT; 2 Zustände">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="franz" Date="2026-05-29">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+		<Import declaration="isobus::UT::Q::types::s2x1ObjectIDs"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+			<SubAppEvent Name="EI" Type="Event">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="Picture" Type="UINT" Comment="Object ID of the ObjectPointer to the Picture"/>
+			<VarDeclaration Name="pictures" Type="isobus::UT::Q::types::s2x1ObjectIDs" Comment="the single Pictures" InitialValue="(up := (u16ObjId := ID_NULL), down := (u16ObjId := ID_NULL))"/>
+			<VarDeclaration Name="DI1" Type="BOOL" Comment="Selector" InitialValue="FALSE"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue" x="5500" y="-700">
+		</FB>
+		<FB Name="F_MOVE" Type="iec61131::selection::F_MOVE" x="-100" y="100">
+			<Attribute Name="DataType" Value="isobus::UT::Q::types::s2x1ObjectIDs"/>
+			<Parameter Name="OUT" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="OUT.up.u16ObjId" Value="">
+				<Attribute Name="Visible" Value="true"/>
+			</Parameter>
+			<Parameter Name="OUT.down.u16ObjId" Value="">
+				<Attribute Name="Visible" Value="true"/>
+			</Parameter>
+		</FB>
+		<FB Name="F_MUX_2" Type="iec61131::selection::F_SEL" x="2100" y="0">
+		</FB>
+		<EventConnections>
+			<Connection Source="EI" Destination="F_MUX_2.REQ" dx1="3206.67"/>
+			<Connection Source="F_MUX_2.CNF" Destination="Q_NumericValue.REQ" dx1="440"/>
+			<Connection Source="INIT" Destination="F_MOVE.REQ" dx1="1246.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="F_MOVE.CNF" Destination="Q_NumericValue.INIT" dx1="613.33"/>
+			<Connection Source="Q_NumericValue.INITO" Destination="INITO" dx1="500"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="Picture" Destination="Q_NumericValue.u16ObjId" dx1="4133.33"/>
+			<Connection Source="pictures" Destination="F_MOVE.IN" dx1="826.67"/>
+			<Connection Source="DI1" Destination="F_MUX_2.G" dx1="3413.33"/>
+			<Connection Source="F_MUX_2.OUT" Destination="Q_NumericValue.u32NewValue" dx1="706.67"/>
+			<Connection Source="F_MOVE.OUT.up.u16ObjId" Destination="F_MUX_2.IN0" dx1="586.67"/>
+			<Connection Source="F_MOVE.OUT.down.u16ObjId" Destination="F_MUX_2.IN1" dx1="586.67"/>
+			<Connection Source="QI" Destination="Q_NumericValue.QI"/>
+			<Connection Source="Q_NumericValue.QO" Destination="QO"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

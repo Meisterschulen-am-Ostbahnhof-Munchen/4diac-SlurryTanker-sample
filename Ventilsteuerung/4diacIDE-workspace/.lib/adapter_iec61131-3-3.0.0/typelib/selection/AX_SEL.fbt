@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="AX_SEL" Comment="binary selection (an output event is only generated if G changes!)">
+	<Identification Standard="61131-3" Classification="standard selection function" Description="Copyright (c) 2012 TU Wien ACIN, HR Agrartechnik GmbH&#10; &#10;This program and the accompanying materials are made&#10;available under the terms of the Eclipse Public License 2.0&#10;which is available at https://www.eclipse.org/legal/epl-2.0/&#10;&#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="3.1" Author="Franz Höpfinger" Date="2026-07-04" Remarks="added note: an output event is only generated if G changes!">
+	</VersionInfo>
+	<VersionInfo Version="3.0" Author="Patrick Aigner" Date="2025-04-14" Remarks="changed package">
+	</VersionInfo>
+	<VersionInfo Organization="TU Wien ACIN" Version="1.0" Author="Monika Wenger" Date="2012-03-25" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::iec61131::selection">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="EI0" Type="Event" Comment="Set IN0">
+				<With Var="IN0"/>
+			</Event>
+			<Event Name="EI1" Type="Event" Comment="Set IN1">
+				<With Var="IN1"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+				<With Var="OUT"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="IN0" Type="ANY" Comment="Selectable input variable"/>
+			<VarDeclaration Name="IN1" Type="ANY" Comment="Selectable input variable"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="OUT" Type="ANY" Comment="Selected input"/>
+		</OutputVars>
+		<Sockets>
+			<AdapterDeclaration Name="G" Type="adapter::types::unidirectional::AX" Comment="Selelctor" x="-1200" y="-800"/>
+		</Sockets>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="F_SEL" Type="iec61131::selection::F_SEL" x="700" y="-600">
+		</FB>
+		<FB Name="E_D_FF_G" Type="iec61499::events::E_D_FF" x="-300" y="-800">
+		</FB>
+		<EventConnections>
+			<Connection Source="F_SEL.CNF" Destination="CNF" dx1="653.33"/>
+			<Connection Source="G.E1" Destination="E_D_FF_G.CLK"/>
+			<Connection Source="E_D_FF_G.EO" Destination="F_SEL.REQ" dx1="166.67"/>
+			<Connection Source="EI0" Destination="F_SEL.REQ" dx1="5746.67"/>
+			<Connection Source="EI1" Destination="F_SEL.REQ" dx1="5746.67"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="IN0" Destination="F_SEL.IN0" dx1="1026.67"/>
+			<Connection Source="IN1" Destination="F_SEL.IN1" dx1="666.67"/>
+			<Connection Source="F_SEL.OUT" Destination="OUT" dx1="1233.33"/>
+			<Connection Source="G.D1" Destination="E_D_FF_G.D"/>
+			<Connection Source="E_D_FF_G.Q" Destination="F_SEL.G" dx1="166.67"/>
+		</DataConnections>
+	</FBNetwork>
+	<Service RightInterface="RESOURCE" LeftInterface="APPLICATION">
+	</Service>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

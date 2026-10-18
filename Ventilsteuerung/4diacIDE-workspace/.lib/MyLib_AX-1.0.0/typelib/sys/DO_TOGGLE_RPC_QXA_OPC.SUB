@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="DO_TOGGLE_RPC_QXA_OPC" Comment="Digitaler Freigabe-Ausgang als Klick-Toggle (AX_T_FF_INIT, Default AN):&#10;CREATE_METHOD-Server nimmt einen argumentlosen RPC-Trigger von mehreren&#10;gleichberechtigten Aufrufern entgegen (z.B. STG1-SoftKey-Relay UND&#10;OPC-Dashboard), alle takten denselben CLK - KEIN OR nach dem Flipflop,&#10;AX_T_FF_INIT.Q ist alleinige Source of Truth fuer den physischen Ausgang UND den&#10;remote publizierten Zustand. Generisch fuer jeden&#10;Not-Bedienung-/Strassenmodus-artigen Digital-Toggle-Ausgang mit&#10;Mehrfach-Bedienung.">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.3" Author="Franz Höpfinger" Date="2026-10-13" Remarks="Neuer SubAppEventOutput INITO (Type EInit), durchgereicht von DigitalOutput_DO.INITO - analog ILOCK_SWITCH_2_QXA_OPC v1.3, fuer Aufnahme_Option.SUB.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.2" Author="Franz Höpfinger" Date="2026-10-11" Remarks="Neuer SubAppEventInput INIT (Type EInit), durchgereicht an DigitalOutput_DO.INIT statt Auto-Verteilung - analog ILOCK_SWITCH_2_QXA_OPC v1.2, 'Init wie bei Tecu' (Franz).">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-10-11" Remarks="Neuer QI-InputVar (Default TRUE, rueckwaertskompatibel) durchgereicht an DigitalOutput_DO.QI statt fest verdrahtetem TRUE - analog ILOCK_SWITCH_2_QXA_OPC v1.1.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-08" Remarks="Ausgelagert aus Heben_Senken_TO_QDA_PWM_OPC (Freigabe-DO-Teilnetz) zur Wiederverwendung fuer weitere Digital-Toggle-Ausgaenge.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO_S"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialisierung - vom Aufrufer sequenziert statt per Auto-Verteilung, damit QI vor der physischen Kanalbindung feststeht">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialisierung abgeschlossen - echtes Confirm von DigitalOutput_DO.INITO">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="Output_DO" Type="logiBUS::io::DQ::logiBUS_DO_S" Comment="Physischer Freigabe-Ausgang: Klick-Toggle, Default AN" InitialValue="logiBUS_DO::Invalid"/>
+			<VarDeclaration Name="ID_DO_TOGGLE_METHOD" Type="WSTRING" Comment="Lokale Methodenadresse (ACTION=CREATE_METHOD) fuer den argumentlosen Freigabe-Toggle-Trigger - wird von mehreren Aufrufern gemeinsam genutzt, alle takten denselben Flipflop"/>
+			<VarDeclaration Name="ID_DO_STATE_WRITE" Type="WSTRING" Comment="Lokale Publish-Adresse (ACTION=WRITE) fuer den tatsaechlichen Freigabe-Zustand (AX_T_FF_INIT.Q) - wird remote abonniert"/>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Qualifier fuer den physischen Ausgang - FALSE haelt diese Instanz komplett inaktiv (keine Hardware-Bindung), fuer den Fall dass derselbe physische Kanal je nach Maschinenvariante anderweitig genutzt wird" InitialValue="TRUE"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully (AND aus DO_TOGGLE_SERVER/AX_T_FF_INIT_DO/PUBLISH_STATE_DO/DigitalOutput_DO)"/>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DO_TOGGLE_SERVER" Type="iec61499::net::SERVER_0" x="1800" y="500">
+		</FB>
+		<FB Name="AX_T_FF_INIT_DO" Type="adapter::events::unidirectional::AX_T_FF_INIT" x="3200" y="500">
+			<Parameter Name="Q_INIT" Value="TRUE"/>
+		</FB>
+		<FB Name="SPLIT_DO_STATE" Type="adapter::events::unidirectional::AX_SPLIT_2" x="4800" y="700">
+		</FB>
+		<FB Name="PUBLISH_STATE_DO" Type="adapter::net::AX_PUBLISH_1" x="6200" y="1300">
+		</FB>
+		<FB Name="DigitalOutput_DO" Type="logiBUS::io::DQ::logiBUS_QXA" x="6400" y="-100">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_4" x="11700" y="600">
+		</FB>
+		<Comment Comment="AX_T_FF_INIT.Q ist die EINZIGE Source of Truth fuer DigitalOutput_DO - KEIN AX_OR_2 nach dem Flipflop (anders als TOGGLE_RPC_MERGE_QXA_OPC/Blitzer). Der Methodenaufruf (ID_DO_TOGGLE_METHOD) ist der einzige Eingang und wird von mehreren Aufrufern gemeinsam genutzt - alle takten denselben CLK, kein Merge auf Datenebene noetig." x="1600" y="3300" width="5500" height="700"/>
+		<Comment Comment="RSP MUSS auf IND zurueckverdrahtet werden (argumentloser Trigger, keine Verarbeitung noetig - wie FORTEs eigener systemtests/clientFailAction.fboot: IND-&gt;RSP direkt). Ohne RSP blockiert FORTEs onServerMethodCall den OPC-UA-Server-Thread bis zu 4s (scmMethodCallTimeoutInNanoSeconds) und haelt dabei open62541s globalen serviceMutex - der von JEDEM AX_PUBLISH_1 auf einem anderen FORTE-Thread ebenfalls gebraucht wird. Folge: physischer Ausgang reagiert sofort (kein Lock noetig), aber JEDE OPC-UA-Statusmeldung (nicht nur diese hier) haengt bis zu 4s fest. Siehe Ventilsteuerung/OPC_UA_VERNETZUNG.md Punkt 12." x="1600" y="2600" width="5500" height="600"/>
+		<EventConnections>
+			<Connection Source="DO_TOGGLE_SERVER.IND" Destination="AX_T_FF_INIT_DO.CLK"/>
+			<Connection Source="DO_TOGGLE_SERVER.IND" Destination="DO_TOGGLE_SERVER.RSP" dx1="80" dx2="80" dy="160"/>
+			<Connection Source="INIT" Destination="DO_TOGGLE_SERVER.INIT" dx1="446.67"/>
+			<Connection Source="DO_TOGGLE_SERVER.INITO" Destination="AX_T_FF_INIT_DO.INIT"/>
+			<Connection Source="AX_T_FF_INIT_DO.INITO" Destination="DigitalOutput_DO.INIT" dx1="273.33"/>
+			<Connection Source="PUBLISH_STATE_DO.INITO" Destination="INITO" dx1="2900"/>
+			<Connection Source="PUBLISH_STATE_DO.INITO" Destination="AND_QO.REQ" dx1="746.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="DigitalOutput_DO.INITO" Destination="PUBLISH_STATE_DO.INIT" dx1="1093.33" dx2="80" dy="1046.67"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="Output_DO" Destination="DigitalOutput_DO.Output" dx1="6913.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="DigitalOutput_DO.QI" dx1="6913.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_DO_TOGGLE_METHOD" Destination="DO_TOGGLE_SERVER.ID" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_DO_STATE_WRITE" Destination="PUBLISH_STATE_DO.ID" dx1="1280">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="DO_TOGGLE_SERVER.QI" dx1="446.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="AX_T_FF_INIT_DO.QI" dx1="1120">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="PUBLISH_STATE_DO.QI" dx1="2620">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="DO_TOGGLE_SERVER.QO" Destination="AND_QO.IN1" dx1="1946.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AX_T_FF_INIT_DO.QO" Destination="AND_QO.IN2" dx1="1173.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="PUBLISH_STATE_DO.QO" Destination="AND_QO.IN3" dx1="826.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="DigitalOutput_DO.QO" Destination="AND_QO.IN4" dx1="746.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="2926.67"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="AX_T_FF_INIT_DO.Q" Destination="SPLIT_DO_STATE.IN" dx1="600"/>
+			<Connection Source="SPLIT_DO_STATE.OUT1" Destination="DigitalOutput_DO.OUT" dx1="160"/>
+			<Connection Source="SPLIT_DO_STATE.OUT2" Destination="PUBLISH_STATE_DO.IN" dx1="120"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

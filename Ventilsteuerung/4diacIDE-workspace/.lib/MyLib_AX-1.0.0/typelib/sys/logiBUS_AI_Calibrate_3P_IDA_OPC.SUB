@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="logiBUS_AI_Calibrate_3P_IDA_OPC" Comment="logiBUS_AI_IDA (Analog-Eingang) mit 3-Punkt-Kalibrierung (AR_CALIBRATE_3P_REF,&#10;unabhaengig gespeicherte Rohwerte X_MIN/X_MID/X_MAX + Referenzwerte&#10;MIN_REF/MID_REF/MAX_REF alle INI-persistiert) auf VT-Zahlenfelder (Rohwert +&#10;kalibrierter Wert, je eigene CNumberVariable) + Bargraph (kalibriert) + 3&#10;VT-Tasten (C_MIN/C_MID/C_MAX) + OPC-UA (Rohwert DWORD + kalibrierter Wert REAL,&#10;generisch, ein Kanal). Fuer Sensoren mit definierter Mittelstellung (z.B.&#10;Lenkwinkelsensor: links/geradeaus/rechts) statt reiner 2-Punkt-Linearisierung.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof&#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.2" Author="Franz Höpfinger" Date="2026-09-18" Remarks="AR_CALIBRATE_3P_REF.C_MIN/C_MID/C_MAX von AX-Sockets auf reine EventInputs umgestellt (Franz-Entscheidung, siehe AR_CALIBRATE_2P_REF) - AX_BOOL_TO_X_MIN/_MID/_MAX entfallen ersatzlos, die Merge-Ketten verbinden jetzt direkt per EventConnection mit CALIBRATE.C_MIN/C_MID/C_MAX.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.3" Author="Franz Höpfinger" Date="2026-09-18" Remarks="C_MIN/C_MAX-Merge-Ketten (2x E_MERGE_2 in Reihe) durch je einen E_MERGE_3 ersetzt, C_MID-Kette (3x E_MERGE_2) durch einen E_MERGE_4 - OR-Merge ist assoziativ, funktional identisch. Siehe logiBUS_AI_Calibrate_IDA_OPC v1.4.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.4" Author="Franz Höpfinger" Date="2026-09-18" Remarks="Franz: 'kann eine SUB sein' - logiBUS_AI_IDA+AD_SPLIT_2+AD_PUBLISH_RAW+AD_TO_AUDI+AUDI_SPLIT_2+Q_NumericValue_RAW+AUDI_TO_AR durch neue SubApp logiBUS_AI_Raw_VT_AR_OPC ersetzt, AR_SPLIT_2+AR_PUBLISH_CAL+Q_NumericValue_CAL durch die bereits bestehende SubApp AR_TO_Q_Publish_OPC (dort um optionales INITO ergaenzt) - identisch zu logiBUS_AI_Calibrate_IDA_OPC v1.6. Die AX_SUBSCRIBE_MIN-Init-Kette haengt jetzt an PublishCal.INITO statt AR_PUBLISH_CAL.INITO; die vorherige Verkettung AD_PUBLISH_RAW.INITO-&gt;AR_PUBLISH_CAL.INIT entfaellt (beide Publishes sind voneinander unabhaengig, initialisieren jetzt unabhaengig/auto).">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.5" Author="Franz Höpfinger" Date="2026-09-18" Remarks="Franz: 'genau so umbauen wie den anderen' (logiBUS_AI_Calibrate_IDA_OPC) - NUR fuer C_MIN/C_MAX: AX_SUBSCRIBE_MIN/MAX + AX_RF_TRIG_MIN/MAX (Toggle-Subscribe, ID_MIN_READ/ID_MAX_READ, beide ueberall unbenutzt) ersatzlos entfernt, ersetzt durch je eine Button_Method_IE (TriggerMIN/TriggerMAX) mit neuer Methodenadresse ID_MIN_METHOD/ID_MAX_METHOD. C_MID BEWUSST NICHT umgestellt: Fahrwerk_Mittelpunkt_Automatik.SUB (Achslenkung, STG1) triggert C_MID lokal (selbe Station!) ueber genau diesen Toggle-Kanal (ID_MID_READ), weil lokaler CALL_METHOD auf derselben Station laut 4diac-Doku nicht funktioniert (FORTE-Log: 'Cannot perform action CALL_METHOD locally') - siehe Fahrwerk_Mittelpunkt_Automatik.SUB v2.2/BERICHT_2026-09-16 Abschnitt 13-15. AX_SUBSCRIBE_MID/AX_RF_TRIG_MID/SERVER_MID_TRIGGER/E_MERGE_MID (E_MERGE_4) bleiben daher unveraendert bestehen. Die OPC_UA_VERNETZUNG.md Punkt 14-Regel (kein Event-Pegel-Event-Umweg) gilt nur fuer echte CROSS-STATION-Trigger, nicht fuer diesen Sonderfall auf derselben Station.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.6" Author="Franz Höpfinger" Date="2026-09-18" Remarks="Franz: 'TriggerMIN TriggerMAX bitte TriggerMID genau gleich machen' - Button_C_MID + SERVER_MID_TRIGGER (Button/Methode-Teil) durch eine SubApp TriggerMID (Button_Method_IE) ersetzt, strukturell identisch zu TriggerMIN/TriggerMAX. Der lokale Toggle-Kanal (AX_SUBSCRIBE_MID+AX_RF_TRIG_MID) bleibt bestehen (siehe v1.5-Begruendung), wird aber jetzt sauber getrennt als zusaetzliche Quelle in E_MERGE_MID gemergt (E_MERGE_4 -&gt; E_MERGE_3: TriggerMID.IND + AX_RF_TRIG_MID.ER/EF) statt als 4. Quelle in einem grossen Merge mit SERVER_0 direkt inline verdrahtet zu sein.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.7" Author="Franz Höpfinger" Date="2026-09-18" Remarks="Franz: 'MID, MIN und MAX sind GLEICH' - AX_SUBSCRIBE_MID/AX_RF_TRIG_MID/E_MERGE_MID (der lokale Toggle-Kanal aus v1.5/v1.6) ersatzlos entfernt, ID_MID_READ entfaellt. TriggerMID ist jetzt eine reine Button_Method_IE-Instanz, 1:1 baugleich zu TriggerMIN/TriggerMAX, direkt auf CALIBRATE.C_MID verdrahtet. ACHTUNG: Fahrwerk_Mittelpunkt_Automatik.SUB (Achslenkung/Hangausgleich) toggelt/publiziert weiterhin auf den bisherigen ID_MID_TRIGGER_WRITE-Knoten, den jetzt niemand mehr abonniert - dieser Pfad ist damit funktionslos, bis Fahrwerk_Mittelpunkt_Automatik.SUB auf einen Aufruf von ID_MID_TRIGGER_METHOD umgestellt wird (lokaler CALL_METHOD schlug bisher fehl, siehe v1.5 - noch ungeklaert, wie das dort geloest wird).">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.12" Author="Franz Höpfinger" Date="2026-10-14" Remarks="AND_QO_A (AND_BOOL_7) + AND_QO_B (AND_BOOL_10) + AND_QO (AND_BOOL_3) Kaskade (18 QO-Quellen) durch einen einzelnen AND_QO (AND_BOOL_18) ersetzt - AND_BOOL_11-21 jetzt verfuegbar, Kaskadierung nicht mehr noetig.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-11" Remarks="C_MID zusaetzlich per lokalem SERVER_0-Methodenaufruf (ID_MID_TRIGGER_METHOD, ACTION=CREATE_METHOD) ausloesbar - reiner RPC-Trigger fuer lokale Aufrufer (z.B. Achslenkung_Automatik.SUB per CLIENT_0), kein Toggle/PUBLISH/SUBSCRIBE-Umweg noetig wie beim echten Remote-Web-Kanal (ID_MID_READ). Per E_MERGE_MID_C mit dem bestehenden Button/Web-Merge zusammengefuehrt.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-11" Remarks="3-Punkt-Pendant zu logiBUS_AI_Calibrate_IDA_OPC (AR_CALIBRATE_3P_REF statt AR_CALIBRATE_2P_REF, 3 statt 2 Kalibrierpunkte/Tasten/Referenzwerte) - Sample fuer Sensoren mit Mittelstellung, siehe Workspace_AI_Calibrate_3P.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.8" Author="Franz Höpfinger" Date="2026-09-20" Remarks="Rohwert-Anzeige an den 3 Kalibrierpunkten (Min/Mid/Max-Raw) ergaenzt, analog zu logiBUS_AI_Calibrate_IDA_OPC v1.7 (Franz: 'im Web-Panel und im IOP die Roh-Werte mit anzeigen'). CALIBRATE.X_MIN/X_MID/X_MAX (AR2, bisher nur an INI_X_MIN/INI_X_MID/INI_X_MAX angeschlossen) werden ueber neue TapMinRaw/TapMidRaw/TapMaxRaw (MyLib::sys::AR2_TAP_TO_AR) abgezapft, ohne die bestehende Persistenz-/Restore-Kette zu aendern, und ueber neue PublishMinRaw/PublishMidRaw/PublishMaxRaw (MyLib::sys::AR_TO_Q_Publish_OPC) als reine Nur-Lese-Anzeige (VT CNumberVariable + OPC-UA Publish) exponiert. Neue InputVars stObjMinRaw/stObjMidRaw/stObjMaxRaw (VT-Objekt) + ID_MIN_RAW_WRITE/ID_MID_RAW_WRITE/ID_MAX_RAW_WRITE (OPC-UA-Adresse).">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.10" Author="Franz Höpfinger" Date="2026-09-21" Remarks="Code-Review-Fund (PR #260): INI_X_MID/INI_X_MAX.DEFAULT_VALUE standen auf REAL#0.5/1.0 statt 0.0 - AR_CALIBRATE_3P_REF's neue xMidCal/xMaxCal-Kalibriert-Flags (v1.3, pruefen X_MID.DI1/X_MAX.DI1 &lt;&gt; 0.0) latchten dadurch bei JEDEM Boot sofort TRUE, obwohl MID/MAX nie kalibriert wurden (fabricated references statt Partial-Kalibrierung-Fallback). Defaults auf REAL#0.0 korrigiert, passend zu INI_X_MIN und zum Flag-Vergleich.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.9" Author="Franz Höpfinger" Date="2026-09-21" Remarks="AR_CALIBRATE_3P_REF hat jetzt ein INIT/QI/QO-Enable-Pattern (Bugfix MIN-vor-MID + xClipping) - CALIBRATE bekommt Parameter QI=TRUE (wie die INI_X_MIN/X_MID/X_MAX-Instanzen), sonst bleibt die FB im START-Zustand haengen und REQ laeuft nie.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.11" Author="Franz Höpfinger" Date="2026-09-26" Remarks="INI_MID_REF.DEFAULT_VALUE stand auf REAL#50.0 statt 0.0 - passte nicht zur dokumentierten Kalibrierwert-Konvention (-100=Links-Anschlag/0=Mitte/+100=Rechts-Anschlag, siehe ACHSLENKUNG_WINKEL_CAL_LOC_WRITE-Kommentar in SubStrings_STG1.gcf). Bei Achslenkung Winkel B02 entdeckt/bestaetigt (Franz), korrigiert auf REAL#0.0, passend zu INI_MIN_REF/INI_MAX_REF's Vorzeichen-Konvention.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+		<Import declaration="logiBUS::io::AI::logiBUS_AI"/>
+		<Import declaration="logiBUS::io::AI::logiBUS_AI_S"/>
+		<Import declaration="logiBUS::utils::conversion::phys::NumericObjectPool_S"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="u16ObjId_RAWVAR" Type="UINT" Comment="Object ID CNumberVariable (Rohwert 0-4095, unkalibriert, reine Diagnose-Anzeige)" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="stObjCal" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object ID + Scale/Offset/Decimals CNumberVariable (kalibrierter Wert, eigene, unabhaengige CNumberVariable)" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 1)"/>
+			<VarDeclaration Name="u16ObjId_C_MIN" Type="UINT" Comment="Object ID Taste &apos;C_MIN&apos; (Min-Position anfahren, dann druecken)" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObjId_C_MID" Type="UINT" Comment="Object ID Taste &apos;C_MID&apos; (Mittelstellung anfahren, dann druecken)" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObjId_C_MAX" Type="UINT" Comment="Object ID Taste &apos;C_MAX&apos; (Max-Position anfahren, dann druecken)" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="Input" Type="logiBUS::io::AI::logiBUS_AI_S" Comment="Identify the Input AnalogInput_I1..I8" InitialValue="logiBUS_AI::Invalid"/>
+			<VarDeclaration Name="sSection" Type="STRING" Comment="INI-Sektionsname fuer X_MIN/X_MID/X_MAX/MIN_REF/MID_REF/MAX_REF-Persistenz - pro Kanal eindeutig, sonst kollidieren die Kanaele in settings.ini"/>
+			<VarDeclaration Name="ID_RAW_WRITE" Type="WSTRING" Comment="Rohwert-Ruckmelde-Adresse (DWORD 0-4095, ACTION=PUBLISH)"/>
+			<VarDeclaration Name="ID_CAL_WRITE" Type="WSTRING" Comment="Kalibrierter-Wert-Ruckmelde-Adresse (REAL, ACTION=PUBLISH)"/>
+			<VarDeclaration Name="ID_MIN_METHOD" Type="WSTRING" Comment="Methodenadresse (ACTION=CREATE_METHOD) fuer den argumentlosen C_MIN-Trigger - gleichberechtigt zur lokalen VT-Taste aufrufbar, sowohl vom OPC-UA-Dashboard als auch per CLIENT_0 von einer anderen Station (siehe OPC_UA_VERNETZUNG.md Punkt 14 - kein Toggle/Subscribe-Umweg mehr)"/>
+			<VarDeclaration Name="ID_MID_TRIGGER_METHOD" Type="WSTRING" Comment="Methodenadresse (ACTION=CREATE_METHOD) fuer den argumentlosen C_MID-Trigger - siehe ID_MIN_METHOD"/>
+			<VarDeclaration Name="ID_MAX_METHOD" Type="WSTRING" Comment="Methodenadresse (ACTION=CREATE_METHOD) fuer den argumentlosen C_MAX-Trigger - siehe ID_MIN_METHOD"/>
+			<VarDeclaration Name="stObjMinRef" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object ID + Scale/Offset/Decimals CNumberVariable (MIN_REF-Referenzwert, VT-Eingabefeld + OPC-UA)" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 1)"/>
+			<VarDeclaration Name="stObjMidRef" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object ID + Scale/Offset/Decimals CNumberVariable (MID_REF-Referenzwert, VT-Eingabefeld + OPC-UA)" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 1)"/>
+			<VarDeclaration Name="stObjMaxRef" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object ID + Scale/Offset/Decimals CNumberVariable (MAX_REF-Referenzwert, VT-Eingabefeld + OPC-UA)" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 1)"/>
+			<VarDeclaration Name="ID_MINREF_READ" Type="WSTRING" Comment="Remote-Subscribe-Adresse MIN_REF-Referenzwert (REAL, ACTION=SUBSCRIBE)"/>
+			<VarDeclaration Name="ID_MINREF_WRITE" Type="WSTRING" Comment="Remote-Echo-Adresse MIN_REF-Referenzwert (REAL, ACTION=PUBLISH)"/>
+			<VarDeclaration Name="ID_MIDREF_READ" Type="WSTRING" Comment="Remote-Subscribe-Adresse MID_REF-Referenzwert (REAL, ACTION=SUBSCRIBE)"/>
+			<VarDeclaration Name="ID_MIDREF_WRITE" Type="WSTRING" Comment="Remote-Echo-Adresse MID_REF-Referenzwert (REAL, ACTION=PUBLISH)"/>
+			<VarDeclaration Name="ID_MAXREF_READ" Type="WSTRING" Comment="Remote-Subscribe-Adresse MAX_REF-Referenzwert (REAL, ACTION=SUBSCRIBE)"/>
+			<VarDeclaration Name="ID_MAXREF_WRITE" Type="WSTRING" Comment="Remote-Echo-Adresse MAX_REF-Referenzwert (REAL, ACTION=PUBLISH)"/>
+			<VarDeclaration Name="stObjMinRaw" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object ID + Scale/Offset/Decimals CNumberVariable (Rohwert am MIN-Kalibrierpunkt, reine Diagnose-Anzeige)" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 1)"/>
+			<VarDeclaration Name="stObjMidRaw" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object ID + Scale/Offset/Decimals CNumberVariable (Rohwert am MID-Kalibrierpunkt, reine Diagnose-Anzeige)" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 1)"/>
+			<VarDeclaration Name="stObjMaxRaw" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object ID + Scale/Offset/Decimals CNumberVariable (Rohwert am MAX-Kalibrierpunkt, reine Diagnose-Anzeige)" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 1)"/>
+			<VarDeclaration Name="ID_MIN_RAW_WRITE" Type="WSTRING" Comment="Rohwert-am-MIN-Kalibrierpunkt-Publish-Adresse (REAL, ACTION=PUBLISH)"/>
+			<VarDeclaration Name="ID_MID_RAW_WRITE" Type="WSTRING" Comment="Rohwert-am-MID-Kalibrierpunkt-Publish-Adresse (REAL, ACTION=PUBLISH)"/>
+			<VarDeclaration Name="ID_MAX_RAW_WRITE" Type="WSTRING" Comment="Rohwert-am-MAX-Kalibrierpunkt-Publish-Adresse (REAL, ACTION=PUBLISH)"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<SubApp Name="InputRaw" Type="MyLib::sys::logiBUS_AI_Raw_VT_AR_OPC" x="-3400" y="1000">
+		</SubApp>
+		<FB Name="CALIBRATE" Type="adapter::Engineering::measurements::AR_CALIBRATE_3P_REF" x="-200" y="200">
+			<Parameter Name="xClipping" Value="FALSE"/>
+		</FB>
+		<SubApp Name="MIN_REF_LIT" Type="MyLib::sys::NumericValue_TO_AR2_OPC" x="-3400" y="1900">
+		</SubApp>
+		<SubApp Name="MID_REF_LIT" Type="MyLib::sys::NumericValue_TO_AR2_OPC" x="-3400" y="3100">
+		</SubApp>
+		<SubApp Name="MAX_REF_LIT" Type="MyLib::sys::NumericValue_TO_AR2_OPC" x="-3400" y="4100">
+		</SubApp>
+		<SubApp Name="TriggerMIN" Type="MyLib::sys::Button_Method_IE" x="-3000" y="-1700">
+		</SubApp>
+		<SubApp Name="TriggerMID" Type="MyLib::sys::Button_Method_IE" x="-3000" y="-900">
+		</SubApp>
+		<SubApp Name="TriggerMAX" Type="MyLib::sys::Button_Method_IE" x="-3000" y="-100">
+		</SubApp>
+		<FB Name="INI_X_MIN" Type="eclipse4diac::storage::INI_AR2" x="5600" y="800">
+			<Parameter Name="SETM" Value="TRUE"/>
+			<Parameter Name="KEY" Value="'X_MIN'"/>
+			<Parameter Name="DEFAULT_VALUE" Value="REAL#0.0"/>
+		</FB>
+		<FB Name="INI_X_MID" Type="eclipse4diac::storage::INI_AR2" x="7100" y="900">
+			<Parameter Name="SETM" Value="TRUE"/>
+			<Parameter Name="KEY" Value="'X_MID'"/>
+			<Parameter Name="DEFAULT_VALUE" Value="REAL#0.0"/>
+		</FB>
+		<FB Name="INI_X_MAX" Type="eclipse4diac::storage::INI_AR2" x="8600" y="1000">
+			<Parameter Name="SETM" Value="TRUE"/>
+			<Parameter Name="KEY" Value="'X_MAX'"/>
+			<Parameter Name="DEFAULT_VALUE" Value="REAL#0.0"/>
+		</FB>
+		<FB Name="INI_MIN_REF" Type="eclipse4diac::storage::INI_AR2" x="5600" y="2000">
+			<Parameter Name="SETM" Value="TRUE"/>
+			<Parameter Name="KEY" Value="'MIN_REF'"/>
+			<Parameter Name="DEFAULT_VALUE" Value="REAL#-100.0"/>
+		</FB>
+		<FB Name="INI_MID_REF" Type="eclipse4diac::storage::INI_AR2" x="7100" y="2100">
+			<Parameter Name="SETM" Value="TRUE"/>
+			<Parameter Name="KEY" Value="'MID_REF'"/>
+			<Parameter Name="DEFAULT_VALUE" Value="REAL#0.0"/>
+		</FB>
+		<FB Name="INI_MAX_REF" Type="eclipse4diac::storage::INI_AR2" x="8700" y="2200">
+			<Parameter Name="SETM" Value="TRUE"/>
+			<Parameter Name="KEY" Value="'MAX_REF'"/>
+			<Parameter Name="DEFAULT_VALUE" Value="REAL#100.0"/>
+		</FB>
+		<SubApp Name="PublishCal" Type="MyLib::sys::AR_TO_Q_Publish_OPC" x="5900" y="-3200">
+		</SubApp>
+		<FB Name="TapMinRaw" Type="adapter::events::bidirectional::AR2_SPLIT_FWD_REV" x="2000" y="700">
+		</FB>
+		<FB Name="TapMidRaw" Type="adapter::events::bidirectional::AR2_SPLIT_FWD_REV" x="2000" y="1300">
+		</FB>
+		<FB Name="TapMaxRaw" Type="adapter::events::bidirectional::AR2_SPLIT_FWD_REV" x="2000" y="1900">
+		</FB>
+		<SubApp Name="PublishMinRaw" Type="MyLib::sys::AR_TO_Q_Publish_OPC" x="5900" y="-2400">
+		</SubApp>
+		<SubApp Name="PublishMidRaw" Type="MyLib::sys::AR_TO_Q_Publish_OPC" x="5900" y="-1600">
+		</SubApp>
+		<SubApp Name="PublishMaxRaw" Type="MyLib::sys::AR_TO_Q_Publish_OPC" x="5900" y="-800">
+		</SubApp>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_18" x="11000" y="-800">
+		</FB>
+		<EventConnections>
+			<Connection Source="TriggerMIN.IND" Destination="CALIBRATE.C_MIN" dx1="606.67"/>
+			<Connection Source="TriggerMID.IND" Destination="CALIBRATE.C_MID" dx1="400"/>
+			<Connection Source="TriggerMAX.IND" Destination="CALIBRATE.C_MAX" dx1="173.33"/>
+			<Connection Source="INIT" Destination="CALIBRATE.INIT" dx1="80" dx2="80" dy="-313.33"/>
+			<Connection Source="CALIBRATE.INITO" Destination="INI_X_MIN.INIT" dx1="2380"/>
+			<Connection Source="INI_X_MIN.INITO" Destination="INI_X_MID.INIT" dx1="260"/>
+			<Connection Source="INI_X_MID.INITO" Destination="INI_X_MAX.INIT" dx1="260"/>
+			<Connection Source="INI_X_MAX.INITO" Destination="INI_MIN_REF.INIT" dx1="80" dx2="80" dy="500"/>
+			<Connection Source="INI_MIN_REF.INITO" Destination="INI_MID_REF.INIT" dx1="260"/>
+			<Connection Source="INI_MID_REF.INITO" Destination="INI_MAX_REF.INIT" dx1="306.67"/>
+			<Connection Source="INI_MAX_REF.INITO" Destination="InputRaw.INIT"/>
+			<Connection Source="InputRaw.INITO" Destination="MIN_REF_LIT.INIT"/>
+			<Connection Source="MIN_REF_LIT.INITO" Destination="MID_REF_LIT.INIT"/>
+			<Connection Source="MID_REF_LIT.INITO" Destination="MAX_REF_LIT.INIT"/>
+			<Connection Source="MAX_REF_LIT.INITO" Destination="TriggerMIN.INIT"/>
+			<Connection Source="TriggerMIN.INITO" Destination="TriggerMID.INIT"/>
+			<Connection Source="TriggerMID.INITO" Destination="TriggerMAX.INIT"/>
+			<Connection Source="TriggerMAX.INITO" Destination="PublishCal.INIT"/>
+			<Connection Source="PublishCal.INITO" Destination="PublishMinRaw.INIT"/>
+			<Connection Source="PublishMinRaw.INITO" Destination="PublishMidRaw.INIT"/>
+			<Connection Source="PublishMidRaw.INITO" Destination="PublishMaxRaw.INIT"/>
+			<Connection Source="PublishMaxRaw.INITO" Destination="INITO"/>
+			<Connection Source="PublishMaxRaw.INITO" Destination="AND_QO.REQ"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="Input" Destination="InputRaw.Input" dx1="1460">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId_RAWVAR" Destination="InputRaw.u16ObjId_RAWVAR" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="stObjCal" Destination="PublishCal.stObj" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId_C_MIN" Destination="TriggerMIN.u16ObjId" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId_C_MID" Destination="TriggerMID.u16ObjId" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId_C_MAX" Destination="TriggerMAX.u16ObjId" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="sSection" Destination="INI_X_MIN.SECTION" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="sSection" Destination="INI_X_MID.SECTION" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="sSection" Destination="INI_X_MAX.SECTION" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="sSection" Destination="INI_MIN_REF.SECTION" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="sSection" Destination="INI_MID_REF.SECTION" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="sSection" Destination="INI_MAX_REF.SECTION" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_RAW_WRITE" Destination="InputRaw.ID_RAW_WRITE" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_CAL_WRITE" Destination="PublishCal.ID_WRITE" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_MIN_METHOD" Destination="TriggerMIN.ID_METHOD" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_MID_TRIGGER_METHOD" Destination="TriggerMID.ID_METHOD" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_MAX_METHOD" Destination="TriggerMAX.ID_METHOD" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="stObjMinRef" Destination="MIN_REF_LIT.stObj" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_MINREF_READ" Destination="MIN_REF_LIT.ID_READ" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_MINREF_WRITE" Destination="MIN_REF_LIT.ID_WRITE" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="stObjMidRef" Destination="MID_REF_LIT.stObj" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_MIDREF_READ" Destination="MID_REF_LIT.ID_READ" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_MIDREF_WRITE" Destination="MID_REF_LIT.ID_WRITE" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="stObjMaxRef" Destination="MAX_REF_LIT.stObj" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_MAXREF_READ" Destination="MAX_REF_LIT.ID_READ" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_MAXREF_WRITE" Destination="MAX_REF_LIT.ID_WRITE" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="stObjMinRaw" Destination="PublishMinRaw.stObj" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_MIN_RAW_WRITE" Destination="PublishMinRaw.ID_WRITE" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="stObjMidRaw" Destination="PublishMidRaw.stObj" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_MID_RAW_WRITE" Destination="PublishMidRaw.ID_WRITE" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="stObjMaxRaw" Destination="PublishMaxRaw.stObj" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_MAX_RAW_WRITE" Destination="PublishMaxRaw.ID_WRITE" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="CALIBRATE.QI" dx1="80" dx2="80" dy="-100"/>
+			<Connection Source="QI" Destination="INI_X_MIN.QI" dx1="2273.33"/>
+			<Connection Source="QI" Destination="INI_X_MID.QI" dx1="3026.67"/>
+			<Connection Source="QI" Destination="INI_X_MAX.QI" dx1="3773.33"/>
+			<Connection Source="QI" Destination="INI_MIN_REF.QI" dx1="2273.33"/>
+			<Connection Source="QI" Destination="INI_MID_REF.QI" dx1="3026.67"/>
+			<Connection Source="QI" Destination="INI_MAX_REF.QI" dx1="3826.67"/>
+			<Connection Source="QI" Destination="InputRaw.QI"/>
+			<Connection Source="QI" Destination="MIN_REF_LIT.QI"/>
+			<Connection Source="QI" Destination="MID_REF_LIT.QI"/>
+			<Connection Source="QI" Destination="MAX_REF_LIT.QI"/>
+			<Connection Source="QI" Destination="TriggerMIN.QI"/>
+			<Connection Source="QI" Destination="TriggerMID.QI"/>
+			<Connection Source="QI" Destination="TriggerMAX.QI"/>
+			<Connection Source="QI" Destination="PublishCal.QI"/>
+			<Connection Source="QI" Destination="PublishMinRaw.QI"/>
+			<Connection Source="QI" Destination="PublishMidRaw.QI"/>
+			<Connection Source="QI" Destination="PublishMaxRaw.QI"/>
+			<Connection Source="CALIBRATE.QO" Destination="AND_QO.IN1" dx1="5080"/>
+			<Connection Source="INI_X_MIN.QO" Destination="AND_QO.IN2" dx1="2206.67"/>
+			<Connection Source="INI_X_MID.QO" Destination="AND_QO.IN3" dx1="1460"/>
+			<Connection Source="INI_X_MAX.QO" Destination="AND_QO.IN4" dx1="706.67"/>
+			<Connection Source="INI_MIN_REF.QO" Destination="AND_QO.IN5" dx1="2206.67"/>
+			<Connection Source="INI_MID_REF.QO" Destination="AND_QO.IN6" dx1="1460"/>
+			<Connection Source="INI_MAX_REF.QO" Destination="AND_QO.IN7" dx1="660"/>
+			<Connection Source="InputRaw.QO" Destination="AND_QO.IN8"/>
+			<Connection Source="MIN_REF_LIT.QO" Destination="AND_QO.IN9"/>
+			<Connection Source="MID_REF_LIT.QO" Destination="AND_QO.IN10"/>
+			<Connection Source="MAX_REF_LIT.QO" Destination="AND_QO.IN11"/>
+			<Connection Source="TriggerMIN.QO" Destination="AND_QO.IN12"/>
+			<Connection Source="TriggerMID.QO" Destination="AND_QO.IN13"/>
+			<Connection Source="TriggerMAX.QO" Destination="AND_QO.IN14"/>
+			<Connection Source="PublishCal.QO" Destination="AND_QO.IN15"/>
+			<Connection Source="PublishMinRaw.QO" Destination="AND_QO.IN16"/>
+			<Connection Source="PublishMidRaw.QO" Destination="AND_QO.IN17"/>
+			<Connection Source="PublishMaxRaw.QO" Destination="AND_QO.IN18"/>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="1173.33"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="InputRaw.AR_OUT" Destination="CALIBRATE.X" dx1="300"/>
+			<Connection Source="CALIBRATE.X_MIN" Destination="TapMinRaw.IN" dx1="580"/>
+			<Connection Source="TapMinRaw.OUT" Destination="INI_X_MIN.VAL" dx1="1353.33"/>
+			<Connection Source="TapMinRaw.REV_OUT" Destination="PublishMinRaw.AR_IN" dx1="313.33"/>
+			<Connection Source="CALIBRATE.X_MID" Destination="TapMidRaw.IN" dx1="460"/>
+			<Connection Source="TapMidRaw.OUT" Destination="INI_X_MID.VAL" dx1="200"/>
+			<Connection Source="TapMidRaw.REV_OUT" Destination="PublishMidRaw.AR_IN" dx1="433.33"/>
+			<Connection Source="CALIBRATE.X_MAX" Destination="TapMaxRaw.IN" dx1="340"/>
+			<Connection Source="TapMaxRaw.OUT" Destination="INI_X_MAX.VAL" dx1="2240"/>
+			<Connection Source="TapMaxRaw.REV_OUT" Destination="PublishMaxRaw.AR_IN" dx1="653.33"/>
+			<Connection Source="CALIBRATE.MIN_REF" Destination="INI_MIN_REF.VAL" dx1="253.33"/>
+			<Connection Source="CALIBRATE.MID_REF" Destination="INI_MID_REF.VAL" dx1="220"/>
+			<Connection Source="CALIBRATE.MAX_REF" Destination="INI_MAX_REF.VAL" dx1="180"/>
+			<Connection Source="MIN_REF_LIT.VALUEO" Destination="CALIBRATE.Y_MIN" dx1="626.67"/>
+			<Connection Source="MID_REF_LIT.VALUEO" Destination="CALIBRATE.Y_MID" dx1="946.67"/>
+			<Connection Source="MAX_REF_LIT.VALUEO" Destination="CALIBRATE.Y_MAX" dx1="1273.33"/>
+			<Connection Source="CALIBRATE.Y" Destination="PublishCal.AR_IN" dx1="300"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

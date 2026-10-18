@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="I_TD" Comment="Time/Date TD">
+	<Identification Standard="ISO 11783-7" Classification="PGN 65254" Function="Time/Date TD" Description="Copyright (c) 2024 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0&#10;&#10;Message providing current time and date information in the ISOBUS network.&#10;&#10;https://docs.ms-muc-docs.de/projects/isobus-other-docs/de/latest/PGN/PGN_65254.html">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2024-07-09">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::tecu">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+				<With Var="QI"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+			</Event>
+			<Event Name="IND" Type="Event" Comment="Indication from Resource - feuert bei jedem Zyklus ohne aktiven Timeout und publiziert dabei auch den Reset von Q_timeout auf false.">
+				<With Var="QO"/>
+				<With Var="timestamp_data"/>
+				<With Var="STATUS"/>
+				<With Var="Q_timeout"/>
+				<With Var="SECONDS"/>
+				<With Var="MINUTES"/>
+				<With Var="HOURS"/>
+				<With Var="MONTH"/>
+				<With Var="DAY"/>
+				<With Var="YEAR"/>
+				<With Var="LOCAL_MINUTE_OFFSET"/>
+				<With Var="LOCAL_HOUR_OFFSET"/>
+			</Event>
+			<Event Name="TIMEOUT" Type="Event" Comment="Feuert ausschliesslich beim tatsaechlichen Eintreten eines Timeouts (Entry-Trigger). Das Zuruecksetzen von Q_timeout auf false wird NICHT hier, sondern ueber IND gemeldet.">
+				<With Var="timestamp_timeout"/>
+				<With Var="STATUS"/>
+				<With Var="Q_timeout"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
+			<VarDeclaration Name="STATUS" Type="STRING"/>
+			<VarDeclaration Name="Q_timeout" Type="BOOL"/>
+			<VarDeclaration Name="timestamp_timeout" Type="DINT"/>
+			<VarDeclaration Name="timestamp_data" Type="DINT"/>
+			<VarDeclaration Name="YEAR" Type="UINT" Comment="Year (see Attributes for Details)" InitialValue="UINT#16#FFFF">
+				<Attribute Name="SPN" Type="INT" Value="964"/>
+				<Attribute Name="SP_Name" Type="STRING" Value="'Year'"/>
+				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'6'"/>
+				<Attribute Name="SP_Length" Type="INT" Value="8" Comment="8 bits"/>
+				<Attribute Name="Scaling" Type="STRING" Value="'1 y/bit'"/>
+				<Attribute Name="Offset" Type="INT" Value="1985"/>
+				<Attribute Name="Link" Type="STRING" Value="'https://docs.ms-muc-docs.de/projects/isobus-other-docs/de/latest/PGN/PGN_65254.html#spn-964-year'"/>
+			</VarDeclaration>
+			<VarDeclaration Name="MONTH" Type="USINT" Comment="Month (see Attributes for Details)" InitialValue="USINT#16#FF">
+				<Attribute Name="SPN" Type="INT" Value="963"/>
+				<Attribute Name="SP_Name" Type="STRING" Value="'Month'"/>
+				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'4'"/>
+				<Attribute Name="SP_Length" Type="INT" Value="8" Comment="8 bits"/>
+				<Attribute Name="Scaling" Type="STRING" Value="'1 month/bit'"/>
+				<Attribute Name="Offset" Type="INT" Value="0"/>
+				<Attribute Name="Link" Type="STRING" Value="'https://docs.ms-muc-docs.de/projects/isobus-other-docs/de/latest/PGN/PGN_65254.html#spn-963-month'"/>
+			</VarDeclaration>
+			<VarDeclaration Name="DAY" Type="USINT" Comment="Day (see Attributes for Details)" InitialValue="USINT#16#FF">
+				<Attribute Name="SPN" Type="INT" Value="962"/>
+				<Attribute Name="SP_Name" Type="STRING" Value="'Day'"/>
+				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'5'"/>
+				<Attribute Name="SP_Length" Type="INT" Value="8" Comment="8 bits"/>
+				<Attribute Name="Scaling" Type="STRING" Value="'0.25 d/bit'"/>
+				<Attribute Name="Offset" Type="INT" Value="0"/>
+				<Attribute Name="Link" Type="STRING" Value="'https://docs.ms-muc-docs.de/projects/isobus-other-docs/de/latest/PGN/PGN_65254.html#spn-962-day'"/>
+			</VarDeclaration>
+			<VarDeclaration Name="HOURS" Type="USINT" Comment="Hours (see Attributes for Details)" InitialValue="USINT#16#FF">
+				<Attribute Name="SPN" Type="INT" Value="961"/>
+				<Attribute Name="SP_Name" Type="STRING" Value="'Hours'"/>
+				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'3'"/>
+				<Attribute Name="SP_Length" Type="INT" Value="8" Comment="8 bits"/>
+				<Attribute Name="Scaling" Type="STRING" Value="'1 h/bit'"/>
+				<Attribute Name="Offset" Type="INT" Value="0"/>
+				<Attribute Name="Link" Type="STRING" Value="'https://docs.ms-muc-docs.de/projects/isobus-other-docs/de/latest/PGN/PGN_65254.html#spn-961-hours'"/>
+			</VarDeclaration>
+			<VarDeclaration Name="MINUTES" Type="USINT" Comment="Minutes (see Attributes for Details)" InitialValue="USINT#16#FF">
+				<Attribute Name="SPN" Type="INT" Value="960"/>
+				<Attribute Name="SP_Name" Type="STRING" Value="'Minutes'"/>
+				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'2'"/>
+				<Attribute Name="SP_Length" Type="INT" Value="8" Comment="8 bits"/>
+				<Attribute Name="Scaling" Type="STRING" Value="'1 min/bit'"/>
+				<Attribute Name="Offset" Type="INT" Value="0"/>
+				<Attribute Name="Link" Type="STRING" Value="'https://docs.ms-muc-docs.de/projects/isobus-other-docs/de/latest/PGN/PGN_65254.html#spn-960-minutes'"/>
+			</VarDeclaration>
+			<VarDeclaration Name="SECONDS" Type="USINT" Comment="Seconds (see Attributes for Details)" InitialValue="USINT#16#FF">
+				<Attribute Name="SPN" Type="INT" Value="959"/>
+				<Attribute Name="SP_Name" Type="STRING" Value="'Seconds'"/>
+				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'1'"/>
+				<Attribute Name="SP_Length" Type="INT" Value="8" Comment="8 bits"/>
+				<Attribute Name="Scaling" Type="STRING" Value="'0.25 s/bit'"/>
+				<Attribute Name="Offset" Type="INT" Value="0"/>
+				<Attribute Name="Link" Type="STRING" Value="'https://docs.ms-muc-docs.de/projects/isobus-other-docs/de/latest/PGN/PGN_65254.html#spn-959-seconds'"/>
+			</VarDeclaration>
+			<VarDeclaration Name="LOCAL_MINUTE_OFFSET" Type="SINT" Comment="Local minute offset (see Attributes for Details)">
+				<Attribute Name="SPN" Type="INT" Value="1601"/>
+				<Attribute Name="SP_Name" Type="STRING" Value="'Local minute offset'"/>
+				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'7'"/>
+				<Attribute Name="SP_Length" Type="INT" Value="8" Comment="8 bits"/>
+				<Attribute Name="Scaling" Type="STRING" Value="'1 min/bit'"/>
+				<Attribute Name="Offset" Type="INT" Value="-125"/>
+				<Attribute Name="Link" Type="STRING" Value="'https://docs.ms-muc-docs.de/projects/isobus-other-docs/de/latest/PGN/PGN_65254.html#spn-1601-local-minute-offset'"/>
+			</VarDeclaration>
+			<VarDeclaration Name="LOCAL_HOUR_OFFSET" Type="SINT" Comment="Local hour offset (see Attributes for Details)">
+				<Attribute Name="SPN" Type="INT" Value="1602"/>
+				<Attribute Name="SP_Name" Type="STRING" Value="'Local hour offset'"/>
+				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'8'"/>
+				<Attribute Name="SP_Length" Type="INT" Value="8" Comment="8 bits"/>
+				<Attribute Name="Scaling" Type="STRING" Value="'1 h/bit'"/>
+				<Attribute Name="Offset" Type="INT" Value="-125"/>
+				<Attribute Name="Link" Type="STRING" Value="'https://docs.ms-muc-docs.de/projects/isobus-other-docs/de/latest/PGN/PGN_65254.html#spn-1602-local-hour-offset'"/>
+			</VarDeclaration>
+		</OutputVars>
+	</InterfaceList>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<p>Time/Date TD</p>
+
+<p>&nbsp;</p>
+
+<p><strong>TIMEOUT / IND Vertrag:</strong> TIMEOUT feuert ausschliesslich beim tatsaechlichen Eintreten eines Timeouts (Q_timeout wird true). Das Zuruecksetzen von Q_timeout auf false (Timeout vorbei) wird bewusst NICHT nochmal separat ueber TIMEOUT gemeldet, sondern kommt ueber IND - das feuert bei jedem Zyklus ohne aktiven Timeout und publiziert Q_timeout mit. Nachgeschaltete Bausteine, die auf das Ende eines Timeouts reagieren muessen, werten dafuer IND mit Q_timeout==false aus, nicht ein zweites TIMEOUT-Event.</p>
+]]></Attribute>
+</FBType>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="FB_SR_T_FF" Comment="Realizes a bistable set-dominat latch plus Toggle">
+	<Identification Standard="61499-1" Description="Copyright (c) 2023 Martin Erich Jobst&#10; &#10;This program and the accompanying materials are made&#10;available under the terms of the Eclipse Public License 2.0&#10;which is available at https://www.eclipse.org/legal/epl-2.0/&#10;&#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Version="3.0" Author="Patrick Aigner" Date="2025-04-14" Remarks="changed package">
+	</VersionInfo>
+	<VersionInfo Version="1.0" Author="Martin Jobst" Date="2023-04-28">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::bistableElements">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event" Comment="Normal Execution Request">
+				<With Var="S1"/>
+				<With Var="R"/>
+				<With Var="CLK"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event" Comment="Execution Confirmation">
+				<With Var="Q1"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="S1" Type="BOOL" Comment="Set"/>
+			<VarDeclaration Name="R" Type="BOOL" Comment="Reset"/>
+			<VarDeclaration Name="CLK" Type="BOOL" Comment="Clock"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="Q1" Type="BOOL" Comment="Output"/>
+		</OutputVars>
+	</InterfaceList>
+	<SimpleFB>
+		<InternalVars>
+			<VarDeclaration Name="EDGE" Type="BOOL" InitialValue="TRUE"/>
+		</InternalVars>
+		<ECState Name="REQ">
+			<ECAction Algorithm="REQ" Output="CNF"/>
+		</ECState>
+		<Algorithm Name="REQ">
+			<ST><![CDATA[
+IF S1 THEN
+	Q1 := BOOL#TRUE;
+ELSIF R THEN
+	Q1 := BOOL#FALSE;
+ELSIF CLK AND NOT EDGE THEN
+	Q1 := NOT Q1;
+END_IF;
+EDGE := CLK;
+]]></ST>
+		</Algorithm>
+	</SimpleFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="LED_FREQ" Comment="Global constants">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Version="1.0" Author="Franz Höpfinger" Date="2025-07-30">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::io::DO_LED">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="LED_5HZ" Type="UINT" Comment="LED blinking 5HZ, highest Prio (Prio 6)" InitialValue="6"/>
+		<VarDeclaration Name="LED_2HZ" Type="UINT" Comment="Identifier for LED blinking 2HZ, Prio 5" InitialValue="5"/>
+		<VarDeclaration Name="LED_1HZ" Type="UINT" Comment="Identifier for LED blinking 1HZ, Prio 4" InitialValue="4"/>
+		<VarDeclaration Name="LED_05HZ" Type="UINT" Comment="Identifier for LED blinking 0.5Hz, Prio 3" InitialValue="3"/>
+		<VarDeclaration Name="LED_breathing_05HZ" Type="UINT" Comment="Identifier for LED breathing 0.5HZ, Prio 2" InitialValue="2"/>
+		<VarDeclaration Name="LED_ON" Type="UINT" Comment="Identifier for LED always on, Prio 1" InitialValue="1"/>
+		<VarDeclaration Name="LED_OFF" Type="UINT" Comment="not used, reserved." InitialValue="0"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE logiBUS::io::DO_LED;
+
+GLOBALCONSTANTS LED_FREQ
+	VAR_GLOBAL CONSTANT
+		LED_5HZ : UINT := 6; // LED blinking 5HZ, highest Prio (Prio 6)
+		LED_2HZ : UINT := 5; // Identifier for LED blinking 2HZ, Prio 5
+		LED_1HZ : UINT := 4; // Identifier for LED blinking 1HZ, Prio 4
+		LED_05HZ : UINT := 3; // Identifier for LED blinking 0.5Hz, Prio 3
+		LED_breathing_05HZ : UINT := 2; // Identifier for LED breathing 0.5HZ, Prio 2
+		LED_ON : UINT := 1; // Identifier for LED always on, Prio 1
+		LED_OFF : UINT := 0; // not used, reserved.
+	END_VAR
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</GlobalConstants>

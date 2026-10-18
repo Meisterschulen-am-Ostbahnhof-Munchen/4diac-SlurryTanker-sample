@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="Override_K" Comment="K-Werte fuer AX_AUI_MUX_3 in Override_K_Select (0=Normal, 1=Force FALSE, 2=Force TRUE)">
+	<Identification Standard="61499-1" Description="Copyright (c) 2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-08-13">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::OverrideK::const">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="Override_K_Normal" Type="UINT" Comment="K=0, AX_AUI_MUX_3.IN1 (Normal/Eingang)" InitialValue="UINT#0"/>
+		<VarDeclaration Name="Override_K_ForceFalse" Type="UINT" Comment="K=1, AX_AUI_MUX_3.IN2 (Force FALSE / Voll)" InitialValue="UINT#1"/>
+		<VarDeclaration Name="Override_K_ForceTrue" Type="UINT" Comment="K=2, AX_AUI_MUX_3.IN3 (Force TRUE / Leer)" InitialValue="UINT#2"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE adapter::OverrideK::const;
+
+GLOBALCONSTANTS Override_K
+	VAR_GLOBAL CONSTANT
+		Override_K_Normal : UINT := 0;
+		Override_K_ForceFalse : UINT := 1;
+		Override_K_ForceTrue : UINT := 2;
+	END_VAR
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</GlobalConstants>

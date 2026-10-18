@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Q_BackgroundColour_EnableOk_A" Comment="Leitet aus 2 Bools (Kanal aktiviert + Hardware-QO) eine&#10;3-Farben-VT-Hintergrundfarbe ab: Weiss=deaktiviert / Gruen=aktiviert+QO TRUE /&#10;Rot=aktiviert+QO FALSE (Stoerung). Generisch fuer jeden Kanal mit&#10;Enable-Schalter + Status-LED (PWM, PI, ...).">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-08-31" Remarks="Die reine 2-Bool-zu-1-von-3-Werten-Logik ist jetzt in MyLib::sys::Select_EnableOk ausgelagert (generisch, nicht auf Farben beschraenkt) - dieser Baustein instanziiert sie nur noch mit den 3 Farben als Parameter und haengt Q_BackgroundColour dran">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::colours::COLOR_GREEN"/>
+		<Import declaration="isobus::UT::Q::const::colours::COLOR_RED"/>
+		<Import declaration="isobus::UT::Q::const::colours::COLOR_WHITE"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+			<SubAppEvent Name="REQ" Type="Event" Comment="Neu auswerten - vom Aufrufer einmal pro moeglicher Aenderung von bEnable ODER bOk gefeuert (Schalter getoggelt, oder frisches QO eingetroffen), beide Werte werden zusammen mitgegeben">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+			<SubAppEvent Name="CNF" Type="Event" Comment="Farbe gesendet (Durchreichung von Q_BackgroundColour.CNF)">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID Status-Anzeige (CButton, nur Hintergrundfarbe, kein Text) - einmalig bei Instanziierung per Parameter gesetzt"/>
+			<VarDeclaration Name="bEnable" Type="BOOL" Comment="Kanal aktiviert (z.B. Enable-Flip-Flop.Q)"/>
+			<VarDeclaration Name="bOk" Type="BOOL" Comment="Hardware bestaetigt aktiv (z.B. logiBUS_..._IDA.QO) - nur relevant wenn bEnable=TRUE"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status (Durchreichung von Q_BackgroundColour.STATUS)"/>
+			<VarDeclaration Name="s16result" Type="INT" Comment="Retval (Durchreichung von Q_BackgroundColour.s16result)"/>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<SubApp Name="Select_EnableOk_Colour" Type="MyLib::sys::Select_EnableOk_a" x="0" y="0">
+			<Parameter Name="valDisabled" Value="COLOR_WHITE"/>
+			<Parameter Name="valOk" Value="COLOR_GREEN"/>
+			<Parameter Name="valFault" Value="COLOR_RED"/>
+		</SubApp>
+		<FB Name="Q_BackgroundColour" Type="isobus::UT::Q::Q_BackgroundColour" x="1600" y="0">
+		</FB>
+		<EventConnections>
+			<Connection Source="REQ" Destination="Select_EnableOk_Colour.REQ" dx1="400"/>
+			<Connection Source="Select_EnableOk_Colour.CNF" Destination="Q_BackgroundColour.REQ" dx1="400"/>
+			<Connection Source="Q_BackgroundColour.CNF" Destination="CNF" dx1="400"/>
+			<Connection Source="INIT" Destination="Q_BackgroundColour.INIT"/>
+			<Connection Source="Q_BackgroundColour.INITO" Destination="INITO"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="bOk" Destination="Select_EnableOk_Colour.bOk" dx1="400"/>
+			<Connection Source="bEnable" Destination="Select_EnableOk_Colour.bEnable" dx1="400"/>
+			<Connection Source="Select_EnableOk_Colour.value" Destination="Q_BackgroundColour.u8Colour" dx1="400"/>
+			<Connection Source="u16ObjId" Destination="Q_BackgroundColour.u16ObjId" dx1="1600">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Q_BackgroundColour.STATUS" Destination="STATUS" dx1="1600"/>
+			<Connection Source="Q_BackgroundColour.s16result" Destination="s16result" dx1="1600"/>
+			<Connection Source="QI" Destination="Q_BackgroundColour.QI"/>
+			<Connection Source="Q_BackgroundColour.QO" Destination="QO"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

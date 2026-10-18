@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="AX_TO_QXA_BG_PUBLISH" Comment="Treibt aus einem bereits fertigen AX-Zustand (z.B. per OR mehrerer Quellen&#10;zusammengefuehrt - gestaffeltes Gruppensignal, Einzel-Toggle,&#10;IO-Diag-Testbutton) 1 physischen Ausgang + Hintergrundfarbe (SoftKey+AUX) +&#10;lokalen State-Publish (Web-Client/OPC-Dashboard). Gegenstueck zu&#10;MyLib::sys::AX_SoftkeyToggle_RS_TO_QXA_BG (das den Toggle/Reset noch selbst&#10;erzeugt) - hier liegt der AX-Zustand bereits fertig vor und muss nur noch auf&#10;Ausgang+Hintergrund+Publish verteilt werden.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.2" Author="Franz Höpfinger" Date="2026-10-13" Remarks="Neuer SubAppEventOutput INITO (Type EInit), durchgereicht von DigitalOutput.INITO - analog ILOCK_SWITCH_2_QXA_OPC v1.3, fuer die Option-Lib-Migration Igel/Elevator Klassisch (echtes INIT_CNF statt T#15s-Delay-Raten).">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-10-12" Remarks="Neuer InputVar QI (BOOL) + SubAppEventInput INIT (Type EInit), durchgereicht an DigitalOutput.QI/.INIT statt hartem TRUE/Auto-Verteilung - QI-Gate Igel/Elevator Klassisch-vs-PVEA (gemeinsame Q5/Q7-Pins), 'Init wie bei Tecu'. Blast radius: 3 Instanzen, alle in Baender_EinAus.SUB (ueber AX_TO_QXA_BG_PUBLISH_SWITCHPIC) - bekommen alle ein explizites INIT statt Auto-Verteilung, unveraendertes Boot-Verhalten fuer Querband (sofort), neue Delay-Option fuer Igel/Elevator.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO_S"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialisierung - durchgereicht an DigitalOutput.INIT statt Auto-Verteilung"/>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialisierung abgeschlossen - echtes Confirm von DigitalOutput.INITO"/>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID Softkey - traegt die Hintergrundfarbe" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObjIdA" Type="UINT" Comment="Object ID AuxFunction2 (Joystick) - zeigt Hintergrundfarbe am Aux-Handle mit" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="Output" Type="logiBUS::io::DQ::logiBUS_DO_S" Comment="Identify the Output Output_Q1..Q12" InitialValue="logiBUS_DO::Invalid"/>
+			<VarDeclaration Name="ID_STATE_WRITE" Type="WSTRING" Comment="Lokale Publish-Adresse (ACTION=WRITE) fuer den tatsaechlichen Zustand - wird von Web-Client/Dashboard remote abonniert"/>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Qualifier fuer den physischen Ausgang - FALSE haelt diese Instanz komplett inaktiv" InitialValue="TRUE"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully (AND aus DigitalOutput/GreenWhiteBackground_AX/PUBLISH_STATE)"/>
+		</OutputVars>
+		<Sockets>
+			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AX" Comment="Fertiger AX-Zustand (bereits zusammengefuehrt) - wird auf Ausgang+Hintergrund+Publish verteilt"/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="AX_SPLIT_3" Type="adapter::events::unidirectional::AX_SPLIT_3" x="0" y="0">
+		</FB>
+		<FB Name="DigitalOutput" Type="logiBUS::io::DQ::logiBUS_QXA" x="1700" y="-1200">
+		</FB>
+		<SubApp Name="GreenWhiteBackground_AX" Type="MyLib::sys::GreenWhiteBackground3_AX" x="1700" y="0">
+		</SubApp>
+		<FB Name="PUBLISH_STATE" Type="adapter::net::AX_PUBLISH_1" x="1700" y="1900">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_3" x="1700" y="2700">
+		</FB>
+		<DataConnections>
+			<Connection Source="u16ObjId" Destination="GreenWhiteBackground_AX.u16ObjId" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjIdA" Destination="GreenWhiteBackground_AX.u16ObjIdA" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Output" Destination="DigitalOutput.Output" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_STATE_WRITE" Destination="PUBLISH_STATE.ID" dx1="1280">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="DigitalOutput.QI" dx1="1280">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="PUBLISH_STATE.QI"/>
+			<Connection Source="QI" Destination="GreenWhiteBackground_AX.QI"/>
+			<Connection Source="DigitalOutput.QO" Destination="AND_QO.IN1"/>
+			<Connection Source="GreenWhiteBackground_AX.QO" Destination="AND_QO.IN2"/>
+			<Connection Source="PUBLISH_STATE.QO" Destination="AND_QO.IN3"/>
+			<Connection Source="AND_QO.OUT" Destination="QO"/>
+		</DataConnections>
+		<EventConnections>
+			<Connection Source="INIT" Destination="DigitalOutput.INIT" dx1="600"/>
+			<Connection Source="DigitalOutput.INITO" Destination="GreenWhiteBackground_AX.INIT"/>
+			<Connection Source="GreenWhiteBackground_AX.INITO" Destination="PUBLISH_STATE.INIT"/>
+			<Connection Source="PUBLISH_STATE.INITO" Destination="INITO" dx2="80" dy="-420"/>
+			<Connection Source="PUBLISH_STATE.INITO" Destination="AND_QO.REQ"/>
+		</EventConnections>
+		<AdapterConnections>
+			<Connection Source="IN" Destination="AX_SPLIT_3.IN" dx1="600"/>
+			<Connection Source="AX_SPLIT_3.OUT1" Destination="DigitalOutput.OUT" dx1="600"/>
+			<Connection Source="AX_SPLIT_3.OUT2" Destination="GreenWhiteBackground_AX.DI1" dx1="600"/>
+			<Connection Source="AX_SPLIT_3.OUT3" Destination="PUBLISH_STATE.IN" dx1="200"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

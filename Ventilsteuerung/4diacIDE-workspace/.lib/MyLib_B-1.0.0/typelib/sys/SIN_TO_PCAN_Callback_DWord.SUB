@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="SIN_TO_PCAN_Callback_DWord" Comment="Sinus-Signalgenerator (GEN_SIN) als PCAN-Callback-CAN-Botschaft senden, Wert als&#10;volle DWORD-Genauigkeit gepackt. Diagnose/Debug-Baustein zum Plotten auf PCAN&#10;Explorer.">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-09" Remarks="Ausgelagert aus Uebung_126b2_sub zur Wiederverwendung.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<Plugs>
+			<AdapterDeclaration Name="PLUG1" Type="isobus::pgn::tx::Callback"/>
+		</Plugs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="CallbackFB" Type="isobus::pgn::tx::CallbackFB" x="-400" y="200">
+			<Parameter Name="DI1" Value="(data := [16#FF, 16#FF, 16#FF, 16#FF, 16#FF, 16#FF, 16#FF, 16#FF])"/>
+		</FB>
+		<FB Name="STRUCT_MUX" Type="eclipse4diac::convert::STRUCT_MUX" x="-2400" y="100">
+			<Attribute Name="StructuredType" Type="STRING" Value="isobus::pgn::CAN_MSG"/>
+			<Parameter Name="u16DaSize" Value="0"/>
+			<Parameter Name="u8Priority" Value="7"/>
+		</FB>
+		<FB Name="BYTES_TO_ARR08B" Type="logiBUS::utils::conversion::arr::reversing::DWORDS_TO_ARR08B" x="-4500" y="200">
+			<Parameter Name="IN_01" Value="16#00"/>
+		</FB>
+		<FB Name="GEN_SIN" Type="OSCAT::Basic::POUs::Engineering::signal_generators::GEN_SIN" x="-9000" y="-100">
+			<Parameter Name="PT" Value="T#10s"/>
+			<Parameter Name="AM" Value="10.0"/>
+			<Parameter Name="OS" Value="5.0"/>
+			<Parameter Name="DL" Value="0.0"/>
+		</FB>
+		<FB Name="F_REAL_TO_DWORD" Type="iec61131::conversion::F_REAL_TO_DWORD" x="-7800" y="0">
+		</FB>
+		<EventConnections>
+			<Connection Source="STRUCT_MUX.CNF" Destination="CallbackFB.CNF" dx1="626.67"/>
+			<Connection Source="BYTES_TO_ARR08B.CNF" Destination="STRUCT_MUX.REQ" dx1="560"/>
+			<Connection Source="CallbackFB.REQ" Destination="GEN_SIN.REQ" dx1="80" dx2="266.67" dy="-980"/>
+			<Connection Source="GEN_SIN.CNF" Destination="F_REAL_TO_DWORD.REQ" dx1="293.33"/>
+			<Connection Source="F_REAL_TO_DWORD.CNF" Destination="BYTES_TO_ARR08B.REQ" dx1="1153.33"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="STRUCT_MUX.OUT" Destination="CallbackFB.DI1" dx1="1173.33"/>
+			<Connection Source="BYTES_TO_ARR08B.OUT" Destination="STRUCT_MUX.data" dx1="506.67"/>
+			<Connection Source="GEN_SIN.Out" Destination="F_REAL_TO_DWORD.IN" dx1="293.33"/>
+			<Connection Source="F_REAL_TO_DWORD.OUT" Destination="BYTES_TO_ARR08B.IN_00" dx1="1153.33"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="CallbackFB.PLUG1" Destination="PLUG1" dx1="4780"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Heben_Senken_TO_QDA_PWM_OPC" Comment="2 Remote-Kommandos (Heben/Senken, je Subscribe+State-Publish, ODER-verknuepft&#10;mit IO-Test wie bei ILOCK_SWITCH_2_QXA_OPC) auf 1 ratiometrisches PWM-Signal&#10;(Danfoss PVEA: 25%=Senken, 50%=Neutral, 75%=Heben, Lastteiler-korrigiert) + 1&#10;Freigabe-DO als Klick-Toggle (AX_T_FF_INIT, Default AN, per RPC-Methode aus VT&#10;und Dashboard aus-/einschaltbar - Not-Bedienung, z.B. Strassenmodus). Generisch&#10;fuer jeden PVEA-Aktor mit 2 physischen Kanaelen (links=PWM, rechts=Freigabe),&#10;Bedienung von einem Modul ohne eigenes VT.">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.8" Author="Franz Höpfinger" Date="2026-10-15" Remarks="Kommentar-Korrektur (Franz: 'INIT Kette ueberall so machen, ein REND ist NICHT NOETIG'): FB-Netzwerk war bereits sequenziell (DO_Toggle.INITO -&gt; PWM_Mux.INIT, kein E_REND_2-FB vorhanden), aber der INITO-Comment beschrieb noch faelschlich ein Rendezvous aus der v1.7-Planung. Nur Dokumentation angepasst, keine funktionale Aenderung.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.7" Author="Franz Höpfinger" Date="2026-10-13" Remarks="Neuer SubAppEventOutput INITO (Type EInit) fuer Aufnahme_Option.SUB (Option::AOption-Socket-Wrapper, analog Bunker_Klappen_Option.SUB) - PWM_Mux.INITO (HebenSenken_ILOCK_QDA_PWM_OPC v1.6) UND DO_Toggle.INITO (DO_TOGGLE_RPC_QXA_OPC v1.3) sind 2 echte, unabhaengige physische Kanal-Confirms (PWM-Kanal + Freigabe-DO-Kanal). E_REND_2 (Rendezvous/AND, nicht E_MERGE_2/OR) wartet auf BEIDE bevor INITO genau 1x feuert - ein nachgelagerter AOption-Socket (DEMUX Break-before-Make) erwartet pro Umschaltvorgang genau 1 INIT_CNF, ein doppeltes Feuern waere dort undefiniert. INIT selbst resettet E_REND_2 (R), damit jeder neue INIT-Zyklus wieder auf beide wartet.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.6" Author="Franz Höpfinger" Date="2026-10-11" Remarks="Neuer SubAppEventInput INIT (Type EInit), durchgereicht an PWM_Mux.INIT (HebenSenken_ILOCK_QDA_PWM_OPC v1.5) UND DO_Toggle.INIT (DO_TOGGLE_RPC_QXA_OPC v1.2) statt Auto-Verteilung - analog ILOCK_SWITCH_2_QXA_OPC v1.2, 'Init wie bei Tecu' (Franz).">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.5" Author="Franz Höpfinger" Date="2026-10-11" Remarks="Neuer QI-InputVar (Default TRUE, rueckwaertskompatibel) durchgereicht an PWM_Mux.QI (HebenSenken_ILOCK_QDA_PWM_OPC v1.4) UND DO_Toggle.QI (DO_TOGGLE_RPC_QXA_OPC v1.1) - analog ILOCK_SWITCH_2_QXA_OPC v1.1, haelt beide physischen Kanaele dieser Instanz gemeinsam inaktiv.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.4" Author="Franz Höpfinger" Date="2026-09-20" Remarks="PWM_POW-Socket ergaenzt (reiner Passthrough an PWM_Mux.PWM_POW), da HebenSenken_ILOCK_QDA_PWM_OPC v1.1 PWM_POW jetzt als eigenen Socket statt intern fest 1.0 hat - jeder Aufrufer muss ihn jetzt verbinden.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.3" Author="Franz Höpfinger" Date="2026-09-08" Remarks="V1.1: IO-Test fuer Heben/Senken ergaenzt (SUBSCRIBE_TEST_HEBEN/SENKEN, ODER vor dem ILOCK), Publish-Punkte (State+Test) hinter den ILOCK verlegt (wie ILOCK_SWITCH_2_QXA_OPC), Freigabe-DO von starrem initval_AX auf AX_T_FF_INIT-Klick-Toggle per RPC-Methode umgestellt - KEIN OR nach dem Flipflop, AX_T_FF_INIT.Q ist alleinige Source of Truth fuer den Ausgang. V1.2: Freigabe-DO-Teilnetz nach MyLib::sys::DO_TOGGLE_RPC_QXA_OPC ausgelagert. V1.3: PWM/ILOCK/Mux-Teilnetz nach MyLib::sys::HebenSenken_ILOCK_QDA_PWM_OPC ausgelagert - diese SubApp ist jetzt nur noch die Zusammensetzung beider Bausteine, Schnittstelle unveraendert.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO_S"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialisierung - vom Aufrufer sequenziert statt per Auto-Verteilung, damit QI vor der physischen Kanalbindung feststeht">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialisierung abgeschlossen - sequenzielles Confirm: DO_Toggle zuerst, dann PWM_Mux (kein Rendezvous noetig, beide sind reine physische Ausgangskanaele)">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="Output_PWM" Type="logiBUS::io::DQ::logiBUS_DO_S" Comment="Physischer PWM-Ausgang (linker Kanal): 25/50/75% Tastgrad, ratiometrisch" InitialValue="logiBUS_DO::Invalid"/>
+			<VarDeclaration Name="Output_DO" Type="logiBUS::io::DQ::logiBUS_DO_S" Comment="Physischer Freigabe-Ausgang (rechter Kanal): Klick-Toggle, Default AN" InitialValue="logiBUS_DO::Invalid"/>
+			<VarDeclaration Name="DT_PROTECT" Type="TIME" Comment="Schutz-Totzeit vor Richtungswechsel" InitialValue="T#300ms"/>
+			<VarDeclaration Name="ID_HEBEN_READ" Type="WSTRING" Comment="Echtes Funktions-Kommando Heben (Subscribe)"/>
+			<VarDeclaration Name="ID_HEBEN_WRITE" Type="WSTRING" Comment="Echte Funktions-Rueckmeldung Heben, HINTER dem ILOCK (Publish)"/>
+			<VarDeclaration Name="ID_SENKEN_READ" Type="WSTRING" Comment="Echtes Funktions-Kommando Senken (Subscribe)"/>
+			<VarDeclaration Name="ID_SENKEN_WRITE" Type="WSTRING" Comment="Echte Funktions-Rueckmeldung Senken, HINTER dem ILOCK (Publish)"/>
+			<VarDeclaration Name="ID_TEST_READ_HEBEN" Type="WSTRING" Comment="Bestehende IO-Test-Subscribe-Adresse Heben (z.B. STG2_Q0x_READ), ODER-verknuepft mit ID_HEBEN_READ vor dem ILOCK"/>
+			<VarDeclaration Name="ID_TEST_WRITE_HEBEN" Type="WSTRING" Comment="Bestehende IO-Test-Publish-Adresse Heben, HINTER dem ILOCK (z.B. STG2_Q0x_WRITE)"/>
+			<VarDeclaration Name="ID_TEST_READ_SENKEN" Type="WSTRING" Comment="Bestehende IO-Test-Subscribe-Adresse Senken, ODER-verknuepft mit ID_SENKEN_READ vor dem ILOCK"/>
+			<VarDeclaration Name="ID_TEST_WRITE_SENKEN" Type="WSTRING" Comment="Bestehende IO-Test-Publish-Adresse Senken, HINTER dem ILOCK"/>
+			<VarDeclaration Name="ID_DO_TOGGLE_METHOD" Type="WSTRING" Comment="Lokale Methodenadresse (ACTION=CREATE_METHOD) fuer den argumentlosen Freigabe-Toggle-Trigger - wird von STG1 (SoftKey-Relay) UND direkt vom OPC-Dashboard (CALL_METHOD) aufgerufen, beide Aufrufer teilen sich denselben Flipflop-Takt"/>
+			<VarDeclaration Name="ID_DO_STATE_WRITE" Type="WSTRING" Comment="Lokale Publish-Adresse (ACTION=WRITE) fuer den tatsaechlichen Freigabe-Zustand (AX_T_FF_INIT.Q) - wird von VT und Dashboard remote abonniert"/>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Qualifier fuer beide physischen Ausgaenge (PWM+Freigabe-DO) - FALSE haelt diese Instanz komplett inaktiv (keine Hardware-Bindung), fuer den Fall dass derselbe physische Kanal je nach Maschinenvariante anderweitig genutzt wird" InitialValue="TRUE"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully (AND aus PWM_Mux/DO_Toggle)"/>
+		</OutputVars>
+		<Sockets>
+			<AdapterDeclaration Name="PWM_POW" Type="adapter::types::unidirectional::AR" Comment="PWM Power 1.0 = Maximale Power, 0.0 = Aus, 0.5 = Halb - durchgereicht an PWM_Mux.PWM_POW"/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<SubApp Name="PWM_Mux" Type="MyLib::sys::HebenSenken_ILOCK_QDA_PWM_OPC" x="2000" y="1500">
+		</SubApp>
+		<SubApp Name="DO_Toggle" Type="MyLib::sys::DO_TOGGLE_RPC_QXA_OPC" x="2100" y="600">
+		</SubApp>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_2" x="8200" y="1400">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="DO_Toggle.INIT" dx1="3686.67"/>
+			<Connection Source="PWM_Mux.INITO" Destination="INITO" dx1="600"/>
+			<Connection Source="PWM_Mux.INITO" Destination="AND_QO.REQ" dx1="1366.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="DO_Toggle.INITO" Destination="PWM_Mux.INIT" dx1="520" dx2="80" dy="706.67"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="ID_HEBEN_READ" Destination="PWM_Mux.ID_HEBEN_READ" dx1="280">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_TEST_READ_HEBEN" Destination="PWM_Mux.ID_TEST_READ_HEBEN" dx1="280">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_TEST_WRITE_HEBEN" Destination="PWM_Mux.ID_TEST_WRITE_HEBEN" dx1="1280">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_HEBEN_WRITE" Destination="PWM_Mux.ID_HEBEN_WRITE" dx1="1280">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_SENKEN_READ" Destination="PWM_Mux.ID_SENKEN_READ" dx1="280">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_TEST_READ_SENKEN" Destination="PWM_Mux.ID_TEST_READ_SENKEN" dx1="280">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_TEST_WRITE_SENKEN" Destination="PWM_Mux.ID_TEST_WRITE_SENKEN" dx1="1280">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_SENKEN_WRITE" Destination="PWM_Mux.ID_SENKEN_WRITE" dx1="1280">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Output_PWM" Destination="PWM_Mux.Output_PWM" dx1="3586.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="DT_PROTECT" Destination="PWM_Mux.DT_PROTECT" dx1="1200">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Output_DO" Destination="DO_Toggle.Output_DO" dx1="1786.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_DO_TOGGLE_METHOD" Destination="DO_Toggle.ID_DO_TOGGLE_METHOD" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_DO_STATE_WRITE" Destination="DO_Toggle.ID_DO_STATE_WRITE" dx1="1280">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="PWM_Mux.QI" dx1="3586.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="DO_Toggle.QI" dx1="1786.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="PWM_Mux.QO" Destination="AND_QO.IN1" dx1="580">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="DO_Toggle.QO" Destination="AND_QO.IN2" dx1="713.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="5060"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="PWM_POW" Destination="PWM_Mux.PWM_POW" dx1="600"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

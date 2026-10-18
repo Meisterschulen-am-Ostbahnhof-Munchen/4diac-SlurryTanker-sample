@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="ILOCK_IO" Comment="Realizes a chainable momentary latch with interlock (BOOL interface)">
+	<Identification Standard="61499-1" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Gemini CLI" Date="2026-05-07" Remarks="initial version">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::signalprocessing::interlock">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event" Comment="Execution Request">
+				<With Var="IN"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event" Comment="Execution Confirmation">
+				<With Var="OUT"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="IN" Type="BOOL" Comment="Input"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="OUT" Type="BOOL" Comment="Output"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="ILOCK_OUT" Type="adapter::types::bidirectional::AX2"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="ILOCK_IN" Type="adapter::types::bidirectional::AX2"/>
+		</Sockets>
+	</InterfaceList>
+	<BasicFB>
+		<ECC>
+			<ECState Name="REQ" x="0" y="0">
+				<ECAction Algorithm="REQ" Output="CNF"/>
+			</ECState>
+			<ECTransition Source="REQ" Destination="REQ" Condition="REQ" x="113.33" y="433.33"/>
+		</ECC>
+		<Algorithm Name="REQ" Comment="Momentary latch: Q1 is active if SET is active AND no other element is set">
+			<ST><![CDATA[
+
+OUT := IN AND NOT (ILOCK_IN.DO1 OR ILOCK_OUT.DI1);
+
+(* Propagate status *)
+ILOCK_IN.DI1 := OUT;
+ILOCK_OUT.DO1 := OUT;
+]]></ST>
+		</Algorithm>
+	</BasicFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

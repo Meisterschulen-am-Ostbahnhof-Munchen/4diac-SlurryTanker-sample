@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataType Name="DataPanel_MI_AI_S" Comment="DataPanel Modules with medium IO density AI Struct">
+	<Identification>
+	</Identification>
+	<VersionInfo Version="1.0" Author="generated" Date="2026-01-16" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="DataPanel::io::MI::AI">
+	</CompilerInfo>
+	<StructuredType>
+		<VarDeclaration Name="Pin" Type="USINT" InitialValue="255"/>
+	</StructuredType>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</DataType>

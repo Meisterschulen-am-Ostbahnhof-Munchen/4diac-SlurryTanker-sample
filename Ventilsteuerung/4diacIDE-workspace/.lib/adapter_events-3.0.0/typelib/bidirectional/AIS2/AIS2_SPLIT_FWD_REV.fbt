@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="AIS2_SPLIT_FWD_REV" Comment="AIS2 passthrough (Socket zu Plug) plus 2 AIS Plugs, die den Vorwaerts- und den&#10;Rueckwaerts-Kanal spiegeln">
+	<Identification Standard="61499-2" Function="IN.EO1/DO1 (Vorwaerts, Indikation) wird unveraendert an OUT und zusaetzlich an FWD_OUT gespiegelt. OUT.EI1/DI1 (Rueckwaerts, Request) wird unveraendert an IN und zusaetzlich an REV_OUT gespiegelt." Description="Copyright (c) 2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-09-21" Remarks="Initial Version">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::events::bidirectional">
+	</CompilerInfo>
+	<InterfaceList>
+		<Plugs>
+			<AdapterDeclaration Name="OUT" Type="adapter::types::bidirectional::AIS2" Comment="bidirektionaler Ausgang (Passthrough)" x="1400" y="800"/>
+			<AdapterDeclaration Name="FWD_OUT" Type="adapter::types::unidirectional::AIS" Comment="spiegelt den Vorwaerts-Kanal (IN.EO1/DO1)" x="1400" y="200"/>
+			<AdapterDeclaration Name="REV_OUT" Type="adapter::types::unidirectional::AIS" Comment="spiegelt den Rueckwaerts-Kanal (OUT.EI1/DI1)" x="2800" y="800"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="IN" Type="adapter::types::bidirectional::AIS2" Comment="bidirektionaler Eingang" x="200" y="800"/>
+		</Sockets>
+	</InterfaceList>
+	<FBNetwork>
+		<EventConnections>
+			<Connection Source="IN.EO1" Destination="OUT.EO1"/>
+			<Connection Source="IN.EO1" Destination="FWD_OUT.E1" dx1="106.67"/>
+			<Connection Source="OUT.EI1" Destination="IN.EI1" dx1="66.67" dx2="66.67" dy="-226.67"/>
+			<Connection Source="OUT.EI1" Destination="REV_OUT.E1"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="IN.DO1" Destination="OUT.DO1"/>
+			<Connection Source="IN.DO1" Destination="FWD_OUT.D1" dx1="220"/>
+			<Connection Source="OUT.DI1" Destination="IN.DI1" dx1="66.67" dx2="66.67" dy="153.33"/>
+			<Connection Source="OUT.DI1" Destination="REV_OUT.D1"/>
+		</DataConnections>
+	</FBNetwork>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

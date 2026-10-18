@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="AOption_OR_2" Comment="Options-Fan-In: 2 AOption-Sockets IN1/IN2 auf 1 Plug OUT, QI_OUT = IN1 OR IN2. OUT.INIT_CNF geht per E_MUX_2/E_DEMUX_2 an den anfragenden Socket zurueck. Gegenstueck zu AOption_T_2.">
+	<Identification Standard="61499-1" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-16" Remarks="E_MUX_2.K merkt den anfragenden Socket, E_DEMUX_2 leitet OUT.INIT_CNF dorthin. Max. 1 offene Anfrage (z.B. hinter einem DEMUX).">
+	</VersionInfo>
+	<CompilerInfo packageName="Option::merging">
+	</CompilerInfo>
+	<InterfaceList>
+		<Plugs>
+			<AdapterDeclaration Name="OUT" Type="Option::AOption" Comment="Gemeinsamer Ausgang - aktiv, solange IN1 ODER IN2 aktiv ist" x="4000" y="0"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="IN1" Type="Option::AOption" Comment="Erster AOption-Eingang" x="300" y="-400"/>
+			<AdapterDeclaration Name="IN2" Type="Option::AOption" Comment="Zweiter AOption-Eingang" x="300" y="600"/>
+		</Sockets>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="OR_QI" Type="iec61131::booleanOperators::OR_BOOL_2" x="2400" y="0">
+		</FB>
+		<FB Name="E_MUX_2" Type="iec61499::events::E_MUX_2" x="-2600" y="0">
+		</FB>
+		<FB Name="E_DEMUX_2" Type="iec61499::events::E_DEMUX_2" x="-1200" y="0">
+		</FB>
+		<EventConnections>
+			<Connection Source="OR_QI.CNF" Destination="OUT.INIT_REQ"/>
+			<Connection Source="E_DEMUX_2.EO1" Destination="IN1.INIT_CNF" dx1="393.33"/>
+			<Connection Source="E_DEMUX_2.EO2" Destination="IN2.INIT_CNF" dx1="393.33"/>
+			<Connection Source="OUT.INIT_CNF" Destination="E_DEMUX_2.EI" dx1="80" dx2="80" dy="-933.33"/>
+			<Connection Source="IN1.INIT_REQ" Destination="E_MUX_2.EI1" dx1="80" dx2="80" dy="-266.67"/>
+			<Connection Source="IN2.INIT_REQ" Destination="E_MUX_2.EI2" dx1="80" dx2="80" dy="386.67"/>
+			<Connection Source="E_MUX_2.EO" Destination="OR_QI.REQ">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="IN1.QI_OUT" Destination="OR_QI.IN1" dx1="606.67"/>
+			<Connection Source="IN2.QI_OUT" Destination="OR_QI.IN2" dx1="606.67"/>
+			<Connection Source="OR_QI.OUT" Destination="OUT.QI_OUT"/>
+			<Connection Source="E_MUX_2.K" Destination="E_DEMUX_2.K"/>
+		</DataConnections>
+	</FBNetwork>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

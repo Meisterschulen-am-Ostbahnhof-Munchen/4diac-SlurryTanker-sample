@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="ScrollFS" Comment="Scroll list position engine — accepts ScrollObjectPool_S struct, drives list and&#10;scrollbar via Q_ChildPosition">
+	<Identification Standard="ISO 11783-6" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0&#10;&#10;Wraps RampLimitFS (position state, 0..stObj.i32PosMax) and two Q_ChildPosition instances (ISO 11783-6 F.16) that move the list content container and the scrollbar indicator content container. stObj is snapshotted once at INIT via F_MOVE, matching the Q_NumericValue_PHYS pattern. The two Y-position formulas are plain Functions (F_ScrollListY, F_ScrollBarY) — concretely typed, so no ANY-generic MOVE anchoring is needed between them. Pure position logic only — does not read any physical buttons or input fields, see ScrollFS_PHYS for that. See Workspace_Scroll/SCROLL_KONZEPT.md for the full derivation.">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-05" Remarks="Add xScale flag, passed through to the internal MoveList/MoveBar (Q_ChildPosition)">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-08-09" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::UT::Q">
+		<Import declaration="isobus::utils::scroll::ScrollObjectPool_S"/>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+				<With Var="stObj"/>
+				<With Var="xScale"/>
+			</Event>
+			<Event Name="FIRST" Type="Event" Comment="Jump to the first row (position 0)">
+			</Event>
+			<Event Name="PAGE_UP" Type="Event" Comment="Page up (fast, by stObj.i32Step rows)">
+			</Event>
+			<Event Name="LINE_UP" Type="Event" Comment="One row up">
+			</Event>
+			<Event Name="LINE_DOWN" Type="Event" Comment="One row down">
+			</Event>
+			<Event Name="PAGE_DOWN" Type="Event" Comment="Page down (fast, by stObj.i32Step rows)">
+			</Event>
+			<Event Name="LAST" Type="Event" Comment="Jump to the last row (position stObj.i32PosMax)">
+			</Event>
+			<Event Name="GOTO" Type="Event" Comment="Jump to an absolute row position">
+				<With Var="SET_POS"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Confirmation of a position change">
+				<With Var="OUT"/>
+				<With Var="qAtFirst"/>
+				<With Var="qAtLast"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="stObj" Type="isobus::utils::scroll::ScrollObjectPool_S" Comment="Scroll list object pool properties (list + scrollbar geometry), snapshotted at INIT"/>
+			<VarDeclaration Name="xScale" Type="BOOL" Comment="FALSE (default) = bypass, send s16Yposition through unchanged. TRUE = scale it by the DM/SKM factor for the respective parent ID. Passed straight through to the internal MoveList/MoveBar (Q_ChildPosition)." InitialValue="FALSE"/>
+			<VarDeclaration Name="SET_POS" Type="DINT" Comment="Target position for the GOTO event, clamped to 0..stObj.i32PosMax"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="OUT" Type="DINT" Comment="Current scroll position (0..stObj.i32PosMax, in rows)"/>
+			<VarDeclaration Name="qAtFirst" Type="BOOL" Comment="TRUE if OUT is at row 0 (FIRST reached) - straight passthrough of Ramp.qAtZero"/>
+			<VarDeclaration Name="qAtLast" Type="BOOL" Comment="TRUE if OUT is at row stObj.i32PosMax (LAST reached) - straight passthrough of Ramp.qAtFull"/>
+		</OutputVars>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="Snap" Type="iec61131::selection::F_MOVE" x="-2800" y="1800">
+			<Attribute Name="DataType" Value="isobus::utils::scroll::ScrollObjectPool_S"/>
+			<Parameter Name="OUT.u16ListParentId" Value="">
+				<Attribute Name="Visible" Value="true"/>
+			</Parameter>
+			<Parameter Name="OUT.u16ListContentId" Value="">
+				<Attribute Name="Visible" Value="true"/>
+			</Parameter>
+			<Parameter Name="OUT.i32RowHeight" Value="">
+				<Attribute Name="Visible" Value="true"/>
+			</Parameter>
+			<Parameter Name="OUT.u16BarParentId" Value="">
+				<Attribute Name="Visible" Value="true"/>
+			</Parameter>
+			<Parameter Name="OUT.u16BarContentId" Value="">
+				<Attribute Name="Visible" Value="true"/>
+			</Parameter>
+			<Parameter Name="OUT.i32BarBaseOffset" Value="">
+				<Attribute Name="Visible" Value="true"/>
+			</Parameter>
+			<Parameter Name="OUT.i32BarTravel" Value="">
+				<Attribute Name="Visible" Value="true"/>
+			</Parameter>
+			<Parameter Name="OUT.i32PosMax" Value="">
+				<Attribute Name="Visible" Value="true"/>
+			</Parameter>
+			<Parameter Name="OUT.i32Step" Value="">
+				<Attribute Name="Visible" Value="true"/>
+			</Parameter>
+		</FB>
+		<FB Name="Ramp" Type="eclipse4diac::signalprocessing::RampLimitFS" x="100" y="400">
+			<Parameter Name="VAL_ZERO" Value="0"/>
+			<Parameter Name="SLOW" Value="1"/>
+		</FB>
+		<FB Name="MoveList" Type="isobus::UT::Q::Q_ChildPosition" x="6300" y="400">
+			<Parameter Name="s16Xposition" Value="0"/>
+		</FB>
+		<FB Name="ListY" Type="isobus::UT::Q::helpers::F_ScrollListY" x="3900" y="600">
+		</FB>
+		<FB Name="MoveBar" Type="isobus::UT::Q::Q_ChildPosition" x="6200" y="1500">
+			<Parameter Name="s16Xposition" Value="0"/>
+		</FB>
+		<FB Name="BarY" Type="isobus::UT::Q::helpers::F_ScrollBarY" x="3600" y="1700">
+		</FB>
+		<FB Name="ScrollReport" Type="isobus::UT::Q::helpers::ReportScrollOffset" x="6500" y="2900">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="Snap.REQ" dx1="420"/>
+			<Connection Source="Snap.CNF" Destination="Ramp.INIT" dx1="1946.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="FIRST" Destination="Ramp.ZERO" dx1="1413.33"/>
+			<Connection Source="PAGE_UP" Destination="Ramp.DOWN_FAST" dx1="1346.67"/>
+			<Connection Source="LINE_UP" Destination="Ramp.DOWN_SLOW" dx1="1380"/>
+			<Connection Source="LINE_DOWN" Destination="Ramp.UP_SLOW" dx1="1313.33"/>
+			<Connection Source="PAGE_DOWN" Destination="Ramp.UP_FAST" dx1="1280"/>
+			<Connection Source="LAST" Destination="Ramp.FULL" dx1="1246.67"/>
+			<Connection Source="GOTO" Destination="Ramp.LOAD" dx1="1213.33"/>
+			<Connection Source="Ramp.CNF" Destination="CNF" dx1="5906.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Ramp.CNF" Destination="ListY.REQ" dx1="66.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ListY.CNF" Destination="MoveList.REQ" dx1="200"/>
+			<Connection Source="Ramp.CNF" Destination="BarY.REQ" dx1="66.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="BarY.CNF" Destination="MoveBar.REQ" dx1="200"/>
+			<Connection Source="Ramp.INITO" Destination="ScrollReport.INIT" dx1="1040"/>
+			<Connection Source="Ramp.CNF" Destination="ScrollReport.REQ" dx1="66.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ScrollReport.INITO" Destination="MoveBar.INIT" dx1="80" dx2="3746.67" dy="-353.33"/>
+			<Connection Source="MoveBar.INITO" Destination="MoveList.INIT" dx1="80" dx2="3813.33" dy="-160"/>
+			<Connection Source="MoveList.INITO" Destination="INITO" dx1="1200"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="stObj" Destination="Snap.IN" dx1="386.67"/>
+			<Connection Source="Snap.OUT.i32PosMax" Destination="Ramp.VAL_FULL" dx1="1653.33"/>
+			<Connection Source="Snap.OUT.i32Step" Destination="Ramp.FAST" dx1="1446.67"/>
+			<Connection Source="SET_POS" Destination="Ramp.PV" dx1="1180"/>
+			<Connection Source="Ramp.OUT" Destination="OUT" dx1="5940">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Ramp.qAtZero" Destination="qAtFirst" dx1="7293.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Ramp.qAtFull" Destination="qAtLast" dx1="7293.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Snap.OUT.u16ListContentId" Destination="MoveList.u16ObjId" dx1="3146.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Snap.OUT.u16ListParentId" Destination="MoveList.u16ObjIdParent" dx1="3180">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="xScale" Destination="MoveList.xScale" dx1="3180">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Ramp.OUT" Destination="ListY.i32Pos" dx1="133.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Snap.OUT.i32RowHeight" Destination="ListY.i32RowHeight" dx1="1520">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ListY." Destination="MoveList.s16Yposition" dx1="200"/>
+			<Connection Source="Snap.OUT.u16BarContentId" Destination="MoveBar.u16ObjId" dx1="3766.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Snap.OUT.u16BarParentId" Destination="MoveBar.u16ObjIdParent" dx1="3126.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="xScale" Destination="MoveBar.xScale" dx1="3126.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Ramp.OUT" Destination="BarY.i32Pos" dx1="133.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Snap.OUT.i32BarTravel" Destination="BarY.i32BarTravel" dx1="1000">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Snap.OUT.i32PosMax" Destination="BarY.i32PosMax" dx1="2666.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Snap.OUT.i32BarBaseOffset" Destination="BarY.i32BarBaseOffset" dx1="2313.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="BarY." Destination="MoveBar.s16Yposition" dx1="200"/>
+			<Connection Source="Snap.OUT.u16ListContentId" Destination="ScrollReport.u16ContainerId" dx1="3146.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Ramp.OUT" Destination="ScrollReport.i32Pos" dx1="133.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Snap.OUT.i32RowHeight" Destination="ScrollReport.i32RowHeight" dx1="1520">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</DataConnections>
+	</FBNetwork>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

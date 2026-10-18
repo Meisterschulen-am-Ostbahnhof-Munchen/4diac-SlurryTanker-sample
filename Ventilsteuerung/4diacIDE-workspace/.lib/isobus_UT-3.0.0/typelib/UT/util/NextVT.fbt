@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="NextVT" Comment="Service Interface Block to switch to the next available VT (Virtual Terminal)">
+	<Identification Standard="ISO 11783-6" Description="Copyright (c) 2025 Meisterschulen am Ostbahnhof&#10;&#10;This program and the accompanying materials are made&#10;available under the terms of the Eclipse Public License 2.0&#10;which is available at https://www.eclipse.org/legal/epl-2.0/&#10;&#10;SPDX-License-Identifier: EPL-2.0&#10;&#10;&#10;&lt;p&gt;Service Interface Block to switch to the next available VT (Virtual Terminal)&lt;/p&gt;&#10;&#10;This block wraps the functionality of VTC_NextVTButtonPressed() from the ISOBUS driver samples.&#10;It allows switching between multiple VTs available on the ISOBUS network.&#10;&#10;The block performs the following steps:&#10;1. Gets the list of all VTs on the bus using IsoClientsReadListofExtHandles()&#10;2. Finds the currently connected VT using IsoVtcGetStatusInfo(VT_HND)&#10;3. Determines the next VT in the list&#10;4. Switches to the next VT using IsoVtcMultipleNextVT()&#10;&#10;If there is only one VT on the bus or if the switch fails, an error status is returned.&#10;&#10;Important: The application must go into a safe state after calling this block&#10;as the connection to the current VT will be lost during the transition.&#10;">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Generated" Date="2025-02-27" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::UT::util">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+				<With Var="QI"/>
+			</Event>
+			<Event Name="REQ" Type="Event" Comment="Service Request - Switch to next VT">
+				<With Var="QI"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Confirmation - VT switch initiated">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+				<With Var="s16Result"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
+			<VarDeclaration Name="s16Result" Type="INT" Comment="Return value: 0=E_NO_ERR (success), negative=error code"/>
+		</OutputVars>
+	</InterfaceList>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

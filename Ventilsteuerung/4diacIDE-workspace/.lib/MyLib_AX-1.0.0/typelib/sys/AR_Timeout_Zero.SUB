@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="AR_Timeout_Zero" Comment="Fendt-Schaltung (4diac_training1 Uebung_074_AUI.SUB): liefert IN0 unveraendert,&#10;ausser G (i.d.R. IA_*.TIMEOUT - echter Kommunikationsausfall) ist TRUE, dann 0.0&#10;statt des sonst einfach eingefrorenen letzten Werts.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-16" Remarks="Nach MyLib_AX-1.0.0::sys verschoben (Franz) - generischer Baustein, gehoert nicht in den TECU-spezifischen Ordner.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-16" Remarks="Herausgeloest (Franz: 'AR_AX_SEL_AR initval_AR=0 kann eine SUB sein, das haben wir ja OFT') - AR_AX_SEL_AR + initval_AR(0.0) wurde in TECU_RPTO/TECU_FPTO/TECU_COGSOG/TECU_GBSD/TECU_WBSD/TECU_VDS/TECU_FHS/TECU_RHS/TECU_MSS jeweils einzeln verdrahtet, jetzt ein wiederverwendbarer Baustein.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<Plugs>
+			<AdapterDeclaration Name="OUT" Type="adapter::types::unidirectional::AR" Comment="IN0, oder 0.0 bei G=TRUE"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="IN0" Type="adapter::types::unidirectional::AR" Comment="Live-Wert, z.B. FIELDBUS_*_SCALED.OUT"/>
+			<AdapterDeclaration Name="G" Type="adapter::types::unidirectional::AX" Comment="TRUE = Timeout, liefert 0.0 statt IN0"/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="LIT_Zero" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-1200" y="-600">
+			<Parameter Name="INIT_VAL" Value="0.0"/>
+		</FB>
+		<FB Name="Selector_AR" Type="adapter::iec61131::selection::AR_AX_SEL_AR" x="900" y="0">
+		</FB>
+		<AdapterConnections>
+			<Connection Source="IN0" Destination="Selector_AR.IN0" dx1="5360"/>
+			<Connection Source="LIT_Zero.OUT" Destination="Selector_AR.IN1" dx1="600"/>
+			<Connection Source="G" Destination="Selector_AR.G" dx1="600"/>
+			<Connection Source="Selector_AR.OUT" Destination="OUT" dx1="600"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

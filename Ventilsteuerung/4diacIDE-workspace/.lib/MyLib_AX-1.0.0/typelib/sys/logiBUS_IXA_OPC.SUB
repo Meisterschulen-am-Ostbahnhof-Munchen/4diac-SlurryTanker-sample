@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="logiBUS_IXA_OPC" Comment="logiBUS DI Kanal: OPC-UA-Publish (generisch, ein Kanal, ohne VT-Hintergrundfarbe&#10;- fuer Module ohne ISOBUS/VT-Anbindung)">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-18" Remarks="logiBUS_IXA.INITO auf logiBUS_IXA.REQ zurueckverdrahtet (Selfloop) - loest nach der Initialisierung sofort einen Service-Request aus, statt auf die erste echte Wertaenderung am Bus zu warten (Fix fuer 'Waiting for handle'-Status direkt nach Boot).">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="franz" Date="2026-08-27">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_S"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="Input" Type="logiBUS::io::DI::logiBUS_DI_S" Comment="Identify the Input Input_I1..I8" InitialValue="logiBUS_DI::Invalid"/>
+			<VarDeclaration Name="ID_WRITE" Type="WSTRING" Comment="OPC-UA Publish-Key (lesbar)"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="logiBUS_IXA" Type="logiBUS::io::DI::logiBUS_IXA" x="0" y="0">
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+		<FB Name="AX_PUBLISH_1" Type="adapter::net::AX_PUBLISH_1" x="1500" y="0">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_2" x="3200" y="700">
+		</FB>
+		<EventConnections>
+			<Connection Source="logiBUS_IXA.INITO" Destination="logiBUS_IXA.REQ" dx1="80" dx2="80" dy="53.33"/>
+			<Connection Source="INIT" Destination="logiBUS_IXA.INIT" dx1="80" dx2="80" dy="-166.67"/>
+			<Connection Source="logiBUS_IXA.INITO" Destination="AX_PUBLISH_1.INIT"/>
+			<Connection Source="AX_PUBLISH_1.INITO" Destination="INITO" dx1="2660"/>
+			<Connection Source="AX_PUBLISH_1.INITO" Destination="AND_QO.REQ" dx1="426.67"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="Input" Destination="logiBUS_IXA.Input" dx1="80" dx2="80" dy="93.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_WRITE" Destination="AX_PUBLISH_1.ID" dx1="526.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="logiBUS_IXA.QI" dx1="80" dx2="80" dy="-60"/>
+			<Connection Source="QI" Destination="AX_PUBLISH_1.QI" dx1="526.67"/>
+			<Connection Source="logiBUS_IXA.QO" Destination="AND_QO.IN1" dx1="1200"/>
+			<Connection Source="AX_PUBLISH_1.QO" Destination="AND_QO.IN2" dx1="426.67"/>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="973.33"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="logiBUS_IXA.IN" Destination="AX_PUBLISH_1.IN"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

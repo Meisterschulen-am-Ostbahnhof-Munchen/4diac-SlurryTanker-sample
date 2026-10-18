@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Button_IXA_TO_Remote_WRITE_BG_OPC" Comment="VT-Button lesen + Remote-OPC-UA-Write an Zielmodul + VT-Hintergrundfarbe aus&#10;Remote-Subscribe (generisch, ein Kanal, fuer Ausgaenge auf Modulen ohne eigene&#10;VT-Anbindung)">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="franz" Date="2026-08-27">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID Button/Hintergrund (VT)" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="ID_SUBSCRIBE" Type="WSTRING" Comment="Remote-Subscribe-Adresse (Status/Farbe, ACTION=SUBSCRIBE)"/>
+			<VarDeclaration Name="ID_WRITE_REMOTE" Type="WSTRING" Comment="Remote-Write-Adresse zum Zielmodul (Befehl, ACTION=WRITE, CLIENT)"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="Button_IXA" Type="isobus::UT::io::Button::Button_IXA" x="0" y="0">
+		</FB>
+		<FB Name="AX_CLIENT_1_0" Type="adapter::net::AX_CLIENT_1_0" x="1700" y="100">
+		</FB>
+		<FB Name="AX_SUBSCRIBE_1" Type="adapter::net::AX_SUBSCRIBE_1" x="0" y="1000">
+		</FB>
+		<SubApp Name="GreenWhiteBackground1_AX" Type="MyLib::sys::GreenWhiteBackground1_AX" x="1500" y="1000">
+		</SubApp>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_4" x="4200" y="500">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="Button_IXA.INIT" dx1="80" dx2="80" dy="-213.33"/>
+			<Connection Source="Button_IXA.INITO" Destination="AX_CLIENT_1_0.INIT" dx1="453.33"/>
+			<Connection Source="AX_CLIENT_1_0.INITO" Destination="AX_SUBSCRIBE_1.INIT" dx1="80" dx2="80" dy="446.67"/>
+			<Connection Source="AX_SUBSCRIBE_1.INITO" Destination="GreenWhiteBackground1_AX.INIT"/>
+			<Connection Source="GreenWhiteBackground1_AX.INITO" Destination="INITO" dx1="2380"/>
+			<Connection Source="GreenWhiteBackground1_AX.INITO" Destination="AND_QO.REQ" dx1="646.67"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="u16ObjId" Destination="Button_IXA.u16ObjId" dx1="80" dx2="80" dy="146.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId" Destination="GreenWhiteBackground1_AX.u16ObjId" dx1="366.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_SUBSCRIBE" Destination="AX_SUBSCRIBE_1.ID" dx1="80" dx2="80" dy="540">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_WRITE_REMOTE" Destination="AX_CLIENT_1_0.ID" dx1="613.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="Button_IXA.QI" dx1="80" dx2="80" dy="-106.67"/>
+			<Connection Source="QI" Destination="AX_CLIENT_1_0.QI" dx1="466.67"/>
+			<Connection Source="QI" Destination="AX_SUBSCRIBE_1.QI" dx1="80" dx2="80" dy="386.67"/>
+			<Connection Source="Button_IXA.QO" Destination="AND_QO.IN1" dx1="1700"/>
+			<Connection Source="AX_CLIENT_1_0.QO" Destination="AND_QO.IN2" dx1="800"/>
+			<Connection Source="AX_SUBSCRIBE_1.QO" Destination="AND_QO.IN3" dx1="1626.67"/>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="2640"/>
+			<Connection Source="QI" Destination="GreenWhiteBackground1_AX.QI" dx1="366.67"/>
+			<Connection Source="GreenWhiteBackground1_AX.QO" Destination="AND_QO.IN4" dx1="646.67"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="Button_IXA.IN" Destination="AX_CLIENT_1_0.IN" dx1="100"/>
+			<Connection Source="AX_SUBSCRIBE_1.OUT" Destination="GreenWhiteBackground1_AX.DI1" dx1="280"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

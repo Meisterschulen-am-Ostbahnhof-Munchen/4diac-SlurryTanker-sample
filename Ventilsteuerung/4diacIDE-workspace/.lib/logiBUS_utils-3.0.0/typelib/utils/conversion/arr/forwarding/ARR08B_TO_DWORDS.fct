@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Function Name="ARR08B_TO_DWORDS" Comment="this Function extracts the 2 DWORD from a 8-BYTE Array">
+	<Identification Standard="61499-1" Description="Copyright (c) 2024 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2024-02-22">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::utils::conversion::arr::forwarding">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event">
+				<With Var="IN"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event">
+				<With Var="OUT_00"/>
+				<With Var="OUT_01"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="IN" Type="BYTE" Comment="ARR08B Input" ArraySize="0..7"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="OUT_00" Type="DWORD" Comment="DWORD 00"/>
+			<VarDeclaration Name="OUT_01" Type="DWORD" Comment="DWORD 01"/>
+		</OutputVars>
+	</InterfaceList>
+	<FunctionBody>
+		<ST><![CDATA[PACKAGE logiBUS::utils::conversion::arr::forwarding;
+
+(* this Function extracts the 2 DWORD from a 8-BYTE Array *)
+FUNCTION ARR08B_TO_DWORDS
+
+VAR_INPUT
+	IN : ARRAY[0..7] OF BYTE; // ARR08B Input
+END_VAR
+
+VAR_OUTPUT
+	OUT_00 : DWORD; // DWORD 00
+	OUT_01 : DWORD; // DWORD 01
+END_VAR
+
+OUT_00.%B0 := IN[0];
+OUT_00.%B1 := IN[1];
+OUT_00.%B2 := IN[2];
+OUT_00.%B3 := IN[3];
+OUT_01.%B0 := IN[4];
+OUT_01.%B1 := IN[5];
+OUT_01.%B2 := IN[6];
+OUT_01.%B3 := IN[7];
+
+END_FUNCTION
+]]></ST>
+	</FunctionBody>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</Function>

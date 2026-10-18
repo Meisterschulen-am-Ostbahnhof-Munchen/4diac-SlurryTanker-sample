@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="E_PERMIT_INVERT_2" Comment="2-Kanal Invertiertes Event-Freigabe-Gate (F_NOT_BOOL_INIT + E_PERMIT_2)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-10" Remarks="initial implementation">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="EI1" Type="Event" Comment="Event input channel 1"/>
+			<SubAppEvent Name="EI2" Type="Event" Comment="Event input channel 2"/>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="EO1" Type="Event" Comment="Event output channel 1"/>
+			<SubAppEvent Name="EO2" Type="Event" Comment="Event output channel 2"/>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="PERMIT" Type="BOOL" Comment="Invertierte Freigabebedingung"/>
+		</InputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="F_NOT_BOOL_INIT" Type="iec61131::booleanOperators::F_NOT_BOOL_INIT" x="-3000" y="0">
+		</FB>
+		<FB Name="E_PERMIT_2" Type="iec61499::events::E_PERMIT_2" x="-1400" y="0">
+		</FB>
+		<EventConnections>
+			<Connection Source="EI1" Destination="E_PERMIT_2.EI1" dx1="500"/>
+			<Connection Source="E_PERMIT_2.EO1" Destination="EO1" dx1="500"/>
+			<Connection Source="EI2" Destination="E_PERMIT_2.EI2" dx1="500"/>
+			<Connection Source="E_PERMIT_2.EO2" Destination="EO2" dx1="500"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="PERMIT" Destination="F_NOT_BOOL_INIT.IN" dx1="500"/>
+			<Connection Source="F_NOT_BOOL_INIT.OUT" Destination="E_PERMIT_2.PERMIT" dx1="500"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

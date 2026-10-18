@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="AX_NOOP" Comment="No-Op, also known as &quot;no Operation&quot;">
+	<Identification Standard="61131-3" Classification="standard boolean function" Description="Copyright (c) 2011 TU Wien ACIN, HR Agrartechnik GmbH&#10; &#10;This program and the accompanying materials are made&#10;available under the terms of the Eclipse Public License 2.0&#10;which is available at https://www.eclipse.org/legal/epl-2.0/&#10;&#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="3.1" Author="Franz Höpfinger" Date="2025-11-04" Remarks="made AX Version">
+	</VersionInfo>
+	<VersionInfo Version="3.0" Author="Patrick Aigner" Date="2025-04-14" Remarks="changed package">
+	</VersionInfo>
+	<VersionInfo Organization="TU Wien ACIN" Version="1.0" Author="Monika Wenger" Date="2011-06-21">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::booleanOperators">
+	</CompilerInfo>
+	<InterfaceList>
+		<Plugs>
+			<AdapterDeclaration Name="OUT" Type="adapter::types::unidirectional::AX" Comment="Output" x="2900" y="1100"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AX" Comment="Input" x="200" y="1100"/>
+		</Sockets>
+	</InterfaceList>
+	<FBNetwork>
+		<EventConnections>
+			<Connection Source="IN.E1" Destination="OUT.E1"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="IN.D1" Destination="OUT.D1"/>
+		</DataConnections>
+	</FBNetwork>
+	<Service RightInterface="RESOURCE" LeftInterface="APPLICATION">
+	</Service>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

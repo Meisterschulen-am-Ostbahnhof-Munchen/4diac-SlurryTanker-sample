@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataType Name="PositionMarker_S" Comment="ISOBUS UT position-marker object pool properties (Change Child Position child/parent + travel bounds + center offset)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-05" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::utils::childposition">
+		<Import declaration="isobus::UT::Q::const::IDs"/>
+	</CompilerInfo>
+	<StructuredType>
+		<VarDeclaration Name="u16ChildId" Type="UINT" Comment="Object ID of the moved VT object (Change Child Position child, e.g. a CPolygon)" InitialValue="IDs::ID_NULL"/>
+		<VarDeclaration Name="u16ParentId" Type="UINT" Comment="Object ID of the parent VT container the child moves within (Change Child Position parent)" InitialValue="IDs::ID_NULL"/>
+		<VarDeclaration Name="r32MinPos" Type="REAL" Comment="Lower bound of the child's valid X-travel inside the parent, in raw pixels (normally 0.0)" InitialValue="0.0"/>
+		<VarDeclaration Name="r32MaxPos" Type="REAL" Comment="Upper bound of the child's valid X-travel inside the parent, in raw pixels = ContainerWidth - ChildBoundingBoxWidth" InitialValue="0.0"/>
+		<VarDeclaration Name="r32Center" Type="REAL" Comment="Offset added to the incoming value before clamping - the raw pixel X position that corresponds to value = 0.0" InitialValue="0.0"/>
+		<VarDeclaration Name="s16YPosition" Type="INT" Comment="Fixed Y position passed straight through to Q_ChildPosition.s16Yposition (this FB drives only the X axis)" InitialValue="0"/>
+	</StructuredType>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</DataType>

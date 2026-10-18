@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="logiBUS_AI_ID" Comment="Input service interface function block for double word input data">
+	<Identification Description="Copyright (c) 2017 fortiss GmbH, HR Agrartechnik GmbH&#10; &#10;This program and the accompanying materials are made &#10;available under the terms of the Eclipse Public License 2.0 &#10;which is available at https://www.eclipse.org/legal/epl-2.0/ &#10;&#10;SPDX-License-Identifier: EPL-2.0&#10;&#10;AnalogInput_hysteresis = 0 switches the change trigger off (use 1 to see every change). TimeDelta = 0 or 16#FFFFFFFF switches the cyclic IND off. With both off the block sends no IND (value only via REQ).&#10;&#10;IN = 0-4095 (12 bit, fixed full-scale raw value, ESP32-P4 ADC continuous/DMA mode has no other bit width to choose from).">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH  " Version="1.1" Author="Franz Höpfinger" Date="2026-04-19">
+	</VersionInfo>
+	<VersionInfo Organization="fortiss GmbH" Version="1.0" Author="Monika Wenger" Date="2017-03-20">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::io::AI">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+				<With Var="QI"/>
+				<With Var="PARAMS"/>
+				<With Var="Input"/>
+				<With Var="AnalogInput_hysteresis"/>
+				<With Var="TimeDelta"/>
+				<With Var="TimeRateLimit"/>
+			</Event>
+			<Event Name="REQ" Type="Event" Comment="Service Request">
+				<With Var="QI"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+				<With Var="IN"/>
+			</Event>
+			<Event Name="IND" Type="Event" Comment="Indication from Resource">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+				<With Var="IN"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
+			<VarDeclaration Name="PARAMS" Type="STRING" Comment="Service Parameters"/>
+			<VarDeclaration Name="Input" Type="logiBUS::io::AI::logiBUS_AI_S" Comment="Identify the Input Input_I1..I8" InitialValue="logiBUS_AI::Invalid"/>
+			<VarDeclaration Name="AnalogInput_hysteresis" Type="DWORD" Comment="IND when the raw value changes by more than this (0 = off)"/>
+			<VarDeclaration Name="TimeDelta" Type="DWORD" Comment="After How many ms an IND (poll interval, 0 or 16#FFFFFFFF = off)" InitialValue="250"/>
+			<VarDeclaration Name="TimeRateLimit" Type="DWORD" Comment="Maximum 1 IND in how many ms. (&lt; delta)" InitialValue="100"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
+			<VarDeclaration Name="IN" Type="DWORD" Comment="Input data from resource, raw value 0-4095 (12 bit, fixed ESP32-P4 ADC continuous-mode full scale)"/>
+		</OutputVars>
+	</InterfaceList>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>logiBUS_AI_ID</h1>
+
+<h2>🇩🇪 Deutsch</h2>
+
+<p>Service-Interface-Funktionsblock für die Verarbeitung eines einzelnen analogen Eingangs (Double-Word). Der Baustein bindet einen physischen logiBUS-Analogeingang (<code>Input_I1..I8</code>) ein und liefert dessen Rohwert zyklisch oder änderungsbasiert über <code>IN</code> zurück.</p>
+
+<h3>Schnittstelle</h3>
+
+<ul>
+	<li><strong>INIT</strong> (mit QI, PARAMS, Input, AnalogInput_hysteresis, TimeDelta, TimeRateLimit): Initialisiert den Service und wählt den physischen Eingang.</li>
+	<li><strong>REQ</strong> (mit QI): Fordert eine sofortige Abfrage des aktuellen Werts an.</li>
+	<li><strong>INITO</strong> (mit QO, STATUS): Bestätigt die Initialisierung.</li>
+	<li><strong>CNF</strong> (mit QO, STATUS, IN): Antwort auf REQ.</li>
+	<li><strong>IND</strong> (mit QO, STATUS, IN): Asynchrone Indikation bei zyklischer oder änderungsbasierter Aktualisierung.</li>
+</ul>
+
+<h3>Roh-Vollausschlag von IN</h3>
+
+<p><code>IN</code> liefert den Rohwert des ADC als <code>DWORD</code> im Bereich <strong>0-4095 (12 bit)</strong>. Auf dem ESP32-P4 ist dieser Bereich im verwendeten Continuous/DMA-ADC-Modus fix — es gibt keine andere wählbare Bit-Breite (<code>SOC_ADC_DIGI_MIN_BITWIDTH</code> = <code>SOC_ADC_DIGI_MAX_BITWIDTH</code> = 12).</p>
+
+<p>Umrechnung Rohwert → Volt: <code>Vout = Dout × Vmax / 4096</code> (<code>Vmax</code> abhängig von der ADC-Dämpfung <code>ADC_ATTEN_DB_12</code>).</p>
+
+<h3>Hysterese und Zeitsteuerung</h3>
+
+<p>Ein IND wird aus zwei unabhängigen Gründen ausgelöst:</p>
+
+<ul>
+	<li><strong>Änderung:</strong> Weicht der Rohwert um mehr als <code>AnalogInput_hysteresis</code> vom zuletzt gemeldeten Wert ab, kommt ein IND, frühestens <code>TimeRateLimit</code> ms nach dem letzten IND (<code>TimeRateLimit</code> 0 = ohne Begrenzung). <code>AnalogInput_hysteresis</code> = 0 schaltet diesen Auslöser ab; wer jede Änderung sehen will, setzt 1.</li>
+	<li><strong>Zyklisch:</strong> Spätestens alle <code>TimeDelta</code> ms kommt ein IND mit dem aktuellen Wert. <code>TimeDelta</code> = 0 oder <code>16#FFFFFFFF</code> schaltet diesen Auslöser ab.</li>
+</ul>
+
+<p>Sind beide Auslöser abgeschaltet (<code>AnalogInput_hysteresis</code> = 0 und <code>TimeDelta</code> = 0 bzw. <code>16#FFFFFFFF</code>), liefert der Baustein keine IND-Ereignisse mehr; der Wert ist dann nur noch über REQ abfragbar. Beim INIT erscheint in diesem Fall eine Warnung im Log.</p>
+
+<h2>🇬🇧 English</h2>
+
+<p>Service interface function block for processing a single analog input (double word). The block wraps a physical logiBUS analog input (<code>Input_I1..I8</code>) and returns its raw value either cyclically or on change via <code>IN</code>.</p>
+
+<h3>Interface</h3>
+
+<ul>
+	<li><strong>INIT</strong> (with QI, PARAMS, Input, AnalogInput_hysteresis, TimeDelta, TimeRateLimit): Initializes the service and selects the physical input.</li>
+	<li><strong>REQ</strong> (with QI): Requests an immediate read of the current value.</li>
+	<li><strong>INITO</strong> (with QO, STATUS): Confirms initialization.</li>
+	<li><strong>CNF</strong> (with QO, STATUS, IN): Response to REQ.</li>
+	<li><strong>IND</strong> (with QO, STATUS, IN): Asynchronous indication on cyclic or change-based update.</li>
+</ul>
+
+<h3>Raw full-scale value of IN</h3>
+
+<p><code>IN</code> delivers the raw ADC value as a <code>DWORD</code> in the range <strong>0-4095 (12 bit)</strong>. On the ESP32-P4, this range is fixed in the continuous/DMA ADC mode used here — no other bit width can be selected (<code>SOC_ADC_DIGI_MIN_BITWIDTH</code> = <code>SOC_ADC_DIGI_MAX_BITWIDTH</code> = 12).</p>
+
+<p>Raw-to-volt conversion: <code>Vout = Dout × Vmax / 4096</code> (<code>Vmax</code> depends on the ADC attenuation <code>ADC_ATTEN_DB_12</code>).</p>
+
+<h3>Hysteresis and timing</h3>
+
+<p>An IND is triggered for two independent reasons:</p>
+
+<ul>
+	<li><strong>Change:</strong> When the raw value differs from the last reported value by more than <code>AnalogInput_hysteresis</code>, an IND is sent, at the earliest <code>TimeRateLimit</code> ms after the previous IND (<code>TimeRateLimit</code> 0 = no limit). <code>AnalogInput_hysteresis</code> = 0 switches this trigger off; to see every change, use 1.</li>
+	<li><strong>Cyclic:</strong> An IND with the current value is sent at least every <code>TimeDelta</code> ms. <code>TimeDelta</code> = 0 or <code>16#FFFFFFFF</code> switches this trigger off.</li>
+</ul>
+
+<p>With both triggers off (<code>AnalogInput_hysteresis</code> = 0 and <code>TimeDelta</code> = 0 or <code>16#FFFFFFFF</code>) the block sends no IND events at all; the value can then only be read via REQ. A warning is logged at INIT in that case.</p>
+]]></Attribute>
+</FBType>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="ROUND_STEP_AR" Comment="Rundet AR_IN auf ein beliebiges Raster RASTER (z.B. 0.25), nicht nur auf&#10;Nachkommastellen wie ROUND_AR. Rechenweg: ROUND(AR_IN / RASTER) * RASTER.&#10;Vorerst als SUB (wiederverwendet das bestehende ROUND_AR), spaeter ggf. als&#10;eigener Basic-Block.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-10-03" Remarks="Bugfix (4diac-IDE-Validation: 'Name: STEP is a reserved keyword' - IEC 61131-3 SFC reserviert STEP fuer Schritte in Ablaufsprache): InputVar STEP in RASTER umbenannt.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-03" Remarks="initial implementation - Franz: 'haben wir einen Baustein um z.B. auf 0.25 zu RUNDEN?' - ROUND_AR/RND_AR/CEIL_AR/FLOOR_AR runden nur auf Nachkommastellen bzw. auf ganze Zahlen, keiner davon auf ein beliebiges Raster. Vorerst als SUB (reine Verdrahtung bestehender Bausteine: AR_DIV_2 -&gt; ROUND_AR(N=0) -&gt; AR_MUL_2), spaeter ggf. als eigener Basic-Block.">
+	</VersionInfo>
+	<CompilerInfo packageName="OSCAT_adapter::Mathematical">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<InputVars>
+			<VarDeclaration Name="RASTER" Type="REAL" Comment="Rundungsraster, z.B. 0.25 - Platzhalter-Default 1.0 (= Rundung auf ganze Zahl), per Parameter ueberschreibbar" InitialValue="1.0"/>
+		</InputVars>
+		<Plugs>
+			<AdapterDeclaration Name="AR_OUT" Type="adapter::types::unidirectional::AR" Comment="Auf RASTER gerundeter Wert (REAL)"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="AR_IN" Type="adapter::types::unidirectional::AR" Comment="Eingangssignal (REAL)"/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="LIT_Step" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-1900" y="700">
+		</FB>
+		<FB Name="AR_SPLIT_2_Step" Type="adapter::events::unidirectional::AR_SPLIT_2" Comment="Faechert RASTER auf AR_DIV_Step und AR_MUL_Step auf - Adapter-Fanout ist strikt 1:1." x="-700" y="900">
+		</FB>
+		<FB Name="AR_DIV_Step" Type="adapter::iec61131::arithmetic::AR_DIV_2" x="1000" y="300">
+		</FB>
+		<FB Name="Round0" Type="OSCAT_adapter::Mathematical::ROUND_AR" Comment="N=0: rundet den Quotienten auf eine ganze Zahl." x="2600" y="300">
+			<Parameter Name="N" Value="0"/>
+		</FB>
+		<FB Name="AR_MUL_Step" Type="adapter::iec61131::arithmetic::AR_MUL_2" x="3900" y="900">
+		</FB>
+		<DataConnections>
+			<Connection Source="RASTER" Destination="LIT_Step.INIT_VAL" dx1="600">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="AR_IN" Destination="AR_DIV_Step.IN1" dx1="600"/>
+			<Connection Source="LIT_Step.OUT" Destination="AR_SPLIT_2_Step.IN" dx1="200"/>
+			<Connection Source="AR_SPLIT_2_Step.OUT1" Destination="AR_DIV_Step.IN2" dx1="600"/>
+			<Connection Source="AR_SPLIT_2_Step.OUT2" Destination="AR_MUL_Step.IN2"/>
+			<Connection Source="AR_DIV_Step.OUT" Destination="Round0.AR_IN" dx1="600"/>
+			<Connection Source="Round0.AR_OUT" Destination="AR_MUL_Step.IN1" dx1="500"/>
+			<Connection Source="AR_MUL_Step.OUT" Destination="AR_OUT" dx1="600"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

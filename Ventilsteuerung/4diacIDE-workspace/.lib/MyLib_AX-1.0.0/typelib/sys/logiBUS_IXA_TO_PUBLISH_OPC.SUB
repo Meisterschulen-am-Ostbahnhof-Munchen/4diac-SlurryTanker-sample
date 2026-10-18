@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="logiBUS_IXA_TO_PUBLISH_OPC" Comment="Digitaler Eingang, lokaler OPC-UA-Write (ACTION=WRITE ohne Endpunkt) per AX_PUBLISH_1">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-18" Remarks="Lokale Variante von logiBUS_IXA_TO_CLIENT_OPC: AX_PUBLISH_1 statt AX_CLIENT_1_0">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-18" Remarks="logiBUS_IXA.INITO auf logiBUS_IXA.REQ zurueckverdrahtet (Selfloop) - loest nach der Initialisierung sofort einen Service-Request aus, statt auf die erste echte Wertaenderung am Bus zu warten (Fix fuer 'Waiting for handle'-Status direkt nach Boot).">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-02" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_S"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="Input" Type="logiBUS::io::DI::logiBUS_DI_S" Comment="Identify the Input Input_I1..I8" InitialValue="logiBUS_DI::Invalid"/>
+			<VarDeclaration Name="ID" Type="WSTRING" Comment="Lokale Knotenadresse (BOOL, ACTION=WRITE, ohne Endpunkt)"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="logiBUS_IXA" Type="logiBUS::io::DI::logiBUS_IXA" x="-2800" y="-200">
+		</FB>
+		<FB Name="AX_PUBLISH_1" Type="adapter::net::AX_PUBLISH_1" x="-600" y="200">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_2" x="1700" y="500">
+		</FB>
+		<EventConnections>
+			<Connection Source="logiBUS_IXA.INITO" Destination="logiBUS_IXA.REQ" dx1="80" dx2="80" dy="53.33"/>
+			<Connection Source="INIT" Destination="logiBUS_IXA.INIT" dx1="80" dx2="80" dy="-313.33"/>
+			<Connection Source="logiBUS_IXA.INITO" Destination="AX_PUBLISH_1.INIT" dx1="700"/>
+			<Connection Source="AX_PUBLISH_1.INITO" Destination="INITO" dx1="3686.67"/>
+			<Connection Source="AX_PUBLISH_1.INITO" Destination="AND_QO.REQ" dx1="700"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="Input" Destination="logiBUS_IXA.Input" dx1="1460">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID" Destination="AX_PUBLISH_1.ID" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="logiBUS_IXA.QI" dx1="80" dx2="80" dy="-206.67"/>
+			<Connection Source="QI" Destination="AX_PUBLISH_1.QI" dx1="80" dx2="80" dy="-6.67"/>
+			<Connection Source="logiBUS_IXA.QO" Destination="AND_QO.IN1" dx1="1000"/>
+			<Connection Source="AX_PUBLISH_1.QO" Destination="AND_QO.IN2" dx1="700"/>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="2473.33"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="logiBUS_IXA.IN" Destination="AX_PUBLISH_1.IN" dx1="1000"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

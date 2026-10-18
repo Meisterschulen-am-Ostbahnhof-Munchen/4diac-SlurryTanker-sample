@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="storageStatusMessages" Comment="Global constants for storage status messages (INI and NVS)">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Version="1.2" Author="franz" Date="2026-08-01" Remarks="added read-only settings error message">
+	</VersionInfo>
+	<VersionInfo Version="1.1" Author="franz" Date="2026-06-13">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::storage::const">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="OK" Type="STRING" InitialValue="'OK'"/>
+		<VarDeclaration Name="NO_CHANGE" Type="STRING" InitialValue="'Value was not stored. Old is new'"/>
+		<VarDeclaration Name="INITIALISED" Type="STRING" InitialValue="'initialized'"/>
+		<VarDeclaration Name="NOT_INITIALISED" Type="STRING" InitialValue="'Not initialized'"/>
+		<VarDeclaration Name="ERR" Type="STRING" InitialValue="'ERROR'"/>
+		<VarDeclaration Name="ERR_NVS_NOT_FOUND" Type="STRING" InitialValue="'ESP_ERR_NVS_NOT_FOUND'"/>
+		<VarDeclaration Name="ERR_NVS_DEFAULT_SET" Type="STRING" InitialValue="'Default Value was used'"/>
+		<VarDeclaration Name="ERR_SECTION_EMPTY" Type="STRING" InitialValue="'SECTION empty'"/>
+		<VarDeclaration Name="ERR_KEY_EMPTY" Type="STRING" InitialValue="'KEY empty'"/>
+		<VarDeclaration Name="ERR_SECTION_WHITESPACE" Type="STRING" InitialValue="'SECTION contains whitespace'"/>
+		<VarDeclaration Name="ERR_KEY_WHITESPACE" Type="STRING" InitialValue="'KEY contains whitespace'"/>
+		<VarDeclaration Name="ERR_READ_ONLY" Type="STRING" InitialValue="'Key is read-only'"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE logiBUS::storage::const;
+
+GLOBALCONSTANTS storageStatusMessages
+	VAR_GLOBAL CONSTANT
+		OK : STRING := 'OK';
+		NO_CHANGE : STRING := 'Value was not stored. Old is new';
+		INITIALISED : STRING := 'initialized';
+		NOT_INITIALISED : STRING := 'Not initialized';
+		ERR : STRING := 'ERROR';
+		ERR_NVS_NOT_FOUND : STRING := 'ESP_ERR_NVS_NOT_FOUND';
+		ERR_NVS_DEFAULT_SET : STRING := 'Default Value was used';
+		ERR_SECTION_EMPTY : STRING := 'SECTION empty';
+		ERR_KEY_EMPTY : STRING := 'KEY empty';
+		ERR_SECTION_WHITESPACE : STRING := 'SECTION contains whitespace';
+		ERR_KEY_WHITESPACE : STRING := 'KEY contains whitespace';
+		ERR_READ_ONLY : STRING := 'Key is read-only';
+	END_VAR
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</GlobalConstants>

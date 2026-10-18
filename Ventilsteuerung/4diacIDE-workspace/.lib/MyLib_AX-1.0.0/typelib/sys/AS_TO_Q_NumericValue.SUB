@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="AS_TO_Q_NumericValue" Comment="AS-Adapter-Wert (z.B. Schrittkettennummer) via AUDI auf ein VT-Zahlenfeld&#10;(Q_NumericValue_AUDI) anzeigen. Generisch, Object ID parametrierbar.&#10;Schwester-Baustein zu MyLib::sys::SINT_TO_Q_NumericValue (dort direkte&#10;SINT-Verdrahtung statt AS-Adapter).">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-09" Remarks="Ausgelagert aus Uebung_039_sub_NumbAnzeig_AS zur Wiederverwendung; u16ObjId zuvor fest importiert (OutputNumber_N1), jetzt als VarDeclaration parametrierbar.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID" InitialValue="ID_NULL"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+		<Sockets>
+			<AdapterDeclaration Name="STATE_NR" Type="adapter::types::unidirectional::AS"/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="Q_NumericValue_AUDI" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="1500" y="-500">
+		</FB>
+		<FB Name="AS_TO_AUDI" Type="adapter::conversion::unidirectional::AS_TO_AUDI" x="-1100" y="0">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="Q_NumericValue_AUDI.INIT"/>
+			<Connection Source="Q_NumericValue_AUDI.INITO" Destination="INITO"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="u16ObjId" Destination="Q_NumericValue_AUDI.u16ObjId" dx1="1880">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="Q_NumericValue_AUDI.QI"/>
+			<Connection Source="Q_NumericValue_AUDI.QO" Destination="QO"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="AS_TO_AUDI.AUDI_OUT" Destination="Q_NumericValue_AUDI.u32NewValue" dx1="893.33"/>
+			<Connection Source="STATE_NR" Destination="AS_TO_AUDI.AS_IN" dx1="540"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="AX_SoftkeyOverride_TO_QXA_BG" Comment="Digitaler AX-Ausgang mit Handbedienung: Programm-Signal (AX-Adapter OUT,&#10;ODER-verknuepft mit Softkey-Taste, solange gedrueckt) auf QXA, Background&#10;spiegelt den Zustand. Generisch. Schwester-Baustein zu&#10;MyLib::sys::SoftkeyOverride_TO_QX_BG (dort event-basiert statt AX-Adapter).">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-09" Remarks="Ausgelagert aus Uebung_039_sub_Outputs_AX zur Wiederverwendung.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO_S"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID Softkey/Button" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="Output" Type="logiBUS::io::DQ::logiBUS_DO_S" InitialValue="logiBUS_DO::Invalid"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+		<Sockets>
+			<AdapterDeclaration Name="OUT" Type="adapter::types::unidirectional::AX"/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="QX" Type="logiBUS::io::DQ::logiBUS_QXA" x="400" y="-800">
+		</FB>
+		<FB Name="IX" Type="isobus::UT::io::Softkey::Softkey_IXA" x="-3800" y="-1000">
+		</FB>
+		<FB Name="AX_OR_2" Type="adapter::booleanOperators::AX_OR_2" x="-2140" y="-193.33">
+		</FB>
+		<SubApp Name="GreenWhiteBackground" Type="MyLib::sys::GreenWhiteBackground1_AX" x="1700" y="0">
+		</SubApp>
+		<FB Name="AX_SPLIT_2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="-1100" y="200">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_3" x="5300" y="-1100">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="QX.INIT" dx1="4806.67"/>
+			<Connection Source="QX.INITO" Destination="IX.INIT" dx1="80" dx2="80" dy="-606.67"/>
+			<Connection Source="IX.INITO" Destination="GreenWhiteBackground.INIT" dx1="2400"/>
+			<Connection Source="GreenWhiteBackground.INITO" Destination="INITO" dx1="4486.67"/>
+			<Connection Source="GreenWhiteBackground.INITO" Destination="AND_QO.REQ" dx1="346.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="u16ObjId" Destination="GreenWhiteBackground.u16ObjId" dx1="7860">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId" Destination="IX.u16ObjId" dx1="1013.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Output" Destination="QX.Output" dx1="4606.67"/>
+			<Connection Source="QI" Destination="QX.QI" dx1="2693.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="IX.QI" dx1="1013.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QX.QO" Destination="AND_QO.IN1" dx1="1346.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="IX.QO" Destination="AND_QO.IN2" dx1="1500">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="1540"/>
+			<Connection Source="QI" Destination="GreenWhiteBackground.QI" dx1="680">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="GreenWhiteBackground.QO" Destination="AND_QO.IN3" dx1="346.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="AX_SPLIT_2.OUT1" Destination="QX.OUT" dx1="520"/>
+			<Connection Source="IX.IN" Destination="AX_OR_2.IN1" dx1="240"/>
+			<Connection Source="AX_SPLIT_2.OUT2" Destination="GreenWhiteBackground.DI1" dx1="960"/>
+			<Connection Source="AX_OR_2.OUT" Destination="AX_SPLIT_2.IN" dx1="213.33"/>
+			<Connection Source="OUT" Destination="AX_OR_2.IN2" dx1="2706.67"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="AX_SELECT" Comment="selection between two events based on boolean input G">
+	<Identification Standard="61499-1 Annex A" Description="Copyright (c) 2017 fortiss GmbH, HR Agrartechnik GmbH&#10; &#10;This program and the accompanying materials are made&#10;available under the terms of the Eclipse Public License 2.0&#10;which is available at https://www.eclipse.org/legal/epl-2.0/&#10;&#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Version="3.0" Author="Patrick Aigner" Date="2025-04-14" Remarks="changed package">
+	</VersionInfo>
+	<VersionInfo Organization="fortiss GmbH" Version="1.0" Author="Alois Zoitl" Date="2017-09-21" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::events::unidirectional">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="EI0" Type="Event" Comment="Input event, selected when G=0">
+			</Event>
+			<Event Name="EI1" Type="Event" Comment="Input event, selected when G=1">
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="EO" Type="Event" Comment="Output Event">
+			</Event>
+		</EventOutputs>
+		<Sockets>
+			<AdapterDeclaration Name="G" Type="adapter::types::unidirectional::AX" Comment=" Select EI0 when G=0, EI1 when G=1"/>
+		</Sockets>
+	</InterfaceList>
+	<BasicFB>
+		<ECC>
+			<ECState Name="START" Comment="Initial State" x="550" y="425">
+			</ECState>
+			<ECState Name="EO" Comment="Issue Output Event" x="580" y="965">
+				<ECAction Output="EO"/>
+			</ECState>
+			<ECTransition Source="EO" Destination="START" Condition="1" x="685" y="750"/>
+			<ECTransition Source="START" Destination="EO" Condition="EI0[NOT G.D1]" x="365" y="750"/>
+			<ECTransition Source="START" Destination="EO" Condition="EI1[G.D1]" x="1060" y="740"/>
+		</ECC>
+	</BasicFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

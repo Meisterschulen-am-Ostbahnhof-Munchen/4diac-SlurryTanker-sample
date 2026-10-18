@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="AW_PUBLISH_1" Comment="Publish a WORD from an AW adapter to one or many SUBSCRIBE_1 Blocks, buffered&#10;with a D_FF. Contract: garantiert seit v1.1 einen erzwungenen ersten Publish&#10;direkt nach INIT (OPC-UA-Knoten existiert sofort, auch ohne vorherige echte&#10;Wertaenderung am Adapter) - dieser erste Publish kann aber noch den&#10;Default-/Platzhalterwert des internen Latches enthalten statt des tatsaechlichen&#10;aktuellen Adapterwerts, bis die erste echte Aenderung eintrifft. Consumer, die&#10;auf den exakten Erstwert angewiesen sind, muessen das beruecksichtigen.&#10;Verhalten bei QI=FALSE (deaktivierter Publisher) verifiziert (FORTE-Quellcode,&#10;core/src/cominfra/commfb.cpp): weder beim INIT (Verbindung wird geschlossen&#10;statt geoeffnet) noch beim erzwungenen Erst-Publish (sendData() bricht vor dem&#10;Erreichen der Kommunikationsschicht ab) wird tatsaechlich etwas gesendet oder&#10;ein Knoten angelegt - das dabei ausgeloeste CNF/QO=FALSE/STATUS=Inhibited ist&#10;reine lokale Rueckmeldung, keine Netzwerkoperation, unbedenklich. Ein spaeterer&#10;QI-Wechsel FALSE-&gt;TRUE ohne erneutes INIT loest den erzwungenen Erst-Publish&#10;NICHT erneut aus.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 HR Agrartechnik GmbH&#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.1" Author="Franz Höpfinger" Date="2026-09-17" Remarks="Erzwungener Erst-Publish nach INIT: PUBLISH_1/PUBLISH_2.INITO -> .REQ ergaenzt (Franz, gegen fehlende OPC-UA-Knoten wenn seit Power-On noch keine echte Wertaenderung stattfand, siehe BERICHT_2026-09-16_STG3_I1_I3_I4_I6_STALE_REMOTE_SUBSCRIBE.md Abschnitt 18-20) - garantiert einen unbedingten ersten Publish direkt nach der Initialisierung.">
+	</VersionInfo>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-08-07" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::net">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Initialization">
+				<With Var="QI"/>
+				<With Var="ID"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Data was sent">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL"/>
+			<VarDeclaration Name="ID" Type="WSTRING"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL"/>
+			<VarDeclaration Name="STATUS" Type="WSTRING"/>
+		</OutputVars>
+		<Sockets>
+			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AW" Comment="WORD to publish" x="-3800" y="900"/>
+		</Sockets>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="E_D_FF_ANY" Type="iec61499::events::E_D_FF_ANY" x="-2700" y="900">
+		</FB>
+		<FB Name="F_MOVE" Type="iec61131::selection::F_MOVE" x="-1600" y="900">
+			<Attribute Name="DataType" Value="WORD"/>
+		</FB>
+		<FB Name="PUBLISH_1" Type="iec61499::net::PUBLISH_1" x="-300" y="0">
+		</FB>
+		<EventConnections>
+			<Connection Source="PUBLISH_1.INITO" Destination="INITO" dx1="873.33"/>
+			<Connection Source="PUBLISH_1.CNF" Destination="CNF" dx1="1280"/>
+			<Connection Source="IN.E1" Destination="E_D_FF_ANY.CLK"/>
+			<Connection Source="E_D_FF_ANY.EO" Destination="F_MOVE.REQ"/>
+			<Connection Source="F_MOVE.CNF" Destination="PUBLISH_1.REQ" dx1="353.33"/>
+			<Connection Source="INIT" Destination="PUBLISH_1.INIT" dx1="4520"/>
+			<Connection Source="PUBLISH_1.INITO" Destination="PUBLISH_1.REQ" dx1="80" dx2="80" dy="53.33"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="PUBLISH_1.QO" Destination="QO" dx1="1540"/>
+			<Connection Source="PUBLISH_1.STATUS" Destination="STATUS" dx1="1713.33"/>
+			<Connection Source="IN.D1" Destination="E_D_FF_ANY.D"/>
+			<Connection Source="E_D_FF_ANY.Q" Destination="F_MOVE.IN"/>
+			<Connection Source="F_MOVE.OUT" Destination="PUBLISH_1.SD_1" dx1="540"/>
+			<Connection Source="QI" Destination="PUBLISH_1.QI" dx1="4160"/>
+			<Connection Source="ID" Destination="PUBLISH_1.ID" dx1="3846.67"/>
+		</DataConnections>
+	</FBNetwork>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

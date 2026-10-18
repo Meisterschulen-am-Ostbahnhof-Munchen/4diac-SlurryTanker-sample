@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="INI_IN_AND_STORE_AUI2" Comment="INI Laden und Speichern von AUI2-Daten (reine Ganzzahl 0-N, kein Scale/Decimals) mit&#10;zusaetzlichem VALUEO (AUI, plain) fuer einen weiteren Consumer - analog&#10;INI_IN_AND_STORE_AUDI2, aber ueber den bidirektionalen AUI2-Adapter (UINT)&#10;statt AUDI2 (UDINT), z.B. fuer K eines AOption_AUI_DEMUX_N.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-13" Remarks="UINT/AUI2-Pendant zu MyLib::sys::INI_IN_AND_STORE_AUDI2: NumericValue_IDA + AD_TO_AUI + AUI_TO_AUI2 + INI_AUI2 (bidirektionaler Adapter statt AUI+Split-Paar), AUI_TO_AUI2.AUI_OUT gesplittet auf Q_NumericValue_AUDI (VT-Anzeige, via AUI_TO_AUDI) und VALUEO (weiterer Consumer, z.B. AOption_AUI_DEMUX_N.K). Strukturell identisch zu INI_IN_AND_STORE_AUDI2, nur mit AUI2 statt AUDI2.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="KEY" Type="STRING" Comment="Key name."/>
+			<VarDeclaration Name="SECTION" Type="STRING" Comment="Section name."/>
+			<VarDeclaration Name="u16ObjId" Type="UINT" InitialValue="ID_NULL"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="VALUEO" Type="adapter::types::unidirectional::AUI"/>
+		</Plugs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="ID" Type="isobus::UT::io::NumericValue::NumericValue_IDA" x="-2800" y="-1000">
+		</FB>
+		<FB Name="AD_TO_AUI" Type="adapter::conversion::unidirectional::AD_TO_AUI" x="-1400" y="0">
+		</FB>
+		<FB Name="AUI_TO_AUI2" Type="adapter::conversion::bidirectional::AUI_TO_AUI2" x="1400" y="500">
+		</FB>
+		<FB Name="INI_AUI2" Type="eclipse4diac::storage::INI_AUI2" x="4500" y="-500">
+			<Parameter Name="SETM" Value="TRUE"/>
+			<Parameter Name="DEFAULT_VALUE" Value="UINT#0"/>
+		</FB>
+		<FB Name="AUI_SPLIT_2" Type="adapter::events::unidirectional::AUI_SPLIT_2" x="3900" y="700">
+		</FB>
+		<FB Name="AUI_TO_AUDI" Type="adapter::conversion::unidirectional::AUI_TO_AUDI" x="5000" y="1700">
+		</FB>
+		<FB Name="Q_NumericValue_AUDI" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="6500" y="1300">
+		</FB>
+		<Comment Comment="SETM=TRUE - der Boot-Wert laedt so oder so automatisch (INIT -&gt; INITO -&gt; GET -&gt; GETO, unabhaengig von SETM). SETM=TRUE sorgt dafuer, dass auch eine LIVE-Aenderung waehrend des laufenden Betriebs sofort bestaetigt/zurueckgemeldet wird - wichtig, falls der frische Wert noch im selben Lauf weiterverwendet werden soll (z.B. hier ueber VALUEO)." x="3100" y="-1100" width="2400" height="500"/>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_3">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="ID.INIT"/>
+			<Connection Source="ID.INITO" Destination="INI_AUI2.INIT"/>
+			<Connection Source="INI_AUI2.INITO" Destination="Q_NumericValue_AUDI.INIT"/>
+			<Connection Source="Q_NumericValue_AUDI.INITO" Destination="INITO"/>
+			<Connection Source="Q_NumericValue_AUDI.INITO" Destination="AND_QO.REQ"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="KEY" Destination="INI_AUI2.KEY" dx1="2846.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="SECTION" Destination="INI_AUI2.SECTION" dx1="2846.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId" Destination="ID.u16ObjId" dx1="1046.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId" Destination="Q_NumericValue_AUDI.u16ObjId" dx1="8246.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="Q_NumericValue_AUDI.QI"/>
+			<Connection Source="QI" Destination="ID.QI"/>
+			<Connection Source="QI" Destination="INI_AUI2.QI"/>
+			<Connection Source="Q_NumericValue_AUDI.QO" Destination="AND_QO.IN1"/>
+			<Connection Source="ID.QO" Destination="AND_QO.IN2"/>
+			<Connection Source="INI_AUI2.QO" Destination="AND_QO.IN3"/>
+			<Connection Source="AND_QO.OUT" Destination="QO"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="ID.IN" Destination="AD_TO_AUI.AD_IN" dx1="180"/>
+			<Connection Source="AD_TO_AUI.AUI_OUT" Destination="AUI_TO_AUI2.AUI_IN" dx1="586.67"/>
+			<Connection Source="AUI_TO_AUI2.AUI2_BIDIR" Destination="INI_AUI2.VAL" dx1="673.33"/>
+			<Connection Source="AUI_TO_AUI2.AUI_OUT" Destination="AUI_SPLIT_2.IN" dx1="1106.67"/>
+			<Connection Source="AUI_SPLIT_2.OUT1" Destination="VALUEO" dx1="2220"/>
+			<Connection Source="AUI_SPLIT_2.OUT2" Destination="AUI_TO_AUDI.AUI_IN" dx1="873.33"/>
+			<Connection Source="AUI_TO_AUDI.AUDI_OUT" Destination="Q_NumericValue_AUDI.u32NewValue" dx1="520"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

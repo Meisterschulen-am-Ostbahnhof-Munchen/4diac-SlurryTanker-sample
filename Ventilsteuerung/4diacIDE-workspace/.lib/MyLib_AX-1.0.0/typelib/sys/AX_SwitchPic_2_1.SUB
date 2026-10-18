@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="AX_SwitchPic_2_1" Comment="Bild/ObjectPointer-Ziel umschalten VT; 2 Zustaende, Selector als AX-Adapter&#10;statt BOOL-InputVar (AX-Pendant zu MyLib::sys::SwitchPic_2_1) - schreibt bei&#10;jedem Update von DI1 das per DI1.D1 ausgewaehlte Ziel-Object-ID (pictures.down&#10;wenn TRUE, pictures.up wenn FALSE) auf den ObjectPointer Picture.">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-17" Remarks="Neu (Franz: 'dann Rectangle_Aktiv oder ID_NULL werfen auf ObjectPointer_Elevatorband_Ein ObjectPointer_Igelband_Ein ObjectPointer_Befuellband_Ein') - AX-Adapter-Pendant zu SwitchPic_2_1 (dort DI1:BOOL + externes EI-Event), hier DI1:AX-Socket dessen eigenes E1/D1 REQ/G direkt speist, kein externer Trigger noetig.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+		<Import declaration="isobus::UT::Q::types::s2x1ObjectIDs"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="Picture" Type="UINT" Comment="Object ID of the ObjectPointer to write into"/>
+			<VarDeclaration Name="pictures" Type="isobus::UT::Q::types::s2x1ObjectIDs" Comment="die beiden Ziel-Object-IDs" InitialValue="(up := (u16ObjId := ID_NULL), down := (u16ObjId := ID_NULL))"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+		<Sockets>
+			<AdapterDeclaration Name="DI1" Type="adapter::types::unidirectional::AX" Comment="Selector - down (pictures.down) wenn TRUE, up (pictures.up) wenn FALSE. Jedes Update schreibt sofort neu."/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue" x="5300" y="-700">
+		</FB>
+		<FB Name="F_MOVE" Type="iec61131::selection::F_MOVE" x="200" y="-300">
+			<Attribute Name="DataType" Value="isobus::UT::Q::types::s2x1ObjectIDs"/>
+			<Parameter Name="OUT" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="OUT.up.u16ObjId" Value="">
+				<Attribute Name="Visible" Value="true"/>
+			</Parameter>
+			<Parameter Name="OUT.down.u16ObjId" Value="">
+				<Attribute Name="Visible" Value="true"/>
+			</Parameter>
+		</FB>
+		<FB Name="F_MUX_2" Type="iec61131::selection::F_SEL" x="2100" y="0">
+		</FB>
+		<FB Name="AX_X_TO_BOOL" Type="adapter::conversion::unidirectional::AX_X_TO_BOOL" x="100" y="800">
+		</FB>
+		<EventConnections>
+			<Connection Source="F_MUX_2.CNF" Destination="Q_NumericValue.REQ" dx1="440"/>
+			<Connection Source="F_MOVE.CNF" Destination="F_MUX_2.REQ" dx1="193.33"/>
+			<Connection Source="AX_X_TO_BOOL.CNF" Destination="F_MUX_2.REQ" dx1="573.33"/>
+			<Connection Source="INIT" Destination="Q_NumericValue.INIT" dx1="1666.67"/>
+			<Connection Source="Q_NumericValue.INITO" Destination="INITO" dx1="1126.67"/>
+			<Connection Source="Q_NumericValue.INITO" Destination="F_MOVE.REQ" dx1="80" dx2="80" dy="-246.67"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="Picture" Destination="Q_NumericValue.u16ObjId" dx1="4133.33"/>
+			<Connection Source="pictures" Destination="F_MOVE.IN" dx1="826.67"/>
+			<Connection Source="F_MUX_2.OUT" Destination="Q_NumericValue.u32NewValue" dx1="706.67"/>
+			<Connection Source="F_MOVE.OUT.up.u16ObjId" Destination="F_MUX_2.IN0" dx1="586.67"/>
+			<Connection Source="F_MOVE.OUT.down.u16ObjId" Destination="F_MUX_2.IN1" dx1="446.67"/>
+			<Connection Source="AX_X_TO_BOOL.IN" Destination="F_MUX_2.G" dx1="840"/>
+			<Connection Source="QI" Destination="Q_NumericValue.QI" dx1="2526.67"/>
+			<Connection Source="Q_NumericValue.QO" Destination="QO" dx1="1126.67"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="DI1" Destination="AX_X_TO_BOOL.AX_IN" dx1="453.33"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

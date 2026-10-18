@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="AX_AND_2_DUAL" Comment="Gated Heben/Senken-Paar mit gemeinsamer Freigabe: OUT_UP = IN_UP AND IN_PERMIT,&#10;OUT_DOWN = IN_DOWN AND IN_PERMIT, OUT_PERMIT = IN_PERMIT durchgereicht (fuer&#10;einen dritten Verbraucher, der die rohe Freigabe selbst braucht - z.B. eine&#10;Statusanzeige). Spart 2x AX_AND_2 + 1x AX_SPLIT_3 als Einzelbausteine, wo immer&#10;ein Heben/Senken-Signalpaar dieselbe Freigabe gegatet braucht.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-27" Remarks="initial implementation - generische Gate-Kombination fuer ein Heben/Senken-Signalpaar mit gemeinsamer Freigabe, IN_PERMIT zusaetzlich unveraendert als OUT_PERMIT durchgereicht.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<Plugs>
+			<AdapterDeclaration Name="OUT_UP" Type="adapter::types::unidirectional::AX" Comment="IN_UP AND IN_PERMIT"/>
+			<AdapterDeclaration Name="OUT_PERMIT" Type="adapter::types::unidirectional::AX" Comment="IN_PERMIT unveraendert durchgereicht (fuer einen dritten Verbraucher, z.B. eine Statusanzeige)"/>
+			<AdapterDeclaration Name="OUT_DOWN" Type="adapter::types::unidirectional::AX" Comment="IN_DOWN AND IN_PERMIT"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="IN_UP" Type="adapter::types::unidirectional::AX" Comment="Rohes Heben-Signal, wird mit IN_PERMIT gegated"/>
+			<AdapterDeclaration Name="IN_PERMIT" Type="adapter::types::unidirectional::AX" Comment="Gemeinsame Freigabe fuer IN_UP/IN_DOWN, zusaetzlich unveraendert an OUT_PERMIT durchgereicht"/>
+			<AdapterDeclaration Name="IN_DOWN" Type="adapter::types::unidirectional::AX" Comment="Rohes Senken-Signal, wird mit IN_PERMIT gegated"/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="AX_AND_UP" Type="adapter::booleanOperators::AX_AND_2" x="1200" y="100">
+		</FB>
+		<FB Name="AX_AND_DOWN" Type="adapter::booleanOperators::AX_AND_2" x="1300" y="1000">
+		</FB>
+		<FB Name="AX_SPLIT_3" Type="adapter::events::unidirectional::AX_SPLIT_3" x="0" y="500">
+		</FB>
+		<AdapterConnections>
+			<Connection Source="AX_AND_UP.OUT" Destination="OUT_UP" dx1="1893.33"/>
+			<Connection Source="AX_AND_DOWN.OUT" Destination="OUT_DOWN" dx1="2340"/>
+			<Connection Source="IN_PERMIT" Destination="AX_SPLIT_3.IN" dx1="4400"/>
+			<Connection Source="AX_SPLIT_3.OUT2" Destination="OUT_PERMIT" dx1="3326.67"/>
+			<Connection Source="AX_SPLIT_3.OUT1" Destination="AX_AND_UP.IN2" dx1="313.33"/>
+			<Connection Source="AX_SPLIT_3.OUT3" Destination="AX_AND_DOWN.IN1" dx1="373.33"/>
+			<Connection Source="IN_DOWN" Destination="AX_AND_DOWN.IN2" dx1="3160"/>
+			<Connection Source="IN_UP" Destination="AX_AND_UP.IN1" dx1="5253.33"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

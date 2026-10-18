@@ -1,0 +1,578 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="AnlagenSequenz_06" Comment="Ring aus getrennter Vorlauf- und Nachlauf-Kette (je 5 Zwischenschritte) für 6&#10;Motoren mit Störungs-Kaskade, s. KONZEPT_Anlagensequenz.md">
+	<Identification Standard="61499-2" ApplicationDomain="Fördertechnik" Description="Copyright (c) 2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0  &#10; &#10;DRAFT (2026-08-12), 2. Fassung: Vorlauf und Nachlauf sind jetzt zwei getrennte,  &#10;jeweils rein lineare Ketten (S_VOR1..S_VOR5 bzw. S_NACH1..S_NACH5), verbunden  &#10;über S_AUS (unten) und S_LAEUFT (oben) zu einem Ring - anstelle der ersten  &#10;Fassung mit 7 bidirektional genutzten Zuständen. Jeder Zustand hat dadurch genau  &#10;einen festen Zeitwert (ZEk_EIN bzw. ZEk_AUS) und ein festes Motor-Muster, keine  &#10;Richtungs-Fallunterscheidung mehr pro Zustand nötig.  &#10; &#10;Bekannte, bewusste Vereinfachungen:  &#10;1) Jede STOERUNG_Mx hat ein eigenes Event EI_Mx (analog EO_Mx/DO_Mx), das direkt  &#10;   von jedem Zustand vor dem jeweiligen Zielschritt (S_NACH_x, bzw. S_AUS bei  &#10;   x=6) dorthin springt - kein Umweg mehr über einen Spiegelpunkt und kein  &#10;   Nachfassen über mehrere Zyklen. Ein AUS-Abbruch aus dem Vorlauf springt  &#10;   weiterhin auf den Spiegelpunkt (S_VOR_k -&gt; S_NACH_(6-k)), da dort keine  &#10;   Motoren-Störung, sondern nur der Bedienerwunsch vorliegt.  &#10;2) Pro Motor gibt es ein Event EO_Mx mit angehängtem DO_Mx (analog EO_Sx/DO_Sx in  &#10;   sequence_T_04/_08). Der Baustein hat keine Selbstschleifen mehr (alle bisherigen  &#10;   liefen über das inzwischen entfernte EI_CYCLIC) - EO_Mx feuert also nur noch bei  &#10;   einem echten Zustandswechsel.  &#10;3) MaxBetriebRest/Nachlauf-Reste (Demo-Server-Schema) sind noch nicht abgebildet.">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="0.6" Author="Franz Höpfinger" Date="2026-08-12">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::utils::sequence::timed">
+		<Import declaration="logiBUS::utils::sequence::const::sequence"/>
+		<Import declaration="logiBUS::utils::sequence::const::anlagenSequenz"/>
+		<Import declaration="logiBUS::utils::sequence::const::motorNummer"/>
+		<Import declaration="logiBUS::utils::sequence::const::zaehlstand"/>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Initialization Request">
+			</Event>
+			<Event Name="EIN" Type="Event" Comment="Startsequenz auslösen; nur wirksam wenn EINSCHALTBEREIT=TRUE; quittiert dabei zugleich eine anstehende Störungsanzeige">
+			</Event>
+			<Event Name="AUS" Type="Event" Comment="Stopsequenz auslösen, aus jedem Schritt der Vorlauf-Kette oder aus S_LAEUFT">
+			</Event>
+			<Event Name="SET_ZE1_EIN" Type="Event" Comment="Update ZE1_EIN independently of EIN">
+				<With Var="ZE1_EIN"/>
+			</Event>
+			<Event Name="SET_ZE2_EIN" Type="Event" Comment="Update ZE2_EIN independently of EIN">
+				<With Var="ZE2_EIN"/>
+			</Event>
+			<Event Name="SET_ZE3_EIN" Type="Event" Comment="Update ZE3_EIN independently of EIN">
+				<With Var="ZE3_EIN"/>
+			</Event>
+			<Event Name="SET_ZE4_EIN" Type="Event" Comment="Update ZE4_EIN independently of EIN">
+				<With Var="ZE4_EIN"/>
+			</Event>
+			<Event Name="SET_ZE5_EIN" Type="Event" Comment="Update ZE5_EIN independently of EIN">
+				<With Var="ZE5_EIN"/>
+			</Event>
+			<Event Name="SET_ZE1_AUS" Type="Event" Comment="Update ZE1_AUS independently of AUS">
+				<With Var="ZE1_AUS"/>
+			</Event>
+			<Event Name="SET_ZE2_AUS" Type="Event" Comment="Update ZE2_AUS independently of AUS">
+				<With Var="ZE2_AUS"/>
+			</Event>
+			<Event Name="SET_ZE3_AUS" Type="Event" Comment="Update ZE3_AUS independently of AUS">
+				<With Var="ZE3_AUS"/>
+			</Event>
+			<Event Name="SET_ZE4_AUS" Type="Event" Comment="Update ZE4_AUS independently of AUS">
+				<With Var="ZE4_AUS"/>
+			</Event>
+			<Event Name="SET_ZE5_AUS" Type="Event" Comment="Update ZE5_AUS independently of AUS">
+				<With Var="ZE5_AUS"/>
+			</Event>
+			<Event Name="EI_M1" Type="Event" Comment="Störungsstatus Motor 1 hat sich geändert">
+				<With Var="STOERUNG_M1"/>
+			</Event>
+			<Event Name="EI_M2" Type="Event" Comment="Störungsstatus Motor 2 hat sich geändert">
+				<With Var="STOERUNG_M2"/>
+			</Event>
+			<Event Name="EI_M3" Type="Event" Comment="Störungsstatus Motor 3 hat sich geändert">
+				<With Var="STOERUNG_M3"/>
+			</Event>
+			<Event Name="EI_M4" Type="Event" Comment="Störungsstatus Motor 4 hat sich geändert">
+				<With Var="STOERUNG_M4"/>
+			</Event>
+			<Event Name="EI_M5" Type="Event" Comment="Störungsstatus Motor 5 hat sich geändert">
+				<With Var="STOERUNG_M5"/>
+			</Event>
+			<Event Name="EI_M6" Type="Event" Comment="Störungsstatus Motor 6 hat sich geändert">
+				<With Var="STOERUNG_M6"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Ausführungsbestätigung, mit jedem Zustands-Update">
+				<With Var="STATUS_BETRIEB"/>
+				<With Var="STATUS_STOERUNG"/>
+				<With Var="ZAEHLSTAND"/>
+				<With Var="EINSCHALTBEREIT"/>
+				<With Var="ANLAGE_AUS"/>
+				<With Var="TRANSIT_MOTOR"/>
+				<With Var="TRANSIT_ART"/>
+			</Event>
+			<Event Name="EO_M1" Type="Event" Comment="Laufbefehl Motor 1 aktualisiert (analog EO_Sx in sequence_T_04/_08)">
+				<With Var="DO_M1"/>
+			</Event>
+			<Event Name="EO_M2" Type="Event" Comment="Laufbefehl Motor 2 aktualisiert">
+				<With Var="DO_M2"/>
+			</Event>
+			<Event Name="EO_M3" Type="Event" Comment="Laufbefehl Motor 3 aktualisiert">
+				<With Var="DO_M3"/>
+			</Event>
+			<Event Name="EO_M4" Type="Event" Comment="Laufbefehl Motor 4 aktualisiert">
+				<With Var="DO_M4"/>
+			</Event>
+			<Event Name="EO_M5" Type="Event" Comment="Laufbefehl Motor 5 aktualisiert">
+				<With Var="DO_M5"/>
+			</Event>
+			<Event Name="EO_M6" Type="Event" Comment="Laufbefehl Motor 6 aktualisiert">
+				<With Var="DO_M6"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="ZE1_EIN" Type="TIME" Comment="S_VOR1 zu S_VOR2, M5 startet (Vorlauf)" InitialValue="sequence::NO_TIME"/>
+			<VarDeclaration Name="ZE2_EIN" Type="TIME" Comment="S_VOR2 zu S_VOR3, M4 startet (Vorlauf)" InitialValue="sequence::NO_TIME"/>
+			<VarDeclaration Name="ZE3_EIN" Type="TIME" Comment="S_VOR3 zu S_VOR4, M3 startet (Vorlauf)" InitialValue="sequence::NO_TIME"/>
+			<VarDeclaration Name="ZE4_EIN" Type="TIME" Comment="S_VOR4 zu S_VOR5, M2 startet (Vorlauf)" InitialValue="sequence::NO_TIME"/>
+			<VarDeclaration Name="ZE5_EIN" Type="TIME" Comment="S_VOR5 zu S_LAEUFT, M1 startet (Vorlauf)" InitialValue="sequence::NO_TIME"/>
+			<VarDeclaration Name="ZE1_AUS" Type="TIME" Comment="S_NACH1 zu S_NACH2, M2 stoppt (Nachlauf)" InitialValue="sequence::NO_TIME"/>
+			<VarDeclaration Name="ZE2_AUS" Type="TIME" Comment="S_NACH2 zu S_NACH3, M3 stoppt (Nachlauf)" InitialValue="sequence::NO_TIME"/>
+			<VarDeclaration Name="ZE3_AUS" Type="TIME" Comment="S_NACH3 zu S_NACH4, M4 stoppt (Nachlauf)" InitialValue="sequence::NO_TIME"/>
+			<VarDeclaration Name="ZE4_AUS" Type="TIME" Comment="S_NACH4 zu S_NACH5, M5 stoppt (Nachlauf)" InitialValue="sequence::NO_TIME"/>
+			<VarDeclaration Name="ZE5_AUS" Type="TIME" Comment="S_NACH5 zu S_AUS, M6 stoppt (Nachlauf)" InitialValue="sequence::NO_TIME"/>
+			<VarDeclaration Name="STOERUNG_M1" Type="BOOL" Comment="Motor 1 hat aktuell eine Störung anstehen" InitialValue="BOOL#FALSE"/>
+			<VarDeclaration Name="STOERUNG_M2" Type="BOOL" Comment="Motor 2 hat aktuell eine Störung anstehen" InitialValue="BOOL#FALSE"/>
+			<VarDeclaration Name="STOERUNG_M3" Type="BOOL" Comment="Motor 3 hat aktuell eine Störung anstehen" InitialValue="BOOL#FALSE"/>
+			<VarDeclaration Name="STOERUNG_M4" Type="BOOL" Comment="Motor 4 hat aktuell eine Störung anstehen" InitialValue="BOOL#FALSE"/>
+			<VarDeclaration Name="STOERUNG_M5" Type="BOOL" Comment="Motor 5 hat aktuell eine Störung anstehen" InitialValue="BOOL#FALSE"/>
+			<VarDeclaration Name="STOERUNG_M6" Type="BOOL" Comment="Motor 6 hat aktuell eine Störung anstehen" InitialValue="BOOL#FALSE"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="STATUS_BETRIEB" Type="SINT" Comment="0=Aus 1=Hochfahren 2=Läuft 3=Herunterfahren"/>
+			<VarDeclaration Name="STATUS_STOERUNG" Type="SINT" Comment="0=keine 4=aktiv, verriegelt bis EIN"/>
+			<VarDeclaration Name="EINSCHALTBEREIT" Type="BOOL" Comment="TRUE nur wenn alle Motoren stehen UND alle Motoren störungsfrei sind"/>
+			<VarDeclaration Name="ZAEHLSTAND" Type="SINT" Comment="0..6, Anzahl aktuell laufender Motoren, s. Konzept"/>
+			<VarDeclaration Name="ANLAGE_AUS" Type="BOOL" Comment="TRUE nur in S_AUS (STATUS_BETRIEB = Aus) - Voraussetzung fuer Handbetrieb"/>
+			<VarDeclaration Name="TRANSIT_MOTOR" Type="SINT" Comment="0 = keiner (S_AUS/S_LAEUFT), 1..6 = Motor-Nr., der nach Ablauf der aktuellen Zeit startet/stoppt (siehe TRANSIT_ART)"/>
+			<VarDeclaration Name="TRANSIT_ART" Type="SINT" Comment="anlagenSequenz::TRANSIT_ART_KEINE/_VORLAUF/_NACHLAUF"/>
+			<VarDeclaration Name="DO_M1" Type="BOOL" Comment="Laufbefehl Motor 1"/>
+			<VarDeclaration Name="DO_M2" Type="BOOL" Comment="Laufbefehl Motor 2"/>
+			<VarDeclaration Name="DO_M3" Type="BOOL" Comment="Laufbefehl Motor 3"/>
+			<VarDeclaration Name="DO_M4" Type="BOOL" Comment="Laufbefehl Motor 4"/>
+			<VarDeclaration Name="DO_M5" Type="BOOL" Comment="Laufbefehl Motor 5"/>
+			<VarDeclaration Name="DO_M6" Type="BOOL" Comment="Laufbefehl Motor 6"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="timeOut" Type="iec61499::events::ATimeOut" Comment="timeOut Adapter"/>
+		</Plugs>
+	</InterfaceList>
+	<BasicFB>
+		<ECC>
+			<ECState Name="xSTART" Comment="Initial State" x="5600" y="11200">
+			</ECState>
+			<ECState Name="Init" Comment="Initialization" x="4240" y="11280">
+				<ECAction Output="INITO"/>
+			</ECState>
+			<ECState Name="sAUS" Comment="S_AUS, unten im Ring: keine Motoren laufen" x="5600" y="9600">
+				<ECAction Algorithm="S_AUS_Setup"/>
+				<ECAction Algorithm="EI_CYCLIC_Auswertung"/>
+				<ECAction Algorithm="M1_AUS" Output="EO_M1"/>
+				<ECAction Algorithm="M2_AUS" Output="EO_M2"/>
+				<ECAction Algorithm="M3_AUS" Output="EO_M3"/>
+				<ECAction Algorithm="M4_AUS" Output="EO_M4"/>
+				<ECAction Algorithm="M5_AUS" Output="EO_M5"/>
+				<ECAction Algorithm="M6_AUS" Output="EO_M6"/>
+				<ECAction Output="CNF"/>
+			</ECState>
+			<ECState Name="sVOR1" Comment="S_VOR1 (Vorlauf-Kette): nur M6 läuft" x="800" y="8000">
+				<ECAction Algorithm="S_VOR1_Setup"/>
+				<ECAction Algorithm="EI_CYCLIC_Auswertung"/>
+				<ECAction Algorithm="M1_AUS" Output="EO_M1"/>
+				<ECAction Algorithm="M2_AUS" Output="EO_M2"/>
+				<ECAction Algorithm="M3_AUS" Output="EO_M3"/>
+				<ECAction Algorithm="M4_AUS" Output="EO_M4"/>
+				<ECAction Algorithm="M5_AUS" Output="EO_M5"/>
+				<ECAction Algorithm="M6_EIN" Output="EO_M6"/>
+				<ECAction Output="timeOut.START"/>
+				<ECAction Output="CNF"/>
+			</ECState>
+			<ECState Name="sVOR2" Comment="S_VOR2 (Vorlauf-Kette): M5,M6 laufen" x="800" y="6400">
+				<ECAction Algorithm="S_VOR2_Setup"/>
+				<ECAction Algorithm="EI_CYCLIC_Auswertung"/>
+				<ECAction Algorithm="M1_AUS" Output="EO_M1"/>
+				<ECAction Algorithm="M2_AUS" Output="EO_M2"/>
+				<ECAction Algorithm="M3_AUS" Output="EO_M3"/>
+				<ECAction Algorithm="M4_AUS" Output="EO_M4"/>
+				<ECAction Algorithm="M5_EIN" Output="EO_M5"/>
+				<ECAction Algorithm="M6_EIN" Output="EO_M6"/>
+				<ECAction Output="timeOut.START"/>
+				<ECAction Output="CNF"/>
+			</ECState>
+			<ECState Name="sVOR3" Comment="S_VOR3 (Vorlauf-Kette): M4,M5,M6 laufen" x="800" y="4800">
+				<ECAction Algorithm="S_VOR3_Setup"/>
+				<ECAction Algorithm="EI_CYCLIC_Auswertung"/>
+				<ECAction Algorithm="M1_AUS" Output="EO_M1"/>
+				<ECAction Algorithm="M2_AUS" Output="EO_M2"/>
+				<ECAction Algorithm="M3_AUS" Output="EO_M3"/>
+				<ECAction Algorithm="M4_EIN" Output="EO_M4"/>
+				<ECAction Algorithm="M5_EIN" Output="EO_M5"/>
+				<ECAction Algorithm="M6_EIN" Output="EO_M6"/>
+				<ECAction Output="timeOut.START"/>
+				<ECAction Output="CNF"/>
+			</ECState>
+			<ECState Name="sVOR4" Comment="S_VOR4 (Vorlauf-Kette): M3,M4,M5,M6 laufen" x="800" y="3200">
+				<ECAction Algorithm="S_VOR4_Setup"/>
+				<ECAction Algorithm="EI_CYCLIC_Auswertung"/>
+				<ECAction Algorithm="M1_AUS" Output="EO_M1"/>
+				<ECAction Algorithm="M2_AUS" Output="EO_M2"/>
+				<ECAction Algorithm="M3_EIN" Output="EO_M3"/>
+				<ECAction Algorithm="M4_EIN" Output="EO_M4"/>
+				<ECAction Algorithm="M5_EIN" Output="EO_M5"/>
+				<ECAction Algorithm="M6_EIN" Output="EO_M6"/>
+				<ECAction Output="timeOut.START"/>
+				<ECAction Output="CNF"/>
+			</ECState>
+			<ECState Name="sVOR5" Comment="S_VOR5 (Vorlauf-Kette): M2,M3,M4,M5,M6 laufen" x="800" y="1600">
+				<ECAction Algorithm="S_VOR5_Setup"/>
+				<ECAction Algorithm="EI_CYCLIC_Auswertung"/>
+				<ECAction Algorithm="M1_AUS" Output="EO_M1"/>
+				<ECAction Algorithm="M2_EIN" Output="EO_M2"/>
+				<ECAction Algorithm="M3_EIN" Output="EO_M3"/>
+				<ECAction Algorithm="M4_EIN" Output="EO_M4"/>
+				<ECAction Algorithm="M5_EIN" Output="EO_M5"/>
+				<ECAction Algorithm="M6_EIN" Output="EO_M6"/>
+				<ECAction Output="timeOut.START"/>
+				<ECAction Output="CNF"/>
+			</ECState>
+			<ECState Name="sLAEUFT" Comment="S_LAEUFT, oben im Ring: alle 6 Motoren laufen" x="800" y="0">
+				<ECAction Algorithm="S_LAEUFT_Setup"/>
+				<ECAction Algorithm="EI_CYCLIC_Auswertung"/>
+				<ECAction Algorithm="M1_EIN" Output="EO_M1"/>
+				<ECAction Algorithm="M2_EIN" Output="EO_M2"/>
+				<ECAction Algorithm="M3_EIN" Output="EO_M3"/>
+				<ECAction Algorithm="M4_EIN" Output="EO_M4"/>
+				<ECAction Algorithm="M5_EIN" Output="EO_M5"/>
+				<ECAction Algorithm="M6_EIN" Output="EO_M6"/>
+				<ECAction Output="CNF"/>
+			</ECState>
+			<ECState Name="sNACH1" Comment="S_NACH1 (Nachlauf-Kette): M2,M3,M4,M5,M6 laufen (M1 gestoppt)" x="5600" y="1600">
+				<ECAction Algorithm="S_NACH1_Setup"/>
+				<ECAction Algorithm="EI_CYCLIC_Auswertung"/>
+				<ECAction Algorithm="M1_AUS" Output="EO_M1"/>
+				<ECAction Algorithm="M2_EIN" Output="EO_M2"/>
+				<ECAction Algorithm="M3_EIN" Output="EO_M3"/>
+				<ECAction Algorithm="M4_EIN" Output="EO_M4"/>
+				<ECAction Algorithm="M5_EIN" Output="EO_M5"/>
+				<ECAction Algorithm="M6_EIN" Output="EO_M6"/>
+				<ECAction Output="timeOut.START"/>
+				<ECAction Output="CNF"/>
+			</ECState>
+			<ECState Name="sNACH2" Comment="S_NACH2 (Nachlauf-Kette): M3,M4,M5,M6 laufen" x="5600" y="3200">
+				<ECAction Algorithm="S_NACH2_Setup"/>
+				<ECAction Algorithm="EI_CYCLIC_Auswertung"/>
+				<ECAction Algorithm="M1_AUS" Output="EO_M1"/>
+				<ECAction Algorithm="M2_AUS" Output="EO_M2"/>
+				<ECAction Algorithm="M3_EIN" Output="EO_M3"/>
+				<ECAction Algorithm="M4_EIN" Output="EO_M4"/>
+				<ECAction Algorithm="M5_EIN" Output="EO_M5"/>
+				<ECAction Algorithm="M6_EIN" Output="EO_M6"/>
+				<ECAction Output="timeOut.START"/>
+				<ECAction Output="CNF"/>
+			</ECState>
+			<ECState Name="sNACH3" Comment="S_NACH3 (Nachlauf-Kette): M4,M5,M6 laufen" x="5600" y="4800">
+				<ECAction Algorithm="S_NACH3_Setup"/>
+				<ECAction Algorithm="EI_CYCLIC_Auswertung"/>
+				<ECAction Algorithm="M1_AUS" Output="EO_M1"/>
+				<ECAction Algorithm="M2_AUS" Output="EO_M2"/>
+				<ECAction Algorithm="M3_AUS" Output="EO_M3"/>
+				<ECAction Algorithm="M4_EIN" Output="EO_M4"/>
+				<ECAction Algorithm="M5_EIN" Output="EO_M5"/>
+				<ECAction Algorithm="M6_EIN" Output="EO_M6"/>
+				<ECAction Output="timeOut.START"/>
+				<ECAction Output="CNF"/>
+			</ECState>
+			<ECState Name="sNACH4" Comment="S_NACH4 (Nachlauf-Kette): M5,M6 laufen" x="5600" y="6400">
+				<ECAction Algorithm="S_NACH4_Setup"/>
+				<ECAction Algorithm="EI_CYCLIC_Auswertung"/>
+				<ECAction Algorithm="M1_AUS" Output="EO_M1"/>
+				<ECAction Algorithm="M2_AUS" Output="EO_M2"/>
+				<ECAction Algorithm="M3_AUS" Output="EO_M3"/>
+				<ECAction Algorithm="M4_AUS" Output="EO_M4"/>
+				<ECAction Algorithm="M5_EIN" Output="EO_M5"/>
+				<ECAction Algorithm="M6_EIN" Output="EO_M6"/>
+				<ECAction Output="timeOut.START"/>
+				<ECAction Output="CNF"/>
+			</ECState>
+			<ECState Name="sNACH5" Comment="S_NACH5 (Nachlauf-Kette): nur M6 läuft" x="5600" y="8000">
+				<ECAction Algorithm="S_NACH5_Setup"/>
+				<ECAction Algorithm="EI_CYCLIC_Auswertung"/>
+				<ECAction Algorithm="M1_AUS" Output="EO_M1"/>
+				<ECAction Algorithm="M2_AUS" Output="EO_M2"/>
+				<ECAction Algorithm="M3_AUS" Output="EO_M3"/>
+				<ECAction Algorithm="M4_AUS" Output="EO_M4"/>
+				<ECAction Algorithm="M5_AUS" Output="EO_M5"/>
+				<ECAction Algorithm="M6_EIN" Output="EO_M6"/>
+				<ECAction Output="timeOut.START"/>
+				<ECAction Output="CNF"/>
+			</ECState>
+			<ECTransition Source="sAUS" Destination="sVOR1" Condition="EIN[NOT (STOERUNG_M1 OR STOERUNG_M2 OR STOERUNG_M3 OR STOERUNG_M4 OR STOERUNG_M5 OR STOERUNG_M6)]" x="2746.67" y="9840"/>
+			<ECTransition Source="sVOR1" Destination="sVOR2" Condition="timeOut.TimeOut" x="673.33" y="7133.33"/>
+			<ECTransition Source="sVOR1" Destination="sNACH5" Condition="AUS" x="3560" y="8160"/>
+			<ECTransition Source="sVOR1" Destination="sNACH1" Condition="EI_M1[STOERUNG_M1]" x="3880" y="780"/>
+			<ECTransition Source="sVOR1" Destination="sNACH2" Condition="EI_M2[STOERUNG_M2]" x="3880" y="910"/>
+			<ECTransition Source="sVOR1" Destination="sNACH3" Condition="EI_M3[STOERUNG_M3]" x="3880" y="1040"/>
+			<ECTransition Source="sVOR1" Destination="sNACH4" Condition="EI_M4[STOERUNG_M4]" x="3880" y="1170"/>
+			<ECTransition Source="sVOR1" Destination="sNACH5" Condition="EI_M5[STOERUNG_M5]" x="3880" y="1300"/>
+			<ECTransition Source="sVOR1" Destination="sAUS" Condition="EI_M6[STOERUNG_M6]" x="3880" y="1430"/>
+			<ECTransition Source="sVOR2" Destination="sVOR3" Condition="timeOut.TimeOut" x="706.67" y="5526.67"/>
+			<ECTransition Source="sVOR2" Destination="sNACH4" Condition="AUS" x="3806.67" y="6826.67"/>
+			<ECTransition Source="sVOR2" Destination="sNACH1" Condition="EI_M1[STOERUNG_M1]" x="3880" y="1820"/>
+			<ECTransition Source="sVOR2" Destination="sNACH2" Condition="EI_M2[STOERUNG_M2]" x="3880" y="1950"/>
+			<ECTransition Source="sVOR2" Destination="sNACH3" Condition="EI_M3[STOERUNG_M3]" x="3880" y="2080"/>
+			<ECTransition Source="sVOR2" Destination="sNACH4" Condition="EI_M4[STOERUNG_M4]" x="3880" y="2210"/>
+			<ECTransition Source="sVOR2" Destination="sNACH5" Condition="EI_M5[STOERUNG_M5]" x="3880" y="2340"/>
+			<ECTransition Source="sVOR2" Destination="sAUS" Condition="EI_M6[STOERUNG_M6]" x="3880" y="2470"/>
+			<ECTransition Source="sVOR3" Destination="sVOR4" Condition="timeOut.TimeOut" x="726.67" y="3926.67"/>
+			<ECTransition Source="sVOR3" Destination="sNACH3" Condition="AUS" x="3746.67" y="4773.33"/>
+			<ECTransition Source="sVOR3" Destination="sNACH1" Condition="EI_M1[STOERUNG_M1]" x="3880" y="2860"/>
+			<ECTransition Source="sVOR3" Destination="sNACH2" Condition="EI_M2[STOERUNG_M2]" x="3880" y="2990"/>
+			<ECTransition Source="sVOR3" Destination="sNACH3" Condition="EI_M3[STOERUNG_M3]" x="3880" y="3120"/>
+			<ECTransition Source="sVOR3" Destination="sNACH4" Condition="EI_M4[STOERUNG_M4]" x="3880" y="3250"/>
+			<ECTransition Source="sVOR3" Destination="sNACH5" Condition="EI_M5[STOERUNG_M5]" x="3880" y="3380"/>
+			<ECTransition Source="sVOR3" Destination="sAUS" Condition="EI_M6[STOERUNG_M6]" x="3880" y="3510"/>
+			<ECTransition Source="sVOR4" Destination="sVOR5" Condition="timeOut.TimeOut" x="720" y="2360"/>
+			<ECTransition Source="sVOR4" Destination="sNACH2" Condition="AUS" x="3853.33" y="2680"/>
+			<ECTransition Source="sVOR4" Destination="sNACH1" Condition="EI_M1[STOERUNG_M1]" x="3880" y="3900"/>
+			<ECTransition Source="sVOR4" Destination="sNACH2" Condition="EI_M2[STOERUNG_M2]" x="3880" y="4030"/>
+			<ECTransition Source="sVOR4" Destination="sNACH3" Condition="EI_M3[STOERUNG_M3]" x="3880" y="4160"/>
+			<ECTransition Source="sVOR4" Destination="sNACH4" Condition="EI_M4[STOERUNG_M4]" x="3880" y="4290"/>
+			<ECTransition Source="sVOR4" Destination="sNACH5" Condition="EI_M5[STOERUNG_M5]" x="3880" y="4420"/>
+			<ECTransition Source="sVOR4" Destination="sAUS" Condition="EI_M6[STOERUNG_M6]" x="3880" y="4550"/>
+			<ECTransition Source="sVOR5" Destination="sLAEUFT" Condition="timeOut.TimeOut" x="813.33" y="813.33"/>
+			<ECTransition Source="sVOR5" Destination="sNACH1" Condition="AUS" x="3846.67" y="1560"/>
+			<ECTransition Source="sVOR5" Destination="sNACH1" Condition="EI_M1[STOERUNG_M1]" x="3880" y="4940"/>
+			<ECTransition Source="sVOR5" Destination="sNACH2" Condition="EI_M2[STOERUNG_M2]" x="3880" y="5070"/>
+			<ECTransition Source="sVOR5" Destination="sNACH3" Condition="EI_M3[STOERUNG_M3]" x="3880" y="5200"/>
+			<ECTransition Source="sVOR5" Destination="sNACH4" Condition="EI_M4[STOERUNG_M4]" x="3880" y="5330"/>
+			<ECTransition Source="sVOR5" Destination="sNACH5" Condition="EI_M5[STOERUNG_M5]" x="3880" y="5460"/>
+			<ECTransition Source="sVOR5" Destination="sAUS" Condition="EI_M6[STOERUNG_M6]" x="3880" y="5590"/>
+			<ECTransition Source="sLAEUFT" Destination="sNACH1" Condition="AUS" x="4780" y="-213.33"/>
+			<ECTransition Source="sLAEUFT" Destination="sNACH1" Condition="EI_M1[STOERUNG_M1]" x="3880" y="5980"/>
+			<ECTransition Source="sLAEUFT" Destination="sNACH2" Condition="EI_M2[STOERUNG_M2]" x="3880" y="6110"/>
+			<ECTransition Source="sLAEUFT" Destination="sNACH3" Condition="EI_M3[STOERUNG_M3]" x="3880" y="6240"/>
+			<ECTransition Source="sLAEUFT" Destination="sNACH4" Condition="EI_M4[STOERUNG_M4]" x="3880" y="6370"/>
+			<ECTransition Source="sLAEUFT" Destination="sNACH5" Condition="EI_M5[STOERUNG_M5]" x="3880" y="6500"/>
+			<ECTransition Source="sLAEUFT" Destination="sAUS" Condition="EI_M6[STOERUNG_M6]" x="3880" y="6630"/>
+			<ECTransition Source="sNACH1" Destination="sNACH2" Condition="timeOut.TimeOut" x="5540" y="2453.33"/>
+			<ECTransition Source="sNACH1" Destination="sNACH2" Condition="EI_M2[STOERUNG_M2]" x="4666.67" y="6886.67"/>
+			<ECTransition Source="sNACH1" Destination="sNACH3" Condition="EI_M3[STOERUNG_M3]" x="4666.67" y="7006.67"/>
+			<ECTransition Source="sNACH1" Destination="sNACH4" Condition="EI_M4[STOERUNG_M4]" x="4666.67" y="7140"/>
+			<ECTransition Source="sNACH1" Destination="sNACH5" Condition="EI_M5[STOERUNG_M5]" x="4666.67" y="7273.33"/>
+			<ECTransition Source="sNACH1" Destination="sAUS" Condition="EI_M6[STOERUNG_M6]" x="4666.67" y="7406.67"/>
+			<ECTransition Source="sNACH2" Destination="sNACH3" Condition="timeOut.TimeOut" x="5540" y="4053.33"/>
+			<ECTransition Source="sNACH2" Destination="sNACH3" Condition="EI_M3[STOERUNG_M3]" x="4666.67" y="7653.33"/>
+			<ECTransition Source="sNACH2" Destination="sNACH4" Condition="EI_M4[STOERUNG_M4]" x="4666.67" y="7786.67"/>
+			<ECTransition Source="sNACH2" Destination="sNACH5" Condition="EI_M5[STOERUNG_M5]" x="4666.67" y="7920"/>
+			<ECTransition Source="sNACH2" Destination="sAUS" Condition="EI_M6[STOERUNG_M6]" x="4666.67" y="8053.33"/>
+			<ECTransition Source="sNACH3" Destination="sNACH4" Condition="timeOut.TimeOut" x="5566.67" y="5653.33"/>
+			<ECTransition Source="sNACH3" Destination="sNACH4" Condition="EI_M4[STOERUNG_M4]" x="4666.67" y="8306.67"/>
+			<ECTransition Source="sNACH3" Destination="sNACH5" Condition="EI_M5[STOERUNG_M5]" x="4666.67" y="8440"/>
+			<ECTransition Source="sNACH3" Destination="sAUS" Condition="EI_M6[STOERUNG_M6]" x="4666.67" y="8573.33"/>
+			<ECTransition Source="sNACH4" Destination="sNACH5" Condition="timeOut.TimeOut" x="5566.67" y="7253.33"/>
+			<ECTransition Source="sNACH4" Destination="sNACH5" Condition="EI_M5[STOERUNG_M5]" x="4666.67" y="8826.67"/>
+			<ECTransition Source="sNACH4" Destination="sAUS" Condition="EI_M6[STOERUNG_M6]" x="4666.67" y="8960"/>
+			<ECTransition Source="sNACH5" Destination="sAUS" Condition="timeOut.TimeOut" x="5540" y="8853.33"/>
+			<ECTransition Source="sNACH5" Destination="sAUS" Condition="EI_M6[STOERUNG_M6]" x="4666.67" y="9226.67"/>
+			<ECTransition Source="sVOR1" Destination="sVOR1" Condition="SET_ZE1_EIN" x="0" y="0"/>
+			<ECTransition Source="sVOR2" Destination="sVOR2" Condition="SET_ZE2_EIN" x="0" y="0"/>
+			<ECTransition Source="sVOR3" Destination="sVOR3" Condition="SET_ZE3_EIN" x="0" y="0"/>
+			<ECTransition Source="sVOR4" Destination="sVOR4" Condition="SET_ZE4_EIN" x="0" y="0"/>
+			<ECTransition Source="sVOR5" Destination="sVOR5" Condition="SET_ZE5_EIN" x="0" y="0"/>
+			<ECTransition Source="sNACH1" Destination="sNACH1" Condition="SET_ZE1_AUS" x="0" y="0"/>
+			<ECTransition Source="sNACH2" Destination="sNACH2" Condition="SET_ZE2_AUS" x="0" y="0"/>
+			<ECTransition Source="sNACH3" Destination="sNACH3" Condition="SET_ZE3_AUS" x="0" y="0"/>
+			<ECTransition Source="sNACH4" Destination="sNACH4" Condition="SET_ZE4_AUS" x="0" y="0"/>
+			<ECTransition Source="sNACH5" Destination="sNACH5" Condition="SET_ZE5_AUS" x="0" y="0"/>
+			<ECTransition Source="xSTART" Destination="Init" Condition="INIT" x="4826.67" y="11806.67"/>
+			<ECTransition Source="Init" Destination="sAUS" Condition="1" x="4920" y="10440"/>
+		</ECC>
+		<Algorithm Name="initialize" Comment="Initialization algorithm">
+			<ST><![CDATA[
+
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="deInitialize" Comment="Normally executed algorithm">
+			<ST><![CDATA[
+
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="EI_CYCLIC_Auswertung" Comment="Liest STOERUNG_M1..M6 neu ein, setzt STATUS_STOERUNG falls eine aktiv ist, und berechnet&#10;EINSCHALTBEREIT/ANLAGE_AUS">
+			<ST><![CDATA[
+// Störungssignale frisch einlesen (BOOL-Dauersignale, kein Event-Consumption-Problem, s. Konzept
+// Frage 4)
+IF STOERUNG_M1 OR STOERUNG_M2 OR STOERUNG_M3 OR STOERUNG_M4 OR STOERUNG_M5 OR STOERUNG_M6 THEN
+	STATUS_STOERUNG := anlagenSequenz::STATUS_STOERUNG_AKTIV; // verriegelt bis zur nächsten erfolgreichen EIN-Quittierung
+END_IF;
+
+// Einschaltbereit: alle Motoren stehen (S_AUS) UND alle Motoren aktuell (live) störungsfrei.
+// Bewusst NICHT an STATUS_STOERUNG gekoppelt: das bleibt bis zum naechsten EIN verriegelt, EIN
+// selbst kommt aber nur an, wenn EINSCHALTBEREIT die Visu-Sperre freigibt - sonst Deadlock.
+EINSCHALTBEREIT := (ZAEHLSTAND = 0)
+	AND NOT (STOERUNG_M1 OR STOERUNG_M2 OR STOERUNG_M3 OR STOERUNG_M4 OR STOERUNG_M5 OR STOERUNG_M6);
+
+// Voraussetzung fuer Handbetrieb: nur wenn die Anlage wirklich in S_AUS steht (unabhaengig von
+// Stoerungen - eine Stoerung soll Handbetrieb zum Freifahren nicht zusaetzlich blockieren).
+ANLAGE_AUS := (STATUS_BETRIEB = anlagenSequenz::STATUS_BETRIEB_AUS);
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="M1_EIN" Comment="Setzt den Laufbefehl DO_M1 auf TRUE (Motor 1 einschalten)">
+			<ST><![CDATA[
+DO_M1 := BOOL#TRUE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="M1_AUS" Comment="Setzt den Laufbefehl DO_M1 auf FALSE (Motor 1 ausschalten)">
+			<ST><![CDATA[
+DO_M1 := BOOL#FALSE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="M2_EIN" Comment="Setzt den Laufbefehl DO_M2 auf TRUE (Motor 2 einschalten)">
+			<ST><![CDATA[
+DO_M2 := BOOL#TRUE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="M2_AUS" Comment="Setzt den Laufbefehl DO_M2 auf FALSE (Motor 2 ausschalten)">
+			<ST><![CDATA[
+DO_M2 := BOOL#FALSE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="M3_EIN" Comment="Setzt den Laufbefehl DO_M3 auf TRUE (Motor 3 einschalten)">
+			<ST><![CDATA[
+DO_M3 := BOOL#TRUE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="M3_AUS" Comment="Setzt den Laufbefehl DO_M3 auf FALSE (Motor 3 ausschalten)">
+			<ST><![CDATA[
+DO_M3 := BOOL#FALSE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="M4_EIN" Comment="Setzt den Laufbefehl DO_M4 auf TRUE (Motor 4 einschalten)">
+			<ST><![CDATA[
+DO_M4 := BOOL#TRUE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="M4_AUS" Comment="Setzt den Laufbefehl DO_M4 auf FALSE (Motor 4 ausschalten)">
+			<ST><![CDATA[
+DO_M4 := BOOL#FALSE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="M5_EIN" Comment="Setzt den Laufbefehl DO_M5 auf TRUE (Motor 5 einschalten)">
+			<ST><![CDATA[
+DO_M5 := BOOL#TRUE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="M5_AUS" Comment="Setzt den Laufbefehl DO_M5 auf FALSE (Motor 5 ausschalten)">
+			<ST><![CDATA[
+DO_M5 := BOOL#FALSE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="M6_EIN" Comment="Setzt den Laufbefehl DO_M6 auf TRUE (Motor 6 einschalten)">
+			<ST><![CDATA[
+DO_M6 := BOOL#TRUE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="M6_AUS" Comment="Setzt den Laufbefehl DO_M6 auf FALSE (Motor 6 ausschalten)">
+			<ST><![CDATA[
+DO_M6 := BOOL#FALSE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="S_AUS_Setup" Comment="Setup für S_AUS: ZAEHLSTAND auf 0, STATUS_BETRIEB auf Aus - keine Motoren laufen,&#10;Ring-Grundzustand">
+			<ST><![CDATA[
+// S_AUS: keine Motoren laufen
+ZAEHLSTAND := zaehlstand::ZAEHLSTAND_0;
+STATUS_BETRIEB := anlagenSequenz::STATUS_BETRIEB_AUS;
+TRANSIT_MOTOR := motorNummer::MOTOR_KEINER;
+TRANSIT_ART := anlagenSequenz::TRANSIT_ART_KEINE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="S_VOR1_Setup" Comment="Setup für S_VOR1: ZAEHLSTAND auf 1, STATUS_BETRIEB auf Hochfahren, quittiert STATUS_STOERUNG (nur&#10;über EIN erreichbar) und lädt Timer ZE1_EIN für den nächsten Vorlauf-Schritt">
+			<ST><![CDATA[
+// S_VOR1: M6 läuft
+ZAEHLSTAND := zaehlstand::ZAEHLSTAND_1;
+STATUS_BETRIEB := anlagenSequenz::STATUS_BETRIEB_HOCHFAHREN;
+STATUS_STOERUNG := anlagenSequenz::STATUS_STOERUNG_KEINE; // Quittierung: EIN wurde soeben angenommen (S_VOR1 ist nur über EIN erreichbar)
+timeOut.DT := ZE1_EIN;
+TRANSIT_MOTOR := motorNummer::MOTOR_M5;
+TRANSIT_ART := anlagenSequenz::TRANSIT_ART_VORLAUF;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="S_VOR2_Setup" Comment="Setup für S_VOR2: ZAEHLSTAND auf 2, STATUS_BETRIEB auf Hochfahren, lädt Timer ZE2_EIN für den&#10;nächsten Vorlauf-Schritt">
+			<ST><![CDATA[
+// S_VOR2: M5,M6 laufen
+ZAEHLSTAND := zaehlstand::ZAEHLSTAND_2;
+STATUS_BETRIEB := anlagenSequenz::STATUS_BETRIEB_HOCHFAHREN;
+timeOut.DT := ZE2_EIN;
+TRANSIT_MOTOR := motorNummer::MOTOR_M4;
+TRANSIT_ART := anlagenSequenz::TRANSIT_ART_VORLAUF;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="S_VOR3_Setup" Comment="Setup für S_VOR3: ZAEHLSTAND auf 3, STATUS_BETRIEB auf Hochfahren, lädt Timer ZE3_EIN für den&#10;nächsten Vorlauf-Schritt">
+			<ST><![CDATA[
+// S_VOR3: M4,M5,M6 laufen
+ZAEHLSTAND := zaehlstand::ZAEHLSTAND_3;
+STATUS_BETRIEB := anlagenSequenz::STATUS_BETRIEB_HOCHFAHREN;
+timeOut.DT := ZE3_EIN;
+TRANSIT_MOTOR := motorNummer::MOTOR_M3;
+TRANSIT_ART := anlagenSequenz::TRANSIT_ART_VORLAUF;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="S_VOR4_Setup" Comment="Setup für S_VOR4: ZAEHLSTAND auf 4, STATUS_BETRIEB auf Hochfahren, lädt Timer ZE4_EIN für den&#10;nächsten Vorlauf-Schritt">
+			<ST><![CDATA[
+// S_VOR4: M3,M4,M5,M6 laufen
+ZAEHLSTAND := zaehlstand::ZAEHLSTAND_4;
+STATUS_BETRIEB := anlagenSequenz::STATUS_BETRIEB_HOCHFAHREN;
+timeOut.DT := ZE4_EIN;
+TRANSIT_MOTOR := motorNummer::MOTOR_M2;
+TRANSIT_ART := anlagenSequenz::TRANSIT_ART_VORLAUF;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="S_VOR5_Setup" Comment="Setup für S_VOR5: ZAEHLSTAND auf 5, STATUS_BETRIEB auf Hochfahren, lädt Timer ZE5_EIN für den&#10;letzten Vorlauf-Schritt (M1 startet danach)">
+			<ST><![CDATA[
+// S_VOR5: M2,M3,M4,M5,M6 laufen
+ZAEHLSTAND := zaehlstand::ZAEHLSTAND_5;
+STATUS_BETRIEB := anlagenSequenz::STATUS_BETRIEB_HOCHFAHREN;
+timeOut.DT := ZE5_EIN;
+TRANSIT_MOTOR := motorNummer::MOTOR_M1;
+TRANSIT_ART := anlagenSequenz::TRANSIT_ART_VORLAUF;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="S_LAEUFT_Setup" Comment="Setup für S_LAEUFT: ZAEHLSTAND auf 6, STATUS_BETRIEB auf Läuft - alle 6 Motoren laufen, oberer&#10;Ring-Zustand">
+			<ST><![CDATA[
+// S_LAEUFT: alle 6 Motoren laufen
+ZAEHLSTAND := zaehlstand::ZAEHLSTAND_6;
+STATUS_BETRIEB := anlagenSequenz::STATUS_BETRIEB_LAEUFT;
+TRANSIT_MOTOR := motorNummer::MOTOR_KEINER;
+TRANSIT_ART := anlagenSequenz::TRANSIT_ART_KEINE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="S_NACH1_Setup" Comment="Setup für S_NACH1: ZAEHLSTAND auf 5, STATUS_BETRIEB auf Herunterfahren, lädt den Nachlauf-Timer&#10;ZE1_AUS">
+			<ST><![CDATA[
+// S_NACH1: M2,M3,M4,M5,M6 laufen (M1 gestoppt)
+ZAEHLSTAND := zaehlstand::ZAEHLSTAND_5;
+STATUS_BETRIEB := anlagenSequenz::STATUS_BETRIEB_HERUNTERFAHREN;
+timeOut.DT := ZE1_AUS;
+TRANSIT_MOTOR := motorNummer::MOTOR_M2;
+TRANSIT_ART := anlagenSequenz::TRANSIT_ART_NACHLAUF;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="S_NACH2_Setup" Comment="Setup für S_NACH2: ZAEHLSTAND auf 4, STATUS_BETRIEB auf Herunterfahren, lädt den Nachlauf-Timer&#10;ZE2_AUS">
+			<ST><![CDATA[
+// S_NACH2: M3,M4,M5,M6 laufen
+ZAEHLSTAND := zaehlstand::ZAEHLSTAND_4;
+STATUS_BETRIEB := anlagenSequenz::STATUS_BETRIEB_HERUNTERFAHREN;
+timeOut.DT := ZE2_AUS;
+TRANSIT_MOTOR := motorNummer::MOTOR_M3;
+TRANSIT_ART := anlagenSequenz::TRANSIT_ART_NACHLAUF;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="S_NACH3_Setup" Comment="Setup für S_NACH3: ZAEHLSTAND auf 3, STATUS_BETRIEB auf Herunterfahren, lädt den Nachlauf-Timer&#10;ZE3_AUS">
+			<ST><![CDATA[
+// S_NACH3: M4,M5,M6 laufen
+ZAEHLSTAND := zaehlstand::ZAEHLSTAND_3;
+STATUS_BETRIEB := anlagenSequenz::STATUS_BETRIEB_HERUNTERFAHREN;
+timeOut.DT := ZE3_AUS;
+TRANSIT_MOTOR := motorNummer::MOTOR_M4;
+TRANSIT_ART := anlagenSequenz::TRANSIT_ART_NACHLAUF;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="S_NACH4_Setup" Comment="Setup für S_NACH4: ZAEHLSTAND auf 2, STATUS_BETRIEB auf Herunterfahren, lädt den Nachlauf-Timer&#10;ZE4_AUS">
+			<ST><![CDATA[
+// S_NACH4: M5,M6 laufen
+ZAEHLSTAND := zaehlstand::ZAEHLSTAND_2;
+STATUS_BETRIEB := anlagenSequenz::STATUS_BETRIEB_HERUNTERFAHREN;
+timeOut.DT := ZE4_AUS;
+TRANSIT_MOTOR := motorNummer::MOTOR_M5;
+TRANSIT_ART := anlagenSequenz::TRANSIT_ART_NACHLAUF;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="S_NACH5_Setup" Comment="Setup für S_NACH5: ZAEHLSTAND auf 1, STATUS_BETRIEB auf Herunterfahren, lädt den Nachlauf-Timer&#10;ZE5_AUS (letzter Schritt vor S_AUS)">
+			<ST><![CDATA[
+// S_NACH5: nur M6 läuft
+ZAEHLSTAND := zaehlstand::ZAEHLSTAND_1;
+STATUS_BETRIEB := anlagenSequenz::STATUS_BETRIEB_HERUNTERFAHREN;
+timeOut.DT := ZE5_AUS;
+TRANSIT_MOTOR := motorNummer::MOTOR_M6;
+TRANSIT_ART := anlagenSequenz::TRANSIT_ART_NACHLAUF;
+]]></ST>
+		</Algorithm>
+	</BasicFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

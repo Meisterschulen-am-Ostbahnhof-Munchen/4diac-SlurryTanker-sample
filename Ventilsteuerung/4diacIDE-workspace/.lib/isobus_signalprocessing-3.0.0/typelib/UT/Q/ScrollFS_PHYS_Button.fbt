@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="ScrollFS_PHYS_Button" Comment="Scroll list — accepts a single ScrollFull_S struct (geometry + physical&#10;controls), reads 6 on-screen Buttons and the direct-position input field, drives&#10;ScrollFS internally">
+	<Identification Standard="ISO 11783-6" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0&#10;&#10;Same as ScrollFS_PHYS, but reads the 6 scroll controls as on-screen Button objects (Button_IE, listening for BT_PRESSED_LATCHED) instead of physical SoftKeys — for masks where scrolling is operated via touch/on-screen buttons rather than the SoftKey column. Reuses the same ScrollFull_S / ScrollControls_S structs (the 6 IDs just point at Button objects instead of Key objects) and the same internal ScrollFS position engine. See Workspace_Scroll/SCROLL_KONZEPT.md for the full derivation.">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-05" Remarks="Add xScale flag, passed through to the internal ScrollFS">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-08-09" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::UT::Q">
+		<Import declaration="isobus::utils::scroll::ScrollFull_S"/>
+		<Import declaration="isobus::UT::io::Button::ButtonActivationCode::BT_PRESSED_LATCHED"/>
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+				<With Var="stObj"/>
+				<With Var="xScale"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Confirmation of a position change">
+				<With Var="OUT"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="stObj" Type="isobus::utils::scroll::ScrollFull_S" Comment="Complete scroll list configuration (geometry + operator controls), snapshotted at INIT"/>
+			<VarDeclaration Name="xScale" Type="BOOL" Comment="FALSE (default) = bypass. TRUE = scale by the DM/SKM factor. Passed straight through to the internal ScrollFS instance." InitialValue="FALSE"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="OUT" Type="DINT" Comment="Current scroll position (0..stObj.stGeometry.i32PosMax, in rows)"/>
+		</OutputVars>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="Snap" Type="iec61131::selection::F_MOVE" x="-800" y="300">
+			<Attribute Name="DataType" Value="isobus::utils::scroll::ScrollFull_S"/>
+			<Parameter Name="OUT.stGeometry" Value="">
+				<Attribute Name="Visible" Value="true"/>
+			</Parameter>
+			<Parameter Name="OUT.stControls.u16BtnTopId" Value="">
+				<Attribute Name="Visible" Value="true"/>
+			</Parameter>
+			<Parameter Name="OUT.stControls.u16BtnPageUpId" Value="">
+				<Attribute Name="Visible" Value="true"/>
+			</Parameter>
+			<Parameter Name="OUT.stControls.u16BtnUpId" Value="">
+				<Attribute Name="Visible" Value="true"/>
+			</Parameter>
+			<Parameter Name="OUT.stControls.u16BtnDownId" Value="">
+				<Attribute Name="Visible" Value="true"/>
+			</Parameter>
+			<Parameter Name="OUT.stControls.u16BtnPageDownId" Value="">
+				<Attribute Name="Visible" Value="true"/>
+			</Parameter>
+			<Parameter Name="OUT.stControls.u16BtnBottomId" Value="">
+				<Attribute Name="Visible" Value="true"/>
+			</Parameter>
+			<Parameter Name="OUT.stControls.u16GotoInputId" Value="">
+				<Attribute Name="Visible" Value="true"/>
+			</Parameter>
+			<Parameter Name="OUT.stControls.u16BtnPageUpPtrId" Value="">
+				<Attribute Name="Visible" Value="true"/>
+			</Parameter>
+			<Parameter Name="OUT.stControls.u16BtnUpPtrId" Value="">
+				<Attribute Name="Visible" Value="true"/>
+			</Parameter>
+			<Parameter Name="OUT.stControls.u16BtnDownPtrId" Value="">
+				<Attribute Name="Visible" Value="true"/>
+			</Parameter>
+			<Parameter Name="OUT.stControls.u16BtnPageDownPtrId" Value="">
+				<Attribute Name="Visible" Value="true"/>
+			</Parameter>
+		</FB>
+		<FB Name="Inner" Type="isobus::UT::Q::ScrollFS" x="6000" y="1600">
+		</FB>
+		<FB Name="BtnFirst" Type="isobus::UT::io::Button::Button_IE" x="2500" y="900">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="InputEvent" Value="BT_PRESSED_LATCHED"/>
+		</FB>
+		<FB Name="BtnPageUp" Type="isobus::UT::io::Button::Button_IE" x="2500" y="1900">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="InputEvent" Value="BT_PRESSED_LATCHED"/>
+		</FB>
+		<FB Name="BtnLineUp" Type="isobus::UT::io::Button::Button_IE" x="2500" y="3000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="InputEvent" Value="BT_PRESSED_LATCHED"/>
+		</FB>
+		<FB Name="BtnLineDown" Type="isobus::UT::io::Button::Button_IE" x="2500" y="4100">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="InputEvent" Value="BT_PRESSED_LATCHED"/>
+		</FB>
+		<FB Name="BtnPageDown" Type="isobus::UT::io::Button::Button_IE" x="2500" y="5200">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="InputEvent" Value="BT_PRESSED_LATCHED"/>
+		</FB>
+		<FB Name="BtnLast" Type="isobus::UT::io::Button::Button_IE" x="2500" y="6200">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="InputEvent" Value="BT_PRESSED_LATCHED"/>
+		</FB>
+		<FB Name="GotoInput" Type="isobus::UT::io::NumericValue::NumericValue_ID" x="2500" y="7200">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="GotoConv" Type="iec61131::conversion::F_DWORD_TO_DINT" x="3800" y="7500">
+		</FB>
+		<FB Name="PageUpSel" Type="iec61131::selection::F_SEL" x="3500" y="8500">
+			<Parameter Name="IN1" Value="ID_NULL"/>
+		</FB>
+		<FB Name="PtrPageUp" Type="isobus::UT::Q::Q_NumericValue" x="5200" y="8300">
+		</FB>
+		<FB Name="UpSel" Type="iec61131::selection::F_SEL" x="3500" y="9300">
+			<Parameter Name="IN1" Value="ID_NULL"/>
+		</FB>
+		<FB Name="PtrUp" Type="isobus::UT::Q::Q_NumericValue" x="5200" y="9200">
+		</FB>
+		<FB Name="DownSel" Type="iec61131::selection::F_SEL" x="3500" y="10100">
+			<Parameter Name="IN1" Value="ID_NULL"/>
+		</FB>
+		<FB Name="PtrDown" Type="isobus::UT::Q::Q_NumericValue" x="5200" y="10100">
+		</FB>
+		<FB Name="PageDownSel" Type="iec61131::selection::F_SEL" x="3500" y="10900">
+			<Parameter Name="IN1" Value="ID_NULL"/>
+		</FB>
+		<FB Name="PtrPageDown" Type="isobus::UT::Q::Q_NumericValue" x="5200" y="11000">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="Snap.REQ" dx1="780"/>
+			<Connection Source="BtnFirst.IND" Destination="Inner.FIRST" dx1="1273.33"/>
+			<Connection Source="BtnPageUp.IND" Destination="Inner.PAGE_UP" dx1="1240"/>
+			<Connection Source="BtnLineUp.IND" Destination="Inner.LINE_UP" dx1="1273.33"/>
+			<Connection Source="BtnLineDown.IND" Destination="Inner.LINE_DOWN" dx1="1306.67"/>
+			<Connection Source="BtnPageDown.IND" Destination="Inner.PAGE_DOWN" dx1="1340"/>
+			<Connection Source="BtnLast.IND" Destination="Inner.LAST" dx1="1373.33"/>
+			<Connection Source="GotoInput.IND" Destination="GotoConv.REQ" dx1="140"/>
+			<Connection Source="GotoConv.CNF" Destination="Inner.GOTO" dx1="573.33"/>
+			<Connection Source="Inner.CNF" Destination="CNF" dx1="460"/>
+			<Connection Source="Snap.CNF" Destination="BtnFirst.INIT" dx1="1446.67"/>
+			<Connection Source="BtnFirst.INITO" Destination="BtnPageUp.INIT" dx1="80" dx2="80" dy="840"/>
+			<Connection Source="BtnPageUp.INITO" Destination="BtnLineUp.INIT" dx1="80" dx2="80" dy="880"/>
+			<Connection Source="BtnLineUp.INITO" Destination="BtnLineDown.INIT" dx1="80" dx2="80" dy="913.33"/>
+			<Connection Source="BtnLineDown.INITO" Destination="BtnPageDown.INIT" dx1="80" dx2="80" dy="913.33"/>
+			<Connection Source="BtnPageDown.INITO" Destination="BtnLast.INIT" dx1="80" dx2="80" dy="820"/>
+			<Connection Source="BtnLast.INITO" Destination="GotoInput.INIT" dx1="80" dx2="80" dy="833.33"/>
+			<Connection Source="GotoInput.INITO" Destination="PtrPageUp.INIT" dx1="1800"/>
+			<Connection Source="PtrPageUp.INITO" Destination="PtrUp.INIT" dx1="80" dx2="80" dy="626.67"/>
+			<Connection Source="PtrUp.INITO" Destination="PtrDown.INIT" dx1="80" dx2="80" dy="633.33"/>
+			<Connection Source="PtrDown.INITO" Destination="PtrPageDown.INIT" dx1="80" dx2="80" dy="626.67"/>
+			<Connection Source="PtrPageDown.INITO" Destination="Inner.INIT" dx1="520" dx2="80" dy="-3106.67"/>
+			<Connection Source="Inner.INITO" Destination="INITO" dx1="366.67"/>
+			<Connection Source="Inner.CNF" Destination="PageUpSel.REQ" dx1="80" dx2="80" dy="3446.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="PageUpSel.CNF" Destination="PtrPageUp.REQ" dx1="200"/>
+			<Connection Source="Inner.CNF" Destination="UpSel.REQ" dx1="80" dx2="80" dy="3846.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="UpSel.CNF" Destination="PtrUp.REQ" dx1="200"/>
+			<Connection Source="Inner.CNF" Destination="DownSel.REQ" dx1="80" dx2="80" dy="4200">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="DownSel.CNF" Destination="PtrDown.REQ" dx1="200"/>
+			<Connection Source="Inner.CNF" Destination="PageDownSel.REQ" dx1="80" dx2="80" dy="4646.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="PageDownSel.CNF" Destination="PtrPageDown.REQ" dx1="200"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="stObj" Destination="Snap.IN" dx1="780"/>
+			<Connection Source="Snap.OUT.stGeometry" Destination="Inner.stObj" dx1="3173.33"/>
+			<Connection Source="xScale" Destination="Inner.xScale" dx1="480"/>
+			<Connection Source="Snap.OUT.stControls.u16BtnTopId" Destination="BtnFirst.u16ObjId" dx1="893.33"/>
+			<Connection Source="Snap.OUT.stControls.u16BtnPageUpId" Destination="BtnPageUp.u16ObjId" dx1="860"/>
+			<Connection Source="Snap.OUT.stControls.u16BtnUpId" Destination="BtnLineUp.u16ObjId" dx1="826.67"/>
+			<Connection Source="Snap.OUT.stControls.u16BtnDownId" Destination="BtnLineDown.u16ObjId" dx1="793.33"/>
+			<Connection Source="Snap.OUT.stControls.u16BtnPageDownId" Destination="BtnPageDown.u16ObjId" dx1="760"/>
+			<Connection Source="Snap.OUT.stControls.u16BtnBottomId" Destination="BtnLast.u16ObjId" dx1="726.67"/>
+			<Connection Source="Snap.OUT.stControls.u16GotoInputId" Destination="GotoInput.u16ObjId" dx1="693.33"/>
+			<Connection Source="GotoInput.IN" Destination="GotoConv.IN" dx1="140"/>
+			<Connection Source="GotoConv.OUT" Destination="Inner.SET_POS" dx1="606.67"/>
+			<Connection Source="Inner.OUT" Destination="OUT" dx1="493.33"/>
+			<Connection Source="Snap.OUT.stControls.u16BtnPageUpPtrId" Destination="PtrPageUp.u16ObjId" dx1="893.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Snap.OUT.stControls.u16BtnPageUpId" Destination="PageUpSel.IN0" dx1="600">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Inner.qAtFirst" Destination="PageUpSel.G" dx1="80" dx2="80" dy="3020">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="PageUpSel.OUT" Destination="PtrPageUp.u32NewValue" dx1="200"/>
+			<Connection Source="Snap.OUT.stControls.u16BtnUpPtrId" Destination="PtrUp.u16ObjId" dx1="893.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Snap.OUT.stControls.u16BtnUpId" Destination="UpSel.IN0" dx1="893.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Inner.qAtFirst" Destination="UpSel.G" dx1="80" dx2="80" dy="3420">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="UpSel.OUT" Destination="PtrUp.u32NewValue" dx1="200"/>
+			<Connection Source="Snap.OUT.stControls.u16BtnDownPtrId" Destination="PtrDown.u16ObjId" dx1="893.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Snap.OUT.stControls.u16BtnDownId" Destination="DownSel.IN0" dx1="893.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Inner.qAtLast" Destination="DownSel.G" dx1="80" dx2="80" dy="3766.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="DownSel.OUT" Destination="PtrDown.u32NewValue" dx1="200"/>
+			<Connection Source="Snap.OUT.stControls.u16BtnPageDownPtrId" Destination="PtrPageDown.u16ObjId" dx1="893.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Snap.OUT.stControls.u16BtnPageDownId" Destination="PageDownSel.IN0" dx1="893.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Inner.qAtLast" Destination="PageDownSel.G" dx1="80" dx2="80" dy="4166.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="PageDownSel.OUT" Destination="PtrPageDown.u32NewValue" dx1="200"/>
+		</DataConnections>
+	</FBNetwork>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

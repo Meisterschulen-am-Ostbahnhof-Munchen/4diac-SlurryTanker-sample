@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Button_Softkey_Aux_IE" Comment="Button (nicht-latching) ODER SoftKey ODER AUX-Zuweisung (Joystick) aktiviert -&gt;&#10;1 gemeinsames IND-Event (BT_RELEASED_UNLATCHED bzw. SK_RELEASED bzw. AuxEnabled&#10;fest verdrahtet). Analog Button_Aux_IE/Softkey_Aux_IE, aber alle drei Quellen&#10;gleichzeitig - Softkey_IE und Button_IE sind zwei getrennte&#10;FORTE-Service-Interface-Bausteine fuer unterschiedliche VT-Activation-Messages,&#10;ein Button liefert NIE ein SK_PRESSED (Franz, 2026-09-20, hat Softkey_IE selbst&#10;implementiert: &apos;tut sie NICHT&apos;). Der Button MUSS non-latching sein (Latchable=0&#10;im Pool) - ein latching Button kann nur sinnvoll ueber Button_IXA&#10;(Dauerzustand/Pegel) gelesen werden, nicht ueber dieses Event-InputEvent-Muster&#10;(Franz, 2026-09-20).">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-29" Remarks="packageName-Tippfehler behoben (MyLib_AX::sys -&gt; MyLib::sys, analog allen Geschwistern). Instanz Softkey_IE_1 in Softkey umbenannt (war identisch zu ihrem eigenen Type-Namen, inkonsistent zu Button/Aux). Kommentar korrigiert (beschrieb nur 2 von 3 Quellen).">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-20" Remarks="initial implementation - Bugfix fuer Automatik_Toggle_Button.SUB (nutzte bisher Softkey_Aux_IE mit einer Button-Object-ID, Softkey_IE empfaengt aber keine Button-Activation-Message - bestaetigt vom Autor der FORTE-Implementierung).">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::io::Button::ButtonActivationCode::BT_RELEASED_UNLATCHED"/>
+		<Import declaration="isobus::UT::io::Auxiliary::IN::AuxiliaryState::AuxDisabled_START"/>
+		<Import declaration="isobus::UT::io::Softkey::SoftKeyActivationCode::SK_RELEASED"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+			<SubAppEvent Name="IND" Type="Event" Comment="Feuert wenn Button (BT_RELEASED_UNLATCHED) ODER Softkey (SK_RELEASED) ODER Aux (AuxEnabled) aktiviert wird">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID Softkey (CSoftkey, non-latching)"/>
+			<VarDeclaration Name="u16ObjIdA" Type="UINT" Comment="Object ID AuxFunction2"/>
+			<VarDeclaration Name="u16ObjIdB" Type="UINT" Comment="Object ID Button (CButton, non-latching)"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<SubApp Name="Button" Type="MyLib::sys::Button_IE_1" x="0" y="1700">
+			<Parameter Name="InputEvent" Value="BT_RELEASED_UNLATCHED"/>
+		</SubApp>
+		<SubApp Name="Aux" Type="MyLib::sys::Aux_IE_1" x="0" y="800">
+			<Parameter Name="InputEvent" Value="AuxDisabled_START"/>
+		</SubApp>
+		<FB Name="MERGE" Type="iec61499::events::E_MERGE_3" x="1700" y="400">
+		</FB>
+		<SubApp Name="Softkey" Type="MyLib::sys::Softkey_IE_1" x="0" y="-100">
+			<Parameter Name="InputEvent" Value="SK_RELEASED"/>
+		</SubApp>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_3" x="3600" y="800">
+		</FB>
+		<EventConnections>
+			<Connection Source="Aux.IND" Destination="MERGE.EI2" dx1="800"/>
+			<Connection Source="MERGE.EO" Destination="IND" dx1="800"/>
+			<Connection Source="Button.IND" Destination="MERGE.EI3" dx1="446.67"/>
+			<Connection Source="Softkey.IND" Destination="MERGE.EI1" dx1="426.67"/>
+			<Connection Source="INIT" Destination="Button.INIT" dx1="1086.67"/>
+			<Connection Source="Button.INITO" Destination="Aux.INIT" dx1="80" dx2="80" dy="-300"/>
+			<Connection Source="Aux.INITO" Destination="Softkey.INIT" dx1="80" dx2="80" dy="-300"/>
+			<Connection Source="Softkey.INITO" Destination="INITO" dx1="3413.33"/>
+			<Connection Source="Softkey.INITO" Destination="AND_QO.REQ" dx1="1373.33"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="u16ObjId" Destination="Softkey.u16ObjId" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjIdA" Destination="Aux.u16ObjId" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjIdB" Destination="Button.u16ObjId" dx1="2100">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="Button.QI" dx1="1086.67"/>
+			<Connection Source="QI" Destination="Aux.QI" dx1="1086.67"/>
+			<Connection Source="QI" Destination="Softkey.QI" dx1="80" dx2="80" dy="-506.67"/>
+			<Connection Source="Button.QO" Destination="AND_QO.IN1" dx1="1400"/>
+			<Connection Source="Aux.QO" Destination="AND_QO.IN2"/>
+			<Connection Source="Softkey.QO" Destination="AND_QO.IN3" dx1="1373.33"/>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="3240"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

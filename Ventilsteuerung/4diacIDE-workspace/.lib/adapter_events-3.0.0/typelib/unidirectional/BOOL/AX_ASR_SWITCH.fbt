@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="AX_ASR_SWITCH" Comment="Converts AX adapter to ASR adapter (1:1 mapping: TRUE=SET, FALSE=RESET)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-01-17">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::events::unidirectional">
+	</CompilerInfo>
+	<InterfaceList>
+		<Plugs>
+			<AdapterDeclaration Name="Q" Type="adapter::types::unidirectional::ASR" Comment="Set/Reset Output" x="2400" y="0"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="G" Type="adapter::types::unidirectional::AX" Comment="Boolean Input" x="0" y="0"/>
+		</Sockets>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="Switch" Type="iec61499::events::E_SWITCH" x="800" y="0">
+		</FB>
+		<EventConnections>
+			<Connection Source="G.E1" Destination="Switch.EI" dx1="100"/>
+			<Connection Source="Switch.EO1" Destination="Q.SET" dx1="100"/>
+			<Connection Source="Switch.EO0" Destination="Q.RESET" dx1="100"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="G.D1" Destination="Switch.G" dx1="100"/>
+		</DataConnections>
+	</FBNetwork>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

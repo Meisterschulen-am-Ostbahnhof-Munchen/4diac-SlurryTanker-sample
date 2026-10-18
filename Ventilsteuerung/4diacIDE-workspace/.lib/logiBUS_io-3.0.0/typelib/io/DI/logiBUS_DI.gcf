@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="logiBUS_DI" Comment="logiBUS_DI constants">
+	<Identification Standard="61499-1" Description="Copyright (c) 2024 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2024-01-25">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::io::DI">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="Input_I1" Type="logiBUS::io::DI::logiBUS_DI_S" InitialValue="(Pin := 1)"/>
+		<VarDeclaration Name="Input_I2" Type="logiBUS::io::DI::logiBUS_DI_S" InitialValue="(Pin := 2)"/>
+		<VarDeclaration Name="Input_I3" Type="logiBUS::io::DI::logiBUS_DI_S" InitialValue="(Pin := 3)"/>
+		<VarDeclaration Name="Input_I4" Type="logiBUS::io::DI::logiBUS_DI_S" InitialValue="(Pin := 4)"/>
+		<VarDeclaration Name="Input_I5" Type="logiBUS::io::DI::logiBUS_DI_S" InitialValue="(Pin := 5)"/>
+		<VarDeclaration Name="Input_I6" Type="logiBUS::io::DI::logiBUS_DI_S" InitialValue="(Pin := 6)"/>
+		<VarDeclaration Name="Input_I7" Type="logiBUS::io::DI::logiBUS_DI_S" InitialValue="(Pin := 7)"/>
+		<VarDeclaration Name="Input_I8" Type="logiBUS::io::DI::logiBUS_DI_S" InitialValue="(Pin := 8)"/>
+		<VarDeclaration Name="Input_I9" Type="logiBUS::io::DI::logiBUS_DI_S" InitialValue="(Pin := 9)"/>
+		<VarDeclaration Name="Invalid" Type="logiBUS::io::DI::logiBUS_DI_S" InitialValue="(Pin := 255)"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE logiBUS::io::DI;
+
+GLOBALCONSTANTS logiBUS_DI
+	VAR_GLOBAL CONSTANT
+		Input_I1 : logiBUS_DI_S := (Pin := 1);
+		Input_I2 : logiBUS_DI_S := (Pin := 2);
+		Input_I3 : logiBUS_DI_S := (Pin := 3);
+		Input_I4 : logiBUS_DI_S := (Pin := 4);
+		Input_I5 : logiBUS_DI_S := (Pin := 5);
+		Input_I6 : logiBUS_DI_S := (Pin := 6);
+		Input_I7 : logiBUS_DI_S := (Pin := 7);
+		Input_I8 : logiBUS_DI_S := (Pin := 8);
+		Input_I9 : logiBUS_DI_S := (Pin := 9);
+		Invalid : logiBUS_DI_S := (Pin := 255);
+	END_VAR
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</GlobalConstants>

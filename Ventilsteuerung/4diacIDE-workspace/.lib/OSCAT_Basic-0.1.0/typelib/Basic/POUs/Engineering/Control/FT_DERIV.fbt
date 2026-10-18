@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="FT_DERIV" Comment="Calculate derivative over signal 'in' with Factor 'K'">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Version="1.1" Author="CodingAssistant" Date="2025-12-21">
+	</VersionInfo>
+	<CompilerInfo packageName="OSCAT::Basic::POUs::Engineering::Control">
+		<Import declaration="OSCAT::Basic::POUs::Engineering::measurements::T_PLC_US"/>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="EINIT" Type="EInit" Comment="Init Request">
+				<With Var="K"/>
+				<With Var="run"/>
+			</Event>
+			<Event Name="REQ" Type="Event" Comment="Normal Execution Request">
+				<With Var="in"/>
+				<With Var="K"/>
+				<With Var="run"/>
+			</Event>
+			<Event Name="RST" Type="Event" Comment="Reset">
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Init Confirmation">
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Execution Confirmation">
+				<With Var="out"/>
+				<With Var="delta_t"/>
+				<With Var="delta_in"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="in" Type="REAL" Comment="Input Signal"/>
+			<VarDeclaration Name="K" Type="REAL" Comment="Derivation Factor" InitialValue="1.0"/>
+			<VarDeclaration Name="run" Type="BOOL" Comment="Enable calculation" InitialValue="1"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="out" Type="REAL" Comment="Calculated Derivative"/>
+			<VarDeclaration Name="delta_t" Type="UDINT" Comment="Time difference in microseconds"/>
+			<VarDeclaration Name="delta_in" Type="REAL" Comment="Input signal difference"/>
+		</OutputVars>
+	</InterfaceList>
+	<SimpleFB>
+		<InternalVars>
+			<VarDeclaration Name="old" Type="REAL"/>
+			<VarDeclaration Name="tx" Type="UDINT"/>
+			<VarDeclaration Name="last" Type="UDINT"/>
+			<VarDeclaration Name="init" Type="BOOL"/>
+		</InternalVars>
+		<ECState Name="EINIT">
+			<ECAction Algorithm="EINIT" Output="INITO"/>
+		</ECState>
+		<ECState Name="REQ">
+			<ECAction Algorithm="REQ" Output="CNF"/>
+		</ECState>
+		<ECState Name="RST">
+			<ECAction Algorithm="RST" Output="CNF"/>
+		</ECState>
+		<Algorithm Name="EINIT">
+			<ST><![CDATA[
+init := FALSE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="RST">
+			<ST><![CDATA[
+init := TRUE;
+old := in;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="REQ">
+			<ST><![CDATA[
+(* read system time *)
+tx := T_PLC_US();
+delta_t := tx - last;
+last := tx;
+
+(* init on first startup *)
+IF NOT init THEN
+	this.RST();
+ELSIF run AND delta_t > 0 THEN
+	delta_in := in - old;
+		// Mikrosekunden in Sekunden
+	out := delta_in / UDINT_TO_REAL(delta_t) * 1000000.0 * K;
+	old := in;
+ELSE
+	out := 0.0;
+END_IF;
+]]></ST>
+		</Algorithm>
+	</SimpleFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

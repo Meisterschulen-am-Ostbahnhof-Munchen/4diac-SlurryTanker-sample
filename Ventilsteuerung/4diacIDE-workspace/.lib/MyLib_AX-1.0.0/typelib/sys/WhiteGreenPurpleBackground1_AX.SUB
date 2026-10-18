@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="WhiteGreenPurpleBackground1_AX" Comment="Hintergrundfarbe fuer 1 Objekt (AX-Adapter), 3 Zustaende: DI1=FALSE -&gt; Weiss&#10;(nicht erfuellt), DI1=TRUE -&gt; Gruen (erfuellt), DI2=TRUE -&gt; Violett (Override,&#10;hat Vorrang vor DI1). Franz: Vorbedingungs-Badges (Saege/Baender/Zapfwelle) bei&#10;Aufnahme-Automatik.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-01" Remarks="initial implementation, analog GreenWhiteBackground1_AX - 2 verschachtelte F_SEL (nicht AX_SEL, da ein einzelnes AX_SEL nur bei Aenderung des EIGENEN G neu auswertet und die 2. Stufe bei einer Aenderung von DI1 sonst nicht nachziehen wuerde) - beide F_SEL werden ueber einen gemeinsamen Trigger (E_MERGE_2 aus DI1.E1/DI2.E1) in Reihe neu ausgewertet, damit eine Aenderung von DI1 ODER DI2 immer die komplette, korrekte Farbe liefert.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+		<Import declaration="isobus::UT::Q::const::colours::COLOR_GREEN"/>
+		<Import declaration="isobus::UT::Q::const::colours::COLOR_WHITE"/>
+		<Import declaration="isobus::UT::Q::const::colours::COLOR_PURPLE"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+			<SubAppEvent Name="CNF" Type="Event" Comment="Execution Confirmation">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID Softkey/Button/OutputText" InitialValue="ID_NULL"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+			<VarDeclaration Name="STATUS_1" Type="STRING" Comment="Service Status"/>
+			<VarDeclaration Name="result_1" Type="INT" Comment="retval see description"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="u8OldColour_1" Type="adapter::types::unidirectional::AUS" Comment="Old value of color"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="DI1" Type="adapter::types::unidirectional::AX" Comment="Bedingung erfuellt (FALSE=Weiss, TRUE=Gruen) - ohne Vorrang, siehe DI2"/>
+			<AdapterDeclaration Name="DI2" Type="adapter::types::unidirectional::AX" Comment="Override aktiv (TRUE=Violett) - hat Vorrang vor DI1"/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="Q_BackgroundColour" Type="isobus::UT::Q::Q_BackgroundColour_AUS" x="-2700" y="700">
+		</FB>
+		<SubApp Name="F_SEL_Condition" Type="MyLib::sys::AUS_AX_SEL_AUS_2_VAL" x="-6300" y="1400">
+			<Parameter Name="val0" Value="COLOR_WHITE"/>
+			<Parameter Name="val1" Value="COLOR_GREEN"/>
+		</SubApp>
+		<FB Name="F_SEL_Override" Type="adapter::iec61131::selection::AUS_AX_SEL_AUS" x="-4600" y="2200">
+		</FB>
+		<FB Name="initval_AUS" Type="adapter::types::unidirectional::AUS::initval::initval_AUS" x="-6000" y="2000">
+			<Parameter Name="INIT_VAL" Value="COLOR_PURPLE"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="Q_BackgroundColour.CNF" Destination="CNF" dx1="960"/>
+			<Connection Source="INIT" Destination="Q_BackgroundColour.INIT"/>
+			<Connection Source="Q_BackgroundColour.INITO" Destination="INITO"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="u16ObjId" Destination="Q_BackgroundColour.u16ObjId" dx1="1126.67"/>
+			<Connection Source="Q_BackgroundColour.s16result" Destination="result_1" dx1="1513.33"/>
+			<Connection Source="Q_BackgroundColour.STATUS" Destination="STATUS_1" dx1="1233.33"/>
+			<Connection Source="QI" Destination="Q_BackgroundColour.QI"/>
+			<Connection Source="Q_BackgroundColour.QO" Destination="QO"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="DI2" Destination="F_SEL_Override.G" dx1="760"/>
+			<Connection Source="DI1" Destination="F_SEL_Condition.G" dx1="920"/>
+			<Connection Source="Q_BackgroundColour.u8OldColour" Destination="u8OldColour_1" dx1="1960"/>
+			<Connection Source="F_SEL_Override.OUT" Destination="Q_BackgroundColour.u8Colour" dx1="506.67"/>
+			<Connection Source="initval_AUS.OUT" Destination="F_SEL_Override.IN1" dx1="200"/>
+			<Connection Source="F_SEL_Condition.OUT" Destination="F_SEL_Override.IN0" dx1="300"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

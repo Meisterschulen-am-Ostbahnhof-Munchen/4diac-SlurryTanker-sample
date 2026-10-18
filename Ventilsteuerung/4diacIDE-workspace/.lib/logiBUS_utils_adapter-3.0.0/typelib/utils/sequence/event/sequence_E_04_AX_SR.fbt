@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="sequence_E_04_AX_SR" Comment="Sequence with 4 Outputs, Transition by EVENT, with AX Adapter, STOP (safety off)&#10;and RESUME Events">
+	<Identification Standard="61499-2" Description="Copyright (c) 2024 HR Agrartechnik GmbH&#10;&#10;This program and the accompanying materials are made&#10;available under the terms of the Eclipse Public License 2.0&#10;which is available at https://www.eclipse.org/legal/epl-2.0/&#10;&#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.1" Author="Franz Höpfinger" Date="2026-02-23">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::utils::sequence::event">
+		<Import declaration="logiBUS::utils::sequence::const::sequence"/>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="START_S1" Type="Event" Comment="jump from START to State_01">
+			</Event>
+			<Event Name="S1_S2" Type="Event" Comment="jump from State_01 to State_02">
+			</Event>
+			<Event Name="S2_S3" Type="Event" Comment="jump from State_02 to State_03">
+			</Event>
+			<Event Name="S3_S4" Type="Event" Comment="jump from State_03 to State_04">
+			</Event>
+			<Event Name="S4_START" Type="Event" Comment="jump from State_04 to START">
+			</Event>
+			<Event Name="STOP" Type="Event" Comment="Stop current state immediately - ALL outputs go OFF (dead-man stop)">
+			</Event>
+			<Event Name="RESUME" Type="Event" Comment="Resume from pause - continue with current state">
+			</Event>
+			<Event Name="RESET" Type="Event" Comment="Reset from any State to START">
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event" Comment="Execution Confirmation">
+				<With Var="STATE_NR"/>
+				<With Var="PAUSED"/>
+			</Event>
+		</EventOutputs>
+		<OutputVars>
+			<VarDeclaration Name="STATE_NR" Type="SINT" Comment="State Number, START = 0, State_01 = 1 and so on."/>
+			<VarDeclaration Name="PAUSED" Type="BOOL" Comment="TRUE if sequencer is paused (STOP active)"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="DO_S1" Type="adapter::types::unidirectional::AX" Comment="Output if State_01 is active"/>
+			<AdapterDeclaration Name="DO_S2" Type="adapter::types::unidirectional::AX" Comment="Output if State_02 is active"/>
+			<AdapterDeclaration Name="DO_S3" Type="adapter::types::unidirectional::AX" Comment="Output if State_03 is active"/>
+			<AdapterDeclaration Name="DO_S4" Type="adapter::types::unidirectional::AX" Comment="Output if State_04 is active"/>
+		</Plugs>
+	</InterfaceList>
+	<BasicFB>
+		<InternalVars>
+			<VarDeclaration Name="savedState" Type="SINT" Comment="Store current state when paused"/>
+		</InternalVars>
+		<ECC>
+			<ECState Name="xSTART" Comment="Initial State" x="800" y="800">
+			</ECState>
+			<ECState Name="sState_01" x="2666.67" y="1200">
+				<ECAction Algorithm="State_01_C" Output="CNF"/>
+				<ECAction Algorithm="State_01_E" Output="DO_S1.E1"/>
+			</ECState>
+			<ECState Name="sState_02" x="2666.67" y="1866.67">
+				<ECAction Algorithm="State_01_X" Output="DO_S1.E1"/>
+				<ECAction Algorithm="State_02_C" Output="CNF"/>
+				<ECAction Algorithm="State_02_E" Output="DO_S2.E1"/>
+			</ECState>
+			<ECState Name="sState_03" x="2666.67" y="2533.33">
+				<ECAction Algorithm="State_02_X" Output="DO_S2.E1"/>
+				<ECAction Algorithm="State_03_C" Output="CNF"/>
+				<ECAction Algorithm="State_03_E" Output="DO_S3.E1"/>
+			</ECState>
+			<ECState Name="sState_04" x="2666.67" y="3200">
+				<ECAction Algorithm="State_03_X" Output="DO_S3.E1"/>
+				<ECAction Algorithm="State_04_C" Output="CNF"/>
+				<ECAction Algorithm="State_04_E" Output="DO_S4.E1"/>
+			</ECState>
+			<ECState Name="sState_00" x="2666.67" y="3866.67">
+				<ECAction Algorithm="State_04_X" Output="DO_S4.E1"/>
+				<ECAction Algorithm="State_00_C" Output="CNF"/>
+			</ECState>
+			<ECState Name="sPAUSED_S1" Comment="Paused while in State_01 - Output OFF" x="4800" y="1040">
+				<ECAction Algorithm="State_01_X" Output="DO_S1.E1"/>
+				<ECAction Algorithm="Save_S1" Output="CNF"/>
+			</ECState>
+			<ECState Name="sPAUSED_S2" Comment="Paused while in State_02 - Output OFF" x="4800" y="1760">
+				<ECAction Algorithm="State_02_X" Output="DO_S2.E1"/>
+				<ECAction Algorithm="Save_S2" Output="CNF"/>
+			</ECState>
+			<ECState Name="sPAUSED_S3" Comment="Paused while in State_03 - Output OFF" x="4800" y="2480">
+				<ECAction Algorithm="State_03_X" Output="DO_S3.E1"/>
+				<ECAction Algorithm="Save_S3" Output="CNF"/>
+			</ECState>
+			<ECState Name="sPAUSED_S4" Comment="Paused while in State_04 - Output OFF" x="4800" y="3120">
+				<ECAction Algorithm="State_04_X" Output="DO_S4.E1"/>
+				<ECAction Algorithm="Save_S4" Output="CNF"/>
+			</ECState>
+			<ECState Name="sPAUSED_S0" Comment="Paused while in START/State_00 - Output OFF" x="4800" y="3760">
+				<ECAction Algorithm="Save_S0" Output="CNF"/>
+			</ECState>
+			<ECState Name="sRESET" x="-666.67" y="2533.33">
+				<ECAction Algorithm="State_01_X" Output="DO_S1.E1"/>
+				<ECAction Algorithm="State_02_X" Output="DO_S2.E1"/>
+				<ECAction Algorithm="State_03_X" Output="DO_S3.E1"/>
+				<ECAction Algorithm="State_04_X" Output="DO_S4.E1"/>
+			</ECState>
+			<ECTransition Source="sState_01" Destination="sState_02" Condition="S1_S2" x="2893.33" y="1553.33"/>
+			<ECTransition Source="sState_02" Destination="sState_03" Condition="S2_S3" x="2900" y="2240"/>
+			<ECTransition Source="sState_03" Destination="sState_04" Condition="S3_S4" x="2920" y="2853.33"/>
+			<ECTransition Source="sState_00" Destination="sState_01" Condition="START_S1" x="1766.67" y="2433.33"/>
+			<ECTransition Source="sState_04" Destination="sState_00" Condition="S4_START" x="2926.67" y="3553.33"/>
+			<ECTransition Source="xSTART" Destination="sState_01" Condition="START_S1" x="2153.33" y="920"/>
+			<ECTransition Source="sState_01" Destination="sPAUSED_S1" Condition="STOP" x="3400" y="1200"/>
+			<ECTransition Source="sState_02" Destination="sPAUSED_S2" Condition="STOP" x="3400" y="1866.67"/>
+			<ECTransition Source="sState_03" Destination="sPAUSED_S3" Condition="STOP" x="3400" y="2533.33"/>
+			<ECTransition Source="sState_04" Destination="sPAUSED_S4" Condition="STOP" x="3420" y="3133.33"/>
+			<ECTransition Source="sState_00" Destination="sPAUSED_S0" Condition="STOP" x="3386.67" y="3826.67"/>
+			<ECTransition Source="xSTART" Destination="sPAUSED_S0" Condition="STOP" x="2220" y="4320"/>
+			<ECTransition Source="sPAUSED_S1" Destination="sState_01" Condition="RESUME" x="3400" y="1200"/>
+			<ECTransition Source="sPAUSED_S2" Destination="sState_02" Condition="RESUME" x="3400" y="1866.67"/>
+			<ECTransition Source="sPAUSED_S3" Destination="sState_03" Condition="RESUME" x="3400" y="2533.33"/>
+			<ECTransition Source="sPAUSED_S4" Destination="sState_04" Condition="RESUME" x="3413.33" y="3073.33"/>
+			<ECTransition Source="sPAUSED_S0" Destination="sState_00" Condition="RESUME" x="3360" y="3746.67"/>
+			<ECTransition Source="sState_01" Destination="sRESET" Condition="RESET" x="586.67" y="1633.33"/>
+			<ECTransition Source="sState_02" Destination="sRESET" Condition="RESET" x="640" y="1866.67"/>
+			<ECTransition Source="sState_03" Destination="sRESET" Condition="RESET" x="580" y="2200"/>
+			<ECTransition Source="sState_04" Destination="sRESET" Condition="RESET" x="606.67" y="2420"/>
+			<ECTransition Source="sState_00" Destination="sRESET" Condition="RESET" x="600" y="3133.33"/>
+			<ECTransition Source="sPAUSED_S1" Destination="sRESET" Condition="RESET" x="1953.33" y="1146.67"/>
+			<ECTransition Source="sPAUSED_S2" Destination="sRESET" Condition="RESET" x="2000" y="2000"/>
+			<ECTransition Source="sPAUSED_S3" Destination="sRESET" Condition="RESET" x="2000" y="2366.67"/>
+			<ECTransition Source="sPAUSED_S4" Destination="sRESET" Condition="RESET" x="2000" y="2733.33"/>
+			<ECTransition Source="sPAUSED_S0" Destination="sRESET" Condition="RESET" x="2000" y="3133.33"/>
+			<ECTransition Source="sRESET" Destination="sState_00" Condition="1" x="-360" y="3300"/>
+		</ECC>
+		<Algorithm Name="State_00_C">
+			<ST><![CDATA[ // State_00 Confirmation Step
+STATE_NR := sequence::State_00;
+PAUSED := BOOL#FALSE;
+savedState := sequence::State_00;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="State_01_C">
+			<ST><![CDATA[ // State_01 Confirmation Step
+STATE_NR := sequence::State_01;
+PAUSED := BOOL#FALSE;
+savedState := sequence::State_01;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="State_02_C">
+			<ST><![CDATA[ // State_02 Confirmation Step
+STATE_NR := sequence::State_02;
+PAUSED := BOOL#FALSE;
+savedState := sequence::State_02;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="State_03_C">
+			<ST><![CDATA[ // State_03 Confirmation Step
+STATE_NR := sequence::State_03;
+PAUSED := BOOL#FALSE;
+savedState := sequence::State_03;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="State_04_C">
+			<ST><![CDATA[ // State_04 Confirmation Step
+STATE_NR := sequence::State_04;
+PAUSED := BOOL#FALSE;
+savedState := sequence::State_04;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="Save_S0">
+			<ST><![CDATA[ // Pause in State_00
+STATE_NR := savedState;
+PAUSED := BOOL#TRUE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="Save_S1">
+			<ST><![CDATA[ // Pause in State_01
+STATE_NR := savedState;
+PAUSED := BOOL#TRUE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="Save_S2">
+			<ST><![CDATA[ // Pause in State_02
+STATE_NR := savedState;
+PAUSED := BOOL#TRUE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="Save_S3">
+			<ST><![CDATA[ // Pause in State_03
+STATE_NR := savedState;
+PAUSED := BOOL#TRUE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="Save_S4">
+			<ST><![CDATA[ // Pause in State_04
+STATE_NR := savedState;
+PAUSED := BOOL#TRUE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="State_01_E">
+			<ST><![CDATA[ // State_01 Entry Step
+DO_S1.D1 := BOOL#TRUE; // ON
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="State_01_X">
+			<ST><![CDATA[ // State_01 Exit Step
+DO_S1.D1 := BOOL#FALSE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="State_02_E">
+			<ST><![CDATA[ // State_02 Entry Step
+DO_S2.D1 := BOOL#TRUE; // ON
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="State_02_X">
+			<ST><![CDATA[ // State_02 Exit Step
+DO_S2.D1 := BOOL#FALSE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="State_03_E">
+			<ST><![CDATA[ // State_03 Entry Step
+DO_S3.D1 := BOOL#TRUE; // ON
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="State_03_X">
+			<ST><![CDATA[ // State_03 Exit Step
+DO_S3.D1 := BOOL#FALSE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="State_04_E">
+			<ST><![CDATA[ // State_04 Entry Step
+DO_S4.D1 := BOOL#TRUE; // ON
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="State_04_X">
+			<ST><![CDATA[ // State_04 Exit Step
+DO_S4.D1 := BOOL#FALSE;
+]]></ST>
+		</Algorithm>
+	</BasicFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

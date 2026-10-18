@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Softkey_Toggle_RPC_TO_Remote_BG_OPC" Comment="Geraet A (Station 11, 192.168.1.11): SoftKey_F1-Tastendruck (SK_RELEASED) ruft&#10;per CLIENT_0 einen argument- und rueckgabewertlosen OPC-UA-Methodenaufruf auf&#10;Geraet B auf (reiner RPC-Trigger, kein Wertwechsel-Trick noetig, kein AX_T_FF&#10;auf diesem Geraet); GreenWhiteBackground zeigt den von Geraet B lokal&#10;ueberwachten Flipflop-Zustand - 'SUB style': das Protokoll steckt im&#10;MyLib::sys-Composite, nicht in der Resource des Geraets">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-02" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+		<Import declaration="isobus::UT::io::Softkey::SoftKeyActivationCode::SK_RELEASED"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID Softkey/Background" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="ID_TRIGGER_CALL" Type="WSTRING" Comment="Remote-Methodenadresse (ACTION=CALL_METHOD) fuer den argumentlosen Trigger-Methodenaufruf auf Geraet B"/>
+			<VarDeclaration Name="ID_STATE_READ" Type="WSTRING" Comment="Lokal ueberwachte Adresse (BOOL, ACTION=READ) fuer den Flipflop-Zustand, wird von Geraet B remote beschrieben"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="SoftKey_UP_F1" Type="isobus::UT::io::Softkey::Softkey_IE" x="-7400" y="-400">
+			<Parameter Name="InputEvent" Value="SK_RELEASED"/>
+		</FB>
+		<FB Name="TRIGGER_CLIENT" Type="iec61499::net::CLIENT_0" x="-4000" y="100">
+		</FB>
+		<SubApp Name="GreenWhiteBackground_AX" Type="MyLib::sys::GreenWhiteBackground1_AX" x="-3000" y="900">
+		</SubApp>
+		<FB Name="STATE_SUBSCRIBE" Type="adapter::net::AX_SUBSCRIBE_1" x="-5600" y="900">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_4">
+		</FB>
+		<EventConnections>
+			<Connection Source="SoftKey_UP_F1.IND" Destination="TRIGGER_CLIENT.REQ" dx1="373.33"/>
+			<Connection Source="INIT" Destination="SoftKey_UP_F1.INIT"/>
+			<Connection Source="SoftKey_UP_F1.INITO" Destination="TRIGGER_CLIENT.INIT"/>
+			<Connection Source="TRIGGER_CLIENT.INITO" Destination="STATE_SUBSCRIBE.INIT"/>
+			<Connection Source="STATE_SUBSCRIBE.INITO" Destination="GreenWhiteBackground_AX.INIT"/>
+			<Connection Source="GreenWhiteBackground_AX.INITO" Destination="INITO"/>
+			<Connection Source="GreenWhiteBackground_AX.INITO" Destination="AND_QO.REQ"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="u16ObjId" Destination="SoftKey_UP_F1.u16ObjId" dx1="2373.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId" Destination="GreenWhiteBackground_AX.u16ObjId" dx1="3893.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_TRIGGER_CALL" Destination="TRIGGER_CLIENT.ID" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_STATE_READ" Destination="STATE_SUBSCRIBE.ID" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="SoftKey_UP_F1.QI"/>
+			<Connection Source="QI" Destination="TRIGGER_CLIENT.QI"/>
+			<Connection Source="QI" Destination="STATE_SUBSCRIBE.QI"/>
+			<Connection Source="SoftKey_UP_F1.QO" Destination="AND_QO.IN1"/>
+			<Connection Source="TRIGGER_CLIENT.QO" Destination="AND_QO.IN2"/>
+			<Connection Source="STATE_SUBSCRIBE.QO" Destination="AND_QO.IN3"/>
+			<Connection Source="AND_QO.OUT" Destination="QO"/>
+			<Connection Source="QI" Destination="GreenWhiteBackground_AX.QI"/>
+			<Connection Source="GreenWhiteBackground_AX.QO" Destination="AND_QO.IN4"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="STATE_SUBSCRIBE.OUT" Destination="GreenWhiteBackground_AX.DI1"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="DataPanel_MI_QXA" Comment="Composite FB for boolean output data (Digital Mode 1)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2024 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2024-04-24">
+	</VersionInfo>
+	<CompilerInfo packageName="DataPanel::io::MI::DQ">
+		<Import declaration="DataPanel::io::MI::DQ::DataPanel_MI_DO::Invalid"/>
+		<Import declaration="DataPanel::io::MI::const::MI"/>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+				<With Var="QI"/>
+				<With Var="PARAMS"/>
+				<With Var="u8SAMember"/>
+				<With Var="Output"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
+			<VarDeclaration Name="PARAMS" Type="STRING" Comment="Service Parameters"/>
+			<VarDeclaration Name="u8SAMember" Type="USINT" Comment="Node SA 224..239" InitialValue="MI::MI_00"/>
+			<VarDeclaration Name="Output" Type="DataPanel::io::MI::DQ::DataPanel_MI_DO_S" Comment="Identify the Output DigitalOutput_1A..8B and Input_Power_Port_5..8" InitialValue="Invalid"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
+		</OutputVars>
+		<Sockets>
+			<AdapterDeclaration Name="OUT" Type="adapter::types::unidirectional::AX" x="-1100" y="1600"/>
+		</Sockets>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="QX" Type="DataPanel::io::MI::DQ::DataPanel_MI_QX" x="1240" y="460">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="QX.INIT" dx1="6013.33"/>
+			<Connection Source="QX.INITO" Destination="INITO" dx1="1026.67"/>
+			<Connection Source="OUT.E1" Destination="QX.REQ" dx1="700"/>
+			<Connection Source="QX.CNF" Destination="CNF" dx1="1753.33"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="OUT.D1" Destination="QX.OUT" dx1="993.33"/>
+			<Connection Source="QI" Destination="QX.QI" dx1="5360"/>
+			<Connection Source="PARAMS" Destination="QX.PARAMS" dx1="5306.67"/>
+			<Connection Source="QX.QO" Destination="QO" dx1="1880"/>
+			<Connection Source="QX.STATUS" Destination="STATUS" dx1="2053.33"/>
+			<Connection Source="u8SAMember" Destination="QX.u8SAMember" dx1="3513.33"/>
+			<Connection Source="Output" Destination="QX.Output" dx1="3020"/>
+		</DataConnections>
+	</FBNetwork>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<p>Copyright (c) 2024 HR Agrartechnik GmbH&nbsp;&nbsp;&nbsp;<br />
+&nbsp;&nbsp;&nbsp;<br />
+This program and the accompanying materials are made&nbsp;&nbsp;&nbsp;&nbsp;<br />
+available under the terms of the Eclipse Public License 2.0&nbsp;&nbsp;&nbsp;&nbsp;<br />
+which is available at <a href="https://www.eclipse.org/legal/epl-2.0/">https://www.eclipse.org/legal/epl-2.0/</a>&nbsp;&nbsp;&nbsp;&nbsp;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<br />
+SPDX-License-Identifier: EPL-2.0</p>
+]]></Attribute>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

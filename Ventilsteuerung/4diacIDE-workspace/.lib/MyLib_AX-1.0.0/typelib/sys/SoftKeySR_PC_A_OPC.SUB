@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="SoftKeySR_PC_A_OPC" Comment="Geraet A (Station 11, 192.168.1.11): 2 SoftKeys (Set/Reset) rufen je einen&#10;eigenen argument- und rueckgabewertlosen OPC-UA-Methodenaufruf auf Geraet B auf&#10;(CLIENT_0, 2 eigene Methoden - wie Training_04, aber ohne Toggle);&#10;GreenWhiteBackground am Set-SoftKey zeigt den von Geraet B lokal ueberwachten&#10;Flipflop-Zustand - 'SUB style': das Protokoll steckt im MyLib::sys-Composite,&#10;nicht in der Resource des Geraets">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-03" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+		<Import declaration="isobus::UT::io::Softkey::SoftKeyActivationCode::SK_RELEASED"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="u16ObjId_SET" Type="UINT" Comment="Object ID SoftKey Set (traegt auch das GreenWhiteBackground)" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObjId_RESET" Type="UINT" Comment="Object ID SoftKey Reset" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="ID_SET_CALL" Type="WSTRING" Comment="Remote-Methodenadresse (ACTION=CALL_METHOD) fuer den Set-Methodenaufruf auf Geraet B"/>
+			<VarDeclaration Name="ID_RESET_CALL" Type="WSTRING" Comment="Remote-Methodenadresse (ACTION=CALL_METHOD) fuer den Reset-Methodenaufruf auf Geraet B"/>
+			<VarDeclaration Name="ID_STATE_READ" Type="WSTRING" Comment="Lokal ueberwachte Adresse (BOOL, ACTION=READ) fuer den Flipflop-Zustand, wird von Geraet B remote beschrieben"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="SoftKey_SET" Type="isobus::UT::io::Softkey::Softkey_IE" x="-7200" y="-1000">
+			<Parameter Name="InputEvent" Value="SK_RELEASED"/>
+		</FB>
+		<FB Name="SoftKey_RESET" Type="isobus::UT::io::Softkey::Softkey_IE" x="-7200" y="0">
+			<Parameter Name="InputEvent" Value="SK_RELEASED"/>
+		</FB>
+		<FB Name="TRIGGER_SET_CLIENT" Type="iec61499::net::CLIENT_0" x="-4000" y="-900">
+		</FB>
+		<FB Name="TRIGGER_RESET_CLIENT" Type="iec61499::net::CLIENT_0" x="-4000" y="100">
+		</FB>
+		<SubApp Name="GreenWhiteBackground_AX" Type="MyLib::sys::GreenWhiteBackground1_AX" x="-4000" y="1100">
+		</SubApp>
+		<FB Name="STATE_SUBSCRIBE" Type="adapter::net::AX_SUBSCRIBE_1" x="-7200" y="1100">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_6">
+		</FB>
+		<EventConnections>
+			<Connection Source="SoftKey_SET.IND" Destination="TRIGGER_SET_CLIENT.REQ" dx1="373.33"/>
+			<Connection Source="SoftKey_RESET.IND" Destination="TRIGGER_RESET_CLIENT.REQ" dx1="373.33"/>
+			<Connection Source="INIT" Destination="SoftKey_SET.INIT"/>
+			<Connection Source="SoftKey_SET.INITO" Destination="SoftKey_RESET.INIT"/>
+			<Connection Source="SoftKey_RESET.INITO" Destination="TRIGGER_SET_CLIENT.INIT"/>
+			<Connection Source="TRIGGER_SET_CLIENT.INITO" Destination="TRIGGER_RESET_CLIENT.INIT"/>
+			<Connection Source="TRIGGER_RESET_CLIENT.INITO" Destination="STATE_SUBSCRIBE.INIT"/>
+			<Connection Source="STATE_SUBSCRIBE.INITO" Destination="GreenWhiteBackground_AX.INIT"/>
+			<Connection Source="GreenWhiteBackground_AX.INITO" Destination="INITO"/>
+			<Connection Source="GreenWhiteBackground_AX.INITO" Destination="AND_QO.REQ"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="u16ObjId_SET" Destination="SoftKey_SET.u16ObjId" dx1="2446.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId_RESET" Destination="SoftKey_RESET.u16ObjId" dx1="2446.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId_SET" Destination="GreenWhiteBackground_AX.u16ObjId" dx1="3893.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_SET_CALL" Destination="TRIGGER_SET_CLIENT.ID" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_RESET_CALL" Destination="TRIGGER_RESET_CLIENT.ID" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_STATE_READ" Destination="STATE_SUBSCRIBE.ID" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="SoftKey_SET.QI"/>
+			<Connection Source="QI" Destination="SoftKey_RESET.QI"/>
+			<Connection Source="QI" Destination="TRIGGER_SET_CLIENT.QI"/>
+			<Connection Source="QI" Destination="TRIGGER_RESET_CLIENT.QI"/>
+			<Connection Source="QI" Destination="STATE_SUBSCRIBE.QI"/>
+			<Connection Source="SoftKey_SET.QO" Destination="AND_QO.IN1"/>
+			<Connection Source="SoftKey_RESET.QO" Destination="AND_QO.IN2"/>
+			<Connection Source="TRIGGER_SET_CLIENT.QO" Destination="AND_QO.IN3"/>
+			<Connection Source="TRIGGER_RESET_CLIENT.QO" Destination="AND_QO.IN4"/>
+			<Connection Source="STATE_SUBSCRIBE.QO" Destination="AND_QO.IN5"/>
+			<Connection Source="AND_QO.OUT" Destination="QO"/>
+			<Connection Source="QI" Destination="GreenWhiteBackground_AX.QI"/>
+			<Connection Source="GreenWhiteBackground_AX.QO" Destination="AND_QO.IN6"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="STATE_SUBSCRIBE.OUT" Destination="GreenWhiteBackground_AX.DI1"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

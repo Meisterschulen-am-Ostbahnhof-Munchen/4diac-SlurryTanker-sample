@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Softkey_IXA_TO_Remote_WRITE_BG_OPC" Comment="VT-SoftKey lesen (ODER lokaler Web-Override, z.B. vt-ui-mirror auf demselben&#10;Modul) + Remote-OPC-UA-Write an Zielmodul + VT-Hintergrundfarbe aus&#10;Remote-Subscribe (generisch, ein Kanal, fuer Funktionen ohne lokalen physischen&#10;Ausgang - Bedienung sitzt auf STG1, Aktor auf einem Modul ohne eigene&#10;VT-Anbindung)">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="franz" Date="2026-09-05">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID SoftKey/Hintergrund (VT)" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="ID_SUBSCRIBE" Type="WSTRING" Comment="Remote-Subscribe-Adresse (Status/Farbe, ACTION=SUBSCRIBE)"/>
+			<VarDeclaration Name="ID_WRITE_REMOTE" Type="WSTRING" Comment="Remote-Write-Adresse zum Zielmodul (Befehl, ACTION=WRITE, CLIENT)"/>
+			<VarDeclaration Name="ID_WEB_READ" Type="WSTRING" Comment="Lokale Subscribe-Adresse fuer einen Web-Client (z.B. vt-ui-mirror) auf demselben Modul, ODER-verknuepft mit dem echten SoftKey"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="Softkey_IXA" Type="isobus::UT::io::Softkey::Softkey_IXA" x="-200" y="-500">
+		</FB>
+		<FB Name="SUBSCRIBE_WEB" Type="adapter::net::AX_SUBSCRIBE_1" x="-400" y="700">
+		</FB>
+		<FB Name="OR_MERGE" Type="adapter::booleanOperators::AX_OR_2" x="900" y="300">
+		</FB>
+		<FB Name="AX_CLIENT_1_0" Type="adapter::net::AX_CLIENT_1_0" x="2200" y="0">
+		</FB>
+		<FB Name="AX_SUBSCRIBE_1" Type="adapter::net::AX_SUBSCRIBE_1" x="0" y="1600">
+		</FB>
+		<SubApp Name="GreenWhiteBackground1_AX" Type="MyLib::sys::GreenWhiteBackground1_AX" x="1500" y="1600">
+		</SubApp>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_5" x="4100" y="500">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="Softkey_IXA.INIT" dx1="80" dx2="80" dy="-566.67"/>
+			<Connection Source="Softkey_IXA.INITO" Destination="SUBSCRIBE_WEB.INIT" dx1="80" dx2="80" dy="600"/>
+			<Connection Source="SUBSCRIBE_WEB.INITO" Destination="AX_CLIENT_1_0.INIT" dx1="826.67"/>
+			<Connection Source="AX_CLIENT_1_0.INITO" Destination="AX_SUBSCRIBE_1.INIT" dx1="80" dx2="80" dy="800"/>
+			<Connection Source="AX_SUBSCRIBE_1.INITO" Destination="GreenWhiteBackground1_AX.INIT"/>
+			<Connection Source="GreenWhiteBackground1_AX.INITO" Destination="INITO" dx1="2380"/>
+			<Connection Source="GreenWhiteBackground1_AX.INITO" Destination="AND_QO.REQ" dx1="593.33"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="u16ObjId" Destination="Softkey_IXA.u16ObjId" dx1="846.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId" Destination="GreenWhiteBackground1_AX.u16ObjId" dx1="366.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_WEB_READ" Destination="SUBSCRIBE_WEB.ID" dx1="80">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_SUBSCRIBE" Destination="AX_SUBSCRIBE_1.ID" dx1="80" dx2="80" dy="540">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_WRITE_REMOTE" Destination="AX_CLIENT_1_0.ID" dx1="613.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="Softkey_IXA.QI" dx1="80" dx2="80" dy="-460"/>
+			<Connection Source="QI" Destination="SUBSCRIBE_WEB.QI" dx1="80" dx2="80" dy="140"/>
+			<Connection Source="QI" Destination="AX_CLIENT_1_0.QI" dx1="713.33"/>
+			<Connection Source="QI" Destination="AX_SUBSCRIBE_1.QI" dx1="80" dx2="80" dy="586.67"/>
+			<Connection Source="Softkey_IXA.QO" Destination="AND_QO.IN1" dx1="1746.67"/>
+			<Connection Source="SUBSCRIBE_WEB.QO" Destination="AND_QO.IN2" dx1="1780"/>
+			<Connection Source="AX_CLIENT_1_0.QO" Destination="AND_QO.IN3" dx1="500"/>
+			<Connection Source="AX_SUBSCRIBE_1.QO" Destination="AND_QO.IN4" dx1="1580"/>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="2740"/>
+			<Connection Source="QI" Destination="GreenWhiteBackground1_AX.QI" dx1="366.67"/>
+			<Connection Source="GreenWhiteBackground1_AX.QO" Destination="AND_QO.IN5" dx1="593.33"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="Softkey_IXA.IN" Destination="OR_MERGE.IN1" dx1="100"/>
+			<Connection Source="SUBSCRIBE_WEB.OUT" Destination="OR_MERGE.IN2" dx1="100"/>
+			<Connection Source="OR_MERGE.OUT" Destination="AX_CLIENT_1_0.IN" dx1="400"/>
+			<Connection Source="AX_SUBSCRIBE_1.OUT" Destination="GreenWhiteBackground1_AX.DI1" dx1="280"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>SoftKey → Remote-OPC-UA-Write mit Status-Feedback (ein Kanal)</h1>
+
+<p>Für Funktionen, deren Bedienung auf einem VT-Steuergerät (STG1) sitzt, deren Aktor aber auf einem
+anderen Modul ohne eigene VT-Anbindung liegt: der lokale SoftKey löst per OPC-UA einen Remote-Write
+zum Zielmodul aus, und der tatsächliche Zustand kommt per Remote-Subscribe zurück und wird als
+Hintergrundfarbe direkt am SoftKey angezeigt.</p>
+
+<h2>Funktionsbeschreibung</h2>
+
+<ul>
+	<li><code>Softkey_IXA</code> liest den lokalen SoftKey (<code>u16ObjId</code>).</li>
+	<li><code>SUBSCRIBE_WEB</code> (<code>ID_WEB_READ</code>) erlaubt zusätzlich einem lokalen
+	Web-Client (z.B. vt-ui-mirror auf demselben Modul) dieselbe Funktion auszulösen -
+	<code>OR_MERGE</code> (<code>AX_OR_2</code>) verknüpft SoftKey und Web-Override per ODER.</li>
+	<li><code>AX_CLIENT_1_0</code> (<code>ID_WRITE_REMOTE</code>) schreibt das gemergte Signal per
+	OPC-UA an das Zielmodul.</li>
+	<li><code>AX_SUBSCRIBE_1</code> (<code>ID_SUBSCRIBE</code>) empfängt den tatsächlichen Zustand
+	vom Zielmodul zurück und speist ihn in <code>GreenWhiteBackground1_AX</code> - ein normales
+	VT-Objekt genügt hier ein <code>Q_BackgroundColour</code>-Kommando.</li>
+</ul>
+
+<p>Kommt am Zielobjekt auch ein Auxiliary-Function-Objekt (Joystick) ins Spiel,
+<code>Softkey_Aux_IXA_TO_Remote_WRITE_BG_OPC</code> verwenden (dieselbe Struktur, zusätzlich eine
+dritte Quelle und <code>GreenWhiteBackground3_AX</code> statt <code>1_AX</code>). Für einen VT-Button
+statt SoftKey <code>Button_IXA_TO_Remote_WRITE_BG_OPC</code>.</p>
+]]></Attribute>
+</SubAppType>

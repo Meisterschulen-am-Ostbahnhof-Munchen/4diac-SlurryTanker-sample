@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="ASR_TO_ASR_AX_SPLIT" Comment="Relays a unidirectional ASR Socket onward as a bidirectional ASR_AX Plug&#10;(Set/Reset passthrough), plus an extra AX Plug mirroring the ASR_AX backward&#10;(state) channel">
+	<Identification Standard="61499-2" Function="Any Event coming in by IN is forwarded to OUT unchanged; the backward Event/Bool fired into OUT by the downstream Socket is mirrored out via AX_OUT (IN has no backward channel to relay it back to)" Description="Copyright (c) 2026 HR Agrartechnik GmbH &#10; &#10;This program and the accompanying materials are made &#10;available under the terms of the Eclipse Public License 2.0 &#10;which is available at https://www.eclipse.org/legal/epl-2.0/ &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-09-04" Remarks="Initial Version">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::events::bidirectional">
+	</CompilerInfo>
+	<InterfaceList>
+		<Plugs>
+			<AdapterDeclaration Name="OUT" Type="adapter::types::bidirectional::ASR_AX" Comment="Output (Set/Reset out, Zustand in)" x="2900" y="800"/>
+			<AdapterDeclaration Name="AX_OUT" Type="adapter::types::unidirectional::AX" Comment="mirrors the ASR_AX backward (state) channel" x="4500" y="800"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::ASR" Comment="Input (Set/Reset, unidirectional)" x="200" y="800"/>
+		</Sockets>
+	</InterfaceList>
+	<FBNetwork>
+		<EventConnections>
+			<Connection Source="IN.SET" Destination="OUT.SET"/>
+			<Connection Source="IN.RESET" Destination="OUT.RESET"/>
+			<Connection Source="OUT.EI1" Destination="AX_OUT.E1"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="OUT.DI1" Destination="AX_OUT.D1" dx1="466.67"/>
+		</DataConnections>
+	</FBNetwork>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

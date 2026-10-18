@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="LinksRechts_AX" Comment="Basic FB with Links-Rechts, with AX Adapter">
+	<Identification Standard="61499-2" Description="Copyright (c) 2025 HR Agrartechnik GmbH &#10; &#10;This program and the accompanying materials are made &#10;available under the terms of the Eclipse Public License 2.0 &#10;which is available at https://www.eclipse.org/legal/epl-2.0/ &#10; &#10;SPDX-License-Identifier: EPL-2.0&#10;   &#10;Nur Rechtslauf ist vorrangig vor Nur Linkslauf. &#10;">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.1" Author="Gemini" Date="2026-01-16">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::utils::sequence::verteiler">
+		<Import declaration="logiBUS::utils::sequence::verteiler::LinksRechts::STATES"/>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventOutputs>
+			<Event Name="EO" Type="Event">
+				<With Var="STATE"/>
+			</Event>
+		</EventOutputs>
+		<OutputVars>
+			<VarDeclaration Name="STATE" Type="STRING"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="Rechts" Type="adapter::types::unidirectional::AX" Comment="Rechtslauf"/>
+			<AdapterDeclaration Name="Links" Type="adapter::types::unidirectional::AX" Comment="Linkslauf"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="EIN" Type="adapter::types::unidirectional::AX" Comment="Einschalten"/>
+			<AdapterDeclaration Name="DI_Rechts" Type="adapter::types::unidirectional::AX" Comment="Nur Rechtslauf"/>
+			<AdapterDeclaration Name="DI_Links" Type="adapter::types::unidirectional::AX" Comment="Nur Linkslauf"/>
+		</Sockets>
+	</InterfaceList>
+	<BasicFB>
+		<ECC>
+			<ECState Name="START" Comment="Initial State" x="1280" y="720">
+			</ECState>
+			<ECState Name="Rechtslauf" x="3200" y="640">
+				<ECAction Algorithm="Set_Rechts_TRUE" Output="Rechts.E1"/>
+				<ECAction Algorithm="Set_Links_FALSE" Output="Links.E1"/>
+				<ECAction Algorithm="Set_State_Rechtslauf" Output="EO"/>
+			</ECState>
+			<ECState Name="Rechtslauf_Pause" x="5600" y="1600">
+				<ECAction Algorithm="Set_Rechts_FALSE" Output="Rechts.E1"/>
+				<ECAction Algorithm="Set_Links_FALSE" Output="Links.E1"/>
+				<ECAction Algorithm="Set_State_Rechtslauf_Pause" Output="EO"/>
+			</ECState>
+			<ECState Name="Linkslauf" x="3200" y="3040">
+				<ECAction Algorithm="Set_Rechts_FALSE" Output="Rechts.E1"/>
+				<ECAction Algorithm="Set_Links_TRUE" Output="Links.E1"/>
+				<ECAction Algorithm="Set_State_Linkslauf" Output="EO"/>
+			</ECState>
+			<ECState Name="Linkslauf_Pause" x="1600" y="1600">
+				<ECAction Algorithm="Set_Rechts_FALSE" Output="Rechts.E1"/>
+				<ECAction Algorithm="Set_Links_FALSE" Output="Links.E1"/>
+				<ECAction Algorithm="Set_State_Linkslauf_Pause" Output="EO"/>
+			</ECState>
+			<ECTransition Source="START" Destination="Linkslauf" Condition="EIN.E1[EIN.D1 AND DI_Links.D1]" x="1066.67" y="3233.33"/>
+			<ECTransition Source="START" Destination="Rechtslauf" Condition="EIN.E1[EIN.D1]" x="2446.67" y="700"/>
+			<ECTransition Source="Rechtslauf" Destination="Rechtslauf_Pause" Condition="EIN.E1[NOT EIN.D1]" x="4666.67" y="1213.33"/>
+			<ECTransition Source="Rechtslauf_Pause" Destination="Rechtslauf" Condition="EIN.E1[EIN.D1 AND DI_Rechts.D1]" x="5506.67" y="340"/>
+			<ECTransition Source="Rechtslauf_Pause" Destination="Linkslauf" Condition="EIN.E1[EIN.D1]" x="4753.33" y="2386.67"/>
+			<ECTransition Source="Linkslauf" Destination="Linkslauf_Pause" Condition="EIN.E1[NOT EIN.D1]" x="2793.33" y="2413.33"/>
+			<ECTransition Source="Linkslauf_Pause" Destination="Linkslauf" Condition="EIN.E1[EIN.D1 AND DI_Links.D1]" x="1986.67" y="2800"/>
+			<ECTransition Source="Linkslauf_Pause" Destination="Rechtslauf" Condition="EIN.E1[EIN.D1]" x="2780" y="1193.33"/>
+		</ECC>
+		<Algorithm Name="Set_Rechts_TRUE">
+			<ST><![CDATA[
+Rechts.D1 := BOOL#TRUE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="Set_Rechts_FALSE">
+			<ST><![CDATA[
+Rechts.D1 := BOOL#FALSE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="Set_Links_TRUE">
+			<ST><![CDATA[
+Links.D1 := BOOL#TRUE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="Set_Links_FALSE">
+			<ST><![CDATA[
+Links.D1 := BOOL#FALSE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="Set_State_Rechtslauf">
+			<ST><![CDATA[
+STATE := STATES::Rechtslauf;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="Set_State_Linkslauf">
+			<ST><![CDATA[
+STATE := STATES::Linkslauf;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="Set_State_Rechtslauf_Pause">
+			<ST><![CDATA[
+STATE := STATES::Rechtslauf_Pause;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="Set_State_Linkslauf_Pause">
+			<ST><![CDATA[
+STATE := STATES::Linkslauf_Pause;
+]]></ST>
+		</Algorithm>
+	</BasicFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

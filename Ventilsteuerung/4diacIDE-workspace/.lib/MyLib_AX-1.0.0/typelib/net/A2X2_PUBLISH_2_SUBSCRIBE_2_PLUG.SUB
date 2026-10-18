@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="A2X2_PUBLISH_2_SUBSCRIBE_2_PLUG" Comment="Wie adapter::net::A2X2_CLIENT_2_0_SUBSCRIBE_2_PLUG, aber lokales PUBLISH_2 statt Remote-CLIENT_2_0 (ein Geraet)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 HR Agrartechnik GmbH &#10; &#10;This program and the accompanying materials are made &#10;available under the terms of the Eclipse Public License 2.0 &#10;which is available at https://www.eclipse.org/legal/epl-2.0/ &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-18" Remarks="Kopie von A2X2_CLIENT_2_0_SUBSCRIBE_2_PLUG, CLIENT_2_0 durch PUBLISH_2 ersetzt - als SubAppType, damit FORTE den Typ nicht kennen muss (kein ELF fuer MyLib_AX)">
+	</VersionInfo>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-09-05" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::net">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+			<SubAppEvent Name="CNF" Type="Event" Comment="QO/STATUS updated">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL"/>
+			<VarDeclaration Name="ID_WRITE" Type="WSTRING" Comment="Remote-Zieladresse (ACTION=WRITE) fuer beide BOOLs"/>
+			<VarDeclaration Name="ID_READ" Type="WSTRING" Comment="Lokal ueberwachter Zustandsknoten (ACTION=READ) fuer beide BOOLs"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="TRUE nur wenn WRITE_CLIENT und READ_SUBSCRIBE aktuell beide QO=TRUE melden"/>
+			<VarDeclaration Name="STATUS_WRITE" Type="WSTRING" Comment="STATUS von WRITE_CLIENT"/>
+			<VarDeclaration Name="STATUS_READ" Type="WSTRING" Comment="STATUS von READ_SUBSCRIBE"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="IO" Type="adapter::types::bidirectional::A2X2" Comment="UP/DOWN BOOLs to send (out), UP/DOWN BOOLs received (in)"/>
+		</Plugs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="WRITE_CLIENT" Type="iec61499::net::PUBLISH_2" x="5400" y="-400">
+		</FB>
+		<FB Name="READ_SUBSCRIBE" Type="iec61499::net::SUBSCRIBE_2" x="-2900" y="-300">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_2" x="8400" y="-100">
+		</FB>
+		<FB Name="E_D_FF_RX_UP" Type="iec61499::events::E_D_FF" x="-100" y="-400">
+		</FB>
+		<FB Name="E_D_FF_RX_DOWN" Type="iec61499::events::E_D_FF" x="-200" y="200">
+		</FB>
+		<FB Name="E_D_FF_TX_UP" Type="iec61499::events::E_D_FF" x="3100" y="-500">
+		</FB>
+		<FB Name="E_D_FF_TX_DOWN" Type="iec61499::events::E_D_FF" x="3100" y="100">
+		</FB>
+		<FB Name="IO_CONV" Type="adapter::conversion::bidirectional::A2X2_BOOL_TO_2X" x="1400" y="0">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="READ_SUBSCRIBE.INIT" dx1="1880">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="READ_SUBSCRIBE.INITO" Destination="WRITE_CLIENT.INIT" dx1="80" dx2="493.33" dy="-446.67"/>
+			<Connection Source="WRITE_CLIENT.INITO" Destination="INITO" dx1="1926.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="WRITE_CLIENT.INITO" Destination="AND_QO.REQ" dx1="473.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="WRITE_CLIENT.CNF" Destination="AND_QO.REQ" dx1="473.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="READ_SUBSCRIBE.IND" Destination="AND_QO.REQ" dx1="2913.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AND_QO.CNF" Destination="CNF" dx1="666.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="READ_SUBSCRIBE.IND" Destination="E_D_FF_RX_UP.CLK" dx1="1000"/>
+			<Connection Source="READ_SUBSCRIBE.IND" Destination="E_D_FF_RX_DOWN.CLK" dx1="946.67"/>
+			<Connection Source="E_D_FF_RX_UP.EO" Destination="IO_CONV.REQ_UP" dx1="313.33"/>
+			<Connection Source="E_D_FF_RX_DOWN.EO" Destination="IO_CONV.REQ_DOWN" dx1="366.67"/>
+			<Connection Source="IO_CONV.CNF_UP" Destination="E_D_FF_TX_UP.CLK" dx1="600"/>
+			<Connection Source="IO_CONV.CNF_DOWN" Destination="E_D_FF_TX_DOWN.CLK" dx1="600"/>
+			<Connection Source="E_D_FF_TX_DOWN.EO" Destination="WRITE_CLIENT.REQ" dx1="866.67"/>
+			<Connection Source="E_D_FF_TX_UP.EO" Destination="WRITE_CLIENT.REQ" dx1="866.67"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="QI" Destination="READ_SUBSCRIBE.QI" dx1="706.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="WRITE_CLIENT.QI" dx1="4613.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_READ" Destination="READ_SUBSCRIBE.ID" dx1="673.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_WRITE" Destination="WRITE_CLIENT.ID" dx1="4546.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="WRITE_CLIENT.QO" Destination="AND_QO.IN1" dx1="440">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="READ_SUBSCRIBE.QO" Destination="AND_QO.IN2" dx1="200">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="700">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="WRITE_CLIENT.STATUS" Destination="STATUS_WRITE" dx1="1513.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="READ_SUBSCRIBE.STATUS" Destination="STATUS_READ" dx1="5173.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="READ_SUBSCRIBE.RD_1" Destination="E_D_FF_RX_UP.D" dx1="1000"/>
+			<Connection Source="READ_SUBSCRIBE.RD_2" Destination="E_D_FF_RX_DOWN.D" dx1="946.67"/>
+			<Connection Source="E_D_FF_RX_DOWN.Q" Destination="IO_CONV.OUT_DOWN" dx1="366.67"/>
+			<Connection Source="E_D_FF_RX_UP.Q" Destination="IO_CONV.OUT_UP" dx1="313.33"/>
+			<Connection Source="IO_CONV.IN_DOWN" Destination="E_D_FF_TX_DOWN.D" dx1="600"/>
+			<Connection Source="IO_CONV.IN_UP" Destination="E_D_FF_TX_UP.D" dx1="733.33"/>
+			<Connection Source="E_D_FF_TX_DOWN.Q" Destination="WRITE_CLIENT.SD_2" dx1="866.67"/>
+			<Connection Source="E_D_FF_TX_UP.Q" Destination="WRITE_CLIENT.SD_1" dx1="646.67"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="IO_CONV.A2X2_OUT" Destination="IO"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</SubAppType>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="IG3_Device_Classes" Comment="Industry Group 3 specific device classes (vehicle systems)">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Organization="Demmler Andreas Fahrzeugbau" Version="1.0" Author="Franz Höpfinger" Date="2026-06-30">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::pgn::const">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="DC_NON_SPECIFIC_SYSTEM" Type="BYTE" Comment="Device Class / Vehicle System: Non-specific system" InitialValue="0"/>
+		<VarDeclaration Name="DC_SKID_STEER_LOADER" Type="BYTE" Comment="Device Class / Vehicle System: Skid Steer Loader" InitialValue="1"/>
+		<VarDeclaration Name="DC_ARTICULATED_DUMP_TRUCK" Type="BYTE" Comment="Device Class / Vehicle System: Articulated Dump Truck" InitialValue="2"/>
+		<VarDeclaration Name="DC_BACKHOE" Type="BYTE" Comment="Device Class / Vehicle System: Backhoe" InitialValue="3"/>
+		<VarDeclaration Name="DC_CRAWLER" Type="BYTE" Comment="Device Class / Vehicle System: Crawler" InitialValue="4"/>
+		<VarDeclaration Name="DC_EXCAVATOR" Type="BYTE" Comment="Device Class / Vehicle System: Excavator" InitialValue="5"/>
+		<VarDeclaration Name="DC_FORKLIFT" Type="BYTE" Comment="Device Class / Vehicle System: Forklift" InitialValue="6"/>
+		<VarDeclaration Name="DC_FOUR_WHEEL_DRIVE_LOADER" Type="BYTE" Comment="Device Class / Vehicle System: Four Wheel Drive Loader" InitialValue="7"/>
+		<VarDeclaration Name="DC_GRADER" Type="BYTE" Comment="Device Class / Vehicle System: Grader" InitialValue="8"/>
+		<VarDeclaration Name="DC_MILLING_MACHINE" Type="BYTE" Comment="Device Class / Vehicle System: Milling Machine" InitialValue="9"/>
+		<VarDeclaration Name="DC_RECYCLER_AND_SOIL_STABILIZER" Type="BYTE" Comment="Device Class / Vehicle System: Recycler and Soil Stabilizer" InitialValue="10"/>
+		<VarDeclaration Name="DC_BINDING_AGENT_SPREADER" Type="BYTE" Comment="Device Class / Vehicle System: Binding Agent Spreader" InitialValue="11"/>
+		<VarDeclaration Name="DC_PAVER" Type="BYTE" Comment="Device Class / Vehicle System: Paver" InitialValue="12"/>
+		<VarDeclaration Name="DC_FEEDER" Type="BYTE" Comment="Device Class / Vehicle System: Feeder" InitialValue="13"/>
+		<VarDeclaration Name="DC_SCREENING_PLANT" Type="BYTE" Comment="Device Class / Vehicle System: Screening Plant" InitialValue="14"/>
+		<VarDeclaration Name="DC_STACKER" Type="BYTE" Comment="Device Class / Vehicle System: Stacker" InitialValue="15"/>
+		<VarDeclaration Name="DC_ROLLER" Type="BYTE" Comment="Device Class / Vehicle System: Roller" InitialValue="16"/>
+		<VarDeclaration Name="DC_CRUSHER" Type="BYTE" Comment="Device Class / Vehicle System: Crusher" InitialValue="17"/>
+		<VarDeclaration Name="DC_NOT_AVAILABLE" Type="BYTE" Comment="Device Class / Vehicle System: Not Available" InitialValue="127"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE isobus::pgn::const;
+
+// Industry Group 3 specific device classes (vehicle systems)
+GLOBALCONSTANTS IG3_Device_Classes
+	VAR_GLOBAL CONSTANT
+		DC_NON_SPECIFIC_SYSTEM : BYTE := 0; // Device Class / Vehicle System: Non-specific system
+		DC_SKID_STEER_LOADER : BYTE := 1; // Device Class / Vehicle System: Skid Steer Loader
+		DC_ARTICULATED_DUMP_TRUCK : BYTE := 2; // Device Class / Vehicle System: Articulated Dump Truck
+		DC_BACKHOE : BYTE := 3; // Device Class / Vehicle System: Backhoe
+		DC_CRAWLER : BYTE := 4; // Device Class / Vehicle System: Crawler
+		DC_EXCAVATOR : BYTE := 5; // Device Class / Vehicle System: Excavator
+		DC_FORKLIFT : BYTE := 6; // Device Class / Vehicle System: Forklift
+		DC_FOUR_WHEEL_DRIVE_LOADER : BYTE := 7; // Device Class / Vehicle System: Four Wheel Drive Loader
+		DC_GRADER : BYTE := 8; // Device Class / Vehicle System: Grader
+		DC_MILLING_MACHINE : BYTE := 9; // Device Class / Vehicle System: Milling Machine
+		DC_RECYCLER_AND_SOIL_STABILIZER : BYTE := 10; // Device Class / Vehicle System: Recycler and Soil Stabilizer
+		DC_BINDING_AGENT_SPREADER : BYTE := 11; // Device Class / Vehicle System: Binding Agent Spreader
+		DC_PAVER : BYTE := 12; // Device Class / Vehicle System: Paver
+		DC_FEEDER : BYTE := 13; // Device Class / Vehicle System: Feeder
+		DC_SCREENING_PLANT : BYTE := 14; // Device Class / Vehicle System: Screening Plant
+		DC_STACKER : BYTE := 15; // Device Class / Vehicle System: Stacker
+		DC_ROLLER : BYTE := 16; // Device Class / Vehicle System: Roller
+		DC_CRUSHER : BYTE := 17; // Device Class / Vehicle System: Crusher
+		DC_NOT_AVAILABLE : BYTE := 127; // Device Class / Vehicle System: Not Available
+	END_VAR
+
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</GlobalConstants>

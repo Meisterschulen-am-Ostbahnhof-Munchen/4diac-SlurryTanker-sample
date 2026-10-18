@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="SoftKeyT_AE_AX" Comment="1 SoftKey (Trigger) und GreenWhiteBackground, gebuendelt hinter einem einzigen&#10;AE_AX-Plug (bidirektional: Trigger raus, Zustand rein) - HMI-Teil, ohne jeden&#10;OPC-UA-Bezug, wiederverwendbar">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-04" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+		<Import declaration="isobus::UT::io::Softkey::SoftKeyActivationCode::SK_RELEASED"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID Softkey/Background" InitialValue="ID_NULL"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="OUT" Type="adapter::types::bidirectional::AE_AX" Comment="Trigger (out), Zustand (in)"/>
+		</Plugs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="SoftKey_UP_F1" Type="isobus::UT::io::Softkey::Softkey_IE" x="-7600" y="-400">
+			<Parameter Name="InputEvent" Value="SK_RELEASED"/>
+		</FB>
+		<FB Name="AE_EVENT_TO_E" Type="adapter::conversion::unidirectional::AE_EVENT_TO_E" x="-6100" y="-100">
+		</FB>
+		<FB Name="SPLIT" Type="adapter::events::bidirectional::AE_TO_AE_AX_SPLIT" x="-4500" y="300">
+		</FB>
+		<SubApp Name="GreenWhiteBackground_AX" Type="MyLib::sys::GreenWhiteBackground1_AX" x="-2200" y="700">
+		</SubApp>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_2">
+		</FB>
+		<EventConnections>
+			<Connection Source="SoftKey_UP_F1.IND" Destination="AE_EVENT_TO_E.REQ" dx1="373.33"/>
+			<Connection Source="INIT" Destination="SoftKey_UP_F1.INIT"/>
+			<Connection Source="SoftKey_UP_F1.INITO" Destination="GreenWhiteBackground_AX.INIT"/>
+			<Connection Source="GreenWhiteBackground_AX.INITO" Destination="INITO"/>
+			<Connection Source="GreenWhiteBackground_AX.INITO" Destination="AND_QO.REQ"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="u16ObjId" Destination="SoftKey_UP_F1.u16ObjId" dx1="2373.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId" Destination="GreenWhiteBackground_AX.u16ObjId" dx1="3893.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="SoftKey_UP_F1.QI"/>
+			<Connection Source="QI" Destination="GreenWhiteBackground_AX.QI"/>
+			<Connection Source="SoftKey_UP_F1.QO" Destination="AND_QO.IN1"/>
+			<Connection Source="GreenWhiteBackground_AX.QO" Destination="AND_QO.IN2"/>
+			<Connection Source="AND_QO.OUT" Destination="QO"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="AE_EVENT_TO_E.AE_OUT" Destination="SPLIT.IN" dx1="626.67"/>
+			<Connection Source="SPLIT.OUT" Destination="OUT" dx1="900"/>
+			<Connection Source="SPLIT.AX_OUT" Destination="GreenWhiteBackground_AX.DI1" dx1="340"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

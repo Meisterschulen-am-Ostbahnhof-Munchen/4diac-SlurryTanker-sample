@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="GreenRedBackground3_AX" Comment="Hintergrundfarbe (TRUE -&gt; Grün, FALSE -&gt; Rot) für 3 Objekte (AX-Adapter)">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2022-11-10">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+		<Import declaration="isobus::UT::Q::const::colours::COLOR_RED"/>
+		<Import declaration="isobus::UT::Q::const::colours::COLOR_GREEN"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+			<SubAppEvent Name="CNF_1" Type="Event">
+			</SubAppEvent>
+			<SubAppEvent Name="CNF_2" Type="Event">
+			</SubAppEvent>
+			<SubAppEvent Name="CNF_3" Type="Event">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID Softkey" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObjIdA" Type="UINT" Comment="Object ID AUX" InitialValue="ID_NULL"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully (AND aller Instanzen)"/>
+			<VarDeclaration Name="STATUS_1" Type="STRING" Comment="Service Status"/>
+			<VarDeclaration Name="u8OldColour_1" Type="USINT" Comment="Old value of ID"/>
+			<VarDeclaration Name="result_1" Type="INT" Comment="retval see description"/>
+			<VarDeclaration Name="STATUS_2" Type="STRING" Comment="Service Status"/>
+			<VarDeclaration Name="u8OldColour_2" Type="USINT" Comment="Old value of ID"/>
+			<VarDeclaration Name="result_2" Type="INT" Comment="retval see description"/>
+			<VarDeclaration Name="STATUS_3" Type="STRING" Comment="Service Status"/>
+			<VarDeclaration Name="u8OldColour_3" Type="USINT" Comment="Old value of ID"/>
+			<VarDeclaration Name="result_3" Type="INT" Comment="retval see description"/>
+		</OutputVars>
+		<Sockets>
+			<AdapterDeclaration Name="DI1" Type="adapter::types::unidirectional::AX" Comment="Selector"/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="Q_BackgroundColour_1" Type="isobus::UT::Q::Q_BackgroundColour" x="1000" y="400">
+		</FB>
+		<FB Name="Q_BackgroundColour_2" Type="isobus::UT::Q::Q_BackgroundColour" x="1000" y="1300">
+		</FB>
+		<FB Name="Q_BackgroundColour_3" Type="isobus::UT::Q::Q_BackgroundColourAux" x="1000" y="2200">
+		</FB>
+		<FB Name="AX_SEL" Type="adapter::iec61131::selection::AX_SEL" x="-1000" y="1000">
+			<Parameter Name="IN0" Value="COLOR_RED"/>
+			<Parameter Name="IN1" Value="COLOR_GREEN"/>
+		</FB>
+		<FB Name="E_MERGE_QO" Type="iec61499::events::E_MERGE_4" x="3800" y="900">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_3" x="5000" y="1000">
+		</FB>
+		<EventConnections>
+			<Connection Source="Q_BackgroundColour_1.CNF" Destination="CNF_1" dx1="1080"/>
+			<Connection Source="Q_BackgroundColour_2.CNF" Destination="CNF_2" dx1="1113.33"/>
+			<Connection Source="Q_BackgroundColour_3.CNF" Destination="CNF_3" dx1="1006.67"/>
+			<Connection Source="AX_SEL.CNF" Destination="Q_BackgroundColour_1.REQ" dx1="733.33"/>
+			<Connection Source="AX_SEL.CNF" Destination="Q_BackgroundColour_2.REQ" dx1="633.33"/>
+			<Connection Source="AX_SEL.CNF" Destination="Q_BackgroundColour_3.REQ" dx1="633.33"/>
+			<Connection Source="INIT" Destination="Q_BackgroundColour_1.INIT" dx1="253.33"/>
+			<Connection Source="Q_BackgroundColour_1.INITO" Destination="Q_BackgroundColour_2.INIT" dx1="80" dx2="80" dy="446.67"/>
+			<Connection Source="Q_BackgroundColour_2.INITO" Destination="Q_BackgroundColour_3.INIT" dx1="80" dx2="80" dy="446.67"/>
+			<Connection Source="Q_BackgroundColour_3.INITO" Destination="INITO" dx1="2633.33"/>
+			<Connection Source="Q_BackgroundColour_3.INITO" Destination="E_MERGE_QO.EI1" dx1="880"/>
+			<Connection Source="Q_BackgroundColour_1.CNF" Destination="E_MERGE_QO.EI2" dx1="880"/>
+			<Connection Source="Q_BackgroundColour_2.CNF" Destination="E_MERGE_QO.EI3" dx1="880"/>
+			<Connection Source="Q_BackgroundColour_3.CNF" Destination="E_MERGE_QO.EI4" dx1="880"/>
+			<Connection Source="E_MERGE_QO.EO" Destination="AND_QO.REQ" dx1="246.67"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="u16ObjId" Destination="Q_BackgroundColour_1.u16ObjId" dx1="5200"/>
+			<Connection Source="Q_BackgroundColour_1.s16result" Destination="result_1" dx1="1246.67"/>
+			<Connection Source="Q_BackgroundColour_1.u8OldColour" Destination="u8OldColour_1" dx1="1213.33"/>
+			<Connection Source="Q_BackgroundColour_1.STATUS" Destination="STATUS_1" dx1="1180"/>
+			<Connection Source="AX_SEL.OUT" Destination="Q_BackgroundColour_1.u8Colour" dx1="766.67"/>
+			<Connection Source="u16ObjIdA" Destination="Q_BackgroundColour_2.u16ObjId" dx1="5133.33"/>
+			<Connection Source="Q_BackgroundColour_2.s16result" Destination="result_2" dx1="1346.67"/>
+			<Connection Source="Q_BackgroundColour_2.u8OldColour" Destination="u8OldColour_2" dx1="1313.33"/>
+			<Connection Source="Q_BackgroundColour_2.STATUS" Destination="STATUS_2" dx1="1280"/>
+			<Connection Source="AX_SEL.OUT" Destination="Q_BackgroundColour_2.u8Colour" dx1="666.67"/>
+			<Connection Source="u16ObjIdA" Destination="Q_BackgroundColour_3.u16ObjId" dx1="5133.33"/>
+			<Connection Source="Q_BackgroundColour_3.s16result" Destination="result_3" dx1="1306.67"/>
+			<Connection Source="Q_BackgroundColour_3.u8OldColour" Destination="u8OldColour_3" dx1="1273.33"/>
+			<Connection Source="Q_BackgroundColour_3.STATUS" Destination="STATUS_3" dx1="1240"/>
+			<Connection Source="AX_SEL.OUT" Destination="Q_BackgroundColour_3.u8Colour" dx1="666.67"/>
+			<Connection Source="QI" Destination="Q_BackgroundColour_1.QI" dx1="253.33"/>
+			<Connection Source="QI" Destination="Q_BackgroundColour_2.QI" dx1="253.33"/>
+			<Connection Source="QI" Destination="Q_BackgroundColour_3.QI" dx1="253.33"/>
+			<Connection Source="Q_BackgroundColour_1.QO" Destination="AND_QO.IN1" dx1="880"/>
+			<Connection Source="Q_BackgroundColour_2.QO" Destination="AND_QO.IN2" dx1="880"/>
+			<Connection Source="Q_BackgroundColour_3.QO" Destination="AND_QO.IN3" dx1="880"/>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="1466.67"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="DI1" Destination="AX_SEL.G" dx1="1920"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

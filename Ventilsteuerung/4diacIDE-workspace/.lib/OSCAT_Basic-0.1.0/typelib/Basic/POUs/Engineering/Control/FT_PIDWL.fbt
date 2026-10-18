@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="FT_PIDWL" Comment="PI Controller with Anti-Windup">
+	<Identification Standard="61499-1" Description="version 1.3&#9;13. nov. 2009&#10;programmer &#9;hugo&#10;tested by&#9;&#9;tobias&#10;&#10;FT_PIDWL is a PID controller with dynamic wind_up reset.&#10;The PID controller works according to the fomula Y = KP *(IN + KI * INTEG(e) + DERIV(e) ).&#10;a rst will reset the integrator to 0&#10;lim_h and Lim_l set the possible output range of the internal integrator.&#10;the output flags lim will signal that the output limits are active.">
+	</Identification>
+	<VersionInfo Version="1.0" Author="Franz Höpfinger" Date="2025-12-19" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="OSCAT::Basic::POUs::Engineering::Control">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="EINIT" Type="EInit" Comment="Init Request">
+			</Event>
+			<Event Name="REQ" Type="Event" Comment="Normal Execution Request">
+				<With Var="IN"/>
+				<With Var="KP"/>
+				<With Var="TN"/>
+				<With Var="TV"/>
+				<With Var="LIM_L"/>
+				<With Var="LIM_H"/>
+			</Event>
+			<Event Name="RST" Type="Event" Comment="Reset Integrator">
+				<With Var="IN"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Init Confirmation">
+				<With Var="Y"/>
+				<With Var="LIM"/>
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Execution Confirmation">
+				<With Var="Y"/>
+				<With Var="LIM"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="IN" Type="REAL" Comment="Process Variable Input"/>
+			<VarDeclaration Name="KP" Type="REAL" Comment="Proportional Gain" InitialValue="1.0"/>
+			<VarDeclaration Name="TN" Type="REAL" Comment="Integral Time" InitialValue="1.0"/>
+			<VarDeclaration Name="TV" Type="REAL" Comment="Derivative Time" InitialValue="1.0"/>
+			<VarDeclaration Name="LIM_L" Type="REAL" Comment="Output Limit Low" InitialValue="-1.0E38"/>
+			<VarDeclaration Name="LIM_H" Type="REAL" Comment="Output Limit High" InitialValue="1.0E38"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="Y" Type="REAL" Comment="PID Output"/>
+			<VarDeclaration Name="LIM" Type="BOOL" Comment="Limit reached flag"/>
+		</OutputVars>
+	</InterfaceList>
+	<SimpleFB>
+		<InternalVars>
+			<FB Name="piwl" Type="OSCAT::Basic::POUs::Engineering::Control::FT_PIWL" Comment="Internal PI Controller">
+			</FB>
+			<FB Name="diff" Type="OSCAT::Basic::POUs::Engineering::Control::FT_DERIV" Comment="Internal Differentiator">
+			</FB>
+		</InternalVars>
+		<ECState Name="EINIT">
+			<ECAction Algorithm="EINIT" Output="INITO"/>
+		</ECState>
+		<ECState Name="REQ">
+			<ECAction Algorithm="REQ" Output="CNF"/>
+		</ECState>
+		<ECState Name="RST">
+			<ECAction Algorithm="RST" Output="CNF"/>
+		</ECState>
+		<Algorithm Name="EINIT">
+			<ST><![CDATA[
+(* Init internal instances if necessary, typically empty or reset logic *)
+piwl.EINIT();
+diff.EINIT(); (* Initialize diff input *)
+Y := 0.0;
+LIM := FALSE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="RST">
+			<ST><![CDATA[
+piwl.RST();
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="REQ">
+			<ST><![CDATA[
+(* run PIWL controller first *)
+(* we need to check if TN = 0 and do alternative calls *)
+IF TN = 0.0 THEN
+	piwl.REQ(in := IN * KP, KP := 1.0, KI := 0.0, LIM_L := LIM_L, LIM_H := LIM_H);
+ELSE
+	piwl.REQ(in := IN * KP, KP := 1.0, KI := 1.0 / TN, LIM_L := LIM_L, LIM_H := LIM_H);
+END_IF;
+
+(* run differentiator and add_to_output *)
+diff.REQ(IN := IN, K := KP * TV);
+Y := piwl.Y + diff.out;
+
+(* limit the output *)
+IF Y < LIM_L THEN
+	LIM := TRUE;
+	Y := LIM_L;
+ELSIF Y > LIM_H THEN
+	LIM := TRUE;
+	Y := LIM_H;
+ELSE
+	LIM := FALSE;
+END_IF;
+]]></ST>
+		</Algorithm>
+	</SimpleFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

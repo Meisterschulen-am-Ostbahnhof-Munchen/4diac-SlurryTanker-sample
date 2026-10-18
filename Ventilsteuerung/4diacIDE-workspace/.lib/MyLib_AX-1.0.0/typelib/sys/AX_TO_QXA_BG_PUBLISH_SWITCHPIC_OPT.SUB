@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="AX_TO_QXA_BG_PUBLISH_SWITCHPIC_OPT" Comment="Wie AX_TO_QXA_BG_PUBLISH_SWITCHPIC, aber mit 2 AOption-Sockets:&#10;AOption_Output schaltet nur den physischen Ausgang, AOption_Anzeige&#10;Hintergrund+Publish+ObjectPointer. INIT_CNF je echt zurueck.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-16" Remarks="Kopie von AX_TO_QXA_BG_PUBLISH_SWITCHPIC v1.2 (Franz: 'Die Lib Typen KOPIEREN und die Kopie aendern') - statt QI/INIT 2 AOption-Sockets: AOption_Output (nur physischer Ausgang) und AOption_Anzeige (Hintergrund/Publish/ObjPtr). Grund: bei Igel/Elevator=PVEA blieben SoftKey-Hintergrund, ObjectPointer und State-Publish tot.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO_S"/>
+		<Import declaration="isobus::UT::Q::types::s2x1ObjectIDs"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<InputVars>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID Softkey - traegt die Hintergrundfarbe" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObjIdA" Type="UINT" Comment="Object ID AuxFunction2 (Joystick) - zeigt Hintergrundfarbe am Aux-Handle mit" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="Output" Type="logiBUS::io::DQ::logiBUS_DO_S" Comment="Identify the Output Output_Q1..Q12" InitialValue="logiBUS_DO::Invalid"/>
+			<VarDeclaration Name="ID_STATE_WRITE" Type="WSTRING" Comment="Lokale Publish-Adresse (ACTION=WRITE) fuer den Zustand - wird von Web-Client/Dashboard remote abonniert"/>
+			<VarDeclaration Name="Picture" Type="UINT" Comment="Object ID des ObjectPointer, der den Status-Kaestchen-Inhalt traegt"/>
+			<VarDeclaration Name="pictures" Type="isobus::UT::Q::types::s2x1ObjectIDs" Comment="die beiden Ziel-Object-IDs (up=aus, down=an)" InitialValue="(up := (u16ObjId := ID_NULL), down := (u16ObjId := ID_NULL))"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output Anzeige (AND aus Publish/ObjPtr)"/>
+			<VarDeclaration Name="QO_Output" Type="BOOL" Comment="Quality Output physischer Ausgang"/>
+		</OutputVars>
+		<Sockets>
+			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AX" Comment="Fertiger AX-Zustand - wird auf Ausgang+Hintergrund+Publish UND ObjectPointer-Statusanzeige verteilt"/>
+			<AdapterDeclaration Name="AOption_Output" Type="Option::AOption" Comment="Aktiviert nur den physischen Ausgang (z.B. DEMUX-Zweig Klassisch)"/>
+			<AdapterDeclaration Name="AOption_Anzeige" Type="Option::AOption" Comment="Aktiviert Hintergrund+Publish+ObjectPointer (z.B. AOption_OR_2 aus Klassisch+PVEA)"/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="AX_SPLIT_2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="0" y="0">
+		</FB>
+		<FB Name="AOption_X_TO_EVENT_Output" Type="Option::conversion::AOption_X_TO_EVENT" x="0" y="-1600">
+		</FB>
+		<FB Name="AOption_X_TO_EVENT_Anzeige" Type="Option::conversion::AOption_X_TO_EVENT" x="0" y="1600">
+		</FB>
+		<SubApp Name="Publish" Type="MyLib::sys::AX_TO_QXA_BG_PUBLISH_OPT" x="1700" y="-800">
+		</SubApp>
+		<SubApp Name="ObjPtr" Type="MyLib::sys::AX_SwitchPic_2_1" x="1700" y="800">
+		</SubApp>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_2" x="1700" y="1600">
+		</FB>
+		<DataConnections>
+			<Connection Source="u16ObjId" Destination="Publish.u16ObjId" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjIdA" Destination="Publish.u16ObjIdA" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Output" Destination="Publish.Output" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_STATE_WRITE" Destination="Publish.ID_STATE_WRITE" dx1="1280">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Picture" Destination="ObjPtr.Picture" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="pictures" Destination="ObjPtr.pictures" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AOption_X_TO_EVENT_Anzeige.QI_OUT" Destination="Publish.QI"/>
+			<Connection Source="AOption_X_TO_EVENT_Anzeige.QI_OUT" Destination="ObjPtr.QI"/>
+			<Connection Source="AOption_X_TO_EVENT_Output.QI_OUT" Destination="Publish.QI_Output"/>
+			<Connection Source="Publish.QO" Destination="AND_QO.IN1"/>
+			<Connection Source="ObjPtr.QO" Destination="AND_QO.IN2"/>
+			<Connection Source="AND_QO.OUT" Destination="QO"/>
+			<Connection Source="Publish.QO_Output" Destination="QO_Output"/>
+		</DataConnections>
+		<EventConnections>
+			<Connection Source="AOption_X_TO_EVENT_Anzeige.INIT_REQ" Destination="Publish.INIT"/>
+			<Connection Source="Publish.INITO" Destination="ObjPtr.INIT"/>
+			<Connection Source="ObjPtr.INITO" Destination="AND_QO.REQ"/>
+			<Connection Source="ObjPtr.INITO" Destination="AOption_X_TO_EVENT_Anzeige.INIT_CNF"/>
+			<Connection Source="AOption_X_TO_EVENT_Output.INIT_REQ" Destination="Publish.INIT_Output"/>
+			<Connection Source="Publish.INITO_Output" Destination="AOption_X_TO_EVENT_Output.INIT_CNF"/>
+		</EventConnections>
+		<AdapterConnections>
+			<Connection Source="IN" Destination="AX_SPLIT_2.IN" dx1="600"/>
+			<Connection Source="AX_SPLIT_2.OUT1" Destination="Publish.IN" dx1="600"/>
+			<Connection Source="AX_SPLIT_2.OUT2" Destination="ObjPtr.DI1" dx1="600"/>
+			<Connection Source="AOption_Output" Destination="AOption_X_TO_EVENT_Output.AOption_IN"/>
+			<Connection Source="AOption_Anzeige" Destination="AOption_X_TO_EVENT_Anzeige.AOption_IN"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="CEIL_AR" Comment="AR/AI-Adapter-Wrapper um OSCAT CEIL - bruckt zwischen adapter und OSCAT, ohne&#10;dass eine der beiden Basisbibliotheken von der anderen abhaengt">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-17" Remarks="Initial implementation of CEIL_AR wrapper FB - E_D_FF_ANY_1 als Aenderungsfilter (EO/AI_OUT.E1 nur bei tatsaechlicher Wertaenderung), analog CTRL_PI_AR/FT_DERIV_AR in diesem Projekt">
+	</VersionInfo>
+	<CompilerInfo packageName="OSCAT_adapter::Mathematical">
+	</CompilerInfo>
+	<InterfaceList>
+		<Sockets>
+			<AdapterDeclaration Name="AR_IN" Type="adapter::types::unidirectional::AR" Comment="Eingangssignal (REAL)" x="-700" y="100"/>
+		</Sockets>
+		<Plugs>
+			<AdapterDeclaration Name="AI_OUT" Type="adapter::types::unidirectional::AI" Comment="Kleinste ganze Zahl &gt;= X (INT)" x="5300" y="200"/>
+		</Plugs>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="CEIL" Type="OSCAT::Basic::POUs::Mathematical::CEIL" x="800" y="0">
+		</FB>
+		<FB Name="E_D_FF_ANY_1" Type="iec61499::events::E_D_FF_ANY" x="2400" y="200">
+		</FB>
+		<EventConnections>
+			<Connection Source="AR_IN.E1" Destination="CEIL.REQ" dx1="626.67"/>
+			<Connection Source="CEIL.CNF" Destination="E_D_FF_ANY_1.CLK" dx1="453.33"/>
+			<Connection Source="E_D_FF_ANY_1.EO" Destination="AI_OUT.E1" dx1="906.67"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="AR_IN.D1" Destination="CEIL.X" dx1="540"/>
+			<Connection Source="CEIL." Destination="E_D_FF_ANY_1.D" dx1="453.33"/>
+			<Connection Source="E_D_FF_ANY_1.Q" Destination="AI_OUT.D1" dx1="940"/>
+		</DataConnections>
+	</FBNetwork>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>CEIL_AR</h1>
+
+<h2>🇩🇪 Deutsch</h2>
+
+<p>Adapter-Wrapper um <code>OSCAT::Basic::POUs::Mathematical::CEIL</code> (kleinste ganze Zahl &gt;= <code>X</code>).</p>
+
+<h3>Reine Adapter-Grenze</h3>
+
+<ul>
+	<li><strong>AR_IN</strong> (Socket, <code>AR</code>): Eingangssignal (REAL)</li>
+	<li><strong>AI_OUT</strong> (Plug, <code>AI</code>): Ergebnis (INT)</li>
+</ul>
+
+<p><code>E_D_FF_ANY_1</code> (Standardbibliothek <code>events-3.0.0</code>) filtert Aenderungen: <code>AI_OUT.E1</code> feuert nur, wenn sich das Ergebnis seit dem letzten Aufruf tatsaechlich geaendert hat - gleiches Muster wie bei den bestehenden <code>FT_DERIV_AR</code>/<code>CTRL_PI_AR</code>-Wrappern in diesem Projekt.</p>
+
+<h3>Warum ein eigener Wrapper?</h3>
+
+<p><code>CEIL</code> ist eine reine OSCAT-<code>Function</code> ohne Adapter-Schnittstelle. <code>adapter</code> soll nicht von <code>OSCAT</code> abhaengen (und umgekehrt) - die Bruecke liegt daher in diesem dritten Bibliotheksprojekt (<code>OSCAT_adapter</code>), das von beiden abhaengt.</p>
+
+<h2>🇬🇧 English</h2>
+
+<p>Adapter wrapper around <code>OSCAT::Basic::POUs::Mathematical::CEIL</code> (smallest integer &gt;= <code>X</code>).</p>
+
+<h3>Pure adapter boundary</h3>
+
+<ul>
+	<li><strong>AR_IN</strong> (socket, <code>AR</code>): input signal (REAL)</li>
+	<li><strong>AI_OUT</strong> (plug, <code>AI</code>): result (INT)</li>
+</ul>
+
+<p><code>E_D_FF_ANY_1</code> (standard library <code>events-3.0.0</code>) filters changes: <code>AI_OUT.E1</code> only fires when the result actually changed since the last call - same pattern as the existing <code>FT_DERIV_AR</code>/<code>CTRL_PI_AR</code> wrappers in this project.</p>
+]]></Attribute>
+</FBType>

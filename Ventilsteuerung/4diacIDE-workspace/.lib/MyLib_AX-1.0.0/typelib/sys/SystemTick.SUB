@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="SystemTick" Comment="Freilaufender Tick-Zaehler (0..99, alle 200ms +1) als ADI-Ausgang -&#10;Lebenszeichen/Heartbeat">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-08-07" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<Plugs>
+			<AdapterDeclaration Name="ADI_OUT" Type="adapter::types::unidirectional::ADI" Comment="Aktueller Tick-Zaehlerstand (0..99), aendert sich alle 200ms"/>
+		</Plugs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="F_MOD" Type="iec61131::arithmetic::F_MOD" x="4200" y="100">
+			<Parameter Name="IN2" Value="DINT#100"/>
+		</FB>
+		<FB Name="ADD_2" Type="iec61131::arithmetic::ADD_2" x="2000" y="100">
+			<Parameter Name="IN1" Value="DINT#1"/>
+		</FB>
+		<FB Name="E_CYCLE" Type="iec61499::events::E_CYCLE" x="900" y="100">
+			<Parameter Name="DT" Value="T#200ms"/>
+		</FB>
+		<FB Name="INIT" Type="iec61131::booleanOperators::INIT" x="0" y="0">
+		</FB>
+		<FB Name="F_MOVE" Type="iec61131::selection::F_MOVE" x="3000" y="100">
+			<Attribute Name="DataType" Value="DINT"/>
+		</FB>
+		<FB Name="ADI_DINT_TO_DI" Type="adapter::conversion::unidirectional::ADI_DINT_TO_DI" x="5000" y="100">
+		</FB>
+		<EventConnections>
+			<Connection Source="F_MOVE.CNF" Destination="F_MOD.REQ"/>
+			<Connection Source="F_MOD.CNF" Destination="ADI_DINT_TO_DI.REQ"/>
+			<Connection Source="E_CYCLE.EO" Destination="ADD_2.REQ"/>
+			<Connection Source="ADD_2.CNF" Destination="F_MOVE.REQ"/>
+			<Connection Source="INIT.CNF" Destination="E_CYCLE.START" dx1="260"/>
+			<Connection Source="INIT.INITO" Destination="INIT.REQ" dx1="80" dx2="80" dy="53.33"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="F_MOVE.OUT" Destination="F_MOD.IN1"/>
+			<Connection Source="F_MOD.OUT" Destination="ADI_DINT_TO_DI.OUT"/>
+			<Connection Source="F_MOVE.OUT" Destination="ADD_2.IN2" dx1="80" dx2="80" dy="206.67"/>
+			<Connection Source="ADD_2.OUT" Destination="F_MOVE.IN"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="ADI_DINT_TO_DI.ADI_OUT" Destination="ADI_OUT" dx1="1160"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>Freilaufender Tick-Zähler (Heartbeat)</h1>
+
+<p>Zählt ohne externen Trigger alle 200ms um 1 hoch und läuft bei 100 wieder auf 0 zurück (Zyklus
+= 20s). Der aktuelle Zählerstand wird als <code>ADI_OUT</code> (1 Event + 1 DINT) bereitgestellt.
+Dient als Lebenszeichen: solange sich der Wert weiter ändert, läuft die Steuerung, die ihn erzeugt,
+noch - egal ob er lokal auf dem VT angezeigt (<code>SystemTickSender_ISO</code>) oder per OPC-UA an
+ein anderes Modul verteilt wird (<code>SystemTickSender_OPC</code>).</p>
+
+<h2>Funktionsbeschreibung</h2>
+
+<ul>
+	<li><code>INIT</code> startet einmalig <code>E_CYCLE</code> (Periode 200ms über
+	<code>DT</code>).</li>
+	<li>Jeder Zyklus erhöht den intern über <code>F_MOVE</code>/<code>ADD_2</code> gehaltenen Zähler
+	um 1 (<code>IN1=DINT#1</code>).</li>
+	<li><code>F_MOD</code> (Modulo 100) begrenzt den sichtbaren Wert auf den Bereich 0..99.</li>
+	<li><code>ADI_DINT_TO_DI</code> verpackt den DINT-Wert in das <code>ADI</code>-Adapterformat für
+	den Plug <code>ADI_OUT</code>.</li>
+</ul>
+]]></Attribute>
+</SubAppType>

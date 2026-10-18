@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="ObjectPointer_Swap_AX" Comment="Schaltet einen ObjectPointer (CPointer) bei DI1=TRUE auf u16ObjId_Show um, bei&#10;FALSE auf ID_NULL (nichts sichtbar). ISO 11783-6 F.22 'Change Numeric Value'&#10;(Q_NumericValue) - ObjectPointer liegt explizit in dessen gueltigem&#10;Object-ID-Bereich (27000-27999). NICHT F.38 'Change Attribute' (Q_Attribute)&#10;verwenden - AID_OP_PTR.VALUE ist dort read-only. Muster:&#10;ms-train/4diac_training1&#10;Ventilsteuerung/4diacIDE-workspace/test_B/Uebungen/Uebung_015.SUB (Franz).">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-29" Remarks="initial implementation, analog GreenWhiteBackground1_AX (AX_SEL-Wrapper um eine Q_-FB) - Franz-Korrektur: Q_Attribute/F.38 verworfen, Q_NumericValue/F.22 ist der richtige Weg fuer ObjectPointer.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+			<SubAppEvent Name="CNF" Type="Event" Comment="Execution Confirmation">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="u16ObjId_Pointer" Type="UINT" Comment="Object ID des ObjectPointer (CPointer), dessen Ziel geschaltet wird" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObjId_Show" Type="UINT" Comment="Object ID, die bei DI1=TRUE unter dem Pointer angezeigt wird" InitialValue="ID_NULL"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+			<VarDeclaration Name="STATUS_1" Type="STRING" Comment="Service Status"/>
+			<VarDeclaration Name="u32OldValue_1" Type="UDINT" Comment="Old value of ID"/>
+			<VarDeclaration Name="result_1" Type="INT" Comment="retval see description"/>
+		</OutputVars>
+		<Sockets>
+			<AdapterDeclaration Name="DI1" Type="adapter::types::unidirectional::AX" Comment="Selector"/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue" x="-3106.67" y="706.67">
+		</FB>
+		<FB Name="AX_SEL" Type="adapter::iec61131::selection::AX_SEL" x="-4900" y="2000">
+			<Parameter Name="IN0" Value="ID_NULL"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="Q_NumericValue.CNF" Destination="CNF" dx1="960"/>
+			<Connection Source="AX_SEL.CNF" Destination="Q_NumericValue.REQ" dx1="213.33"/>
+			<Connection Source="INIT" Destination="Q_NumericValue.INIT"/>
+			<Connection Source="Q_NumericValue.INITO" Destination="INITO"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="u16ObjId_Pointer" Destination="Q_NumericValue.u16ObjId" dx1="3953.33"/>
+			<Connection Source="u16ObjId_Show" Destination="AX_SEL.IN1" dx1="1400"/>
+			<Connection Source="Q_NumericValue.u32OldValue" Destination="u32OldValue_1" dx1="926.67"/>
+			<Connection Source="Q_NumericValue.STATUS" Destination="STATUS_1" dx1="946.67"/>
+			<Connection Source="Q_NumericValue.s16result" Destination="result_1" dx1="926.67"/>
+			<Connection Source="AX_SEL.OUT" Destination="Q_NumericValue.u32NewValue" dx1="406.67"/>
+			<Connection Source="QI" Destination="Q_NumericValue.QI"/>
+			<Connection Source="Q_NumericValue.QO" Destination="QO"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="DI1" Destination="AX_SEL.G" dx1="660"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

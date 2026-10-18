@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataType Name="ST08X" Comment="A Structure with 8 BOOLS">
+	<Identification>
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2024-02-21">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::utils::conversion::types">
+	</CompilerInfo>
+	<StructuredType>
+		<VarDeclaration Name="X_00" Type="BOOL" Comment="BIT 00"/>
+		<VarDeclaration Name="X_01" Type="BOOL" Comment="BIT 01"/>
+		<VarDeclaration Name="X_02" Type="BOOL" Comment="BIT 02"/>
+		<VarDeclaration Name="X_03" Type="BOOL" Comment="BIT 03"/>
+		<VarDeclaration Name="X_04" Type="BOOL" Comment="BIT 04"/>
+		<VarDeclaration Name="X_05" Type="BOOL" Comment="BIT 05"/>
+		<VarDeclaration Name="X_06" Type="BOOL" Comment="BIT 06"/>
+		<VarDeclaration Name="X_07" Type="BOOL" Comment="BIT 07"/>
+	</StructuredType>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</DataType>

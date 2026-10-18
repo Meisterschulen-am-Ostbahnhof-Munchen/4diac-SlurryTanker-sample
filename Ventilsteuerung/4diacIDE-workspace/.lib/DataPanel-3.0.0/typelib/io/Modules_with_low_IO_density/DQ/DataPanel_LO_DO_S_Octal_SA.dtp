@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataType Name="DataPanel_LO_DO_S_Octal_SA" Comment="DataPanel Modules with low IO density DO Struct + Source Address">
+	<Identification>
+	</Identification>
+	<VersionInfo Version="1.1" Author="franz" Date="2026-05-28">
+	</VersionInfo>
+	<CompilerInfo packageName="DataPanel::io::LO::DQ">
+		<Import declaration="DataPanel::io::LO::DQ::DataPanel_LO_DO::InvalidL"/>
+		<Import declaration="DataPanel::io::LO::const::LO::LO_00"/>
+	</CompilerInfo>
+	<StructuredType>
+		<VarDeclaration Name="u8SAMember" Type="USINT" Comment="Node SA 217..224" InitialValue="LO_00"/>
+		<VarDeclaration Name="Port1" Type="DataPanel::io::LO::DQ::DataPanel_LO_DO_S" Comment="Identify the Port 1A..4B" InitialValue="InvalidL"/>
+		<VarDeclaration Name="Port2" Type="DataPanel::io::LO::DQ::DataPanel_LO_DO_S" Comment="Identify the Port 1A..4B" InitialValue="InvalidL"/>
+		<VarDeclaration Name="Port3" Type="DataPanel::io::LO::DQ::DataPanel_LO_DO_S" Comment="Identify the Port 1A..4B" InitialValue="InvalidL"/>
+		<VarDeclaration Name="Port4" Type="DataPanel::io::LO::DQ::DataPanel_LO_DO_S" Comment="Identify the Port 1A..4B" InitialValue="InvalidL"/>
+		<VarDeclaration Name="Port5" Type="DataPanel::io::LO::DQ::DataPanel_LO_DO_S" Comment="Identify the Port 1A..4B" InitialValue="InvalidL"/>
+		<VarDeclaration Name="Port6" Type="DataPanel::io::LO::DQ::DataPanel_LO_DO_S" Comment="Identify the Port 1A..4B" InitialValue="InvalidL"/>
+		<VarDeclaration Name="Port7" Type="DataPanel::io::LO::DQ::DataPanel_LO_DO_S" Comment="Identify the Port 1A..4B" InitialValue="InvalidL"/>
+		<VarDeclaration Name="Port8" Type="DataPanel::io::LO::DQ::DataPanel_LO_DO_S" Comment="Identify the Port 1A..4B" InitialValue="InvalidL"/>
+	</StructuredType>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</DataType>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Select_EnableOk_a" Comment="Leitet aus 2 Bools (bEnable + bOk) einen von 3 Werten ab: valDisabled&#10;(bEnable=FALSE) / valOk (bEnable=TRUE, bOk=TRUE) / valFault (bEnable=TRUE,&#10;bOk=FALSE). Generischer 2-stufiger F_SEL - die 3 Werte sind Parameter, nicht auf&#10;Farben beschraenkt.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-08-31" Remarks="Extrahiert aus Q_BackgroundColour_EnableOk - die reine 2-Bool-zu-1-von-3-Werten-Logik, entkoppelt von der VT-Hintergrundfarben-Anwendung">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="REQ" Type="Event" Comment="Neu auswerten - bEnable und bOk werden zusammen mitgegeben">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="CNF" Type="Event" Comment="Wert berechnet">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="bEnable" Type="BOOL" Comment="Aktiviert"/>
+			<VarDeclaration Name="bOk" Type="BOOL" Comment="OK-Zustand (nur relevant wenn bEnable=TRUE)"/>
+			<VarDeclaration Name="valDisabled" Type="USINT" Comment="Ausgabewert wenn bEnable=FALSE - einmalig bei Instanziierung per Parameter gesetzt"/>
+			<VarDeclaration Name="valOk" Type="USINT" Comment="Ausgabewert wenn bEnable=TRUE und bOk=TRUE - einmalig bei Instanziierung per Parameter gesetzt"/>
+			<VarDeclaration Name="valFault" Type="USINT" Comment="Ausgabewert wenn bEnable=TRUE und bOk=FALSE - einmalig bei Instanziierung per Parameter gesetzt"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="value" Type="USINT" Comment="Ausgewaehlter Wert"/>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="F_SEL_OK_FAULT" Type="iec61131::selection::F_SEL" x="-200" y="700">
+		</FB>
+		<FB Name="F_MOVE" Type="iec61131::selection::F_MOVE" x="800" y="700">
+			<Attribute Name="DataType" Value="USINT"/>
+		</FB>
+		<FB Name="F_SEL_ENABLE" Type="iec61131::selection::F_SEL" x="2400" y="0">
+		</FB>
+		<EventConnections>
+			<Connection Source="REQ" Destination="F_SEL_OK_FAULT.REQ" dx1="720"/>
+			<Connection Source="F_SEL_OK_FAULT.CNF" Destination="F_MOVE.REQ"/>
+			<Connection Source="F_MOVE.CNF" Destination="F_SEL_ENABLE.REQ" dx1="373.33"/>
+			<Connection Source="F_SEL_ENABLE.CNF" Destination="CNF" dx1="400"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="bOk" Destination="F_SEL_OK_FAULT.G" dx1="400"/>
+			<Connection Source="valFault" Destination="F_SEL_OK_FAULT.IN0" dx1="400"/>
+			<Connection Source="valOk" Destination="F_SEL_OK_FAULT.IN1" dx1="400"/>
+			<Connection Source="F_SEL_OK_FAULT.OUT" Destination="F_MOVE.IN"/>
+			<Connection Source="bEnable" Destination="F_SEL_ENABLE.G" dx1="2000"/>
+			<Connection Source="valDisabled" Destination="F_SEL_ENABLE.IN0" dx1="1600"/>
+			<Connection Source="F_MOVE.OUT" Destination="F_SEL_ENABLE.IN1" dx1="473.33"/>
+			<Connection Source="F_SEL_ENABLE.OUT" Destination="value" dx1="3600"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

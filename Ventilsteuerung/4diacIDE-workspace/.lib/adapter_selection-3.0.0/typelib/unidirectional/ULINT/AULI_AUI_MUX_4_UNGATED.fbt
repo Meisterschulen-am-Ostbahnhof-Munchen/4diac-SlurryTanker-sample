@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="AULI_AUI_MUX_4_UNGATED" Comment="Wie AULI_AUI_MUX_4, aber OHNE Aenderungserkennung - reicht JEDES neu berechnete&#10;Ergebnis bedingungslos weiter (fuer Verbraucher, die eine periodische Kadenz&#10;unabhaengig von Wertaenderung brauchen, z.B. Ableitungs-/Frequenzberechnungen).&#10;(AULI multiplexor (generic FB))">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-08-31">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::selection::unidirectional">
+	</CompilerInfo>
+	<InterfaceList>
+		<Plugs>
+			<AdapterDeclaration Name="OUT" Type="adapter::types::unidirectional::AULI" Comment="IN1 for K = 0, IN2 for K = 1, IN3 for K = 2, IN4 for K = 3"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="K" Type="adapter::types::unidirectional::AUI" Comment="index"/>
+			<AdapterDeclaration Name="IN1" Type="adapter::types::unidirectional::AULI" Comment="Input value 1 (selected when K = 0)"/>
+			<AdapterDeclaration Name="IN2" Type="adapter::types::unidirectional::AULI" Comment="Input value 2 (selected when K = 1)"/>
+			<AdapterDeclaration Name="IN3" Type="adapter::types::unidirectional::AULI" Comment="Input value 3 (selected when K = 2)"/>
+			<AdapterDeclaration Name="IN4" Type="adapter::types::unidirectional::AULI" Comment="Input value 4 (selected when K = 3)"/>
+		</Sockets>
+	</InterfaceList>
+	<Attribute Name="eclipse4diac::core::GenericClassName" Value="'GEN_AULI_AUI_MUX'"/>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

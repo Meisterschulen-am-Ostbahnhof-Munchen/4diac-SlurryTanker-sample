@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="ASR2_DELAY_SUB" Comment="ASR2_DELAY mit fest verdrahteten Verzoegerungszeiten (Franz: 'da jetzt Zeiten&#10;einbauen, einfach Fix mal. 2s oder so. Rein wie rauswaerts') - alle 4 Zeiten&#10;(SET/RESET x Vorwaerts/Rueckwaerts) fest auf T#2s, ueber initval_ATM&#10;initialisiert. STOP_* pass-through, optional von aussen verdrahtbar.">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-17" Remarks="Zeiten ergaenzt (Franz: '2s oder so, rein wie rauswaerts'): 4x initval_ATM (T#2s) auf PT_SET_FWD/PT_SET_BWD/PT_RESET_FWD/PT_RESET_BWD verdrahtet - Platzhalter-Fixwert, kein funktionale Vorgabe, spaeter parametrierbar falls noetig. STOP_SET_FWD/STOP_SET_BWD/STOP_RESET_FWD/STOP_RESET_BWD als Pass-through-Sockets ergaenzt (analog CHAIN_OUT), unverdrahtet lassen wenn nicht gebraucht.">
+	</VersionInfo>
+	<VersionInfo Version="1.0" Author="franz" Date="2026-09-17">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<Plugs>
+			<AdapterDeclaration Name="OUT" Type="adapter::types::bidirectional::ASR2"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="CHAIN_OUT" Type="adapter::types::bidirectional::ASR2"/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="ASR2_DELAY" Type="adapter::events::bidirectional::ASR2_DELAY" x="-100" y="200">
+		</FB>
+		<FB Name="initval_PT_SET_FWD" Type="adapter::types::unidirectional::ATM::initval::initval_ATM" x="-2100" y="600">
+			<Parameter Name="INIT_VAL" Value="T#500ms"/>
+		</FB>
+		<FB Name="initval_PT_SET_BWD" Type="adapter::types::unidirectional::ATM::initval::initval_ATM" x="-2100" y="1200">
+			<Parameter Name="INIT_VAL" Value="T#500ms"/>
+		</FB>
+		<FB Name="initval_PT_RESET_FWD" Type="adapter::types::unidirectional::ATM::initval::initval_ATM" x="-1900" y="2000">
+			<Parameter Name="INIT_VAL" Value="T#500ms"/>
+		</FB>
+		<FB Name="initval_PT_RESET_BWD" Type="adapter::types::unidirectional::ATM::initval::initval_ATM" x="-1600" y="2600">
+			<Parameter Name="INIT_VAL" Value="T#500ms"/>
+		</FB>
+		<AdapterConnections>
+			<Connection Source="CHAIN_OUT" Destination="ASR2_DELAY.IN" dx1="4386.67"/>
+			<Connection Source="ASR2_DELAY.OUT" Destination="OUT" dx1="5353.33"/>
+			<Connection Source="initval_PT_SET_FWD.OUT" Destination="ASR2_DELAY.PT_SET_FWD" dx1="200"/>
+			<Connection Source="initval_PT_SET_BWD.OUT" Destination="ASR2_DELAY.PT_SET_BWD" dx1="346.67"/>
+			<Connection Source="initval_PT_RESET_FWD.OUT" Destination="ASR2_DELAY.PT_RESET_FWD" dx1="273.33"/>
+			<Connection Source="initval_PT_RESET_BWD.OUT" Destination="ASR2_DELAY.PT_RESET_BWD" dx1="200"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

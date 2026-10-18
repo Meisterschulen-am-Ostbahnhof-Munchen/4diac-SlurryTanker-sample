@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="ASRT_MERGE_4" Comment="MERGE 4 ASRT into 1 ASRT (generic FB)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-06">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::events::unidirectional">
+		<Import declaration="eclipse4diac::core::GenericClassName"/>
+	</CompilerInfo>
+	<InterfaceList>
+		<Plugs>
+			<AdapterDeclaration Name="OUT" Type="adapter::types::unidirectional::ASRT"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="IN1" Type="adapter::types::unidirectional::ASRT"/>
+			<AdapterDeclaration Name="IN2" Type="adapter::types::unidirectional::ASRT"/>
+			<AdapterDeclaration Name="IN3" Type="adapter::types::unidirectional::ASRT"/>
+			<AdapterDeclaration Name="IN4" Type="adapter::types::unidirectional::ASRT"/>
+		</Sockets>
+	</InterfaceList>
+	<Attribute Name="eclipse4diac::core::GenericClassName" Value="'GEN_ASRT_MERGE'"/>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

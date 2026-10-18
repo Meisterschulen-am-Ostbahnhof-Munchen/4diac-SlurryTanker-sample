@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="SPLIT_AL_INTO_AD" Comment="this Function splits the 2 AD (DWORD) adapters from a AL (LWORD)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof&#10;&#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-05-16" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::splitting">
+	</CompilerInfo>
+	<InterfaceList>
+		<Plugs>
+			<AdapterDeclaration Name="DWORD_00" Type="adapter::types::unidirectional::AD" Comment="DWord 0" x="700" y="0"/>
+			<AdapterDeclaration Name="DWORD_01" Type="adapter::types::unidirectional::AD" Comment="DWord 1" x="700" y="1000"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AL" Comment="LWORD Input" x="-4000" y="1700"/>
+		</Sockets>
+	</InterfaceList>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

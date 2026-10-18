@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="TimeTicker" Comment="Composite FB wrapping other FBs">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2026-08-15">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::events::TimeOut">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Initialization Request">
+				<With Var="TC"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Reports the current Q/ET on every tick">
+				<With Var="Q"/>
+				<With Var="ET"/>
+			</Event>
+			<Event Name="STARTO" Type="Event">
+				<With Var="PT"/>
+			</Event>
+			<Event Name="STOPO" Type="Event">
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="TC" Type="TIME" Comment="cycleTime" InitialValue="T#200ms"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="Q" Type="BOOL" Comment="Output"/>
+			<VarDeclaration Name="PT" Type="TIME" Comment="Process time"/>
+			<VarDeclaration Name="ET" Type="TIME" Comment="Elapsed time"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="TimeTickSocket" Type="adapter::events::TimeOut::ATimeTick" x="0" y="0"/>
+		</Plugs>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="E_CYCLE" Type="iec61499::events::E_CYCLE" x="-1100" y="0">
+		</FB>
+		<EventConnections>
+			<Connection Source="E_CYCLE.EO" Destination="TimeTickSocket.REQ"/>
+			<Connection Source="INIT" Destination="INITO"/>
+			<Connection Source="TimeTickSocket.CNF" Destination="CNF" dx1="2826.67"/>
+			<Connection Source="TimeTickSocket.STARTO_IN" Destination="STARTO" dx1="2880"/>
+			<Connection Source="TimeTickSocket.STOPO_IN" Destination="STOPO" dx1="2960"/>
+			<Connection Source="TimeTickSocket.STARTO_IN" Destination="E_CYCLE.START" dx1="80" dx2="80" dy="-500"/>
+			<Connection Source="TimeTickSocket.STOPO_IN" Destination="E_CYCLE.STOP" dx1="213.33" dx2="213.33" dy="-706.67"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="TC" Destination="E_CYCLE.DT" dx1="653.33"/>
+			<Connection Source="TimeTickSocket.Q" Destination="Q" dx1="3060"/>
+			<Connection Source="TimeTickSocket.ET" Destination="ET" dx1="3340"/>
+			<Connection Source="TimeTickSocket.PT" Destination="PT" dx1="3206.67"/>
+		</DataConnections>
+	</FBNetwork>
+</FBType>

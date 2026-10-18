@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="SRT_RPC_FROM_Remote_QXA_OPC_LOC" Comment="Wie SRT_RPC_FROM_Remote_QXA_OPC, aber Zustand lokal per PUBLISH (ein Geraet, Methoden per localhost)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-18" Remarks="Lokale Variante von SRT_RPC_FROM_Remote_QXA_OPC: lokales PUBLISH statt Remote-WRITE (CLIENT)">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-09" Remarks="Fix: alle 3 SERVER_0.RSP waren nie verdrahtet - blockierten je bis zu 4s den OPC-UA-Server-Thread (haelt open62541s globalen serviceMutex), verzoegerte dadurch JEDE OPC-UA-Statusmeldung projektweit. IND-&gt;RSP direkt verdrahtet. Siehe OPC_UA_VERNETZUNG.md Punkt 12.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-02" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO_S"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="Output" Type="logiBUS::io::DQ::logiBUS_DO_S" Comment="Identify the Output Output_Q1..Q8" InitialValue="logiBUS_DO::Invalid"/>
+			<VarDeclaration Name="ID_SET_METHOD" Type="WSTRING" Comment="Lokale Methodenadresse (ACTION=CREATE_METHOD) fuer den Set-Methodenaufruf, wird von Geraet A per CALL_METHOD aufgerufen"/>
+			<VarDeclaration Name="ID_RESET_METHOD" Type="WSTRING" Comment="Lokale Methodenadresse (ACTION=CREATE_METHOD) fuer den Reset-Methodenaufruf, wird von Geraet A per CALL_METHOD aufgerufen"/>
+			<VarDeclaration Name="ID_TOGGLE_METHOD" Type="WSTRING" Comment="Lokale Methodenadresse (ACTION=CREATE_METHOD) fuer den Toggle-Methodenaufruf, wird von Geraet A per CALL_METHOD aufgerufen"/>
+			<VarDeclaration Name="ID_STATE_WRITE" Type="WSTRING" Comment="Lokale Knotenadresse (BOOL, ACTION=WRITE) fuer den Zustand"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="TRIGGER_SET_SERVER" Type="iec61499::net::SERVER_0" x="-6600" y="-1200">
+		</FB>
+		<FB Name="TRIGGER_RESET_SERVER" Type="iec61499::net::SERVER_0" x="-6600" y="-500">
+		</FB>
+		<FB Name="TRIGGER_TOGGLE_SERVER" Type="iec61499::net::SERVER_0" x="-6700" y="200">
+		</FB>
+		<FB Name="AX_T_FF_SR" Type="adapter::events::unidirectional::AX_T_FF_SR" x="-4600" y="-500">
+		</FB>
+		<FB Name="AX_SPLIT_2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="-3300" y="-200">
+		</FB>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="-1900" y="-1100">
+		</FB>
+		<FB Name="STATE_PUBLISH" Type="adapter::net::AX_PUBLISH_1" x="-1900" y="100">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_5">
+		</FB>
+		<EventConnections>
+			<Connection Source="TRIGGER_SET_SERVER.IND" Destination="AX_T_FF_SR.S" dx1="373.33"/>
+			<Connection Source="TRIGGER_SET_SERVER.IND" Destination="TRIGGER_SET_SERVER.RSP"/>
+			<Connection Source="TRIGGER_RESET_SERVER.IND" Destination="AX_T_FF_SR.R"/>
+			<Connection Source="TRIGGER_RESET_SERVER.IND" Destination="TRIGGER_RESET_SERVER.RSP"/>
+			<Connection Source="TRIGGER_TOGGLE_SERVER.IND" Destination="AX_T_FF_SR.CLK" dx1="373.33"/>
+			<Connection Source="TRIGGER_TOGGLE_SERVER.IND" Destination="TRIGGER_TOGGLE_SERVER.RSP"/>
+			<Connection Source="INIT" Destination="TRIGGER_SET_SERVER.INIT"/>
+			<Connection Source="TRIGGER_SET_SERVER.INITO" Destination="TRIGGER_RESET_SERVER.INIT"/>
+			<Connection Source="TRIGGER_RESET_SERVER.INITO" Destination="TRIGGER_TOGGLE_SERVER.INIT"/>
+			<Connection Source="TRIGGER_TOGGLE_SERVER.INITO" Destination="DigitalOutput_Q1.INIT"/>
+			<Connection Source="DigitalOutput_Q1.INITO" Destination="STATE_PUBLISH.INIT"/>
+			<Connection Source="STATE_PUBLISH.INITO" Destination="INITO"/>
+			<Connection Source="STATE_PUBLISH.INITO" Destination="AND_QO.REQ"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="Output" Destination="DigitalOutput_Q1.Output" dx1="4046.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_SET_METHOD" Destination="TRIGGER_SET_SERVER.ID" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_RESET_METHOD" Destination="TRIGGER_RESET_SERVER.ID" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_TOGGLE_METHOD" Destination="TRIGGER_TOGGLE_SERVER.ID" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_STATE_WRITE" Destination="STATE_PUBLISH.ID" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="TRIGGER_SET_SERVER.QI"/>
+			<Connection Source="QI" Destination="TRIGGER_RESET_SERVER.QI"/>
+			<Connection Source="QI" Destination="TRIGGER_TOGGLE_SERVER.QI"/>
+			<Connection Source="QI" Destination="DigitalOutput_Q1.QI"/>
+			<Connection Source="QI" Destination="STATE_PUBLISH.QI"/>
+			<Connection Source="TRIGGER_SET_SERVER.QO" Destination="AND_QO.IN1"/>
+			<Connection Source="TRIGGER_RESET_SERVER.QO" Destination="AND_QO.IN2"/>
+			<Connection Source="TRIGGER_TOGGLE_SERVER.QO" Destination="AND_QO.IN3"/>
+			<Connection Source="DigitalOutput_Q1.QO" Destination="AND_QO.IN4"/>
+			<Connection Source="STATE_PUBLISH.QO" Destination="AND_QO.IN5"/>
+			<Connection Source="AND_QO.OUT" Destination="QO"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="AX_T_FF_SR.Q" Destination="AX_SPLIT_2.IN" dx1="466.67"/>
+			<Connection Source="AX_SPLIT_2.OUT1" Destination="DigitalOutput_Q1.OUT" dx1="266.67"/>
+			<Connection Source="AX_SPLIT_2.OUT2" Destination="STATE_PUBLISH.IN" dx1="240"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

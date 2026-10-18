@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="SPLIT_MI_DO_S_Dual_SA" Comment="Splits a DataPanel_MI_DO_S_Dual_SA into 2 DataPanel_MI_DO_S_Single_SA">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 HR Agrartechnik GmbH&#10;&#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="franz" Date="2026-05-28">
+	</VersionInfo>
+	<CompilerInfo packageName="DataPanel::io::MI::DQ">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event" Comment="Service Request">
+				<With Var="IN"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+				<With Var="UP"/>
+				<With Var="DOWN"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="IN" Type="DataPanel::io::MI::DQ::DataPanel_MI_DO_S_Dual_SA" Comment="Dual Input"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="UP" Type="DataPanel::io::MI::DQ::DataPanel_MI_DO_S_Single_SA" Comment=" forward, up, right, clockwise"/>
+			<VarDeclaration Name="DOWN" Type="DataPanel::io::MI::DQ::DataPanel_MI_DO_S_Single_SA" Comment="backward, down, left, counter-clockwise"/>
+		</OutputVars>
+	</InterfaceList>
+	<SimpleFB>
+		<ECState Name="REQ">
+			<ECAction Algorithm="REQ" Output="CNF"/>
+		</ECState>
+		<Algorithm Name="REQ" Comment="Normally executed algorithm">
+			<ST><![CDATA[
+UP.u8SAMember := IN.u8SAMember;
+UP.Port := IN.Up;
+DOWN.u8SAMember := IN.u8SAMember;
+DOWN.Port := IN.Down;
+]]></ST>
+		</Algorithm>
+	</SimpleFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

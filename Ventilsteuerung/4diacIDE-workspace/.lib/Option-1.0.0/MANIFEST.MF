@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Manifest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="platform:/resource/org.eclipse.fordiac.ide.library.model/model/library.xsd" Scope="Library">
+  <Dependencies>
+    <Required SymbolicName="core" Version="3.0.0"/>
+    <Required SymbolicName="adapter_types" Version="3.0.0"/>
+    <Required SymbolicName="iec61131-3-bool" Version="3.0.1"/>
+    <Required SymbolicName="events" Version="3.0.0"/>
+  </Dependencies>
+  <Product Comment="Function Blocks fuer Optionsmanagement: AOption (INIT-Request/Confirm-Handshake mit QI) und die darauf aufbauenden Single-/Multi-Select-Demultiplexer. MyLib_AX_Option enthaelt die maschinenspezifischen SubApps dazu." Name="Option" SymbolicName="Option">
+    <VersionInfo Author="Franz Höpfinger" Date="2026-10-13" Version="1.0.0"/>
+  </Product>
+</Manifest>

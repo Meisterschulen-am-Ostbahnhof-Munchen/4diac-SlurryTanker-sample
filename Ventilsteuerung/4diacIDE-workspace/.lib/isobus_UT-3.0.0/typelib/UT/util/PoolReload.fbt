@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="PoolReload" Comment="Service Interface Block to reload/update the object pool during runtime">
+	<Identification Standard="ISO 11783-6" Description="Copyright (c) 2025 Meisterschulen am Ostbahnhof&#10;&#10;This program and the accompanying materials are made&#10;available under the terms of the Eclipse Public License 2.0&#10;which is available at https://www.eclipse.org/legal/epl-2.0/&#10;&#10;SPDX-License-Identifier: EPL-2.0&#10;&#10;&#10;&lt;p&gt;Service Interface Block to reload/update the object pool during runtime&lt;/p&gt;&#10;&#10;This block wraps the functionality of VTC_PoolReload() from the ISOBUS driver samples.&#10;It allows reloading or updating the object pool on the VT while the application is running.&#10;&#10;The block performs the following steps:&#10;1. Loads the pool data from the configured file (e.g., pools/pool_de.iop)&#10;2. Opens the pool for the specified color depth&#10;3. Calls IsoVtcPoolUpdate() to update the pool on the VT&#10;4. Optionally applies ID range mode settings for pool manipulation&#10;&#10;Typical use cases:&#10;- Language switching during runtime&#10;- Dynamic pool updates based on application state&#10;- Reloading modified pool files&#10;&#10;Note: The pool file path is typically read from configuration.&#10;Default path: pools/pool_de.iop (German language variant)&#10;">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Generated" Date="2025-02-27" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::UT::util">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+				<With Var="QI"/>
+				<With Var="poolFileName"/>
+			</Event>
+			<Event Name="REQ" Type="Event" Comment="Service Request - Reload pool">
+				<With Var="QI"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Confirmation - Pool reload completed">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+				<With Var="s16Result"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service"/>
+			<VarDeclaration Name="poolFileName" Type="STRING" Comment="Path to pool file (e.g., pools/pool_de.iop)"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if pool reload was successful"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
+			<VarDeclaration Name="s16Result" Type="INT" Comment="Return value: 0=E_NO_ERR (success), negative=error code"/>
+		</OutputVars>
+	</InterfaceList>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="Q_ActiveMask_AUI" Comment="Command change active mask with AUI adapter (UINT)">
+	<Identification Standard="ISO 11783-6" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-10" Remarks="AUI adapter wrapper for Q_ActiveMask">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::UT::Q">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+				<With Var="QI"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+				<With Var="s16result"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
+			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description"/>
+		</OutputVars>
+		<Sockets>
+			<AdapterDeclaration Name="u16NewMaskId" Type="adapter::types::unidirectional::AUI" Comment="New active mask ID" x="-600" y="1200"/>
+		</Sockets>
+		<Plugs>
+			<AdapterDeclaration Name="u16OldMaskId" Type="adapter::types::unidirectional::AUI" Comment="Old active mask ID" x="3900" y="1100"/>
+		</Plugs>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="Q_ActiveMask" Type="isobus::UT::Q::Q_ActiveMask" x="533.33" y="420">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="Q_ActiveMask.INIT" dx1="1306.67"/>
+			<Connection Source="Q_ActiveMask.INITO" Destination="INITO" dx1="1506.67"/>
+			<Connection Source="Q_ActiveMask.CNF" Destination="CNF" dx1="1760"/>
+			<Connection Source="u16NewMaskId.E1" Destination="Q_ActiveMask.REQ" dx1="320"/>
+			<Connection Source="Q_ActiveMask.CNF" Destination="u16OldMaskId.E1" dx1="906.67"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="Q_ActiveMask.STATUS" Destination="STATUS" dx1="2000"/>
+			<Connection Source="u16NewMaskId.D1" Destination="Q_ActiveMask.u16NewMaskId" dx1="486.67"/>
+			<Connection Source="Q_ActiveMask.u16OldMaskId" Destination="u16OldMaskId.D1" dx1="606.67"/>
+			<Connection Source="Q_ActiveMask.s16result" Destination="s16result" dx1="2573.33"/>
+			<Connection Source="QI" Destination="Q_ActiveMask.QI"/>
+			<Connection Source="Q_ActiveMask.QO" Destination="QO"/>
+		</DataConnections>
+	</FBNetwork>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>Command change active mask with AUI adapter ( Part 6 - F.34 )</h1>
+
+<p>This FB is an AUI adapter wrapper around <strong>Q_ActiveMask</strong>.</p>
+]]></Attribute>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

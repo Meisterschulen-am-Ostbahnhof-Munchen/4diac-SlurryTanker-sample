@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="AX_TON_MERGE_QXA_OPC" Comment="1 Kanal einer geschalteten Gruppe (z.B. Scheinwerfer): nimmt den Toggle-Zustand&#10;eines gemeinsamen TOGGLE_RPC_MASTER_QXA_OPC ueber den MASTER-Socket entgegen,&#10;verzoegert das Einschalten um PT (AX_TON, Ausschalten sofort), verknuepft per&#10;AX_OR_2 mit dem bestehenden IO-Test-Kommando dieses Kanals und treibt den&#10;physischen Ausgang. Fuer einen komplett eigenstaendigen Kanal (eigener SoftKey,&#10;kein gemeinsamer Master) stattdessen TOGGLE_RPC_MERGE_QXA_OPC oder&#10;MERGE_SWITCH_1_QXA_OPC verwenden.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-07" Remarks="initial API and implementation and/or initial documentation - Scheinwerfer-Kanal, versetztes Einschalten (PT je Instanz unterschiedlich) gegen kapazitive Einschaltstrom-Spitzen">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO_S"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="Output" Type="logiBUS::io::DQ::logiBUS_DO_S" Comment="Physischer Ausgang dieses Kanals" InitialValue="logiBUS_DO::Invalid"/>
+			<VarDeclaration Name="PT" Type="TIME" Comment="Einschaltverzoegerung dieses Kanals gegenueber dem Master-Toggle (je Instanz unterschiedlich setzen, z.B. T#0ms/T#800ms/T#1600ms/...) - Ausschalten ist immer sofort" InitialValue="T#0ms"/>
+			<VarDeclaration Name="ID_TEST_READ" Type="WSTRING" Comment="Bestehende IO-Test-Subscribe-Adresse dieses Kanals (z.B. STG5_Q0x_READ)"/>
+			<VarDeclaration Name="ID_TEST_WRITE" Type="WSTRING" Comment="Bestehende IO-Test-Publish-Adresse dieses Kanals (z.B. STG5_Q0x_WRITE) - EIGENER Knoten, NICHT ID_TEST_READs Knoten (sonst Selbstrueckkopplung/Latch, siehe OPC_UA_VERNETZUNG.md Punkt 10+11)"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+		<Sockets>
+			<AdapterDeclaration Name="MASTER" Type="adapter::types::unidirectional::AX" Comment="Toggle-Zustand vom gemeinsamen TOGGLE_RPC_MASTER_QXA_OPC.OUT"/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="AX_TON" Type="adapter::events::unidirectional::timers::AX_TON" x="-5600" y="-800">
+		</FB>
+		<FB Name="SUBSCRIBE_TEST" Type="adapter::net::AX_SUBSCRIBE_1" x="-5600" y="200">
+		</FB>
+		<FB Name="OR_MERGE" Type="adapter::booleanOperators::AX_OR_2" x="-3600" y="-300">
+		</FB>
+		<FB Name="DigitalOutput" Type="logiBUS::io::DQ::logiBUS_QXA" x="-800" y="-1200">
+		</FB>
+		<FB Name="SPLIT" Type="adapter::events::unidirectional::AX_SPLIT_2" x="-2000" y="-300">
+		</FB>
+		<FB Name="PUBLISH_TEST" Type="adapter::net::AX_PUBLISH_1" x="-800" y="200">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_3">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="SUBSCRIBE_TEST.INIT"/>
+			<Connection Source="SUBSCRIBE_TEST.INITO" Destination="DigitalOutput.INIT"/>
+			<Connection Source="DigitalOutput.INITO" Destination="PUBLISH_TEST.INIT"/>
+			<Connection Source="PUBLISH_TEST.INITO" Destination="INITO"/>
+			<Connection Source="PUBLISH_TEST.INITO" Destination="AND_QO.REQ"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="Output" Destination="DigitalOutput.Output" dx1="2913.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="PT" Destination="AX_TON.PT" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_TEST_READ" Destination="SUBSCRIBE_TEST.ID" dx1="280">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_TEST_WRITE" Destination="PUBLISH_TEST.ID" dx1="1280">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="SUBSCRIBE_TEST.QI"/>
+			<Connection Source="QI" Destination="DigitalOutput.QI"/>
+			<Connection Source="QI" Destination="PUBLISH_TEST.QI"/>
+			<Connection Source="SUBSCRIBE_TEST.QO" Destination="AND_QO.IN1"/>
+			<Connection Source="DigitalOutput.QO" Destination="AND_QO.IN2"/>
+			<Connection Source="PUBLISH_TEST.QO" Destination="AND_QO.IN3"/>
+			<Connection Source="AND_QO.OUT" Destination="QO"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="MASTER" Destination="AX_TON.IN" dx1="800"/>
+			<Connection Source="AX_TON.Q" Destination="OR_MERGE.IN1" dx1="280"/>
+			<Connection Source="SUBSCRIBE_TEST.OUT" Destination="OR_MERGE.IN2" dx1="280"/>
+			<Connection Source="OR_MERGE.OUT" Destination="SPLIT.IN" dx1="800"/>
+			<Connection Source="SPLIT.OUT1" Destination="DigitalOutput.OUT" dx1="600"/>
+			<Connection Source="SPLIT.OUT2" Destination="PUBLISH_TEST.IN" dx1="600"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>1 Kanal einer Klick-Toggle-Gruppe, zeitversetzt hochfahrend</h1>
+
+<p>Nimmt ueber den <code>MASTER</code>-Socket den gemeinsamen Toggle-Zustand eines
+<code>TOGGLE_RPC_MASTER_QXA_OPC</code> entgegen (mehrere Kanaele koennen sich denselben Master teilen -
+gemeinsam per <code>AdapterConnections</code> im selben SubApp-Netzwerk verdrahtet, kein OPC-UA noetig).
+<code>AX_TON</code> verzoegert nur das EINSCHALTEN um <code>PT</code> (je Kanal unterschiedlich, z.B.
+0/800/1600ms...) - Ausschalten erfolgt sofort. Danach wie gewohnt per <code>AX_OR_2</code> mit dem
+bestehenden IO-Test-Kommando dieses Kanals zusammengefuehrt.</p>
+
+<p>Praxisbeispiel: Scheinwerfer-Bank mit 6 LED-Kanaelen, EIN SoftKey (ueber
+<code>TOGGLE_RPC_MASTER_QXA_OPC</code>), aber 6 <code>AX_TON_MERGE_QXA_OPC</code>-Instanzen mit
+gestaffeltem <code>PT</code> - verteilt den Einschaltstrom der LED-Treiber ueber die Zeit statt alle
+kapazitiven Lasten gleichzeitig zu schalten.</p>
+]]></Attribute>
+</SubAppType>

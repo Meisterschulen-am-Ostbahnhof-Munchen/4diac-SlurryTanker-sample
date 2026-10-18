@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Function Name="ST08X_TO_ARR08X" Comment="this Function takes a a 8-BOOL Struct and makes a 8-BOOL Array">
+	<Identification Standard="61499-1" Description="Copyright (c) 2024 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2024-02-22">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::utils::conversion::str::converting">
+		<Import declaration="logiBUS::utils::conversion::types::ST08X"/>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event">
+				<With Var="IN"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event">
+				<With Var="OUT"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="IN" Type="logiBUS::utils::conversion::types::ST08X" Comment="ST08X Input"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="OUT" Type="BOOL" Comment="ARR08X Output" ArraySize="0..7"/>
+		</OutputVars>
+	</InterfaceList>
+	<FunctionBody>
+		<ST><![CDATA[PACKAGE logiBUS::utils::conversion::str::converting;
+
+IMPORT logiBUS::utils::conversion::types::ST08X;
+
+(* this Function takes a a 8-BOOL Struct and makes a 8-BOOL Array *)
+FUNCTION ST08X_TO_ARR08X
+
+VAR_INPUT
+	IN : ST08X; // ST08X Input
+END_VAR
+
+VAR_OUTPUT
+	OUT : ARRAY[0..7] OF BOOL; // ARR08X Output
+END_VAR
+
+OUT[0] := IN.X_00;
+OUT[1] := IN.X_01;
+OUT[2] := IN.X_02;
+OUT[3] := IN.X_03;
+OUT[4] := IN.X_04;
+OUT[5] := IN.X_05;
+OUT[6] := IN.X_06;
+OUT[7] := IN.X_07;
+
+END_FUNCTION
+]]></ST>
+	</FunctionBody>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</Function>

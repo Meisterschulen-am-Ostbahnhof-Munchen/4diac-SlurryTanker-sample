@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Function Name="NmSetNameField" Comment="Fills the NAME field structure out of an ISO NAME ( see ISO 11783 - 5 - 5.1.2 )">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Version="1.0" Author="Franz Höpfinger" Date="2025-09-04">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::pgn">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event">
+				<With Var="au8IsoName"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event">
+				<With Var=""/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="au8IsoName" Type="isobus::pgn::CF_NAME_T"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="" Type="isobus::pgn::NAMEFIELD_T"/>
+		</OutputVars>
+	</InterfaceList>
+	<FunctionBody>
+		<ST><![CDATA[PACKAGE isobus::pgn;
+
+(* Fills the NAME field structure out of an ISO NAME ( see ISO 11783 - 5 - 5.1.2 ) *)
+FUNCTION NmSetNameField : isobus::pgn::NAMEFIELD_T
+(*
+ * \param[in]  \wpp{au8IsoName, const #ISO_CF_NAME_T*} Pointer to the ISO NAME byte array ( 8 bytes
+ * ) 
+ * \param[out] \wp{psNameField, ISONAMEFIELD_T*} Pointer to the NAME field structure which should be
+ * filled
+ * *
+ *)
+VAR_INPUT
+	au8IsoName : isobus::pgn::CF_NAME_T;
+END_VAR
+
+// ISO NAME fields are 8 bytes long (0 to 7)
+// The bits are assigned to the structured type ISONAMEFIELD_T
+// Byte 7
+NmSetNameField.bSelfConf := ((au8IsoName.data[7] AND WORD#16#80) = WORD#16#80);
+NmSetNameField.bIndGroup := SHL(SHR(au8IsoName.data[7], SINT#4), SINT#1) AND BYTE#16#07;
+NmSetNameField.bDevClassInst := au8IsoName.data[7] AND BYTE#16#0F;
+
+// Byte 6
+NmSetNameField.bDevClass := SHR(au8IsoName.data[6], SINT#1) AND BYTE#16#7F;
+NmSetNameField.bReserved := ((au8IsoName.data[6] AND BYTE#16#01) = BYTE#16#01);
+
+// Byte 5
+NmSetNameField.bFunction := au8IsoName.data[5];
+
+// Byte 4
+NmSetNameField.bFunctionInst := SHR(au8IsoName.data[4], SINT#5) AND BYTE#16#1F;
+NmSetNameField.bEcuInstance := au8IsoName.data[4] AND BYTE#16#1F;
+
+// Bytes 2, 3 for Manufacturer Code
+NmSetNameField.wManufCode := SHL(BYTE_TO_WORD(au8IsoName.data[3]), SINT#3)
+	OR SHR(BYTE_TO_WORD(au8IsoName.data[2] AND BYTE#16#E0), SINT#5);
+
+// Bytes 0, 1, 2 for Identity Number
+NmSetNameField.dwIdentNumb := SHL(BYTE_TO_DWORD(au8IsoName.data[2] AND BYTE#16#1F), SINT#16)
+	OR SHL(BYTE_TO_DWORD(au8IsoName.data[1]), SINT#8) OR BYTE_TO_DWORD(au8IsoName.data[0]);
+
+END_FUNCTION
+]]></ST>
+	</FunctionBody>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</Function>

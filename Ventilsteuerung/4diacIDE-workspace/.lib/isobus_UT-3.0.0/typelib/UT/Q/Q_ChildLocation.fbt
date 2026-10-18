@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="Q_ChildLocation" Comment="Command change child location ( Part 6 - F.14 )">
+	<Identification Standard="ISO 11783-6" Description="Copyright (c) 2022 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0  &#10;   &#10;   &#10;see Description Tab">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.2" Author="Franz Höpfinger" Date="2026-09-05" Remarks="Implement xScale scaling multiply">
+	</VersionInfo>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.1" Author="Franz Höpfinger" Date="2026-09-05" Remarks="Add xScale flag">
+	</VersionInfo>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2022-07-08">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::UT::Q">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+				<With Var="QI"/>
+				<With Var="u16ObjId"/>
+				<With Var="u16ObjIdParent"/>
+				<With Var="xScale"/>
+			</Event>
+			<Event Name="REQ" Type="Event" Comment="Service Request">
+				<With Var="QI"/>
+				<With Var="u8Xchange"/>
+				<With Var="u8Ychange"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+				<With Var="u8OldYchange"/>
+				<With Var="u8OldXchange"/>
+				<With Var="s16result"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObjIdParent" Type="UINT" Comment="Parent object ID " InitialValue="ID_NULL"/>
+			<VarDeclaration Name="xScale" Type="BOOL" Comment="FALSE (default) = bypass, send u8Xchange/u8Ychange through unchanged. TRUE = scale them by the DM/SKM factor for u16ObjIdParent." InitialValue="FALSE"/>
+			<VarDeclaration Name="u8Xchange" Type="USINT" Comment="Relative change in x position (interpreted as signed!)"/>
+			<VarDeclaration Name="u8Ychange" Type="USINT" Comment="Relative change in y position (interpreted as signed!)"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
+			<VarDeclaration Name="u8OldXchange" Type="USINT" Comment="Old relative change in x position (interpreted as signed!)"/>
+			<VarDeclaration Name="u8OldYchange" Type="USINT" Comment="Old relative change in y position (interpreted as signed!)"/>
+			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description"/>
+		</OutputVars>
+	</InterfaceList>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>Command change child location ( Part 6 - F.14 )</h1>
+
+<p>The Change Child Location command is used to change the relative position of an object. The command addresses <strong>two distinct Object IDs</strong> with <strong>different validity rules each</strong> — <code>u16ObjId</code> (the child object to move) and <code>u16ObjIdParent</code> (the parent it is moved within). Annex F only defines which object types are valid as the child; which object types may act as parent for this command is defined separately in Annex B, under each object type's "Allowed commands" list.</p>
+
+<h2>Valid values for u16ObjId (the child object to move)</h2>
+
+<p>Valid if it falls within one of the following ISO 11783-6 ID ranges (Annex F.14):</p>
+<ul>
+	<li><strong>Container</strong>: 3000 – 3999</li>
+	<li><strong>Key</strong>: 5000 – 5999</li>
+	<li><strong>Button</strong>: 6000 – 6999</li>
+	<li><strong>InputBooleanField</strong>: 7000 – 7999</li>
+	<li><strong>InputStringField</strong>: 8000 – 8999</li>
+	<li><strong>InputNumberField</strong>: 9000 – 9999</li>
+	<li><strong>InputListField</strong>: 10000 – 10999</li>
+	<li><strong>OutputStringField</strong>: 11000 – 11999</li>
+	<li><strong>OutputNumberField</strong>: 12000 – 12999</li>
+	<li><strong>TypLine</strong>: 13000 – 13999</li>
+	<li><strong>TypRectangle</strong>: 14000 – 14999</li>
+	<li><strong>TypEllipse</strong>: 15000 – 15999</li>
+	<li><strong>TypPolygon</strong>: 16000 – 16999</li>
+	<li><strong>Meter</strong>: 17000 – 17999</li>
+	<li><strong>LinearBarGraph</strong>: 18000 – 18999</li>
+	<li><strong>ArchedBarGraph</strong>: 19000 – 19999</li>
+	<li><strong>PictureGraphic</strong>: 20000 – 20499</li>
+	<li><strong>ObjectPointer</strong>: 27000 – 27999</li>
+	<li><strong>OutputListObject</strong>: 37000 – 37999</li>
+	<li><strong>ExternalObjectPointer</strong>: 43000 – 43999</li>
+	<li><strong>AnimationObject</strong>: 44000 – 44999</li>
+	<li><strong>ScaledGraphicObject</strong>: 48000 – 48999</li>
+	<li><strong>AuxiliaryFunction</strong>: 29000 – 29999</li>
+	<li><strong>AuxiliaryFunctionType2</strong>: 31000 – 31999</li>
+	<li><strong>AuxiliaryInput</strong>: 30000 – 30999</li>
+	<li><strong>AuxiliaryInputType2</strong>: 32000 – 32999</li>
+	<li><strong>AuxiliaryControlDesignator</strong>: 33000 – 33999</li>
+</ul>
+
+<h2>Valid values for u16ObjIdParent (the parent object)</h2>
+
+<p>Only object types whose ISO 11783-6 Annex B definition lists "Change Child Location command" / "Change Child Position command" among its Allowed commands:</p>
+<ul>
+	<li><strong>WorkingSet</strong> (Annex B.1)</li>
+	<li><strong>DataMask</strong> (Annex B.2)</li>
+	<li><strong>AlarmMask</strong> (Annex B.3)</li>
+	<li><strong>Container</strong> (Annex B.4)</li>
+	<li><strong>Key</strong> (Annex B.6)</li>
+	<li><strong>WindowMask</strong></li>
+	<li><strong>Button</strong></li>
+	<li><strong>AuxiliaryFunction</strong> / <strong>AuxiliaryFunctionType2</strong></li>
+	<li><strong>AuxiliaryInput</strong> / <strong>AuxiliaryInputType2</strong></li>
+</ul>
+
+<p><strong>Not valid as parent:</strong> <strong>SoftKeyMask</strong> (Annex B.5 does not list either command as allowed) and <strong>AnimationObject</strong> (its children are indexed frames, not X/Y-positioned).</p>
+
+<p>ID_NULL (65535) is not a command target but can be used in INIT to deactivate the FB. Any child ID outside the child ranges above, or any parent ID that is not one of the parent-capable types above, is invalid for commanding — independent of each other.</p>
+
+<h2>Activate / Deactivate</h2>
+
+<p>The FB is deactivated by default. It becomes active when INIT provides a valid child location Object ID. Sending INIT with ID_NULL (65535) deactivates the FB again. This toggle can be repeated arbitrarily.</p>
+
+<ul>
+	<li><strong>INIT + ID_NULL (65535)</strong>: FB deactivated, STATUS="DEACTIVATED", s16result=VT_E_DEACTIVATED (-40)</li>
+	<li><strong>INIT + valid child location ID</strong>: FB activated, STATUS="initialized", s16result=VT_E_NO_ERR (0). If a REQ was buffered before, it is executed immediately.</li>
+	<li><strong>INIT + invalid ID</strong>: STATUS="ERROR: Invalid Object ID (not a child location object)", s16result=VT_E_INVALID_OBJECT_ID (-132)</li>
+</ul>
+
+<h2>REQ Handling</h2>
+
+<ul>
+	<li><strong>REQ before any INIT</strong>: Buffered, STATUS="Buffered: INIT not yet completed", s16result=VT_E_NOT_READY (-131)</li>
+	<li><strong>REQ while deactivated (INIT came with NULL or invalid ID)</strong>: STATUS shows the actual deactivation reason, s16result=VT_E_DEACTIVATED (-40) or VT_E_INVALID_OBJECT_ID (-132)</li>
+	<li><strong>REQ while active</strong>: Command sent to VT, result reflected in CNF</li>
+</ul>
+
+<h2>param[in] {objectID, uint16_t}</h2>
+
+<p>Object ID. Use ID_NULL (65535) to deactivate the FB. Use a valid child location object ID to activate.</p>
+
+<h2>param[in] {parentObjectID, uint16_t}</h2>
+
+<p>Parent object ID</p>
+
+<h2>param[in] {relativeXPositionChange, uint8_t}</h2>
+
+<p>Relative change in x position (interpreted as signed!)</p>
+
+<h2>param[in] {relativeYPositionChange, uint8_t}</h2>
+
+<p>Relative change in y position (interpreted as signed!)</p>
+
+<h2>Return Values (s16result):</h2>
+
+<h3>int16_t</h3>
+
+<ul>
+	<li><span style="color:#27ae60">VT_E_NO_ERR (0)</span> - OK</li>
+	<li><span style="color:#f39c12">VT_E_DEACTIVATED (-40)</span> - FB deactivated (INIT received with ID_NULL)</li>
+	<li><span style="color:#e74c3c">VT_E_INVALID_OBJECT_ID (-132)</span> - Object ID is invalid (not a child location object)</li>
+	<li><span style="color:#e74c3c">VT_E_NOT_READY (-131)</span> - Buffered: INIT not yet completed</li>
+	<li><span style="color:#e74c3c">VT_E_OVERFLOW (-6)</span> - buffer overflow</li>
+	<li><span style="color:#e74c3c">VT_E_NOACT (-8)</span> - Command not possible in current state</li>
+	<li><span style="color:#e74c3c">VT_E_NO_INSTANCE (-21)</span> - No VT client available</li>
+	<li><span style="color:#e74c3c">VT_E_ISO_INSTANCE_INVALID (-129)</span> - Identifier for instance (connection) invalid</li>
+	<li><span style="color:#e74c3c">VT_E_NOT_ALIVE (-130)</span> - Identifier for instance valid, but VT Dead.</li>
+</ul>
+<h2>Instanz-Eindeutigkeit (Instance Uniqueness)</h2>
+
+<p>Dieser Baustein erfordert Instanz-Eindeutigkeit bezüglich <strong>u16ObjId</strong>. Es darf im gesamten Programm nur eine Instanz von <code>Q_ChildLocation</code> für dieselbe Ziel-Objekt-ID existieren. Eine zweite Instanz auf dieselbe Objekt-ID wird bei <code>INIT</code> deaktiviert (STATUS = "This objID is already in use").</p>
+]]></Attribute>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

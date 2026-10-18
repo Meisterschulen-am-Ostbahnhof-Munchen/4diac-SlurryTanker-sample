@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="A2X_TO_QXA2" Comment="Ein gebuendeltes unidirektionales A2X (UP/DOWN) auf 2 physische&#10;logiBUS-Digitalausgaenge entbuendelt: A2X_2X_TO_2AX spaltet das Paar unmittelbar&#10;vor den beiden logiBUS_QXA-Ausgaengen auf 2 einzelne AX-Signale auf - 'SUB&#10;style': das Entbuendeln steckt im Composite, nicht in der Resource des Geraets.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-09-05" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Invalid"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="Output_UP" Type="logiBUS::io::DQ::logiBUS_DO_S" Comment="Physischer Ausgang fuer forward/up" InitialValue="Invalid"/>
+			<VarDeclaration Name="Output_DOWN" Type="logiBUS::io::DQ::logiBUS_DO_S" Comment="Physischer Ausgang fuer backward/down" InitialValue="Invalid"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+		<Sockets>
+			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::A2X" Comment="Gebuendeltes UP/DOWN Eingangssignal"/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="UNBUNDLE" Type="adapter::conversion::unidirectional::A2X_2X_TO_2AX" x="-2400" y="-100">
+		</FB>
+		<FB Name="DigitalOutput_UP" Type="logiBUS::io::DQ::logiBUS_QXA" x="700" y="-1200">
+		</FB>
+		<FB Name="DigitalOutput_DOWN" Type="logiBUS::io::DQ::logiBUS_QXA" x="700" y="0">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_2">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="DigitalOutput_UP.INIT"/>
+			<Connection Source="DigitalOutput_UP.INITO" Destination="DigitalOutput_DOWN.INIT"/>
+			<Connection Source="DigitalOutput_DOWN.INITO" Destination="INITO"/>
+			<Connection Source="DigitalOutput_DOWN.INITO" Destination="AND_QO.REQ"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="Output_UP" Destination="DigitalOutput_UP.Output" dx1="2446.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Output_DOWN" Destination="DigitalOutput_DOWN.Output" dx1="2446.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="DigitalOutput_UP.QI"/>
+			<Connection Source="QI" Destination="DigitalOutput_DOWN.QI"/>
+			<Connection Source="DigitalOutput_UP.QO" Destination="AND_QO.IN1"/>
+			<Connection Source="DigitalOutput_DOWN.QO" Destination="AND_QO.IN2"/>
+			<Connection Source="AND_QO.OUT" Destination="QO"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="IN" Destination="UNBUNDLE.A2X_IN" dx1="560"/>
+			<Connection Source="UNBUNDLE.UP" Destination="DigitalOutput_UP.OUT" dx1="1200"/>
+			<Connection Source="UNBUNDLE.DOWN" Destination="DigitalOutput_DOWN.OUT" dx1="1200"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="Computers" Comment="Global constants">
+	<Identification Standard="61499-1" Description="Copyright (c) 2023 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2023-10-22">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::stations">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="C_LO" Type="WSTRING" InitialValue="&quot;localhost:61499&quot;"/>
+		<VarDeclaration Name="C_ET" Type="WSTRING" InitialValue="&quot;192.168.5.1:61499&quot;"/>
+		<VarDeclaration Name="C_ST" Type="WSTRING" InitialValue="&quot;192.168.4.1:61499&quot;"/>
+		<VarDeclaration Name="C_01" Type="WSTRING" InitialValue="&quot;192.168.4.1:61499&quot;"/>
+		<VarDeclaration Name="C_02" Type="WSTRING" Comment="Station 01 (61499/MGR_ID)" InitialValue="&quot;192.168.4.2:61499&quot;"/>
+		<VarDeclaration Name="C_03" Type="WSTRING" Comment="Station 02 (61499/MGR_ID)" InitialValue="&quot;192.168.4.3:61499&quot;"/>
+		<VarDeclaration Name="C_04" Type="WSTRING" Comment="Station 03 (61499/MGR_ID)" InitialValue="&quot;192.168.4.4:61499&quot;"/>
+		<VarDeclaration Name="C_TR" Type="WSTRING" Comment="Station 04 (61499/MGR_ID)" InitialValue="&quot;192.168.6.1:61499&quot;"/>
+		<VarDeclaration Name="C_SI" Type="WSTRING" Comment="Trainings-PC (61499/MGR_ID)" InitialValue="&quot;192.168.6.2:61499&quot;"/>
+		<VarDeclaration Name="C_11" Type="WSTRING" Comment="Simulator-PC (61499/MGR_ID)" InitialValue="&quot;192.168.1.11:61499&quot;"/>
+		<VarDeclaration Name="C_12" Type="WSTRING" Comment="Station 12 (61499/MGR_ID)" InitialValue="&quot;192.168.1.12:61499&quot;"/>
+		<VarDeclaration Name="C_13" Type="WSTRING" Comment="Station 13 (61499/MGR_ID)" InitialValue="&quot;192.168.1.13:61499&quot;"/>
+		<VarDeclaration Name="C_14" Type="WSTRING" Comment="Station 14 (61499/MGR_ID)" InitialValue="&quot;192.168.1.14:61499&quot;"/>
+		<VarDeclaration Name="C_15" Type="WSTRING" Comment="Station 15 (61499/MGR_ID)" InitialValue="&quot;192.168.1.15:61499&quot;"/>
+		<VarDeclaration Name="C_55" Type="WSTRING" Comment="Station 55 (61499/MGR_ID)" InitialValue="&quot;192.168.178.55:61499&quot;"/>
+		<VarDeclaration Name="C_11_OPC" Type="WSTRING" Comment="Station 11 (OPC-UA-Endpunkt)" InitialValue="&quot;opc.tcp://192.168.1.11:4840&quot;"/>
+		<VarDeclaration Name="C_12_OPC" Type="WSTRING" Comment="Station 12 (OPC-UA-Endpunkt)" InitialValue="&quot;opc.tcp://192.168.1.12:4840&quot;"/>
+		<VarDeclaration Name="C_13_OPC" Type="WSTRING" Comment="Station 13 (OPC-UA-Endpunkt)" InitialValue="&quot;opc.tcp://192.168.1.13:4840&quot;"/>
+		<VarDeclaration Name="C_14_OPC" Type="WSTRING" Comment="Station 14 (OPC-UA-Endpunkt)" InitialValue="&quot;opc.tcp://192.168.1.14:4840&quot;"/>
+		<VarDeclaration Name="C_15_OPC" Type="WSTRING" Comment="Station 15 (OPC-UA-Endpunkt)" InitialValue="&quot;opc.tcp://192.168.1.15:4840&quot;"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE logiBUS::stations;
+
+(*
+ * Feste Verbindungsstrings bekannter Stationen/Rechner im logiBUS-Netzwerk,
+ * damit Projekte nicht mit literalen IP-Adressen arbeiten muessen. Zwei Protokoll-Formen kommen
+ * vor:
+ *   - 61499  ("IP:61499", z.B. als MGR_ID fuer ein FORTE_PC-Device)
+ *   - OPC-UA ("opc.tcp://IP:4840")
+ * *
+ *)
+GLOBALCONSTANTS Computers
+	VAR_GLOBAL CONSTANT
+		C_LO : WSTRING := "localhost:61499";
+		C_ET : WSTRING := "192.168.5.1:61499";
+		C_ST : WSTRING := "192.168.4.1:61499";
+		C_01 : WSTRING := "192.168.4.1:61499"; (* Station 01 (61499/MGR_ID) *)
+		C_02 : WSTRING := "192.168.4.2:61499"; (* Station 02 (61499/MGR_ID) *)
+		C_03 : WSTRING := "192.168.4.3:61499"; (* Station 03 (61499/MGR_ID) *)
+		C_04 : WSTRING := "192.168.4.4:61499"; (* Station 04 (61499/MGR_ID) *)
+		C_TR : WSTRING := "192.168.6.1:61499"; (* Trainings-PC (61499/MGR_ID) *)
+		C_SI : WSTRING := "192.168.6.2:61499"; (* Simulator-PC (61499/MGR_ID) *)
+		C_11 : WSTRING := "192.168.1.11:61499"; (* Station 11 (61499/MGR_ID) *)
+		C_12 : WSTRING := "192.168.1.12:61499"; (* Station 12 (61499/MGR_ID) *)
+		C_13 : WSTRING := "192.168.1.13:61499"; (* Station 13 (61499/MGR_ID) *)
+		C_14 : WSTRING := "192.168.1.14:61499"; (* Station 14 (61499/MGR_ID) *)
+		C_15 : WSTRING := "192.168.1.15:61499"; (* Station 15 (61499/MGR_ID) *)
+		C_55 : WSTRING := "192.168.178.55:61499"; (* Station 55 (61499/MGR_ID) *)
+		C_11_OPC : WSTRING := "opc.tcp://192.168.1.11:4840"; (* Station 11 (OPC-UA-Endpunkt) *)
+		C_12_OPC : WSTRING := "opc.tcp://192.168.1.12:4840"; (* Station 12 (OPC-UA-Endpunkt) *)
+		C_13_OPC : WSTRING := "opc.tcp://192.168.1.13:4840"; (* Station 13 (OPC-UA-Endpunkt) *)
+		C_14_OPC : WSTRING := "opc.tcp://192.168.1.14:4840"; (* Station 14 (OPC-UA-Endpunkt) *)
+		C_15_OPC : WSTRING := "opc.tcp://192.168.1.15:4840"; (* Station 15 (OPC-UA-Endpunkt) *)
+	END_VAR
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</GlobalConstants>

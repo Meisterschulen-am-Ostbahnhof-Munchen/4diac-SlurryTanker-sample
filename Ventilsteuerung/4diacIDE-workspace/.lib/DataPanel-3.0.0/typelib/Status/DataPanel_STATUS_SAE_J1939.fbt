@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="DataPanel_STATUS_SAE_J1939" Comment="Status Output of 1 DataPanel Node">
+	<Identification Standard="SAE J1939" Description="Copyright (c) 2018, 2023 Jose Cabral, HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Version="1.0" Author="Jose Cabral" Date="2018-12-05">
+	</VersionInfo>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.1" Author="Franz Höpfinger" Date="2022-08-04">
+	</VersionInfo>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.2" Author="Franz Höpfinger" Date="2023-01-05">
+	</VersionInfo>
+	<CompilerInfo packageName="DataPanel::Status">
+		<Import declaration="DataPanel::io::MI::const::MI"/>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+				<With Var="QI"/>
+				<With Var="u8SAMember"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+			</Event>
+			<Event Name="IND" Type="Event" Comment="Indication from Resource">
+				<With Var="QO"/>
+				<With Var="s32TimeStamp"/>
+				<With Var="STATUS"/>
+				<With Var="bTimeout"/>
+				<With Var="Version"/>
+				<With Var="Revision"/>
+				<With Var="Fault_Code"/>
+				<With Var="User_ID"/>
+				<With Var="Hardware_Version"/>
+				<With Var="Status_01"/>
+				<With Var="Status_02"/>
+				<With Var="Status_03"/>
+				<With Var="Status_04"/>
+				<With Var="Status_05"/>
+				<With Var="Status_06"/>
+				<With Var="Status_07"/>
+				<With Var="Status_08"/>
+				<With Var="Status_09"/>
+				<With Var="Status_10"/>
+				<With Var="Status_11"/>
+				<With Var="Status_12"/>
+				<With Var="Status_13"/>
+				<With Var="Status_14"/>
+			</Event>
+			<Event Name="TIMEOUT" Type="Event">
+				<With Var="bTimeout"/>
+				<With Var="s32TimeStamp_timeout"/>
+				<With Var="STATUS"/>
+				<With Var="bTimeout"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
+			<VarDeclaration Name="u8SAMember" Type="USINT" Comment="Node SA 224..239" InitialValue="MI::MI_00"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
+			<VarDeclaration Name="bTimeout" Type="BOOL" Comment="Timeout occured TRUE = Timeout, FALSE = no Timeout" InitialValue="FALSE"/>
+			<VarDeclaration Name="s32TimeStamp_timeout" Type="DINT" Comment="Time stamp of the Timeout in ms"/>
+			<VarDeclaration Name="s32TimeStamp" Type="DINT" Comment="Time stamp of the message in ms"/>
+			<VarDeclaration Name="Version" Type="USINT"/>
+			<VarDeclaration Name="Revision" Type="USINT"/>
+			<VarDeclaration Name="Fault_Code" Type="USINT"/>
+			<VarDeclaration Name="User_ID" Type="USINT"/>
+			<VarDeclaration Name="Hardware_Version" Type="USINT"/>
+			<VarDeclaration Name="Status_01" Type="BOOL"/>
+			<VarDeclaration Name="Status_02" Type="BOOL"/>
+			<VarDeclaration Name="Status_03" Type="BOOL"/>
+			<VarDeclaration Name="Status_04" Type="BOOL"/>
+			<VarDeclaration Name="Status_05" Type="BOOL"/>
+			<VarDeclaration Name="Status_06" Type="BOOL"/>
+			<VarDeclaration Name="Status_07" Type="BOOL"/>
+			<VarDeclaration Name="Status_08" Type="BOOL"/>
+			<VarDeclaration Name="Status_09" Type="BOOL"/>
+			<VarDeclaration Name="Status_10" Type="BOOL"/>
+			<VarDeclaration Name="Status_11" Type="BOOL"/>
+			<VarDeclaration Name="Status_12" Type="BOOL"/>
+			<VarDeclaration Name="Status_13" Type="BOOL"/>
+			<VarDeclaration Name="Status_14" Type="BOOL"/>
+		</OutputVars>
+	</InterfaceList>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

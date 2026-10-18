@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="ILOCK_FB_SR" Comment="Realizes a bistable set-dominat latch">
+	<Identification Standard="61499-1" Description="Copyright (c) 2023 Martin Erich Jobst&#10; &#10;This program and the accompanying materials are made&#10;available under the terms of the Eclipse Public License 2.0&#10;which is available at https://www.eclipse.org/legal/epl-2.0/&#10;&#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Version="3.0" Author="Patrick Aigner" Date="2025-04-14" Remarks="changed package">
+	</VersionInfo>
+	<VersionInfo Version="1.0" Author="Martin Jobst" Date="2023-04-28">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::signalprocessing::interlock">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event" Comment="Normal Execution Request">
+				<With Var="S1"/>
+				<With Var="R"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event" Comment="Execution Confirmation">
+				<With Var="Q1"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="S1" Type="BOOL" Comment="Set"/>
+			<VarDeclaration Name="R" Type="BOOL" Comment="Reset"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="Q1" Type="BOOL" Comment="Output"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="ILOCK_OUT" Type="adapter::types::bidirectional::AX2" x="2500" y="2400"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="ILOCK_IN" Type="adapter::types::bidirectional::AX2" x="2600" y="1500"/>
+		</Sockets>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="FB_SR" Type="iec61131::bistableElements::FB_SR" x="5000" y="300">
+		</FB>
+		<FB Name="OR_2_BOOL_OUT" Type="iec61131::booleanOperators::OR_BOOL_2" x="1500" y="2400">
+		</FB>
+		<FB Name="OR_2_BOOL_IN" Type="iec61131::booleanOperators::OR_BOOL_2" x="1500" y="1500">
+		</FB>
+		<FB Name="OR_BOOL_3" Type="iec61131::booleanOperators::OR_BOOL_3" x="4000" y="800">
+		</FB>
+		<EventConnections>
+			<Connection Source="REQ" Destination="OR_BOOL_3.REQ" dx1="1113.33"/>
+			<Connection Source="FB_SR.CNF" Destination="CNF" dx1="1113.33"/>
+			<Connection Source="OR_2_BOOL_IN.CNF" Destination="ILOCK_IN.EI1" dx1="253.33"/>
+			<Connection Source="OR_2_BOOL_OUT.CNF" Destination="ILOCK_OUT.EO1" dx1="200"/>
+			<Connection Source="ILOCK_IN.EO1" Destination="OR_BOOL_3.REQ" dx1="200"/>
+			<Connection Source="OR_BOOL_3.CNF" Destination="FB_SR.REQ" dx1="126.67"/>
+			<Connection Source="ILOCK_OUT.EI1" Destination="OR_BOOL_3.REQ" dx1="300"/>
+			<Connection Source="ILOCK_OUT.EI1" Destination="OR_2_BOOL_IN.REQ" dx1="300" dx2="300" dy="-346.67"/>
+			<Connection Source="ILOCK_IN.EO1" Destination="OR_2_BOOL_OUT.REQ" dx1="100" dx2="100" dy="586.67"/>
+			<Connection Source="REQ" Destination="OR_2_BOOL_IN.REQ" dx1="1113.33"/>
+			<Connection Source="REQ" Destination="OR_2_BOOL_OUT.REQ" dx1="1113.33"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="R" Destination="FB_SR.R" dx1="4613.33"/>
+			<Connection Source="FB_SR.Q1" Destination="Q1" dx1="1113.33"/>
+			<Connection Source="OR_2_BOOL_IN.OUT" Destination="ILOCK_IN.DI1"/>
+			<Connection Source="OR_2_BOOL_OUT.OUT" Destination="ILOCK_OUT.DO1"/>
+			<Connection Source="S1" Destination="OR_BOOL_3.IN1" dx1="1146.67"/>
+			<Connection Source="OR_BOOL_3.OUT" Destination="FB_SR.S1" dx1="160"/>
+			<Connection Source="ILOCK_IN.DO1" Destination="OR_BOOL_3.IN2" dx1="133.33"/>
+			<Connection Source="ILOCK_OUT.DI1" Destination="OR_BOOL_3.IN3" dx1="266.67"/>
+			<Connection Source="ILOCK_IN.DO1" Destination="OR_2_BOOL_OUT.IN1" dx1="66.67" dx2="66.67" dy="406.67"/>
+			<Connection Source="ILOCK_OUT.DI1" Destination="OR_2_BOOL_IN.IN2" dx1="266.67" dx2="266.67" dy="-593.33"/>
+			<Connection Source="S1" Destination="OR_2_BOOL_IN.IN1" dx1="1146.67"/>
+			<Connection Source="S1" Destination="OR_2_BOOL_OUT.IN2" dx1="1146.67"/>
+		</DataConnections>
+	</FBNetwork>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

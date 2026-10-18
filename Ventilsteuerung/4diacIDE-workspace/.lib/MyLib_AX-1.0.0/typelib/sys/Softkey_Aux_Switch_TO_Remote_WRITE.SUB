@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Softkey_Aux_Switch_TO_Remote_WRITE" Comment="VT-SoftKey lesen ODER AUX-Zuweisung (Joystick) lesen ODER lokaler Web-Override&#10;(z.B. vt-ui-mirror auf demselben Modul) ODER ein zusaetzlicher physischer Taster&#10;auf einem ANDEREN Modul (Remote-Subscribe) + Remote-OPC-UA-Write an Zielmodul&#10;(generisch, ein Kanal, ohne Status-Feedback) - 4-Quellen-Erweiterung von&#10;Softkey_Aux_IXA_TO_Remote_WRITE fuer Funktionen, die zusaetzlich zu&#10;SoftKey/AUX/Web noch einen fest verbauten Taster auf einem dritten Modul haben&#10;(z.B. Schnittverstellung: SoftKey auf STG1, Taster S06/S07 auf STG4, Aktor auf&#10;STG2)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-07" Remarks="initial API and implementation and/or initial documentation - 4-Quellen-Variante von Softkey_Aux_IXA_TO_Remote_WRITE fuer Schnittverstellung (V14: SoftKey_Aufnahme_Heben/Senken auf STG1, physische Taster S06/S07 auf STG4, Aktor auf STG2)">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID SoftKey (VT)" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObjIdA" Type="UINT" Comment="Object ID AuxFunction2 (VT)" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="ID_WRITE_REMOTE" Type="WSTRING" Comment="Remote-Write-Adresse zum Zielmodul (Befehl, ACTION=WRITE, CLIENT)"/>
+			<VarDeclaration Name="ID_WEB_READ" Type="WSTRING" Comment="Lokale Subscribe-Adresse fuer einen Web-Client (z.B. vt-ui-mirror) auf demselben Modul, ODER-verknuepft mit SoftKey und AUX"/>
+			<VarDeclaration Name="ID_SWITCH_REMOTE" Type="WSTRING" Comment="Remote-Subscribe-Adresse eines zusaetzlichen physischen Tasters auf einem ANDEREN Modul (z.B. STG4_I2_REMOTE), ODER-verknuepft mit SoftKey/AUX/Web"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="Softkey_IXA" Type="isobus::UT::io::Softkey::Softkey_IXA" x="-600" y="-1400">
+		</FB>
+		<FB Name="Aux_IXA" Type="isobus::UT::io::Auxiliary::IN::Aux_IXA" x="-600" y="-400">
+		</FB>
+		<FB Name="SUBSCRIBE_WEB" Type="adapter::net::AX_SUBSCRIBE_1" x="-600" y="700">
+		</FB>
+		<FB Name="SUBSCRIBE_SWITCH" Type="adapter::net::AX_SUBSCRIBE_1" x="-600" y="1600">
+		</FB>
+		<FB Name="OR_MERGE" Type="adapter::booleanOperators::AX_OR_4" x="900" y="300">
+		</FB>
+		<FB Name="AX_CLIENT_1_0" Type="adapter::net::AX_CLIENT_1_0" x="2300" y="-200">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_5" x="4500" y="700">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="Softkey_IXA.INIT" dx1="1960"/>
+			<Connection Source="Softkey_IXA.INITO" Destination="Aux_IXA.INIT" dx1="80" dx2="80" dy="500"/>
+			<Connection Source="Aux_IXA.INITO" Destination="SUBSCRIBE_WEB.INIT" dx1="80" dx2="80" dy="546.67"/>
+			<Connection Source="SUBSCRIBE_WEB.INITO" Destination="SUBSCRIBE_SWITCH.INIT" dx1="80" dx2="80" dy="446.67"/>
+			<Connection Source="SUBSCRIBE_SWITCH.INITO" Destination="AX_CLIENT_1_0.INIT" dx1="1026.67"/>
+			<Connection Source="AX_CLIENT_1_0.INITO" Destination="INITO" dx1="2240"/>
+			<Connection Source="AX_CLIENT_1_0.INITO" Destination="AND_QO.REQ" dx1="653.33"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="u16ObjId" Destination="Softkey_IXA.u16ObjId" dx1="846.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjIdA" Destination="Aux_IXA.u16ObjId" dx1="846.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_WEB_READ" Destination="SUBSCRIBE_WEB.ID" dx1="80">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_SWITCH_REMOTE" Destination="SUBSCRIBE_SWITCH.ID" dx1="80">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_WRITE_REMOTE" Destination="AX_CLIENT_1_0.ID" dx1="613.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="Softkey_IXA.QI" dx1="1960"/>
+			<Connection Source="QI" Destination="Aux_IXA.QI" dx1="1960"/>
+			<Connection Source="QI" Destination="SUBSCRIBE_WEB.QI" dx1="626.67"/>
+			<Connection Source="QI" Destination="SUBSCRIBE_SWITCH.QI" dx1="626.67"/>
+			<Connection Source="QI" Destination="AX_CLIENT_1_0.QI" dx1="740"/>
+			<Connection Source="Softkey_IXA.QO" Destination="AND_QO.IN1" dx1="2100"/>
+			<Connection Source="Aux_IXA.QO" Destination="AND_QO.IN2" dx1="2100"/>
+			<Connection Source="SUBSCRIBE_WEB.QO" Destination="AND_QO.IN3" dx1="2126.67"/>
+			<Connection Source="SUBSCRIBE_SWITCH.QO" Destination="AND_QO.IN4" dx1="2126.67"/>
+			<Connection Source="AX_CLIENT_1_0.QO" Destination="AND_QO.IN5" dx1="653.33"/>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="2340"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="Softkey_IXA.IN" Destination="OR_MERGE.IN1" dx1="246.67"/>
+			<Connection Source="Aux_IXA.IN" Destination="OR_MERGE.IN2" dx1="100"/>
+			<Connection Source="SUBSCRIBE_WEB.OUT" Destination="OR_MERGE.IN3" dx1="100"/>
+			<Connection Source="SUBSCRIBE_SWITCH.OUT" Destination="OR_MERGE.IN4" dx1="100"/>
+			<Connection Source="OR_MERGE.OUT" Destination="AX_CLIENT_1_0.IN" dx1="400"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>SoftKey UND Aux UND Web UND Remote-Taster → Remote-OPC-UA-Write (nur Kommando, kein Status)</h1>
+
+<p>4-Quellen-Erweiterung von <code>Softkey_Aux_IXA_TO_Remote_WRITE</code>: zusaetzlich zu SoftKey
+(<code>u16ObjId</code>), Aux-Zuweisung (<code>u16ObjIdA</code>) und lokalem Web-Override
+(<code>ID_WEB_READ</code>) wird noch ein vierter, per Remote-Subscribe gelesener physischer Taster
+auf einem ANDEREN Modul (<code>ID_SWITCH_REMOTE</code>) per <code>AX_OR_4</code> zusammengefuehrt
+und per <code>AX_CLIENT_1_0</code> (<code>ID_WRITE_REMOTE</code>) ans Zielmodul geschrieben.</p>
+
+<p>Wichtig: alle 4 Quellen werden HIER (auf dem Bedienmodul, z.B. STG1) zu EINEM Kommando
+zusammengefuehrt, bevor per EINEM einzigen <code>AX_CLIENT_1_0</code> ans Zielmodul geschrieben
+wird - NICHT mehrere unabhaengige Writer auf denselben Zielknoten (das waere ein Race/Last-
+Write-Wins-Fehler, kein echtes ODER). Fuer den Anwendungsfall Schnittverstellung: SoftKey_
+Aufnahme_Heben/Senken (STG1) + AuxFunction2 (Joystick) + vt-ui-mirror-Web-Override, ALLE auf
+STG1, ODER-verknuepft mit dem physischen Taster S06/S07 (STG4, per Remote-Subscribe STG4_I2/
+I3_REMOTE - bereits fuer die VT-IO-Diag-Anzeige vorhanden, hier zusaetzlich mitverwendet).</p>
+
+<p>Kein Status-Feedback/Hintergrundfarbe hier - dafuer <code>AX_SUBSCRIBE_BG3_WEB_OPC</code>
+danebenstellen (gleiche <code>u16ObjId</code>/<code>u16ObjIdA</code>-Werte durchreichen), genau wie
+bei <code>Softkey_Aux_IXA_TO_Remote_WRITE</code>.</p>
+]]></Attribute>
+</SubAppType>

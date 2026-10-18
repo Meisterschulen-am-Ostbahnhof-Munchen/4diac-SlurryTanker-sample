@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="AuxIXA_TO_logiBUS_QXA_BG" Comment="AUX-Funktion (Aux_IXA) auf DigitalOutput QXA mit GreenWhiteBackground.&#10;Generisch, analog zu Button_IXA_TO_logiBUS_QXA_BG (dort Button statt AUX).">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-09" Remarks="Ausgelagert aus Uebung_010f2_sub_AX zur Wiederverwendung.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO_S"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="u16ObjIdA" Type="UINT" Comment="Object ID AUX" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="Output" Type="logiBUS::io::DQ::logiBUS_DO_S" Comment="Identify the Output Output_Q1..Q8" InitialValue="logiBUS_DO::Invalid"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<SubApp Name="GreenWhiteBackground2_AX" Type="MyLib::sys::GreenWhiteBackground2_AX" x="3600" y="1200">
+		</SubApp>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="3900" y="-300">
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+		<FB Name="AuxFunction2_X1" Type="isobus::UT::io::Auxiliary::IN::Aux_IXA" x="100" y="200">
+		</FB>
+		<FB Name="AX_SPLIT_2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="1500" y="700">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_3" x="5900" y="400">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="DigitalOutput_Q1.INIT" dx1="1706.67"/>
+			<Connection Source="DigitalOutput_Q1.INITO" Destination="AuxFunction2_X1.INIT" dx1="80" dx2="80" dy="246.67"/>
+			<Connection Source="AuxFunction2_X1.INITO" Destination="GreenWhiteBackground2_AX.INIT"/>
+			<Connection Source="GreenWhiteBackground2_AX.INITO" Destination="INITO"/>
+			<Connection Source="GreenWhiteBackground2_AX.INITO" Destination="AND_QO.REQ"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="u16ObjIdA" Destination="AuxFunction2_X1.u16ObjId" dx1="2446.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjIdA" Destination="GreenWhiteBackground2_AX.u16ObjIdA" dx1="3893.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Output" Destination="DigitalOutput_Q1.Output" dx1="4046.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="DigitalOutput_Q1.QI" dx1="1706.67"/>
+			<Connection Source="QI" Destination="AuxFunction2_X1.QI" dx1="80" dx2="80" dy="40"/>
+			<Connection Source="DigitalOutput_Q1.QO" Destination="AND_QO.IN1" dx1="600"/>
+			<Connection Source="AuxFunction2_X1.QO" Destination="AND_QO.IN2" dx1="2500"/>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="940"/>
+			<Connection Source="QI" Destination="GreenWhiteBackground2_AX.QI"/>
+			<Connection Source="GreenWhiteBackground2_AX.QO" Destination="AND_QO.IN3"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="AuxFunction2_X1.IN" Destination="AX_SPLIT_2.IN" dx1="364.71"/>
+			<Connection Source="AX_SPLIT_2.OUT1" Destination="DigitalOutput_Q1.OUT" dx1="388.24"/>
+			<Connection Source="AX_SPLIT_2.OUT2" Destination="GreenWhiteBackground2_AX.DI1" dx1="388.24"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

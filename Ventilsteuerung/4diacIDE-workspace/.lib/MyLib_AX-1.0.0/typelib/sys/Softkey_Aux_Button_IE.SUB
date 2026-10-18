@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Softkey_Aux_Button_IE" Comment="Softkey_Aux_IE (SoftKey ODER AUX) ODER zusaetzlich ein weiterer Button&#10;(Button_IE, z.B. IO-Diag-Testbutton, kann aber auch ein regulaerer Button sein)&#10;aktiviert -&gt; 1 gemeinsames IND-Event. Wie Softkey_Aux_Method_Button_IE, aber&#10;ohne die lokale OPC-UA-Methode - fuer Faelle, die nur SoftKey/AUX/Button&#10;gleichberechtigt brauchen.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-15" Remarks="initial implementation - aus Baender_Individual_Toggle.SUB herausgeloest (dort 3x identisch fuer Igel/Elevator/Querband verdrahtet: Softkey_Aux_IE + Button_IE + E_MERGE_2).">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::io::Button::ButtonActivationCode::BT_RELEASED_UNLATCHED"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+			<SubAppEvent Name="IND" Type="Event" Comment="Feuert wenn SoftKey, AUX ODER der Button aktiviert wird">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID SoftKey"/>
+			<VarDeclaration Name="u16ObjIdA" Type="UINT" Comment="Object ID AuxFunction2"/>
+			<VarDeclaration Name="u16ObjIdB" Type="UINT" Comment="Object ID weiterer Button (z.B. IO-Diag-Testbutton), gleichberechtigt zu SoftKey/AUX"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<SubApp Name="SoftkeyAux" Type="MyLib::sys::Softkey_Aux_IE" x="0" y="0">
+		</SubApp>
+		<FB Name="Button_IE_B" Type="isobus::UT::io::Button::Button_IE" x="0" y="900">
+			<Parameter Name="InputEvent" Value="BT_RELEASED_UNLATCHED"/>
+		</FB>
+		<FB Name="MERGE" Type="iec61499::events::E_MERGE_2" x="1700" y="500">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_2" x="3400" y="800">
+		</FB>
+		<EventConnections>
+			<Connection Source="SoftkeyAux.IND" Destination="MERGE.EI1" dx1="580"/>
+			<Connection Source="Button_IE_B.IND" Destination="MERGE.EI2" dx1="633.33"/>
+			<Connection Source="MERGE.EO" Destination="IND" dx1="2200"/>
+			<Connection Source="INIT" Destination="Button_IE_B.INIT" dx1="1140"/>
+			<Connection Source="Button_IE_B.INITO" Destination="SoftkeyAux.INIT" dx1="80" dx2="80" dy="-446.67"/>
+			<Connection Source="SoftkeyAux.INITO" Destination="INITO" dx1="3366.67"/>
+			<Connection Source="SoftkeyAux.INITO" Destination="AND_QO.REQ" dx1="1226.67"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="u16ObjId" Destination="SoftkeyAux.u16ObjId" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjIdA" Destination="SoftkeyAux.u16ObjIdA" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjIdB" Destination="Button_IE_B.u16ObjId" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="Button_IE_B.QI" dx1="1140"/>
+			<Connection Source="QI" Destination="SoftkeyAux.QI" dx1="1140"/>
+			<Connection Source="Button_IE_B.QO" Destination="AND_QO.IN1" dx1="1253.33"/>
+			<Connection Source="SoftkeyAux.QO" Destination="AND_QO.IN2" dx1="1226.67"/>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="773.33"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

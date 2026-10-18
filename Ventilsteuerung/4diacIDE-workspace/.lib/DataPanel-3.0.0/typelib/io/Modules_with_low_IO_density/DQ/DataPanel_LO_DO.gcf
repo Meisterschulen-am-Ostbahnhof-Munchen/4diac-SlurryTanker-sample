@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="DataPanel_LO_DO" Comment="DataPanel Modules with low IO density DO constants">
+	<Identification Standard="61499-1" Description="Copyright (c) 2024 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2024-01-25">
+	</VersionInfo>
+	<CompilerInfo packageName="DataPanel::io::LO::DQ">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="DigitalOutputL_1A" Type="DataPanel::io::LO::DQ::DataPanel_LO_DO_S" InitialValue="(Pin := 1)"/>
+		<VarDeclaration Name="DigitalOutputL_1B" Type="DataPanel::io::LO::DQ::DataPanel_LO_DO_S" InitialValue="(Pin := 2)"/>
+		<VarDeclaration Name="DigitalOutputL_2A" Type="DataPanel::io::LO::DQ::DataPanel_LO_DO_S" InitialValue="(Pin := 3)"/>
+		<VarDeclaration Name="DigitalOutputL_2B" Type="DataPanel::io::LO::DQ::DataPanel_LO_DO_S" InitialValue="(Pin := 4)"/>
+		<VarDeclaration Name="DigitalOutputL_3A" Type="DataPanel::io::LO::DQ::DataPanel_LO_DO_S" InitialValue="(Pin := 5)"/>
+		<VarDeclaration Name="DigitalOutputL_3B" Type="DataPanel::io::LO::DQ::DataPanel_LO_DO_S" InitialValue="(Pin := 6)"/>
+		<VarDeclaration Name="DigitalOutputL_4A" Type="DataPanel::io::LO::DQ::DataPanel_LO_DO_S" InitialValue="(Pin := 7)"/>
+		<VarDeclaration Name="DigitalOutputL_4B" Type="DataPanel::io::LO::DQ::DataPanel_LO_DO_S" InitialValue="(Pin := 8)"/>
+		<VarDeclaration Name="InvalidL" Type="DataPanel::io::LO::DQ::DataPanel_LO_DO_S" InitialValue="(Pin := 255)"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE DataPanel::io::LO::DQ;
+
+GLOBALCONSTANTS DataPanel_LO_DO
+	VAR_GLOBAL CONSTANT
+		DigitalOutputL_1A : DataPanel_LO_DO_S := (Pin := 1);
+		DigitalOutputL_1B : DataPanel_LO_DO_S := (Pin := 2);
+		DigitalOutputL_2A : DataPanel_LO_DO_S := (Pin := 3);
+		DigitalOutputL_2B : DataPanel_LO_DO_S := (Pin := 4);
+		DigitalOutputL_3A : DataPanel_LO_DO_S := (Pin := 5);
+		DigitalOutputL_3B : DataPanel_LO_DO_S := (Pin := 6);
+		DigitalOutputL_4A : DataPanel_LO_DO_S := (Pin := 7);
+		DigitalOutputL_4B : DataPanel_LO_DO_S := (Pin := 8);
+		InvalidL : DataPanel_LO_DO_S := (Pin := 255);
+	END_VAR
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</GlobalConstants>

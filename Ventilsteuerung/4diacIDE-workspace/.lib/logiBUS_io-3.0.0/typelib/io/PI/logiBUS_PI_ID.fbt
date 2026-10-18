@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="logiBUS_PI_ID" Comment="Input service interface function block for double word input data">
+	<Identification Description="Copyright (c) 2017 fortiss GmbH, HR Agrartechnik GmbH&#10; &#10;This program and the accompanying materials are made &#10;available under the terms of the Eclipse Public License 2.0 &#10;which is available at https://www.eclipse.org/legal/epl-2.0/ &#10;&#10;SPDX-License-Identifier: EPL-2.0&#10;&#10;&#10;if ImpulseDelta = 0, then TimeDelta cannot be 0.&#10;&#10;set TimeDelta to 16#FFFFFFFF to deactivate cyclic processing, and onyl indicate Changes in Value.">
+	</Identification>
+	<VersionInfo Organization="fortiss GmbH" Version="1.0" Author="Monika Wenger" Date="2017-03-20" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::io::PI">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+				<With Var="QI"/>
+				<With Var="PARAMS"/>
+				<With Var="Input"/>
+				<With Var="ImpulseDelta"/>
+				<With Var="TimeDelta"/>
+				<With Var="TimeRateLimit"/>
+			</Event>
+			<Event Name="REQ" Type="Event" Comment="Service Request">
+				<With Var="QI"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+				<With Var="IN"/>
+			</Event>
+			<Event Name="IND" Type="Event" Comment="Indication from Resource">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+				<With Var="IN"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
+			<VarDeclaration Name="PARAMS" Type="STRING" Comment="Service Parameters"/>
+			<VarDeclaration Name="Input" Type="logiBUS::io::PI::logiBUS_PI_S" Comment="Identify the Input Input_I1..I8" InitialValue="logiBUS_PI::Invalid"/>
+			<VarDeclaration Name="ImpulseDelta" Type="DWORD" Comment="After How many Impulses an IND"/>
+			<VarDeclaration Name="TimeDelta" Type="DWORD" Comment="After How many ms an IND" InitialValue="250"/>
+			<VarDeclaration Name="TimeRateLimit" Type="DWORD" Comment="Maximum 1 IND in how many ms. (&lt; delta)" InitialValue="100"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
+			<VarDeclaration Name="IN" Type="DWORD" Comment="Input data from resource"/>
+		</OutputVars>
+	</InterfaceList>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

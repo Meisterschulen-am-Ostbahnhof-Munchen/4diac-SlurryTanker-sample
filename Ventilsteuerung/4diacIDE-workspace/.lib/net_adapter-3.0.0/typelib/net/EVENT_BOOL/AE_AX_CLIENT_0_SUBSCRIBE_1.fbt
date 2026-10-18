@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="AE_AX_CLIENT_0_SUBSCRIBE_1" Comment="Trigger a remote OPC-UA method call via CLIENT_0 and read the resulting state&#10;back via SUBSCRIBE_1, driven by an AE_AX bidirectional adapter Socket (1 Event&#10;forward, state back)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 HR Agrartechnik GmbH &#10; &#10;This program and the accompanying materials are made &#10;available under the terms of the Eclipse Public License 2.0 &#10;which is available at https://www.eclipse.org/legal/epl-2.0/ &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-09-03" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::net">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Initialization">
+				<With Var="QI"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="QO/STATUS updated">
+				<With Var="QO"/>
+				<With Var="STATUS_TRIGGER"/>
+				<With Var="STATUS_STATE"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL"/>
+			<VarDeclaration Name="ID" Type="WSTRING" Comment="Remote-Methodenadresse fuer den Trigger-Aufruf"/>
+			<VarDeclaration Name="ID_STATE" Type="WSTRING" Comment="Lokal ueberwachter Zustandsknoten (ACTION=READ)"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="TRUE nur wenn CLIENT_0_1 und STATE_SUBSCRIBE aktuell beide QO=TRUE melden"/>
+			<VarDeclaration Name="STATUS_TRIGGER" Type="WSTRING" Comment="STATUS von CLIENT_0_1"/>
+			<VarDeclaration Name="STATUS_STATE" Type="WSTRING" Comment="STATUS von STATE_SUBSCRIBE"/>
+		</OutputVars>
+		<Sockets>
+			<AdapterDeclaration Name="TRIGGER" Type="adapter::types::bidirectional::AE_AX" Comment="Trigger (out), Zustand (in)" x="2200" y="1100"/>
+		</Sockets>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="CLIENT_0_1" Type="iec61499::net::CLIENT_0" x="3400" y="1300">
+		</FB>
+		<FB Name="STATE_SUBSCRIBE" Type="iec61499::net::SUBSCRIBE_1" x="-300" y="500">
+		</FB>
+		<FB Name="E_D_FF" Type="iec61499::events::E_D_FF" x="1100" y="900">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_2" x="4700" y="1900">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="STATE_SUBSCRIBE.INIT" dx1="1733.33"/>
+			<Connection Source="CLIENT_0_1.INITO" Destination="INITO" dx1="2266.67"/>
+			<Connection Source="CLIENT_0_1.INITO" Destination="AND_QO.REQ" dx1="380"/>
+			<Connection Source="TRIGGER.E1" Destination="CLIENT_0_1.REQ" dx1="340"/>
+			<Connection Source="STATE_SUBSCRIBE.IND" Destination="E_D_FF.CLK" dx1="280"/>
+			<Connection Source="E_D_FF.EO" Destination="TRIGGER.EI1" dx1="246.67"/>
+			<Connection Source="STATE_SUBSCRIBE.INITO" Destination="CLIENT_0_1.INIT" dx1="2820"/>
+			<Connection Source="CLIENT_0_1.CNF" Destination="AND_QO.REQ" dx1="460"/>
+			<Connection Source="STATE_SUBSCRIBE.IND" Destination="AND_QO.REQ" dx1="146.67"/>
+			<Connection Source="AND_QO.CNF" Destination="CNF" dx1="1060"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="QI" Destination="CLIENT_0_1.QI" dx1="5146.67"/>
+			<Connection Source="QI" Destination="STATE_SUBSCRIBE.QI" dx1="993.33"/>
+			<Connection Source="ID" Destination="CLIENT_0_1.ID" dx1="926.67"/>
+			<Connection Source="ID_STATE" Destination="STATE_SUBSCRIBE.ID" dx1="806.67"/>
+			<Connection Source="STATE_SUBSCRIBE.RD_1" Destination="E_D_FF.D" dx1="280"/>
+			<Connection Source="E_D_FF.Q" Destination="TRIGGER.DI1" dx1="246.67"/>
+			<Connection Source="CLIENT_0_1.QO" Destination="AND_QO.IN1" dx1="320"/>
+			<Connection Source="STATE_SUBSCRIBE.QO" Destination="AND_QO.IN2" dx1="80"/>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="1253.33"/>
+			<Connection Source="CLIENT_0_1.STATUS" Destination="STATUS_TRIGGER" dx1="2926.67"/>
+			<Connection Source="STATE_SUBSCRIBE.STATUS" Destination="STATUS_STATE" dx1="4706.67"/>
+		</DataConnections>
+	</FBNetwork>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

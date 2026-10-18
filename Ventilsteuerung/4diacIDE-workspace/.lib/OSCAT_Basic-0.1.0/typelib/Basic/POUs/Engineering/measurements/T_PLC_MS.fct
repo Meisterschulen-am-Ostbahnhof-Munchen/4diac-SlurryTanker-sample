@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Function Name="T_PLC_MS" Comment="T_PLC_MS reads the internal PLC timer and return the time">
+	<Identification Standard="61499-1" Description="T_PLC_MS reads the internal PLC timer and return the time, it has the advantage to be able to set&#10;a debug mode and speed up the counter to test the plc timer overrun which occurs every 50 days&#10;respectively 25 days at siemens S7 this routine also allows to correct the behavior of s7 where&#10;the internal plc counter will not count all 32 bits.">
+	</Identification>
+	<VersionInfo Version="1.0" Author="Franz Höpfinger" Date="2025-12-19">
+	</VersionInfo>
+	<CompilerInfo packageName="OSCAT::Basic::POUs::Engineering::measurements">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event">
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event">
+				<With Var=""/>
+			</Event>
+		</EventOutputs>
+		<OutputVars>
+			<VarDeclaration Name="" Type="UDINT"/>
+		</OutputVars>
+	</InterfaceList>
+	<FunctionBody>
+		<ST><![CDATA[PACKAGE OSCAT::Basic::POUs::Engineering::measurements;
+
+(* T_PLC_MS reads the internal PLC timer and return the time *)
+FUNCTION T_PLC_MS : UDINT
+VAR CONSTANT
+	debug : BOOL := 0;
+	N : INT := 0;
+	offset : UDINT := 0;
+END_VAR
+VAR
+	tx : TIME;
+END_VAR
+
+(*
+ * version 1.2	16. nov 2008 programmer 	hugo tested by	oscat
+ *)
+tx := NOW_MONOTONIC();
+T_PLC_MS := TIME_IN_MS_TO_UDINT(tx);
+(* hier muss die korrektur für step7 stattfinden plctime muss den vollen wertebereich von time
+ * ausnutzen:
+ * wenn bei step7 time -24tage bis plus 24 tage ist dann muss der timer auch beim überlauf auf
+ * -24tage springen und auf keinen fall auf 0 !!!!
+ * für siemens muss ein weiterer fb im main eingebunden werden der sicherstellt das alle 32 bits
+ * durchgezählt werden.
+ * es kann nur ein fb sein den er muss sich das oberste (32te) bit merken.
+ * oder etwa spring s7 bei überlauf auf -24 tage????? dann wäre keine korrektur nötig. *)
+IF debug THEN
+	T_PLC_MS := DWORD_TO_UDINT(SHL(UDINT_TO_DWORD(T_PLC_MS), N) OR UDINT_TO_DWORD(DWORD_TO_UDINT(SHL(DWORD#1, N)) - 1))
+		+ offset;
+END_IF;
+
+END_FUNCTION
+
+(* revision history hm	14.9.2007	rev 1.0 original version
+ * *
+ * hm	12. nov 2007	rev 1.1 added temporaray variable tx because some compilers could not handle
+ * time() as an argument
+ * *
+ * hm	16. nov. 2008	rev 1.2 initialized constants with 0 for compatibility reasons *)
+]]></ST>
+	</FunctionBody>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</Function>

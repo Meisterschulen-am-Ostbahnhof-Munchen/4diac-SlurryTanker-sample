@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Softkey_Aux_Auto_IXA_TO_Remote_WRITE" Comment="VT-SoftKey lesen ODER AUX-Zuweisung (Joystick) lesen ODER lokaler Web-Override&#10;ODER Automatik-Kommando + Remote-OPC-UA-Write an Zielmodul (generisch, ein&#10;Kanal, ohne Status-Feedback). Kopie von Softkey_Aux_IXA_TO_Remote_WRITE + 1&#10;zusaetzlicher AUTO_IN-Socket - fuer Funktionen mit autonomer Ansteuerung (z.B.&#10;Achslenkung-Mittelpunkt-Automatik).">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.2" Author="Franz Höpfinger" Date="2026-09-16" Remarks="Fix: SUBSCRIBE_WEB.OUT konnte nicht an 2 Ziele (OR_MERGE.IN3 UND WEB_STATE) gleichzeitig angeschlossen werden - Adapter-Plugs sind strikt 1:1, kein Fan-out wie bei Daten-/Eventverbindungen (FORTE-Bootfehler INVALID_STATE beim 2. CREATE Connection auf demselben Plug). AX_SPLIT_2 (SPLIT_WEB) dazwischengesetzt, analog dem bereits etablierten SPLIT_Y/AR_SPLIT_2-Muster.">
+	</VersionInfo>
+	<VersionInfo Version="1.1" Author="Franz Höpfinger" Date="2026-09-16" Remarks="Neuer Ausgangs-Plug WEB_STATE ergaenzt (reiner Fan-out von SUBSCRIBE_WEB.OUT) - behebt Doppel-Self-Subscribe auf ID_WEB_READ (FORTE: 'Cannot add another one'), da Fahrwerk_Mittelpunkt_Automatik denselben Knoten bisher selbst nochmal abonniert hat. Siehe BERICHT_2026-09-16_STG3_I1_I3_I4_I6_STALE_REMOTE_SUBSCRIBE.md Abschnitt 16-17.">
+	</VersionInfo>
+	<VersionInfo Version="1.0" Author="Franz Höpfinger" Date="2026-09-11" Remarks="Kopie von Softkey_Aux_IXA_TO_Remote_WRITE (Version 1.0, 2026-09-07) + AUTO_IN-Socket (AX_OR_4 statt AX_OR_3) fuer Achslenkung-Mittelpunkt-Automatik. Nur fuer Kanaele mit Automatik-Bedarf verwenden - alle anderen Verwender von Softkey_Aux_IXA_TO_Remote_WRITE(_BG_OPC) bleiben unveraendert auf dem Original-Typ.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID SoftKey (VT)" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObjIdA" Type="UINT" Comment="Object ID AuxFunction2 (VT)" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="ID_WRITE_REMOTE" Type="WSTRING" Comment="Remote-Write-Adresse zum Zielmodul (Befehl, ACTION=WRITE, CLIENT)"/>
+			<VarDeclaration Name="ID_WEB_READ" Type="WSTRING" Comment="Lokale Subscribe-Adresse fuer einen Web-Client (z.B. vt-ui-mirror) auf demselben Modul, ODER-verknuepft mit SoftKey und AUX"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="WEB_STATE" Type="adapter::types::unidirectional::AX" Comment="Web-Zustand (= SUBSCRIBE_WEB.OUT) nach aussen durchgereicht, damit andere Composite-Instanzen denselben Wert per Datenverbindung nutzen koennen statt selbst nochmal lokal zu abonnieren (nur 1 lokaler OPC-UA-Subscriber pro Knoten zulaessig)"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="AUTO_IN" Type="adapter::types::unidirectional::AX" Comment="Autonomes Kommando (z.B. Achslenkung-Mittelpunkt-Automatik), ODER-verknuepft mit SoftKey/Aux/Web"/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="Softkey_IXA" Type="isobus::UT::io::Softkey::Softkey_IXA" x="-1400" y="-1600">
+		</FB>
+		<FB Name="Aux_IXA" Type="isobus::UT::io::Auxiliary::IN::Aux_IXA" x="-1400" y="-600">
+		</FB>
+		<FB Name="SUBSCRIBE_WEB" Type="adapter::net::AX_SUBSCRIBE_1" x="-1500" y="900">
+		</FB>
+		<FB Name="OR_MERGE" Type="adapter::booleanOperators::AX_OR_4" x="1200" y="300">
+		</FB>
+		<FB Name="SPLIT_WEB" Type="adapter::events::unidirectional::AX_SPLIT_2" x="-100" y="1100">
+		</FB>
+		<FB Name="AX_CLIENT_1_0" Type="adapter::net::AX_CLIENT_1_0" x="2300" y="-200">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_4" x="4300" y="800">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="Softkey_IXA.INIT" dx1="1580"/>
+			<Connection Source="Softkey_IXA.INITO" Destination="Aux_IXA.INIT" dx1="80" dx2="80" dy="500"/>
+			<Connection Source="Aux_IXA.INITO" Destination="SUBSCRIBE_WEB.INIT" dx1="80" dx2="80" dy="546.67"/>
+			<Connection Source="SUBSCRIBE_WEB.INITO" Destination="AX_CLIENT_1_0.INIT" dx1="1026.67"/>
+			<Connection Source="AX_CLIENT_1_0.INITO" Destination="INITO" dx1="2126.67"/>
+			<Connection Source="AX_CLIENT_1_0.INITO" Destination="AND_QO.REQ" dx1="553.33"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="u16ObjId" Destination="Softkey_IXA.u16ObjId" dx1="846.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjIdA" Destination="Aux_IXA.u16ObjId" dx1="846.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_WEB_READ" Destination="SUBSCRIBE_WEB.ID" dx1="80">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_WRITE_REMOTE" Destination="AX_CLIENT_1_0.ID" dx1="613.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="Softkey_IXA.QI" dx1="1580"/>
+			<Connection Source="QI" Destination="Aux_IXA.QI" dx1="1580"/>
+			<Connection Source="QI" Destination="SUBSCRIBE_WEB.QI" dx1="1833.33"/>
+			<Connection Source="QI" Destination="AX_CLIENT_1_0.QI" dx1="766.67"/>
+			<Connection Source="Softkey_IXA.QO" Destination="AND_QO.IN1" dx1="2000"/>
+			<Connection Source="Aux_IXA.QO" Destination="AND_QO.IN2" dx1="2000"/>
+			<Connection Source="SUBSCRIBE_WEB.QO" Destination="AND_QO.IN3" dx1="2026.67"/>
+			<Connection Source="AX_CLIENT_1_0.QO" Destination="AND_QO.IN4" dx1="553.33"/>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="2320"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="Softkey_IXA.IN" Destination="OR_MERGE.IN1" dx1="246.67"/>
+			<Connection Source="Aux_IXA.IN" Destination="OR_MERGE.IN2" dx1="100"/>
+			<Connection Source="SUBSCRIBE_WEB.OUT" Destination="SPLIT_WEB.IN" dx1="280"/>
+			<Connection Source="SPLIT_WEB.OUT1" Destination="OR_MERGE.IN3" dx1="173.33"/>
+			<Connection Source="AUTO_IN" Destination="OR_MERGE.IN4" dx1="100"/>
+			<Connection Source="OR_MERGE.OUT" Destination="AX_CLIENT_1_0.IN" dx1="400"/>
+			<Connection Source="SPLIT_WEB.OUT2" Destination="WEB_STATE" dx1="100"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>SoftKey UND Aux UND Automatik → Remote-OPC-UA-Write (nur Kommando, kein Status)</h1>
+
+<p>Kopie von <code>Softkey_Aux_IXA_TO_Remote_WRITE</code> mit einem 4. ODER-Eingang
+(<code>AUTO_IN</code>, <code>AX_OR_4</code> statt <code>AX_OR_3</code>) fuer eine autonome
+Ansteuerung (z.B. Achslenkung-Mittelpunkt-Automatik). Genau EIN Publisher pro Kanal auf
+<code>ID_WRITE_REMOTE</code> bleibt dadurch erhalten, auch wenn 4 statt 3 Quellen zusammengefuehrt
+werden - kein Self-Latch-Risiko.</p>
+
+<p>Kein Status-Feedback/Hintergrundfarbe hier - dafuer <code>AX_SUBSCRIBE_BG3_WEB_OPC</code>
+danebenstellen (unveraendert, gleiche <code>u16ObjId</code>/<code>u16ObjIdA</code>-Werte
+durchreichen) - siehe <code>Softkey_Aux_Auto_IXA_TO_Remote_WRITE_BG_OPC</code> fuer die
+vorverdrahtete Kombination.</p>
+
+<p><code>WEB_STATE</code> (neu, Version 1.1): Plug von <code>SUBSCRIBE_WEB.OUT</code> ueber
+<code>SPLIT_WEB</code> (<code>AX_SPLIT_2</code>) durchgereicht, damit andere Composite-Instanzen
+(z.B. <code>Fahrwerk_Mittelpunkt_Automatik</code> fuer die Override-Erkennung) denselben
+Web-Zustand per normaler Adapterverbindung lesen koennen, statt selbst nochmal denselben Knoten
+lokal zu abonnieren - FORTE erlaubt nur EINEN lokalen OPC-UA-Subscriber pro Knoten.
+<code>SPLIT_WEB</code> ist noetig, da ein Adapter-Plug (anders als Daten-/Eventverbindungen)
+nicht an 2 Ziele gleichzeitig angeschlossen werden kann (Version 1.2 Fix, siehe VersionInfo).</p>
+]]></Attribute>
+</SubAppType>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="IG5_NAME_Functions" Comment="Industry Group 5 specific function defines">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Organization="Demmler Andreas Fahrzeugbau" Version="1.0" Author="Franz Höpfinger" Date="2026-06-29">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::pgn::const">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="F_INDUSTRIAL_GEN_SET_SUPPLEMENTAL_ENGINE_CONTROL_SENSING" Type="BYTE" Comment="Sys: Industrial-Process Control-Stationary (Gen-Sets), Func: Supplemental Engine Control Sensing" InitialValue="128"/>
+		<VarDeclaration Name="F_INDUSTRIAL_GEN_SET_GENERATOR_SET_CONTROLLER" Type="BYTE" Comment="Sys: Industrial-Process Control-Stationary (Gen-Sets), Func: Generator Set Controller - Generator" InitialValue="129"/>
+		<VarDeclaration Name="F_INDUSTRIAL_GEN_SET_GENERATOR_VOLTAGE_REGULATOR" Type="BYTE" Comment="Sys: Industrial-Process Control-Stationary (Gen-Sets), Func: Generator Voltage Regulator" InitialValue="130"/>
+		<VarDeclaration Name="F_INDUSTRIAL_GEN_SET_CHOKE_ACTUATOR" Type="BYTE" Comment="Sys: Industrial-Process Control-Stationary (Gen-Sets), Func: Choke Actuator - Device used to" InitialValue="131"/>
+		<VarDeclaration Name="F_WELL_STIMULATION_PUMP" Type="BYTE" Comment="Sys: , Func: Well Stimulation Pump - Device which communicates operating parameters of a well" InitialValue="132"/>
+		<VarDeclaration Name="F_INDUSTRIAL_GEN_SET_NOT_AVAILABLE" Type="BYTE" Comment="Sys: Industrial-Process Control-Stationary (Gen-Sets), Func: Not Available - This assignment can" InitialValue="255"/>
+		<VarDeclaration Name="F_NOT_AVAILABLE" Type="BYTE" Comment="Sys: Not Available, Func: Not Available - This assignment can be used until an explicit function" InitialValue="255"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE isobus::pgn::const;
+
+// Industry Group 5 specific function defines
+GLOBALCONSTANTS IG5_NAME_Functions
+	// Industrial-Process Control-Stationary (Gen-Sets) (DC_INDUSTRIAL_GEN_SET = 0)
+	VAR_GLOBAL CONSTANT
+		F_INDUSTRIAL_GEN_SET_SUPPLEMENTAL_ENGINE_CONTROL_SENSING : BYTE := 128; // Sys: Industrial-Process Control-Stationary (Gen-Sets), Func: Supplemental Engine Control Sensing
+		F_INDUSTRIAL_GEN_SET_GENERATOR_SET_CONTROLLER : BYTE := 129; // Sys: Industrial-Process Control-Stationary (Gen-Sets), Func: Generator Set Controller - Generator
+		                                                             // set controller used to collect data and control.
+		F_INDUSTRIAL_GEN_SET_GENERATOR_VOLTAGE_REGULATOR : BYTE := 130; // Sys: Industrial-Process Control-Stationary (Gen-Sets), Func: Generator Voltage Regulator
+		F_INDUSTRIAL_GEN_SET_CHOKE_ACTUATOR : BYTE := 131; // Sys: Industrial-Process Control-Stationary (Gen-Sets), Func: Choke Actuator - Device used to
+		                                                   // Control the flow of air on a Gas Engine.
+		F_WELL_STIMULATION_PUMP : BYTE := 132; // Sys: , Func: Well Stimulation Pump - Device which communicates operating parameters of a well
+		                                       // stimulation pump used in oil and gas drilling applications.
+		F_INDUSTRIAL_GEN_SET_NOT_AVAILABLE : BYTE := 255; // Sys: Industrial-Process Control-Stationary (Gen-Sets), Func: Not Available - This assignment can
+		                                                  // be used until an explicit function has been assigned.
+	END_VAR
+
+	// Not Available (DC_NOT_AVAILABLE = 127)
+	VAR_GLOBAL CONSTANT
+		F_NOT_AVAILABLE : BYTE := 255; // Sys: Not Available, Func: Not Available - This assignment can be used until an explicit function
+		                               // has been assigned.
+	END_VAR
+
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</GlobalConstants>

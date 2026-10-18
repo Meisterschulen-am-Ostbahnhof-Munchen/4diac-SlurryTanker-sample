@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataType Name="ScrollFull_S" Comment="Complete ISOBUS UT scroll list configuration: geometry + operator controls, bundled for a single-struct FB interface">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-08-09" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::utils::scroll">
+	</CompilerInfo>
+	<StructuredType>
+		<VarDeclaration Name="stGeometry" Type="isobus::utils::scroll::ScrollObjectPool_S" Comment="List + scrollbar geometry and Change Child Position targets"/>
+		<VarDeclaration Name="stControls" Type="isobus::utils::scroll::ScrollControls_S" Comment="Operator control objects (6 buttons + direct-position input field)"/>
+	</StructuredType>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</DataType>

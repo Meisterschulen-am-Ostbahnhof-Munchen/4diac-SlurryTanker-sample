@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="A2X_TO_A2X_AX" Comment="Wie AX_2_TO_3, aber gebuendelt: A2X (UP/DOWN) durchgereicht + gemeinsames ODER&#10;(z.B. Treiber-Enable) als zusaetzliches AX-Signal">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-06" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<Sockets>
+			<AdapterDeclaration Name="A2X_IN" Type="adapter::types::unidirectional::A2X" Comment="Gebuendeltes UP/DOWN Eingangssignal"/>
+		</Sockets>
+		<Plugs>
+			<AdapterDeclaration Name="A2X_OUT" Type="adapter::types::unidirectional::A2X" Comment="Gebuendeltes UP/DOWN Ausgangssignal (unveraendert durchgereicht)"/>
+			<AdapterDeclaration Name="OR_OUT" Type="adapter::types::unidirectional::AX" Comment="ODER aus UP und DOWN"/>
+		</Plugs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="UNBUNDLE" Type="adapter::conversion::unidirectional::A2X_2X_TO_2AX" x="-4600" y="-500">
+		</FB>
+		<FB Name="AX_SPLIT_UP" Type="adapter::events::unidirectional::AX_SPLIT_2" x="-3000" y="-1100">
+		</FB>
+		<FB Name="AX_SPLIT_DOWN" Type="adapter::events::unidirectional::AX_SPLIT_2" x="-3000" y="-200">
+		</FB>
+		<FB Name="BUNDLE" Type="adapter::conversion::unidirectional::A2X_2AX_TO_2X" x="-1200" y="-1000">
+		</FB>
+		<FB Name="AX_OR_2" Type="adapter::booleanOperators::AX_OR_2" x="-1200" y="200">
+		</FB>
+		<AdapterConnections>
+			<Connection Source="A2X_IN" Destination="UNBUNDLE.A2X_IN" dx1="520"/>
+			<Connection Source="UNBUNDLE.UP" Destination="AX_SPLIT_UP.IN" dx1="1346.67"/>
+			<Connection Source="UNBUNDLE.DOWN" Destination="AX_SPLIT_DOWN.IN" dx1="1346.67"/>
+			<Connection Source="AX_SPLIT_UP.OUT1" Destination="BUNDLE.UP" dx1="813.33"/>
+			<Connection Source="AX_SPLIT_DOWN.OUT1" Destination="BUNDLE.DOWN" dx1="813.33"/>
+			<Connection Source="AX_SPLIT_UP.OUT2" Destination="AX_OR_2.IN1" dx1="500"/>
+			<Connection Source="AX_SPLIT_DOWN.OUT2" Destination="AX_OR_2.IN2" dx1="466.67"/>
+			<Connection Source="BUNDLE.A2X_OUT" Destination="A2X_OUT" dx1="2026.67"/>
+			<Connection Source="AX_OR_2.OUT" Destination="OR_OUT" dx1="360"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>A2X-Passthrough plus gemeinsames ODER als zusätzliches AX-Signal</h1>
+
+<p>Gebündeltes Pendant zu <code>AX_2_TO_3</code>: statt zwei getrennter <code>AX</code>-Sockets/Plugs
+(<code>UP_IN</code>/<code>DOWN_IN</code>, <code>UP_OUT</code>/<code>DOWN_OUT</code>) nimmt dieser
+Baustein UP/DOWN gebündelt als ein einziges <code>A2X</code>-Signal entgegen und gibt sie ebenso
+gebündelt wieder aus - plus ein zusätzliches, einzelnes <code>AX</code>-Signal mit dem ODER aus
+beiden Richtungen.</p>
+
+<h2>Funktionsbeschreibung</h2>
+
+<ul>
+	<li><code>UNBUNDLE</code> (<code>A2X_2X_TO_2AX</code>) trennt das eingehende <code>A2X_IN</code>
+	in zwei einzelne <code>AX</code>-Signale (UP, DOWN) auf.</li>
+	<li>Je ein <code>AX_SPLIT_2</code> pro Richtung, weil jedes der beiden Signale zu zwei Zielen muss:
+	zurück ins gebündelte Ausgangssignal UND in die ODER-Verknüpfung.</li>
+	<li><code>BUNDLE</code> (<code>A2X_2AX_TO_2X</code>) fügt UP/DOWN wieder zu einem einzigen
+	<code>A2X_OUT</code> zusammen - nach außen bleibt die Bündelung erhalten, intern wird trotzdem
+	unverändert durchgereicht wie bei <code>AX_2_TO_3</code>.</li>
+	<li><code>AX_OR_2</code> liefert auf <code>OR_OUT</code> "läuft der Aktor gerade in irgendeine
+	Richtung" - z.B. für einen gemeinsamen Treiber/Enable-Ausgang.</li>
+</ul>
+
+<p>Verwenden, wenn UP/DOWN im Rest der Schaltung ohnehin als gebündeltes <code>A2X</code> geführt
+werden (z.B. Richtung an einem Doppelwirkungs-Ventil) und nicht extra in zwei einzelne
+<code>AX</code>-Signale aufgesplittet werden sollen. Werden UP/DOWN ohnehin einzeln als
+<code>AX</code> geführt, <code>AX_2_TO_3</code> verwenden.</p>
+]]></Attribute>
+</SubAppType>

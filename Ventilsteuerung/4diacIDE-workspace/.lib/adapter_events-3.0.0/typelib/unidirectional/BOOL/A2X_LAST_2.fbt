@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="A2X_LAST_2" Comment="MERGE 2 A2X in 1 A2X (LAST WRITER WINS je Kanal, nicht naiv gemergt) - UP und&#10;DOWN werden unabhaengig gemerged, welcher Socket zuletzt auf dem jeweiligen&#10;Kanal geschrieben hat, gewinnt">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-08-31" Remarks="2-channel extension of the generic LAST_2 pattern - UP and DOWN are two independent single-channel merges sharing one ECC (only one event is processed per FB invocation, so no state collision)">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::events::unidirectional">
+	</CompilerInfo>
+	<InterfaceList>
+		<Plugs>
+			<AdapterDeclaration Name="OUT" Type="adapter::types::unidirectional::A2X"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="IN1" Type="adapter::types::unidirectional::A2X"/>
+			<AdapterDeclaration Name="IN2" Type="adapter::types::unidirectional::A2X"/>
+		</Sockets>
+	</InterfaceList>
+	<BasicFB>
+		<ECC>
+			<ECState Name="START" Comment="Initial State" x="1200" y="80">
+			</ECState>
+			<ECState Name="PASS1_UP" Comment="IN1 zuletzt auf UP geschrieben" x="1840" y="-1280">
+				<ECAction Algorithm="PASS1_UP" Output="OUT.E_UP"/>
+			</ECState>
+			<ECState Name="PASS2_UP" Comment="IN2 zuletzt auf UP geschrieben" x="1840" y="-640">
+				<ECAction Algorithm="PASS2_UP" Output="OUT.E_UP"/>
+			</ECState>
+			<ECState Name="PASS1_DOWN" Comment="IN1 zuletzt auf DOWN geschrieben" x="1360" y="1120">
+				<ECAction Algorithm="PASS1_DOWN" Output="OUT.E_DOWN"/>
+			</ECState>
+			<ECState Name="PASS2_DOWN" Comment="IN2 zuletzt auf DOWN geschrieben" x="1360" y="1760">
+				<ECAction Algorithm="PASS2_DOWN" Output="OUT.E_DOWN"/>
+			</ECState>
+			<ECTransition Source="START" Destination="PASS1_UP" Condition="IN1.E_UP" x="1593.33" y="-626.67"/>
+			<ECTransition Source="START" Destination="PASS2_UP" Condition="IN2.E_UP" x="1593.33" y="-313.33"/>
+			<ECTransition Source="START" Destination="PASS1_DOWN" Condition="IN1.E_DOWN" x="1380" y="513.33"/>
+			<ECTransition Source="START" Destination="PASS2_DOWN" Condition="IN2.E_DOWN" x="1380" y="826.67"/>
+			<ECTransition Source="PASS1_UP" Destination="START" Condition="1" x="633.33" y="-753.33"/>
+			<ECTransition Source="PASS2_UP" Destination="START" Condition="1" x="633.33" y="-440"/>
+			<ECTransition Source="PASS1_DOWN" Destination="START" Condition="1" x="720" y="386.67"/>
+			<ECTransition Source="PASS2_DOWN" Destination="START" Condition="1" x="720" y="700"/>
+		</ECC>
+		<Algorithm Name="PASS1_UP" Comment="IN1.UP durchreichen">
+			<ST><![CDATA[
+OUT.UP := IN1.UP;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="PASS2_UP" Comment="IN2.UP durchreichen">
+			<ST><![CDATA[
+OUT.UP := IN2.UP;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="PASS1_DOWN" Comment="IN1.DOWN durchreichen">
+			<ST><![CDATA[
+OUT.DOWN := IN1.DOWN;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="PASS2_DOWN" Comment="IN2.DOWN durchreichen">
+			<ST><![CDATA[
+OUT.DOWN := IN2.DOWN;
+]]></ST>
+		</Algorithm>
+	</BasicFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

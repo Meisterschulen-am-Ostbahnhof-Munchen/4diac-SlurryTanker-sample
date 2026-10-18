@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="GreenWhiteBackground1_AX" Comment="Hintergrundfarbe (TRUE -&gt; Grün, FALSE -&gt; Weiß) für 1 Objekt (AX-Adapter)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2022 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2022-11-10">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+		<Import declaration="isobus::UT::Q::const::colours::COLOR_GREEN"/>
+		<Import declaration="isobus::UT::Q::const::colours::COLOR_WHITE"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+			<SubAppEvent Name="CNF" Type="Event" Comment="Execution Confirmation">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID Softkey/Button" InitialValue="ID_NULL"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+			<VarDeclaration Name="STATUS_1" Type="STRING" Comment="Service Status"/>
+			<VarDeclaration Name="u8OldColour_1" Type="USINT" Comment="Old value of ID"/>
+			<VarDeclaration Name="result_1" Type="INT" Comment="retval see description"/>
+		</OutputVars>
+		<Sockets>
+			<AdapterDeclaration Name="DI1" Type="adapter::types::unidirectional::AX" Comment="Selector"/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="Q_BackgroundColour" Type="isobus::UT::Q::Q_BackgroundColour" x="-3106.67" y="706.67">
+		</FB>
+		<FB Name="AX_SEL" Type="adapter::iec61131::selection::AX_SEL" x="-4306.67" y="2040">
+			<Parameter Name="IN0" Value="COLOR_WHITE"/>
+			<Parameter Name="IN1" Value="COLOR_GREEN"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="Q_BackgroundColour.CNF" Destination="CNF" dx1="960"/>
+			<Connection Source="AX_SEL.CNF" Destination="Q_BackgroundColour.REQ" dx1="213.33"/>
+			<Connection Source="INIT" Destination="Q_BackgroundColour.INIT" dx1="80" dx2="80" dy="340"/>
+			<Connection Source="Q_BackgroundColour.INITO" Destination="INITO" dx1="2893.33"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="u16ObjId" Destination="Q_BackgroundColour.u16ObjId" dx1="1126.67"/>
+			<Connection Source="Q_BackgroundColour.s16result" Destination="result_1" dx1="926.67"/>
+			<Connection Source="Q_BackgroundColour.u8OldColour" Destination="u8OldColour_1" dx1="960"/>
+			<Connection Source="Q_BackgroundColour.STATUS" Destination="STATUS_1" dx1="946.67"/>
+			<Connection Source="AX_SEL.OUT" Destination="Q_BackgroundColour.u8Colour" dx1="406.67"/>
+			<Connection Source="QI" Destination="Q_BackgroundColour.QI" dx1="80" dx2="80" dy="446.67"/>
+			<Connection Source="Q_BackgroundColour.QO" Destination="QO" dx1="3293.33"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="DI1" Destination="AX_SEL.G" dx1="660"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>Hintergrundfarbe für ein normales VT-Objekt</h1>
+
+<p>Setzt die Hintergrundfarbe (TRUE -&gt; Grün, FALSE -&gt; Weiß) eines einzelnen normalen VT-Objekts
+(SoftKey, Button, Output-Feld, Container usw.) über <code>u16ObjId</code>. Sendet dafür genau ein
+ISO-11783-6-Kommando (Part 6 - F.20, "Change Background Colour", FB <code>Q_BackgroundColour</code>)
+an das VT.</p>
+
+<p>Für ein Auxiliary-Function-Type-2-Objekt (Object-ID-Bereich 31000&ndash;31999) reicht dieser
+Baustein <strong>nicht</strong>, weil dessen Zuweisung zusätzlich am physischen Aux-Handle (Joystick)
+angezeigt wird und dafür ein zweites Kommando über die Aux-Verbindung nötig ist - dafür
+<code>GreenWhiteBackground2_AX</code> verwenden. Für die Kombination "1 normales Objekt + 1
+Aux-Objekt gemeinsam schalten" <code>GreenWhiteBackground3_AX</code> verwenden.</p>
+]]></Attribute>
+</SubAppType>

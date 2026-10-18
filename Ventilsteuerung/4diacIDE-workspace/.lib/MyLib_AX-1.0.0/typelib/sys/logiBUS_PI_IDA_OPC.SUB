@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="logiBUS_PI_IDA_OPC" Comment="logiBUS_PI_IDA (Puls-Eingang) auf VT-Zahlenfelder (Zaehler roh + Frequenz Hz, je&#10;eigene CNumberVariable) + Bargraph (Frequenz) + OPC-UA (Zaehler DWORD + Frequenz&#10;REAL, generisch, ein Kanal)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.2" Author="Franz Höpfinger" Date="2026-10-15" Remarks="Bugfix: E_MERGE_QO.EO war nirgends angeschlossen (totes Wiring) - QO wurde dadurch nur einmal beim Boot berechnet (Button_SWITCH.INITO-Trigger) und nie wieder aktualisiert. Neue Connection E_MERGE_QO.EO -&gt; AND_QO.REQ: QO wird jetzt bei jedem neuen Q_NumericValue_COUNT/_FREQ-Wert (CNF) neu ausgewertet.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-10-03" Remarks="Folgefix zu FT_DERIV_10_AR v1.2 (K jetzt AUI-Adapter-Socket statt Parameter): bisheriges Parameter Name='K' Value='9' auf FT_DERIV_10_AR entfernt (waere jetzt ein IDE-Fehler, da K kein plain InputVar mehr ist), ersetzt durch LIT_DerivK (initval_AUI, INIT_VAL=9) + AdapterConnection auf FT_DERIV_10_AR.K - gleicher Wert wie bisher, nur adapter-konform verdrahtet. Dieser Baustein hat aktuell keine aktiven Aufrufer im Projekt.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-08-30" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+		<Import declaration="logiBUS::io::PI::logiBUS_PI"/>
+		<Import declaration="logiBUS::io::PI::logiBUS_PI_S"/>
+		<Import declaration="logiBUS::utils::conversion::phys::NumericObjectPool_S"/>
+		<Import declaration="isobus::UT::io::Button::ButtonActivationCode::BT_PRESSED_LATCHED"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="u16ObjId_COUNTVAR" Type="UINT" Comment="Object ID CNumberVariable (roher Zaehlerstand, unbegrenzt wachsend, Scale=1 im VT-Pool)" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="stObjFreq" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object ID + Scale/Offset/Decimals CNumberVariable (Frequenz Hz, eigene, unabhaengige CNumberVariable - keine Reskalierung des Zaehlers)" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 0)"/>
+			<VarDeclaration Name="u16ObjId_SWITCH" Type="UINT" Comment="Object ID Kanal-Ein/Aus-Taste auf der VT (physischer Tastendruck togglet Enable, ueber Button_IE)" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObjId_STATUS" Type="UINT" Comment="Object ID Status-Anzeige (Hintergrundfarbe Weiss=Kanal deaktiviert / Gruen=aktiv+logiBUS_PI_IDA.QO TRUE / Rot=aktiv+QO FALSE, Stoerung)" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="bDefaultEnabled" Type="BOOL" Comment="Kanal-Zustand beim Start: TRUE=aktiv (Kanaele 1-4), FALSE=inaktiv (Kanaele 5-8, da nur 4 Kanaele gleichzeitig verfuegbar sind)"/>
+			<VarDeclaration Name="Input" Type="logiBUS::io::PI::logiBUS_PI_S" Comment="Identify the Input PulseInput_I1..I8" InitialValue="logiBUS_PI::Invalid"/>
+			<VarDeclaration Name="ID_COUNT_WRITE" Type="WSTRING" Comment="Zaehler-Ruckmelde-Adresse (DWORD, roh, ACTION=PUBLISH)"/>
+			<VarDeclaration Name="ID_FREQ_WRITE" Type="WSTRING" Comment="Frequenz-Ruckmelde-Adresse (REAL Hz, ACTION=PUBLISH)"/>
+			<VarDeclaration Name="ID_SWITCH_READ" Type="WSTRING" Comment="Remote-Schalter-Adresse (BOOL, ACTION=SUBSCRIBE, togglet Kanal-Enable wie ein Tastendruck)"/>
+			<VarDeclaration Name="ID_SWITCH_WRITE" Type="WSTRING" Comment="Echo-Ruckmelde-Adresse (BOOL, ACTION=PUBLISH, aktueller Kanal-Enable-Zustand)"/>
+			<VarDeclaration Name="ID_STATUS_WRITE" Type="WSTRING" Comment="Status-Ruckmelde-Adresse (BOOL, ACTION=PUBLISH, nur lesend, logiBUS_PI_IDA.QO)"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully (AND aus Q_NumericValue_COUNT/_FREQ)"/>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="logiBUS_PI_IDA" Type="logiBUS::io::PI::logiBUS_PI_IDA" x="-5600" y="-1700">
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="ImpulseDelta" Value="DWORD#100"/>
+			<Parameter Name="TimeDelta" Value="DWORD#250"/>
+			<Parameter Name="TimeRateLimit" Value="DWORD#100"/>
+		</FB>
+		<FB Name="AD_SPLIT_2_UNGATED_FREQ" Type="adapter::events::unidirectional::AD_SPLIT_2_UNGATED" x="-4100" y="-1000">
+		</FB>
+		<FB Name="AD_SPLIT_2" Type="adapter::events::unidirectional::AD_SPLIT_2" x="-2400" y="-1000">
+		</FB>
+		<FB Name="AD_PUBLISH_COUNT" Type="adapter::net::AD_PUBLISH_1" x="2000" y="-1700">
+		</FB>
+		<FB Name="AD_TO_AUDI" Type="adapter::conversion::unidirectional::AD_TO_AUDI" x="0" y="-400">
+		</FB>
+		<FB Name="Q_NumericValue_COUNT" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="1900" y="-800">
+		</FB>
+		<FB Name="AD_TO_AR_NUM" Type="adapter::conversion::unidirectional::AD_TO_AR_NUM" x="-1900" y="1100">
+		</FB>
+		<FB Name="AR_PUBLISH_FREQ" Type="adapter::net::AR_PUBLISH_1" x="8900" y="100">
+		</FB>
+		<FB Name="Q_NumericValue_FREQ" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="7100" y="1000">
+		</FB>
+		<FB Name="AR_SPLIT_2" Type="adapter::events::unidirectional::AR_SPLIT_2" x="4800" y="900">
+		</FB>
+		<FB Name="E_T_FF_SR_SWITCH" Type="iec61499::events::E_T_FF_SR_SYM_INIT" x="-7700" y="-2000">
+		</FB>
+		<FB Name="Button_SWITCH" Type="isobus::UT::io::Button::Button_IE" x="-10500" y="-1200">
+			<Parameter Name="InputEvent" Value="BT_PRESSED_LATCHED"/>
+		</FB>
+		<FB Name="AX_SUBSCRIBE_SWITCH" Type="adapter::net::AX_SUBSCRIBE_1" x="-11900" y="-2200">
+		</FB>
+		<FB Name="AX_RF_TRIG_SWITCH" Type="adapter::events::unidirectional::AX_RF_TRIG" x="-10500" y="-1900">
+		</FB>
+		<FB Name="AX_BOOL_TO_X_SWITCH" Type="adapter::conversion::unidirectional::AX_BOOL_TO_X" x="-5600" y="800">
+		</FB>
+		<FB Name="AX_PUBLISH_SWITCH" Type="adapter::net::AX_PUBLISH_1" x="-4000" y="400">
+		</FB>
+		<SubApp Name="Q_BackgroundColour_EnableOk_STATUS" Type="MyLib::sys::Q_BackgroundColour_EnableOk_A" x="-1400" y="-3400">
+		</SubApp>
+		<FB Name="AX_BOOL_TO_X_STATUS" Type="adapter::conversion::unidirectional::AX_BOOL_TO_X" x="-2200" y="-2300">
+		</FB>
+		<FB Name="AX_PUBLISH_STATUS" Type="adapter::net::AX_PUBLISH_1" x="-100" y="-2500">
+		</FB>
+		<FB Name="initval_ATM" Type="adapter::types::unidirectional::ATM::initval::initval_ATM" x="1700" y="1500">
+			<Parameter Name="INIT_VAL" Value="T#2s"/>
+		</FB>
+		<FB Name="FT_PT1_AR" Type="OSCAT_adapter::Control::FT_PT1_AR" x="3000" y="800">
+			<Parameter Name="K" Value="1.0"/>
+		</FB>
+		<FB Name="FT_DERIV_10_AR" Type="OSCAT_adapter::Control::FT_DERIV_10_AR" x="0" y="500">
+			<Parameter Name="Faktor" Value="1.0"/>
+			<Parameter Name="run" Value="TRUE"/>
+		</FB>
+		<FB Name="LIT_DerivK" Type="adapter::types::unidirectional::AUI::initval::initval_AUI" x="-1800" y="1500">
+			<Parameter Name="INIT_VAL" Value="9"/>
+		</FB>
+		<FB Name="E_MERGE_QO" Type="iec61499::events::E_MERGE_3" x="5600" y="-100">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_10" x="9400" y="-1500">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="Q_NumericValue_COUNT.INIT" dx1="6586.67"/>
+			<Connection Source="Q_NumericValue_COUNT.INITO" Destination="Q_NumericValue_FREQ.INIT" dx1="1980"/>
+			<Connection Source="Q_NumericValue_FREQ.INITO" Destination="Q_BackgroundColour_EnableOk_STATUS.INIT" dx1="80" dx2="80" dy="-2200"/>
+			<Connection Source="Q_BackgroundColour_EnableOk_STATUS.INITO" Destination="AD_PUBLISH_COUNT.INIT" dx1="926.67"/>
+			<Connection Source="AD_PUBLISH_COUNT.INITO" Destination="Button_SWITCH.INIT" dx1="80" dx2="80" dy="246.67"/>
+			<Connection Source="Button_SWITCH.INITO" Destination="INITO" dx1="18026.67"/>
+			<Connection Source="Q_NumericValue_FREQ.INITO" Destination="E_MERGE_QO.EI1" dx1="80" dx2="80" dy="-500"/>
+			<Connection Source="Q_NumericValue_COUNT.CNF" Destination="E_MERGE_QO.EI2" dx1="580"/>
+			<Connection Source="Q_NumericValue_FREQ.CNF" Destination="E_MERGE_QO.EI3" dx1="80" dx2="80" dy="-446.67"/>
+			<Connection Source="Button_SWITCH.INITO" Destination="AND_QO.REQ" dx1="9553.33"/>
+			<Connection Source="E_MERGE_QO.EO" Destination="AND_QO.REQ" dx1="1700"/>
+			<Connection Source="AD_PUBLISH_COUNT.INITO" Destination="AR_PUBLISH_FREQ.INIT" dx1="1600">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AR_PUBLISH_FREQ.INITO" Destination="AX_SUBSCRIBE_SWITCH.INIT" dx1="80" dx2="80" dy="1300">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AX_SUBSCRIBE_SWITCH.INITO" Destination="AX_PUBLISH_SWITCH.INIT" dx1="2673.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AX_PUBLISH_SWITCH.INITO" Destination="AX_PUBLISH_STATUS.INIT" dx1="1473.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AX_PUBLISH_STATUS.INITO" Destination="E_T_FF_SR_SWITCH.INIT" dx1="80" dx2="80" dy="-1000">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="E_T_FF_SR_SWITCH.EO" Destination="logiBUS_PI_IDA.INIT" dx1="533.33"/>
+			<Connection Source="E_T_FF_SR_SWITCH.EO" Destination="Q_BackgroundColour_EnableOk_STATUS.REQ" dx1="406.67"/>
+			<Connection Source="logiBUS_PI_IDA.INITO" Destination="Q_BackgroundColour_EnableOk_STATUS.REQ" dx1="140"/>
+			<Connection Source="logiBUS_PI_IDA.INITO" Destination="AX_BOOL_TO_X_STATUS.REQ" dx1="1146.67"/>
+			<Connection Source="AX_RF_TRIG_SWITCH.ER" Destination="E_T_FF_SR_SWITCH.S" dx1="1006.67"/>
+			<Connection Source="AX_RF_TRIG_SWITCH.EF" Destination="E_T_FF_SR_SWITCH.R" dx1="1713.33"/>
+			<Connection Source="Button_SWITCH.IND" Destination="E_T_FF_SR_SWITCH.CLK" dx1="933.33"/>
+			<Connection Source="E_T_FF_SR_SWITCH.EO" Destination="AX_BOOL_TO_X_SWITCH.REQ" dx1="593.33"/>
+			<Connection Source="initval_ATM.INITO" Destination="FT_PT1_AR.INIT" dx1="246.67"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="Input" Destination="logiBUS_PI_IDA.Input" dx1="1460">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId_COUNTVAR" Destination="Q_NumericValue_COUNT.u16ObjId" dx1="2680">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="stObjFreq" Destination="Q_NumericValue_FREQ.stObj" dx1="2680">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_COUNT_WRITE" Destination="AD_PUBLISH_COUNT.ID" dx1="4280">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_FREQ_WRITE" Destination="AR_PUBLISH_FREQ.ID" dx1="4280">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="bDefaultEnabled" Destination="E_T_FF_SR_SWITCH.Q_INIT" dx1="1600">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="E_T_FF_SR_SWITCH.Q" Destination="logiBUS_PI_IDA.QI" dx1="533.33"/>
+			<Connection Source="E_T_FF_SR_SWITCH.Q" Destination="Q_BackgroundColour_EnableOk_STATUS.bEnable" dx1="606.67"/>
+			<Connection Source="logiBUS_PI_IDA.QO" Destination="Q_BackgroundColour_EnableOk_STATUS.bOk" dx1="413.33"/>
+			<Connection Source="u16ObjId_STATUS" Destination="Q_BackgroundColour_EnableOk_STATUS.u16ObjId" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="E_T_FF_SR_SWITCH.Q" Destination="AX_BOOL_TO_X_SWITCH.OUT" dx1="180"/>
+			<Connection Source="logiBUS_PI_IDA.QO" Destination="AX_BOOL_TO_X_STATUS.OUT" dx1="1273.33"/>
+			<Connection Source="ID_SWITCH_READ" Destination="AX_SUBSCRIBE_SWITCH.ID" dx1="220">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_SWITCH_WRITE" Destination="AX_PUBLISH_SWITCH.ID" dx1="1600">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_STATUS_WRITE" Destination="AX_PUBLISH_STATUS.ID" dx1="1600">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId_SWITCH" Destination="Button_SWITCH.u16ObjId" dx1="973.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="Q_NumericValue_COUNT.QI" dx1="520">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="Q_NumericValue_FREQ.QI" dx1="3120">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Q_NumericValue_COUNT.QO" Destination="AND_QO.IN1" dx1="480"/>
+			<Connection Source="Q_NumericValue_FREQ.QO" Destination="AND_QO.IN2" dx1="633.33"/>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="2773.33"/>
+			<Connection Source="QI" Destination="AD_PUBLISH_COUNT.QI" dx1="566.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="AR_PUBLISH_FREQ.QI" dx1="4020">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="E_T_FF_SR_SWITCH.QI" dx1="3720">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="Button_SWITCH.QI" dx1="2320">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="AX_SUBSCRIBE_SWITCH.QI" dx1="1620">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="AX_PUBLISH_SWITCH.QI" dx1="80" dx2="80" dy="86.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="AX_PUBLISH_STATUS.QI" dx1="7520">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="Q_BackgroundColour_EnableOk_STATUS.QI" dx1="6866.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Q_BackgroundColour_EnableOk_STATUS.QO" Destination="AND_QO.IN3" dx1="1980"/>
+			<Connection Source="AD_PUBLISH_COUNT.QO" Destination="AND_QO.IN4" dx1="3273.33"/>
+			<Connection Source="AR_PUBLISH_FREQ.QO" Destination="AND_QO.IN5" dx1="80" dx2="80" dy="-640"/>
+			<Connection Source="E_T_FF_SR_SWITCH.QO" Destination="AND_QO.IN6" dx1="8033.33"/>
+			<Connection Source="Button_SWITCH.QO" Destination="AND_QO.IN7" dx1="9553.33"/>
+			<Connection Source="AX_SUBSCRIBE_SWITCH.QO" Destination="AND_QO.IN8" dx1="10126.67"/>
+			<Connection Source="AX_PUBLISH_SWITCH.QO" Destination="AND_QO.IN9" dx1="6273.33"/>
+			<Connection Source="AX_PUBLISH_STATUS.QO" Destination="AND_QO.IN10" dx1="4373.33"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="logiBUS_PI_IDA.IN" Destination="AD_SPLIT_2_UNGATED_FREQ.IN" dx1="393.33"/>
+			<Connection Source="AD_SPLIT_2_UNGATED_FREQ.OUT1" Destination="AD_SPLIT_2.IN"/>
+			<Connection Source="AD_SPLIT_2_UNGATED_FREQ.OUT2" Destination="AD_TO_AR_NUM.AD_IN" dx1="300"/>
+			<Connection Source="AD_SPLIT_2.OUT1" Destination="AD_PUBLISH_COUNT.IN" dx1="173.33"/>
+			<Connection Source="AD_SPLIT_2.OUT2" Destination="AD_TO_AUDI.AD_IN" dx1="1273.33"/>
+			<Connection Source="AD_TO_AUDI.AUDI_OUT" Destination="Q_NumericValue_COUNT.u32NewValue" dx1="540"/>
+			<Connection Source="AR_SPLIT_2.OUT1" Destination="AR_PUBLISH_FREQ.IN" dx1="850"/>
+			<Connection Source="AR_SPLIT_2.OUT2" Destination="Q_NumericValue_FREQ.rPhys" dx1="1020"/>
+			<Connection Source="AX_SUBSCRIBE_SWITCH.OUT" Destination="AX_RF_TRIG_SWITCH.QI" dx1="133.33"/>
+			<Connection Source="AX_BOOL_TO_X_SWITCH.AX_OUT" Destination="AX_PUBLISH_SWITCH.IN" dx1="413.33"/>
+			<Connection Source="AX_BOOL_TO_X_STATUS.AX_OUT" Destination="AX_PUBLISH_STATUS.IN" dx1="146.67"/>
+			<Connection Source="initval_ATM.OUT" Destination="FT_PT1_AR.TM" dx1="400"/>
+			<Connection Source="FT_DERIV_10_AR.AR_OUT" Destination="FT_PT1_AR.AR_IN" dx1="420"/>
+			<Connection Source="AD_TO_AR_NUM.AR_OUT" Destination="FT_DERIV_10_AR.AR_IN" dx1="526.67"/>
+			<Connection Source="LIT_DerivK.OUT" Destination="FT_DERIV_10_AR.K" dx1="400"/>
+			<Connection Source="FT_PT1_AR.AR_OUT" Destination="AR_SPLIT_2.IN" dx1="540"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

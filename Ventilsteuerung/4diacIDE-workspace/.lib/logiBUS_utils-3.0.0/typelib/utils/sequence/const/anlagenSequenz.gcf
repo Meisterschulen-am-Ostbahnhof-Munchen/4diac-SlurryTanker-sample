@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="anlagenSequenz" Comment="Global constants für AnlagenSequenz_06 (STATUS_BETRIEB/STATUS_STOERUNG), s. KONZEPT_Anlagensequenz.md">
+	<Identification Standard="61499-1" Description="Copyright (c) 2026 HR Agrartechnik GmbH &#10; &#10;This program and the accompanying materials are made &#10;available under the terms of the Eclipse Public License 2.0 &#10;which is available at https://www.eclipse.org/legal/epl-2.0/ &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-08-12">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::utils::sequence::const">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="STATUS_BETRIEB_AUS" Type="SINT" Comment="Anlage steht" InitialValue="SINT#0"/>
+		<VarDeclaration Name="STATUS_BETRIEB_HOCHFAHREN" Type="SINT" Comment="Vorlauf-Kette aktiv" InitialValue="SINT#1"/>
+		<VarDeclaration Name="STATUS_BETRIEB_LAEUFT" Type="SINT" Comment="alle 6 Motoren laufen" InitialValue="SINT#2"/>
+		<VarDeclaration Name="STATUS_BETRIEB_HERUNTERFAHREN" Type="SINT" Comment="Nachlauf-Kette aktiv" InitialValue="SINT#3"/>
+		<VarDeclaration Name="STATUS_STOERUNG_KEINE" Type="SINT" Comment="keine aktive Störung" InitialValue="SINT#0"/>
+		<VarDeclaration Name="STATUS_STOERUNG_AKTIV" Type="SINT" Comment="Störung aktiv, verriegelt bis EIN" InitialValue="SINT#4"/>
+		<VarDeclaration Name="TRANSIT_ART_KEINE" Type="SINT" Comment="kein Motor aktuell im Vor-/Nachlauf (S_AUS, S_LAEUFT)" InitialValue="SINT#0"/>
+		<VarDeclaration Name="TRANSIT_ART_VORLAUF" Type="SINT" Comment="TRANSIT_MOTOR startet nach Ablauf der aktuellen Zeit" InitialValue="SINT#1"/>
+		<VarDeclaration Name="TRANSIT_ART_NACHLAUF" Type="SINT" Comment="TRANSIT_MOTOR stoppt nach Ablauf der aktuellen Zeit" InitialValue="SINT#2"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE logiBUS::utils::sequence::const;
+
+GLOBALCONSTANTS anlagenSequenz
+	VAR_GLOBAL CONSTANT
+		STATUS_BETRIEB_AUS : SINT := SINT#0; // Anlage steht
+		STATUS_BETRIEB_HOCHFAHREN : SINT := SINT#1; // Vorlauf-Kette aktiv
+		STATUS_BETRIEB_LAEUFT : SINT := SINT#2; // alle 6 Motoren laufen
+		STATUS_BETRIEB_HERUNTERFAHREN : SINT := SINT#3; // Nachlauf-Kette aktiv
+		STATUS_STOERUNG_KEINE : SINT := SINT#0; // keine aktive Störung
+		STATUS_STOERUNG_AKTIV : SINT := SINT#4; // Störung aktiv, verriegelt bis EIN
+		TRANSIT_ART_KEINE : SINT := SINT#0; // kein Motor aktuell im Vor-/Nachlauf (S_AUS, S_LAEUFT)
+		TRANSIT_ART_VORLAUF : SINT := SINT#1; // TRANSIT_MOTOR startet nach Ablauf der aktuellen Zeit
+		TRANSIT_ART_NACHLAUF : SINT := SINT#2; // TRANSIT_MOTOR stoppt nach Ablauf der aktuellen Zeit
+	END_VAR
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</GlobalConstants>

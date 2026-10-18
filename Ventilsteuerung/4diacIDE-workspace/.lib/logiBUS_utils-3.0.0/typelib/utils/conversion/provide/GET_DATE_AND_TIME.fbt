@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="GET_DATE_AND_TIME" Comment="Reads a DATE_AND_TIME value from an InOut variable and provides it as a buffered&#10;Output">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Version="1.0" Author="Gemini CLI" Date="2026-05-07" Remarks="Initial version">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::utils::conversion::provide">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event" Comment="Normal Execution Request">
+				<With Var="IN"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event" Comment="Execution Confirmation">
+				<With Var="OUT"/>
+				<With Var="IN"/>
+			</Event>
+		</EventOutputs>
+		<OutputVars>
+			<VarDeclaration Name="OUT" Type="DATE_AND_TIME" Comment="Buffered output value"/>
+		</OutputVars>
+		<InOutVars>
+			<VarDeclaration Name="IN" Type="DATE_AND_TIME" Comment="Source variable (InOut)"/>
+		</InOutVars>
+	</InterfaceList>
+	<SimpleFB>
+		<ECState Name="REQ">
+			<ECAction Algorithm="REQ" Output="CNF"/>
+		</ECState>
+		<Algorithm Name="REQ" Comment="Read value from InOut source and store in local buffer">
+			<ST><![CDATA[
+OUT := IN;
+]]></ST>
+		</Algorithm>
+	</SimpleFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

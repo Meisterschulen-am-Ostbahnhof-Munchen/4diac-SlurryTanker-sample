@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="F_CONCAT_LDATE_LTOD" Comment="concatenation">
+	<Identification Standard="61131-3" Classification="standard character and string function" Description="Copyright (c) 2013 TU Wien ACIN&#10; &#10;This program and the accompanying materials are made&#10;available under the terms of the Eclipse Public License 2.0&#10;which is available at https://www.eclipse.org/legal/epl-2.0/&#10;&#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Version="3.0" Author="Patrick Aigner" Date="2025-04-14" Remarks="changed package">
+	</VersionInfo>
+	<VersionInfo Organization="TU Wien ACIN" Version="1.0" Author="Monika Wenger" Date="2013-09-15">
+	</VersionInfo>
+	<CompilerInfo packageName="iec61131::charString">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event" Comment="Service Request">
+				<With Var="IN1"/>
+				<With Var="IN2"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+				<With Var="OUT"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="IN1" Type="LDATE" Comment="date input"/>
+			<VarDeclaration Name="IN2" Type="LTIME_OF_DAY" Comment="time of day input"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="OUT" Type="LDATE_AND_TIME" Comment="date + time of day"/>
+		</OutputVars>
+	</InterfaceList>
+	<SimpleFB>
+		<ECState Name="REQ">
+			<ECAction Algorithm="REQ" Output="CNF"/>
+		</ECState>
+		<Algorithm Name="REQ">
+			<ST><![CDATA[
+ALGORITHM REQ
+OUT := CONCAT_LDATE_LTOD(IN1, IN2);
+END_ALGORITHM
+
+]]></ST>
+		</Algorithm>
+	</SimpleFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

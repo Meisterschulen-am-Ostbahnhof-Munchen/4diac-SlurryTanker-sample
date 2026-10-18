@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="StringValue_TO_NVS" Comment="String-VT-Wert einlesen und in NVS speichern (generisch).">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-09" Remarks="Ausgelagert aus Uebung_012m_sub zur Wiederverwendung.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+			<SubAppEvent Name="IND" Type="Event">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="KEY" Type="STRING" Comment="Key name."/>
+			<VarDeclaration Name="u16ObjId" Type="UINT" InitialValue="ID_NULL"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+			<VarDeclaration Name="VALUEO" Type="STRING"/>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="StringValue_IS" Type="isobus::UT::io::StringValue::StringValue_IS" x="-1600" y="100">
+		</FB>
+		<FB Name="NVS" Type="logiBUS::storage::esp32_nvs::NVS" x="2100" y="100">
+			<Parameter Name="DEFAULT_VALUE" Value="STRING#''"/>
+		</FB>
+		<FB Name="Q_StringValue" Type="isobus::UT::Q::Q_StringValue" x="4600" y="300">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_3">
+		</FB>
+		<EventConnections>
+			<Connection Source="StringValue_IS.IND" Destination="NVS.SET" dx1="380"/>
+			<Connection Source="NVS.SETO" Destination="IND" dx1="2933.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="NVS.GETO" Destination="Q_StringValue.REQ" dx1="546.67"/>
+			<Connection Source="NVS.GETO" Destination="IND" dx1="2933.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="NVS.INITO" Destination="NVS.GET" dx1="80" dx2="80" dy="-580"/>
+			<Connection Source="INIT" Destination="Q_StringValue.INIT"/>
+			<Connection Source="Q_StringValue.INITO" Destination="StringValue_IS.INIT"/>
+			<Connection Source="StringValue_IS.INITO" Destination="NVS.INIT"/>
+			<Connection Source="NVS.INITO" Destination="INITO"/>
+			<Connection Source="NVS.INITO" Destination="AND_QO.REQ"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="StringValue_IS.IN" Destination="NVS.VALUE"/>
+			<Connection Source="u16ObjId" Destination="Q_StringValue.u16ObjId" dx1="2933.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="KEY" Destination="NVS.KEY" dx1="2066.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="NVS.VALUEO" Destination="Q_StringValue.pau8String" dx1="486.67"/>
+			<Connection Source="NVS.VALUEO" Destination="VALUEO" dx1="2933.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId" Destination="StringValue_IS.u16ObjId" dx1="1793.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="Q_StringValue.QI"/>
+			<Connection Source="QI" Destination="StringValue_IS.QI"/>
+			<Connection Source="QI" Destination="NVS.QI"/>
+			<Connection Source="Q_StringValue.QO" Destination="AND_QO.IN1"/>
+			<Connection Source="StringValue_IS.QO" Destination="AND_QO.IN2"/>
+			<Connection Source="NVS.QO" Destination="AND_QO.IN3"/>
+			<Connection Source="AND_QO.OUT" Destination="QO"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

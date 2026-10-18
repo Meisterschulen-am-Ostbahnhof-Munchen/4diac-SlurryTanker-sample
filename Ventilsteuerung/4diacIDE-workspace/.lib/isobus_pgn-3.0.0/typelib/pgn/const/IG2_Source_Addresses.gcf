@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="IG2_Source_Addresses" Comment="Industry Group 2 specific source addresses">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Organization="Demmler Andreas Fahrzeugbau" Version="1.0" Author="Franz Höpfinger" Date="2026-06-29">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::pgn::const">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="SA_RESERVED_128" Type="BYTE" Comment="Source Address: thru 235 are reserved by ISO for the self-configurable address capability - All" InitialValue="128"/>
+		<VarDeclaration Name="SA_DATA_LOGGER" Type="BYTE" Comment="Source Address: Data Logger - A data logging server that provides the LOG functionality as" InitialValue="236"/>
+		<VarDeclaration Name="SA_TIM_SERVER" Type="BYTE" Comment="Source Address: TIM Server - Control function that represents a Tractor Implement Management" InitialValue="237"/>
+		<VarDeclaration Name="SA_SEQUENCE_CONTROLLER" Type="BYTE" Comment="Source Address: Sequence Controller - The master in the Sequence Control System as defined in" InitialValue="238"/>
+		<VarDeclaration Name="SA_POSITION_CONTROL" Type="BYTE" Comment="Source Address: Position Control - Multiple axis position control of a devices movable device" InitialValue="239"/>
+		<VarDeclaration Name="SA_TRACTOR_ECU" Type="BYTE" Comment="Source Address: Tractor ECU - A gateway (see ISO 11783-4) between the tractor and the implement" InitialValue="240"/>
+		<VarDeclaration Name="SA_TAILINGS_MONITORING" Type="BYTE" Comment="Source Address: Tailings Monitoring - Monitoring of the quantity of unthreshed material returned" InitialValue="241"/>
+		<VarDeclaration Name="SA_HEADER_CONTROL" Type="BYTE" Comment="Source Address: Header Control - Control of the headers reel rate and material delivery rate" InitialValue="242"/>
+		<VarDeclaration Name="SA_PRODUCT_LOSS_MONITORING" Type="BYTE" Comment="Source Address: Product Loss Monitoring - Monitoring of the amount of produce being lost from" InitialValue="243"/>
+		<VarDeclaration Name="SA_PRODUCT_MOISTURE_SENSING" Type="BYTE" Comment="Source Address: Product Moisture Sensing - Monitoring of the produce moisture content" InitialValue="244"/>
+		<VarDeclaration Name="SA_NON_VIRTUAL_TERMINAL_DISPLAY_IMPLEMENT_BUS" Type="BYTE" Comment="Source Address: Non Virtual Terminal Display (Implement Bus) - A non Virtual Terminal cab display" InitialValue="245"/>
+		<VarDeclaration Name="SA_OPERATOR_CONTROLS_MACHINE_SPECIFIC" Type="BYTE" Comment="Source Address: Operator Controls - Machine Specific - Non auxiliary operator control inputs" InitialValue="246"/>
+		<VarDeclaration Name="SA_TASK_CONTROL_MAPPING_COMPUTER" Type="BYTE" Comment="Source Address: Task Control (Mapping Computer) - A control function on the 11783 network that is" InitialValue="247"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE isobus::pgn::const;
+
+// Industry Group 2 specific source addresses
+GLOBALCONSTANTS IG2_Source_Addresses
+	VAR_GLOBAL CONSTANT
+		SA_RESERVED_128 : BYTE := 128; // Source Address: thru 235 are reserved by ISO for the self-configurable address capability - All
+		                               // devices in IG2 using preferred addresses shall be self-configurable. IG2 devices shall include
+		                               // the va...
+		SA_DATA_LOGGER : BYTE := 236; // Source Address: Data Logger - A data logging server that provides the LOG functionality as
+		                              // specified in ISO 11783-10
+		SA_TIM_SERVER : BYTE := 237; // Source Address: TIM Server - Control function that represents a Tractor Implement Management
+		                             // (TIM) Server. TIM is an Operator Assistance System that enables TIM clients to request the
+		                             // control of ce...
+		SA_SEQUENCE_CONTROLLER : BYTE := 238; // Source Address: Sequence Controller - The master in the Sequence Control System as defined in
+		                                      // ISO11783-14
+		SA_POSITION_CONTROL : BYTE := 239; // Source Address: Position Control - Multiple axis position control of a devices movable device
+		                                   // elements
+		SA_TRACTOR_ECU : BYTE := 240; // Source Address: Tractor ECU - A gateway (see ISO 11783-4) between the tractor and the implement
+		                              // bus representing the tractor and its messages on the 11783 network
+		SA_TAILINGS_MONITORING : BYTE := 241; // Source Address: Tailings Monitoring - Monitoring of the quantity of unthreshed material returned
+		                                      // to threshing machine
+		SA_HEADER_CONTROL : BYTE := 242; // Source Address: Header Control - Control of the headers reel rate and material delivery rate
+		SA_PRODUCT_LOSS_MONITORING : BYTE := 243; // Source Address: Product Loss Monitoring - Monitoring of the amount of produce being lost from
+		                                          // e.g. a harvesting process
+		SA_PRODUCT_MOISTURE_SENSING : BYTE := 244; // Source Address: Product Moisture Sensing - Monitoring of the produce moisture content
+		SA_NON_VIRTUAL_TERMINAL_DISPLAY_IMPLEMENT_BUS : BYTE := 245; // Source Address: Non Virtual Terminal Display (Implement Bus) - A non Virtual Terminal cab display
+		                                                             // connected to the implement bus
+		SA_OPERATOR_CONTROLS_MACHINE_SPECIFIC : BYTE := 246; // Source Address: Operator Controls - Machine Specific - Non auxiliary operator control inputs
+		SA_TASK_CONTROL_MAPPING_COMPUTER : BYTE := 247; // Source Address: Task Control (Mapping Computer) - A control function on the 11783 network that is
+		                                                // responsible for the sending, receiving and logging of process data
+	END_VAR
+
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</GlobalConstants>

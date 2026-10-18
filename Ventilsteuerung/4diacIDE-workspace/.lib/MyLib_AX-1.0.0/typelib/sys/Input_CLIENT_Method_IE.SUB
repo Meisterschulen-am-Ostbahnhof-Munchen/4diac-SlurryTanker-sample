@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Input_CLIENT_Method_IE" Comment="logiBUS-Taster (logiBUS_IE) loest per CLIENT_0 einen argumentlosen OPC-UA-Methodenaufruf (CALL_METHOD) aus">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-18" Remarks="Wie Button_CLIENT_Method_IE, aber logiBUS_IE statt Button_IE (Taster statt VT-Button)">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-22" Remarks="initial implementation - herausgeloest aus logiBUS_AI_Calibrated_Subscribe_VT_OPC (Button_IE + CLIENT_0 kam dort 2x identisch vor, fuer CO und CS). Franz: 'Button_IE CLIENT_0 kann eine Subapp werden, das ist ein generelles Muster zum Rufen einer Methode vom VT aus' - InputEvent ist Parameter (nicht hartcodiert auf BT_PRESSED_LATCHED), damit auch andere Aktivierungsarten (z.B. Loslassen) wiederverwendbar sind.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_S"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events_S"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_PRESS_DOWN"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="Input" Type="logiBUS::io::DI::logiBUS_DI_S" Comment="Taster Input_I1..I8" InitialValue="logiBUS_DI::Invalid"/>
+			<VarDeclaration Name="InputEvent" Type="logiBUS::io::DI::logiBUS_DI_Events_S" Comment="Welches Tasterereignis den Aufruf ausloest" InitialValue="BUTTON_PRESS_DOWN"/>
+			<VarDeclaration Name="ID_CALL" Type="WSTRING" Comment="Methodenadresse (ACTION=CALL_METHOD, mit Endpunkt, auch localhost)"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="Taster" Type="logiBUS::io::DI::logiBUS_IE" x="-100" y="0">
+		</FB>
+		<FB Name="CLIENT" Type="iec61499::net::CLIENT_0" x="1600" y="0">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_2" x="3000" y="900">
+		</FB>
+		<EventConnections>
+			<Connection Source="Taster.IND" Destination="CLIENT.REQ" dx1="733.33"/>
+			<Connection Source="INIT" Destination="Taster.INIT" dx1="1013.33"/>
+			<Connection Source="Taster.INITO" Destination="CLIENT.INIT"/>
+			<Connection Source="CLIENT.INITO" Destination="INITO" dx1="2706.67"/>
+			<Connection Source="CLIENT.INITO" Destination="AND_QO.REQ" dx1="660"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="Input" Destination="Taster.Input" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="InputEvent" Destination="Taster.InputEvent" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_CALL" Destination="CLIENT.ID" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="Taster.QI" dx1="1013.33"/>
+			<Connection Source="QI" Destination="CLIENT.QI" dx1="533.33"/>
+			<Connection Source="Taster.QO" Destination="AND_QO.IN1" dx1="266.67"/>
+			<Connection Source="CLIENT.QO" Destination="AND_QO.IN2" dx1="660"/>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="1173.33"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

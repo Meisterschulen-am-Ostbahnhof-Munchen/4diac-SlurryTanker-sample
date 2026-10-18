@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="AX_3_3" Comment="AX_OR and AX_SPLIT for a 3-to-3 Connection">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-06" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<Sockets>
+			<AdapterDeclaration Name="IN1" Type="adapter::types::unidirectional::AX"/>
+			<AdapterDeclaration Name="IN2" Type="adapter::types::unidirectional::AX"/>
+			<AdapterDeclaration Name="IN3" Type="adapter::types::unidirectional::AX"/>
+		</Sockets>
+		<Plugs>
+			<AdapterDeclaration Name="OUT1" Type="adapter::types::unidirectional::AX"/>
+			<AdapterDeclaration Name="OUT2" Type="adapter::types::unidirectional::AX"/>
+			<AdapterDeclaration Name="OUT3" Type="adapter::types::unidirectional::AX"/>
+		</Plugs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="AX_SPLIT_3" Type="adapter::events::unidirectional::AX_SPLIT_3" x="1300" y="-1000">
+		</FB>
+		<FB Name="AX_OR_3" Type="adapter::booleanOperators::AX_OR_3" x="300" y="-1000">
+		</FB>
+		<AdapterConnections>
+			<Connection Source="AX_OR_3.OUT" Destination="AX_SPLIT_3.IN"/>
+			<Connection Source="AX_SPLIT_3.OUT1" Destination="OUT1" dx1="2486.67"/>
+			<Connection Source="AX_SPLIT_3.OUT2" Destination="OUT2" dx1="2486.67"/>
+			<Connection Source="AX_SPLIT_3.OUT3" Destination="OUT3" dx1="2486.67"/>
+			<Connection Source="IN1" Destination="AX_OR_3.IN1" dx1="1386.67"/>
+			<Connection Source="IN2" Destination="AX_OR_3.IN2" dx1="1386.67"/>
+			<Connection Source="IN3" Destination="AX_OR_3.IN3" dx1="1386.67"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>3 AX-Quellen ODER-verknüpft auf 3 AX-Ziele verteilt</h1>
+
+<p>Kombiniert <code>AX_OR_3</code> und <code>AX_SPLIT_3</code> zu einem fertigen Baustein: nimmt
+<code>IN1</code>/<code>IN2</code>/<code>IN3</code> entgegen, verknüpft alle drei per ODER zu einem
+gemeinsamen Signal und verteilt dieses anschließend auf
+<code>OUT1</code>/<code>OUT2</code>/<code>OUT3</code>.</p>
+
+<p>Für andere Quellen-/Ziel-Anzahlen: <code>AX_2_2</code> (2→2), <code>AX_2_3</code> (2→3),
+<code>AX_3_2</code> (3→2).</p>
+]]></Attribute>
+</SubAppType>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Function Name="ST08X_TO_BYTE" Comment="this Function combines 8 BOOLS as Struct to 1 BYTE">
+	<Identification Standard="61499-1" Description="Copyright (c) 2024 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2024-02-22">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::utils::conversion::str::assembling">
+		<Import declaration="logiBUS::utils::conversion::types::ST08X"/>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event">
+				<With Var="IN"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event">
+				<With Var="OUT"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="IN" Type="logiBUS::utils::conversion::types::ST08X" Comment="ST08X Input"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="OUT" Type="BYTE" Comment="BYTE Output"/>
+		</OutputVars>
+	</InterfaceList>
+	<FunctionBody>
+		<ST><![CDATA[PACKAGE logiBUS::utils::conversion::str::assembling;
+
+IMPORT logiBUS::utils::conversion::types::ST08X;
+
+(* this Function combines 8 BOOLS as Struct to 1 BYTE *)
+FUNCTION ST08X_TO_BYTE
+
+VAR_INPUT
+	IN : ST08X; // ST08X Input
+END_VAR
+
+VAR_OUTPUT
+	OUT : BYTE; // BYTE Output
+END_VAR
+
+OUT.0 := IN.X_00;
+OUT.1 := IN.X_01;
+OUT.2 := IN.X_02;
+OUT.3 := IN.X_03;
+OUT.4 := IN.X_04;
+OUT.5 := IN.X_05;
+OUT.6 := IN.X_06;
+OUT.7 := IN.X_07;
+
+END_FUNCTION
+]]></ST>
+	</FunctionBody>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</Function>

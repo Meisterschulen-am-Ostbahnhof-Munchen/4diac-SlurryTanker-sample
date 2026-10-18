@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="AE2_DELAY" Comment="Delayed event propagation (AE2 Adapter, bidirektional, 1 Event)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-09-17" Remarks="Wrapper fuer E_DELAY ueber AE2-Adapter (bidirektional) - existierte im Projekt noch nicht (Franz: 'AE2_DELAY fehlt auch noch'), war faelschlich als bereits vorhanden angenommen worden. PT als ATM-Socket statt Klartext-InputVar, sauber initialisierbar ueber initval_ATM+INIT/INITO, analog zur selben Korrektur bei AE_DELAY/ASR2_DELAY.">
+	</VersionInfo>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.1" Author="Franz Höpfinger" Date="2026-09-17" Remarks="Bugfix (4diac IDE Validation: 'Name: DT is a reserved keyword' - DT ist Abkuerzung fuer DATE_AND_TIME, IEC 61131-3-Keyword): Socket DT in PT (Preset Time, Standardname wie bei TON/TOF) umbenannt.">
+	</VersionInfo>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.2" Author="Franz Höpfinger" Date="2026-09-17" Remarks="Bugfix (Franz: 'AE2_DELAY braucht 2 Zeiten, ein DELAY FORWARD und ein DELAY BACKWARD'): AE2 ist echt bidirektional (EI1/EO1 je Socket UND Plug) - bisher wurde nur die Vorwaerts-Richtung (IN.EO1-&gt;OUT.EO1) verzoegert. Jetzt 2 unabhaengige E_DELAY-Instanzen: Vorwaerts (IN.EO1-&gt;OUT.EO1, PT_FWD) und Rueckwaerts (OUT.EI1-&gt;IN.EI1, PT_BWD).">
+	</VersionInfo>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.3" Author="Franz Höpfinger" Date="2026-09-17" Remarks="Bugfix (Franz: 'wenn AE_DELAY ein STOP hat, braucht auch AE2_DELAY ein STOP'): 2 zusaetzliche unidirektionale AE-Sockets STOP_FWD/STOP_BWD ergaenzt, je auf E_DELAY_FWD.STOP/E_DELAY_BWD.STOP verdrahtet - analog zu AE_DELAY.STOP, je Richtung getrennt stoppbar.">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::events::bidirectional">
+	</CompilerInfo>
+	<InterfaceList>
+		<Plugs>
+			<AdapterDeclaration Name="OUT" Type="adapter::types::bidirectional::AE2" Comment="Verzoegertes Event, an naechstes Kettenglied (bidirektional: Vorwaerts hinaus, Rueckwaerts herein)" x="2000" y="0"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="IN" Type="adapter::types::bidirectional::AE2" Comment="Event vom vorherigen Kettenglied (bidirektional: Vorwaerts herein, Rueckwaerts hinaus)" x="300" y="-200"/>
+			<AdapterDeclaration Name="STOP_FWD" Type="adapter::types::unidirectional::AE" Comment="Stop delay Vorwaerts (analog AE_DELAY.STOP)" x="-700" y="100"/>
+			<AdapterDeclaration Name="PT_FWD" Type="adapter::types::unidirectional::ATM" Comment="Preset Time Vorwaerts (IN-&gt;OUT), ATM statt Klartext-InputVar, sauber initialisierbar ueber initval_ATM" x="300" y="300"/>
+			<AdapterDeclaration Name="STOP_BWD" Type="adapter::types::unidirectional::AE" Comment="Stop delay Rueckwaerts" x="-700" y="1800"/>
+			<AdapterDeclaration Name="PT_BWD" Type="adapter::types::unidirectional::ATM" Comment="Preset Time Rueckwaerts (OUT-&gt;IN), unabhaengig von PT_FWD einstellbar" x="500" y="2000"/>
+		</Sockets>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="E_DELAY_FWD" Type="iec61499::events::E_DELAY" x="1200" y="0">
+		</FB>
+		<FB Name="E_DELAY_BWD" Type="iec61499::events::E_DELAY" x="1200" y="1700">
+		</FB>
+		<EventConnections>
+			<Connection Source="IN.EO1" Destination="E_DELAY_FWD.START" dx1="233.33"/>
+			<Connection Source="STOP_FWD.E1" Destination="E_DELAY_FWD.STOP" dx1="460"/>
+			<Connection Source="E_DELAY_FWD.EO" Destination="OUT.EO1"/>
+			<Connection Source="OUT.EI1" Destination="E_DELAY_BWD.START" dx1="80" dx2="893.33" dy="1286.67"/>
+			<Connection Source="STOP_BWD.E1" Destination="E_DELAY_BWD.STOP" dx1="460"/>
+			<Connection Source="E_DELAY_BWD.EO" Destination="IN.EI1" dx1="80" dx2="80" dy="-946.67"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="PT_FWD.D1" Destination="E_DELAY_FWD.DT" dx1="393.33"/>
+			<Connection Source="PT_BWD.D1" Destination="E_DELAY_BWD.DT" dx1="193.33"/>
+		</DataConnections>
+	</FBNetwork>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

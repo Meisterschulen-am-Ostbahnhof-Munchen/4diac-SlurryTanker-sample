@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="AX_ATM_FB_TON" Comment="standard timer function block (on-delay timing) with AX/ATM Adapter, PT and ET&#10;as adapters">
+	<Identification Standard="61131-3" Classification="standard timer function block" Description="Copyright (c) 2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0  &#10; &#10;Wie AX_FB_TON, aber PT (Socket) und ET (Plug) sind ATM-Adapter statt&#10;einfacher Datenvariablen, damit sie ueber AR_SUBSCRIBE_1/AR_PUBLISH_1-artige&#10;Ketten mit REAL-Sekundenwerten verdrahtet werden koennen, ohne eigene&#10;Datenverbindungen fuer PT/ET zu brauchen. REQ bleibt ein einfaches Event -&#10;damit die Anwendung selbst einen E_CYCLE anschliessen kann, um ET periodisch&#10;zu aktualisieren, waehrend der Timer laeuft. ET feuert sein Adapterereignis&#10;nur bei tatsaechlicher Wertaenderung (E_D_FF_ANY), nicht bei jedem REQ.  &#10; &#10;PT-Verhalten: PT.D1 liegt als reine Datenverbindung dauerhaft am internen&#10;FB_TON.PT an - der Adapter puffert/entprellt PT nicht. IN.E1, PT.E1 und das&#10;externe REQ sind gleichwertige Ausloeser fuer dieselbe FB_TON.REQ-Auswertung;&#10;FB_TON selbst unterscheidet nicht, welcher der drei es war. Eine Aenderung von&#10;PT ist also nicht am Start (steigende Flanke von IN) eingefroren, sondern wirkt&#10;bei der naechsten Auswertung sofort mit dem dann aktuellen ET zusammen - siehe&#10;Technische Besonderheiten in der Doku fuer die Grenzfaelle PT=0 und schnell&#10;aufeinanderfolgende PT-Aenderungen. Vor dem allerersten PT.E1 liegt an&#10;FB_TON.PT der TIME-Standardwert T#0s an, nicht ein projektspezifischer Default.">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-08-13" Remarks="initial API and implementation">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::iec61131::timers">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event" Comment="Normal Execution Request (non-triggering); gleichwertig zu IN.E1/PT.E1 (alle drei loesen dieselbe interne Neuauswertung aus). Anwendung haengt hier periodisch einen E_CYCLE an, damit ET auch ohne IN-/PT-Aenderung aktualisiert wird">
+			</Event>
+		</EventInputs>
+		<Plugs>
+			<AdapterDeclaration Name="Q" Type="adapter::types::unidirectional::AX" Comment="Output" x="2886.67" y="-173.33"/>
+			<AdapterDeclaration Name="ET" Type="adapter::types::unidirectional::ATM" Comment="Elapsed time, Event nur bei Wertaenderung" x="3073.33" y="620"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AX" Comment="Input" x="300" y="800"/>
+			<AdapterDeclaration Name="PT" Type="adapter::types::unidirectional::ATM" Comment="Process time; live/nicht gelatched - PT.E1 loest wie IN.E1/REQ sofort eine Neuauswertung mit dem neuen PT-Wert aus, keine Entprellung. PT=0 laesst Q bei der naechsten Auswertung sofort TRUE werden" x="300" y="1300"/>
+		</Sockets>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="FB_TON" Type="iec61131::timers::FB_TON" x="1126.67" y="546.67">
+		</FB>
+		<FB Name="E_D_FF" Type="iec61499::events::E_D_FF" x="2006.67" y="-173.33">
+		</FB>
+		<FB Name="E_D_FF_ANY" Type="iec61499::events::E_D_FF_ANY" x="2006.67" y="620">
+		</FB>
+		<EventConnections>
+			<Connection Source="IN.E1" Destination="FB_TON.REQ" dx1="80"/>
+			<Connection Source="REQ" Destination="FB_TON.REQ" dx1="993.33"/>
+			<Connection Source="FB_TON.CNF" Destination="E_D_FF.CLK" dx1="66.67"/>
+			<Connection Source="E_D_FF.EO" Destination="Q.E1"/>
+			<Connection Source="FB_TON.CNF" Destination="E_D_FF_ANY.CLK" dx1="66.67"/>
+			<Connection Source="E_D_FF_ANY.EO" Destination="ET.E1"/>
+			<Connection Source="PT.E1" Destination="FB_TON.REQ" dx1="80"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="IN.D1" Destination="FB_TON.IN" dx1="260"/>
+			<Connection Source="PT.D1" Destination="FB_TON.PT" dx1="320"/>
+			<Connection Source="FB_TON.Q" Destination="E_D_FF.D" dx1="133.33"/>
+			<Connection Source="E_D_FF.Q" Destination="Q.D1"/>
+			<Connection Source="FB_TON.ET" Destination="E_D_FF_ANY.D" dx1="66.67"/>
+			<Connection Source="E_D_FF_ANY.Q" Destination="ET.D1"/>
+		</DataConnections>
+	</FBNetwork>
+	<Service RightInterface="RESOURCE" LeftInterface="APPLICATION">
+	</Service>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

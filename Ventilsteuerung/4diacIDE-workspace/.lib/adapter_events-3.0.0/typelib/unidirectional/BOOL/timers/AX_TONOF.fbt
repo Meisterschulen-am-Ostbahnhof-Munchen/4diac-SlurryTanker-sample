@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="AX_TONOF" Comment="Standard timer function block (on/off-delay timing)">
+	<Identification Standard="61499-2" Classification="standard timer function block" Description="Copyright (c) 2024 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0  &#10;   &#10;   &#10;AX_TONOF -- On/Off-delay timer FB with AX adapter interface  &#10;&#10;The adapter input IN triggers execution (E1-&gt;REQ) and provides  &#10;the boolean input value (D1-&gt;IN). The event input R presets  &#10;both delay times PT_ON and PT_OFF and resets the timer.  &#10;When IN goes TRUE, Q becomes TRUE after delay PT_ON.  &#10;When IN goes FALSE, Q becomes FALSE after delay PT_OFF.  &#10;Reset stops both timers and sets Q to FALSE.">
+	</Identification>
+	<VersionInfo Version="3.0" Author="Patrick Aigner" Date="2025-04-14" Remarks="changed package">
+	</VersionInfo>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.1" Author="Franz Höpfinger" Date="2024-04-23" Remarks="Add a Reset to Timer FBs">
+	</VersionInfo>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2024-03-04">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::events::unidirectional::timers">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="R" Type="Event" Comment="Reset">
+				<With Var="PT_ON"/>
+				<With Var="PT_OFF"/>
+			</Event>
+		</EventInputs>
+		<InputVars>
+			<VarDeclaration Name="PT_ON" Type="TIME" Comment="ON delay time"/>
+			<VarDeclaration Name="PT_OFF" Type="TIME" Comment="OFF delay time"/>
+		</InputVars>
+		<Plugs>
+			<AdapterDeclaration Name="Q" Type="adapter::types::unidirectional::AX" Comment="Timer output (AX adapter)" x="-1800" y="-900"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AX" Comment="Timer input (AX adapter)" x="-4200" y="-1000"/>
+		</Sockets>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="E_TONOF" Type="iec61499::events::timers::E_TONOF" x="-3100" y="-1000">
+		</FB>
+		<EventConnections>
+			<Connection Source="R" Destination="E_TONOF.R" dx1="2273.33"/>
+			<Connection Source="IN.E1" Destination="E_TONOF.REQ"/>
+			<Connection Source="E_TONOF.CNF" Destination="Q.E1" dx1="340"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="PT_ON" Destination="E_TONOF.PT_ON" dx1="2273.33"/>
+			<Connection Source="PT_OFF" Destination="E_TONOF.PT_OFF" dx1="1493.33"/>
+			<Connection Source="IN.D1" Destination="E_TONOF.IN" dx1="360"/>
+			<Connection Source="E_TONOF.Q" Destination="Q.D1" dx1="340"/>
+		</DataConnections>
+	</FBNetwork>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

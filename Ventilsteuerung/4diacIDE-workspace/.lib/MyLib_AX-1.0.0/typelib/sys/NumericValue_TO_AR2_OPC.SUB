@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="NumericValue_TO_AR2_OPC" Comment="VT-Eingabefeld (CInputNumber) UND OPC-UA (Remote) lesen, letzter Schreiber&#10;gewinnt (AR_LAST_2), als AR2 (bidirektional) an einen Consumer weiterreichen.&#10;Was der Consumer zurueckechot wird auf BEIDE Wege zurueckgemeldet (VT-Anzeige +&#10;Publish)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-16" Remarks="Neuer optionaler Ausgangs-Plug VALUE_OUT ergaenzt (AR_SPLIT_2 zu AR_SPLIT_3, 3. Zweig = plain-AR-Spiegel von AR_TO_AR2.AR_OUT) - damit externe Consumer den aktuellen Wert lesen koennen, ohne selbst denselben OPC-UA-Knoten lokal zu abonnieren (FORTE: 'Cannot add another one'). Unverdrahtet lassen, wenn nicht gebraucht. Siehe BERICHT_2026-09-16_STG3_I1_I3_I4_I6_STALE_REMOTE_SUBSCRIBE.md Abschnitt 16-17 Gruppe C.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-08-31" Remarks="VT+OPC-UA sibling of NumericValue_TO_AR2 (VT only) / OPC_TO_AR2 (OPC only) - merges both live sources via AR_LAST_2 (last writer wins), exactly like the VT/Web merge already proven in RampLimitFS_TO_logiBUS_QDA_PWM_OPC.SUB">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+		<Import declaration="logiBUS::utils::conversion::phys::NumericObjectPool_S"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="stObj" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 0)"/>
+			<VarDeclaration Name="ID_READ" Type="WSTRING" Comment="Remote-Subscribe-Adresse (REAL, ACTION=SUBSCRIBE)"/>
+			<VarDeclaration Name="ID_WRITE" Type="WSTRING" Comment="Remote-Echo-Adresse (REAL, ACTION=PUBLISH) - meldet zurueck, was der Consumer gerade als aktuellen/persistierten Wert liefert"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="VALUEO" Type="adapter::types::bidirectional::AR2"/>
+			<AdapterDeclaration Name="VALUE_OUT" Type="adapter::types::unidirectional::AR" Comment="Optional: plain-AR-Spiegel des aktuellen Werts (= AR_TO_AR2.AR_OUT), fuer externe Consumer statt eigenem lokalen OPC-UA-Self-Subscribe. Unverdrahtet lassen, wenn nicht gebraucht."/>
+		</Plugs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="NumericValue_PHYSA" Type="isobus::UT::io::NumericValue::NumericValue_PHYSA" x="-6500" y="-1200">
+		</FB>
+		<FB Name="AR_SUBSCRIBE_1" Type="adapter::net::AR_SUBSCRIBE_1" x="-6400" y="-200">
+		</FB>
+		<FB Name="Q_NumericValue_PHYSA" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="1600" y="-2300">
+		</FB>
+		<FB Name="AR_PUBLISH_1" Type="adapter::net::AR_PUBLISH_1" x="1800" y="-1300">
+		</FB>
+		<FB Name="AR_TO_AR2" Type="adapter::conversion::bidirectional::AR_TO_AR2" x="-2200" y="-600">
+		</FB>
+		<FB Name="AR_SPLIT_2" Type="adapter::events::unidirectional::AR_SPLIT_3" x="-300" y="-500">
+		</FB>
+		<FB Name="AR_LAST_2" Type="adapter::events::unidirectional::AR_LAST_2" x="-3400" y="-600">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_4" x="3900" y="-800">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="NumericValue_PHYSA.INIT" dx1="80" dx2="80" dy="-866.67"/>
+			<Connection Source="NumericValue_PHYSA.INITO" Destination="AR_SUBSCRIBE_1.INIT" dx1="80" dx2="80" dy="500"/>
+			<Connection Source="AR_SUBSCRIBE_1.INITO" Destination="AR_PUBLISH_1.INIT" dx1="6266.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AR_PUBLISH_1.INITO" Destination="Q_NumericValue_PHYSA.INIT" dx1="80" dx2="80" dy="-500"/>
+			<Connection Source="Q_NumericValue_PHYSA.INITO" Destination="INITO" dx1="5073.33"/>
+			<Connection Source="Q_NumericValue_PHYSA.INITO" Destination="AND_QO.REQ" dx1="633.33"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="stObj" Destination="NumericValue_PHYSA.stObj" dx1="1046.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="stObj" Destination="Q_NumericValue_PHYSA.stObj" dx1="6046.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_READ" Destination="AR_SUBSCRIBE_1.ID" dx1="1046.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_WRITE" Destination="AR_PUBLISH_1.ID" dx1="4046.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="Q_NumericValue_PHYSA.QI" dx1="580"/>
+			<Connection Source="QI" Destination="NumericValue_PHYSA.QI" dx1="80" dx2="80" dy="-760"/>
+			<Connection Source="QI" Destination="AR_SUBSCRIBE_1.QI" dx1="80" dx2="80" dy="-260"/>
+			<Connection Source="QI" Destination="AR_PUBLISH_1.QI" dx1="680"/>
+			<Connection Source="Q_NumericValue_PHYSA.QO" Destination="AND_QO.IN1" dx1="633.33"/>
+			<Connection Source="NumericValue_PHYSA.QO" Destination="AND_QO.IN2" dx1="2733.33"/>
+			<Connection Source="AR_SUBSCRIBE_1.QO" Destination="AND_QO.IN3" dx1="2726.67"/>
+			<Connection Source="AR_PUBLISH_1.QO" Destination="AND_QO.IN4" dx1="626.67"/>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="2720"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="AR_TO_AR2.AR2_BIDIR" Destination="VALUEO" dx1="2220">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AR_TO_AR2.AR_OUT" Destination="AR_SPLIT_2.IN" dx1="120"/>
+			<Connection Source="AR_SPLIT_2.OUT1" Destination="Q_NumericValue_PHYSA.rPhys" dx1="80"/>
+			<Connection Source="AR_SPLIT_2.OUT2" Destination="AR_PUBLISH_1.IN" dx1="1266.67"/>
+			<Connection Source="AR_SPLIT_2.OUT3" Destination="VALUE_OUT" dx1="4700"/>
+			<Connection Source="AR_LAST_2.OUT" Destination="AR_TO_AR2.AR_IN"/>
+			<Connection Source="NumericValue_PHYSA.rPhys" Destination="AR_LAST_2.IN1" dx1="1893.33"/>
+			<Connection Source="AR_SUBSCRIBE_1.OUT" Destination="AR_LAST_2.IN2" dx1="960"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

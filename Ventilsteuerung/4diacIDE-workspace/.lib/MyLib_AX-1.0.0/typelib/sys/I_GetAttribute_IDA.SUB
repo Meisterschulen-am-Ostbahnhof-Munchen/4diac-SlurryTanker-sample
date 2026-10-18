@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="I_GetAttribute_IDA" Comment="Bündelung von I_GetAttribute (Kommando GetAttribute F.58) und Attribute_IDA&#10;(asynchroner Adapter-Empfang) mit gemeinsamen u16ObjId und u8AID Parametern">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-15" Remarks="Initial implementation combining I_GetAttribute and Attribute_IDA">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+			<SubAppEvent Name="REQ" Type="Event" Comment="Service Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u8AID" Type="USINT" Comment="Attribute ID of the object"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AD" Comment="Input data from resource"/>
+		</Plugs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="GetAttribute" Type="isobus::UT::I::I_GetAttribute" x="-2000" y="-800">
+		</FB>
+		<FB Name="Attribute_IDA" Type="isobus::UT::io::Attribute::Attribute_IDA" x="-2000" y="0">
+			<Parameter Name="PARAMS" Value="''"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="REQ" Destination="GetAttribute.REQ" dx1="1480"/>
+			<Connection Source="INIT" Destination="Attribute_IDA.INIT"/>
+			<Connection Source="Attribute_IDA.INITO" Destination="INITO"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="u16ObjId" Destination="GetAttribute.u16ObjId" dx1="1446.67"/>
+			<Connection Source="u16ObjId" Destination="Attribute_IDA.u16ObjId" dx1="1446.67"/>
+			<Connection Source="u8AID" Destination="GetAttribute.u8AID" dx1="1413.33"/>
+			<Connection Source="u8AID" Destination="Attribute_IDA.u8AID" dx1="1413.33"/>
+			<Connection Source="QI" Destination="Attribute_IDA.QI"/>
+			<Connection Source="Attribute_IDA.QO" Destination="QO"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="Attribute_IDA.IN" Destination="IN" dx1="3633.33"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

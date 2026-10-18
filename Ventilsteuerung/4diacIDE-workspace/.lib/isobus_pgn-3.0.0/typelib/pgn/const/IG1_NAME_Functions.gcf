@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="IG1_NAME_Functions" Comment="Industry Group 1 specific function defines">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Organization="Demmler Andreas Fahrzeugbau" Version="1.0" Author="Franz Höpfinger" Date="2026-06-29">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::pgn::const">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="F_TACHOGRAPH" Type="BYTE" Comment="Sys: Non-specific System, Func: Tachograph" InitialValue="128"/>
+		<VarDeclaration Name="F_DOOR_CONTROLLER" Type="BYTE" Comment="Sys: Non-specific System, Func: Door Controller" InitialValue="129"/>
+		<VarDeclaration Name="F_ARTICULATION_TURNTABLE_CONTROL" Type="BYTE" Comment="Sys: Non-specific System, Func: Articulation Turntable Control - Control of the articulation" InitialValue="130"/>
+		<VarDeclaration Name="F_BODY_TO_VEHICLE_INTERFACE_CONTROL" Type="BYTE" Comment="Sys: Non-specific System, Func: Body-to-Vehicle Interface Control - Interface controller managing" InitialValue="131"/>
+		<VarDeclaration Name="F_SLOPE_SENSOR" Type="BYTE" Comment="Sys: Non-specific System, Func: Slope Sensor - Sensor for measuring a slope along an axis." InitialValue="132"/>
+		<VarDeclaration Name="F_RETARDER_DISPLAY" Type="BYTE" Comment="Sys: Non-specific System, Func: Retarder Display - Display module that shows information" InitialValue="134"/>
+		<VarDeclaration Name="F_DIFFERENTIAL_LOCK_CONTROLLER" Type="BYTE" Comment="Sys: Non-specific System, Func: Differential Lock Controller" InitialValue="135"/>
+		<VarDeclaration Name="F_LOW_VOLTAGE_DISCONNECT" Type="BYTE" Comment="Sys: Non-specific System, Func: Low-Voltage Disconnect - The device that monitors the voltage of" InitialValue="136"/>
+		<VarDeclaration Name="F_ROADWAY_INFORMATION" Type="BYTE" Comment="Sys: Non-specific System, Func: Roadway Information - Devices that use this function will provide" InitialValue="137"/>
+		<VarDeclaration Name="F_AUTOMATED_DRIVING" Type="BYTE" Comment="Sys: Non-specific System, Func: Automated Driving - Automated Driving System. Note: The hardware" InitialValue="138"/>
+		<VarDeclaration Name="F_NOT_AVAILABLE" Type="BYTE" Comment="Sys: Non-specific System, Func: Not Available - This assignment can be used until an explicit" InitialValue="255"/>
+		<VarDeclaration Name="F_TRACTOR_FORWARD_ROAD_IMAGE_PROCESSING" Type="BYTE" Comment="Sys: Tractor, Func: Forward Road Image Processing - Determine vehicle position from lane" InitialValue="128"/>
+		<VarDeclaration Name="F_TRACTOR_FIFTH_WHEEL_SMART_SYSTEM" Type="BYTE" Comment="Sys: Tractor, Func: Fifth Wheel Smart System - Any systems relative to the operation &amp;" InitialValue="129"/>
+		<VarDeclaration Name="F_TRACTOR_CATALYST_FLUID_SENSOR" Type="BYTE" Comment="Sys: Tractor, Func: Catalyst Fluid Sensor - The Catalyst Fluid Sensor can measure the catalyst" InitialValue="130"/>
+		<VarDeclaration Name="F_TRACTOR_ADAPTIVE_FRONT_LIGHTING_SYSTEM" Type="BYTE" Comment="Sys: Tractor, Func: Adaptive Front Lighting System - System used to adjust the vehicle front" InitialValue="131"/>
+		<VarDeclaration Name="F_TRACTOR_IDLE_CONTROL_SYSTEM" Type="BYTE" Comment="Sys: Tractor, Func: Idle Control System - The device automatically starts and stops the engine" InitialValue="132"/>
+		<VarDeclaration Name="F_TRACTOR_USER_INTERFACE_SYSTEM" Type="BYTE" Comment="Sys: Tractor, Func: User Interface System - The User Interface System is a two way interface" InitialValue="133"/>
+		<VarDeclaration Name="F_TRACTOR_NOT_AVAILABLE" Type="BYTE" Comment="Sys: Tractor, Func: Not Available - This assignment can be used until an explicit function has" InitialValue="255"/>
+		<VarDeclaration Name="F_TRAILER_NOT_AVAILABLE" Type="BYTE" Comment="Sys: Trailer, Func: Not Available - This assignment can be used until an explicit function has" InitialValue="255"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE isobus::pgn::const;
+
+// Industry Group 1 specific function defines
+GLOBALCONSTANTS IG1_NAME_Functions
+	// Non-specific System (DC_NON_SPECIFIC_SYSTEM = 0)
+	VAR_GLOBAL CONSTANT
+		F_TACHOGRAPH : BYTE := 128; // Sys: Non-specific System, Func: Tachograph
+		F_DOOR_CONTROLLER : BYTE := 129; // Sys: Non-specific System, Func: Door Controller
+		F_ARTICULATION_TURNTABLE_CONTROL : BYTE := 130; // Sys: Non-specific System, Func: Articulation Turntable Control - Control of the articulation
+		                                                // turntable for joined body buses.
+		F_BODY_TO_VEHICLE_INTERFACE_CONTROL : BYTE := 131; // Sys: Non-specific System, Func: Body-to-Vehicle Interface Control - Interface controller managing
+		                                                   // interaction of vehicle functions and body functions.May be combination of body signals and
+		                                                   // gateway ...
+		F_SLOPE_SENSOR : BYTE := 132; // Sys: Non-specific System, Func: Slope Sensor - Sensor for measuring a slope along an axis.
+		F_RETARDER_DISPLAY : BYTE := 134; // Sys: Non-specific System, Func: Retarder Display - Display module that shows information
+		                                  // pertaining to the retarder (driveline or exhaust or engine).
+		F_DIFFERENTIAL_LOCK_CONTROLLER : BYTE := 135; // Sys: Non-specific System, Func: Differential Lock Controller
+		F_LOW_VOLTAGE_DISCONNECT : BYTE := 136; // Sys: Non-specific System, Func: Low-Voltage Disconnect - The device that monitors the voltage of
+		                                        // the starting battery bank and disconnects predetermined auxiliary loads to assure enough power is
+		                                        // le...
+		F_ROADWAY_INFORMATION : BYTE := 137; // Sys: Non-specific System, Func: Roadway Information - Devices that use this function will provide
+		                                     // information relevant to the roadway in which the vehicle is traveling. This includes attributes
+		                                     // suc...
+		F_AUTOMATED_DRIVING : BYTE := 138; // Sys: Non-specific System, Func: Automated Driving - Automated Driving System. Note: The hardware
+		                                   // and software that are collectively capable of performing some or all of the dynamic driving task
+		                                   // on ...
+		F_NOT_AVAILABLE : BYTE := 255; // Sys: Non-specific System, Func: Not Available - This assignment can be used until an explicit
+		                               // function has been assigned.
+	END_VAR
+
+	// Tractor (DC_TRACTOR = 1)
+	VAR_GLOBAL CONSTANT
+		F_TRACTOR_FORWARD_ROAD_IMAGE_PROCESSING : BYTE := 128; // Sys: Tractor, Func: Forward Road Image Processing - Determine vehicle position from lane
+		                                                       // markings. Performance, Advisory & Warning only
+		F_TRACTOR_FIFTH_WHEEL_SMART_SYSTEM : BYTE := 129; // Sys: Tractor, Func: Fifth Wheel Smart System - Any systems relative to the operation &
+		                                                  // status/safety monitoring of the fifth wheel coupler system (including mounting bracket).
+		F_TRACTOR_CATALYST_FLUID_SENSOR : BYTE := 130; // Sys: Tractor, Func: Catalyst Fluid Sensor - The Catalyst Fluid Sensor can measure the catalyst
+		                                               // fluid temperature, the catalyst fluid level and the catalyst fluid quality
+		F_TRACTOR_ADAPTIVE_FRONT_LIGHTING_SYSTEM : BYTE := 131; // Sys: Tractor, Func: Adaptive Front Lighting System - System used to adjust the vehicle front
+		                                                        // lighting for the current operating conditions (city, highway, country,etc.)
+		F_TRACTOR_IDLE_CONTROL_SYSTEM : BYTE := 132; // Sys: Tractor, Func: Idle Control System - The device automatically starts and stops the engine
+		                                             // when the vehicle is stationary for the purpose of reducing excess idle time.
+		F_TRACTOR_USER_INTERFACE_SYSTEM : BYTE := 133; // Sys: Tractor, Func: User Interface System - The User Interface System is a two way interface
+		                                               // system. Uses of this may include, but are not limited to, setting climate conditions, setting
+		                                               // system par...
+		F_TRACTOR_NOT_AVAILABLE : BYTE := 255; // Sys: Tractor, Func: Not Available - This assignment can be used until an explicit function has
+		                                       // been assigned.
+	END_VAR
+
+	// Trailer (DC_TRAILER = 2)
+	VAR_GLOBAL CONSTANT
+		F_TRAILER_NOT_AVAILABLE : BYTE := 255; // Sys: Trailer, Func: Not Available - This assignment can be used until an explicit function has
+		                                       // been assigned.
+	END_VAR
+
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</GlobalConstants>

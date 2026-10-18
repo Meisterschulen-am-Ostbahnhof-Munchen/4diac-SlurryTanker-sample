@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="ASR2_DELAY" Comment="Delayed event propagation (ASR2 Adapter, Set und Reset je unabhaengig&#10;verzoegert)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-09-17" Remarks="Wrapper fuer 2x E_DELAY ueber ASR2-Adapter - verzoegert SET und RESET eines Set/Reset-Kettenglieds (z.B. AX_T_FF_SR_SEQ) je um DT">
+	</VersionInfo>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.1" Author="Franz Höpfinger" Date="2026-09-17" Remarks="Bugfix (Franz: 'ASR2_DELAY.fbt braucht 4 Zeiten', 'ATM waere hier richtig'): gemeinsamer Klartext-InputVar DT:TIME (nie ueber INIT initialisiert, UND SET/RESET faelschlich mit derselben Zeit) durch 2 getrennte ATM-Sockets DT_SET/DT_RESET ersetzt - SET- und RESET-Verzoegerung sind damit unabhaengig voneinander einstellbar UND sauber ueber initval_ATM+INIT/INITO initialisierbar.">
+	</VersionInfo>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.2" Author="Franz Höpfinger" Date="2026-09-17" Remarks="Bugfix (Franz: 'ASR2_DELAY.fbt braucht 4 Zeiten und 4 STOP', analog zur AE2_DELAY-Korrektur): ASR2 ist wie AE2 echt bidirektional (EI_SET/EI_RESET/EO_SET/EO_RESET je Socket UND Plug) - bisher wurde nur die Vorwaerts-Richtung verzoegert. Jetzt 4 unabhaengige E_DELAY-Instanzen (SET/RESET x Vorwaerts/Rueckwaerts), 4 ATM-Zeiten PT_SET_FWD/PT_SET_BWD/PT_RESET_FWD/PT_RESET_BWD (vormals DT_SET/DT_RESET, DT-Praefix wegen 'DT is a reserved keyword' auf PT umbenannt) und 4 AE-Stop-Sockets STOP_SET_FWD/STOP_SET_BWD/STOP_RESET_FWD/STOP_RESET_BWD.">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::events::bidirectional">
+	</CompilerInfo>
+	<InterfaceList>
+		<Plugs>
+			<AdapterDeclaration Name="OUT" Type="adapter::types::bidirectional::ASR2" Comment="Verzoegertes Set/Reset, an naechstes Kettenglied (bidirektional: Vorwaerts hinaus, Rueckwaerts herein)" x="6900" y="4100"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="IN" Type="adapter::types::bidirectional::ASR2" Comment="Set/Reset vom vorherigen Kettenglied (bidirektional: Vorwaerts herein, Rueckwaerts hinaus)" x="1800" y="4226.67"/>
+			<AdapterDeclaration Name="STOP_SET_FWD" Type="adapter::types::unidirectional::AE" Comment="Stop delay SET Vorwaerts" x="4500" y="4700"/>
+			<AdapterDeclaration Name="PT_SET_FWD" Type="adapter::types::unidirectional::ATM" Comment="Preset Time SET Vorwaerts (IN.EO_SET-&gt;OUT.EO_SET)" x="4500" y="5100"/>
+			<AdapterDeclaration Name="STOP_SET_BWD" Type="adapter::types::unidirectional::AE" Comment="Stop delay SET Rueckwaerts" x="-200" y="4300"/>
+			<AdapterDeclaration Name="PT_SET_BWD" Type="adapter::types::unidirectional::ATM" Comment="Preset Time SET Rueckwaerts (OUT.EI_SET-&gt;IN.EI_SET)" x="-300" y="4700"/>
+			<AdapterDeclaration Name="STOP_RESET_FWD" Type="adapter::types::unidirectional::AE" Comment="Stop delay RESET Vorwaerts" x="1793.33" y="4986.67"/>
+			<AdapterDeclaration Name="PT_RESET_FWD" Type="adapter::types::unidirectional::ATM" Comment="Preset Time RESET Vorwaerts (IN.EO_RESET-&gt;OUT.EO_RESET)" x="1660" y="5640"/>
+			<AdapterDeclaration Name="STOP_RESET_BWD" Type="adapter::types::unidirectional::AE" Comment="Stop delay RESET Rueckwaerts" x="-500" y="5600"/>
+			<AdapterDeclaration Name="PT_RESET_BWD" Type="adapter::types::unidirectional::ATM" Comment="Preset Time RESET Rueckwaerts (OUT.EI_RESET-&gt;IN.EI_RESET)" x="-406.67" y="6160"/>
+		</Sockets>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="E_DELAY_SET_FWD" Type="iec61499::events::E_DELAY" x="5700" y="4500">
+		</FB>
+		<FB Name="E_DELAY_SET_BWD" Type="iec61499::events::E_DELAY" x="873.33" y="4226.67">
+		</FB>
+		<FB Name="E_DELAY_RESET_FWD" Type="iec61499::events::E_DELAY" x="3000" y="4660">
+		</FB>
+		<FB Name="E_DELAY_RESET_BWD" Type="iec61499::events::E_DELAY" x="800" y="5400">
+		</FB>
+		<EventConnections>
+			<Connection Source="IN.EO_SET" Destination="E_DELAY_SET_FWD.START" dx1="1186.67"/>
+			<Connection Source="STOP_SET_FWD.E1" Destination="E_DELAY_SET_FWD.STOP" dx1="693.33"/>
+			<Connection Source="E_DELAY_SET_FWD.EO" Destination="OUT.EO_SET" dx1="293.33"/>
+			<Connection Source="OUT.EI_SET" Destination="E_DELAY_SET_BWD.START" dx1="66.67" dx2="480" dy="-553.33"/>
+			<Connection Source="STOP_SET_BWD.E1" Destination="E_DELAY_SET_BWD.STOP" dx1="66.67"/>
+			<Connection Source="E_DELAY_SET_BWD.EO" Destination="IN.EI_SET"/>
+			<Connection Source="IN.EO_RESET" Destination="E_DELAY_RESET_FWD.START" dx1="66.67"/>
+			<Connection Source="STOP_RESET_FWD.E1" Destination="E_DELAY_RESET_FWD.STOP" dx1="66.67"/>
+			<Connection Source="E_DELAY_RESET_FWD.EO" Destination="OUT.EO_RESET" dx1="713.33"/>
+			<Connection Source="OUT.EI_RESET" Destination="E_DELAY_RESET_BWD.START" dx1="80" dx2="1606.67" dy="2620"/>
+			<Connection Source="STOP_RESET_BWD.E1" Destination="E_DELAY_RESET_BWD.STOP" dx1="440"/>
+			<Connection Source="E_DELAY_RESET_BWD.EO" Destination="IN.EI_RESET" dx1="193.33"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="PT_SET_FWD.D1" Destination="E_DELAY_SET_FWD.DT" dx1="653.33"/>
+			<Connection Source="PT_SET_BWD.D1" Destination="E_DELAY_SET_BWD.DT" dx1="66.67"/>
+			<Connection Source="PT_RESET_FWD.D1" Destination="E_DELAY_RESET_FWD.DT" dx1="306.67"/>
+			<Connection Source="PT_RESET_BWD.D1" Destination="E_DELAY_RESET_BWD.DT" dx1="106.67"/>
+		</DataConnections>
+	</FBNetwork>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

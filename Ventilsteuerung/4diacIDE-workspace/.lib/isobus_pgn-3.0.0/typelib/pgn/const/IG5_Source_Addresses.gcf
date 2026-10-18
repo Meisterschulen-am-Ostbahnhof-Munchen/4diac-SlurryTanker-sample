@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="IG5_Source_Addresses" Comment="Industry Group 5 specific source addresses">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Organization="Demmler Andreas Fahrzeugbau" Version="1.0" Author="Franz Höpfinger" Date="2026-06-29">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::pgn::const">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="SA_RESERVED_128" Type="BYTE" Comment="Source Address: thru 207 are reserved for future assignment by SAE - Used for dynamic address" InitialValue="128"/>
+		<VarDeclaration Name="SA_RESERVED_208" Type="BYTE" Comment="Source Address: thru 229 are reserved for future assignment - Used for individual preassigned" InitialValue="208"/>
+		<VarDeclaration Name="SA_GENERATOR_VOLTAGE_REGULATOR" Type="BYTE" Comment="Source Address: Generator Voltage Regulator - The voltage regulator controls the generator output" InitialValue="230"/>
+		<VarDeclaration Name="SA_ENGINE_3" Type="BYTE" Comment="Source Address: Engine #3 - The Engine ECU for the third engine within a system." InitialValue="231"/>
+		<VarDeclaration Name="SA_ENGINE_4" Type="BYTE" Comment="Source Address: Engine #4 - The Engine ECU for the fourth engine within a system." InitialValue="232"/>
+		<VarDeclaration Name="SA_ENGINE_5" Type="BYTE" Comment="Source Address: Engine #5 - The Engine ECU for the fifth engine within a system." InitialValue="233"/>
+		<VarDeclaration Name="SA_GENERATOR_SET_CONTROLLER" Type="BYTE" Comment="Source Address: Generator Set Controller - Used for data collection and control of a generator" InitialValue="234"/>
+		<VarDeclaration Name="SA_SUPPLEMENTAL_SENSOR_PROCESSING_UNIT_1" Type="BYTE" Comment="Source Address: Supplemental Sensor Processing Unit #1" InitialValue="235"/>
+		<VarDeclaration Name="SA_SUPPLEMENTAL_SENSOR_PROCESSING_UNIT_2" Type="BYTE" Comment="Source Address: Supplemental Sensor Processing Unit #2" InitialValue="236"/>
+		<VarDeclaration Name="SA_SUPPLEMENTAL_SENSOR_PROCESSING_UNIT_3" Type="BYTE" Comment="Source Address: Supplemental Sensor Processing Unit #3" InitialValue="237"/>
+		<VarDeclaration Name="SA_SUPPLEMENTAL_SENSOR_PROCESSING_UNIT_4" Type="BYTE" Comment="Source Address: Supplemental Sensor Processing Unit #4" InitialValue="238"/>
+		<VarDeclaration Name="SA_SUPPLEMENTAL_SENSOR_PROCESSING_UNIT_5" Type="BYTE" Comment="Source Address: Supplemental Sensor Processing Unit #5" InitialValue="239"/>
+		<VarDeclaration Name="SA_SUPPLEMENTAL_SENSOR_PROCESSING_UNIT_6" Type="BYTE" Comment="Source Address: Supplemental Sensor Processing Unit #6" InitialValue="240"/>
+		<VarDeclaration Name="SA_ENGINE_MONITOR_1" Type="BYTE" Comment="Source Address: Engine Monitor #1" InitialValue="241"/>
+		<VarDeclaration Name="SA_ENGINE_MONITOR_2" Type="BYTE" Comment="Source Address: Engine Monitor #2" InitialValue="242"/>
+		<VarDeclaration Name="SA_ENGINE_MONITOR_3" Type="BYTE" Comment="Source Address: Engine Monitor #3" InitialValue="243"/>
+		<VarDeclaration Name="SA_ENGINE_MONITOR_4" Type="BYTE" Comment="Source Address: Engine Monitor #4" InitialValue="244"/>
+		<VarDeclaration Name="SA_ENGINE_MONITOR_5" Type="BYTE" Comment="Source Address: Engine Monitor #5" InitialValue="245"/>
+		<VarDeclaration Name="SA_ENGINE_MONITOR_6" Type="BYTE" Comment="Source Address: Engine Monitor #6" InitialValue="246"/>
+		<VarDeclaration Name="SA_ENGINE_MONITOR_7" Type="BYTE" Comment="Source Address: Engine Monitor #7" InitialValue="247"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE isobus::pgn::const;
+
+// Industry Group 5 specific source addresses
+GLOBALCONSTANTS IG5_Source_Addresses
+	VAR_GLOBAL CONSTANT
+		SA_RESERVED_128 : BYTE := 128; // Source Address: thru 207 are reserved for future assignment by SAE - Used for dynamic address
+		                               // assignment (self-configurable)
+		SA_RESERVED_208 : BYTE := 208; // Source Address: thru 229 are reserved for future assignment - Used for individual preassigned
+		                               // addresses
+		SA_GENERATOR_VOLTAGE_REGULATOR : BYTE := 230; // Source Address: Generator Voltage Regulator - The voltage regulator controls the generator output
+		                                              // voltage
+		SA_ENGINE_3 : BYTE := 231; // Source Address: Engine #3 - The Engine ECU for the third engine within a system.
+		SA_ENGINE_4 : BYTE := 232; // Source Address: Engine #4 - The Engine ECU for the fourth engine within a system.
+		SA_ENGINE_5 : BYTE := 233; // Source Address: Engine #5 - The Engine ECU for the fifth engine within a system.
+		SA_GENERATOR_SET_CONTROLLER : BYTE := 234; // Source Address: Generator Set Controller - Used for data collection and control of a generator
+		                                           // system
+		SA_SUPPLEMENTAL_SENSOR_PROCESSING_UNIT_1 : BYTE := 235; // Source Address: Supplemental Sensor Processing Unit #1
+		SA_SUPPLEMENTAL_SENSOR_PROCESSING_UNIT_2 : BYTE := 236; // Source Address: Supplemental Sensor Processing Unit #2
+		SA_SUPPLEMENTAL_SENSOR_PROCESSING_UNIT_3 : BYTE := 237; // Source Address: Supplemental Sensor Processing Unit #3
+		SA_SUPPLEMENTAL_SENSOR_PROCESSING_UNIT_4 : BYTE := 238; // Source Address: Supplemental Sensor Processing Unit #4
+		SA_SUPPLEMENTAL_SENSOR_PROCESSING_UNIT_5 : BYTE := 239; // Source Address: Supplemental Sensor Processing Unit #5
+		SA_SUPPLEMENTAL_SENSOR_PROCESSING_UNIT_6 : BYTE := 240; // Source Address: Supplemental Sensor Processing Unit #6
+		SA_ENGINE_MONITOR_1 : BYTE := 241; // Source Address: Engine Monitor #1
+		SA_ENGINE_MONITOR_2 : BYTE := 242; // Source Address: Engine Monitor #2
+		SA_ENGINE_MONITOR_3 : BYTE := 243; // Source Address: Engine Monitor #3
+		SA_ENGINE_MONITOR_4 : BYTE := 244; // Source Address: Engine Monitor #4
+		SA_ENGINE_MONITOR_5 : BYTE := 245; // Source Address: Engine Monitor #5
+		SA_ENGINE_MONITOR_6 : BYTE := 246; // Source Address: Engine Monitor #6
+		SA_ENGINE_MONITOR_7 : BYTE := 247; // Source Address: Engine Monitor #7
+	END_VAR
+
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</GlobalConstants>

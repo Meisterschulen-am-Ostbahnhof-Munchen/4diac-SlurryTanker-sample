@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="AID_PG" Comment="Picture graphic object attribute ids">
+	<Identification Standard="61499-1" Description="Copyright (c) 2023 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-06-20">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::UT::Q::const::AID">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="WIDTH" Type="USINT" Comment="1: AID_PG_WIDTH - Width in pixels." InitialValue="USINT#1"/>
+		<VarDeclaration Name="OPTIONS" Type="USINT" Comment="2: AID_PG_OPTIONS - Bitmask: Bit 0=Transparent, Bit 1=Flashing, Bit 2=Run-Length Encoded (RLE)" InitialValue="USINT#2"/>
+		<VarDeclaration Name="TRANSPARENCY_COLOUR" Type="USINT" Comment="3: AID_PG_TRANSPARENCY_COLOUR" InitialValue="USINT#3"/>
+		<VarDeclaration Name="ACTUAL_WIDTH" Type="USINT" Comment="4: AID_PG_ACTUAL_WIDTH (read-only)" InitialValue="USINT#4"/>
+		<VarDeclaration Name="ACTUAL_HEIGHT" Type="USINT" Comment="5: AID_PG_ACTUAL_HEIGHT (read-only)" InitialValue="USINT#5"/>
+		<VarDeclaration Name="FORMAT" Type="USINT" Comment="6: AID_PG_FORMAT (read-only) - Picture graphic type: 0 = Monochrome, 1 = 4-bit colour, 2 = 8-bit colour." InitialValue="USINT#6"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE isobus::UT::Q::const::AID;
+
+// picture graphic object attribute ids
+GLOBALCONSTANTS AID_PG
+	VAR_GLOBAL CONSTANT
+		WIDTH : USINT := USINT#1; // 1: AID_PG_WIDTH - Width in pixels.
+		OPTIONS : USINT := USINT#2; // 2: AID_PG_OPTIONS - Bitmask: Bit 0=Transparent, Bit 1=Flashing, Bit 2=Run-Length Encoded (RLE)
+		                            // data.
+		TRANSPARENCY_COLOUR : USINT := USINT#3; // 3: AID_PG_TRANSPARENCY_COLOUR
+		ACTUAL_WIDTH : USINT := USINT#4; // 4: AID_PG_ACTUAL_WIDTH (read-only)
+		ACTUAL_HEIGHT : USINT := USINT#5; // 5: AID_PG_ACTUAL_HEIGHT (read-only)
+		FORMAT : USINT := USINT#6; // 6: AID_PG_FORMAT (read-only) - Picture graphic type: 0 = Monochrome, 1 = 4-bit colour, 2 = 8-bit colour.
+	END_VAR
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</GlobalConstants>

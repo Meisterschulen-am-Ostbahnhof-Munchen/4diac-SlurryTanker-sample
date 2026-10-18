@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="AnlagenSequenz_06_ADAPTER" Comment="Composite wrapper around AnlagenSequenz_06: DO_Mx/STOERUNG_Mx (Event+BOOL)&#10;bundled into AX adapters, ZE*_EIN/AUS each fed via its own ATM adapter socket.&#10;timeOut stays internal, not exposed.">
+	<Identification Standard="61499-2" ApplicationDomain="Fördertechnik" Description="Copyright (c) 2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-08-14" Remarks="initial API and implementation">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::utils::sequence::timed">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Initialization Request">
+				<With Var="TC"/>
+			</Event>
+			<Event Name="EIN" Type="Event" Comment="Startsequenz auslösen; nur wirksam wenn EINSCHALTBEREIT=TRUE; quittiert dabei zugleich eine anstehende Störungsanzeige">
+			</Event>
+			<Event Name="AUS" Type="Event" Comment="Stopsequenz auslösen, aus jedem Schritt der Vorlauf-Kette oder aus S_LAEUFT">
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Ausführungsbestätigung, mit jedem Zustands-Update (Werte selbst laufen ueber STATUS_BETRIEB/STATUS_STOERUNG/ZAEHLSTAND/EINSCHALTBEREIT/TRANSIT_MOTOR/TRANSIT_ART Plugs)">
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="TC" Type="TIME" Comment="Cycle time for the internal TimeTicker (PT/ET readback)" InitialValue="T#200ms"/>
+		</InputVars>
+		<Plugs>
+			<AdapterDeclaration Name="STATUS_BETRIEB" Type="adapter::types::unidirectional::AS" Comment="0=Aus 1=Hochfahren 2=Läuft 3=Herunterfahren" x="10200" y="5000"/>
+			<AdapterDeclaration Name="STATUS_STOERUNG" Type="adapter::types::unidirectional::AS" Comment="0=keine 4=aktiv, verriegelt bis EIN" x="10200" y="5500"/>
+			<AdapterDeclaration Name="ZAEHLSTAND" Type="adapter::types::unidirectional::AS" Comment="0..6, Anzahl aktuell laufender Motoren" x="10200" y="6000"/>
+			<AdapterDeclaration Name="EINSCHALTBEREIT" Type="adapter::types::unidirectional::AX" Comment="TRUE nur wenn alle Motoren stehen UND alle Motoren störungsfrei sind" x="10200" y="6500"/>
+			<AdapterDeclaration Name="TRANSIT_MOTOR" Type="adapter::types::unidirectional::AS" Comment="0 = keiner (S_AUS/S_LAEUFT), 1..6 = Motor-Nr., der nach Ablauf der aktuellen Zeit startet/stoppt (siehe TRANSIT_ART)" x="10200" y="7000"/>
+			<AdapterDeclaration Name="TRANSIT_ART" Type="adapter::types::unidirectional::AS" Comment="anlagenSequenz::TRANSIT_ART_KEINE/_VORLAUF/_NACHLAUF" x="10200" y="7500"/>
+			<AdapterDeclaration Name="DO_M1" Type="adapter::types::unidirectional::AX" Comment="Laufbefehl Motor 1" x="10200" y="1500"/>
+			<AdapterDeclaration Name="DO_M2" Type="adapter::types::unidirectional::AX" Comment="Laufbefehl Motor 2" x="10200" y="2000"/>
+			<AdapterDeclaration Name="DO_M3" Type="adapter::types::unidirectional::AX" Comment="Laufbefehl Motor 3" x="10200" y="2500"/>
+			<AdapterDeclaration Name="DO_M4" Type="adapter::types::unidirectional::AX" Comment="Laufbefehl Motor 4" x="10200" y="3000"/>
+			<AdapterDeclaration Name="DO_M5" Type="adapter::types::unidirectional::AX" Comment="Laufbefehl Motor 5" x="10200" y="3500"/>
+			<AdapterDeclaration Name="DO_M6" Type="adapter::types::unidirectional::AX" Comment="Laufbefehl Motor 6" x="10200" y="4000"/>
+			<AdapterDeclaration Name="ANLAGE_AUS" Type="adapter::types::unidirectional::AX" Comment="TRUE nur in S_AUS - Voraussetzung fuer Handbetrieb" x="10200" y="4500"/>
+			<AdapterDeclaration Name="PT" Type="adapter::types::unidirectional::ATM" Comment="Process time" x="7600" y="7100"/>
+			<AdapterDeclaration Name="ET" Type="adapter::types::unidirectional::ATM" Comment="Elapsed time" x="7600" y="6600"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="ATM_ZE1_EIN" Type="adapter::types::unidirectional::ATM" Comment="S_VOR1 zu S_VOR2, M5 startet (Vorlauf)" x="-100" y="-700"/>
+			<AdapterDeclaration Name="ATM_ZE2_EIN" Type="adapter::types::unidirectional::ATM" Comment="S_VOR2 zu S_VOR3, M4 startet (Vorlauf)" x="-100" y="-200"/>
+			<AdapterDeclaration Name="ATM_ZE3_EIN" Type="adapter::types::unidirectional::ATM" Comment="S_VOR3 zu S_VOR4, M3 startet (Vorlauf)" x="-100" y="300"/>
+			<AdapterDeclaration Name="ATM_ZE4_EIN" Type="adapter::types::unidirectional::ATM" Comment="S_VOR4 zu S_VOR5, M2 startet (Vorlauf)" x="-100" y="800"/>
+			<AdapterDeclaration Name="ATM_ZE5_EIN" Type="adapter::types::unidirectional::ATM" Comment="S_VOR5 zu S_LAEUFT, M1 startet (Vorlauf)" x="-100" y="1300"/>
+			<AdapterDeclaration Name="ATM_ZE1_AUS" Type="adapter::types::unidirectional::ATM" Comment="S_NACH1 zu S_NACH2, M2 stoppt (Nachlauf)" x="1800" y="-700"/>
+			<AdapterDeclaration Name="ATM_ZE2_AUS" Type="adapter::types::unidirectional::ATM" Comment="S_NACH2 zu S_NACH3, M3 stoppt (Nachlauf)" x="1800" y="-200"/>
+			<AdapterDeclaration Name="ATM_ZE3_AUS" Type="adapter::types::unidirectional::ATM" Comment="S_NACH3 zu S_NACH4, M4 stoppt (Nachlauf)" x="1800" y="300"/>
+			<AdapterDeclaration Name="ATM_ZE4_AUS" Type="adapter::types::unidirectional::ATM" Comment="S_NACH4 zu S_NACH5, M5 stoppt (Nachlauf)" x="1800" y="800"/>
+			<AdapterDeclaration Name="ATM_ZE5_AUS" Type="adapter::types::unidirectional::ATM" Comment="S_NACH5 zu S_AUS, M6 stoppt (Nachlauf)" x="1800" y="1300"/>
+			<AdapterDeclaration Name="STOERUNG_M1" Type="adapter::types::unidirectional::AX" Comment="Motor 1 hat aktuell eine Störung anstehen" x="-100" y="1900"/>
+			<AdapterDeclaration Name="STOERUNG_M2" Type="adapter::types::unidirectional::AX" Comment="Motor 2 hat aktuell eine Störung anstehen" x="-100" y="2400"/>
+			<AdapterDeclaration Name="STOERUNG_M3" Type="adapter::types::unidirectional::AX" Comment="Motor 3 hat aktuell eine Störung anstehen" x="-100" y="2900"/>
+			<AdapterDeclaration Name="STOERUNG_M4" Type="adapter::types::unidirectional::AX" Comment="Motor 4 hat aktuell eine Störung anstehen" x="-100" y="3400"/>
+			<AdapterDeclaration Name="STOERUNG_M5" Type="adapter::types::unidirectional::AX" Comment="Motor 5 hat aktuell eine Störung anstehen" x="-100" y="3900"/>
+			<AdapterDeclaration Name="STOERUNG_M6" Type="adapter::types::unidirectional::AX" Comment="Motor 6 hat aktuell eine Störung anstehen" x="-100" y="4400"/>
+		</Sockets>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="Sequence" Type="logiBUS::utils::sequence::timed::AnlagenSequenz_06" x="3600" y="1900">
+		</FB>
+		<FB Name="E_TimeOut" Type="adapter::events::TimeOut::E_FB_TimeOut" x="8300" y="6000">
+		</FB>
+		<FB Name="TimeTicker" Type="adapter::events::TimeOut::TimeTicker" x="6700" y="5200">
+		</FB>
+		<EventConnections>
+			<Connection Source="EIN" Destination="Sequence.EIN" dx1="1553.33" dx2="673.33" dy="653.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AUS" Destination="Sequence.AUS" dx1="1520" dx2="706.67" dy="580">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ATM_ZE1_EIN.E1" Destination="Sequence.SET_ZE1_EIN" dx1="1633.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ATM_ZE2_EIN.E1" Destination="Sequence.SET_ZE2_EIN" dx1="1600">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ATM_ZE3_EIN.E1" Destination="Sequence.SET_ZE3_EIN" dx1="1566.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ATM_ZE4_EIN.E1" Destination="Sequence.SET_ZE4_EIN" dx1="840">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ATM_ZE5_EIN.E1" Destination="Sequence.SET_ZE5_EIN" dx1="806.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ATM_ZE1_AUS.E1" Destination="Sequence.SET_ZE1_AUS" dx1="806.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ATM_ZE2_AUS.E1" Destination="Sequence.SET_ZE2_AUS" dx1="606.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ATM_ZE3_AUS.E1" Destination="Sequence.SET_ZE3_AUS" dx1="506.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ATM_ZE4_AUS.E1" Destination="Sequence.SET_ZE4_AUS" dx1="540">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ATM_ZE5_AUS.E1" Destination="Sequence.SET_ZE5_AUS" dx1="506.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="STOERUNG_M1.E1" Destination="Sequence.EI_M1" dx1="540">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="STOERUNG_M2.E1" Destination="Sequence.EI_M2" dx1="1666.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="STOERUNG_M3.E1" Destination="Sequence.EI_M3" dx1="1700">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="STOERUNG_M4.E1" Destination="Sequence.EI_M4" dx1="1733.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="STOERUNG_M5.E1" Destination="Sequence.EI_M5" dx1="1766.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="STOERUNG_M6.E1" Destination="Sequence.EI_M6" dx1="1773.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Sequence.CNF" Destination="CNF" dx1="480">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Sequence.CNF" Destination="ANLAGE_AUS.E1" dx1="1506.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Sequence.CNF" Destination="STATUS_BETRIEB.E1">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Sequence.CNF" Destination="STATUS_STOERUNG.E1">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Sequence.CNF" Destination="ZAEHLSTAND.E1">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Sequence.CNF" Destination="EINSCHALTBEREIT.E1">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Sequence.CNF" Destination="TRANSIT_MOTOR.E1">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Sequence.CNF" Destination="TRANSIT_ART.E1">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Sequence.EO_M1" Destination="DO_M1.E1" dx1="473.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Sequence.EO_M2" Destination="DO_M2.E1" dx1="440">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Sequence.EO_M3" Destination="DO_M3.E1" dx1="366.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Sequence.EO_M4" Destination="DO_M4.E1" dx1="333.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Sequence.EO_M5" Destination="DO_M5.E1" dx1="266.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Sequence.EO_M6" Destination="DO_M6.E1" dx1="200">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="INIT" Destination="Sequence.INIT" dx1="5360">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Sequence.INITO" Destination="TimeTicker.INIT" dx1="133.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="TimeTicker.INITO" Destination="INITO" dx1="1440">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="TimeTicker.CNF" Destination="ET.E1" dx1="80" dx2="80" dy="646.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="TimeTicker.STARTO" Destination="PT.E1" dx1="80" dx2="80" dy="840">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="ATM_ZE1_EIN.D1" Destination="Sequence.ZE1_EIN" dx1="1466.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ATM_ZE2_EIN.D1" Destination="Sequence.ZE2_EIN" dx1="1433.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ATM_ZE3_EIN.D1" Destination="Sequence.ZE3_EIN" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ATM_ZE4_EIN.D1" Destination="Sequence.ZE4_EIN" dx1="673.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ATM_ZE5_EIN.D1" Destination="Sequence.ZE5_EIN" dx1="640">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ATM_ZE1_AUS.D1" Destination="Sequence.ZE1_AUS" dx1="540">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ATM_ZE2_AUS.D1" Destination="Sequence.ZE2_AUS" dx1="373.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ATM_ZE3_AUS.D1" Destination="Sequence.ZE3_AUS" dx1="806.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ATM_ZE4_AUS.D1" Destination="Sequence.ZE4_AUS" dx1="840">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ATM_ZE5_AUS.D1" Destination="Sequence.ZE5_AUS" dx1="806.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="STOERUNG_M1.D1" Destination="Sequence.STOERUNG_M1" dx1="840">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="STOERUNG_M2.D1" Destination="Sequence.STOERUNG_M2" dx1="1026.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="STOERUNG_M3.D1" Destination="Sequence.STOERUNG_M3" dx1="220">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="STOERUNG_M4.D1" Destination="Sequence.STOERUNG_M4" dx1="1773.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="STOERUNG_M5.D1" Destination="Sequence.STOERUNG_M5" dx1="1773.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="STOERUNG_M6.D1" Destination="Sequence.STOERUNG_M6" dx1="1773.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Sequence.STATUS_BETRIEB" Destination="STATUS_BETRIEB.D1" dx1="513.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Sequence.STATUS_STOERUNG" Destination="STATUS_STOERUNG.D1" dx1="546.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Sequence.ZAEHLSTAND" Destination="ZAEHLSTAND.D1" dx1="613.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Sequence.EINSCHALTBEREIT" Destination="EINSCHALTBEREIT.D1" dx1="580">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Sequence.TRANSIT_MOTOR" Destination="TRANSIT_MOTOR.D1">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Sequence.TRANSIT_ART" Destination="TRANSIT_ART.D1">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Sequence.ANLAGE_AUS" Destination="ANLAGE_AUS.D1" dx1="1406.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Sequence.DO_M1" Destination="DO_M1.D1" dx1="646.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Sequence.DO_M2" Destination="DO_M2.D1" dx1="680">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Sequence.DO_M3" Destination="DO_M3.D1" dx1="400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Sequence.DO_M4" Destination="DO_M4.D1" dx1="300">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Sequence.DO_M5" Destination="DO_M5.D1" dx1="233.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Sequence.DO_M6" Destination="DO_M6.D1" dx1="166.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="TimeTicker.ET" Destination="ET.D1" dx1="80" dx2="80" dy="433.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="TimeTicker.PT" Destination="PT.D1" dx1="80" dx2="80" dy="733.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="TC" Destination="TimeTicker.TC" dx1="2733.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="Sequence.timeOut" Destination="E_TimeOut.TimeOutSocket" dx1="100"/>
+			<Connection Source="TimeTicker.TimeTickSocket" Destination="E_TimeOut.TimeTickSocket" dx1="266.67"/>
+		</AdapterConnections>
+	</FBNetwork>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

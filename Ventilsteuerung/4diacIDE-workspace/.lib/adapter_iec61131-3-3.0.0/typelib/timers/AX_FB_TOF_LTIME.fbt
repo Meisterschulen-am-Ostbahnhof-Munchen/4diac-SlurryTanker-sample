@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="AX_FB_TOF_LTIME" Comment="standard timer function block (off-delay timing) with AX Adapter">
+	<Identification Standard="61131-3" Classification="standard timer function block" Description="Copyright (c) 2011 TU Wien ACIN, HR Agrartechnik GmbH&#10; &#10;This program and the accompanying materials are made&#10;available under the terms of the Eclipse Public License 2.0&#10;which is available at https://www.eclipse.org/legal/epl-2.0/&#10;&#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Version="3.0" Author="Patrick Aigner" Date="2025-04-14" Remarks="changed package">
+	</VersionInfo>
+	<VersionInfo Organization="TU Wien ACIN" Version="1.0" Author="Monika Wenger" Date="2011-06-21" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::iec61131::timers">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event" Comment="Normal Execution Request (non-triggering)">
+				<With Var="PT"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event" Comment="Execution Confirmation">
+				<With Var="ET"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="PT" Type="LTIME" Comment="Process time"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="ET" Type="LTIME" Comment="Elapsed time"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="Q" Type="adapter::types::unidirectional::AX" Comment="Output" x="2900" y="-900"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AX" Comment="Input" x="-900" y="-900"/>
+		</Sockets>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="FB_TOF_LTIME" Type="iec61131::timers::FB_TOF_LTIME" x="200" y="-900">
+		</FB>
+		<FB Name="E_D_FF" Type="iec61499::events::E_D_FF" x="1700" y="-900">
+		</FB>
+		<EventConnections>
+			<Connection Source="IN.E1" Destination="FB_TOF_LTIME.REQ"/>
+			<Connection Source="FB_TOF_LTIME.CNF" Destination="E_D_FF.CLK"/>
+			<Connection Source="E_D_FF.EO" Destination="Q.E1"/>
+			<Connection Source="REQ" Destination="FB_TOF_LTIME.REQ" dx1="2580"/>
+			<Connection Source="FB_TOF_LTIME.CNF" Destination="CNF" dx1="80"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="FB_TOF_LTIME.ET" Destination="ET" dx1="3386.67"/>
+			<Connection Source="PT" Destination="FB_TOF_LTIME.PT" dx1="633.33"/>
+			<Connection Source="IN.D1" Destination="FB_TOF_LTIME.IN"/>
+			<Connection Source="FB_TOF_LTIME.Q" Destination="E_D_FF.D"/>
+			<Connection Source="E_D_FF.Q" Destination="Q.D1"/>
+		</DataConnections>
+	</FBNetwork>
+	<Service RightInterface="RESOURCE" LeftInterface="APPLICATION">
+	</Service>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

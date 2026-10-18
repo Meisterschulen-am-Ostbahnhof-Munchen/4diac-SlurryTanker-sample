@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="logiBUS_2_CAN_DI" Comment="logiBUS_DI constants">
+	<Identification Standard="61499-1" Description="Copyright (c) 2024 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2024-01-25">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::io::DI_CAN">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="Input_CI1" Type="logiBUS::io::DI_CAN::logiBUS_2_CAN_DI_S" InitialValue="(Pin := 1)"/>
+		<VarDeclaration Name="Input_CI2" Type="logiBUS::io::DI_CAN::logiBUS_2_CAN_DI_S" InitialValue="(Pin := 2)"/>
+		<VarDeclaration Name="Invalid" Type="logiBUS::io::DI_CAN::logiBUS_2_CAN_DI_S" InitialValue="(Pin := 255)"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE logiBUS::io::DI_CAN;
+
+GLOBALCONSTANTS logiBUS_2_CAN_DI
+	VAR_GLOBAL CONSTANT
+		Input_CI1 : logiBUS_2_CAN_DI_S := (Pin := 1);
+		Input_CI2 : logiBUS_2_CAN_DI_S := (Pin := 2);
+		Invalid : logiBUS_2_CAN_DI_S := (Pin := 255);
+	END_VAR
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</GlobalConstants>

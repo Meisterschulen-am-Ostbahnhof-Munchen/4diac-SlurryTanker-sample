@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="ASR_AX_SERVER_0_PUBLISH_1" Comment="Wie adapter::net::ASR_AX_SERVER_0_CLIENT_1_0, aber lokales PUBLISH_1 statt Remote-CLIENT_1_0 (ein Geraet)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 HR Agrartechnik GmbH &#10; &#10;This program and the accompanying materials are made &#10;available under the terms of the Eclipse Public License 2.0 &#10;which is available at https://www.eclipse.org/legal/epl-2.0/ &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-18" Remarks="Kopie von ASR_AX_SERVER_0_CLIENT_1_0, CLIENT_1_0 durch PUBLISH_1 ersetzt - als SubAppType, damit FORTE den Typ nicht kennen muss (kein ELF fuer MyLib_AX). SERVER_0: IND direkt auf RSP (sonst bis 4 s Server-Lock fuer alle Publishes)">
+	</VersionInfo>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-09-03" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::net">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+			<SubAppEvent Name="CNF" Type="Event" Comment="QO/STATUS updated">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL"/>
+			<VarDeclaration Name="ID_SET" Type="WSTRING" Comment="Lokale Methodenadresse (ACTION=CREATE_METHOD) fuer den Set-Methodenaufruf"/>
+			<VarDeclaration Name="ID_RESET" Type="WSTRING" Comment="Lokale Methodenadresse (ACTION=CREATE_METHOD) fuer den Reset-Methodenaufruf"/>
+			<VarDeclaration Name="ID_STATE" Type="WSTRING" Comment="Lokale Adresse (ACTION=WRITE) fuer den Zustand"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="TRUE nur wenn SET_SERVER, RESET_SERVER und STATE_CLIENT aktuell alle QO=TRUE melden"/>
+			<VarDeclaration Name="STATUS_SET" Type="WSTRING" Comment="STATUS von SET_SERVER"/>
+			<VarDeclaration Name="STATUS_RESET" Type="WSTRING" Comment="STATUS von RESET_SERVER"/>
+			<VarDeclaration Name="STATUS_STATE" Type="WSTRING" Comment="STATUS von STATE_CLIENT"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="S_R" Type="adapter::types::bidirectional::ASR_AX" Comment="Set/Reset (in), Zustand (out)"/>
+		</Plugs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="SET_SERVER" Type="iec61499::net::SERVER_0" x="-6000" y="0">
+		</FB>
+		<FB Name="RESET_SERVER" Type="iec61499::net::SERVER_0" x="-6000" y="700">
+		</FB>
+		<FB Name="EVENTS" Type="adapter::conversion::unidirectional::ASR_2EVENTS_TO_SR" x="-3600" y="0">
+		</FB>
+		<FB Name="SPLIT" Type="adapter::events::bidirectional::ASR_TO_ASR_AX_SPLIT" x="-1600" y="200">
+		</FB>
+		<FB Name="STATE_PUBLISH" Type="adapter::net::AX_PUBLISH_1" x="600" y="900">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_3" x="2600" y="0">
+		</FB>
+		<EventConnections>
+			<Connection Source="SET_SERVER.IND" Destination="SET_SERVER.RSP"/>
+			<Connection Source="RESET_SERVER.IND" Destination="RESET_SERVER.RSP"/>
+			<Connection Source="INIT" Destination="SET_SERVER.INIT"/>
+			<Connection Source="SET_SERVER.INITO" Destination="RESET_SERVER.INIT"/>
+			<Connection Source="RESET_SERVER.INITO" Destination="STATE_PUBLISH.INIT"/>
+			<Connection Source="STATE_PUBLISH.INITO" Destination="INITO"/>
+			<Connection Source="STATE_PUBLISH.INITO" Destination="AND_QO.REQ"/>
+			<Connection Source="SET_SERVER.IND" Destination="EVENTS.SET"/>
+			<Connection Source="SET_SERVER.IND" Destination="AND_QO.REQ"/>
+			<Connection Source="RESET_SERVER.IND" Destination="EVENTS.RESET"/>
+			<Connection Source="RESET_SERVER.IND" Destination="AND_QO.REQ"/>
+			<Connection Source="STATE_PUBLISH.CNF" Destination="AND_QO.REQ"/>
+			<Connection Source="AND_QO.CNF" Destination="CNF"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="QI" Destination="SET_SERVER.QI"/>
+			<Connection Source="ID_SET" Destination="SET_SERVER.ID"/>
+			<Connection Source="SET_SERVER.QO" Destination="AND_QO.IN1"/>
+			<Connection Source="SET_SERVER.STATUS" Destination="STATUS_SET"/>
+			<Connection Source="QI" Destination="RESET_SERVER.QI"/>
+			<Connection Source="ID_RESET" Destination="RESET_SERVER.ID"/>
+			<Connection Source="RESET_SERVER.QO" Destination="AND_QO.IN2"/>
+			<Connection Source="RESET_SERVER.STATUS" Destination="STATUS_RESET"/>
+			<Connection Source="QI" Destination="STATE_PUBLISH.QI"/>
+			<Connection Source="ID_STATE" Destination="STATE_PUBLISH.ID"/>
+			<Connection Source="STATE_PUBLISH.QO" Destination="AND_QO.IN3"/>
+			<Connection Source="AND_QO.OUT" Destination="QO"/>
+			<Connection Source="STATE_PUBLISH.STATUS" Destination="STATUS_STATE"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="EVENTS.ASR_OUT" Destination="SPLIT.IN"/>
+			<Connection Source="SPLIT.OUT" Destination="S_R"/>
+			<Connection Source="SPLIT.AX_OUT" Destination="STATE_PUBLISH.IN"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</SubAppType>

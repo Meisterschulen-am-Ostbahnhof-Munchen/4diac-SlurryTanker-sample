@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="AUDI_AUI_MUX_2_VAL" Comment="2-Wege-Multiplexer fuer AUDI-Werte mit 2 internen initval_AUDI und AUI_MUX_2 /&#10;AUDI_AUI_MUX_2. Schaltet per Event-Input (EI1, EI2) zwischen val1, val2 um.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-10" Remarks="2-fach Variante von AUDI_AUI_MUX_3_VAL">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="EI1" Type="Event" Comment="Event zur Auswahl von val1"/>
+			<SubAppEvent Name="EI2" Type="Event" Comment="Event zur Auswahl von val2"/>
+		</SubAppEventInputs>
+		<InputVars>
+			<VarDeclaration Name="val1" Type="UDINT" Comment="Initialer Ausgabewert bei EI1"/>
+			<VarDeclaration Name="val2" Type="UDINT" Comment="Initialer Ausgabewert bei EI2"/>
+		</InputVars>
+		<Plugs>
+			<AdapterDeclaration Name="OUT" Type="adapter::types::unidirectional::AUDI" Comment="Ausgewaehlter AUDI-Adapter Output"/>
+		</Plugs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="AUI_MUX_2" Type="adapter::events::unidirectional::AUI_MUX_2" x="-2200" y="-1100">
+		</FB>
+		<FB Name="AUDI_AUI_MUX_2" Type="adapter::selection::unidirectional::AUDI_AUI_MUX_2" x="100" y="-800">
+		</FB>
+		<FB Name="initval_AUDI_1" Type="adapter::types::unidirectional::AUDI::initval::initval_AUDI" x="-2300" y="-400">
+		</FB>
+		<FB Name="initval_AUDI_2" Type="adapter::types::unidirectional::AUDI::initval::initval_AUDI" x="-2300" y="200">
+		</FB>
+		<EventConnections>
+			<Connection Source="EI1" Destination="AUI_MUX_2.EI1" dx1="1000"/>
+			<Connection Source="EI2" Destination="AUI_MUX_2.EI2" dx1="1000"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="val1" Destination="initval_AUDI_1.INIT_VAL" dx1="1000"/>
+			<Connection Source="val2" Destination="initval_AUDI_2.INIT_VAL" dx1="1000"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="AUI_MUX_2.K" Destination="AUDI_AUI_MUX_2.K" dx1="946.67"/>
+			<Connection Source="initval_AUDI_1.OUT" Destination="AUDI_AUI_MUX_2.IN1" dx1="320"/>
+			<Connection Source="initval_AUDI_2.OUT" Destination="AUDI_AUI_MUX_2.IN2" dx1="420"/>
+			<Connection Source="AUDI_AUI_MUX_2.OUT" Destination="OUT" dx1="700"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="AR_M2M_Subscribe_TO_Q_Publish_OPC" Comment="Remote-Subscribe eines bereits fertigen physikalischen Werts (M2M, von einer&#10;anderen Station) -&gt; VT-Anzeige (Q_NumericValue_PHYSA) UND lokaler Re-Publish&#10;(fuer weitere lokale Konsumenten/Web-Mirror/Dashboard). Ersetzt&#10;AR_HZ_TO_Q_Publish_OPC fuer Sensoren, deren Hz-&gt;Einheit-Umrechnung jetzt lokal&#10;auf der Sensor-Station laeuft (logiBUS_PI_Speed_Publish_OPC) statt hier zentral&#10;- kein SCALE/AR_MUL_2 mehr noetig, nur noch Subscribe+Anzeige+Re-Publish.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-17" Remarks="initial implementation - schlanke Nachfolge-Variante von AR_HZ_TO_Q_Publish_OPC ohne eigene Skalierung, da die Hz-&gt;Einheit-Umrechnung jetzt auf der Sensor-Station selbst laeuft (logiBUS_PI_Speed_Publish_OPC). Buendelt AR_SUBSCRIBE_1+AR_TO_Q_Publish_OPC - ein Baustein je bereits umgerechnetem Puls-/Analog-Wert, der von einer anderen Station remote abonniert wird.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-21" Remarks="Neuer Plug VALUE_OUT (AR) ergaenzt - Fuellband-Winkel-Migration (Kalibrierung zieht auf die Sensor-Station um) braucht den remote abonnierten Wert nicht nur fuer die VT-Anzeige/den eigenen Re-Publish, sondern auch als direkten AR-Plug fuer weitere lokale Konsumenten (Befuellautomatik/Fuellband_Oben) - analog zum bereits etablierten VALUE_OUT-Muster in NumericValue_TO_AR2_OPC v1.1. AR_SPLIT_2 vor Publish.AR_IN eingefuegt, statt AR_SUBSCRIBE_M2M.OUT direkt dorthin zu verdrahten.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="ID_M2M_READ" Type="WSTRING" Comment="Remote-Subscribe-Adresse des bereits fertigen physikalischen Werts (REAL), z.B. FBs::Ventilsteuerung::Ventilsteuerung_STG1::RemoteSubStrings::AUFNAHME_GESCHWINDIGKEIT_KMH_M2M"/>
+			<VarDeclaration Name="stObj" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object pool properties der VT-Zahlenvariable (u16ObjId, scale, offset, decimals) - z.B. FBs::const::DefaultPool_Numeric::NumberVariable_X_N"/>
+			<VarDeclaration Name="ID_WRITE" Type="WSTRING" Comment="Lokale Publish-Adresse (REAL, physikalischer Wert) - Web-Mirror/Dashboard/Self-Subscribe weiterer lokaler Konsumenten"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="VALUE_OUT" Type="adapter::types::unidirectional::AR" Comment="Nur-Lese-Spiegel des remote abonnierten Werts, fuer weitere lokale Konsumenten (SubApp-Sockets statt eigenem OPC-UA-Self-Subscribe) - vermeidet Doppel-Self-Subscribe desselben Remote-Knotens auf dieser Station"/>
+		</Plugs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="AR_SUBSCRIBE_M2M" Type="adapter::net::AR_SUBSCRIBE_1" x="-900" y="0">
+		</FB>
+		<FB Name="AR_SPLIT_2_Value" Type="adapter::events::unidirectional::AR_SPLIT_2" x="900" y="0">
+		</FB>
+		<SubApp Name="Publish" Type="MyLib::sys::AR_TO_Q_Publish_OPC" x="2700" y="-400">
+		</SubApp>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_2">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="AR_SUBSCRIBE_M2M.INIT"/>
+			<Connection Source="AR_SUBSCRIBE_M2M.INITO" Destination="Publish.INIT"/>
+			<Connection Source="Publish.INITO" Destination="INITO"/>
+			<Connection Source="Publish.INITO" Destination="AND_QO.REQ"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="ID_M2M_READ" Destination="AR_SUBSCRIBE_M2M.ID" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="stObj" Destination="Publish.stObj" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_WRITE" Destination="Publish.ID_WRITE" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="AR_SUBSCRIBE_M2M.QI"/>
+			<Connection Source="QI" Destination="Publish.QI"/>
+			<Connection Source="AR_SUBSCRIBE_M2M.QO" Destination="AND_QO.IN1"/>
+			<Connection Source="Publish.QO" Destination="AND_QO.IN2"/>
+			<Connection Source="AND_QO.OUT" Destination="QO"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="AR_SUBSCRIBE_M2M.OUT" Destination="AR_SPLIT_2_Value.IN" dx1="300"/>
+			<Connection Source="AR_SPLIT_2_Value.OUT1" Destination="Publish.AR_IN" dx1="300"/>
+			<Connection Source="AR_SPLIT_2_Value.OUT2" Destination="VALUE_OUT" dx1="2960"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

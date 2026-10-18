@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="ISO_NETEVENT_e" Comment="Global constants for network management event types">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Version="1.0" Author="Franz Höpfinger" Date="2025-10-18">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::pgn">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="Isonet_MemberActive" Type="USINT" InitialValue="0"/>
+		<VarDeclaration Name="Isonet_MemberAddressConflict" Type="USINT" Comment="&lt; There is a new member on network (intern or extern)" InitialValue="1"/>
+		<VarDeclaration Name="Isonet_MemberInactive" Type="USINT" Comment="&lt; Network member has lost address conflict" InitialValue="2"/>
+		<VarDeclaration Name="Isonet_MemberNewAddress" Type="USINT" Comment="&lt; Member stopped or commanded address" InitialValue="3"/>
+		<VarDeclaration Name="Isonet_MemberAddressViolation" Type="USINT" Comment="&lt; Address claimed after SA conflict" InitialValue="4"/>
+		<VarDeclaration Name="Isonet_MemberAdd" Type="USINT" Comment="&lt; Address violation: internal SA conflicts with SA from extern msg" InitialValue="5"/>
+		<VarDeclaration Name="Isonet_MemberRemove" Type="USINT" Comment="&lt; Core/base internal: Add(ed) CF to list" InitialValue="6"/>
+		<VarDeclaration Name="Isonet_HsiActive" Type="USINT" Comment="Conditional constants from C-Code: #if defined (CCI_HSI)" InitialValue="7"/>
+		<VarDeclaration Name="Isonet_HsiInactive" Type="USINT" InitialValue="8"/>
+		<VarDeclaration Name="Isonet_Last" Type="USINT" Comment="End of conditional block" InitialValue="9"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE isobus::pgn;
+
+GLOBALCONSTANTS ISO_NETEVENT_e // Network management event type
+	VAR_GLOBAL CONSTANT
+		Isonet_MemberActive : USINT := 0; (* *< There is a new member on network (intern or extern) *)
+		Isonet_MemberAddressConflict : USINT := 1; (* *< Network member has lost address conflict *)
+		Isonet_MemberInactive : USINT := 2; (* *< Member stopped or commanded address *)
+		Isonet_MemberNewAddress : USINT := 3; (* *< Address claimed after SA conflict *)
+		Isonet_MemberAddressViolation : USINT := 4; (* *< Address violation: internal SA conflicts with SA from extern msg *)
+		Isonet_MemberAdd : USINT := 5; (* *< Core/base internal: Add(ed) CF to list *)
+		Isonet_MemberRemove : USINT := 6; (* *< Core/base internal: Remove CF from list () *)
+		(* Conditional constants from C-Code: #if defined (CCI_HSI) *)
+		Isonet_HsiActive : USINT := 7;
+		Isonet_HsiInactive : USINT := 8;
+		(* End of conditional block *)
+		Isonet_Last : USINT := 9;
+	END_VAR
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</GlobalConstants>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="E_D_FF_ANY_HYS" Comment="Data latch (d) flip flop with a Hysteresis">
+	<Identification Standard="61499-1 Annex A" Description="Copyright (c) 2017 fortiss GmbH, HR Agrartechnik GmbH&#10;&#10;This program and the accompanying materials are made&#10;available under the terms of the Eclipse Public License 2.0&#10;which is available at https://www.eclipse.org/legal/epl-2.0/&#10;&#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-04-17" Remarks="E_D_FF copied and replace BOOL by ANY">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::signalprocessing::hysteresis">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="CLK" Type="Event" Comment="Clock">
+				<With Var="D"/>
+				<With Var="HYSTERESIS"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="EO" Type="Event" Comment="Triggered if clock results in a change of Q">
+				<With Var="Q"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="D" Type="ANY_NUM" Comment="Value to latch. Must be the same type as Q and HYSTERESIS"/>
+			<VarDeclaration Name="HYSTERESIS" Type="ANY_NUM" Comment="Hysteresis band. Must be the same type as D and Q"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="Q" Type="ANY_NUM" Comment="Latched value. Must be the same type as D and HYSTERESIS"/>
+		</OutputVars>
+	</InterfaceList>
+	<BasicFB>
+		<ECC>
+			<ECState Name="START" Comment="Initial State" x="400" y="700">
+			</ECState>
+			<ECState Name="SET" Comment="Initialization" x="1235" y="665">
+				<ECAction Algorithm="LATCH" Output="EO"/>
+			</ECState>
+			<ECTransition Source="SET" Destination="SET" Condition="CLK[GE(SUB(MAX(D, Q), MIN(D, Q)), HYSTERESIS)]" x="1506.67" y="180"/>
+			<ECTransition Source="START" Destination="SET" Condition="CLK" x="886.67" y="420"/>
+		</ECC>
+		<Algorithm Name="LATCH" Comment="new algorithm">
+			<ST><![CDATA[
+Q := D;
+]]></ST>
+		</Algorithm>
+	</BasicFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

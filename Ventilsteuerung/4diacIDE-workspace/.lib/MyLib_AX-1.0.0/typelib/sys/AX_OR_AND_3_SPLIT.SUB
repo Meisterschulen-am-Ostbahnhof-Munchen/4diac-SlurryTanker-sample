@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="AX_OR_AND_3_SPLIT" Comment="3 unabhaengige AX-Signale je einzeln durchreichen (OUT1/OUT2/OUT3 = IN1/IN2/IN3)&#10;sowie gemeinsam UND- (OUT_AND/OUT_AND2 = IN1 AND IN2 AND IN3) und&#10;ODER-verknuepfen (OUT_OR/OUT_OR2 = IN1 OR IN2 OR IN3).">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-17" Remarks="Erweitert um UND- und ODER-Sammelverknuepfungen (OUT_AND/OUT_AND2, OUT_OR/OUT_OR2) mit aufgedoppelten Ausgangszweigen (AX_SPLIT_2) und bereinigten FB-Instanznamen.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<Plugs>
+			<AdapterDeclaration Name="OUT1" Type="adapter::types::unidirectional::AX" Comment="Durchgereichtes Eingangssignal 1 (IN1)"/>
+			<AdapterDeclaration Name="OUT2" Type="adapter::types::unidirectional::AX" Comment="Durchgereichtes Eingangssignal 2 (IN2)"/>
+			<AdapterDeclaration Name="OUT3" Type="adapter::types::unidirectional::AX" Comment="Durchgereichtes Eingangssignal 3 (IN3)"/>
+			<AdapterDeclaration Name="OUT_AND" Type="adapter::types::unidirectional::AX" Comment="IN1 AND IN2 AND IN3 - Sammelstatus alle aktiv (Zweig 1)"/>
+			<AdapterDeclaration Name="OUT_AND2" Type="adapter::types::unidirectional::AX" Comment="IN1 AND IN2 AND IN3 - Sammelstatus alle aktiv (Zweig 2)"/>
+			<AdapterDeclaration Name="OUT_OR" Type="adapter::types::unidirectional::AX" Comment="IN1 OR IN2 OR IN3 - Sammelstatus mindestens einer aktiv (Zweig 1)"/>
+			<AdapterDeclaration Name="OUT_OR2" Type="adapter::types::unidirectional::AX" Comment="IN1 OR IN2 OR IN3 - Sammelstatus mindestens einer aktiv (Zweig 2)"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="IN1" Type="adapter::types::unidirectional::AX" Comment="Eingangssignal 1"/>
+			<AdapterDeclaration Name="IN2" Type="adapter::types::unidirectional::AX" Comment="Eingangssignal 2"/>
+			<AdapterDeclaration Name="IN3" Type="adapter::types::unidirectional::AX" Comment="Eingangssignal 3"/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="Split1" Type="adapter::events::unidirectional::AX_SPLIT_3" x="600" y="200">
+		</FB>
+		<FB Name="Split2" Type="adapter::events::unidirectional::AX_SPLIT_3" x="600" y="1000">
+		</FB>
+		<FB Name="Split3" Type="adapter::events::unidirectional::AX_SPLIT_3" x="600" y="1800">
+		</FB>
+		<FB Name="AND_3" Type="adapter::booleanOperators::AX_AND_3" x="2400" y="2300">
+		</FB>
+		<FB Name="Split_AND" Type="adapter::events::unidirectional::AX_SPLIT_2" x="3400" y="2300">
+		</FB>
+		<FB Name="OR_3" Type="adapter::booleanOperators::AX_OR_3" x="2400" y="3100">
+		</FB>
+		<FB Name="Split_OR" Type="adapter::events::unidirectional::AX_SPLIT_2" x="3400" y="3100">
+		</FB>
+		<AdapterConnections>
+			<Connection Source="IN1" Destination="Split1.IN" dx1="2840"/>
+			<Connection Source="IN2" Destination="Split2.IN" dx1="2860"/>
+			<Connection Source="IN3" Destination="Split3.IN" dx1="2826.67"/>
+			<Connection Source="Split1.OUT1" Destination="OUT1" dx1="4393.33"/>
+			<Connection Source="Split2.OUT1" Destination="OUT2" dx1="4380"/>
+			<Connection Source="Split3.OUT1" Destination="OUT3" dx1="4413.33"/>
+			<Connection Source="Split1.OUT2" Destination="AND_3.IN1" dx1="540"/>
+			<Connection Source="Split2.OUT2" Destination="AND_3.IN2" dx1="506.67"/>
+			<Connection Source="Split3.OUT2" Destination="AND_3.IN3" dx1="473.33"/>
+			<Connection Source="Split1.OUT3" Destination="OR_3.IN1" dx1="440"/>
+			<Connection Source="Split2.OUT3" Destination="OR_3.IN2" dx1="406.67"/>
+			<Connection Source="Split3.OUT3" Destination="OR_3.IN3" dx1="373.33"/>
+			<Connection Source="AND_3.OUT" Destination="Split_AND.IN"/>
+			<Connection Source="Split_AND.OUT1" Destination="OUT_AND" dx1="2993.33"/>
+			<Connection Source="Split_AND.OUT2" Destination="OUT_AND2" dx1="3026.67"/>
+			<Connection Source="OR_3.OUT" Destination="Split_OR.IN"/>
+			<Connection Source="Split_OR.OUT1" Destination="OUT_OR" dx1="3060"/>
+			<Connection Source="Split_OR.OUT2" Destination="OUT_OR2" dx1="3093.33"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

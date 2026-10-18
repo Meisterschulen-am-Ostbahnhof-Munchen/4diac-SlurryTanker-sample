@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataType Name="ST02X" Comment="A Structure with 2 BOOLS">
+	<Identification>
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2024-02-21">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::utils::conversion::types">
+	</CompilerInfo>
+	<StructuredType>
+		<VarDeclaration Name="X_00" Type="BOOL" Comment="BIT 00"/>
+		<VarDeclaration Name="X_01" Type="BOOL" Comment="BIT 01"/>
+	</StructuredType>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</DataType>

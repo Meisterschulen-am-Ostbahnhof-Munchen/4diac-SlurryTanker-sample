@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Button_Aux_IE" Comment="Button (nicht-latching) ODER AUX-Zuweisung (Joystick) aktiviert -&gt; 1 gemeinsames&#10;IND-Event (BT_RELEASED_UNLATCHED bzw. AuxEnabled fest verdrahtet). Analog&#10;Softkey_Aux_IE, aber fuer einen echten VT-Button (Klasse CButton) statt eines&#10;SoftKeys - Softkey_IE und Button_IE sind zwei getrennte&#10;FORTE-Service-Interface-Bausteine fuer unterschiedliche VT-Activation-Messages,&#10;ein Button liefert NIE ein SK_PRESSED (Franz, 2026-09-20, hat Softkey_IE selbst&#10;implementiert: &apos;tut sie NICHT&apos;). Der Button MUSS non-latching sein (Latchable=0&#10;im Pool) - ein latching Button kann nur sinnvoll ueber Button_IXA&#10;(Dauerzustand/Pegel) gelesen werden, nicht ueber dieses Event-InputEvent-Muster&#10;(Franz, 2026-09-20).">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-20" Remarks="initial implementation - Bugfix fuer Automatik_Toggle_Button.SUB (nutzte bisher Softkey_Aux_IE mit einer Button-Object-ID, Softkey_IE empfaengt aber keine Button-Activation-Message - bestaetigt vom Autor der FORTE-Implementierung).">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::io::Button::ButtonActivationCode::BT_RELEASED_UNLATCHED"/>
+		<Import declaration="isobus::UT::io::Auxiliary::IN::AuxiliaryState::AuxDisabled_START"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+			<SubAppEvent Name="IND" Type="Event" Comment="Feuert wenn Button (BT_RELEASED_UNLATCHED) ODER Aux (AuxEnabled) aktiviert wird">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID Button (CButton, non-latching)"/>
+			<VarDeclaration Name="u16ObjIdA" Type="UINT" Comment="Object ID AuxFunction2"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<SubApp Name="Button" Type="MyLib::sys::Button_IE_1" x="-100" y="200">
+			<Parameter Name="InputEvent" Value="BT_RELEASED_UNLATCHED"/>
+		</SubApp>
+		<SubApp Name="Aux" Type="MyLib::sys::Aux_IE_1" x="-100" y="1100">
+			<Parameter Name="InputEvent" Value="AuxDisabled_START"/>
+		</SubApp>
+		<FB Name="MERGE" Type="iec61499::events::E_MERGE_2" x="1700" y="400">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_2" x="4200" y="900">
+		</FB>
+		<EventConnections>
+			<Connection Source="Button.IND" Destination="MERGE.EI1" dx1="733.33"/>
+			<Connection Source="Aux.IND" Destination="MERGE.EI2" dx1="800"/>
+			<Connection Source="MERGE.EO" Destination="IND" dx1="800"/>
+			<Connection Source="INIT" Destination="Button.INIT" dx1="1040"/>
+			<Connection Source="Button.INITO" Destination="Aux.INIT" dx1="80" dx2="80" dy="346.67"/>
+			<Connection Source="Aux.INITO" Destination="INITO" dx1="3486.67"/>
+			<Connection Source="Aux.INITO" Destination="AND_QO.REQ" dx1="1746.67"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="u16ObjId" Destination="Button.u16ObjId" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjIdA" Destination="Aux.u16ObjId" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="Button.QI" dx1="1040"/>
+			<Connection Source="QI" Destination="Aux.QI" dx1="1086.67"/>
+			<Connection Source="Button.QO" Destination="AND_QO.IN1" dx1="1746.67"/>
+			<Connection Source="Aux.QO" Destination="AND_QO.IN2" dx1="1746.67"/>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="2640"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

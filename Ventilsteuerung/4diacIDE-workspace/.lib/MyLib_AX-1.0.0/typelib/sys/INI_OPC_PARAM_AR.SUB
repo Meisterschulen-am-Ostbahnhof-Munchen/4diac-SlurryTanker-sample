@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="INI_OPC_PARAM_AR" Comment="OPC_UA Parameter lesen/Schreiben, remanent per INI, mit AR-Ausgang fuer den&#10;gespeicherten Wert (z.B. Drehzahl).">
+	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-08-14" Remarks="INI_OPC_PARAM mit zusaetzlichem AR-Ausgang">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-07-20" Remarks="Background">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-01-15" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="SECTION" Type="STRING" Comment="INI-Abschnitt (settings.ini)"/>
+			<VarDeclaration Name="KEY" Type="STRING" Comment="INI-Schluessel innerhalb SECTION"/>
+			<VarDeclaration Name="DEFAULT_VALUE" Type="REAL" Comment="Wert falls in settings.ini nicht vorhanden"/>
+			<VarDeclaration Name="ID_READ" Type="WSTRING" Comment="OPC-UA-Verbindungsstring (READ) - Client schreibt hier einen neuen Wert"/>
+			<VarDeclaration Name="ID_WRITE" Type="WSTRING" Comment="OPC-UA-Verbindungsstring (WRITE) - aktuell gespeicherter Wert wird hier publiziert"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="OUT" Type="adapter::types::unidirectional::AR" Comment="Aktuell gespeicherter/geladener Wert"/>
+		</Plugs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="AX_SUBSCRIBE_1" Type="adapter::net::AR_SUBSCRIBE_1" x="-7300" y="-1400">
+		</FB>
+		<FB Name="AX_PUBLISH_1" Type="adapter::net::AR_PUBLISH_1" x="-800" y="-1400">
+		</FB>
+		<FB Name="INI_AR" Type="eclipse4diac::storage::INI_AR" x="-4800" y="-1600">
+			<Parameter Name="SETM" Value="FALSE"/>
+		</FB>
+		<FB Name="AR_SPLIT_2" Type="adapter::events::unidirectional::AR_SPLIT_2" x="-2800" y="-600">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_3">
+		</FB>
+		<EventConnections>
+			<Connection Source="AX_SUBSCRIBE_1.INITO" Destination="INI_AR.INIT" dx1="780"/>
+			<Connection Source="INI_AR.INITO" Destination="AX_PUBLISH_1.INIT" dx1="493.33"/>
+			<Connection Source="INIT" Destination="AX_SUBSCRIBE_1.INIT"/>
+			<Connection Source="AX_SUBSCRIBE_1.INITO" Destination="AX_PUBLISH_1.INIT"/>
+			<Connection Source="AX_PUBLISH_1.INITO" Destination="INI_AR.INIT"/>
+			<Connection Source="INI_AR.INITO" Destination="INITO"/>
+			<Connection Source="INI_AR.INITO" Destination="AND_QO.REQ"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="SECTION" Destination="INI_AR.SECTION" dx1="760">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="KEY" Destination="INI_AR.KEY" dx1="760">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="DEFAULT_VALUE" Destination="INI_AR.DEFAULT_VALUE" dx1="760">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_READ" Destination="AX_SUBSCRIBE_1.ID" dx1="760">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_WRITE" Destination="AX_PUBLISH_1.ID" dx1="5026.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="AX_SUBSCRIBE_1.QI"/>
+			<Connection Source="QI" Destination="AX_PUBLISH_1.QI"/>
+			<Connection Source="QI" Destination="INI_AR.QI"/>
+			<Connection Source="AX_SUBSCRIBE_1.QO" Destination="AND_QO.IN1"/>
+			<Connection Source="AX_PUBLISH_1.QO" Destination="AND_QO.IN2"/>
+			<Connection Source="INI_AR.QO" Destination="AND_QO.IN3"/>
+			<Connection Source="AND_QO.OUT" Destination="QO"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="AX_SUBSCRIBE_1.OUT" Destination="INI_AR.AR_IN" dx1="780"/>
+			<Connection Source="AR_SPLIT_2.OUT2" Destination="OUT" dx1="3753.33"/>
+			<Connection Source="AR_SPLIT_2.OUT1" Destination="AX_PUBLISH_1.IN" dx1="973.33"/>
+			<Connection Source="INI_AR.AR_OUT" Destination="AR_SPLIT_2.IN" dx1="120"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

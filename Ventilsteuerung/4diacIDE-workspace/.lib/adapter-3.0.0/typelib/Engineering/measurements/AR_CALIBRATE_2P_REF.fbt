@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="AR_CALIBRATE_2P_REF" Comment="Adapter-based 2-point calibration (Low/High, independently stored - no&#10;CO-before-CS style ordering dependency) - reference targets (Y_LOW/Y_HIGH) are&#10;live AR sockets, persisted via 2 additional AR2 plugs (LOW_REF/HIGH_REF), same&#10;live-echo pattern as AR_CALIBRATE_SQ_REF">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Version="1.3" Author="Franz Höpfinger" Date="2026-09-21" Remarks="Code-Review-Fund (PR #260): xClipping clippte bisher unconditional auf [LOW_REF,HIGH_REF], auch wenn nur EIN Punkt kalibriert war - der jeweils andere, noch unkalibrierte Referenzwert stand dann noch auf seinem INI_AR2-Default 0.0, wodurch der frisch eingefuehrte Partial-Kalibrierung-Fallback (Y.D1 := LOW_REF.DI1 bzw. HIGH_REF.DI1) sofort wieder auf 0.0 zurueckgeklemmt wurde - der Wert griff also weiterhin nicht sofort. Clipping jetzt zusaetzlich an xLowCal AND xHighCal gegated.">
+	</VersionInfo>
+	<VersionInfo Version="1.2" Author="Franz Höpfinger" Date="2026-09-21" Remarks="Genauso geaendert wie AR_CALIBRATE_3P_REF: INIT/QI/QO/INITO-Pattern (Enable/Disable) ergaenzt. Neuer Input xClipping (Default TRUE) - bisher clippte dieser Typ ueberhaupt nicht, jetzt optional auf LOW_REF..HIGH_REF klemmbar (FALSE = altes Verhalten, keine Klemmung). Neue interne Kalibriert-Flags xLowCal/xHighCal (latchen TRUE, sobald der jeweilige Rohwert vom INI_AR2-Default 0.0 abweicht): solange nur EIN Punkt kalibriert ist, wurde bisher trotzdem interpoliert - gegen einen Rohwert-Default von 0.0 fuer den jeweils anderen, noch unkalibrierten Punkt, was ein Garbage-Ergebnis lieferte. Jetzt liefert REQ in diesem Fall stattdessen direkt den REF-Wert des einen kalibrierten Punkts.">
+	</VersionInfo>
+	<VersionInfo Version="1.1" Author="Franz Höpfinger" Date="2026-09-17" Remarks="C_LOW/C_HIGH von AX-Sockets (mit [C_LOW.D1]/[C_HIGH.D1]-Flankenwaechter) auf reine EventInputs umgestellt - Franz: jeder echte Aufrufer (VT-Taste, OPC-UA-Methode, Remote-Toggle-Trigger nach Merge) liefert ohnehin ein atomares, einmaliges Event, der D1-Wert war bei jedem tatsaechlichen Caller immer hartcodiert TRUE (via AX_BOOL_TO_X) und der Guard filterte nie etwas - reine akademische Rechtfertigung ohne echten Nutzen. Aufrufer muessen jetzt direkt ein Event statt eines AX-Adapters anschliessen (AX_BOOL_TO_X-Umweg entfaellt).">
+	</VersionInfo>
+	<VersionInfo Version="1.0" Author="Meisterschulen am Ostbahnhof" Date="2026-09-11" Remarks="Ersatz fuer AR_CALIBRATE_SQ_REF: dieselbe Formel/dasselbe Ergebnis, aber ohne die CO-vor-CS-Abhaengigkeit - jeder Punkt speichert unabhaengig seinen Rohwert (wie AR_CALIBRATE_3P), die Interpolation passiert erst live bei X.E1, nicht mehr inkrementell beim Kalibrieren selbst.">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::Engineering::measurements">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Initialization Request">
+				<With Var="QI"/>
+				<With Var="xClipping"/>
+			</Event>
+			<Event Name="C_LOW" Type="Event" Comment="Calibrate Low Point - atomarer Trigger (VT-Taste/OPC-UA-Methode/Remote-Toggle nach Merge)">
+			</Event>
+			<Event Name="C_HIGH" Type="Event" Comment="Calibrate High Point - atomarer Trigger (VT-Taste/OPC-UA-Methode/Remote-Toggle nach Merge)">
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Input event qualifier"/>
+			<VarDeclaration Name="xClipping" Type="BOOL" Comment="TRUE (Default) = Ausgang wird auf LOW_REF..HIGH_REF geklemmt; FALSE = kein Clipping, Extrapolation ueber die Kalibrierpunkte hinaus erlaubt (bisheriges Verhalten)" InitialValue="TRUE"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Output event qualifier"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="Y" Type="adapter::types::unidirectional::AR" Comment="Calibrated Output"/>
+			<AdapterDeclaration Name="X_LOW" Type="adapter::types::bidirectional::AR2" Comment="Persisted raw input value at the low calibration point"/>
+			<AdapterDeclaration Name="X_HIGH" Type="adapter::types::bidirectional::AR2" Comment="Persisted raw input value at the high calibration point"/>
+			<AdapterDeclaration Name="LOW_REF" Type="adapter::types::bidirectional::AR2" Comment="Persisted low-point target reference (Y_LOW)"/>
+			<AdapterDeclaration Name="HIGH_REF" Type="adapter::types::bidirectional::AR2" Comment="Persisted high-point target reference (Y_HIGH)"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="X" Type="adapter::types::unidirectional::AR" Comment="Raw Input"/>
+			<AdapterDeclaration Name="Y_LOW" Type="adapter::types::bidirectional::AR2" Comment="Target output Y at the low calibration point - live edit in via EO1/DO1 (Socket-side swap), persisted/restored value echoed back out via EI1/DI1 for VT/web display"/>
+			<AdapterDeclaration Name="Y_HIGH" Type="adapter::types::bidirectional::AR2" Comment="Target output Y at the high calibration point - live edit in via EO1/DO1 (Socket-side swap), persisted/restored value echoed back out via EI1/DI1 for VT/web display"/>
+		</Sockets>
+	</InterfaceList>
+	<BasicFB>
+		<InternalVars>
+			<VarDeclaration Name="xLowCal" Type="BOOL" Comment="Latched TRUE sobald X_LOW.DI1 vom INI-Default 0.0 abweicht - LOW wurde mindestens einmal kalibriert (diese Session oder ueber Boot-Restore)" InitialValue="FALSE"/>
+			<VarDeclaration Name="xHighCal" Type="BOOL" Comment="Latched TRUE sobald X_HIGH.DI1 vom INI-Default 0.0 abweicht - HIGH wurde mindestens einmal kalibriert (diese Session oder ueber Boot-Restore)" InitialValue="FALSE"/>
+		</InternalVars>
+		<ECC>
+			<ECState Name="START" Comment="Initial State" x="-2400" y="-1600">
+			</ECState>
+			<ECState Name="Init" Comment="Initialization" x="-1900" y="-1920">
+				<ECAction Algorithm="initialize" Output="INITO"/>
+			</ECState>
+			<ECState Name="DeInit" x="-1960" y="-1280">
+				<ECAction Algorithm="deInitialize" Output="INITO"/>
+			</ECState>
+			<ECState Name="IDLE" x="0" y="0">
+			</ECState>
+			<ECState Name="REQ" x="720" y="-1360">
+				<ECAction Algorithm="REQ" Output="Y.E1"/>
+			</ECState>
+			<ECState Name="C_LOW" x="2320" y="160">
+				<ECAction Algorithm="C_LOW" Output="X_LOW.EO1"/>
+			</ECState>
+			<ECState Name="C_HIGH" x="3360" y="-240">
+				<ECAction Algorithm="C_HIGH" Output="X_HIGH.EO1"/>
+			</ECState>
+			<ECState Name="LOW_REF_ECHO" x="2160" y="800">
+				<ECAction Algorithm="LOW_REF_ECHO" Output="LOW_REF.EO1"/>
+			</ECState>
+			<ECState Name="HIGH_REF_ECHO" x="1360" y="1440">
+				<ECAction Algorithm="HIGH_REF_ECHO" Output="HIGH_REF.EO1"/>
+			</ECState>
+			<ECState Name="Y_LOW_DISP" x="-2080" y="2080">
+				<ECAction Algorithm="Y_LOW_DISP" Output="Y_LOW.EI1"/>
+			</ECState>
+			<ECState Name="Y_HIGH_DISP" x="-1520" y="1680">
+				<ECAction Algorithm="Y_HIGH_DISP" Output="Y_HIGH.EI1"/>
+			</ECState>
+			<ECTransition Source="IDLE" Destination="REQ" Condition="X.E1" x="833.33" y="-800"/>
+			<ECTransition Source="REQ" Destination="IDLE" Condition="1" x="1040" y="-826.67"/>
+			<ECTransition Source="IDLE" Destination="C_LOW" Condition="C_LOW" x="1540" y="33.33"/>
+			<ECTransition Source="C_LOW" Destination="IDLE" Condition="1" x="1900" y="100"/>
+			<ECTransition Source="IDLE" Destination="C_HIGH" Condition="C_HIGH" x="2680" y="-160"/>
+			<ECTransition Source="C_HIGH" Destination="IDLE" Condition="1" x="2900" y="-100"/>
+			<ECTransition Source="IDLE" Destination="REQ" Condition="X_LOW.EI1" x="440" y="-606.67"/>
+			<ECTransition Source="IDLE" Destination="REQ" Condition="X_HIGH.EI1" x="-20" y="-706.67"/>
+			<ECTransition Source="IDLE" Destination="LOW_REF_ECHO" Condition="Y_LOW.EO1" x="1586.67" y="646.67"/>
+			<ECTransition Source="LOW_REF_ECHO" Destination="IDLE" Condition="1" x="1966.67" y="560"/>
+			<ECTransition Source="IDLE" Destination="HIGH_REF_ECHO" Condition="Y_HIGH.EO1" x="900" y="1006.67"/>
+			<ECTransition Source="HIGH_REF_ECHO" Destination="IDLE" Condition="1" x="1126.67" y="780"/>
+			<ECTransition Source="IDLE" Destination="Y_LOW_DISP" Condition="LOW_REF.EI1" x="-1693.33" y="520"/>
+			<ECTransition Source="Y_LOW_DISP" Destination="IDLE" Condition="1" x="-1473.33" y="766.67"/>
+			<ECTransition Source="IDLE" Destination="Y_HIGH_DISP" Condition="HIGH_REF.EI1" x="-753.33" y="933.33"/>
+			<ECTransition Source="Y_HIGH_DISP" Destination="IDLE" Condition="1" x="-1046.67" y="840"/>
+			<ECTransition Source="START" Destination="Init" Condition="INIT[TRUE = QI]" x="-2160" y="-1760"/>
+			<ECTransition Source="DeInit" Destination="START" Condition="1" x="-2180" y="-1440"/>
+			<ECTransition Source="Init" Destination="IDLE" Condition="1" x="-950" y="-960"/>
+			<ECTransition Source="IDLE" Destination="DeInit" Condition="INIT[FALSE = QI]" x="-980" y="-640"/>
+		</ECC>
+		<Algorithm Name="initialize" Comment="Initialization algorithm">
+			<ST><![CDATA[
+QO := QI;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="deInitialize" Comment="Normally executed algorithm">
+			<ST><![CDATA[
+QO := FALSE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="REQ" Comment="REQ">
+			<ST><![CDATA[
+QO := QI;
+
+IF TRUE = QI THEN
+	(* latch "has been calibrated at least once" per point - a never-calibrated point stays
+	 * exactly at the INI_AR2 DEFAULT_VALUE (0.0) forever, a real raw sensor value practically
+	 * never is; a re-boot restores an already-calibrated point straight back to its non-0.0
+	 * persisted value, so the latch stays correctly set across restarts *)
+	IF X_LOW.DI1 <> 0.0 THEN xLowCal := TRUE; END_IF;
+	IF X_HIGH.DI1 <> 0.0 THEN xHighCal := TRUE; END_IF;
+
+	IF xLowCal AND xHighCal THEN
+		(* both points calibrated - live linear interpolation, as before *)
+		IF (X_HIGH.DI1 - X_LOW.DI1) <> 0.0 THEN
+			Y.D1 := LOW_REF.DI1 + (X.D1 - X_LOW.DI1) * (HIGH_REF.DI1 - LOW_REF.DI1) / (X_HIGH.DI1 - X_LOW.DI1);
+		ELSE
+			Y.D1 := LOW_REF.DI1;
+		END_IF;
+	ELSIF xLowCal THEN
+		(* only LOW calibrated so far - HIGH still at its 0.0 default, interpolating against it would
+		 * give a garbage result, so fall back cleanly to the one REF value we actually have *)
+		Y.D1 := LOW_REF.DI1;
+	ELSIF xHighCal THEN
+		Y.D1 := HIGH_REF.DI1;
+	ELSE
+		(* nothing calibrated yet *)
+		Y.D1 := LOW_REF.DI1;
+	END_IF;
+
+	(* only clip once both bounding points are calibrated - otherwise the
+	 * still-uncalibrated bound sits at its INI_AR2 default (0.0) and would
+	 * clamp the partial-calibration fallback above right back to garbage *)
+	IF xClipping AND xLowCal AND xHighCal THEN
+		IF Y.D1 < LOW_REF.DI1 THEN
+			Y.D1 := LOW_REF.DI1;
+		ELSIF Y.D1 > HIGH_REF.DI1 THEN
+			Y.D1 := HIGH_REF.DI1;
+		END_IF;
+	END_IF;
+END_IF;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="C_LOW" Comment="Store current raw input as the low calibration point - independent of C_HIGH, repeatable any time">
+			<ST><![CDATA[
+X_LOW.DO1 := X.D1;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="C_HIGH" Comment="Store current raw input as the high calibration point - independent of C_LOW, repeatable any time">
+			<ST><![CDATA[
+X_HIGH.DO1 := X.D1;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="LOW_REF_ECHO" Comment="Persist live Y_LOW reference to INI">
+			<ST><![CDATA[
+LOW_REF.DO1 := Y_LOW.DO1;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="HIGH_REF_ECHO" Comment="Persist live Y_HIGH reference to INI">
+			<ST><![CDATA[
+HIGH_REF.DO1 := Y_HIGH.DO1;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="Y_LOW_DISP" Comment="Echo the persisted/restored LOW_REF value back out through Y_LOW for VT/web display (boot and after every change)">
+			<ST><![CDATA[
+Y_LOW.DI1 := LOW_REF.DI1;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="Y_HIGH_DISP" Comment="Echo the persisted/restored HIGH_REF value back out through Y_HIGH for VT/web display (boot and after every change)">
+			<ST><![CDATA[
+Y_HIGH.DI1 := HIGH_REF.DI1;
+]]></ST>
+		</Algorithm>
+	</BasicFB>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h2>Formula</h2>
+<pre>Y = LOW_REF + (X - X_LOW) * (HIGH_REF - LOW_REF) / (X_HIGH - X_LOW), clipped to LOW_REF..HIGH_REF unless xClipping = FALSE</pre>
+
+<h2>Partial Calibration (before both points are set)</h2>
+<p>Each point is tracked internally (<code>xLowCal</code>/<code>xHighCal</code>, latched TRUE once its raw value differs from the INI_AR2 default 0.0). Until both are calibrated, <code>REQ</code> falls back to the one already-known REF value instead of interpolating against the other point's still-0.0 default (which previously produced a garbage result as soon as only one side had been calibrated).</p>
+
+<h2>Why this replaces AR_CALIBRATE_SQ_REF</h2>
+<p><code>AR_CALIBRATE_SQ_REF</code> computes OFFSET/SCALE incrementally (CO sets OFFSET from a live SCALE, CS then recomputes both from an internal <code>X_LOW_INT</code>/<code>Y_LOW_INT</code> captured by CO) - CS is only mathematically valid <strong>after</strong> CO has run at least once, which needed an ECC-enforced order to avoid a silent garbage-OFFSET calibration.</p>
+<p>This type stores <code>X_LOW</code>/<code>X_HIGH</code> completely independently (exactly like <code>AR_CALIBRATE_3P</code>/<code>AR_CALIBRATE_3P_REF</code> store <code>X_MIN</code>/<code>X_MID</code>/<code>X_MAX</code>) and only combines them into a line at read-time (<code>REQ</code>), which runs on every <code>X.E1</code> regardless of calibration state. There is no data dependency between <code>C_LOW</code> and <code>C_HIGH</code>, so there is nothing an enforced order could protect against - both points can be (re-)calibrated in any order, independently, at any time.</p>
+
+<h2>Calibration (Two-Point, Free Order)</h2>
+<ol>
+<li><strong>Low (C_LOW):</strong> Apply low reference, set Y_LOW to desired output, trigger C_LOW &rarr; <code>X_LOW := X</code></li>
+<li><strong>High (C_HIGH):</strong> Apply high reference, set Y_HIGH to desired output, trigger C_HIGH &rarr; <code>X_HIGH := X</code></li>
+</ol>
+<p>Either point can be recalibrated on its own at any later time (e.g. re-trimming a drifted zero point) without repeating the other.</p>
+
+<h2>Reference Targets (Y_LOW / Y_HIGH) are live AR Sockets</h2>
+<p>Same live-echo mechanism as <code>AR_CALIBRATE_SQ_REF</code>: <code>Y_LOW</code>/<code>Y_HIGH</code> are bidirectional AR2 Sockets fed from an external VT/web reader, mirrored out through the AR2 Plugs <code>LOW_REF</code>/<code>HIGH_REF</code> for persistence (<code>INI_AR2</code>/<code>NVS_AR2</code>), and echoed back via <code>LOW_REF.EI1</code>/<code>HIGH_REF.EI1</code> so a boot-restored value shows up on screen without the operator re-entering it.</p>
+]]></Attribute>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

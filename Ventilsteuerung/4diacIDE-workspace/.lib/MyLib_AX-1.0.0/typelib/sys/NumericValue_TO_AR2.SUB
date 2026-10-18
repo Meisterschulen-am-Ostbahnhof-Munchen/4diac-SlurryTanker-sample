@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="NumericValue_TO_AR2" Comment="VT-Eingabefeld (CInputNumber) lesen und als AR2 (bidirektional) an einen&#10;Consumer weiterreichen (z.B. AR_CALIBRATE_SQ_REF.Y_Offset/.Y_Scale, oder direkt&#10;an ein INI_AR2). Speichert NICHT selbst - der Consumer persistiert (z.B. via&#10;ZERO/SPAN+INI_AR2), das Echo kommt hier ueber denselben AR2-Plug zurueck und&#10;wird auf das VT-Feld zurueckgeschrieben (auch beim Boot)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-08-31" Remarks="Renamed from INI_IN_AND_STORE_AR2 - this SubApp is a pure VT-to-AR2 bridge, it does not persist anything itself">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+		<Import declaration="logiBUS::utils::conversion::phys::NumericObjectPool_S"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="stObj" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 0)"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="VALUEO" Type="adapter::types::bidirectional::AR2"/>
+		</Plugs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="NumericValue_PHYSA" Type="isobus::UT::io::NumericValue::NumericValue_PHYSA" x="-2300" y="-300">
+		</FB>
+		<FB Name="AR_TO_AR2" Type="adapter::conversion::bidirectional::AR_TO_AR2" x="700" y="200">
+		</FB>
+		<FB Name="Q_NumericValue_PHYSA" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="3000" y="-100">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_2">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="Q_NumericValue_PHYSA.INIT"/>
+			<Connection Source="Q_NumericValue_PHYSA.INITO" Destination="NumericValue_PHYSA.INIT"/>
+			<Connection Source="NumericValue_PHYSA.INITO" Destination="INITO"/>
+			<Connection Source="NumericValue_PHYSA.INITO" Destination="AND_QO.REQ"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="stObj" Destination="Q_NumericValue_PHYSA.stObj" dx1="6046.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="stObj" Destination="NumericValue_PHYSA.stObj" dx1="1046.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="Q_NumericValue_PHYSA.QI"/>
+			<Connection Source="QI" Destination="NumericValue_PHYSA.QI"/>
+			<Connection Source="Q_NumericValue_PHYSA.QO" Destination="AND_QO.IN1"/>
+			<Connection Source="NumericValue_PHYSA.QO" Destination="AND_QO.IN2"/>
+			<Connection Source="AND_QO.OUT" Destination="QO"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="NumericValue_PHYSA.rPhys" Destination="AR_TO_AR2.AR_IN" dx1="1233.33"/>
+			<Connection Source="AR_TO_AR2.AR2_BIDIR" Destination="VALUEO" dx1="2220">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AR_TO_AR2.AR_OUT" Destination="Q_NumericValue_PHYSA.rPhys" dx1="873.33"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

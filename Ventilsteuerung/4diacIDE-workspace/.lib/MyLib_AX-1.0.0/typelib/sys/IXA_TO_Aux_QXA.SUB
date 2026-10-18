@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="IXA_TO_Aux_QXA" Comment="logiBUS_IXA auf isobus Aux_QXA (generisch), adapter-basiert">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-18" Remarks="IX.INITO auf IX.REQ zurueckverdrahtet (Selfloop) - loest nach der Initialisierung sofort einen Service-Request aus, statt auf die erste echte Wertaenderung am Bus zu warten (Fix fuer 'Waiting for handle'-Status direkt nach Boot).">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-09" Remarks="Ausgelagert aus Uebung_003c_sub_AX zur Wiederverwendung.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Invalid"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_S"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="Input" Type="logiBUS::io::DI::logiBUS_DI_S" Comment="Identify the Input Input_I1..I8" InitialValue="Invalid"/>
+			<VarDeclaration Name="iInpNr" Type="USINT" Comment="Number of auxiliary array - corresponds with the order in the pool that means first aux input in pool is iInpNr = 0 etc." InitialValue="0"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="QX" Type="isobus::UT::io::Auxiliary::OUT::Aux_QXA" x="-1900" y="-800">
+		</FB>
+		<FB Name="IX" Type="logiBUS::io::DI::logiBUS_IXA" x="-4600" y="-700">
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_2">
+		</FB>
+		<EventConnections>
+			<Connection Source="IX.INITO" Destination="IX.REQ" dx1="80" dx2="80" dy="53.33"/>
+			<Connection Source="INIT" Destination="IX.INIT"/>
+			<Connection Source="IX.INITO" Destination="QX.INIT"/>
+			<Connection Source="QX.INITO" Destination="INITO"/>
+			<Connection Source="QX.INITO" Destination="AND_QO.REQ"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="Input" Destination="IX.Input" dx1="2047.06">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="iInpNr" Destination="QX.iInpNr" dx1="3906.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="IX.QI"/>
+			<Connection Source="QI" Destination="QX.QI"/>
+			<Connection Source="QX.QO" Destination="AND_QO.IN1"/>
+			<Connection Source="IX.QO" Destination="AND_QO.IN2"/>
+			<Connection Source="AND_QO.OUT" Destination="QO"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="IX.IN" Destination="QX.OUT"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="AR2_TO_AR" Comment="Composite FB for convert bidirectional AR2 to unidirectional AR">
+	<Identification Standard="61499-2" Function="AR2_BIDIR forwards its incoming (EO1) side out as a plain unidirectional signal via AR_OUT. AR_IN publishes its value onto the outgoing (EI1) side of AR2_BIDIR." Description="Copyright (c) 2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-08-31" Remarks="Initial Version">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::conversion::bidirectional">
+	</CompilerInfo>
+	<InterfaceList>
+		<Sockets>
+			<AdapterDeclaration Name="AR2_BIDIR" Type="adapter::types::bidirectional::AR2" Comment="Adapter Input: bidirectional tap, incoming side forwarded to AR_OUT, outgoing side driven by AR_IN" x="-1200" y="900"/>
+			<AdapterDeclaration Name="AR_IN" Type="adapter::types::unidirectional::AR" Comment="Adapter Input: unidirectional source" x="-2200" y="900"/>
+		</Sockets>
+		<Plugs>
+			<AdapterDeclaration Name="AR_OUT" Type="adapter::types::unidirectional::AR" Comment="Adapter Output: mirrors AR2_BIDIR's incoming (indication) side" x="100" y="900"/>
+		</Plugs>
+	</InterfaceList>
+	<FBNetwork>
+		<EventConnections>
+			<Connection Source="AR2_BIDIR.EO1" Destination="AR_OUT.E1"/>
+			<Connection Source="AR_IN.E1" Destination="AR2_BIDIR.EI1"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="AR2_BIDIR.DO1" Destination="AR_OUT.D1"/>
+			<Connection Source="AR_IN.D1" Destination="AR2_BIDIR.DI1"/>
+		</DataConnections>
+	</FBNetwork>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

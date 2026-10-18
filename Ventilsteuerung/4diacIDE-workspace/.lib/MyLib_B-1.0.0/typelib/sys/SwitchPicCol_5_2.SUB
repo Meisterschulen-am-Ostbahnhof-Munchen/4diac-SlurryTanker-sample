@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="SwitchPicCol_5_2" Comment="Bild- und Farbumschaltung für AUX-N und VT Objekte; 5 Zustände">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik" Version="1.1" Author="Christoph Behr" Date="2026-04-09" Remarks="Inits verbunden und REQ angeschlossen">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="franz" Date="2025-06-12">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="logiBUS::utils::sequence::schieber::SchieberAuxInStruct"/>
+		<Import declaration="logiBUS::utils::sequence::schieber::const::iSTATES::Unknown"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+			<SubAppEvent Name="EI" Type="Event">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="Picture" Type="UINT" Comment="Object ID of the ObjectPointer to the Picture"/>
+			<VarDeclaration Name="Color" Type="UINT" Comment="Object ID of the AuxFunction"/>
+			<VarDeclaration Name="Sets" Type="logiBUS::utils::sequence::schieber::SchieberAuxInStruct"/>
+			<VarDeclaration Name="iSTATE" Type="USINT" InitialValue="Unknown"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully (AND aller 4 Instanzen)"/>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="PictureVT" Type="isobus::UT::Q::Q_NumericValue" x="3900" y="500">
+		</FB>
+		<FB Name="ColorAux" Type="isobus::UT::Q::Q_BackgroundColourAux" x="3700" y="1400">
+		</FB>
+		<FB Name="PictureAux" Type="isobus::UT::Q::Q_NumericValueAux" x="3900" y="-400">
+		</FB>
+		<FB Name="ColorVT" Type="isobus::UT::Q::Q_BackgroundColour" x="3800" y="2400">
+		</FB>
+		<FB Name="F_MOVE" Type="iec61131::selection::F_MOVE" x="-600" y="300">
+			<Attribute Name="DataType" Value="logiBUS::utils::sequence::schieber::SchieberAuxInStruct"/>
+			<Parameter Name="OUT" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="OUT.Picture.Unknown" Value="">
+				<Attribute Name="Visible" Value="true"/>
+			</Parameter>
+			<Parameter Name="OUT.Picture.Closed" Value="">
+				<Attribute Name="Visible" Value="true"/>
+			</Parameter>
+			<Parameter Name="OUT.Picture.Opening" Value="">
+				<Attribute Name="Visible" Value="true"/>
+			</Parameter>
+			<Parameter Name="OUT.Picture.Opened" Value="">
+				<Attribute Name="Visible" Value="true"/>
+			</Parameter>
+			<Parameter Name="OUT.Picture.Closing" Value="">
+				<Attribute Name="Visible" Value="true"/>
+			</Parameter>
+			<Parameter Name="OUT.u8Colour.Unknown" Value="">
+				<Attribute Name="Visible" Value="true"/>
+			</Parameter>
+			<Parameter Name="OUT.u8Colour.Closed" Value="">
+				<Attribute Name="Visible" Value="true"/>
+			</Parameter>
+			<Parameter Name="OUT.u8Colour.Opening" Value="">
+				<Attribute Name="Visible" Value="true"/>
+			</Parameter>
+			<Parameter Name="OUT.u8Colour.Opened" Value="">
+				<Attribute Name="Visible" Value="true"/>
+			</Parameter>
+			<Parameter Name="OUT.u8Colour.Closing" Value="">
+				<Attribute Name="Visible" Value="true"/>
+			</Parameter>
+		</FB>
+		<FB Name="F_MUX_5_Picture" Type="iec61131::selection::F_MUX_5" x="1900" y="-200">
+		</FB>
+		<FB Name="F_MUX_5_Colour" Type="iec61131::selection::F_MUX_5" x="1900" y="1500">
+		</FB>
+		<FB Name="E_MERGE_QO_A" Type="iec61499::events::E_MERGE_4" x="5700" y="100">
+		</FB>
+		<FB Name="E_MERGE_QO" Type="iec61499::events::E_MERGE_2" x="5800" y="1900">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_4" x="5700" y="1000">
+		</FB>
+		<EventConnections>
+			<Connection Source="F_MUX_5_Picture.CNF" Destination="PictureAux.REQ" dx1="693.33"/>
+			<Connection Source="F_MUX_5_Picture.CNF" Destination="PictureVT.REQ" dx1="693.33"/>
+			<Connection Source="F_MUX_5_Colour.CNF" Destination="ColorAux.REQ" dx1="666.67"/>
+			<Connection Source="F_MUX_5_Colour.CNF" Destination="ColorVT.REQ" dx1="666.67"/>
+			<Connection Source="EI" Destination="F_MUX_5_Picture.REQ" dx1="3373.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="EI" Destination="F_MUX_5_Colour.REQ" dx1="3373.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="INIT" Destination="F_MOVE.REQ" dx1="833.33"/>
+			<Connection Source="F_MOVE.CNF" Destination="PictureAux.INIT" dx1="80">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="PictureAux.INITO" Destination="PictureVT.INIT" dx1="80" dx2="80" dy="400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="PictureVT.INITO" Destination="ColorAux.INIT" dx1="80" dx2="80" dy="446.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ColorAux.INITO" Destination="ColorVT.INIT" dx1="80" dx2="80" dy="400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ColorVT.INITO" Destination="INITO" dx1="1373.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="PictureAux.CNF" Destination="E_MERGE_QO_A.EI1" dx1="313.33"/>
+			<Connection Source="PictureVT.CNF" Destination="E_MERGE_QO_A.EI2" dx1="313.33"/>
+			<Connection Source="ColorAux.CNF" Destination="E_MERGE_QO_A.EI3" dx1="480"/>
+			<Connection Source="ColorVT.CNF" Destination="E_MERGE_QO_A.EI4" dx1="433.33"/>
+			<Connection Source="E_MERGE_QO_A.EO" Destination="E_MERGE_QO.EI1" dx1="80" dx2="80" dy="900"/>
+			<Connection Source="ColorVT.INITO" Destination="E_MERGE_QO.EI2" dx1="480"/>
+			<Connection Source="E_MERGE_QO.EO" Destination="AND_QO.REQ" dx1="80" dx2="80" dy="-446.67"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="Color" Destination="ColorAux.u16ObjId" dx1="3200">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Color" Destination="ColorVT.u16ObjId" dx1="3200">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Picture" Destination="PictureAux.u16ObjId" dx1="3153.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Picture" Destination="PictureVT.u16ObjId" dx1="3173.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Sets" Destination="F_MOVE.IN" dx1="566.67"/>
+			<Connection Source="F_MOVE.OUT.Picture.Unknown" Destination="F_MUX_5_Picture.IN1" dx1="580"/>
+			<Connection Source="F_MOVE.OUT.Picture.Closed" Destination="F_MUX_5_Picture.IN2" dx1="613.33"/>
+			<Connection Source="F_MOVE.OUT.Picture.Opening" Destination="F_MUX_5_Picture.IN3" dx1="646.67"/>
+			<Connection Source="F_MOVE.OUT.Picture.Opened" Destination="F_MUX_5_Picture.IN4" dx1="680"/>
+			<Connection Source="F_MOVE.OUT.Picture.Closing" Destination="F_MUX_5_Picture.IN5" dx1="713.33"/>
+			<Connection Source="F_MOVE.OUT.u8Colour.Unknown" Destination="F_MUX_5_Colour.IN1" dx1="480"/>
+			<Connection Source="F_MOVE.OUT.u8Colour.Closed" Destination="F_MUX_5_Colour.IN2" dx1="446.67"/>
+			<Connection Source="F_MOVE.OUT.u8Colour.Opening" Destination="F_MUX_5_Colour.IN3" dx1="413.33"/>
+			<Connection Source="F_MOVE.OUT.u8Colour.Opened" Destination="F_MUX_5_Colour.IN4" dx1="380"/>
+			<Connection Source="F_MOVE.OUT.u8Colour.Closing" Destination="F_MUX_5_Colour.IN5" dx1="346.67"/>
+			<Connection Source="F_MUX_5_Colour.OUT" Destination="ColorAux.u8Colour" dx1="633.33"/>
+			<Connection Source="F_MUX_5_Colour.OUT" Destination="ColorVT.u8Colour" dx1="633.33"/>
+			<Connection Source="F_MUX_5_Picture.OUT" Destination="PictureAux.u32NewValue" dx1="660"/>
+			<Connection Source="F_MUX_5_Picture.OUT" Destination="PictureVT.u32NewValue" dx1="660"/>
+			<Connection Source="iSTATE" Destination="F_MUX_5_Picture.K" dx1="3406.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="iSTATE" Destination="F_MUX_5_Colour.K" dx1="3406.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="PictureAux.QI" dx1="1753.33"/>
+			<Connection Source="QI" Destination="PictureVT.QI" dx1="1753.33"/>
+			<Connection Source="QI" Destination="ColorAux.QI" dx1="1653.33"/>
+			<Connection Source="QI" Destination="ColorVT.QI" dx1="1700"/>
+			<Connection Source="PictureAux.QO" Destination="AND_QO.IN1" dx1="313.33"/>
+			<Connection Source="PictureVT.QO" Destination="AND_QO.IN2" dx1="313.33"/>
+			<Connection Source="ColorAux.QO" Destination="AND_QO.IN3" dx1="480"/>
+			<Connection Source="ColorVT.QO" Destination="AND_QO.IN4" dx1="433.33"/>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="1140"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

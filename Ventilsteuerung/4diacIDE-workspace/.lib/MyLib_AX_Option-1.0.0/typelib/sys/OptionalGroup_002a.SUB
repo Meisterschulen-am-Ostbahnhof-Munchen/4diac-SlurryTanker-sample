@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="OptionalGroup_002a" Comment="Optionsgruppe 2a: wie OptionalGroup_001a, aber mit Input_I2/Output_Q2 - Gegenstueck mit Plug AOption_OUT zu OptionalGroup_002; wie OptionalGroup_001b (Eingang/Ausgang per QI freigeschaltet), reicht die Aktivierung zusaetzlich ueber den Plug AOption_OUT an eine nachgeschaltete Gruppe weiter - fuer sequenzielle Aktivierung mehrerer Gruppen (erst 2a, dann nachgeschaltete Gruppe).">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-17" Remarks="Baugleich zu OptionalGroup_001a mit I2/Q2. Daisy-Chain-Glied fuer sequenzielle Options-Aktivierung: AOption_OUT (Option::AOption) wird erst ausgeloest, wenn DigitalOutput_Q2 selbst initialisiert ist, und dessen INIT_CNF wird an den eigenen Socket AOption_IN zurueckgemeldet - der aufrufende DEMUX sieht die Gruppe also erst als fertig, wenn die GESAMTE Kette (inkl. nachgeschalteter Gruppen an AOption_OUT) bestaetigt hat.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib_AX_Option::sys">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI::Input_I2"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Output_Q2"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<Plugs>
+			<AdapterDeclaration Name="AOption_OUT" Type="Option::AOption"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="AOption_IN" Type="Option::AOption"/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="DigitalInput_I2" Type="logiBUS::io::DI::logiBUS_IXA" x="0" y="0">
+			<Parameter Name="Input" Value="Input_I2"/>
+		</FB>
+		<FB Name="DigitalOutput_Q2" Type="logiBUS::io::DQ::logiBUS_QXA" x="3100" y="0">
+			<Parameter Name="Output" Value="Output_Q2"/>
+		</FB>
+		<FB Name="AOption_X_TO_EVENT" Type="Option::conversion::AOption_X_TO_EVENT" x="-3100" y="0">
+		</FB>
+		<FB Name="AOption_EVENT_TO_X" Type="Option::conversion::AOption_EVENT_TO_X" x="4800" y="-600">
+		</FB>
+		<EventConnections>
+			<Connection Source="AOption_X_TO_EVENT.INIT_REQ" Destination="DigitalInput_I2.INIT"/>
+			<Connection Source="DigitalInput_I2.INITO" Destination="DigitalOutput_Q2.INIT"/>
+			<Connection Source="DigitalOutput_Q2.INITO" Destination="AOption_EVENT_TO_X.INIT_REQ" dx1="446.67"/>
+			<Connection Source="AOption_EVENT_TO_X.INIT_CNF" Destination="AOption_X_TO_EVENT.INIT_CNF" dx1="80" dx2="80" dy="-493.33"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="AOption_X_TO_EVENT.QI_OUT" Destination="DigitalInput_I2.QI" dx1="680">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AOption_X_TO_EVENT.QI_OUT" Destination="DigitalOutput_Q2.QI" dx1="1733.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AOption_X_TO_EVENT.QI_OUT" Destination="AOption_EVENT_TO_X.QI_OUT" dx1="340"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="DigitalInput_I2.IN" Destination="DigitalOutput_Q2.OUT"/>
+			<Connection Source="AOption_IN" Destination="AOption_X_TO_EVENT.AOption_IN" dx1="346.67"/>
+			<Connection Source="AOption_EVENT_TO_X.AOption_OUT" Destination="AOption_OUT" dx1="900"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="Q_SoftKeyMask" Comment="Command change soft key mask( Part 6 - F.36 )">
+	<Identification Standard="ISO 11783-6" Description="Copyright (c) 2022 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0  &#10;   &#10;   &#10;see Description Tab">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2022-07-08">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::UT::Q">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+				<With Var="QI"/>
+			</Event>
+			<Event Name="REQ" Type="Event" Comment="Service Request">
+				<With Var="QI"/>
+				<With Var="u16DataMaskId"/>
+				<With Var="u16SoftKeyMaskId"/>
+				<With Var="u8MaskType"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+				<With Var="s16result"/>
+				<With Var="u16OldDataMaskId"/>
+				<With Var="u16OldSoftKeyMaskId"/>
+				<With Var="u8OldMaskType"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="u8MaskType" Type="USINT" Comment="1 == Data, 2 == Alarm "/>
+			<VarDeclaration Name="u16DataMaskId" Type="UINT" Comment="Object ID of active Mask " InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16SoftKeyMaskId" Type="UINT" Comment="Object ID of (new) soft key mask " InitialValue="ID_NULL"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
+			<VarDeclaration Name="u8OldMaskType" Type="USINT"/>
+			<VarDeclaration Name="u16OldDataMaskId" Type="UINT" Comment="Old object ID of active Mask "/>
+			<VarDeclaration Name="u16OldSoftKeyMaskId" Type="UINT" Comment="Old object ID of (new) soft key mask "/>
+			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description"/>
+		</OutputVars>
+	</InterfaceList>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>Command change soft key mask( Part 6 - F.36 )</h1>
+
+<p>This command is used to change the soft key mask associated with a data or alarm mask object.</p>
+
+<h2>param[in] {type, uint8_t}</h2>
+
+<p>1 == Data, 2 == Alarm</p>
+
+<h2>param[in] {dataOrAlarmMaskObjectID, uint16_t}</h2>
+
+<p>Object ID of active Mask</p>
+
+<h2>param[in] {newSoftKeyMaskObjectID, uint16_t}</h2>
+
+<p>Object ID of (new) soft key mask</p>
+
+<h2>Valid values for u16DataMaskId (the data or alarm mask object)</h2>
+
+<p>The Change Soft Key Mask command (Annex F.36) associates a Soft Key Mask with a Data Mask or an Alarm Mask. Valid if <code>u16DataMaskId</code> falls within one of the following ISO 11783-6 ID ranges:</p>
+<ul>
+	<li><strong>DataMask</strong>: 1000 – 1999</li>
+	<li><strong>AlarmMask</strong>: 2000 – 2999</li>
+</ul>
+
+<h2>Valid values for u16SoftKeyMaskId (the soft key mask object)</h2>
+
+<p>Valid if <code>u16SoftKeyMaskId</code> falls within the ISO 11783-6 ID range for a Soft Key Mask:</p>
+<ul>
+	<li><strong>SoftKeyMask</strong>: 4000 – 4999</li>
+</ul>
+
+<p>ID_NULL (65535) is not a command target but can be used in INIT to deactivate the FB. Any data/alarm mask ID outside the ranges above, or any soft key mask ID that is not a SoftKeyMask, is invalid for commanding — independent of each other.</p>
+
+<h2>Return Values (s16result):</h2>
+
+<h3>int16_t</h3>
+
+<ul>
+	<li><span style="color:#27ae60">VT_E_NO_ERR (0)</span> - OK</li>
+	<li><span style="color:#e74c3c">VT_E_NOT_READY (-131)</span> - VT client not yet ready</li>
+	<li><span style="color:#e74c3c">VT_E_OVERFLOW (-6)</span> - buffer overflow</li>
+	<li><span style="color:#e74c3c">VT_E_NOACT (-8)</span> - Command not possible in current state</li>
+	<li><span style="color:#e74c3c">VT_E_NO_INSTANCE (-21)</span> - No VT client available</li>
+	<li><span style="color:#e74c3c">VT_E_ISO_INSTANCE_INVALID (-129)</span> - Identifier for instance (connection) invalid</li>
+	<li><span style="color:#e74c3c">VT_E_NOT_ALIVE (-130)</span> - Identifier for instance valid, but VT Dead.</li>
+	<li><span style="color:#2980b9">VT_OK_BUFFERED (18)</span> - command buffered, waiting for VT to be ready</li>
+</ul>
+<h2>Instanz-Eindeutigkeit (Instance Uniqueness)</h2>
+
+<p>Dieser Baustein ist konzeptionell als Singleton (genau eine Instanz im gesamten Programm) vorgesehen.</p>
+]]></Attribute>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

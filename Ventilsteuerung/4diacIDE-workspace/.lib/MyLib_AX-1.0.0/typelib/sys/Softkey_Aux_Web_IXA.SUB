@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Softkey_Aux_Web_IXA" Comment="VT-SoftKey lesen ODER AUX-Zuweisung (Joystick) lesen ODER lokaler Web-Override&#10;(z.B. vt-ui-mirror auf demselben Modul) -&gt; 1 gemeinsamer, kontinuierlicher&#10;AX-Pegel (kein Remote-Write, kein Event) - fuer Tastbetrieb (Jog/Tippen), bei&#10;dem der Pegel selbst (nicht eine Flanke) weiterverarbeitet werden soll, z.B. als&#10;G-Eingang eines AX_AX_SEL_AR oder als DI1 einer&#10;GreenWhiteBackground-Ruecklmeldung. Kommando-Haelfte von&#10;Softkey_Aux_IXA_TO_Remote_WRITE, aber OUT statt Remote-Write.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-13" Remarks="initial implementation - herausgeloest aus Softkey_Aux_IXA_TO_Remote_WRITE (Quellen-ODER ohne den Remote-Write-Teil), fuer Bunkerboden (2 tastende Kommandos, Max/Wert, die lokal zu einem PWM-Prozentwert selektiert werden muessen statt direkt remote geschrieben zu werden).">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID SoftKey (VT)" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObjIdA" Type="UINT" Comment="Object ID AuxFunction2 (VT)" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="ID" Type="WSTRING" Comment="Lokale Subscribe-Adresse fuer einen Web-Client (z.B. vt-ui-mirror) auf demselben Modul, ODER-verknuepft mit SoftKey und AUX"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="OUT" Type="adapter::types::unidirectional::AX" Comment="SoftKey ODER Aux ODER Web-Override, kontinuierlicher Pegel (TRUE solange gehalten/aktiv)"/>
+		</Plugs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="Softkey_IXA" Type="isobus::UT::io::Softkey::Softkey_IXA" x="0" y="100">
+		</FB>
+		<FB Name="Aux_IXA" Type="isobus::UT::io::Auxiliary::IN::Aux_IXA" x="0" y="1100">
+		</FB>
+		<FB Name="SUBSCRIBE_WEB" Type="adapter::net::AX_SUBSCRIBE_1" x="0" y="2100">
+		</FB>
+		<FB Name="OR_MERGE" Type="adapter::booleanOperators::AX_OR_3" x="1800" y="900">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_3" x="4700" y="700">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="Softkey_IXA.INIT" dx1="1086.67"/>
+			<Connection Source="Softkey_IXA.INITO" Destination="Aux_IXA.INIT" dx1="360" dx2="740" dy="793.33"/>
+			<Connection Source="Aux_IXA.INITO" Destination="SUBSCRIBE_WEB.INIT" dx1="500" dx2="513.33" dy="773.33"/>
+			<Connection Source="SUBSCRIBE_WEB.INITO" Destination="INITO" dx1="2413.33"/>
+			<Connection Source="SUBSCRIBE_WEB.INITO" Destination="AND_QO.REQ" dx1="1380">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="u16ObjId" Destination="Softkey_IXA.u16ObjId" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjIdA" Destination="Aux_IXA.u16ObjId" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID" Destination="SUBSCRIBE_WEB.ID" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="Softkey_IXA.QI" dx1="1086.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="Aux_IXA.QI" dx1="1086.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="SUBSCRIBE_WEB.QI" dx1="1086.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Softkey_IXA.QO" Destination="AND_QO.IN1" dx1="1446.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Aux_IXA.QO" Destination="AND_QO.IN2" dx1="1453.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="SUBSCRIBE_WEB.QO" Destination="AND_QO.IN3" dx1="1380">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="733.33"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="Softkey_IXA.IN" Destination="OR_MERGE.IN1" dx1="600"/>
+			<Connection Source="Aux_IXA.IN" Destination="OR_MERGE.IN2" dx1="600"/>
+			<Connection Source="SUBSCRIBE_WEB.OUT" Destination="OR_MERGE.IN3" dx1="600"/>
+			<Connection Source="OR_MERGE.OUT" Destination="OUT" dx1="600"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

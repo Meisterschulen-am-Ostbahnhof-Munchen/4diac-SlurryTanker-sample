@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="Q_NumericValue_AUDI" Comment="Command change numeric value ( Part 6 - F.22 )">
+	<Identification Standard="ISO 11783-6" Description="Copyright (c) 2022 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0  &#10;   &#10;   &#10;see Description Tab">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2022-07-08">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::UT::Q">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+				<With Var="QI"/>
+				<With Var="u16ObjId"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+				<With Var="s16result"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID" InitialValue="ID_NULL"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
+			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="u32OldValue" Type="adapter::types::unidirectional::AUDI" Comment="Old value of ID" x="3900" y="1100"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="u32NewValue" Type="adapter::types::unidirectional::AUDI" Comment="New value of ID" x="-600" y="1200"/>
+		</Sockets>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue" x="533.33" y="420">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="Q_NumericValue.INIT" dx1="1306.67"/>
+			<Connection Source="Q_NumericValue.INITO" Destination="INITO" dx1="1506.67"/>
+			<Connection Source="Q_NumericValue.CNF" Destination="CNF" dx1="1760"/>
+			<Connection Source="u32NewValue.E1" Destination="Q_NumericValue.REQ" dx1="320"/>
+			<Connection Source="Q_NumericValue.CNF" Destination="u32OldValue.E1" dx1="906.67"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="Q_NumericValue.STATUS" Destination="STATUS" dx1="2000"/>
+			<Connection Source="u16ObjId" Destination="Q_NumericValue.u16ObjId" dx1="973.33"/>
+			<Connection Source="u32NewValue.D1" Destination="Q_NumericValue.u32NewValue" dx1="486.67"/>
+			<Connection Source="Q_NumericValue.u32OldValue" Destination="u32OldValue.D1" dx1="606.67"/>
+			<Connection Source="Q_NumericValue.s16result" Destination="s16result" dx1="2573.33"/>
+			<Connection Source="QI" Destination="Q_NumericValue.QI"/>
+			<Connection Source="Q_NumericValue.QO" Destination="QO"/>
+		</DataConnections>
+	</FBNetwork>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>Command change numeric value ( Part 6 - F.22 )</h1>
+
+<p>This command is used to change the value of an object. It applies only to objects that have a numeric value attribute. This FB is an AUDI adapter wrapper around <strong>Q_NumericValue</strong> — the same object-type validity rules apply.</p>
+
+<h2>Valid Object IDs</h2>
+
+<p>u16ObjId is valid if it falls within one of the following ISO 11783-6 ID ranges (see Q_NumericValue, Annex F.22):</p>
+<ul>
+	<li><strong>InputBooleanField</strong>: 7000 – 7999</li>
+	<li><strong>InputNumberField</strong>: 9000 – 9999</li>
+	<li><strong>InputListField</strong>: 10000 – 10999</li>
+	<li><strong>OutputNumberField</strong>: 12000 – 12999</li>
+	<li><strong>Meter</strong>: 17000 – 17999</li>
+	<li><strong>LinearBarGraph</strong>: 18000 – 18999</li>
+	<li><strong>ArchedBarGraph</strong>: 19000 – 19999</li>
+	<li><strong>NumberVariable</strong>: 21000 – 21999</li>
+	<li><strong>ObjectPointer</strong>: 27000 – 27999</li>
+	<li><strong>OutputListObject</strong>: 37000 – 37999</li>
+	<li><strong>ExternalObjectPointer</strong>: 43000 – 43999</li>
+	<li><strong>AnimationObject</strong>: 44000 – 44999</li>
+	<li><strong>ScaledGraphicObject</strong>: 48000 – 48999</li>
+</ul>
+
+<p>ID_NULL (65535) is not a command target but can be used in INIT to deactivate the FB. Any ID outside these ranges is invalid for commanding.</p>
+
+<h2>param[in] {objectID, uint16_t}</h2>
+
+<p>Object ID</p>
+
+<h2>param[in] {value, uint32_t}</h2>
+
+<p>New value of ID</p>
+
+<h2>Return Values:&nbsp;</h2>
+
+<h3>int16_t</h3>
+
+<ul>
+	<li><span style="color:#2980b9">VT_E_NO_ERR (0)</span>&nbsp;- OK</li>
+	<li><span style="color:#2980b9">VT_E_OVERFLOW (-6)</span>&nbsp;- buffer overflow</li>
+	<li><span style="color:#2980b9">VT_E_NOACT (-8)</span> - Command not possible in current state</li>
+	<li><span style="color:#2980b9">VT_E_NO_INSTANCE (-21)</span>&nbsp;- No VT client available</li>
+	<li><span style="color:#2980b9">VT_E_ISO_INSTANCE_INVALID (-129)</span> - Identifier for instance (connection) invalid</li>
+	<li><span style="color:#2980b9">VT_E_HANDLE_INVALID</span><span style="color:#2980b9"> (-128)</span> - ErrorCause: invalid Handle</li>
+	<li><span style="color:#2980b9">VT_E_NOT_ALIVE (-130)</span> - Identifier for instance valid, but VT Dead.</li>
+</ul>
+]]></Attribute>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

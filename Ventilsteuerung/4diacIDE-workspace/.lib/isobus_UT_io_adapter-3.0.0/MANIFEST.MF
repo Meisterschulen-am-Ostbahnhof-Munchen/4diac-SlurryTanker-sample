@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Manifest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="platform:/resource/org.eclipse.fordiac.ide.library.model/model/library.xsd" Scope="Library">
+  <Dependencies>
+    <Required SymbolicName="adapter_types" Version="3.0.0"/>
+    <Required SymbolicName="isobus_UT" Version="3.1.1"/>
+    <Required SymbolicName="isobus_UT_io" Version="3.0.1"/>
+  </Dependencies>
+  <Product Comment="AR/AX/AD-Adapter-Wrapper um isobus_UT_io (UT/io: Attribute, Auxiliary, Button, NumericValue, Softkey, StringValue), herausgeloest aus isobus_UT_adapter-3.0.0 - 1:1-Gegenstueck zu isobus_UT_io, analog zur Trennung von isobus_UT_adapter (zu isobus_UT) und isobus_tecu_adapter (zu isobus_tecu). isobus_UT zusaetzlich direkt noetig, da NumericValue_PHYSA.fbt isobus_UT-3.0.0/typelib/utils/conversion/phys/NumericObjectPool_S.dtp referenziert" Name="isobus_UT_io_adapter" SymbolicName="isobus_UT_io_adapter">
+    <VersionInfo Author="HR Agrartechnik GmbH" Date="2026-10-10" Version="3.0.0"/>
+  </Product>
+</Manifest>

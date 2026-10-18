@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="AR_CALIBRATE_3P" Comment="Adapter-based 3-point calibration for joysticks (Min, Mid, Max)">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Version="1.1" Author="Franz Höpfinger" Date="2026-09-18" Remarks="C_MIN/C_MID/C_MAX von AX-Sockets (mit [C_x.D1]-Flankenwaechter) auf reine EventInputs umgestellt - jeder echte Aufrufer liefert ohnehin ein atomares Event, der D1-Wert war immer hartcodiert TRUE (via AX_BOOL_TO_X) und der Guard filterte nie etwas. Aufrufer muessen jetzt direkt ein Event statt eines AX-Adapters anschliessen. Siehe AR_CALIBRATE_2P_REF fuer die identische Aenderung.">
+	</VersionInfo>
+	<VersionInfo Version="1.0" Author="Meisterschulen am Ostbahnhof" Date="2026-06-01">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::Engineering::measurements">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="SET" Type="Event" Comment="Set Reference Values">
+				<With Var="MIN_REF"/>
+				<With Var="MID_REF"/>
+				<With Var="MAX_REF"/>
+			</Event>
+			<Event Name="C_MIN" Type="Event" Comment="Calibrate Min Point - atomarer Trigger"/>
+			<Event Name="C_MID" Type="Event" Comment="Calibrate Mid Point - atomarer Trigger"/>
+			<Event Name="C_MAX" Type="Event" Comment="Calibrate Max Point - atomarer Trigger"/>
+		</EventInputs>
+		<InputVars>
+			<VarDeclaration Name="MIN_REF" Type="REAL" Comment="Target value for Min" InitialValue="0.0"/>
+			<VarDeclaration Name="MID_REF" Type="REAL" Comment="Target value for Mid" InitialValue="50.0"/>
+			<VarDeclaration Name="MAX_REF" Type="REAL" Comment="Target value for Max" InitialValue="100.0"/>
+		</InputVars>
+		<Plugs>
+			<AdapterDeclaration Name="Y" Type="adapter::types::unidirectional::AR" Comment="Calibrated Output"/>
+			<AdapterDeclaration Name="X_MIN" Type="adapter::types::bidirectional::AR2" Comment="Stored Min Value"/>
+			<AdapterDeclaration Name="X_MID" Type="adapter::types::bidirectional::AR2" Comment="Stored Mid Value"/>
+			<AdapterDeclaration Name="X_MAX" Type="adapter::types::bidirectional::AR2" Comment="Stored Max Value"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="X" Type="adapter::types::unidirectional::AR" Comment="Raw Input"/>
+		</Sockets>
+	</InterfaceList>
+	<BasicFB>
+		<ECC>
+			<ECState Name="IDLE" x="400" y="400">
+			</ECState>
+			<ECState Name="REQ" x="1200" y="400">
+				<ECAction Algorithm="REQ" Output="Y.E1"/>
+			</ECState>
+			<ECState Name="CAL_MIN" x="1200" y="0">
+				<ECAction Algorithm="CAL_MIN" Output="X_MIN.EO1"/>
+			</ECState>
+			<ECState Name="CAL_MID" x="1200" y="800">
+				<ECAction Algorithm="CAL_MID" Output="X_MID.EO1"/>
+			</ECState>
+			<ECState Name="CAL_MAX" x="1200" y="1200">
+				<ECAction Algorithm="CAL_MAX" Output="X_MAX.EO1"/>
+			</ECState>
+			<ECTransition Source="IDLE" Destination="REQ" Condition="X.E1" x="800" y="400"/>
+			<ECTransition Source="REQ" Destination="IDLE" Condition="1" x="800" y="500"/>
+			<ECTransition Source="IDLE" Destination="REQ" Condition="SET" x="200" y="200"/>
+			<ECTransition Source="IDLE" Destination="REQ" Condition="X_MIN.EI1" x="200" y="300"/>
+			<ECTransition Source="IDLE" Destination="REQ" Condition="X_MID.EI1" x="200" y="400"/>
+			<ECTransition Source="IDLE" Destination="REQ" Condition="X_MAX.EI1" x="200" y="500"/>
+			<ECTransition Source="IDLE" Destination="CAL_MIN" Condition="C_MIN" x="800" y="200"/>
+			<ECTransition Source="CAL_MIN" Destination="IDLE" Condition="1" x="800" y="100"/>
+			<ECTransition Source="IDLE" Destination="CAL_MID" Condition="C_MID" x="800" y="600"/>
+			<ECTransition Source="CAL_MID" Destination="IDLE" Condition="1" x="800" y="700"/>
+			<ECTransition Source="IDLE" Destination="CAL_MAX" Condition="C_MAX" x="800" y="1000"/>
+			<ECTransition Source="CAL_MAX" Destination="IDLE" Condition="1" x="800" y="1100"/>
+		</ECC>
+		<Algorithm Name="REQ">
+			<ST><![CDATA[
+(* calculate output using stored X_MIN, X_MID, X_MAX from AR2 DI1 ports *)
+IF X.D1 < X_MID.DI1 THEN
+	IF X_MID.DI1 > X_MIN.DI1 THEN
+		Y.D1 := MIN_REF + (X.D1 - X_MIN.DI1) * (MID_REF - MIN_REF) / (X_MID.DI1 - X_MIN.DI1);
+	ELSE
+		Y.D1 := MIN_REF;
+	END_IF;
+ELSE
+	IF X_MAX.DI1 > X_MID.DI1 THEN
+		Y.D1 := MID_REF + (X.D1 - X_MID.DI1) * (MAX_REF - MID_REF) / (X_MAX.DI1 - X_MID.DI1);
+	ELSE
+		Y.D1 := MID_REF;
+	END_IF;
+END_IF;
+
+(* clipping *)
+IF Y.D1 < MIN_REF THEN
+	Y.D1 := MIN_REF;
+ELSIF Y.D1 > MAX_REF THEN
+	Y.D1 := MAX_REF;
+END_IF;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="CAL_MIN">
+			<ST><![CDATA[
+X_MIN.DO1 := X.D1;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="CAL_MID">
+			<ST><![CDATA[
+X_MID.DO1 := X.D1;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="CAL_MAX">
+			<ST><![CDATA[
+X_MAX.DO1 := X.D1;
+]]></ST>
+		</Algorithm>
+	</BasicFB>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h2>Formula</h2>
+<pre>Y = piecewise linear interpolation between stored calibration points</pre>
+
+<h2>Calibration (3-Point)</h2>
+<ol>
+<li><strong>Min (C_MIN):</strong> Move joystick to minimum, trigger <code>C_MIN</code><br/>
+<code>X_MIN := X</code> &rarr; stores current raw value as Min point</li>
+<li><strong>Mid (C_MID):</strong> Move joystick to center, trigger <code>C_MID</code><br/>
+<code>X_MID := X</code> &rarr; stores current raw value as Mid point (center)</li>
+<li><strong>Max (C_MAX):</strong> Move joystick to maximum, trigger <code>C_MAX</code><br/>
+<code>X_MAX := X</code> &rarr; stores current raw value as Max point</li>
+</ol>
+<p><strong>Note:</strong> Calibration points can be calibrated in <strong>any order</strong> and repeated individually.</p>
+
+<h2>Output Calculation</h2>
+<ul>
+<li>If <code>X &lt; X_MID</code>: linear interpolation between <code>(X_MIN, MIN_REF)</code> and <code>(X_MID, MID_REF)</code></li>
+<li>If <code>X &gt;= X_MID</code>: linear interpolation between <code>(X_MID, MID_REF)</code> and <code>(X_MAX, MAX_REF)</code></li>
+<li>Output clipped to <code>MIN_REF..MAX_REF</code></li>
+</ul>
+
+<h2>Example</h2>
+<p><strong>Scenario:</strong> Joystick with center drift. Raw range <code>0..1000</code>, desired output <code>-100..0..100</code>.</p>
+<table border="1" cellpadding="4" style="border-collapse:collapse">
+<tr><th>Step</th><th>Action</th><th>Result</th></tr>
+<tr><td>1</td><td>Move joystick to <strong>min</strong>, trigger <code>C_MIN</code></td><td><code>X_MIN = 50</code> (drifted from ideal 0)</td></tr>
+<tr><td>2</td><td>Move joystick to <strong>center</strong>, trigger <code>C_MID</code></td><td><code>X_MID = 520</code> (drifted from ideal 500)</td></tr>
+<tr><td>3</td><td>Move joystick to <strong>max</strong>, trigger <code>C_MAX</code></td><td><code>X_MAX = 980</code> (drifted from ideal 1000)</td></tr>
+</table>
+<p><strong>Output:</strong> Interpolated between <code>MIN_REF=-100</code>, <code>MID_REF=0</code>, <code>MAX_REF=100</code> with clipping.</p>
+]]></Attribute>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="STATES" Comment="Global constants">
+	<Identification Standard="61499-1" Description="Copyright (c) 2025 HR Agrartechnik GmbH &#10; &#10;This program and the accompanying materials are made &#10;available under the terms of the Eclipse Public License 2.0 &#10;which is available at https://www.eclipse.org/legal/epl-2.0/ &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2025-05-23">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::utils::sequence::verteiler::LinksRechts">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="Rechtslauf" Type="STRING" InitialValue="STRING#'Rechtslauf'"/>
+		<VarDeclaration Name="Linkslauf" Type="STRING" InitialValue="STRING#'Linkslauf'"/>
+		<VarDeclaration Name="Linkslauf_Pause" Type="STRING" InitialValue="STRING#'Linkslauf_Pause'"/>
+		<VarDeclaration Name="Rechtslauf_Pause" Type="STRING" InitialValue="STRING#'Rechtslauf_Pause'"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE logiBUS::utils::sequence::verteiler::LinksRechts;
+
+GLOBALCONSTANTS STATES
+	VAR_GLOBAL CONSTANT
+		Rechtslauf : STRING := STRING#'Rechtslauf';
+		Linkslauf : STRING := STRING#'Linkslauf';
+		Linkslauf_Pause : STRING := STRING#'Linkslauf_Pause';
+		Rechtslauf_Pause : STRING := STRING#'Rechtslauf_Pause';
+	END_VAR
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</GlobalConstants>

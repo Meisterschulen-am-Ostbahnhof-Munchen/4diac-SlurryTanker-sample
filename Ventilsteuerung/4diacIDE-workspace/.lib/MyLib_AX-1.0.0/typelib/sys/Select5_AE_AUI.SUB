@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Select5_AE_AUI" Comment="5 AE-Sockets (je 1 Trigger, z.B. von AE_AX_TO_AE_SPLIT.IN) -&gt; AUI_MUX_5 liefert&#10;den Index (0-4) des zuletzt gefeuerten Sockets auf Plug K. Buendelt AUI_MUX_5 +&#10;5x AE_E_TO_EVENT (Adapter-zu-Event-Entpacker) in einen wiederverwendbaren&#10;Baustein.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-12" Remarks="initial implementation - AUI_MUX_5 + 5x AE_E_TO_EVENT gekapselt, fuer die exklusive TECU-Geschwindigkeitsquellen-Auswahl (5x AE_AX_TO_AE_SPLIT.IN als Quelle).">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<Plugs>
+			<AdapterDeclaration Name="K" Type="adapter::types::unidirectional::AUI" Comment="Index (0-4) des zuletzt gefeuerten Sockets"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="EI1" Type="adapter::types::unidirectional::AE" Comment="Trigger 1 (Index 0)"/>
+			<AdapterDeclaration Name="EI2" Type="adapter::types::unidirectional::AE" Comment="Trigger 2 (Index 1)"/>
+			<AdapterDeclaration Name="EI3" Type="adapter::types::unidirectional::AE" Comment="Trigger 3 (Index 2)"/>
+			<AdapterDeclaration Name="EI4" Type="adapter::types::unidirectional::AE" Comment="Trigger 4 (Index 3)"/>
+			<AdapterDeclaration Name="EI5" Type="adapter::types::unidirectional::AE" Comment="Trigger 5 (Index 4)"/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="AUI_MUX_5" Type="adapter::events::unidirectional::AUI_MUX_5" x="3200" y="0">
+		</FB>
+		<FB Name="AE_E_TO_EVENT_1" Type="adapter::conversion::unidirectional::AE_E_TO_EVENT" x="0" y="-300">
+		</FB>
+		<FB Name="AE_E_TO_EVENT_2" Type="adapter::conversion::unidirectional::AE_E_TO_EVENT" x="0" y="200">
+		</FB>
+		<FB Name="AE_E_TO_EVENT_3" Type="adapter::conversion::unidirectional::AE_E_TO_EVENT" x="0" y="800">
+		</FB>
+		<FB Name="AE_E_TO_EVENT_4" Type="adapter::conversion::unidirectional::AE_E_TO_EVENT" x="0" y="1300">
+		</FB>
+		<FB Name="AE_E_TO_EVENT_5" Type="adapter::conversion::unidirectional::AE_E_TO_EVENT" x="0" y="1900">
+		</FB>
+		<EventConnections>
+			<Connection Source="AE_E_TO_EVENT_1.CNF" Destination="AUI_MUX_5.EI1" dx1="1133.33"/>
+			<Connection Source="AE_E_TO_EVENT_2.CNF" Destination="AUI_MUX_5.EI2" dx1="1133.33"/>
+			<Connection Source="AE_E_TO_EVENT_3.CNF" Destination="AUI_MUX_5.EI3" dx1="1100"/>
+			<Connection Source="AE_E_TO_EVENT_4.CNF" Destination="AUI_MUX_5.EI4" dx1="1133.33"/>
+			<Connection Source="AE_E_TO_EVENT_5.CNF" Destination="AUI_MUX_5.EI5" dx1="1166.67"/>
+		</EventConnections>
+		<AdapterConnections>
+			<Connection Source="EI1" Destination="AE_E_TO_EVENT_1.AE_IN" dx1="1273.33"/>
+			<Connection Source="EI2" Destination="AE_E_TO_EVENT_2.AE_IN" dx1="1240"/>
+			<Connection Source="EI3" Destination="AE_E_TO_EVENT_3.AE_IN" dx1="1206.67"/>
+			<Connection Source="EI4" Destination="AE_E_TO_EVENT_4.AE_IN" dx1="1173.33"/>
+			<Connection Source="EI5" Destination="AE_E_TO_EVENT_5.AE_IN" dx1="1140"/>
+			<Connection Source="AUI_MUX_5.K" Destination="K" dx1="613.33"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

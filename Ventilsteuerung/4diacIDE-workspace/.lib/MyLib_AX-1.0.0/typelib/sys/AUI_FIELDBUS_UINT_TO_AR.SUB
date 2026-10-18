@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="AUI_FIELDBUS_UINT_TO_AR" Comment="AUI-Rohwert (TECU UINT) -&gt; AR, NOT_AVAILABLE/ERROR_INDI-gefiltert&#10;(VALID_SIGNAL_W/ERROR_INDI_W/NOT_AVAILABLE_W, FIELDBUS_SIGNAL.gcf), unskaliert&#10;(SCALE=1.0/OFFSET=0 fest).">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-16" Remarks="Nach MyLib_AX-1.0.0::sys verschoben (Franz) - generischer Baustein, gehoert nicht in den TECU-spezifischen Ordner.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-16" Remarks="Herausgeloest (Franz: 'AUI_FIELDBUS_UINT_TO_SIGNAL_SCALED mit SCALE 1 und OFFSET 0 kann auch eine SUB sein') - in TECU_RPTO/TECU_FPTO/TECU_COGSOG/TECU_GBSD/TECU_WBSD/TECU_VDS/TECU_FHS/TECU_RHS wurde SCALE=1.0/OFFSET=0 bisher jedes Mal einzeln parametriert.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<Sockets>
+			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AUI" Comment="TECU-Rohwert"/>
+		</Sockets>
+		<Plugs>
+			<AdapterDeclaration Name="OUT" Type="adapter::types::unidirectional::AR" Comment="0.0 bei NOT_AVAILABLE/ERROR_INDI, sonst IN unskaliert"/>
+		</Plugs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="SCALE_1" Type="logiBUS::signalprocessing::fieldbus::AUI_FIELDBUS_UINT_TO_SIGNAL_SCALED" x="600" y="0">
+			<Parameter Name="SCALE" Value="1.0"/>
+			<Parameter Name="OFFSET" Value="0"/>
+		</FB>
+		<AdapterConnections>
+			<Connection Source="IN" Destination="SCALE_1.IN" dx1="600"/>
+			<Connection Source="SCALE_1.OUT" Destination="OUT" dx1="600"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

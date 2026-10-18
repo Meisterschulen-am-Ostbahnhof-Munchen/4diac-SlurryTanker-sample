@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Ramp6Buttons" Comment="Subapplication Type">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2026-08-29">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::io::Button::ButtonActivationCode::BT_PRESSED_LATCHED"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+			<SubAppEvent Name="IND_SWITCH" Type="Event" Comment="Kanal-Ein/Aus-Taste gedrueckt (togglet Enable-Zustand)">
+			</SubAppEvent>
+			<SubAppEvent Name="IND_ZERO" Type="Event" Comment="Taste &apos;0&apos; gedrueckt (RampLimitFS.ZERO)">
+			</SubAppEvent>
+			<SubAppEvent Name="IND_UP_SLOW" Type="Event" Comment="Taste &apos;+&apos; gedrueckt (RampLimitFS.UP_SLOW, ~1%)">
+			</SubAppEvent>
+			<SubAppEvent Name="IND_UP_FAST" Type="Event" Comment="Taste &apos;++&apos; gedrueckt (RampLimitFS.UP_FAST, ~10%)">
+			</SubAppEvent>
+			<SubAppEvent Name="IND_DOWN_SLOW" Type="Event" Comment="Taste &apos;-&apos; gedrueckt (RampLimitFS.DOWN_SLOW, ~1%)">
+			</SubAppEvent>
+			<SubAppEvent Name="IND_DOWN_FAST" Type="Event" Comment="Taste &apos;--&apos; gedrueckt (RampLimitFS.DOWN_FAST, ~10%)">
+			</SubAppEvent>
+			<SubAppEvent Name="IND_FULL" Type="Event" Comment="Taste &apos;F&apos; gedrueckt (RampLimitFS.FULL, 100%)">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="u16ObjId_SWITCH" Type="UINT"/>
+			<VarDeclaration Name="u16ObjId_ZERO" Type="UINT"/>
+			<VarDeclaration Name="u16ObjId_UP_SLOW" Type="UINT"/>
+			<VarDeclaration Name="u16ObjId_UP_FAST" Type="UINT"/>
+			<VarDeclaration Name="u16ObjId_DOWN_SLOW" Type="UINT"/>
+			<VarDeclaration Name="u16ObjId_DOWN_FAST" Type="UINT"/>
+			<VarDeclaration Name="u16ObjId_FULL" Type="UINT"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="Button_SWITCH" Type="isobus::UT::io::Button::Button_IE" x="0" y="0">
+			<Parameter Name="InputEvent" Value="BT_PRESSED_LATCHED"/>
+		</FB>
+		<FB Name="Button_ZERO" Type="isobus::UT::io::Button::Button_IE" x="0" y="1000">
+			<Parameter Name="InputEvent" Value="BT_PRESSED_LATCHED"/>
+		</FB>
+		<FB Name="Button_UP_SLOW" Type="isobus::UT::io::Button::Button_IE" x="0" y="2000">
+			<Parameter Name="InputEvent" Value="BT_PRESSED_LATCHED"/>
+		</FB>
+		<FB Name="Button_UP_FAST" Type="isobus::UT::io::Button::Button_IE" x="0" y="3000">
+			<Parameter Name="InputEvent" Value="BT_PRESSED_LATCHED"/>
+		</FB>
+		<FB Name="Button_DOWN_SLOW" Type="isobus::UT::io::Button::Button_IE" x="0" y="4000">
+			<Parameter Name="InputEvent" Value="BT_PRESSED_LATCHED"/>
+		</FB>
+		<FB Name="Button_DOWN_FAST" Type="isobus::UT::io::Button::Button_IE" x="0" y="5000">
+			<Parameter Name="InputEvent" Value="BT_PRESSED_LATCHED"/>
+		</FB>
+		<FB Name="Button_FULL" Type="isobus::UT::io::Button::Button_IE" x="0" y="6000">
+			<Parameter Name="InputEvent" Value="BT_PRESSED_LATCHED"/>
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_7" x="4800" y="500">
+		</FB>
+		<EventConnections>
+			<Connection Source="Button_SWITCH.IND" Destination="IND_SWITCH" dx1="1760"/>
+			<Connection Source="Button_ZERO.IND" Destination="IND_ZERO" dx1="1793.33"/>
+			<Connection Source="Button_UP_SLOW.IND" Destination="IND_UP_SLOW" dx1="1826.67"/>
+			<Connection Source="Button_UP_FAST.IND" Destination="IND_UP_FAST" dx1="1860"/>
+			<Connection Source="Button_DOWN_SLOW.IND" Destination="IND_DOWN_SLOW" dx1="1893.33"/>
+			<Connection Source="Button_DOWN_FAST.IND" Destination="IND_DOWN_FAST" dx1="1926.67"/>
+			<Connection Source="Button_FULL.IND" Destination="IND_FULL" dx1="1960"/>
+			<Connection Source="INIT" Destination="Button_SWITCH.INIT" dx1="80" dx2="80" dy="-113.33"/>
+			<Connection Source="Button_SWITCH.INITO" Destination="Button_ZERO.INIT" dx1="80" dx2="80" dy="500"/>
+			<Connection Source="Button_ZERO.INITO" Destination="Button_UP_SLOW.INIT" dx1="80" dx2="80" dy="500"/>
+			<Connection Source="Button_UP_SLOW.INITO" Destination="Button_UP_FAST.INIT" dx1="80" dx2="80" dy="500"/>
+			<Connection Source="Button_UP_FAST.INITO" Destination="Button_DOWN_SLOW.INIT" dx1="80" dx2="80" dy="500"/>
+			<Connection Source="Button_DOWN_SLOW.INITO" Destination="Button_DOWN_FAST.INIT" dx1="80" dx2="80" dy="500"/>
+			<Connection Source="Button_DOWN_FAST.INITO" Destination="Button_FULL.INIT" dx1="80" dx2="80" dy="500"/>
+			<Connection Source="Button_FULL.INITO" Destination="INITO" dx1="3206.67"/>
+			<Connection Source="Button_FULL.INITO" Destination="AND_QO.REQ" dx1="1406.67"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="u16ObjId_SWITCH" Destination="Button_SWITCH.u16ObjId" dx1="973.33"/>
+			<Connection Source="u16ObjId_ZERO" Destination="Button_ZERO.u16ObjId" dx1="940"/>
+			<Connection Source="u16ObjId_UP_SLOW" Destination="Button_UP_SLOW.u16ObjId" dx1="906.67"/>
+			<Connection Source="u16ObjId_UP_FAST" Destination="Button_UP_FAST.u16ObjId" dx1="873.33"/>
+			<Connection Source="u16ObjId_DOWN_SLOW" Destination="Button_DOWN_SLOW.u16ObjId" dx1="840"/>
+			<Connection Source="u16ObjId_DOWN_FAST" Destination="Button_DOWN_FAST.u16ObjId" dx1="806.67"/>
+			<Connection Source="u16ObjId_FULL" Destination="Button_FULL.u16ObjId" dx1="773.33"/>
+			<Connection Source="QI" Destination="Button_SWITCH.QI" dx1="80" dx2="80" dy="40"/>
+			<Connection Source="QI" Destination="Button_ZERO.QI" dx1="80" dx2="80" dy="540"/>
+			<Connection Source="QI" Destination="Button_UP_SLOW.QI" dx1="80" dx2="80" dy="1040"/>
+			<Connection Source="QI" Destination="Button_UP_FAST.QI" dx1="80" dx2="80" dy="1540"/>
+			<Connection Source="QI" Destination="Button_DOWN_SLOW.QI" dx1="80" dx2="80" dy="2040"/>
+			<Connection Source="QI" Destination="Button_DOWN_FAST.QI" dx1="80" dx2="80" dy="2540"/>
+			<Connection Source="QI" Destination="Button_FULL.QI" dx1="80" dx2="80" dy="3040"/>
+			<Connection Source="Button_SWITCH.QO" Destination="AND_QO.IN1" dx1="1406.67"/>
+			<Connection Source="Button_ZERO.QO" Destination="AND_QO.IN2" dx1="1406.67"/>
+			<Connection Source="Button_UP_SLOW.QO" Destination="AND_QO.IN3" dx1="1406.67"/>
+			<Connection Source="Button_UP_FAST.QO" Destination="AND_QO.IN4" dx1="1406.67"/>
+			<Connection Source="Button_DOWN_SLOW.QO" Destination="AND_QO.IN5" dx1="1406.67"/>
+			<Connection Source="Button_DOWN_FAST.QO" Destination="AND_QO.IN6" dx1="1406.67"/>
+			<Connection Source="Button_FULL.QO" Destination="AND_QO.IN7" dx1="1406.67"/>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="1666.67"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

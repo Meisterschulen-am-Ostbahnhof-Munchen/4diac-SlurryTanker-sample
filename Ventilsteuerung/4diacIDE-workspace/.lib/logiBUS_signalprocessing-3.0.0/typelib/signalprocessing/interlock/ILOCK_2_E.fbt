@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="ILOCK_2_E" Comment="Event-driven bistable and Toggle with Dual Interlock">
+	<Identification Standard="61499-1 Annex A" Description="Copyright (c) 2017, 2024 fortiss GmbH, HR Agrartechnik GmbH&#10; &#10;This program and the accompanying materials are made&#10;available under the terms of the Eclipse Public License 2.0&#10;which is available at https://www.eclipse.org/legal/epl-2.0/&#10;&#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Version="3.0" Author="Patrick Aigner" Date="2025-04-14" Remarks="changed package">
+	</VersionInfo>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.1" Author="Franz Höpfinger" Date="2024-08-27" Remarks="Copy E_SR and make this FB">
+	</VersionInfo>
+	<VersionInfo Organization="fortiss GmbH" Version="1.0" Author="Alois Zoitl" Date="2017-09-22" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::signalprocessing::interlock">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="SET1" Type="Event" Comment="Set output OUT1">
+			</Event>
+			<Event Name="CLK1" Type="Event" Comment="Clock for triggering a output toggle on OUT1">
+			</Event>
+			<Event Name="SET2" Type="Event" Comment="Set output OUT2">
+			</Event>
+			<Event Name="CLK2" Type="Event" Comment="Clock for triggering a output toggle on OUT2">
+			</Event>
+			<Event Name="R" Type="Event" Comment="Reset all outputs">
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="EO" Type="Event" Comment="Output has changed">
+				<With Var="OUT1"/>
+				<With Var="OUT2"/>
+			</Event>
+		</EventOutputs>
+		<OutputVars>
+			<VarDeclaration Name="OUT1" Type="BOOL" Comment="value of flip flop"/>
+			<VarDeclaration Name="OUT2" Type="BOOL" Comment="value of flip flop"/>
+		</OutputVars>
+	</InterfaceList>
+	<BasicFB>
+		<InternalVars>
+			<VarDeclaration Name="EDGE1" Type="BOOL" InitialValue="FALSE"/>
+			<VarDeclaration Name="EDGE2" Type="BOOL" InitialValue="FALSE"/>
+		</InternalVars>
+		<ECC>
+			<ECState Name="STOP" Comment="Initial State" x="500" y="385">
+			</ECState>
+			<ECState Name="TOGGLE1" x="2640" y="1280">
+				<ECAction Algorithm="TOGGLE1" Output="EO"/>
+			</ECState>
+			<ECState Name="RESET" x="2480" y="1920">
+				<ECAction Algorithm="RESET" Output="EO"/>
+			</ECState>
+			<ECState Name="SET1" x="2720" y="720">
+				<ECAction Algorithm="SET1" Output="EO"/>
+			</ECState>
+			<ECState Name="SET2" x="2960" y="160">
+				<ECAction Algorithm="SET2" Output="EO"/>
+			</ECState>
+			<ECState Name="TOGGLE2" x="2960" y="-240">
+				<ECAction Algorithm="TOGGLE2" Output="EO"/>
+			</ECState>
+			<ECTransition Source="STOP" Destination="SET1" Condition="SET1" x="1140" y="620"/>
+			<ECTransition Source="STOP" Destination="SET2" Condition="SET2" x="1946.67" y="53.33"/>
+			<ECTransition Source="STOP" Destination="TOGGLE1" Condition="CLK1" x="1906.67" y="820"/>
+			<ECTransition Source="STOP" Destination="TOGGLE2" Condition="CLK2" x="1653.33" y="53.33"/>
+			<ECTransition Source="STOP" Destination="RESET" Condition="R" x="1800" y="1506.67"/>
+			<ECTransition Source="TOGGLE1" Destination="STOP" Condition="1" x="1866.67" y="1040"/>
+			<ECTransition Source="SET1" Destination="STOP" Condition="1" x="1140" y="980"/>
+			<ECTransition Source="SET2" Destination="STOP" Condition="1" x="1980" y="273.33"/>
+			<ECTransition Source="TOGGLE2" Destination="STOP" Condition="1" x="1353.33" y="73.33"/>
+			<ECTransition Source="RESET" Destination="STOP" Condition="1" x="1606.67" y="1813.33"/>
+		</ECC>
+		<Algorithm Name="SET1">
+			<ST><![CDATA[
+OUT1 := TRUE;
+OUT2 := FALSE;
+EDGE1 := FALSE;
+EDGE2 := FALSE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="SET2">
+			<ST><![CDATA[
+OUT1 := FALSE;
+OUT2 := TRUE;
+EDGE1 := FALSE;
+EDGE2 := FALSE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="TOGGLE1">
+			<ST><![CDATA[
+IF NOT EDGE1 THEN
+	OUT1 := NOT OUT1;
+END_IF;
+OUT2 := FALSE;
+EDGE1 := TRUE;
+EDGE2 := FALSE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="TOGGLE2">
+			<ST><![CDATA[
+OUT1 := FALSE;
+IF NOT EDGE2 THEN
+	OUT2 := NOT OUT2;
+END_IF;
+EDGE1 := FALSE;
+EDGE2 := TRUE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="RESET">
+			<ST><![CDATA[
+OUT1 := FALSE;
+OUT2 := FALSE;
+EDGE1 := FALSE;
+EDGE2 := FALSE;
+]]></ST>
+		</Algorithm>
+	</BasicFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

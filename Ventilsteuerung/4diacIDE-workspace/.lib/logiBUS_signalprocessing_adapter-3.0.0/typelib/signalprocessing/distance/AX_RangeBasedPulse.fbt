@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="AX_RangeBasedPulse" Comment="Generates a pulse on AX adapter based on distance traveled (Adapter Version)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-04-19" Remarks="initial API and implementation">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::signalprocessing::distance">
+	</CompilerInfo>
+	<InterfaceList>
+		<InputVars>
+			<VarDeclaration Name="DIST_HIGH" Type="UDINT" Comment="Distance for HIGH pulse (mm)" InitialValue="5000"/>
+			<VarDeclaration Name="DIST_LOW" Type="UDINT" Comment="Distance for LOW pulse (mm)" InitialValue="5000"/>
+		</InputVars>
+		<Plugs>
+			<AdapterDeclaration Name="OUT" Type="adapter::types::unidirectional::AX" Comment="Pulse Output Adapter"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="DIST_IN" Type="adapter::types::unidirectional::AUDI" Comment="Input Distance Adapter"/>
+		</Sockets>
+	</InterfaceList>
+	<BasicFB>
+		<InternalVars>
+			<VarDeclaration Name="LastDist" Type="UDINT" Comment="Last distance value when state changed"/>
+			<VarDeclaration Name="FirstRun" Type="BOOL" Comment="Initial run flag" InitialValue="TRUE"/>
+			<VarDeclaration Name="LastState" Type="BOOL" Comment="Last state of Q"/>
+		</InternalVars>
+		<ECC>
+			<ECState Name="START" Comment="Initial State" x="550" y="425">
+			</ECState>
+			<ECState Name="INIT" Comment="Initialize base distance" x="1500" y="165">
+				<ECAction Algorithm="INIT"/>
+			</ECState>
+			<ECState Name="CHECK" Comment="Evaluate distance" x="1500" y="700">
+				<ECAction Algorithm="CHECK"/>
+			</ECState>
+			<ECState Name="EMIT" Comment="Fire state change" x="2500" y="700">
+				<ECAction Algorithm="SAVE" Output="OUT.E1"/>
+			</ECState>
+			<ECTransition Source="START" Destination="INIT" Condition="DIST_IN.E1[FirstRun]" x="1000" y="200"/>
+			<ECTransition Source="INIT" Destination="CHECK" Condition="1" x="1500" y="400"/>
+			<ECTransition Source="START" Destination="CHECK" Condition="DIST_IN.E1[NOT FirstRun]" x="1000" y="600"/>
+			<ECTransition Source="CHECK" Destination="EMIT" Condition="[OUT.D1 &lt;&gt; LastState]" x="2000" y="700"/>
+			<ECTransition Source="CHECK" Destination="START" Condition="[OUT.D1 = LastState]" x="1000" y="800"/>
+			<ECTransition Source="EMIT" Destination="START" Condition="1" x="2000" y="400"/>
+		</ECC>
+		<Algorithm Name="INIT">
+			<ST><![CDATA[
+LastDist := DIST_IN.D1;
+OUT.D1 := BOOL#FALSE;
+LastState := BOOL#FALSE;
+FirstRun := BOOL#FALSE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="CHECK">
+			<ST><![CDATA[
+IF (LastState = BOOL#FALSE) THEN
+	IF (DIST_IN.D1 >= (LastDist + DIST_LOW)) THEN
+		OUT.D1 := BOOL#TRUE;
+		LastDist := DIST_IN.D1;
+	END_IF;
+ELSE
+	IF (DIST_IN.D1 >= (LastDist + DIST_HIGH)) THEN
+		OUT.D1 := BOOL#FALSE;
+		LastDist := DIST_IN.D1;
+	END_IF;
+END_IF;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="SAVE">
+			<ST><![CDATA[
+LastState := OUT.D1;
+]]></ST>
+		</Algorithm>
+	</BasicFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

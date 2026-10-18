@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="I_VDS" Comment="Vehicle Direction/Speed VDS">
+	<Identification Standard="ISO 11783-7" Classification="PGN 65256" Function="Vehicle Direction/Speed VDS" Description="Copyright (c) 2024 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0&#10;&#10;See https://copperhilltech.com/sae-j1939-gps-module/ for details&#10;&#10;https://docs.ms-muc-docs.de/projects/isobus-other-docs/de/latest/PGN/PGN_65256.html">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2024-07-09">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::tecu">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+				<With Var="QI"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+			</Event>
+			<Event Name="IND" Type="Event" Comment="Indication from Resource - feuert bei jedem Zyklus ohne aktiven Timeout und publiziert dabei auch den Reset von Q_timeout auf false.">
+				<With Var="QO"/>
+				<With Var="timestamp_data"/>
+				<With Var="CompassBearing"/>
+				<With Var="NavigationBasedVehicleSpeed"/>
+				<With Var="Pitch"/>
+				<With Var="STATUS"/>
+				<With Var="Q_timeout"/>
+				<With Var="Altitude"/>
+			</Event>
+			<Event Name="TIMEOUT" Type="Event" Comment="Feuert ausschliesslich beim tatsaechlichen Eintreten eines Timeouts (Entry-Trigger). Das Zuruecksetzen von Q_timeout auf false wird NICHT hier, sondern ueber IND gemeldet.">
+				<With Var="timestamp_timeout"/>
+				<With Var="STATUS"/>
+				<With Var="Q_timeout"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
+			<VarDeclaration Name="STATUS" Type="STRING"/>
+			<VarDeclaration Name="Q_timeout" Type="BOOL"/>
+			<VarDeclaration Name="timestamp_timeout" Type="DINT"/>
+			<VarDeclaration Name="timestamp_data" Type="DINT"/>
+			<VarDeclaration Name="CompassBearing" Type="UINT" Comment="Present compass bearing of vehicle." InitialValue="UINT#16#FFFF">
+				<Attribute Name="SPN" Type="INT" Value="165"/>
+				<Attribute Name="SP_Name" Type="STRING" Value="'Compass Bearing'"/>
+				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'1'"/>
+				<Attribute Name="SP_Length" Type="INT" Value="2" Comment="2 bytes"/>
+				<Attribute Name="Scaling" Type="STRING" Value="'1/128 deg per bit'"/>
+				<Attribute Name="Offset" Type="INT" Value=""/>
+				<Attribute Name="Link" Type="STRING" Value="'https://docs.ms-muc-docs.de/projects/isobus-other-docs/de/latest/PGN/PGN_65256.html#spn-165-compassbearing-kompassrichtung'"/>
+			</VarDeclaration>
+			<VarDeclaration Name="NavigationBasedVehicleSpeed" Type="UINT" Comment="Speed of the vehicle as calculated from a device such as a Global Positioning System (GPS)." InitialValue="UINT#16#FFFF">
+				<Attribute Name="SPN" Type="INT" Value="517"/>
+				<Attribute Name="SP_Name" Type="STRING" Value="'Navigation-Based Vehicle Speed'"/>
+				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'2'"/>
+				<Attribute Name="SP_Length" Type="INT" Value="2" Comment="2 bytes"/>
+				<Attribute Name="Scaling" Type="STRING" Value="'1/256 km/h per bit'"/>
+				<Attribute Name="Offset" Type="INT" Value=""/>
+				<Attribute Name="Link" Type="STRING" Value="'https://docs.ms-muc-docs.de/projects/isobus-other-docs/de/latest/PGN/PGN_65256.html#spn-517-navigationbasedvehiclespeed-fahrzeuggeschwindigkeit'"/>
+			</VarDeclaration>
+			<VarDeclaration Name="Pitch" Type="UINT" Comment="Pitch (rotation about the y-axis) of the vehicle as calculated by the navigation device(s)." InitialValue="UINT#16#FFFF">
+				<Attribute Name="SPN" Type="INT" Value="583"/>
+				<Attribute Name="SP_Name" Type="STRING" Value="'Pitch'"/>
+				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'3'"/>
+				<Attribute Name="SP_Length" Type="INT" Value="2" Comment="2 bytes"/>
+				<Attribute Name="Scaling" Type="STRING" Value="'Not used; Always set to 0xFFFF'"/>
+				<Attribute Name="Offset" Type="INT" Value=""/>
+				<Attribute Name="Link" Type="STRING" Value="'https://docs.ms-muc-docs.de/projects/isobus-other-docs/de/latest/PGN/PGN_65256.html#spn-583-pitch-neigungswinkel'"/>
+			</VarDeclaration>
+			<VarDeclaration Name="Altitude" Type="UINT" Comment="Altitude of the vehicle referenced to sea level at standard atmospheric pressure and temperature." InitialValue="UINT#16#FFFF">
+				<Attribute Name="SPN" Type="INT" Value="580"/>
+				<Attribute Name="SP_Name" Type="STRING" Value="'Altitude'"/>
+				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'4'"/>
+				<Attribute Name="SP_Length" Type="INT" Value="2" Comment="2 bytes"/>
+				<Attribute Name="Scaling" Type="STRING" Value="'Not used; Always set to 0xFFFF'"/>
+				<Attribute Name="Offset" Type="INT" Value=""/>
+				<Attribute Name="Link" Type="STRING" Value="'https://docs.ms-muc-docs.de/projects/isobus-other-docs/de/latest/PGN/PGN_65256.html#spn-580-altitude-hohe-uber-dem-meeresspiegel'"/>
+			</VarDeclaration>
+		</OutputVars>
+	</InterfaceList>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<p>Vehicle Direction/Speed VDS</p>
+
+<p>&nbsp;</p>
+
+<p><strong>TIMEOUT / IND Vertrag:</strong> TIMEOUT feuert ausschliesslich beim tatsaechlichen Eintreten eines Timeouts (Q_timeout wird true). Das Zuruecksetzen von Q_timeout auf false (Timeout vorbei) wird bewusst NICHT nochmal separat ueber TIMEOUT gemeldet, sondern kommt ueber IND - das feuert bei jedem Zyklus ohne aktiven Timeout und publiziert Q_timeout mit. Nachgeschaltete Bausteine, die auf das Ende eines Timeouts reagieren muessen, werten dafuer IND mit Q_timeout==false aus, nicht ein zweites TIMEOUT-Event.</p>
+]]></Attribute>
+</FBType>

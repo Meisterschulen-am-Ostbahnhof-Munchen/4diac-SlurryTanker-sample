@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="AX_SoftkeyToggle_RS_TO_AX_BG_PUBLISH" Comment="Wraps AX_SoftkeyToggle_RS_TO_AX (Toggle/Reset-Zustand: SoftKey ODER AUX ODER&#10;lokale Web-/Dashboard-Methode ODER IO-Diag-Testbutton fuer den Toggle, SoftKey&#10;ODER AUX ODER Methode fuer den Reset) und treibt daraus Hintergrundfarbe&#10;(SoftKey+AUX aus 1 GreenWhiteBackground3_AX) + lokalen State-Publish - OHNE&#10;physischen Ausgang (Gegenstueck zu AX_SoftkeyToggle_RS_TO_QXA_BG, das&#10;zusaetzlich noch 1 logiBUS_QXA treibt). Fuer Faelle, in denen der Toggle-Zustand&#10;vom Aufrufer noch weiterverarbeitet wird, bevor er auf einen oder mehrere&#10;physische Ausgaenge geht (z.B. Baender-Sequenzierung: Taste 5 toggelt, danach&#10;erst AX_TON/AX_TOF pro Kanal). Toggle-Zustand bleibt zusaetzlich als Plug OUT&#10;verfuegbar.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.3" Author="Franz Höpfinger" Date="2026-09-16" Remarks="Event-Input RESET in AUS umbenannt (Franz: 'der Eingang soll AUS heissen'), Durchreiche an ToggleState.AUS (AX_SoftkeyToggle_RS_TO_AX v1.4).">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.2" Author="Franz Höpfinger" Date="2026-09-16" Remarks="Event-Input RESET durchgereicht an ToggleState.RESET (AX_SoftkeyToggle_RS_TO_AX v1.3) - rein additiv, fuer einen zentral gelesenen gemeinsamen SoftKey.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-15" Remarks="FORCE_OFF Socket (AX) ergaenzt - reiner Durchreich-Socket an ToggleState.FORCE_OFF (AX_SoftkeyToggle_RS_TO_AX v1.2). Fuer eine uebergeordnete Sicherheitsabschaltung (z.B. Zapfwelle_Ueberwachung, KVE14 Zeile 33) - rein additiv, bestehende Instanzen muessen den neuen Socket verdrahten (z.B. auf einen festen FALSE-Literal, wenn nicht gebraucht).">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-15" Remarks="initial implementation - aus Baender_EinAus.SUB herausgeloest (ToggleState/AX_SPLIT_4-Anteil fuer Background+Publish/GreenWhiteBackground_AX/PUBLISH_STATE, Franz: 'GreenWhiteBackground3_AX AX_SoftkeyToggle_RS_TO_AX koennen zusammen in eine SUB, PUBLISH_STATE kann da auch rein'). TOF_IgelElevator/TON_Querband-Staffelung bleibt beim Aufrufer, da die 2 zeitversetzten Ausgaenge ausserhalb dieser SUB liegen.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+			<SubAppEvent Name="AUS" Type="Event" Comment="Reset hart auf AUS, von aussen als Event (z.B. 1 zentral gelesener gemeinsamer SoftKey) - Durchreiche an ToggleState.AUS. Unverdrahtet lassen, wenn nicht gebraucht.">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID Softkey Ein/Aus (Toggle), traegt auch die Hintergrundfarbe" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObjIdA" Type="UINT" Comment="Object ID AuxFunction2 (Joystick) fuer den Toggle - gleichberechtigt zum SoftKey, zeigt Hintergrundfarbe am Aux-Handle mit" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObjIdB" Type="UINT" Comment="Object ID IO-Diag-Testbutton (Ausgaenge-Diagnoseseite) - toggelt gleichberechtigt mit (keine eigene Hintergrundfarbe, GreenWhiteBackground3_AX kennt nur SoftKey+AUX)" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObjId_RESET" Type="UINT" Comment="Object ID Softkey &apos;Alles Aus&apos; (Reset, hart auf AUS) - z.B. SoftKey_AUS" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObjIdA_RESET" Type="UINT" Comment="Object ID AuxFunction2 (Joystick) fuer den Reset - gleichberechtigt zum Softkey &apos;Alles Aus&apos;" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="ID_TOGGLE_METHOD" Type="WSTRING" Comment="Lokale Methodenadresse (ACTION=CREATE_METHOD) fuer den argumentlosen Toggle-Trigger - wird von Web-Client (vt-ui-mirror) UND direkt vom OPC-Dashboard aufgerufen"/>
+			<VarDeclaration Name="ID_RESET_METHOD" Type="WSTRING" Comment="Lokale Methodenadresse (ACTION=CREATE_METHOD) fuer den argumentlosen Reset-Trigger (hart auf AUS) - wird von Web-Client UND OPC-Dashboard aufgerufen"/>
+			<VarDeclaration Name="ID_STATE_WRITE" Type="WSTRING" Comment="Lokale Publish-Adresse (ACTION=WRITE) fuer den tatsaechlichen Toggle-Zustand (AX_T_FF_SR.Q) - wird von Web-Client/Dashboard remote abonniert"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="OUT" Type="adapter::types::unidirectional::AX" Comment="Toggle-Zustand (AX_T_FF_SR.Q) - fuer Weiterverarbeitung beim Aufrufer (z.B. AX_TON/AX_TOF-Staffelung), Hintergrund+Publish sind hier bereits erledigt"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="FORCE_OFF" Type="adapter::types::unidirectional::AX" Comment="Optional: steigende Flanke resettet hart auf AUS (z.B. Sicherheitsabschaltung) - reiner Durchreich-Socket an ToggleState.FORCE_OFF. Unverdrahtet lassen (fester FALSE-Literal), wenn nicht gebraucht."/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<SubApp Name="ToggleState" Type="MyLib::sys::AX_SoftkeyToggle_RS_TO_AX" x="-2400" y="-1400">
+		</SubApp>
+		<FB Name="AX_SPLIT_3" Type="adapter::events::unidirectional::AX_SPLIT_3" x="1300" y="-600">
+		</FB>
+		<SubApp Name="GreenWhiteBackground_AX" Type="MyLib::sys::GreenWhiteBackground3_AX" x="3400" y="-2200">
+		</SubApp>
+		<FB Name="PUBLISH_STATE" Type="adapter::net::AX_PUBLISH_1" x="3500" y="-100">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_3">
+		</FB>
+		<EventConnections>
+			<Connection Source="AUS" Destination="ToggleState.AUS" dx1="600"/>
+			<Connection Source="INIT" Destination="PUBLISH_STATE.INIT"/>
+			<Connection Source="PUBLISH_STATE.INITO" Destination="GreenWhiteBackground_AX.INIT"/>
+			<Connection Source="GreenWhiteBackground_AX.INITO" Destination="ToggleState.INIT"/>
+			<Connection Source="ToggleState.INITO" Destination="INITO"/>
+			<Connection Source="ToggleState.INITO" Destination="AND_QO.REQ"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="u16ObjId" Destination="ToggleState.u16ObjId" dx1="1846.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjIdA" Destination="ToggleState.u16ObjIdA" dx1="1846.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_TOGGLE_METHOD" Destination="ToggleState.ID_TOGGLE_METHOD" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjIdB" Destination="ToggleState.u16ObjIdB" dx1="1846.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId_RESET" Destination="ToggleState.u16ObjId_RESET" dx1="1846.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjIdA_RESET" Destination="ToggleState.u16ObjIdA_RESET" dx1="1846.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_RESET_METHOD" Destination="ToggleState.ID_RESET_METHOD" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId" Destination="GreenWhiteBackground_AX.u16ObjId" dx1="5393.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjIdA" Destination="GreenWhiteBackground_AX.u16ObjIdA" dx1="5393.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_STATE_WRITE" Destination="PUBLISH_STATE.ID" dx1="1280">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="PUBLISH_STATE.QI"/>
+			<Connection Source="QI" Destination="GreenWhiteBackground_AX.QI"/>
+			<Connection Source="PUBLISH_STATE.QO" Destination="AND_QO.IN1"/>
+			<Connection Source="GreenWhiteBackground_AX.QO" Destination="AND_QO.IN2"/>
+			<Connection Source="AND_QO.OUT" Destination="QO"/>
+			<Connection Source="QI" Destination="ToggleState.QI"/>
+			<Connection Source="ToggleState.QO" Destination="AND_QO.IN3"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="ToggleState.OUT" Destination="AX_SPLIT_3.IN" dx1="290"/>
+			<Connection Source="AX_SPLIT_3.OUT1" Destination="OUT" dx1="393.33"/>
+			<Connection Source="AX_SPLIT_3.OUT2" Destination="GreenWhiteBackground_AX.DI1" dx1="600"/>
+			<Connection Source="AX_SPLIT_3.OUT3" Destination="PUBLISH_STATE.IN" dx1="600"/>
+			<Connection Source="FORCE_OFF" Destination="ToggleState.FORCE_OFF" dx1="600"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

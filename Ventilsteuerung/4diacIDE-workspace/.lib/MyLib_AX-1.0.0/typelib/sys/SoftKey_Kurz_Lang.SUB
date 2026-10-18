@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="SoftKey_Kurz_Lang" Comment="Unterscheidet kurzen Tastendruck (Loslassen vor Ablauf PT) von langem&#10;Tastendruck (PT gehalten) auf einem AX-Adapter-Eingang (z.B. Softkey_IXA.IN).&#10;LANG feuert sofort beim Erreichen von PT (nicht erst beim Loslassen); KURZ&#10;feuert beim Loslassen, wenn PT noch nicht erreicht war. PT konfigurierbar&#10;(Parameter, Default 5s).">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="2.0" Author="Franz Höpfinger" Date="2026-09-11" Remarks="PT konfigurierbar gemacht (Parameter statt fest 5s), umbenannt von SoftKey_Kurz_Lang_5s. Race-Bug behoben: PERMIT_KURZ pruefte bisher E_TON.Q im selben Loslass-Event, das E_TON.Q durch denselben IN-Flankenwechsel bereits auf FALSE zuruecksetzt - KURZ waere dadurch IMMER durchgelassen worden, auch nach bereits gefeuertem LANG (Ausfuehrungsreihenfolge zwischen E_TON und F_TRIG_RELEASE auf denselben IN-Event ist nicht garantiert/nicht das Kriterium). Neu: eigener LANG_LATCH (AX_SR), gesetzt durch R_TRIG_LONG (waehrend PT noch gehalten wird, zeitlich klar vor jedem Loslassen), zurueckgesetzt erst beim naechsten Tastendruck-Start (R_TRIG_PRESS) - PERMIT_KURZ prueft jetzt diesen Latch statt E_TON.Q direkt. Ausserdem SPLIT_IN (AX_SPLIT_3) ergaenzt: IN wird auf 3 Sockets (E_TON/R_TRIG_PRESS/F_TRIG_RELEASE) verteilt - ein AX-Socket darf nicht direkt auf mehrere Ziel-Sockets verbunden werden, dafuer gibt es die AX_SPLIT_n-Familie.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-11" Remarks="initial implementation - fuer Achslenkung-Mittelpunkt-Taste (kurz=Anfahren, lang=Speichern), generisch fuer jede Softkey-Kurz/Lang-Unterscheidung">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="KURZ" Type="Event" Comment="Kurzer Druck bestaetigt (Loslassen vor Ablauf PT)"/>
+			<SubAppEvent Name="LANG" Type="Event" Comment="Langer Druck bestaetigt (PT erreicht, feuert sofort - nicht erst beim Loslassen)"/>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="PT" Type="TIME" Comment="Haltezeit fuer 'lang'" InitialValue="T#5s"/>
+		</InputVars>
+		<Sockets>
+			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AX" Comment="Rohzustand der Taste (z.B. Softkey_IXA.IN)"/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="SPLIT_IN" Type="adapter::events::unidirectional::AX_SPLIT_3" x="-8400" y="-1400">
+		</FB>
+		<FB Name="E_TON" Type="adapter::events::unidirectional::timers::AX_TON" x="-6600" y="-1400">
+		</FB>
+		<FB Name="R_TRIG_LONG" Type="adapter::events::unidirectional::AX_R_TRIG" x="-4600" y="-1400">
+		</FB>
+		<FB Name="R_TRIG_PRESS" Type="adapter::events::unidirectional::AX_R_TRIG" x="-4600" y="-2200">
+		</FB>
+		<FB Name="LANG_LATCH" Type="adapter::events::unidirectional::AX_SR" x="-2600" y="-1800">
+		</FB>
+		<FB Name="F_TRIG_RELEASE" Type="adapter::events::unidirectional::AX_F_TRIG" x="-4600" y="-400">
+		</FB>
+		<SubApp Name="PERMIT_KURZ" Type="MyLib::sys::AX_E_PERMIT_INVERT_1" x="-1200" y="-400">
+		</SubApp>
+		<EventConnections>
+			<Connection Source="R_TRIG_LONG.EO" Destination="LANG" dx1="1200"/>
+			<Connection Source="R_TRIG_LONG.EO" Destination="LANG_LATCH.S" dx1="600" dx2="0" dy="400"/>
+			<Connection Source="R_TRIG_PRESS.EO" Destination="LANG_LATCH.R" dx1="600"/>
+			<Connection Source="F_TRIG_RELEASE.EO" Destination="PERMIT_KURZ.EI" dx1="600"/>
+			<Connection Source="PERMIT_KURZ.EO" Destination="KURZ" dx1="1200"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="PT" Destination="E_TON.PT" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="IN" Destination="SPLIT_IN.IN" dx1="600"/>
+			<Connection Source="SPLIT_IN.OUT1" Destination="E_TON.IN" dx1="600"/>
+			<Connection Source="SPLIT_IN.OUT2" Destination="R_TRIG_PRESS.QI" dx1="600" dy="-400"/>
+			<Connection Source="SPLIT_IN.OUT3" Destination="F_TRIG_RELEASE.QI" dx1="600" dy="400"/>
+			<Connection Source="E_TON.Q" Destination="R_TRIG_LONG.QI" dx1="600"/>
+			<Connection Source="LANG_LATCH.Q" Destination="PERMIT_KURZ.PERMIT" dx1="600" dy="800"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>Kurz/Lang-Druck-Unterscheidung (konfigurierbare Haltezeit)</h1>
+
+<p><code>E_TON</code> (<code>AX_TON</code>, <code>PT</code> als Parameter/InputVar konfigurierbar, Default 5s) laeuft solange <code>IN</code> gehalten wird.
+<code>R_TRIG_LONG</code> erkennt die steigende Flanke von <code>E_TON.Q</code> - das ist der Moment,
+in dem <code>PT</code> erreicht ist, waehrend die Taste noch gehalten wird - und feuert <code>LANG</code> sofort,
+ohne auf das Loslassen zu warten. Gleichzeitig setzt <code>R_TRIG_LONG</code> den <code>LANG_LATCH</code> (<code>AX_SR</code>).</p>
+
+<p><code>F_TRIG_RELEASE</code> erkennt die fallende Flanke von <code>IN</code> (Loslassen).
+<code>PERMIT_KURZ</code> (<code>AX_E_PERMIT_INVERT_1</code>) laesst dieses Ereignis nur durch, wenn
+<code>LANG_LATCH.Q</code> zu diesem Zeitpunkt FALSE ist - also wenn <code>LANG</code> in diesem Tastendruck-Zyklus
+noch nicht gefeuert wurde. <code>LANG_LATCH</code> wird beim naechsten Tastendruck-Start (<code>R_TRIG_PRESS</code>)
+wieder zurueckgesetzt.</p>
+
+<p><b>Wichtig (Bugfix ggue. Version 1.0):</b> die Pruefung darf NICHT direkt auf <code>E_TON.Q</code> erfolgen -
+<code>E_TON.Q</code> wird durch denselben <code>IN</code>-Flankenwechsel (Loslassen), der auch <code>F_TRIG_RELEASE</code>
+ausloest, ebenfalls auf FALSE zurueckgesetzt (AX_TON: kein <code>IN</code> -&gt; kein <code>Q</code>). Da beide Ziele
+(<code>E_TON</code> und <code>F_TRIG_RELEASE</code>) vom selben <code>IN</code>-Event gespeist werden, ist die
+Ausfuehrungsreihenfolge zwischen ihnen nicht garantiert - <code>E_TON.Q</code> waere zum Zeitpunkt der Pruefung
+faktisch IMMER schon FALSE, wodurch <code>KURZ</code> auch nach bereits gefeuertem <code>LANG</code> zusaetzlich
+gefeuert haette. Der <code>LANG_LATCH</code> ist von diesem Reset-Timing komplett entkoppelt (gesetzt waehrend des
+Haltens, zurueckgesetzt erst beim naechsten Tastendruck) und macht die Pruefung robust.</p>
+]]></Attribute>
+</SubAppType>

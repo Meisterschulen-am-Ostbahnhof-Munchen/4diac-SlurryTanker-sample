@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="AR_S_TO_ATM" Comment="Wandelt einen AR-Wert (REAL, Sekunden) in einen ATM-Wert (TIME) um - fuer&#10;TIME-Sockets (z.B. FT_PT1_AR.TM), die von einer per VT/Web einstellbaren, in&#10;Sekunden editierten REAL-Groesse (AR2) gespeist werden sollen. T#1s * Sekunden&#10;(adapter::iec61131::arithmetic::AR_MULTIME) - echte IEC-61131-3-TIME-Arithmetik,&#10;analog dem bereits bestehenden Sec_To_Time in INI_OPC_PARAM_ATM.SUB.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-23" Remarks="Korrektur: die bisherige Kette (AR_R_MUL x1000 -&gt; AR_TO_ADI -&gt; ADI_TO_ATM) beruhte auf einer nicht existierenden Funktion iec61131::conversion::F_DINT_TO_TIME (Franz: 'F_DINT_TO_TIME GIBT ES NICHT'). Ersetzt durch AR_MULTIME (T#1s * REAL-Sekunden), bereits real erprobtes Muster aus INI_OPC_PARAM_ATM.SUB. ADI_TO_ATM.fbt geloescht (war erfunden).">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-22" Remarks="initial implementation - fuer die einstellbare PT1-Filterzeit der Puls-Frequenz-Sensoren (logiBUS_PI_Raw_Publish_OPC), Franz: 'Kunde will die Filter Zeit ohnehin Einstellbar haben (die 2S)'.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<Plugs>
+			<AdapterDeclaration Name="OUT" Type="adapter::types::unidirectional::ATM" Comment="IN1, umgerechnet von Sekunden (REAL) auf TIME"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="IN1" Type="adapter::types::unidirectional::AR" Comment="Zeit in Sekunden (REAL)"/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="Sec_To_Time" Type="adapter::iec61131::arithmetic::AR_MULTIME" x="1500" y="0">
+			<Parameter Name="IN1" Value="T#1s"/>
+		</FB>
+		<AdapterConnections>
+			<Connection Source="IN1" Destination="Sec_To_Time.IN2" dx1="500"/>
+			<Connection Source="Sec_To_Time.OUT" Destination="OUT" dx1="500"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

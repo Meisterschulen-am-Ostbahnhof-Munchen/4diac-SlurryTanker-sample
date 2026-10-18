@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="AID_GC" Comment="Graphic context object attribute ids">
+	<Identification Standard="61499-1" Description="Copyright (c) 2023 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-06-20">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::UT::Q::const::AID">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="VP_WIDTH" Type="USINT" Comment="1: AID_GC_VP_WIDTH" InitialValue="USINT#1"/>
+		<VarDeclaration Name="VP_HEIGHT" Type="USINT" Comment="2: AID_GC_VP_HEIGHT" InitialValue="USINT#2"/>
+		<VarDeclaration Name="VP_X" Type="USINT" Comment="3: AID_GC_VP_X" InitialValue="USINT#3"/>
+		<VarDeclaration Name="VP_Y" Type="USINT" Comment="4: AID_GC_VP_Y" InitialValue="USINT#4"/>
+		<VarDeclaration Name="CANVAS_WIDTH" Type="USINT" Comment="5: AID_GC_CANVAS_WIDTH (read-only)" InitialValue="USINT#5"/>
+		<VarDeclaration Name="CANVAS_HEIGHT" Type="USINT" Comment="6: AID_GC_CANVAS_HEIGHT (read-only)" InitialValue="USINT#6"/>
+		<VarDeclaration Name="VP_ZOOM" Type="USINT" Comment="7: AID_GC_VP_ZOOM" InitialValue="USINT#7"/>
+		<VarDeclaration Name="GR_CURSOR_X" Type="USINT" Comment="8: AID_GC_GR_CURSOR_X" InitialValue="USINT#8"/>
+		<VarDeclaration Name="GR_CURSOR_Y" Type="USINT" Comment="9: AID_GC_GR_CURSOR_Y" InitialValue="USINT#9"/>
+		<VarDeclaration Name="FG_COLOUR" Type="USINT" Comment="10: AID_GC_FG_COLOUR" InitialValue="USINT#10"/>
+		<VarDeclaration Name="BACKGROUND_COLOUR" Type="USINT" Comment="11: AID_GC_BACKGROUND_COLOUR - Background colour index." InitialValue="USINT#11"/>
+		<VarDeclaration Name="FONT_ATT" Type="USINT" Comment="12: AID_GC_FONT_ATT - Object ID of a Font Attributes object." InitialValue="USINT#12"/>
+		<VarDeclaration Name="LINE_ATT" Type="USINT" Comment="13: AID_GC_LINE_ATT - Object ID of a Line Attributes object." InitialValue="USINT#13"/>
+		<VarDeclaration Name="FILL_ATT" Type="USINT" Comment="14: AID_GC_FILL_ATT - Object ID of a Fill Attributes object." InitialValue="USINT#14"/>
+		<VarDeclaration Name="FORMAT" Type="USINT" Comment="15: AID_GC_FORMAT - Canvas Type: 0 = Monochrome, 1 = 4-bit colour, 2 = 8-bit colour." InitialValue="USINT#15"/>
+		<VarDeclaration Name="OPTIONS" Type="USINT" Comment="16: AID_GC_OPTIONS - Bitmask: Bit 0=Transparency (0=opaque, 1=transparent), Bit 1=Colour mode" InitialValue="USINT#16"/>
+		<VarDeclaration Name="TRANS_COLOUR" Type="USINT" Comment="17: AID_GC_TRANS_COLOUR" InitialValue="USINT#17"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE isobus::UT::Q::const::AID;
+
+// graphic context object attribute ids
+GLOBALCONSTANTS AID_GC
+	VAR_GLOBAL CONSTANT
+		VP_WIDTH : USINT := USINT#1; // 1: AID_GC_VP_WIDTH
+		VP_HEIGHT : USINT := USINT#2; // 2: AID_GC_VP_HEIGHT
+		VP_X : USINT := USINT#3; // 3: AID_GC_VP_X
+		VP_Y : USINT := USINT#4; // 4: AID_GC_VP_Y
+		CANVAS_WIDTH : USINT := USINT#5; // 5: AID_GC_CANVAS_WIDTH (read-only)
+		CANVAS_HEIGHT : USINT := USINT#6; // 6: AID_GC_CANVAS_HEIGHT (read-only)
+		VP_ZOOM : USINT := USINT#7; // 7: AID_GC_VP_ZOOM
+		GR_CURSOR_X : USINT := USINT#8; // 8: AID_GC_GR_CURSOR_X
+		GR_CURSOR_Y : USINT := USINT#9; // 9: AID_GC_GR_CURSOR_Y
+		FG_COLOUR : USINT := USINT#10; // 10: AID_GC_FG_COLOUR
+		BACKGROUND_COLOUR : USINT := USINT#11; // 11: AID_GC_BACKGROUND_COLOUR - Background colour index.
+		FONT_ATT : USINT := USINT#12; // 12: AID_GC_FONT_ATT - Object ID of a Font Attributes object.
+		LINE_ATT : USINT := USINT#13; // 13: AID_GC_LINE_ATT - Object ID of a Line Attributes object.
+		FILL_ATT : USINT := USINT#14; // 14: AID_GC_FILL_ATT - Object ID of a Fill Attributes object.
+		FORMAT : USINT := USINT#15; // 15: AID_GC_FORMAT - Canvas Type: 0 = Monochrome, 1 = 4-bit colour, 2 = 8-bit colour.
+		OPTIONS : USINT := USINT#16; // 16: AID_GC_OPTIONS - Bitmask: Bit 0=Transparency (0=opaque, 1=transparent), Bit 1=Colour mode
+		                             // (0=use fg/bg, 1=use line/font/fill attributes).
+		TRANS_COLOUR : USINT := USINT#17; // 17: AID_GC_TRANS_COLOUR
+	END_VAR
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</GlobalConstants>

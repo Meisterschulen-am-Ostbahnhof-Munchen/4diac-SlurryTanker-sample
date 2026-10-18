@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="AR_HZ_TO_Q_Publish_OPC" Comment="Remote-Hz-Subscribe -&gt; feste Skalierung -&gt; VT-Anzeige (Q_NumericValue_PHYSA) UND&#10;per OPC-UA publiziert (AR_PUBLISH_1). Buendelt&#10;AR_SUBSCRIBE_1+initval_AR+AR_MUL_2+AR_TO_Q_Publish_OPC - ein Baustein je&#10;Puls-Geschwindigkeits-/Drehzahlsensor (Aufnahme B03, Igelband1/2 B10/B11,&#10;Saegeblatt B08), nur Parameter unterscheiden sich.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-13" Remarks="initial implementation - herausgeloest aus Inputs_STG1.SUB (Aufnahme/Igelband1/Igelband2/Saegeblatt waren 4x nahezu identische AR_SUBSCRIBE_1+initval_AR+AR_MUL_2+AR_TO_Q_Publish_OPC-Ketten, nur Parameter unterschiedlich).">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-22" Remarks="Neuer optionaler Plug HZ_RAW_OUT (AR_SPLIT_2 vor AR_MUL eingefuegt) - Spiegel des noch unskalierten Rohwerts (Hz), fuer eine Diagnose-Anzeige (z.B. IO-Diagnose-Zeile), ohne einen zweiten eigenstaendigen Remote-Subscribe desselben Knotens zu brauchen (FORTE: 'Cannot add another one' bei doppeltem Self-Subscribe). Unverdrahtet lassen, wenn nicht gebraucht.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="ID_HZ_REMOTE" Type="WSTRING" Comment="Remote-Subscribe-Adresse der publizierten Frequenz (Hz), z.B. FBs::Ventilsteuerung::Ventilsteuerung_STG1::RemoteSubStrings::AUFNAHME_GESCHWINDIGKEIT_HZ_REMOTE"/>
+			<VarDeclaration Name="SCALE" Type="REAL" Comment="Skalierungsfaktor Hz -&gt; physikalische Einheit (z.B. 3.6/53 fuer km/h, 60.0 fuer U/min bei 1 Impuls/Umdrehung)"/>
+			<VarDeclaration Name="stObj" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object pool properties der VT-Zahlenvariable (u16ObjId, scale, offset, decimals) - z.B. FBs::const::DefaultPool_Numeric::NumberVariable_X_N"/>
+			<VarDeclaration Name="ID_WRITE" Type="WSTRING" Comment="Lokale Publish-Adresse (REAL, physikalischer Wert) - Web-Mirror/Dashboard/Self-Subscribe"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="HZ_RAW_OUT" Type="adapter::types::unidirectional::AR" Comment="Optional: Nur-Lese-Spiegel des noch unskalierten Rohwerts (Hz) vor der SCALE-Multiplikation, fuer weitere lokale Konsumenten (z.B. Diagnose-Anzeige) statt eigenem Remote-Subscribe. Unverdrahtet lassen, wenn nicht gebraucht."/>
+		</Plugs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="AR_SUBSCRIBE_Hz" Type="adapter::net::AR_SUBSCRIBE_1" x="-1200" y="-100">
+		</FB>
+		<FB Name="LIT_Scale" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-1200" y="700">
+		</FB>
+		<FB Name="AR_SPLIT_2_HzRaw" Type="adapter::events::unidirectional::AR_SPLIT_2" x="200" y="300">
+		</FB>
+		<FB Name="AR_MUL" Type="adapter::iec61131::arithmetic::AR_MUL_2" x="1800" y="800">
+		</FB>
+		<SubApp Name="Publish" Type="MyLib::sys::AR_TO_Q_Publish_OPC" x="3500" y="600">
+		</SubApp>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_2" x="5300" y="400">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="AR_SUBSCRIBE_Hz.INIT" dx1="80" dx2="80" dy="-366.67"/>
+			<Connection Source="AR_SUBSCRIBE_Hz.INITO" Destination="Publish.INIT" dx1="1880"/>
+			<Connection Source="Publish.INITO" Destination="INITO" dx1="2700"/>
+			<Connection Source="Publish.INITO" Destination="AND_QO.REQ" dx1="313.33"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="ID_HZ_REMOTE" Destination="AR_SUBSCRIBE_Hz.ID" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="SCALE" Destination="LIT_Scale.INIT_VAL" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="stObj" Destination="Publish.stObj" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_WRITE" Destination="Publish.ID_WRITE" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="AR_SUBSCRIBE_Hz.QI" dx1="80" dx2="80" dy="-260"/>
+			<Connection Source="QI" Destination="Publish.QI" dx1="1433.33"/>
+			<Connection Source="AR_SUBSCRIBE_Hz.QO" Destination="AND_QO.IN1" dx1="126.67"/>
+			<Connection Source="Publish.QO" Destination="AND_QO.IN2" dx1="313.33"/>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="1273.33"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="AR_SUBSCRIBE_Hz.OUT" Destination="AR_SPLIT_2_HzRaw.IN" dx1="380"/>
+			<Connection Source="AR_SPLIT_2_HzRaw.OUT1" Destination="HZ_RAW_OUT" dx1="600"/>
+			<Connection Source="LIT_Scale.OUT" Destination="AR_MUL.IN2" dx1="600"/>
+			<Connection Source="AR_MUL.OUT" Destination="Publish.AR_IN" dx1="600"/>
+			<Connection Source="AR_SPLIT_2_HzRaw.OUT2" Destination="AR_MUL.IN1" dx1="273.33"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

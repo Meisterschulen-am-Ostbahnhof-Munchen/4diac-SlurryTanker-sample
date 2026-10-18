@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="AID_EIA" Comment="Extended input attributes object attribute ids (all read-only)">
+	<Identification Standard="61499-1" Description="Copyright (c) 2023 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-06-20">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::UT::Q::const::AID">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="VALTYPE" Type="USINT" Comment="1: AID_EIA_VALTYPE (read-only) - Validation Type: 0 = valid characters are listed, 1 = invalid characters are" InitialValue="USINT#1"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE isobus::UT::Q::const::AID;
+
+// extended input attributes object attribute ids
+GLOBALCONSTANTS AID_EIA
+	VAR_GLOBAL CONSTANT
+		VALTYPE : USINT := USINT#1; // 1: AID_EIA_VALTYPE (read-only) - Validation Type: 0 = valid characters are listed, 1 = invalid characters are
+		                            // listed.
+	END_VAR
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</GlobalConstants>

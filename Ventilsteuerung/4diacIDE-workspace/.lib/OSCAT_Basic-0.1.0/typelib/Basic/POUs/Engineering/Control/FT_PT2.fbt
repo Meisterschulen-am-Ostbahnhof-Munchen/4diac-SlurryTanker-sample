@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="FT_PT2" Comment="2nd grade filter with programmable times">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Version="1.5" Author="Franz Höpfinger" Date="2025-12-21">
+	</VersionInfo>
+	<CompilerInfo packageName="OSCAT::Basic::POUs::Engineering::Control">
+		<Import declaration="OSCAT::Basic::POUs::conversion::TIME_TO_REAL"/>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="EINIT" Type="EInit" Comment="Init Request">
+				<With Var="in"/>
+				<With Var="TM"/>
+				<With Var="D"/>
+				<With Var="K"/>
+			</Event>
+			<Event Name="REQ" Type="Event" Comment="Normal Execution Request">
+				<With Var="in"/>
+				<With Var="TM"/>
+				<With Var="D"/>
+				<With Var="K"/>
+			</Event>
+			<Event Name="RST" Type="Event" Comment="Reset Filter">
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Init Confirmation">
+				<With Var="out"/>
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Execution Confirmation">
+				<With Var="out"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="in" Type="REAL" Comment="Input Signal"/>
+			<VarDeclaration Name="TM" Type="TIME" Comment="Time Constant"/>
+			<VarDeclaration Name="D" Type="REAL" Comment="Damping Factor"/>
+			<VarDeclaration Name="K" Type="REAL" Comment="Gain" InitialValue="1.0"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="out" Type="REAL" Comment="Filtered Output"/>
+		</OutputVars>
+	</InterfaceList>
+	<SimpleFB>
+		<InternalVars>
+			<VarDeclaration Name="init" Type="BOOL" InitialValue="FALSE"/>
+			<VarDeclaration Name="TN" Type="REAL"/>
+			<VarDeclaration Name="I1" Type="REAL"/>
+			<VarDeclaration Name="I2" Type="REAL"/>
+			<VarDeclaration Name="tn2" Type="REAL"/>
+			<FB Name="int1" Type="OSCAT::Basic::POUs::Engineering::Control::INTEGRATE">
+			</FB>
+			<FB Name="int2" Type="OSCAT::Basic::POUs::Engineering::Control::INTEGRATE">
+			</FB>
+		</InternalVars>
+		<ECState Name="EINIT">
+			<ECAction Algorithm="EINIT" Output="INITO"/>
+		</ECState>
+		<ECState Name="REQ">
+			<ECAction Algorithm="REQ" Output="CNF"/>
+		</ECState>
+		<ECState Name="RST">
+			<ECAction Algorithm="RST" Output="CNF"/>
+		</ECState>
+		<Algorithm Name="EINIT">
+			<ST><![CDATA[
+(* Startup Initialization *)
+init := FALSE;
+
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="RST">
+			<ST><![CDATA[
+init := TRUE;
+out := K * in;
+I2 := out;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="REQ">
+			<ST><![CDATA[
+(* startup initialisation *)
+IF NOT init OR TM = T#0s THEN
+	this.RST();
+ELSE
+	TN := TIME_TO_REAL(TM) * 1.0E-3;
+	tn2 := TN * TN;
+	int1.REQ(X := in * K / tn2 - I1 * 0.5 * D / TN - I2 / tn2, Y := I1);
+	int2.REQ(X := I1, Y := I2);
+	out := I2;
+END_IF;
+]]></ST>
+		</Algorithm>
+	</SimpleFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

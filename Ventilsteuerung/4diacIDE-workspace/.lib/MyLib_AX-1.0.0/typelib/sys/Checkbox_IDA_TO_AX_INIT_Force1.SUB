@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Checkbox_IDA_TO_AX_INIT_Force1" Comment="Checkbox_IDA_TO_AX_INIT (boot-stabiler AX-Pegel, startet TRUE bis zur ersten&#10;echten VT-Aenderung) + Q_NumericValue (F.22, erzwingt denselben&#10;NumberVariable-Wert bei FORTE-Start einmalig auf 1) zusammengefasst - Franz:&#10;'gehoert ja zusammen', da beide dieselbe u16ObjId ansteuern/lesen. u16ObjId als&#10;Parameter fuer Wiederverwendung.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-01" Remarks="initial implementation - aus Aufnahme_Automatik.SUB herausgeloest (Permit_Automatik + Q_NumericValue_Force1_Geschwindigkeitsregelung), u16ObjId als Parameter statt fest verdrahtet.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib_AX::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID der VT-Checkbox-NumberVariable (gleiches Objekt fuer Lesen und Force1-Schreiben)" InitialValue="ID_NULL"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="PERMIT_OUT" Type="adapter::types::unidirectional::AX" Comment="Boot-stabiler Checkbox-Zustand (startet TRUE, folgt danach der echten VT-Checkbox)"/>
+		</Plugs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<SubApp Name="Reader" Type="MyLib_AX::sys::Checkbox_IDA_TO_AX_INIT" x="0" y="0">
+		</SubApp>
+		<FB Name="Writer" Type="isobus::UT::Q::Q_NumericValue" Comment="Franz: &apos;soll bei INIT 1 werden&apos; - fester FB-seitiger Einmalschreiber, NICHT die VT-Pool-InitialValue-Property." x="0" y="1400">
+			<Parameter Name="u32NewValue" Value="1"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="Writer.INITO" Destination="Writer.REQ" dx1="80" dx2="80" dy="53.33"/>
+			<Connection Source="INIT" Destination="Writer.INIT"/>
+			<Connection Source="Writer.INITO" Destination="INITO"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="u16ObjId" Destination="Reader.u16ObjId" dx1="600"/>
+			<Connection Source="u16ObjId" Destination="Writer.u16ObjId" dx1="600"/>
+			<Connection Source="QI" Destination="Writer.QI"/>
+			<Connection Source="Writer.QO" Destination="QO"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="Reader.PERMIT_OUT" Destination="PERMIT_OUT" dx1="600"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

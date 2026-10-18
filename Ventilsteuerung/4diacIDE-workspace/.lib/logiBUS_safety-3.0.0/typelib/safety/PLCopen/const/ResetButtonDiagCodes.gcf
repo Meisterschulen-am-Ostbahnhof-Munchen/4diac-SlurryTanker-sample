@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="ResetButtonDiagCodes" Comment="PLCopen Safety Part 1 Ch. 6.1.6 - SF_ResetButton-specific DiagCode values">
+	<Identification Standard="61499-1" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-09" Remarks="Source: PLCopen TC5 Safety Part 1, Version 2.10, Chapter 6.1.6 DiagCode table. See also DiagCodes.gcf for the shared IDLE code.">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::safety::PLCopen::const">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="WAIT_R_TRIG" Type="WORD" Comment="83E2 - enabled, waiting for rising edge on ResetIn" InitialValue="16#83E2"/>
+		<VarDeclaration Name="WAIT_F_TRIG" Type="WORD" Comment="83F2 - ResetIn is TRUE, waiting for falling edge" InitialValue="16#83F2"/>
+		<VarDeclaration Name="RESET_DETECTED" Type="WORD" Comment="8000 - valid trailing-edge reset, 1-cycle pulse" InitialValue="16#8000"/>
+		<VarDeclaration Name="PARAMETER_ERROR" Type="WORD" Comment="C000 - TrailingMinimum &gt; TrailingMaximum OR TrailingMinimum &lt; 100ms" InitialValue="16#C000"/>
+		<VarDeclaration Name="RESET_ERROR" Type="WORD" Comment="C001 - ResetIn was already TRUE when ResetRequested became TRUE" InitialValue="16#C001"/>
+		<VarDeclaration Name="ERROR_TRAILING_MAXIMUM" Type="WORD" Comment="C3E0 - TrailingMaximum elapsed before F_TRIG. Waiting for R_TRIG" InitialValue="16#C3E0"/>
+		<VarDeclaration Name="ERROR_TRAILING_MINIMUM" Type="WORD" Comment="C3F0 - F_TRIG before TrailingMinimum elapsed. Waiting for R_TRIG" InitialValue="16#C3F0"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE logiBUS::safety::PLCopen::const;
+
+GLOBALCONSTANTS ResetButtonDiagCodes
+	VAR_GLOBAL CONSTANT
+		WAIT_R_TRIG : WORD := 16#83E2; (* 83E2 - enabled, waiting for rising edge on ResetIn *)
+		WAIT_F_TRIG : WORD := 16#83F2; (* 83F2 - ResetIn is TRUE, waiting for falling edge *)
+		RESET_DETECTED : WORD := 16#8000; (* 8000 - valid trailing-edge reset, 1-cycle pulse *)
+		PARAMETER_ERROR : WORD := 16#C000; (* C000 - TrailingMinimum > TrailingMaximum OR TrailingMinimum < 100ms *)
+		RESET_ERROR : WORD := 16#C001; (* C001 - ResetIn was already TRUE when ResetRequested became TRUE *)
+		ERROR_TRAILING_MAXIMUM : WORD := 16#C3E0; (* C3E0 - TrailingMaximum elapsed before F_TRIG. Waiting for R_TRIG *)
+		ERROR_TRAILING_MINIMUM : WORD := 16#C3F0; (* C3F0 - F_TRIG before TrailingMinimum elapsed. Waiting for R_TRIG *)
+	END_VAR
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</GlobalConstants>

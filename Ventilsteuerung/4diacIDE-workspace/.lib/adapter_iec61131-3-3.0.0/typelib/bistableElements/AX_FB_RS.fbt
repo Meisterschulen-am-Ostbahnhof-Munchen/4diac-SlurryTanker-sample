@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="AX_FB_RS" Comment="Realizes a bistable reset-dominat latch (with Adapter)">
+	<Identification Standard="61499-1" Description="Copyright (c) 2023 Martin Erich Jobst, HR Agrartechnik GmbH&#10; &#10;This program and the accompanying materials are made&#10;available under the terms of the Eclipse Public License 2.0&#10;which is available at https://www.eclipse.org/legal/epl-2.0/&#10;&#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Version="3.0" Author="Patrick Aigner" Date="2025-04-14" Remarks="changed package">
+	</VersionInfo>
+	<VersionInfo Version="1.0" Author="Martin Jobst" Date="2023-04-28" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::iec61131::bistableElements">
+	</CompilerInfo>
+	<InterfaceList>
+		<Plugs>
+			<AdapterDeclaration Name="Q1" Type="adapter::types::unidirectional::AX" Comment="Output"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="SET" Type="adapter::types::unidirectional::AX" Comment="Set"/>
+			<AdapterDeclaration Name="RESET1" Type="adapter::types::unidirectional::AX" Comment="Reset"/>
+		</Sockets>
+	</InterfaceList>
+	<BasicFB>
+		<ECC>
+			<ECState Name="REQ" x="0" y="0">
+				<ECAction Algorithm="REQ" Output="Q1.E1"/>
+			</ECState>
+			<ECTransition Source="REQ" Destination="REQ" Condition="RESET1.E1" x="380" y="646.67"/>
+			<ECTransition Source="REQ" Destination="REQ" Condition="SET.E1" x="-233.33" y="646.67"/>
+		</ECC>
+		<Algorithm Name="REQ">
+			<ST><![CDATA[
+Q1.D1 := (NOT RESET1.D1) AND (SET.D1 OR Q1.D1);
+]]></ST>
+		</Algorithm>
+	</BasicFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

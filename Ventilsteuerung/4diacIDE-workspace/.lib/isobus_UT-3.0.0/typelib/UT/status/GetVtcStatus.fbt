@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="GetVtcStatus" Comment="Service Interface Block to read VT client status information using&#10;IsoVtcGetStatusInfo()">
+	<Identification Standard="ISO 11783-6" Description="Copyright (c) 2025 Meisterschulen am Ostbahnhof&#10;&#10;This program and the accompanying materials are made&#10;available under the terms of the Eclipse Public License 2.0&#10;which is available at https://www.eclipse.org/legal/epl-2.0/&#10;&#10;SPDX-License-Identifier: EPL-2.0&#10;&#10;&#10;&lt;p&gt;Service Interface Block to read VT client status information using IsoVtcGetStatusInfo()&lt;/p&gt;&#10;&#10;This block wraps the IsoVtcGetStatusInfo() function from the ISOBUS driver.&#10;It allows reading various status information about the VT client and connected VT.&#10;&#10;Available eVTInfo values (ISOVT_STATUS_e):&#10;- VT_SOURCE_ADDRESS (0): SA of VT&#10;- VT_HND (2): CF handle of VT&#10;- CF_SOURCE_ADDRESS (3): SA of VT client&#10;- CF_HND (4): CF handle of VT client&#10;- ID_VISIBLE_DATA_MASK (6): Data mask open on VT&#10;- ID_VISIBLE_SOFTKEY_MASK (7): Soft key mask open on VT&#10;- VT_BUSY_CODE (8): Busy code of VT Status message&#10;- AUXUNITS_TYPE1_ONBUS (9): ISO_TRUE if auxiliary unit type 1 is on bus&#10;- VT_ALIVE (11): VT lost for more than three seconds&#10;- VT_DOWNLOAD_FINISHED (12): Complete announcing finished&#10;- VT_POOL_ACTIVE_onVT (13): Pool active (selected) on VT&#10;- VT_STATEOFANNOUNCING (14): State of announcing&#10;- WS_VERSION_NR (15): Version number of working set&#10;- VT_NUMBOFVERSIONSTRINGS (16): Number of version strings sent of VT&#10;- VT_NAVSOFTKEYS (17): Navigation soft keys - Version 4&#10;- VT_SOFTKEYXDOT (18): Softkey designator - pixel X&#10;- VT_SOFTKEYYDOT (19): Softkey designator - pixel Y&#10;- VT_VIRTUALSOFTKEYS (20): Number of virtual soft keys&#10;- VT_PHYSICALSOFTKEYS (21): Number of physical soft keys&#10;- VT_BOOTTIME (25): Boot time of VT&#10;- VT_GRAPHICTYPE (26): VT hardware - graphic type&#10;- VT_VERSIONNR (29): Version of working set VT&#10;">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Generated" Date="2025-02-27" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::UT::status">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+				<With Var="QI"/>
+				<With Var="u8Instance"/>
+			</Event>
+			<Event Name="REQ" Type="Event" Comment="Service Request - Read VT Status Info">
+				<With Var="QI"/>
+				<With Var="u8Instance"/>
+				<With Var="eVTInfo"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Confirmation with result">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+				<With Var="wValue"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service"/>
+			<VarDeclaration Name="u8Instance" Type="USINT" Comment="Identifier of the VT client instance (0-255)"/>
+			<VarDeclaration Name="eVTInfo" Type="UINT" Comment="Status info type to read (ISOVT_STATUS_e enum value)" InitialValue="0"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
+			<VarDeclaration Name="wValue" Type="UINT" Comment="Returned status value from IsoVtcGetStatusInfo()"/>
+		</OutputVars>
+	</InterfaceList>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

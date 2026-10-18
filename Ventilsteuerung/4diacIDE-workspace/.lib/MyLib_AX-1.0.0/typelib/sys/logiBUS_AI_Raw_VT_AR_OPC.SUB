@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="logiBUS_AI_Raw_VT_AR_OPC" Comment="logiBUS_AI_IDA (Analog-Eingang, lokal) lesen -&gt; Rohwert per OPC-UA publizieren&#10;(REAL 0-4095) + VT-Zahlenfeld (Rohwert, reine Diagnose-Anzeige) -&gt; als AR-Plug&#10;ausgeben, fertig zur Weiterverarbeitung durch einen Kalibrier-Baustein&#10;(AR_CALIBRATE_2P_REF.X / AR_CALIBRATE_3P_REF.X). Herausgeloest aus&#10;logiBUS_AI_Calibrate_IDA_OPC/_3P_IDA_OPC&#10;(logiBUS_AI_IDA+AD_TO_AUDI+AUDI_SPLIT_2+Q_NumericValue_RAW+AUDI_TO_AR kam dort&#10;2x identisch vor).">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-27" Remarks="Bugfix (Live-Log STG1): 'RD_0 of FB ...RawDisplay.AR_SUBSCRIBE_M2M.SUBSCRIBE_1 has no data, is not a scalar or there is a type mismatch', 170x im Log, auf allen 5 co-located Sensor-Stationen (Fuellband/Schnitthoehe/Druck/Oeltemperatur/Hangausgleich Winkel). Ursache: ID_RAW_WRITE ging bisher per AD_PUBLISH_1 (DWORD) raus, aber die STG1-Seite (AR_M2M_Subscribe_TO_Q_Publish_OPC.RawDisplay) abonniert per AR_SUBSCRIBE_1 (REAL) - Typkonflikt auf dem Draht. Zero-Raw/Span-Raw (an den Kalibrierpunkten) hatten dasselbe Problem nie, weil die schon immer per AR_PUBLISH_1 (REAL) rausgehen. AD_SPLIT_2/AD_PUBLISH_RAW entfernt, AR_OUT jetzt per neuem AR_SPLIT_2_Raw zusaetzlich an neuen AR_PUBLISH_RAW (AR_PUBLISH_1) verzweigt - ACHTUNG: aendert den OPC-UA-Datentyp auf dem Draht, alle Stationen mit einer Calibrate_2P/3P_IDA_OPC-Instanz (STG2/STG3/STG4) muessen neu gebaut UND geflasht werden, nicht nur STG1.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-18" Remarks="initial implementation - herausgeloest aus logiBUS_AI_Calibrate_IDA_OPC/_3P_IDA_OPC, wiederverwendbar fuer jeden lokal (auf derselben Station wie die VT) angeschlossenen Analog-Eingang mit Rohwert-Publish+VT-Anzeige, unabhaengig von 2- oder 3-Punkt-Kalibrierung.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="logiBUS::io::AI::logiBUS_AI"/>
+		<Import declaration="logiBUS::io::AI::logiBUS_AI_S"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="Input" Type="logiBUS::io::AI::logiBUS_AI_S" Comment="Identify the Input AnalogInput_I1..I8" InitialValue="logiBUS_AI::Invalid"/>
+			<VarDeclaration Name="u16ObjId_RAWVAR" Type="UINT" Comment="Object ID CNumberVariable (Rohwert 0-4095, unkalibriert, reine Diagnose-Anzeige)"/>
+			<VarDeclaration Name="ID_RAW_WRITE" Type="WSTRING" Comment="Rohwert-Ruckmelde-Adresse (REAL 0-4095, ACTION=PUBLISH)"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="AR_OUT" Type="adapter::types::unidirectional::AR" Comment="Rohwert als AR, fertig fuer CALIBRATE.X"/>
+		</Plugs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="logiBUS_AI_IDA" Type="logiBUS::io::AI::logiBUS_AI_IDA" x="-9200" y="-1700">
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="AnalogInput_hysteresis" Value="DWORD#50"/>
+			<Parameter Name="TimeDelta" Value="DWORD#250"/>
+			<Parameter Name="TimeRateLimit" Value="DWORD#100"/>
+		</FB>
+		<FB Name="AD_TO_AUDI" Type="adapter::conversion::unidirectional::AD_TO_AUDI" x="-5600" y="-400">
+		</FB>
+		<FB Name="AUDI_SPLIT_2" Type="adapter::events::unidirectional::AUDI_SPLIT_2" x="-4000" y="-400">
+		</FB>
+		<FB Name="Q_NumericValue_RAW" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="-2300" y="-1000">
+		</FB>
+		<FB Name="AUDI_TO_AR" Type="adapter::conversion::unidirectional::AUDI_TO_AR" x="-2300" y="200">
+		</FB>
+		<FB Name="AR_SPLIT_2_Raw" Type="adapter::events::unidirectional::AR_SPLIT_2" x="-900" y="200">
+		</FB>
+		<FB Name="AR_PUBLISH_RAW" Type="adapter::net::AR_PUBLISH_1" x="600" y="-600">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_3" x="2900" y="0">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="logiBUS_AI_IDA.INIT" dx1="80" dx2="80" dy="-1266.67"/>
+			<Connection Source="logiBUS_AI_IDA.INITO" Destination="AR_PUBLISH_RAW.INIT" dx1="4406.67"/>
+			<Connection Source="AR_PUBLISH_RAW.INITO" Destination="Q_NumericValue_RAW.INIT" dx1="80" dx2="80" dy="-200"/>
+			<Connection Source="Q_NumericValue_RAW.INITO" Destination="INITO" dx1="8326.67"/>
+			<Connection Source="Q_NumericValue_RAW.INITO" Destination="AND_QO.REQ" dx1="533.33"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="Input" Destination="logiBUS_AI_IDA.Input" dx1="1460">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId_RAWVAR" Destination="Q_NumericValue_RAW.u16ObjId" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_RAW_WRITE" Destination="AR_PUBLISH_RAW.ID" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="Q_NumericValue_RAW.QI" dx1="80" dx2="80" dy="-806.67"/>
+			<Connection Source="QI" Destination="logiBUS_AI_IDA.QI" dx1="80" dx2="80" dy="-1160"/>
+			<Connection Source="QI" Destination="AR_PUBLISH_RAW.QI" dx1="80" dx2="80" dy="-606.67"/>
+			<Connection Source="Q_NumericValue_RAW.QO" Destination="AND_QO.IN1" dx1="533.33"/>
+			<Connection Source="logiBUS_AI_IDA.QO" Destination="AND_QO.IN2" dx1="4106.67"/>
+			<Connection Source="AR_PUBLISH_RAW.QO" Destination="AND_QO.IN3" dx1="726.67"/>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="1193.33"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="logiBUS_AI_IDA.IN" Destination="AD_TO_AUDI.AD_IN" dx1="420"/>
+			<Connection Source="AD_TO_AUDI.AUDI_OUT" Destination="AUDI_SPLIT_2.IN" dx1="300"/>
+			<Connection Source="AUDI_SPLIT_2.OUT1" Destination="Q_NumericValue_RAW.u32NewValue" dx1="300"/>
+			<Connection Source="AUDI_SPLIT_2.OUT2" Destination="AUDI_TO_AR.AUDI_IN" dx1="300"/>
+			<Connection Source="AUDI_TO_AR.AR_OUT" Destination="AR_SPLIT_2_Raw.IN" dx1="300"/>
+			<Connection Source="AR_SPLIT_2_Raw.OUT1" Destination="AR_OUT" dx1="173.33"/>
+			<Connection Source="AR_SPLIT_2_Raw.OUT2" Destination="AR_PUBLISH_RAW.IN" dx1="300"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

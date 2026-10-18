@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="AR_M2M_Subscribe_TO_Q_OPC" Comment="Remote-Subscribe eines fertigen physikalischen Werts (M2M) -&gt; VT-Anzeige&#10;(Q_NumericValue_PHYSA, gedrosselt) + VALUE_OUT. Wie&#10;AR_M2M_Subscribe_TO_Q_Publish_OPC, aber ohne lokalen Re-Publish.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-17" Remarks="Kopie von AR_M2M_Subscribe_TO_Q_Publish_OPC ohne Publish/ID_WRITE (Franz: schlanke Lib-Variante bauen, damit die Lib komplett ist). Drosselung T#500ms nur auf dem Anzeige-Zweig, VALUE_OUT ungedrosselt wie im Original.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+		<Import declaration="logiBUS::utils::conversion::phys::NumericObjectPool_S"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="ID_M2M_READ" Type="WSTRING" Comment="Remote-Subscribe-Adresse des fertigen physikalischen Werts (REAL)"/>
+			<VarDeclaration Name="stObj" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object pool properties der VT-Zahlenvariable (u16ObjId, scale, offset, decimals)" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 0)"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="VALUE_OUT" Type="adapter::types::unidirectional::AR" Comment="Nur-Lese-Spiegel des remote abonnierten Werts fuer weitere lokale Konsumenten"/>
+		</Plugs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="AR_SUBSCRIBE_M2M" Type="adapter::net::AR_SUBSCRIBE_1" x="0" y="0">
+		</FB>
+		<FB Name="AR_SPLIT_2_Value" Type="adapter::events::unidirectional::AR_SPLIT_2" x="1600" y="400">
+		</FB>
+		<FB Name="RateLimit_Anzeige" Type="adapter::events::unidirectional::AR_D_FF_TMIN" Comment="Drosselt nur die VT-Anzeige auf max. 1 Update pro Tmin" x="3000" y="200">
+			<Parameter Name="Tmin" Value="T#500ms"/>
+		</FB>
+		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="4600" y="0">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_2" x="6200" y="0">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="AR_SUBSCRIBE_M2M.INIT"/>
+			<Connection Source="AR_SUBSCRIBE_M2M.INITO" Destination="Q_NumericValue.INIT"/>
+			<Connection Source="Q_NumericValue.INITO" Destination="INITO"/>
+			<Connection Source="Q_NumericValue.INITO" Destination="AND_QO.REQ"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="ID_M2M_READ" Destination="AR_SUBSCRIBE_M2M.ID">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="stObj" Destination="Q_NumericValue.stObj">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="AR_SUBSCRIBE_M2M.QI"/>
+			<Connection Source="QI" Destination="Q_NumericValue.QI"/>
+			<Connection Source="AR_SUBSCRIBE_M2M.QO" Destination="AND_QO.IN1"/>
+			<Connection Source="Q_NumericValue.QO" Destination="AND_QO.IN2"/>
+			<Connection Source="AND_QO.OUT" Destination="QO"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="AR_SUBSCRIBE_M2M.OUT" Destination="AR_SPLIT_2_Value.IN"/>
+			<Connection Source="AR_SPLIT_2_Value.OUT1" Destination="RateLimit_Anzeige.I"/>
+			<Connection Source="RateLimit_Anzeige.Q" Destination="Q_NumericValue.rPhys"/>
+			<Connection Source="AR_SPLIT_2_Value.OUT2" Destination="VALUE_OUT"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

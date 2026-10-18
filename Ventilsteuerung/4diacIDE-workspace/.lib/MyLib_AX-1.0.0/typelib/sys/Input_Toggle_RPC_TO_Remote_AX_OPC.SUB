@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Input_Toggle_RPC_TO_Remote_AX_OPC" Comment="Wie Input_Toggle_RPC_TO_Remote_QXA_OPC, aber ohne logiBUS_QXA: der Zustand geht als AX-Plug STATE nach aussen">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-18" Remarks="Ohne QXA: AX_SUBSCRIBE_1.OUT direkt auf den Plug STATE, Anzeige/Weiterverarbeitung frei waehlbar">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_S"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_PRESS_DOWN"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="Input" Type="logiBUS::io::DI::logiBUS_DI_S" Comment="Taster Input_I1..I8 (Tastendruck ruft die Methode)" InitialValue="logiBUS_DI::Invalid"/>
+			<VarDeclaration Name="ID_TRIGGER_CALL" Type="WSTRING" Comment="Methodenadresse (ACTION=CALL_METHOD, mit Endpunkt)"/>
+			<VarDeclaration Name="ID_STATE_READ" Type="WSTRING" Comment="Lokale Adresse (BOOL, ACTION=READ) fuer den Zustand"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="STATE" Type="adapter::types::unidirectional::AX" Comment="Flipflop-Zustand (lokal gelesen)"/>
+		</Plugs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="TRIGGER_INPUT" Type="logiBUS::io::DI::logiBUS_IE" x="-7300" y="-400">
+			<Parameter Name="InputEvent" Value="BUTTON_PRESS_DOWN"/>
+		</FB>
+		<FB Name="TRIGGER_CLIENT" Type="iec61499::net::CLIENT_0" x="-5900" y="700">
+		</FB>
+		<FB Name="STATE_SUBSCRIBE" Type="adapter::net::AX_SUBSCRIBE_1" x="-4300" y="1100">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_3" x="-600" y="0">
+		</FB>
+		<EventConnections>
+			<Connection Source="TRIGGER_INPUT.IND" Destination="TRIGGER_CLIENT.REQ" dx1="433.33"/>
+			<Connection Source="INIT" Destination="TRIGGER_INPUT.INIT" dx1="1300"/>
+			<Connection Source="TRIGGER_INPUT.INITO" Destination="TRIGGER_CLIENT.INIT" dx1="433.33"/>
+			<Connection Source="TRIGGER_CLIENT.INITO" Destination="STATE_SUBSCRIBE.INIT" dx1="666.67"/>
+			<Connection Source="STATE_SUBSCRIBE.INITO" Destination="INITO" dx1="913.33"/>
+			<Connection Source="STATE_SUBSCRIBE.INITO" Destination="AND_QO.REQ" dx1="1180">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="Input" Destination="TRIGGER_INPUT.Input" dx1="413.33"/>
+			<Connection Source="ID_TRIGGER_CALL" Destination="TRIGGER_CLIENT.ID" dx1="180"/>
+			<Connection Source="ID_STATE_READ" Destination="STATE_SUBSCRIBE.ID" dx1="86.67"/>
+			<Connection Source="QI" Destination="TRIGGER_INPUT.QI" dx1="1300">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="TRIGGER_CLIENT.QI" dx1="2000">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="STATE_SUBSCRIBE.QI" dx1="3346.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="TRIGGER_INPUT.QO" Destination="AND_QO.IN1" dx1="2753.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="TRIGGER_CLIENT.QO" Destination="AND_QO.IN2" dx1="1166.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="STATE_SUBSCRIBE.QO" Destination="AND_QO.IN3" dx1="1180">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="2073.33"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="STATE_SUBSCRIBE.OUT" Destination="STATE" dx1="1566.67"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="SPLIT_SIGNED_INT" Comment="Teilt einen INT-Wert in 2 einseitige Betragswerte auf: NEG_MAG = MAX(0,-Y),&#10;POS_MAG = MAX(0,Y). Sonderfall Y=INT#-32768 (INT-Minimum): -Y wuerde ueberlaufen&#10;(Zweierkomplement, |MIN| &gt; MAX) - in diesem Fall wird NEG_MAG auf INT#32767&#10;(INT-Maximum) begrenzt (Regelungstechnik: Saettigung statt&#10;Ueberlauf/Vorzeichenwechsel). Feuert CNF bei jedem REQ, unabhaengig von&#10;Wertaenderung - Event-Deduplizierung erfolgt aussen im Adapter-Wrapper&#10;AI_SPLIT_SIGNED ueber je einen E_D_FF_ANY pro Seite.">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="Franz Höpfinger" Date="2026-09-11" Remarks="Einfacher Value/Event-Baustein ohne Event-Dedup - wird vom Adapter-Wrapper AI_SPLIT_SIGNED mit je einem E_D_FF_ANY pro Seite dedupliziert">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::Engineering::splitting::signed">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event" Comment="Neuer Y-Wert liegt an">
+				<With Var="Y"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event" Comment="NEG_MAG/POS_MAG berechnet">
+				<With Var="NEG_MAG"/>
+				<With Var="POS_MAG"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="Y" Type="INT" Comment="Eingangswert"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="NEG_MAG" Type="INT" Comment="MAX(0, -Y), bei Y=INT#-32768 gesaettigt auf INT#32767"/>
+			<VarDeclaration Name="POS_MAG" Type="INT" Comment="MAX(0, Y)"/>
+		</OutputVars>
+	</InterfaceList>
+	<BasicFB>
+		<ECC>
+			<ECState Name="START" Comment="Initial State" x="0" y="0">
+			</ECState>
+			<ECState Name="EMIT" x="800" y="0">
+				<ECAction Algorithm="SPLIT" Output="CNF"/>
+			</ECState>
+			<ECTransition Source="START" Destination="EMIT" Condition="REQ" x="400" y="-120"/>
+			<ECTransition Source="EMIT" Destination="START" Condition="1" x="400" y="120"/>
+		</ECC>
+		<Algorithm Name="SPLIT">
+			<ST><![CDATA[
+IF Y = INT#-32768 THEN
+	NEG_MAG := INT#32767;
+ELSE
+	NEG_MAG := MAX(INT#0,-Y);
+END_IF;
+POS_MAG := MAX(INT#0,Y);
+]]></ST>
+		</Algorithm>
+	</BasicFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataType Name="ST32B" Comment="A Structure with 32 BYTES">
+	<Identification>
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2024-02-21">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::utils::conversion::types">
+	</CompilerInfo>
+	<StructuredType>
+		<VarDeclaration Name="B_00" Type="BYTE" Comment="BYTE 00"/>
+		<VarDeclaration Name="B_01" Type="BYTE" Comment="BYTE 01"/>
+		<VarDeclaration Name="B_02" Type="BYTE" Comment="BYTE 02"/>
+		<VarDeclaration Name="B_03" Type="BYTE" Comment="BYTE 03"/>
+		<VarDeclaration Name="B_04" Type="BYTE" Comment="BYTE 04"/>
+		<VarDeclaration Name="B_05" Type="BYTE" Comment="BYTE 05"/>
+		<VarDeclaration Name="B_06" Type="BYTE" Comment="BYTE 06"/>
+		<VarDeclaration Name="B_07" Type="BYTE" Comment="BYTE 07"/>
+		<VarDeclaration Name="B_08" Type="BYTE" Comment="BYTE 08"/>
+		<VarDeclaration Name="B_09" Type="BYTE" Comment="BYTE 09"/>
+		<VarDeclaration Name="B_10" Type="BYTE" Comment="BYTE 10"/>
+		<VarDeclaration Name="B_11" Type="BYTE" Comment="BYTE 11"/>
+		<VarDeclaration Name="B_12" Type="BYTE" Comment="BYTE 12"/>
+		<VarDeclaration Name="B_13" Type="BYTE" Comment="BYTE 13"/>
+		<VarDeclaration Name="B_14" Type="BYTE" Comment="BYTE 14"/>
+		<VarDeclaration Name="B_15" Type="BYTE" Comment="BYTE 15"/>
+		<VarDeclaration Name="B_16" Type="BYTE" Comment="BYTE 16"/>
+		<VarDeclaration Name="B_17" Type="BYTE" Comment="BYTE 17"/>
+		<VarDeclaration Name="B_18" Type="BYTE" Comment="BYTE 18"/>
+		<VarDeclaration Name="B_19" Type="BYTE" Comment="BYTE 19"/>
+		<VarDeclaration Name="B_20" Type="BYTE" Comment="BYTE 20"/>
+		<VarDeclaration Name="B_21" Type="BYTE" Comment="BYTE 21"/>
+		<VarDeclaration Name="B_22" Type="BYTE" Comment="BYTE 22"/>
+		<VarDeclaration Name="B_23" Type="BYTE" Comment="BYTE 23"/>
+		<VarDeclaration Name="B_24" Type="BYTE" Comment="BYTE 24"/>
+		<VarDeclaration Name="B_25" Type="BYTE" Comment="BYTE 25"/>
+		<VarDeclaration Name="B_26" Type="BYTE" Comment="BYTE 26"/>
+		<VarDeclaration Name="B_27" Type="BYTE" Comment="BYTE 27"/>
+		<VarDeclaration Name="B_28" Type="BYTE" Comment="BYTE 28"/>
+		<VarDeclaration Name="B_29" Type="BYTE" Comment="BYTE 29"/>
+		<VarDeclaration Name="B_30" Type="BYTE" Comment="BYTE 30"/>
+		<VarDeclaration Name="B_31" Type="BYTE" Comment="BYTE 31"/>
+	</StructuredType>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</DataType>

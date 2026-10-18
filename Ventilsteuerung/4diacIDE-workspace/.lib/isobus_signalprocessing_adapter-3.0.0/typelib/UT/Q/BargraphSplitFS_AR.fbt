@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="BargraphSplitFS_AR" Comment="AR adapter wrapper around BargraphSplitFS — accepts the signed value via AR&#10;adapter socket instead of a plain REQ/rValue pair">
+	<Identification Standard="ISO 11783-6" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0&#10;&#10;Same wrapper shape as PositionMarkerFSA around PositionMarkerFS: the AR adapter socket&apos;s value drives the internally-owned BargraphSplitFS instance&apos;s REQ/rValue directly. xOverRight/xOverLeft are re-exposed as AX adapter plugs, exactly like PositionMarkerFSA does for xOver/xUnder.">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-05" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::UT::Q">
+		<Import declaration="isobus::utils::bargraph::BargraphSplit_S"/>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+				<With Var="stObj"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+				<With Var="STATUSRight"/>
+				<With Var="s16resultRight"/>
+				<With Var="STATUSLeft"/>
+				<With Var="s16resultLeft"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="stObj" Type="isobus::utils::bargraph::BargraphSplit_S" Comment="Split-bargraph object pool properties (left/right Bargraph refs, shared magnitude bounds), snapshotted at INIT"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="STATUSRight" Type="STRING" Comment="Service Status - passthrough from the internal BargraphSplitFS"/>
+			<VarDeclaration Name="s16resultRight" Type="INT" Comment="retval - passthrough from the internal BargraphSplitFS"/>
+			<VarDeclaration Name="STATUSLeft" Type="STRING" Comment="Service Status - passthrough from the internal BargraphSplitFS"/>
+			<VarDeclaration Name="s16resultLeft" Type="INT" Comment="retval - passthrough from the internal BargraphSplitFS"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="xOverRight" Type="adapter::types::unidirectional::AX" Comment="rValue exceeded stObj.r32MaxMagnitude and the right side was clamped" x="4000" y="1300"/>
+			<AdapterDeclaration Name="xOverLeft" Type="adapter::types::unidirectional::AX" Comment="-rValue exceeded stObj.r32MaxMagnitude and the left side was clamped" x="4000" y="1800"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="rPhys" Type="adapter::types::unidirectional::AR" Comment="Signed physical value input" x="-1400" y="1000"/>
+		</Sockets>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="Inner" Type="isobus::UT::Q::BargraphSplitFS" x="533.33" y="420">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="Inner.INIT" dx1="1306.67"/>
+			<Connection Source="rPhys.E1" Destination="Inner.REQ" dx1="320"/>
+			<Connection Source="Inner.INITO" Destination="INITO" dx1="1506.67"/>
+			<Connection Source="Inner.CNF" Destination="CNF" dx1="1760"/>
+			<Connection Source="Inner.CNF" Destination="xOverRight.E1" dx1="1146.67"/>
+			<Connection Source="Inner.CNF" Destination="xOverLeft.E1" dx1="1146.67"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="stObj" Destination="Inner.stObj" dx1="973.33"/>
+			<Connection Source="rPhys.D1" Destination="Inner.rValue" dx1="1120"/>
+			<Connection Source="Inner.STATUSRight" Destination="STATUSRight" dx1="2000"/>
+			<Connection Source="Inner.s16resultRight" Destination="s16resultRight" dx1="2573.33"/>
+			<Connection Source="Inner.STATUSLeft" Destination="STATUSLeft" dx1="2000"/>
+			<Connection Source="Inner.s16resultLeft" Destination="s16resultLeft" dx1="2573.33"/>
+			<Connection Source="Inner.xOverRight" Destination="xOverRight.D1" dx1="2000"/>
+			<Connection Source="Inner.xOverLeft" Destination="xOverLeft.D1" dx1="913.33"/>
+		</DataConnections>
+	</FBNetwork>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

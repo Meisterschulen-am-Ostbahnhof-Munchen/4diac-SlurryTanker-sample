@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="AE_AX_SERVER_0_PUBLISH_1" Comment="Wie adapter::net::AE_AX_SERVER_0_CLIENT_1_0, aber lokales PUBLISH_1 statt Remote-CLIENT_1_0 (ein Geraet)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 HR Agrartechnik GmbH &#10; &#10;This program and the accompanying materials are made &#10;available under the terms of the Eclipse Public License 2.0 &#10;which is available at https://www.eclipse.org/legal/epl-2.0/ &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-18" Remarks="Kopie von AE_AX_SERVER_0_CLIENT_1_0, CLIENT_1_0 durch PUBLISH_1 ersetzt - als SubAppType, damit FORTE den Typ nicht kennen muss (kein ELF fuer MyLib_AX). SERVER_0: IND direkt auf RSP (sonst bis 4 s Server-Lock fuer alle Publishes)">
+	</VersionInfo>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-09-03" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::net">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+			<SubAppEvent Name="CNF" Type="Event" Comment="QO/STATUS updated">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL"/>
+			<VarDeclaration Name="ID" Type="WSTRING" Comment="Lokale Methodenadresse (ACTION=CREATE_METHOD) fuer den Trigger-Methodenaufruf"/>
+			<VarDeclaration Name="ID_STATE" Type="WSTRING" Comment="Lokale Adresse (ACTION=WRITE) fuer den Zustand"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="TRUE nur wenn SERVER_0_1 und STATE_CLIENT aktuell beide QO=TRUE melden"/>
+			<VarDeclaration Name="STATUS_TRIGGER" Type="WSTRING" Comment="STATUS von SERVER_0_1"/>
+			<VarDeclaration Name="STATUS_STATE" Type="WSTRING" Comment="STATUS von STATE_CLIENT"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="TRIGGER" Type="adapter::types::bidirectional::AE_AX" Comment="Trigger (in), Zustand (out)"/>
+		</Plugs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="SERVER_0_1" Type="iec61499::net::SERVER_0" x="-6000" y="0">
+		</FB>
+		<FB Name="EVENTS" Type="adapter::conversion::unidirectional::AE_EVENT_TO_E" x="-3600" y="0">
+		</FB>
+		<FB Name="SPLIT" Type="adapter::events::bidirectional::AE_TO_AE_AX_SPLIT" x="-1600" y="200">
+		</FB>
+		<FB Name="STATE_PUBLISH" Type="adapter::net::AX_PUBLISH_1" x="600" y="900">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_2" x="2600" y="0">
+		</FB>
+		<EventConnections>
+			<Connection Source="SERVER_0_1.IND" Destination="SERVER_0_1.RSP"/>
+			<Connection Source="INIT" Destination="SERVER_0_1.INIT"/>
+			<Connection Source="SERVER_0_1.INITO" Destination="STATE_PUBLISH.INIT"/>
+			<Connection Source="STATE_PUBLISH.INITO" Destination="INITO"/>
+			<Connection Source="STATE_PUBLISH.INITO" Destination="AND_QO.REQ"/>
+			<Connection Source="SERVER_0_1.IND" Destination="EVENTS.REQ"/>
+			<Connection Source="SERVER_0_1.IND" Destination="AND_QO.REQ"/>
+			<Connection Source="STATE_PUBLISH.CNF" Destination="AND_QO.REQ"/>
+			<Connection Source="AND_QO.CNF" Destination="CNF"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="QI" Destination="SERVER_0_1.QI"/>
+			<Connection Source="ID" Destination="SERVER_0_1.ID"/>
+			<Connection Source="SERVER_0_1.QO" Destination="AND_QO.IN1"/>
+			<Connection Source="SERVER_0_1.STATUS" Destination="STATUS_TRIGGER"/>
+			<Connection Source="QI" Destination="STATE_PUBLISH.QI"/>
+			<Connection Source="ID_STATE" Destination="STATE_PUBLISH.ID"/>
+			<Connection Source="STATE_PUBLISH.QO" Destination="AND_QO.IN2"/>
+			<Connection Source="AND_QO.OUT" Destination="QO"/>
+			<Connection Source="STATE_PUBLISH.STATUS" Destination="STATUS_STATE"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="EVENTS.AE_OUT" Destination="SPLIT.IN"/>
+			<Connection Source="SPLIT.OUT" Destination="TRIGGER"/>
+			<Connection Source="SPLIT.AX_OUT" Destination="STATE_PUBLISH.IN"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</SubAppType>

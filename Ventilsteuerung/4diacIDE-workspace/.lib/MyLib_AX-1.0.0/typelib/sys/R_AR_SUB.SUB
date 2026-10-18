@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="R_AR_SUB" Comment="Subtrahiert einen AR-Wert von einem festen REAL-Minuenden (OUT = MINUEND - IN;&#10;kein zweiter AR-Socket noetig - der Minuend wird per Parameter bei der&#10;Instanziierung eingebacken)">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-27">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<InputVars>
+			<VarDeclaration Name="MINUEND" Type="REAL" Comment="Fester Minuend, ueber Parameter bei der Instanziierung gesetzt" InitialValue="REAL#0.0"/>
+		</InputVars>
+		<Sockets>
+			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AR" Comment="Zu subtrahierender Subtrahend"/>
+		</Sockets>
+		<Plugs>
+			<AdapterDeclaration Name="OUT" Type="adapter::types::unidirectional::AR" Comment="MINUEND - IN"/>
+		</Plugs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="initval_AR_MINUEND" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="0" y="0">
+		</FB>
+		<FB Name="AR_SUB_2" Type="adapter::iec61131::arithmetic::AR_SUB_2" x="1500" y="0">
+		</FB>
+		<DataConnections>
+			<Connection Source="MINUEND" Destination="initval_AR_MINUEND.INIT_VAL" dx1="500">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="initval_AR_MINUEND.OUT" Destination="AR_SUB_2.IN1" dx1="500"/>
+			<Connection Source="IN" Destination="AR_SUB_2.IN2" dx1="500"/>
+			<Connection Source="AR_SUB_2.OUT" Destination="OUT" dx1="500"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

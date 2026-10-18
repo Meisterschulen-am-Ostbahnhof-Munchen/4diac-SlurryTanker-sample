@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="F_FRACTION_TO_PERCENT" Comment="Anteil (REAL 0.0-1.0, von F_PWM_RAW_TO_PERCENT.OUT) in Prozent (REAL 0.0-100.0,&#10;fuer OPC-UA-Publish) umrechnen">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-08-28" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::signalprocessing::fieldbus">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event" Comment="Umrechnung anfordern">
+				<With Var="rFraction"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event" Comment="Umrechnung abgeschlossen">
+				<With Var="rPercent"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="rFraction" Type="REAL" Comment="Anteil 0.0-1.0"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="rPercent" Type="REAL" Comment="Prozentwert 0.0-100.0"/>
+		</OutputVars>
+	</InterfaceList>
+	<SimpleFB>
+		<ECState Name="REQ">
+			<ECAction Algorithm="REQ" Output="CNF"/>
+		</ECState>
+		<Algorithm Name="REQ" Comment="1.0 entspricht 100.0 %">
+			<ST><![CDATA[
+rPercent := rFraction * 100.0;
+]]></ST>
+		</Algorithm>
+	</SimpleFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

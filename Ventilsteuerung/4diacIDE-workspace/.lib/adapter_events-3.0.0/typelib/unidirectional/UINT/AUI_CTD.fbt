@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="AUI_CTD" Comment="Event driven down counter (Adapter Version) - On Change Triggering">
+	<Identification Standard="61499-2" Description="Copyright (c) 2024 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-04-19" Remarks="initial API and implementation based on E_CTD with adapter support">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::events::unidirectional">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="CD" Type="Event" Comment="Count Down">
+			</Event>
+			<Event Name="LD" Type="Event" Comment="Load CV with PV">
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CDO" Type="Event" Comment="Count Down Output">
+			</Event>
+			<Event Name="LDO" Type="Event" Comment="Load Output">
+			</Event>
+		</EventOutputs>
+		<Plugs>
+			<AdapterDeclaration Name="Q" Type="adapter::types::unidirectional::AX" Comment="True if CV &lt;= 0"/>
+			<AdapterDeclaration Name="CV" Type="adapter::types::unidirectional::AUI" Comment="Counter Value"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="PV" Type="adapter::types::unidirectional::AUI" Comment="Preset Value"/>
+		</Sockets>
+	</InterfaceList>
+	<BasicFB>
+		<InternalVars>
+			<VarDeclaration Name="Q_OLD" Type="BOOL" Comment="Stores the previous state of the output Q to detect changes (On-Change triggering)" InitialValue="FALSE">
+				<Attribute Name="Retain" Value="NON_RETAIN"/>
+			</VarDeclaration>
+		</InternalVars>
+		<ECC>
+			<ECState Name="START" Comment="Initial State" x="640" y="1040">
+			</ECState>
+			<ECState Name="CD" Comment="Count Down" x="2880" y="560">
+				<ECAction Algorithm="CD" Output="CV.E1"/>
+				<ECAction Output="CDO"/>
+			</ECState>
+			<ECState Name="LD" Comment="Load" x="1920" y="1920">
+				<ECAction Algorithm="LOAD" Output="CV.E1"/>
+				<ECAction Output="LDO"/>
+			</ECState>
+			<ECState Name="UPDATE_PV" Comment="Re-evaluate Q on PV change" x="2820" y="1620">
+				<ECAction Algorithm="UPDATE"/>
+			</ECState>
+			<ECState Name="EMIT_Q" Comment="Fires Q event and saves state" x="4880" y="1520">
+				<ECAction Algorithm="SAVE_Q" Output="Q.E1"/>
+			</ECState>
+			<ECTransition Source="START" Destination="CD" Condition="CD[CV.D1 &gt; 0]" x="1653.33" y="553.33"/>
+			<ECTransition Source="CD" Destination="EMIT_Q" Condition="[Q.D1 &lt;&gt; Q_OLD]" x="4160" y="1140"/>
+			<ECTransition Source="CD" Destination="START" Condition="[Q.D1 = Q_OLD]" x="1480" y="260"/>
+			<ECTransition Source="START" Destination="LD" Condition="LD" x="1246.67" y="1633.33"/>
+			<ECTransition Source="LD" Destination="EMIT_Q" Condition="[Q.D1 &lt;&gt; Q_OLD]" x="2780" y="2933.33"/>
+			<ECTransition Source="LD" Destination="START" Condition="[Q.D1 = Q_OLD]" x="1053.33" y="1946.67"/>
+			<ECTransition Source="START" Destination="UPDATE_PV" Condition="PV.E1" x="2180" y="1633.33"/>
+			<ECTransition Source="UPDATE_PV" Destination="EMIT_Q" Condition="[Q.D1 &lt;&gt; Q_OLD]" x="3480" y="1953.33"/>
+			<ECTransition Source="UPDATE_PV" Destination="START" Condition="[Q.D1 = Q_OLD]" x="2386.67" y="1320"/>
+			<ECTransition Source="EMIT_Q" Destination="START" Condition="1" x="2826.67" y="1173.33"/>
+		</ECC>
+		<Algorithm Name="LOAD" Comment="load counter">
+			<ST><![CDATA[
+CV.D1 := PV.D1;
+Q.D1 := (CV.D1 <= 0);
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="CD" Comment="count down">
+			<ST><![CDATA[
+CV.D1 := CV.D1 - 1;
+Q.D1 := (CV.D1 <= 0);
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="UPDATE" Comment="update status only">
+			<ST><![CDATA[
+Q.D1 := (CV.D1 <= 0);
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="SAVE_Q" Comment="save state">
+			<ST><![CDATA[
+Q_OLD := Q.D1;
+]]></ST>
+		</Algorithm>
+	</BasicFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

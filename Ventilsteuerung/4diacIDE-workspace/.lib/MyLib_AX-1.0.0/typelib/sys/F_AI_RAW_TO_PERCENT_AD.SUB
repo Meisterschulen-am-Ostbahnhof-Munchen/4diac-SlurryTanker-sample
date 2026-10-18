@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="F_AI_RAW_TO_PERCENT_AD" Comment="Volladapterbasierte Alternative zu F_AI_RAW_TO_PERCENT: Analog-Rohwert&#10;(AD-Adapter, DWORD 0-4095) linear in Prozent (AR-Adapter, REAL 0.0-100.0)&#10;umrechnen, gleiches Ergebnis wie die datenbasierte Variante. WICHTIG:&#10;AD_TO_AR/F_DWORD_TO_REAL waere hier FALSCH - das ist eine Bit-Reinterpretation&#10;(IEEE754-Cast), keine numerische Umwandlung (siehe forte_real.cpp&#10;CIEC_REAL::setValue, case e_DWORD: setValueSimple). Der korrekte Weg ist&#10;AD_TO_AUDI (Bit-Reinterpretation DWORD-UDINT, hier gueltig, gleiche&#10;Bitbreite/Darstellung) gefolgt von AUDI_TO_AR (nutzt intern F_UDINT_TO_REAL,&#10;echte numerische Umwandlung).">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2026-08-30">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<Sockets>
+			<AdapterDeclaration Name="RAW_IN" Type="adapter::types::unidirectional::AD" Comment="Analog-Rohwert 0-4095 (12 bit, logiBUS_AI_IDA.IN)"/>
+		</Sockets>
+		<Plugs>
+			<AdapterDeclaration Name="PERCENT_OUT" Type="adapter::types::unidirectional::AR" Comment="Prozent 0.0-100.0, linear raw/4095*100, keine physikalische Einheit"/>
+		</Plugs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="AD_TO_AR_NUM" Type="adapter::conversion::unidirectional::AD_TO_AR_NUM" x="1200" y="0">
+		</FB>
+		<FB Name="INITVAL_SCALE" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="1200" y="900">
+			<Parameter Name="INIT_VAL" Value="REAL#0.0244200244"/>
+		</FB>
+		<FB Name="AR_MUL_PERCENT" Type="adapter::iec61131::arithmetic::AR_MUL_2" x="2400" y="0">
+		</FB>
+		<AdapterConnections>
+			<Connection Source="RAW_IN" Destination="AD_TO_AR_NUM.AD_IN" dx1="420"/>
+			<Connection Source="AD_TO_AR_NUM.AR_OUT" Destination="AR_MUL_PERCENT.IN1" dx1="420"/>
+			<Connection Source="INITVAL_SCALE.OUT" Destination="AR_MUL_PERCENT.IN2" dx1="420"/>
+			<Connection Source="AR_MUL_PERCENT.OUT" Destination="PERCENT_OUT" dx1="420"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

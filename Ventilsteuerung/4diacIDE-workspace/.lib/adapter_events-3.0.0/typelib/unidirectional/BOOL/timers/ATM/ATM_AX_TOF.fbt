@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="ATM_AX_TOF" Comment="Standard timer function block (off-delay timing)">
+	<Identification Standard="61499-2" Classification="standard timer function block" Description="Copyright (c) 2024 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0  &#10;   &#10;   &#10;AT_AX_TOF -- Off-delay timer FB with AX/AT adapter interface  &#10;&#10;The adapter input IN triggers execution (E1-&gt;REQ) and provides  &#10;the boolean input value (D1-&gt;IN). The adapter input PT provides  &#10;the off-delay time (D1-&gt;PT). The event input R resets the timer.  &#10;When IN goes TRUE, Q becomes TRUE immediately.  &#10;When IN goes FALSE, Q stays TRUE for duration PT before going FALSE.  &#10;Reset stops the timer and sets Q to FALSE.">
+	</Identification>
+	<VersionInfo Version="3.0" Author="Patrick Aigner" Date="2025-04-14" Remarks="changed package">
+	</VersionInfo>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.1" Author="Franz Höpfinger" Date="2024-04-23" Remarks="Add a Reset to Timer FBs">
+	</VersionInfo>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2024-03-04">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::events::unidirectional::timers">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="R" Type="Event" Comment="Reset">
+			</Event>
+		</EventInputs>
+		<Plugs>
+			<AdapterDeclaration Name="Q" Type="adapter::types::unidirectional::AX" Comment="Timer output (AX adapter)" x="-1666.67" y="-493.33"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AX" Comment="Timer input (AX adapter)" x="-3193.33" y="-880"/>
+			<AdapterDeclaration Name="PT" Type="adapter::types::unidirectional::ATM" Comment="Off-delay time (AT adapter)" x="-3600" y="-100"/>
+		</Sockets>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="E_TOF" Type="iec61499::events::timers::E_TOF" x="-2500" y="-600">
+		</FB>
+		<EventConnections>
+			<Connection Source="R" Destination="E_TOF.R" dx1="360"/>
+			<Connection Source="E_TOF.CNF" Destination="Q.E1" dx1="66.67"/>
+			<Connection Source="IN.E1" Destination="E_TOF.REQ" dx1="133.33"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="PT.D1" Destination="E_TOF.PT" dx1="426.67"/>
+			<Connection Source="E_TOF.Q" Destination="Q.D1" dx1="153.33"/>
+			<Connection Source="IN.D1" Destination="E_TOF.IN" dx1="66.67"/>
+		</DataConnections>
+	</FBNetwork>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

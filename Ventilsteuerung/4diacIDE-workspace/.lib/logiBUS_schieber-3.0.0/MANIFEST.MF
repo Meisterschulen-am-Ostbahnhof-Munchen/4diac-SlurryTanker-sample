@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Manifest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="platform:/resource/org.eclipse.fordiac.ide.library.model/model/library.xsd" Scope="Library">
+  <Dependencies>
+    <Required SymbolicName="events" Version="3.0.0"/>
+    <Required SymbolicName="isobus_UT" Version="3.1.1"/>
+  </Dependencies>
+  <Product Comment="Schieber-Steuerung (SchieberControl, SchieberVerriegelung, Struct/Const), herausgeloest aus logiBUS_utils-3.0.0/typelib/utils/sequence/schieber - einzige Abhaengigkeit von isobus innerhalb von logiBUS_utils (SchieberColorStruct/SchieberStruct importieren isobus::UT::Q::const::...)" Name="logiBUS_schieber" SymbolicName="logiBUS_schieber">
+    <VersionInfo Author="HR Agrartechnik GmbH" Date="2026-10-09" Version="3.0.0"/>
+  </Product>
+</Manifest>

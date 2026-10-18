@@ -1,0 +1,561 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="IG2_NAME_Functions" Comment="Industry Group 2 specific function defines">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Organization="Demmler Andreas Fahrzeugbau" Version="1.0" Author="Franz Höpfinger" Date="2026-06-29">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::pgn::const">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="F_NON_VIRTUAL_TERMINAL_DISPLAY" Type="BYTE" Comment="Sys: Non-specific System, Func: Non Virtual Terminal Display - An operator display connected to" InitialValue="128"/>
+		<VarDeclaration Name="F_OPERATOR_CONTROLS_MACHINE_SPECIFIC" Type="BYTE" Comment="Sys: Non-specific System, Func: Operator Controls - Machine Specific - Operator interface" InitialValue="129"/>
+		<VarDeclaration Name="F_TASK_CONTROLLER_MAPPING_COMPUTER" Type="BYTE" Comment="Sys: Non-specific System, Func: Task Controller (Mapping Computer) - A control function on the" InitialValue="130"/>
+		<VarDeclaration Name="F_POSITION_CONTROL" Type="BYTE" Comment="Sys: Non-specific System, Func: Position Control - Multiple axis position control of a devices" InitialValue="131"/>
+		<VarDeclaration Name="F_MACHINE_CONTROL" Type="BYTE" Comment="Sys: Non-specific System, Func: Machine Control - Control of outputs including adjustment of any" InitialValue="132"/>
+		<VarDeclaration Name="F_FOREIGN_OBJECT_DETECTION" Type="BYTE" Comment="Sys: Non-specific System, Func: Foreign Object Detection - Detection of undesireable objects in" InitialValue="133"/>
+		<VarDeclaration Name="F_TRACTOR_ECU" Type="BYTE" Comment="Sys: Non-specific System, Func: Tractor ECU - An interface unit between the tractor and the" InitialValue="134"/>
+		<VarDeclaration Name="F_SEQUENCE_CONTROL_MASTER" Type="BYTE" Comment="Sys: Non-specific System, Func: Sequence Control Master - The master controller in the Sequence" InitialValue="135"/>
+		<VarDeclaration Name="F_PRODUCT_DOSING" Type="BYTE" Comment="Sys: Non-specific System, Func: Product Dosing - Control function that adds an active ingredient" InitialValue="136"/>
+		<VarDeclaration Name="F_PRODUCT_TREATMENT" Type="BYTE" Comment="Sys: Non-specific System, Func: Product Treatment - Control function that mixes a treatment to a" InitialValue="137"/>
+		<VarDeclaration Name="F_RESERVED" Type="BYTE" Comment="Sys: Non-specific System, Func: reserved - reserved, pending discussion and approval of an &quot;all" InitialValue="138"/>
+		<VarDeclaration Name="F_DATA_LOGGER" Type="BYTE" Comment="Sys: Non-specific System, Func: Data Logger - Data logger as defined in ISO11783-10 for non-task" InitialValue="139"/>
+		<VarDeclaration Name="F_DECISION_SUPPORT" Type="BYTE" Comment="Sys: Non-specific System, Func: Decision Support - A control function which is used by the" InitialValue="140"/>
+		<VarDeclaration Name="F_LIGHTING_CONTROLLER" Type="BYTE" Comment="Sys: Non-specific System, Func: Lighting Controller - Control function that controls electrical" InitialValue="141"/>
+		<VarDeclaration Name="F_TIM_SERVER" Type="BYTE" Comment="Sys: Non-specific System, Func: TIM Server - Control function that represents a Tractor Implement" InitialValue="142"/>
+		<VarDeclaration Name="F_NOT_AVAILABLE" Type="BYTE" Comment="Sys: Non-specific System, Func: Not Available - This assignment can be used until an explicit" InitialValue="255"/>
+		<VarDeclaration Name="F_TRACTOR_AUXILIARY_VALVE_CONTROL" Type="BYTE" Comment="Sys: Tractor, Func: Auxiliary Valve Control - Control of addressed tractor mounted auxiliary" InitialValue="129"/>
+		<VarDeclaration Name="F_TRACTOR_REAR_HITCH_CONTROL" Type="BYTE" Comment="Sys: Tractor, Func: Rear Hitch Control - Control of the rear hitch of an agricultural tractor" InitialValue="130"/>
+		<VarDeclaration Name="F_TRACTOR_FRONT_HITCH_CONTROL" Type="BYTE" Comment="Sys: Tractor, Func: Front Hitch Control - Control of the front hitch of an agricultural tractor" InitialValue="131"/>
+		<VarDeclaration Name="F_TRACTOR_TRACTOR_MACHINE_CONTROL" Type="BYTE" Comment="Sys: Tractor, Func: Tractor Machine Control - Control of outputs including adjustment of any" InitialValue="132"/>
+		<VarDeclaration Name="F_TRACTOR_CENTER_HITCH_CONTROL" Type="BYTE" Comment="Sys: Tractor, Func: Center Hitch Control - Control of center hitch of an agricultural tractor" InitialValue="134"/>
+		<VarDeclaration Name="F_TRACTOR_NOT_AVAILABLE" Type="BYTE" Comment="Sys: Tractor, Func: Not Available - This assignment can be used until an explicit function has" InitialValue="255"/>
+		<VarDeclaration Name="F_TILLAGE_TILLAGE_MACHINE_CONTROL" Type="BYTE" Comment="Sys: Tillage, Func: Tillage Machine Control - Control of outputs including adjustment of any" InitialValue="132"/>
+		<VarDeclaration Name="F_TILLAGE_TILLAGE_DEPTH_CONTROL" Type="BYTE" Comment="Sys: Tillage, Func: Tillage Depth Control - Control of the depth of the tillage tool in the soil" InitialValue="135"/>
+		<VarDeclaration Name="F_TILLAGE_FRAME_CONTROL" Type="BYTE" Comment="Sys: Tillage, Func: Frame Control - Control of the folding and unfolding of the frame of the" InitialValue="136"/>
+		<VarDeclaration Name="F_TILLAGE_NOT_AVAILABLE" Type="BYTE" Comment="Sys: Tillage, Func: Not Available - This assignment can be used until an explicit function has" InitialValue="255"/>
+		<VarDeclaration Name="F_SECONDARY_TILLAGE_SECONDARY_TILLAGE_MACHINE_CONTROL" Type="BYTE" Comment="Sys: Secondary Tillage, Func: Secondary Tillage Machine Control - Control of outputs including" InitialValue="132"/>
+		<VarDeclaration Name="F_SECONDARY_TILLAGE_SECONDARY_TILLAGE_DEPTH_CONTROL" Type="BYTE" Comment="Sys: Secondary Tillage, Func: Secondary Tillage Depth Control - Control of the depth of the" InitialValue="135"/>
+		<VarDeclaration Name="F_SECONDARY_TILLAGE_FRAME_CONTROL" Type="BYTE" Comment="Sys: Secondary Tillage, Func: Frame Control - Control of the folding and unfolding of the frame" InitialValue="136"/>
+		<VarDeclaration Name="F_SECONDARY_TILLAGE_NOT_AVAILABLE" Type="BYTE" Comment="Sys: Secondary Tillage, Func: Not Available - This assignment can be used until an explicit" InitialValue="255"/>
+		<VarDeclaration Name="F_PLANTERS_SEEDERS_SEED_RATE_CONTROL" Type="BYTE" Comment="Sys: Planters/Seeders, Func: Seed Rate Control - Control of the rate of the product placed in the" InitialValue="128"/>
+		<VarDeclaration Name="F_PLANTERS_SEEDERS_SECTION_ON_OFF_CONTROL" Type="BYTE" Comment="Sys: Planters/Seeders, Func: Section On/Off Control - On/Off control of individual sections" InitialValue="129"/>
+		<VarDeclaration Name="F_PLANTERS_SEEDERS_POSITION_CONTROL" Type="BYTE" Comment="Sys: Planters/Seeders, Func: Position Control - Multiple axis control of an application boom in" InitialValue="131"/>
+		<VarDeclaration Name="F_PLANTERS_SEEDERS_PLANTERS_SEEDERS_MACHINE_CONTROL" Type="BYTE" Comment="Sys: Planters/Seeders, Func: Planters/ Seeders Machine Control - Control of outputs including" InitialValue="132"/>
+		<VarDeclaration Name="F_PLANTERS_SEEDERS_PRODUCT_FLOW" Type="BYTE" Comment="Sys: Planters/Seeders, Func: Product Flow - Measuring function to monitor the current product" InitialValue="133"/>
+		<VarDeclaration Name="F_PLANTERS_SEEDERS_PRODUCT_LEVEL" Type="BYTE" Comment="Sys: Planters/Seeders, Func: Product Level - Measuring function to monitor the current product" InitialValue="134"/>
+		<VarDeclaration Name="F_PLANTERS_SEEDERS_DEPTH_CONTROL" Type="BYTE" Comment="Sys: Planters/Seeders, Func: Depth Control - Control of the depth of seed/tuber placement in the" InitialValue="135"/>
+		<VarDeclaration Name="F_PLANTERS_SEEDERS_FRAME_CONTROL" Type="BYTE" Comment="Sys: Planters/Seeders, Func: Frame Control - Control of the folding and unfolding of the frame of" InitialValue="136"/>
+		<VarDeclaration Name="F_PLANTERS_SEEDERS_DOWN_PRESSURE" Type="BYTE" Comment="Sys: Planters/Seeders, Func: Down Pressure - Control of the ground contact pressure on the" InitialValue="137"/>
+		<VarDeclaration Name="F_PLANTERS_SEEDERS_NOT_AVAILABLE" Type="BYTE" Comment="Sys: Planters/Seeders, Func: Not Available - This assignment can be used until an explicit" InitialValue="255"/>
+		<VarDeclaration Name="F_FERTILIZERS_FERTILIZE_RATE_CONTROL" Type="BYTE" Comment="Sys: Fertilizers, Func: Fertilize Rate Control - Control of the rate of product placed on or in" InitialValue="128"/>
+		<VarDeclaration Name="F_FERTILIZERS_SECTION_ON_OFF_CONTROL" Type="BYTE" Comment="Sys: Fertilizers, Func: Section On/Off Control - On/Off control of individual sections" InitialValue="129"/>
+		<VarDeclaration Name="F_FERTILIZERS_PRODUCT_PRESSURE" Type="BYTE" Comment="Sys: Fertilizers, Func: Product Pressure - Monitoring of the pressure of the liquid in the" InitialValue="130"/>
+		<VarDeclaration Name="F_FERTILIZERS_POSITION_CONTROL" Type="BYTE" Comment="Sys: Fertilizers, Func: Position Control - Multiple axis control of an application boom in the x" InitialValue="131"/>
+		<VarDeclaration Name="F_FERTILIZERS_FERTILIZERS_MACHINE_CONTROL" Type="BYTE" Comment="Sys: Fertilizers, Func: Fertilizers Machine Control - Control of outputs including adjustment of" InitialValue="132"/>
+		<VarDeclaration Name="F_FERTILIZERS_PRODUCT_FLOW" Type="BYTE" Comment="Sys: Fertilizers, Func: Product Flow - Measuring function to monitor the current product flow." InitialValue="133"/>
+		<VarDeclaration Name="F_FERTILIZERS_PRODUCT_LEVEL" Type="BYTE" Comment="Sys: Fertilizers, Func: Product Level - Measuring function to monitor the current product level" InitialValue="134"/>
+		<VarDeclaration Name="F_FERTILIZERS_HEIGHT_DEPTH_CONTROL" Type="BYTE" Comment="Sys: Fertilizers, Func: Height/Depth Control - Control of the height of the implement boom" InitialValue="135"/>
+		<VarDeclaration Name="F_FERTILIZERS_FRAME_CONTROL" Type="BYTE" Comment="Sys: Fertilizers, Func: Frame Control - Control of the folding and unfolding of the frame of the" InitialValue="136"/>
+		<VarDeclaration Name="F_FERTILIZERS_NOT_AVAILABLE" Type="BYTE" Comment="Sys: Fertilizers, Func: Not Available - This assignment can be used until an explicit function" InitialValue="255"/>
+		<VarDeclaration Name="F_SPRAYERS_SPRAY_RATE_CONTROL" Type="BYTE" Comment="Sys: Sprayers, Func: Spray Rate Control - Control of the rate of crop protection product applied" InitialValue="128"/>
+		<VarDeclaration Name="F_SPRAYERS_SECTION_ON_OFF_CONTROL" Type="BYTE" Comment="Sys: Sprayers, Func: Section On/Off Control - On/Off control of individual sections" InitialValue="129"/>
+		<VarDeclaration Name="F_SPRAYERS_PRODUCT_PRESSURE" Type="BYTE" Comment="Sys: Sprayers, Func: Product Pressure - Monitoring of the pressure of the product in the delivery" InitialValue="130"/>
+		<VarDeclaration Name="F_SPRAYERS_POSITION_CONTROL" Type="BYTE" Comment="Sys: Sprayers, Func: Position Control - Multiple axis control of an application boom in the x &amp; y" InitialValue="131"/>
+		<VarDeclaration Name="F_SPRAYERS_SPRAYERS_MACHINE_CONTROL" Type="BYTE" Comment="Sys: Sprayers, Func: Sprayers Machine Control - Control of outputs including adjustment of any" InitialValue="132"/>
+		<VarDeclaration Name="F_SPRAYERS_PRODUCT_FLOW" Type="BYTE" Comment="Sys: Sprayers, Func: Product Flow - Measuring function to monitor the current product flow" InitialValue="133"/>
+		<VarDeclaration Name="F_SPRAYERS_PRODUCT_LEVEL" Type="BYTE" Comment="Sys: Sprayers, Func: Product Level - Measuring function to monitor the current product level in" InitialValue="134"/>
+		<VarDeclaration Name="F_SPRAYERS_BOOM_HEIGHT_CONTROL" Type="BYTE" Comment="Sys: Sprayers, Func: Boom Height Control - Control of the height of the boom above the surface of" InitialValue="135"/>
+		<VarDeclaration Name="F_SPRAYERS_FRAME_CONTROL" Type="BYTE" Comment="Sys: Sprayers, Func: Frame Control - Control of the folding and unfolding of the frame of the" InitialValue="136"/>
+		<VarDeclaration Name="F_SPRAYERS_NOT_AVAILABLE" Type="BYTE" Comment="Sys: Sprayers, Func: Not Available - This assignment can be used until an explicit function has" InitialValue="255"/>
+		<VarDeclaration Name="F_HARVESTERS_TAILING_MONITOR" Type="BYTE" Comment="Sys: Harvesters, Func: Tailing Monitor - Measuring system to monitor the quantity of unthreshed" InitialValue="128"/>
+		<VarDeclaration Name="F_HARVESTERS_HEADER_CONTROL" Type="BYTE" Comment="Sys: Harvesters, Func: Header Control - Control of the headers reel height and rotation and" InitialValue="129"/>
+		<VarDeclaration Name="F_HARVESTERS_PRODUCT_LOSS_MONITOR" Type="BYTE" Comment="Sys: Harvesters, Func: Product Loss Monitor - Measuring system to monitor the amount of grain" InitialValue="130"/>
+		<VarDeclaration Name="F_HARVESTERS_PRODUCT_MOISTURE" Type="BYTE" Comment="Sys: Harvesters, Func: Product Moisture - Measuring system to monitor the moisture content of the" InitialValue="131"/>
+		<VarDeclaration Name="F_HARVESTERS_HARVESTER_MACHINE_CONTROL" Type="BYTE" Comment="Sys: Harvesters, Func: Harvester Machine Control - Control of outputs including adjustment of any" InitialValue="132"/>
+		<VarDeclaration Name="F_HARVESTERS_PRODUCT_FLOW" Type="BYTE" Comment="Sys: Harvesters, Func: Product Flow - Measuring function to monitor the rate of the grain flow" InitialValue="133"/>
+		<VarDeclaration Name="F_HARVESTERS_PRODUCT_LEVEL" Type="BYTE" Comment="Sys: Harvesters, Func: Product Level - Measuring function to monitor the grain level in the" InitialValue="134"/>
+		<VarDeclaration Name="F_HARVESTERS_HEADER_HEIGHT_CONTROL" Type="BYTE" Comment="Sys: Harvesters, Func: Header Height Control - Control of the height of cutter bar above the" InitialValue="135"/>
+		<VarDeclaration Name="F_HARVESTERS_NOT_AVAILABLE" Type="BYTE" Comment="Sys: Harvesters, Func: Not Available - This assignment can be used until an explicit function has" InitialValue="255"/>
+		<VarDeclaration Name="F_ROOT_HARVESTERS_ROOT_HARVESTERS_MACHINE_CONTROL" Type="BYTE" Comment="Sys: Root Harvesters, Func: Root Harvesters Machine Control - Control of outputs including" InitialValue="132"/>
+		<VarDeclaration Name="F_ROOT_HARVESTERS_PRODUCT_FLOW" Type="BYTE" Comment="Sys: Root Harvesters, Func: Product Flow - Measuring function to monitor the product flow into" InitialValue="133"/>
+		<VarDeclaration Name="F_ROOT_HARVESTERS_PRODUCT_LEVEL" Type="BYTE" Comment="Sys: Root Harvesters, Func: Product Level - Measuring function to monitor the product level in" InitialValue="134"/>
+		<VarDeclaration Name="F_ROOT_HARVESTERS_DEPTH_CONTROL" Type="BYTE" Comment="Sys: Root Harvesters, Func: Depth Control - Control of the depth of the harvestors lifter shares" InitialValue="135"/>
+		<VarDeclaration Name="F_ROOT_HARVESTERS_NOT_AVAILABLE" Type="BYTE" Comment="Sys: Root Harvesters, Func: Not Available - This assignment can be used until an explicit" InitialValue="255"/>
+		<VarDeclaration Name="F_FORAGE_TWINE_WRAPPER_CONTROL" Type="BYTE" Comment="Sys: Forage, Func: Twine Wrapper Control - Control of the wrapping of twine around a bale before" InitialValue="128"/>
+		<VarDeclaration Name="F_FORAGE_PRODUCT_PACKAGING_CONTROL" Type="BYTE" Comment="Sys: Forage, Func: Product Packaging Control - Control of packaging process for the forage" InitialValue="129"/>
+		<VarDeclaration Name="F_FORAGE_PRODUCT_MOISTURE" Type="BYTE" Comment="Sys: Forage, Func: Product Moisture - Measuring system to monitor the moisture of the forage" InitialValue="131"/>
+		<VarDeclaration Name="F_FORAGE_FORAGE_MACHINE_CONTROL" Type="BYTE" Comment="Sys: Forage, Func: Forage Machine Control - Control of outputs including adjustment of ancillary" InitialValue="132"/>
+		<VarDeclaration Name="F_FORAGE_PRODUCT_FLOW" Type="BYTE" Comment="Sys: Forage, Func: Product Flow - Measuring function to monitor the product flow through the" InitialValue="133"/>
+		<VarDeclaration Name="F_FORAGE_WORKING_HEIGHT_CONTROL" Type="BYTE" Comment="Sys: Forage, Func: Working Height Control - Control of the height of cutting header above the" InitialValue="135"/>
+		<VarDeclaration Name="F_FORAGE_NOT_AVAILABLE" Type="BYTE" Comment="Sys: Forage, Func: Not Available - This assignment can be used until an explicit function has" InitialValue="255"/>
+		<VarDeclaration Name="F_IRRIGATION_NOT_AVAILABLE" Type="BYTE" Comment="Sys: Irrigation, Func: Not Available - This assignment can be used until an explicit function has" InitialValue="255"/>
+		<VarDeclaration Name="F_TRANSPORT_TRAILER_TRANSPORT_MACHINE_CONTROL" Type="BYTE" Comment="Sys: Transport/Trailer, Func: Transport Machine Control - Control of outputs including adjustment" InitialValue="132"/>
+		<VarDeclaration Name="F_TRANSPORT_TRAILER_UNLOAD_CONTROL" Type="BYTE" Comment="Sys: Transport/Trailer, Func: Unload Control - Control of trailer unloading process" InitialValue="136"/>
+		<VarDeclaration Name="F_TRANSPORT_TRAILER_NOT_AVAILABLE" Type="BYTE" Comment="Sys: Transport/Trailer, Func: Not Available - This assignment can be used until an explicit" InitialValue="255"/>
+		<VarDeclaration Name="F_FARM_YARD_OPERATIONS_NOT_AVAILABLE" Type="BYTE" Comment="Sys: Farm Yard Operations, Func: Not Available - This assignment can be used until an explicit" InitialValue="255"/>
+		<VarDeclaration Name="F_POWERED_AUXILIARY_DEVICES_POWERED_DEVICES_MACHINE_CONTROL" Type="BYTE" Comment="Sys: Powered Auxiliary Devices, Func: Powered Devices Machine Control - Control of outputs" InitialValue="132"/>
+		<VarDeclaration Name="F_POWERED_AUXILIARY_DEVICES_NOT_AVAILABLE" Type="BYTE" Comment="Sys: Powered Auxiliary Devices, Func: Not Available - This assignment can be used until an" InitialValue="255"/>
+		<VarDeclaration Name="F_SPECIAL_CROPS_SPECIAL_CROP_MACHINE_CONTROL" Type="BYTE" Comment="Sys: Special Crops, Func: Special Crop Machine Control - Control of outputs including adjustment" InitialValue="132"/>
+		<VarDeclaration Name="F_SPECIAL_CROPS_NOT_AVAILABLE" Type="BYTE" Comment="Sys: Special Crops, Func: Not Available - This assignment can be used until an explicit function" InitialValue="255"/>
+		<VarDeclaration Name="F_EARTH_WORK_MATERIAL_RATE_CONTROL" Type="BYTE" Comment="Sys: Earth Work, Func: Material Rate Control - Control of the rate the material is processed." InitialValue="128"/>
+		<VarDeclaration Name="F_EARTH_WORK_EARTHWORKS_MACHINE_CONTROL" Type="BYTE" Comment="Sys: Earth Work, Func: Earthworks Machine Control - Control of outputs including adjustment of" InitialValue="132"/>
+		<VarDeclaration Name="F_EARTH_WORK_MATERIAL_FLOW" Type="BYTE" Comment="Sys: Earth Work, Func: Material Flow - Measuring function to monitor the material flow" InitialValue="133"/>
+		<VarDeclaration Name="F_EARTH_WORK_MATERIAL_LEVEL" Type="BYTE" Comment="Sys: Earth Work, Func: Material Level - Measuring function to monitor the material level" InitialValue="134"/>
+		<VarDeclaration Name="F_EARTH_WORK_DEPTH_CONTROL" Type="BYTE" Comment="Sys: Earth Work, Func: Depth Control - Control of working depth" InitialValue="135"/>
+		<VarDeclaration Name="F_EARTH_WORK_NOT_AVAILABLE" Type="BYTE" Comment="Sys: Earth Work, Func: Not Available - This assignment can be used until an explicit function has" InitialValue="255"/>
+		<VarDeclaration Name="F_SKIDDER_SKIDDER_MACHINE_CONTROL" Type="BYTE" Comment="Sys: Skidder, Func: Skidder Machine Control - Control of outputs including adjustment of any" InitialValue="132"/>
+		<VarDeclaration Name="F_SKIDDER_NOT_AVAILABLE" Type="BYTE" Comment="Sys: Skidder, Func: Not Available - This assignment can be used until an explicit function has" InitialValue="255"/>
+		<VarDeclaration Name="F_SENSOR_SYSTEMS_GUIDANCE_FEELER" Type="BYTE" Comment="Sys: Sensor Systems, Func: Guidance Feeler - Mechanical function for determining row position in" InitialValue="128"/>
+		<VarDeclaration Name="F_SENSOR_SYSTEMS_CAMERA_SYSTEM" Type="BYTE" Comment="Sys: Sensor Systems, Func: Camera System - Provides images or processed data for control" InitialValue="129"/>
+		<VarDeclaration Name="F_SENSOR_SYSTEMS_CROP_SCOUTING" Type="BYTE" Comment="Sys: Sensor Systems, Func: Crop Scouting - Measures vegetation parameters in a standing crop" InitialValue="130"/>
+		<VarDeclaration Name="F_SENSOR_SYSTEMS_MATERIAL_PROPERTIES_SENSING" Type="BYTE" Comment="Sys: Sensor Systems, Func: Material Properties Sensing - Sensing system to detect material" InitialValue="131"/>
+		<VarDeclaration Name="F_SENSOR_SYSTEMS_INERTIAL_MEASUREMENT_UNIT_IMU" Type="BYTE" Comment="Sys: Sensor Systems, Func: Inertial Measurement Unit (IMU) - A sensor unit providing inertial" InitialValue="132"/>
+		<VarDeclaration Name="F_SENSOR_SYSTEMS_PRODUCT_FLOW" Type="BYTE" Comment="Sys: Sensor Systems, Func: Product flow - Measuring function to monitor product flow" InitialValue="133"/>
+		<VarDeclaration Name="F_SENSOR_SYSTEMS_PRODUCT_LEVEL" Type="BYTE" Comment="Sys: Sensor Systems, Func: Product Level - Measuring function to monitor the product level in the" InitialValue="134"/>
+		<VarDeclaration Name="F_SENSOR_SYSTEMS_PRODUCT_MASS" Type="BYTE" Comment="Sys: Sensor Systems, Func: Product Mass - Measuring function to monitor the mass of the product" InitialValue="135"/>
+		<VarDeclaration Name="F_SENSOR_SYSTEMS_VIBRATION_KNOCK" Type="BYTE" Comment="Sys: Sensor Systems, Func: Vibration/Knock - Measuring function to determine the vibration or" InitialValue="136"/>
+		<VarDeclaration Name="F_SENSOR_SYSTEMS_WEATHER_INSTRUMENTS" Type="BYTE" Comment="Sys: Sensor Systems, Func: Weather Instruments - The &quot;Weather Instruments&quot; function code shall be" InitialValue="137"/>
+		<VarDeclaration Name="F_SENSOR_SYSTEMS_SOIL_SCOUTING" Type="BYTE" Comment="Sys: Sensor Systems, Func: Soil Scouting - Soil Sensor to measure different soil physical" InitialValue="138"/>
+		<VarDeclaration Name="F_TIMBER_HARVESTERS_TIMBER_HARVESTORS_MACHINE_CONTROL" Type="BYTE" Comment="Sys: Timber Harvesters, Func: Timber Harvestors Machine Control - Control of outputs including" InitialValue="132"/>
+		<VarDeclaration Name="F_FORWARDERS_FORWARDERS_MACHINE_CONTROL" Type="BYTE" Comment="Sys: Forwarders, Func: Forwarders Machine Control - Control of outputs including adjustment of" InitialValue="132"/>
+		<VarDeclaration Name="F_TIMBER_LOADERS_TIMBER_LOADERS_MACHINE_CONTROL" Type="BYTE" Comment="Sys: Timber Loaders, Func: Timber Loaders Machine Control - Control of outputs including" InitialValue="132"/>
+		<VarDeclaration Name="F_TIMBER_PROCESSING_MACHINES_TIMBER_PROCESSING_MACHINE_CONTROL" Type="BYTE" Comment="Sys: Timber Processing Machines, Func: Timber Processing Machine Control - Control of outputs" InitialValue="132"/>
+		<VarDeclaration Name="F_MULCHERS_MULCHER_MACHINE_CONTROL" Type="BYTE" Comment="Sys: Mulchers, Func: Mulcher Machine Control - Control of outputs including adjustment of any" InitialValue="132"/>
+		<VarDeclaration Name="F_UTILITY_VEHICLES_UTILITY_MACHINE_CONTROL" Type="BYTE" Comment="Sys: Utility Vehicles, Func: Utility Machine Control - Control of outputs including adjustment of" InitialValue="132"/>
+		<VarDeclaration Name="F_SLURRY_MANURE_APPLICATORS_SLURRY_MANURE_RATE_CONTROL" Type="BYTE" Comment="Sys: Slurry/Manure Applicators, Func: Slurry/Manure Rate Control - Control of the rate of product" InitialValue="128"/>
+		<VarDeclaration Name="F_SLURRY_MANURE_APPLICATORS_SECTION_ON_OFF_CONTROL" Type="BYTE" Comment="Sys: Slurry/Manure Applicators, Func: Section On/Off Control - On/Off control of individual" InitialValue="129"/>
+		<VarDeclaration Name="F_SLURRY_MANURE_APPLICATORS_PRODUCT_PRESSURE" Type="BYTE" Comment="Sys: Slurry/Manure Applicators, Func: Product Pressure - Monitoring of the pressure of the" InitialValue="130"/>
+		<VarDeclaration Name="F_SLURRY_MANURE_APPLICATORS_SLURRY_MANURE_MACHINE_CONTROL" Type="BYTE" Comment="Sys: Slurry/Manure Applicators, Func: Slurry/Manure Machine Control - Control of outputs" InitialValue="132"/>
+		<VarDeclaration Name="F_SLURRY_MANURE_APPLICATORS_PRODUCT_FLOW" Type="BYTE" Comment="Sys: Slurry/Manure Applicators, Func: Product Flow - Measuring function to monitor the current" InitialValue="133"/>
+		<VarDeclaration Name="F_SLURRY_MANURE_APPLICATORS_PRODUCT_LEVEL" Type="BYTE" Comment="Sys: Slurry/Manure Applicators, Func: Product Level - Measuring function to monitor the current" InitialValue="134"/>
+		<VarDeclaration Name="F_SLURRY_MANURE_APPLICATORS_BOOM_HEIGHT_CONTROL" Type="BYTE" Comment="Sys: Slurry/Manure Applicators, Func: Boom Height Control - Control of the height of delivery" InitialValue="135"/>
+		<VarDeclaration Name="F_FEEDERS_MIXERS_FEEDER_MIXER_RATE_CONTROL" Type="BYTE" Comment="Sys: Feeders/Mixers, Func: Feeder/Mixer Rate Control - Control of the rate of product distributed" InitialValue="128"/>
+		<VarDeclaration Name="F_FEEDERS_MIXERS_SECTION_ON_OFF_CONTROL" Type="BYTE" Comment="Sys: Feeders/Mixers, Func: Section On/Off Control - On/Off control of individual sections, e.g." InitialValue="129"/>
+		<VarDeclaration Name="F_FEEDERS_MIXERS_PRODUCT_PRESSURE" Type="BYTE" Comment="Sys: Feeders/Mixers, Func: Product Pressure - Monitoring of the pressure of the product in the" InitialValue="130"/>
+		<VarDeclaration Name="F_FEEDERS_MIXERS_FEEDER_MIXER_MACHINE_CONTROL" Type="BYTE" Comment="Sys: Feeders/Mixers, Func: Feeder/Mixer Machine Control - Control of outputs including adjustment" InitialValue="132"/>
+		<VarDeclaration Name="F_FEEDERS_MIXERS_PRODUCT_FLOW" Type="BYTE" Comment="Sys: Feeders/Mixers, Func: Product Flow - Measuring function to monitor the current product flow." InitialValue="133"/>
+		<VarDeclaration Name="F_FEEDERS_MIXERS_PRODUCT_LEVEL" Type="BYTE" Comment="Sys: Feeders/Mixers, Func: Product Level - Measuring function to monitor the current product" InitialValue="134"/>
+		<VarDeclaration Name="F_FEEDERS_MIXERS_BOOM_HEIGHT_CONTROL" Type="BYTE" Comment="Sys: Feeders/Mixers, Func: Boom Height Control - Control of the height of delivery boom above the" InitialValue="135"/>
+		<VarDeclaration Name="F_WEEDERS_WEEDER_MACHINE_CONTROL" Type="BYTE" Comment="Sys: Weeders - Non-chemical weed control. The device class Weeders is used by devices that" InitialValue="132"/>
+		<VarDeclaration Name="F_TURF_AND_LAWN_CARE_MOWERS_TURF_AND_LAWN_CARE_MOWERS_MACHINE_CONTROL" Type="BYTE" Comment="Sys: Turf and Lawn Care Mowers, Func: Turf and Lawn Care Mowers Machine Control - The machine" InitialValue="132"/>
+		<VarDeclaration Name="F_PRODUCT_MATERIAL_HANDLING_PRODUCT_MATERIAL_HANDLING_MACHINE_CONTROL" Type="BYTE" Comment="Sys: Product/Material Handling, Func: Product/Material Handling Machine Control - Control of" InitialValue="132"/>
+		<VarDeclaration Name="F_PRODUCT_MATERIAL_HANDLING_PRODUCT_MATERIAL_HANDLING_PRODUCT_FLOW" Type="BYTE" Comment="Sys: Product/Material Handling, Func: Product/Material Handling Product Flow - Measuring function" InitialValue="133"/>
+		<VarDeclaration Name="F_PRODUCT_MATERIAL_HANDLING_PRODUCT_MATERIAL_HANDLING_PRODUCT_LEVEL" Type="BYTE" Comment="Sys: Product/Material Handling, Func: Product/Material Handling Product Level - Meauring function" InitialValue="134"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE isobus::pgn::const;
+
+// Industry Group 2 specific function defines
+GLOBALCONSTANTS IG2_NAME_Functions
+	// Non-specific System (DC_NON_SPECIFIC_SYSTEM = 0)
+	VAR_GLOBAL CONSTANT
+		F_NON_VIRTUAL_TERMINAL_DISPLAY : BYTE := 128; // Sys: Non-specific System, Func: Non Virtual Terminal Display - An operator display connected to
+		                                              // the 11783 network that cannot perform as a Virtual Terminal and is not allowed to send a VT
+		                                              // status me...
+		F_OPERATOR_CONTROLS_MACHINE_SPECIFIC : BYTE := 129; // Sys: Non-specific System, Func: Operator Controls - Machine Specific - Operator interface
+		                                                    // controls, either auxiliary control inputs or a proprietary means, provided by a control function
+		F_TASK_CONTROLLER_MAPPING_COMPUTER : BYTE := 130; // Sys: Non-specific System, Func: Task Controller (Mapping Computer) - A control function on the
+		                                                  // 11783 network that is responsible for the sending, receiving and logging of process data as
+		                                                  // defined in...
+		F_POSITION_CONTROL : BYTE := 131; // Sys: Non-specific System, Func: Position Control - Multiple axis position control of a devices
+		                                  // application boom used for dispensing fertilizer, chemicals and seed
+		F_MACHINE_CONTROL : BYTE := 132; // Sys: Non-specific System, Func: Machine Control - Control of outputs including adjustment of any
+		                                 // ancillary functions like position and/or rotation speed. For VT or TC control, this function
+		                                 // combine...
+		F_FOREIGN_OBJECT_DETECTION : BYTE := 133; // Sys: Non-specific System, Func: Foreign Object Detection - Detection of undesireable objects in
+		                                          // the product flow
+		F_TRACTOR_ECU : BYTE := 134; // Sys: Non-specific System, Func: Tractor ECU - An interface unit between the tractor and the
+		                             // implement bus representing the tractor and its messages on the 11783 network
+		F_SEQUENCE_CONTROL_MASTER : BYTE := 135; // Sys: Non-specific System, Func: Sequence Control Master - The master controller in the Sequence
+		                                         // Control System as defined in ISO11783-14
+		F_PRODUCT_DOSING : BYTE := 136; // Sys: Non-specific System, Func: Product Dosing - Control function that adds an active ingredient
+		                                // to a liquid carrier for application to fields
+		F_PRODUCT_TREATMENT : BYTE := 137; // Sys: Non-specific System, Func: Product Treatment - Control function that mixes a treatment to a
+		                                   // dry product applied to or harvested from fields
+		F_RESERVED : BYTE := 138; // Sys: Non-specific System, Func: reserved - reserved, pending discussion and approval of an "all
+		                          // operations stop function"
+		F_DATA_LOGGER : BYTE := 139; // Sys: Non-specific System, Func: Data Logger - Data logger as defined in ISO11783-10 for non-task
+		                             // related data logging
+		F_DECISION_SUPPORT : BYTE := 140; // Sys: Non-specific System, Func: Decision Support - A control function which is used by the
+		                                  // operator or by another control function to configure an operation to perform optimally under the
+		                                  // current c...
+		F_LIGHTING_CONTROLLER : BYTE := 141; // Sys: Non-specific System, Func: Lighting Controller - Control function that controls electrical
+		                                     // power to the lights and reports the status of the lights. This control function can be used on
+		                                     // traile...
+		F_TIM_SERVER : BYTE := 142; // Sys: Non-specific System, Func: TIM Server - Control function that represents a Tractor Implement
+		                            // Management (TIM) Server. TIM is an Operator Assistance System that enables TIM clients to request
+		                            // t...
+		F_NOT_AVAILABLE : BYTE := 255; // Sys: Non-specific System, Func: Not Available - This assignment can be used until an explicit
+		                               // function has been assigned.
+	END_VAR
+
+	// Tractor (DC_TRACTOR = 1)
+	VAR_GLOBAL CONSTANT
+		F_TRACTOR_AUXILIARY_VALVE_CONTROL : BYTE := 129; // Sys: Tractor, Func: Auxiliary Valve Control - Control of addressed tractor mounted auxiliary
+		                                                 // valves
+		F_TRACTOR_REAR_HITCH_CONTROL : BYTE := 130; // Sys: Tractor, Func: Rear Hitch Control - Control of the rear hitch of an agricultural tractor
+		F_TRACTOR_FRONT_HITCH_CONTROL : BYTE := 131; // Sys: Tractor, Func: Front Hitch Control - Control of the front hitch of an agricultural tractor
+		F_TRACTOR_TRACTOR_MACHINE_CONTROL : BYTE := 132; // Sys: Tractor, Func: Tractor Machine Control - Control of outputs including adjustment of any
+		                                                 // ancillary functions like position and/or rotation speed. For VT or TC control, this function
+		                                                 // combines se...
+		F_TRACTOR_CENTER_HITCH_CONTROL : BYTE := 134; // Sys: Tractor, Func: Center Hitch Control - Control of center hitch of an agricultural tractor
+		F_TRACTOR_NOT_AVAILABLE : BYTE := 255; // Sys: Tractor, Func: Not Available - This assignment can be used until an explicit function has
+		                                       // been assigned.
+	END_VAR
+
+	// Tillage (DC_TILLAGE = 2)
+	VAR_GLOBAL CONSTANT
+		F_TILLAGE_TILLAGE_MACHINE_CONTROL : BYTE := 132; // Sys: Tillage, Func: Tillage Machine Control - Control of outputs including adjustment of any
+		                                                 // ancillary functions like position and/or rotation speed. For VT or TC control, this function
+		                                                 // combines se...
+		F_TILLAGE_TILLAGE_DEPTH_CONTROL : BYTE := 135; // Sys: Tillage, Func: Tillage Depth Control - Control of the depth of the tillage tool in the soil
+		F_TILLAGE_FRAME_CONTROL : BYTE := 136; // Sys: Tillage, Func: Frame Control - Control of the folding and unfolding of the frame of the
+		                                       // device. Control used to change between transport and field operation position. Not to be used for
+		                                       // field ...
+		F_TILLAGE_NOT_AVAILABLE : BYTE := 255; // Sys: Tillage, Func: Not Available - This assignment can be used until an explicit function has
+		                                       // been assigned.
+	END_VAR
+
+	// Secondary Tillage (DC_SECONDARY_TILLAGE = 3)
+	VAR_GLOBAL CONSTANT
+		F_SECONDARY_TILLAGE_SECONDARY_TILLAGE_MACHINE_CONTROL : BYTE := 132; // Sys: Secondary Tillage, Func: Secondary Tillage Machine Control - Control of outputs including
+		                                                                     // adjustment of any ancillary functions like position and/or rotation speed. For VT or TC control,
+		                                                                     // this ...
+		F_SECONDARY_TILLAGE_SECONDARY_TILLAGE_DEPTH_CONTROL : BYTE := 135; // Sys: Secondary Tillage, Func: Secondary Tillage Depth Control - Control of the depth of the
+		                                                                   // tillage tool in the soil. Secondary tillage is usually soil surface preparation.
+		F_SECONDARY_TILLAGE_FRAME_CONTROL : BYTE := 136; // Sys: Secondary Tillage, Func: Frame Control - Control of the folding and unfolding of the frame
+		                                                 // of the device. Control used to change between transport and field operation position. Not to be
+		                                                 // used ...
+		F_SECONDARY_TILLAGE_NOT_AVAILABLE : BYTE := 255; // Sys: Secondary Tillage, Func: Not Available - This assignment can be used until an explicit
+		                                                 // function has been assigned.
+	END_VAR
+
+	// Planters/Seeders (DC_PLANTERS_SEEDERS = 4)
+	VAR_GLOBAL CONSTANT
+		F_PLANTERS_SEEDERS_SEED_RATE_CONTROL : BYTE := 128; // Sys: Planters/Seeders, Func: Seed Rate Control - Control of the rate of the product placed in the
+		                                                    // soil. This can be the primary control function of a seeder
+		F_PLANTERS_SEEDERS_SECTION_ON_OFF_CONTROL : BYTE := 129; // Sys: Planters/Seeders, Func: Section On/Off Control - On/Off control of individual sections
+		F_PLANTERS_SEEDERS_POSITION_CONTROL : BYTE := 131; // Sys: Planters/Seeders, Func: Position Control - Multiple axis control of an application boom in
+		                                                   // the x & y coordinates which can be used for row guidance. Z coordinate control is achieved by
+		                                                   // depth/ ...
+		F_PLANTERS_SEEDERS_PLANTERS_SEEDERS_MACHINE_CONTROL : BYTE := 132; // Sys: Planters/Seeders, Func: Planters/ Seeders Machine Control - Control of outputs including
+		                                                                   // adjustment of any ancillary functions like position and/or rotation speed. For VT or TC control,
+		                                                                   // this f...
+		F_PLANTERS_SEEDERS_PRODUCT_FLOW : BYTE := 133; // Sys: Planters/Seeders, Func: Product Flow - Measuring function to monitor the current product
+		                                               // flow during operation
+		F_PLANTERS_SEEDERS_PRODUCT_LEVEL : BYTE := 134; // Sys: Planters/Seeders, Func: Product Level - Measuring function to monitor the current product
+		                                                // level in the bin
+		F_PLANTERS_SEEDERS_DEPTH_CONTROL : BYTE := 135; // Sys: Planters/Seeders, Func: Depth Control - Control of the depth of seed/tuber placement in the
+		                                                // soil
+		F_PLANTERS_SEEDERS_FRAME_CONTROL : BYTE := 136; // Sys: Planters/Seeders, Func: Frame Control - Control of the folding and unfolding of the frame of
+		                                                // the device. Control used to change between transport and field operation position. Not to be used
+		                                                // f...
+		F_PLANTERS_SEEDERS_DOWN_PRESSURE : BYTE := 137; // Sys: Planters/Seeders, Func: Down Pressure - Control of the ground contact pressure on the
+		                                                // product delivery unit for optimal operation e.g. pressure on openers for penetrating the ground
+		F_PLANTERS_SEEDERS_NOT_AVAILABLE : BYTE := 255; // Sys: Planters/Seeders, Func: Not Available - This assignment can be used until an explicit
+		                                                // function has been assigned.
+	END_VAR
+
+	// Fertilizers (DC_FERTILIZERS = 5)
+	VAR_GLOBAL CONSTANT
+		F_FERTILIZERS_FERTILIZE_RATE_CONTROL : BYTE := 128; // Sys: Fertilizers, Func: Fertilize Rate Control - Control of the rate of product placed on or in
+		                                                    // the soil
+		F_FERTILIZERS_SECTION_ON_OFF_CONTROL : BYTE := 129; // Sys: Fertilizers, Func: Section On/Off Control - On/Off control of individual sections
+		F_FERTILIZERS_PRODUCT_PRESSURE : BYTE := 130; // Sys: Fertilizers, Func: Product Pressure - Monitoring of the pressure of the liquid in the
+		                                              // sprayers delivery booms
+		F_FERTILIZERS_POSITION_CONTROL : BYTE := 131; // Sys: Fertilizers, Func: Position Control - Multiple axis control of an application boom in the x
+		                                              // & y coordinates which can be used for row guidance. Z coordinate control is achieved by depth/
+		                                              // heigh...
+		F_FERTILIZERS_FERTILIZERS_MACHINE_CONTROL : BYTE := 132; // Sys: Fertilizers, Func: Fertilizers Machine Control - Control of outputs including adjustment of
+		                                                         // any ancillary functions like position and/or rotation speed. For VT or TC control, this function
+		                                                         // com...
+		F_FERTILIZERS_PRODUCT_FLOW : BYTE := 133; // Sys: Fertilizers, Func: Product Flow - Measuring function to monitor the current product flow.
+		F_FERTILIZERS_PRODUCT_LEVEL : BYTE := 134; // Sys: Fertilizers, Func: Product Level - Measuring function to monitor the current product level
+		                                           // in the bin
+		F_FERTILIZERS_HEIGHT_DEPTH_CONTROL : BYTE := 135; // Sys: Fertilizers, Func: Height/Depth Control - Control of the height of the implement boom
+		                                                  // dispensing product on the soil or the depth of the product placement in the soil
+		F_FERTILIZERS_FRAME_CONTROL : BYTE := 136; // Sys: Fertilizers, Func: Frame Control - Control of the folding and unfolding of the frame of the
+		                                           // device. Control used to change between transport and field operation position. Not to be used for
+		                                           // fi...
+		F_FERTILIZERS_NOT_AVAILABLE : BYTE := 255; // Sys: Fertilizers, Func: Not Available - This assignment can be used until an explicit function
+		                                           // has been assigned.
+	END_VAR
+
+	// Sprayers (DC_SPRAYERS = 6)
+	VAR_GLOBAL CONSTANT
+		F_SPRAYERS_SPRAY_RATE_CONTROL : BYTE := 128; // Sys: Sprayers, Func: Spray Rate Control - Control of the rate of crop protection product applied
+		                                             // to a crop or on the soil
+		F_SPRAYERS_SECTION_ON_OFF_CONTROL : BYTE := 129; // Sys: Sprayers, Func: Section On/Off Control - On/Off control of individual sections
+		F_SPRAYERS_PRODUCT_PRESSURE : BYTE := 130; // Sys: Sprayers, Func: Product Pressure - Monitoring of the pressure of the product in the delivery
+		                                           // booms
+		F_SPRAYERS_POSITION_CONTROL : BYTE := 131; // Sys: Sprayers, Func: Position Control - Multiple axis control of an application boom in the x & y
+		                                           // coordinates which can be used for row guidance. Z coordinate control is achieved by depth/ height
+		                                           // c...
+		F_SPRAYERS_SPRAYERS_MACHINE_CONTROL : BYTE := 132; // Sys: Sprayers, Func: Sprayers Machine Control - Control of outputs including adjustment of any
+		                                                   // ancillary functions like position and/or rotation speed. For VT or TC control, this function
+		                                                   // combines ...
+		F_SPRAYERS_PRODUCT_FLOW : BYTE := 133; // Sys: Sprayers, Func: Product Flow - Measuring function to monitor the current product flow
+		F_SPRAYERS_PRODUCT_LEVEL : BYTE := 134; // Sys: Sprayers, Func: Product Level - Measuring function to monitor the current product level in
+		                                        // the tank
+		F_SPRAYERS_BOOM_HEIGHT_CONTROL : BYTE := 135; // Sys: Sprayers, Func: Boom Height Control - Control of the height of the boom above the surface of
+		                                              // the soil or above the height of the standing crop
+		F_SPRAYERS_FRAME_CONTROL : BYTE := 136; // Sys: Sprayers, Func: Frame Control - Control of the folding and unfolding of the frame of the
+		                                        // device. Control used to change between transport and field operation position. Not to be used for
+		                                        // field...
+		F_SPRAYERS_NOT_AVAILABLE : BYTE := 255; // Sys: Sprayers, Func: Not Available - This assignment can be used until an explicit function has
+		                                        // been assigned.
+	END_VAR
+
+	// Harvesters (DC_HARVESTERS = 7)
+	VAR_GLOBAL CONSTANT
+		F_HARVESTERS_TAILING_MONITOR : BYTE := 128; // Sys: Harvesters, Func: Tailing Monitor - Measuring system to monitor the quantity of unthreshed
+		                                            // material returned to threshing machine
+		F_HARVESTERS_HEADER_CONTROL : BYTE := 129; // Sys: Harvesters, Func: Header Control - Control of the headers reel height and rotation and
+		                                           // material delivery rate
+		F_HARVESTERS_PRODUCT_LOSS_MONITOR : BYTE := 130; // Sys: Harvesters, Func: Product Loss Monitor - Measuring system to monitor the amount of grain
+		                                                 // being delivered back onto the soil
+		F_HARVESTERS_PRODUCT_MOISTURE : BYTE := 131; // Sys: Harvesters, Func: Product Moisture - Measuring system to monitor the moisture content of the
+		                                             // grain
+		F_HARVESTERS_HARVESTER_MACHINE_CONTROL : BYTE := 132; // Sys: Harvesters, Func: Harvester Machine Control - Control of outputs including adjustment of any
+		                                                      // ancillary functions like position and/or rotation speed functions such as the adjustment of the
+		                                                      // pre...
+		F_HARVESTERS_PRODUCT_FLOW : BYTE := 133; // Sys: Harvesters, Func: Product Flow - Measuring function to monitor the rate of the grain flow
+		                                         // into the harvesters grain tank (bin). This rate is used to determine the yield.
+		F_HARVESTERS_PRODUCT_LEVEL : BYTE := 134; // Sys: Harvesters, Func: Product Level - Measuring function to monitor the grain level in the
+		                                          // harvesters tank (bin).
+		F_HARVESTERS_HEADER_HEIGHT_CONTROL : BYTE := 135; // Sys: Harvesters, Func: Header Height Control - Control of the height of cutter bar above the
+		                                                  // surface of the soil or below the top of the standing crop
+		F_HARVESTERS_NOT_AVAILABLE : BYTE := 255; // Sys: Harvesters, Func: Not Available - This assignment can be used until an explicit function has
+		                                          // been assigned.
+	END_VAR
+
+	// Root Harvesters (DC_ROOT_HARVESTERS = 8)
+	VAR_GLOBAL CONSTANT
+		F_ROOT_HARVESTERS_ROOT_HARVESTERS_MACHINE_CONTROL : BYTE := 132; // Sys: Root Harvesters, Func: Root Harvesters Machine Control - Control of outputs including
+		                                                                 // adjustment of any ancillary functions like position and/or rotation speed. For VT or TC control,
+		                                                                 // this func...
+		F_ROOT_HARVESTERS_PRODUCT_FLOW : BYTE := 133; // Sys: Root Harvesters, Func: Product Flow - Measuring function to monitor the product flow into
+		                                              // the harvesters tank (bin). This rate is used to determine harvested yield.
+		F_ROOT_HARVESTERS_PRODUCT_LEVEL : BYTE := 134; // Sys: Root Harvesters, Func: Product Level - Measuring function to monitor the product level in
+		                                               // the harvesters tank (bin).
+		F_ROOT_HARVESTERS_DEPTH_CONTROL : BYTE := 135; // Sys: Root Harvesters, Func: Depth Control - Control of the depth of the harvestors lifter shares
+		                                               // in the soil
+		F_ROOT_HARVESTERS_NOT_AVAILABLE : BYTE := 255; // Sys: Root Harvesters, Func: Not Available - This assignment can be used until an explicit
+		                                               // function has been assigned.
+	END_VAR
+
+	// Forage (DC_FORAGE = 9)
+	VAR_GLOBAL CONSTANT
+		F_FORAGE_TWINE_WRAPPER_CONTROL : BYTE := 128; // Sys: Forage, Func: Twine Wrapper Control - Control of the wrapping of twine around a bale before
+		                                              // discharge from the baler
+		F_FORAGE_PRODUCT_PACKAGING_CONTROL : BYTE := 129; // Sys: Forage, Func: Product Packaging Control - Control of packaging process for the forage
+		                                                  // material.
+		F_FORAGE_PRODUCT_MOISTURE : BYTE := 131; // Sys: Forage, Func: Product Moisture - Measuring system to monitor the moisture of the forage
+		                                         // content.
+		F_FORAGE_FORAGE_MACHINE_CONTROL : BYTE := 132; // Sys: Forage, Func: Forage Machine Control - Control of outputs including adjustment of ancillary
+		                                               // functions like position functions such as header up/down, cutterhead & feedroll control and/or
+		                                               // any r...
+		F_FORAGE_PRODUCT_FLOW : BYTE := 133; // Sys: Forage, Func: Product Flow - Measuring function to monitor the product flow through the
+		                                     // machine. This rate is used to determine forage yield.
+		F_FORAGE_WORKING_HEIGHT_CONTROL : BYTE := 135; // Sys: Forage, Func: Working Height Control - Control of the height of cutting header above the
+		                                               // surface of the soil or below the top of the forage crop
+		F_FORAGE_NOT_AVAILABLE : BYTE := 255; // Sys: Forage, Func: Not Available - This assignment can be used until an explicit function has
+		                                      // been assigned.
+	END_VAR
+
+	// Irrigation (DC_IRRIGATION = 10)
+	VAR_GLOBAL CONSTANT
+		F_IRRIGATION_NOT_AVAILABLE : BYTE := 255; // Sys: Irrigation, Func: Not Available - This assignment can be used until an explicit function has
+		                                          // been assigned.
+	END_VAR
+
+	// Transport/Trailer (DC_TRANSPORT_TRAILER = 11)
+	VAR_GLOBAL CONSTANT
+		F_TRANSPORT_TRAILER_TRANSPORT_MACHINE_CONTROL : BYTE := 132; // Sys: Transport/Trailer, Func: Transport Machine Control - Control of outputs including adjustment
+		                                                             // of any ancillary functions like position and/or rotation speed. For VT or TC control, this
+		                                                             // function...
+		F_TRANSPORT_TRAILER_UNLOAD_CONTROL : BYTE := 136; // Sys: Transport/Trailer, Func: Unload Control - Control of trailer unloading process
+		F_TRANSPORT_TRAILER_NOT_AVAILABLE : BYTE := 255; // Sys: Transport/Trailer, Func: Not Available - This assignment can be used until an explicit
+		                                                 // function has been assigned.
+	END_VAR
+
+	// Farm Yard Operations (DC_FARM_YARD_OPERATIONS = 12)
+	VAR_GLOBAL CONSTANT
+		F_FARM_YARD_OPERATIONS_NOT_AVAILABLE : BYTE := 255; // Sys: Farm Yard Operations, Func: Not Available - This assignment can be used until an explicit
+		                                                    // function has been assigned.
+	END_VAR
+
+	// Powered Auxiliary Devices (DC_POWERED_AUXILIARY_DEVICES = 13)
+	VAR_GLOBAL CONSTANT
+		F_POWERED_AUXILIARY_DEVICES_POWERED_DEVICES_MACHINE_CONTROL : BYTE := 132; // Sys: Powered Auxiliary Devices, Func: Powered Devices Machine Control - Control of outputs
+		                                                                           // including adjustment of any ancillary functions like position and/or rotation speed. For VT or TC
+		                                                                           // control,...
+		F_POWERED_AUXILIARY_DEVICES_NOT_AVAILABLE : BYTE := 255; // Sys: Powered Auxiliary Devices, Func: Not Available - This assignment can be used until an
+		                                                         // explicit function has been assigned.
+	END_VAR
+
+	// Special Crops (DC_SPECIAL_CROPS = 14)
+	VAR_GLOBAL CONSTANT
+		F_SPECIAL_CROPS_SPECIAL_CROP_MACHINE_CONTROL : BYTE := 132; // Sys: Special Crops, Func: Special Crop Machine Control - Control of outputs including adjustment
+		                                                            // of any ancillary functions like position and/or rotation speed. For VT or TC control, this
+		                                                            // function ...
+		F_SPECIAL_CROPS_NOT_AVAILABLE : BYTE := 255; // Sys: Special Crops, Func: Not Available - This assignment can be used until an explicit function
+		                                             // has been assigned.
+	END_VAR
+
+	// Earth Work (DC_EARTH_WORK = 15)
+	VAR_GLOBAL CONSTANT
+		F_EARTH_WORK_MATERIAL_RATE_CONTROL : BYTE := 128; // Sys: Earth Work, Func: Material Rate Control - Control of the rate the material is processed.
+		F_EARTH_WORK_EARTHWORKS_MACHINE_CONTROL : BYTE := 132; // Sys: Earth Work, Func: Earthworks Machine Control - Control of outputs including adjustment of
+		                                                       // any ancillary functions like position and/or rotation speed. For VT or TC control, this function
+		                                                       // combi...
+		F_EARTH_WORK_MATERIAL_FLOW : BYTE := 133; // Sys: Earth Work, Func: Material Flow - Measuring function to monitor the material flow
+		F_EARTH_WORK_MATERIAL_LEVEL : BYTE := 134; // Sys: Earth Work, Func: Material Level - Measuring function to monitor the material level
+		F_EARTH_WORK_DEPTH_CONTROL : BYTE := 135; // Sys: Earth Work, Func: Depth Control - Control of working depth
+		F_EARTH_WORK_NOT_AVAILABLE : BYTE := 255; // Sys: Earth Work, Func: Not Available - This assignment can be used until an explicit function has
+		                                          // been assigned.
+	END_VAR
+
+	// Skidder (DC_SKIDDER = 16)
+	VAR_GLOBAL CONSTANT
+		F_SKIDDER_SKIDDER_MACHINE_CONTROL : BYTE := 132; // Sys: Skidder, Func: Skidder Machine Control - Control of outputs including adjustment of any
+		                                                 // ancillary functions like position and/or rotation speed. For VT or TC control, this function
+		                                                 // combines se...
+		F_SKIDDER_NOT_AVAILABLE : BYTE := 255; // Sys: Skidder, Func: Not Available - This assignment can be used until an explicit function has
+		                                       // been assigned.
+	END_VAR
+
+	// Sensor Systems (DC_SENSOR_SYSTEMS = 17)
+	VAR_GLOBAL CONSTANT
+		F_SENSOR_SYSTEMS_GUIDANCE_FEELER : BYTE := 128; // Sys: Sensor Systems, Func: Guidance Feeler - Mechanical function for determining row position in
+		                                                // the field
+		F_SENSOR_SYSTEMS_CAMERA_SYSTEM : BYTE := 129; // Sys: Sensor Systems, Func: Camera System - Provides images or processed data for control
+		                                              // operations.
+		F_SENSOR_SYSTEMS_CROP_SCOUTING : BYTE := 130; // Sys: Sensor Systems, Func: Crop Scouting - Measures vegetation parameters in a standing crop
+		F_SENSOR_SYSTEMS_MATERIAL_PROPERTIES_SENSING : BYTE := 131; // Sys: Sensor Systems, Func: Material Properties Sensing - Sensing system to detect material
+		                                                            // properties like density, particle size, color or constitutens (moisture, starch, protein,…)
+		F_SENSOR_SYSTEMS_INERTIAL_MEASUREMENT_UNIT_IMU : BYTE := 132; // Sys: Sensor Systems, Func: Inertial Measurement Unit (IMU) - A sensor unit providing inertial
+		                                                              // measurements
+		F_SENSOR_SYSTEMS_PRODUCT_FLOW : BYTE := 133; // Sys: Sensor Systems, Func: Product flow - Measuring function to monitor product flow
+		F_SENSOR_SYSTEMS_PRODUCT_LEVEL : BYTE := 134; // Sys: Sensor Systems, Func: Product Level - Measuring function to monitor the product level in the
+		                                              // tank (bin)
+		F_SENSOR_SYSTEMS_PRODUCT_MASS : BYTE := 135; // Sys: Sensor Systems, Func: Product Mass - Measuring function to monitor the mass of the product
+		F_SENSOR_SYSTEMS_VIBRATION_KNOCK : BYTE := 136; // Sys: Sensor Systems, Func: Vibration/Knock - Measuring function to determine the vibration or
+		                                                // knock behaviour of a system
+		F_SENSOR_SYSTEMS_WEATHER_INSTRUMENTS : BYTE := 137; // Sys: Sensor Systems, Func: Weather Instruments - The "Weather Instruments" function code shall be
+		                                                    // used by ISO11783 compliant Weather Instruments to identify themselves on the network.
+		F_SENSOR_SYSTEMS_SOIL_SCOUTING : BYTE := 138; // Sys: Sensor Systems, Func: Soil Scouting - Soil Sensor to measure different soil physical
+		                                              // parameters. One example of a soil sensor is a system that measures the apparent conductivity
+		                                              // (in-Phase and ...
+	END_VAR
+
+	// Timber Harvesters (DC_TIMBER_HARVESTERS = 19)
+	VAR_GLOBAL CONSTANT
+		F_TIMBER_HARVESTERS_TIMBER_HARVESTORS_MACHINE_CONTROL : BYTE := 132; // Sys: Timber Harvesters, Func: Timber Harvestors Machine Control - Control of outputs including
+		                                                                     // adjustment of any ancillary functions like position and/or rotation speed. For VT or TC control,
+		                                                                     // this ...
+	END_VAR
+
+	// Forwarders (DC_FORWARDERS = 20)
+	VAR_GLOBAL CONSTANT
+		F_FORWARDERS_FORWARDERS_MACHINE_CONTROL : BYTE := 132; // Sys: Forwarders, Func: Forwarders Machine Control - Control of outputs including adjustment of
+		                                                       // any ancillary functions like position and/or rotation speed. For VT or TC control, this function
+		                                                       // combi...
+	END_VAR
+
+	// Timber Loaders (DC_TIMBER_LOADERS = 21)
+	VAR_GLOBAL CONSTANT
+		F_TIMBER_LOADERS_TIMBER_LOADERS_MACHINE_CONTROL : BYTE := 132; // Sys: Timber Loaders, Func: Timber Loaders Machine Control - Control of outputs including
+		                                                               // adjustment of any ancillary functions like position and/or rotation speed. For VT or TC control,
+		                                                               // this functi...
+	END_VAR
+
+	// Timber Processing Machines (DC_TIMBER_PROCESSING_MACHINES = 22)
+	VAR_GLOBAL CONSTANT
+		F_TIMBER_PROCESSING_MACHINES_TIMBER_PROCESSING_MACHINE_CONTROL : BYTE := 132; // Sys: Timber Processing Machines, Func: Timber Processing Machine Control - Control of outputs
+		                                                                              // including adjustment of any ancillary functions like position and/or rotation speed. For VT or TC
+		                                                                              // contr...
+	END_VAR
+
+	// Mulchers (DC_MULCHERS = 23)
+	VAR_GLOBAL CONSTANT
+		F_MULCHERS_MULCHER_MACHINE_CONTROL : BYTE := 132; // Sys: Mulchers, Func: Mulcher Machine Control - Control of outputs including adjustment of any
+		                                                  // ancillary functions like position and/or rotation speed. For VT or TC control, this function
+		                                                  // combines s...
+	END_VAR
+
+	// Utility Vehicles (DC_UTILITY_VEHICLES = 24)
+	VAR_GLOBAL CONSTANT
+		F_UTILITY_VEHICLES_UTILITY_MACHINE_CONTROL : BYTE := 132; // Sys: Utility Vehicles, Func: Utility Machine Control - Control of outputs including adjustment of
+		                                                          // any ancillary functions like position and/or rotation speed. For VT or TC control, this function
+		                                                          // co...
+	END_VAR
+
+	// Slurry/Manure Applicators (DC_SLURRY_MANURE_APPLICATORS = 25)
+	VAR_GLOBAL CONSTANT
+		F_SLURRY_MANURE_APPLICATORS_SLURRY_MANURE_RATE_CONTROL : BYTE := 128; // Sys: Slurry/Manure Applicators, Func: Slurry/Manure Rate Control - Control of the rate of product
+		                                                                      // placed on the soil
+		F_SLURRY_MANURE_APPLICATORS_SECTION_ON_OFF_CONTROL : BYTE := 129; // Sys: Slurry/Manure Applicators, Func: Section On/Off Control - On/Off control of individual
+		                                                                  // sections
+		F_SLURRY_MANURE_APPLICATORS_PRODUCT_PRESSURE : BYTE := 130; // Sys: Slurry/Manure Applicators, Func: Product Pressure - Monitoring of the pressure of the
+		                                                            // product in the delivery booms
+		F_SLURRY_MANURE_APPLICATORS_SLURRY_MANURE_MACHINE_CONTROL : BYTE := 132; // Sys: Slurry/Manure Applicators, Func: Slurry/Manure Machine Control - Control of outputs
+		                                                                         // including adjustment of any ancillary functions like position and/or rotation speed. For VT or TC
+		                                                                         // control, t...
+		F_SLURRY_MANURE_APPLICATORS_PRODUCT_FLOW : BYTE := 133; // Sys: Slurry/Manure Applicators, Func: Product Flow - Measuring function to monitor the current
+		                                                        // product flow.
+		F_SLURRY_MANURE_APPLICATORS_PRODUCT_LEVEL : BYTE := 134; // Sys: Slurry/Manure Applicators, Func: Product Level - Measuring function to monitor the current
+		                                                         // product level in the bin
+		F_SLURRY_MANURE_APPLICATORS_BOOM_HEIGHT_CONTROL : BYTE := 135; // Sys: Slurry/Manure Applicators, Func: Boom Height Control - Control of the height of delivery
+		                                                               // boom above the surface of the soil
+	END_VAR
+
+	// Feeders/Mixers (DC_FEEDERS_MIXERS = 26)
+	VAR_GLOBAL CONSTANT
+		F_FEEDERS_MIXERS_FEEDER_MIXER_RATE_CONTROL : BYTE := 128; // Sys: Feeders/Mixers, Func: Feeder/Mixer Rate Control - Control of the rate of product distributed
+		                                                          // to cattle or livestock
+		F_FEEDERS_MIXERS_SECTION_ON_OFF_CONTROL : BYTE := 129; // Sys: Feeders/Mixers, Func: Section On/Off Control - On/Off control of individual sections, e.g.
+		                                                       // Left / Center / Right unloading of fodder
+		F_FEEDERS_MIXERS_PRODUCT_PRESSURE : BYTE := 130; // Sys: Feeders/Mixers, Func: Product Pressure - Monitoring of the pressure of the product in the
+		                                                 // delivery units
+		F_FEEDERS_MIXERS_FEEDER_MIXER_MACHINE_CONTROL : BYTE := 132; // Sys: Feeders/Mixers, Func: Feeder/Mixer Machine Control - Control of outputs including adjustment
+		                                                             // of any ancillary functions like position and/or rotation speed. For VT or TC control, this
+		                                                             // function...
+		F_FEEDERS_MIXERS_PRODUCT_FLOW : BYTE := 133; // Sys: Feeders/Mixers, Func: Product Flow - Measuring function to monitor the current product flow.
+		F_FEEDERS_MIXERS_PRODUCT_LEVEL : BYTE := 134; // Sys: Feeders/Mixers, Func: Product Level - Measuring function to monitor the current product
+		                                              // level in the bin
+		F_FEEDERS_MIXERS_BOOM_HEIGHT_CONTROL : BYTE := 135; // Sys: Feeders/Mixers, Func: Boom Height Control - Control of the height of delivery boom above the
+		                                                    // surface of the soil
+	END_VAR
+
+	// Weeders - Non-chemical weed control. The device class Weeders is used by devices that control and
+	// eliminate weeds through the use of operation techniques other than spraying. Examples of
+	// non-spraying operation techniques for weed control are the use of mechanical actuators or hoes or
+	// the transfer of energy from electrical and irradiation sources or a combination of those.
+	// (DC_WEEDERS = 27)
+	VAR_GLOBAL CONSTANT
+		F_WEEDERS_WEEDER_MACHINE_CONTROL : BYTE := 132; // Sys: Weeders - Non-chemical weed control. The device class Weeders is used by devices that
+		                                                // control and eliminate weeds through the use of operation techniques other than spraying. Examples
+		                                                // of non-s...
+	END_VAR
+
+	// Turf and Lawn Care Mowers (DC_TURF_AND_LAWN_CARE_MOWERS = 28)
+	VAR_GLOBAL CONSTANT
+		F_TURF_AND_LAWN_CARE_MOWERS_TURF_AND_LAWN_CARE_MOWERS_MACHINE_CONTROL : BYTE := 132; // Sys: Turf and Lawn Care Mowers, Func: Turf and Lawn Care Mowers Machine Control - The machine
+		                                                                                     // used for cutting grass
+	END_VAR
+
+	// Product/Material Handling (DC_PRODUCT_MATERIAL_HANDLING = 29)
+	VAR_GLOBAL CONSTANT
+		F_PRODUCT_MATERIAL_HANDLING_PRODUCT_MATERIAL_HANDLING_MACHINE_CONTROL : BYTE := 132; // Sys: Product/Material Handling, Func: Product/Material Handling Machine Control - Control of
+		                                                                                     // outputs including adjustment of equipment operational controls. For VT or TC control, this
+		                                                                                     // function comb...
+		F_PRODUCT_MATERIAL_HANDLING_PRODUCT_MATERIAL_HANDLING_PRODUCT_FLOW : BYTE := 133; // Sys: Product/Material Handling, Func: Product/Material Handling Product Flow - Measuring function
+		                                                                                  // to monitor the current product flow.
+		F_PRODUCT_MATERIAL_HANDLING_PRODUCT_MATERIAL_HANDLING_PRODUCT_LEVEL : BYTE := 134; // Sys: Product/Material Handling, Func: Product/Material Handling Product Level - Meauring function
+		                                                                                   // to monitor the current product level in the bin.
+	END_VAR
+
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</GlobalConstants>

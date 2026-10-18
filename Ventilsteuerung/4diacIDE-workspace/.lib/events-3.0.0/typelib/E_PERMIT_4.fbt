@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="E_PERMIT_4" Comment="Permissive propagation of 4 event channels (generic FB)">
+	<Identification Standard="61499-1 Annex A" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof&#10; &#10;This program and the accompanying materials are made&#10;available under the terms of the Eclipse Public License 2.0&#10;which is available at https://www.eclipse.org/legal/epl-2.0/&#10;&#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Version="3.0" Author="Patrick Aigner" Date="2025-04-14" Remarks="changed package">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-10" Remarks="initial implementation">
+	</VersionInfo>
+	<CompilerInfo packageName="iec61499::events">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="EI1" Type="Event" Comment="Event input channel 1">
+				<With Var="PERMIT"/>
+			</Event>
+			<Event Name="EI2" Type="Event" Comment="Event input channel 2">
+				<With Var="PERMIT"/>
+			</Event>
+			<Event Name="EI3" Type="Event" Comment="Event input channel 3">
+				<With Var="PERMIT"/>
+			</Event>
+			<Event Name="EI4" Type="Event" Comment="Event input channel 4">
+				<With Var="PERMIT"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="EO1" Type="Event" Comment="Event output channel 1"/>
+			<Event Name="EO2" Type="Event" Comment="Event output channel 2"/>
+			<Event Name="EO3" Type="Event" Comment="Event output channel 3"/>
+			<Event Name="EO4" Type="Event" Comment="Event output channel 4"/>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="PERMIT" Type="BOOL" Comment="Permit condition"/>
+		</InputVars>
+	</InterfaceList>
+	<Attribute Name="eclipse4diac::core::GenericClassName" Value="'GEN_E_PERMIT'"/>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

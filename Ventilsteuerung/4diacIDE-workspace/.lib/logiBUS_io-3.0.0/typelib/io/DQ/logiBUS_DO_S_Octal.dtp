@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataType Name="logiBUS_DO_S_Octal" Comment="logiBUS DO Struct Octal">
+	<Identification>
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2026-05-28">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::io::DQ">
+	</CompilerInfo>
+	<StructuredType>
+		<VarDeclaration Name="Port1" Type="logiBUS::io::DQ::logiBUS_DO_S" InitialValue="(Pin := 255)"/>
+		<VarDeclaration Name="Port2" Type="logiBUS::io::DQ::logiBUS_DO_S" InitialValue="(Pin := 255)"/>
+		<VarDeclaration Name="Port3" Type="logiBUS::io::DQ::logiBUS_DO_S" InitialValue="(Pin := 255)"/>
+		<VarDeclaration Name="Port4" Type="logiBUS::io::DQ::logiBUS_DO_S" InitialValue="(Pin := 255)"/>
+		<VarDeclaration Name="Port5" Type="logiBUS::io::DQ::logiBUS_DO_S" InitialValue="(Pin := 255)"/>
+		<VarDeclaration Name="Port6" Type="logiBUS::io::DQ::logiBUS_DO_S" InitialValue="(Pin := 255)"/>
+		<VarDeclaration Name="Port7" Type="logiBUS::io::DQ::logiBUS_DO_S" InitialValue="(Pin := 255)"/>
+		<VarDeclaration Name="Port8" Type="logiBUS::io::DQ::logiBUS_DO_S" InitialValue="(Pin := 255)"/>
+	</StructuredType>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</DataType>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="ReportScrollOffset" Comment="Service Interface Block: reports the current scroll offset (in px) of a&#10;*_Scrolling_Content container to the ECU's VT scroll-visibility gate">
+	<Identification Standard="ISO 11783-6" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0&#10;&#10;Sits inside the ScrollFS FBNetwork, parallel to MoveList/ListY (same Ramp.INITO/Ramp.CNF
+triggers, same Snap.OUT.u16ListContentId/i32RowHeight sources). Multiplies i32Pos (Ramp.OUT,
+the current row index) by i32RowHeight and reports the resulting pixel offset to the ECU's
+VtMaskVisibility module (VtMaskVisibility_OnScroll(), Application/components/App_VTClient/) so
+row-content Q_* commands can be gated on whether their row is currently within the visible
+scroll window (BERICHT_2026-09-18_VT_SICHTBARKEITS_KONZEPT.md Section 4.4). Deliberately a
+plain, non-VT-command Basic FB (no CQ_VTCommandBase inheritance) - it does not participate in
+the mask-visibility notifyAllVTReady() burst mechanism, so it cannot be reentered by it. See
+Workspace_Scroll/SCROLL_KONZEPT.md for the scroll module this is a helper of.">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-21" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::UT::Q::helpers">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization - latch the container ID">
+				<With Var="u16ContainerId"/>
+			</Event>
+			<Event Name="REQ" Type="Event" Comment="Service Request - report the current position">
+				<With Var="i32Pos"/>
+				<With Var="i32RowHeight"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="u16ContainerId" Type="UINT" Comment="Object ID of the *_Scrolling_Content container this instance reports for - latched once at INIT"/>
+			<VarDeclaration Name="i32Pos" Type="DINT" Comment="Current scroll position (0..PosMax, in rows) - same value Q_ChildPosition's Y-position is derived from"/>
+			<VarDeclaration Name="i32RowHeight" Type="DINT" Comment="Row height in px, used to convert i32Pos into a pixel offset"/>
+		</InputVars>
+	</InterfaceList>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="AR_CALIBRATE" Comment="Adapter-based two-point calibration (offset &amp; scale) of an analog input">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Version="2.1" Author="Franz Höpfinger" Date="2026-09-18" Remarks="CO/CS von AX-Sockets (mit [CO.D1]/[CS.D1]-Flankenwaechter) auf reine EventInputs umgestellt - jeder echte Aufrufer liefert ohnehin ein atomares Event, der D1-Wert war immer hartcodiert TRUE (via AX_BOOL_TO_X) und der Guard filterte nie etwas. Aufrufer muessen jetzt direkt ein Event statt eines AX-Adapters anschliessen (AX_BOOL_TO_X-Umweg entfaellt). Siehe AR_CALIBRATE_2P_REF fuer die identische Aenderung.">
+	</VersionInfo>
+	<VersionInfo Version="2.0" Author="Meisterschulen am Ostbahnhof" Date="2026-06-01">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::Engineering::measurements">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="SET" Type="EInit" Comment="Set References">
+				<With Var="Y_Offset"/>
+				<With Var="Y_Scale"/>
+			</Event>
+			<Event Name="CO" Type="Event" Comment="Calibrate Offset - atomarer Trigger"/>
+			<Event Name="CS" Type="Event" Comment="Calibrate Scale - atomarer Trigger"/>
+		</EventInputs>
+		<InputVars>
+			<VarDeclaration Name="Y_Offset" Type="REAL" Comment="Reference for offset calibration"/>
+			<VarDeclaration Name="Y_Scale" Type="REAL" Comment="Reference for scale calibration"/>
+		</InputVars>
+		<Plugs>
+			<AdapterDeclaration Name="Y" Type="adapter::types::unidirectional::AR" Comment="Calibrated Output"/>
+			<AdapterDeclaration Name="OFFSET" Type="adapter::types::bidirectional::AR2" Comment="Offset value"/>
+			<AdapterDeclaration Name="SCALE" Type="adapter::types::bidirectional::AR2" Comment="Scale value"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="X" Type="adapter::types::unidirectional::AR" Comment="Input"/>
+		</Sockets>
+	</InterfaceList>
+	<BasicFB>
+		<ECC>
+			<ECState Name="REQ" x="240" y="640">
+				<ECAction Algorithm="REQ" Output="Y.E1"/>
+			</ECState>
+			<ECState Name="CO" x="1920" y="-320">
+				<ECAction Algorithm="CO" Output="OFFSET.EO1"/>
+			</ECState>
+			<ECState Name="CS" x="2080" y="1360">
+				<ECAction Algorithm="CS" Output="SCALE.EO1"/>
+			</ECState>
+			<ECTransition Source="REQ" Destination="REQ" Condition="X.E1" x="13.33" y="1733.33"/>
+			<ECTransition Source="REQ" Destination="REQ" Condition="SET" x="-160" y="1326.67"/>
+			<ECTransition Source="REQ" Destination="REQ" Condition="SET" x="-73.33" y="1633.33"/>
+			<ECTransition Source="REQ" Destination="REQ" Condition="OFFSET.EI1" x="-146.67" y="1433.33"/>
+			<ECTransition Source="REQ" Destination="REQ" Condition="SCALE.EI1" x="-100" y="1533.33"/>
+			<ECTransition Source="CO" Destination="REQ" Condition="1" x="1080" y="160"/>
+			<ECTransition Source="CS" Destination="REQ" Condition="1" x="1160" y="1000"/>
+			<ECTransition Source="REQ" Destination="CO" Condition="CO" x="846.67" y="-200"/>
+			<ECTransition Source="REQ" Destination="CS" Condition="CS" x="1006.67" y="1193.33"/>
+		</ECC>
+		<Algorithm Name="REQ" Comment="REQ">
+			<ST><![CDATA[
+(* calculate calibrated output *)
+Y.D1 := (X.D1 + OFFSET.DI1) * SCALE.DI1;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="CO" Comment="CO">
+			<ST><![CDATA[
+(* store offset so that Y = Y_Offset at current X *)
+(* note: after CO, Y = Y_Offset * SCALE, only correct when SCALE = 1 *)
+OFFSET.DO1 := Y_Offset - X.D1;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="CS" Comment="CS">
+			<ST><![CDATA[
+(* store scale so that Y = Y_Scale at current X (requires OFFSET from CO!) *)
+IF (X.D1 + OFFSET.DI1) <> 0.0 THEN
+	SCALE.DO1 := Y_Scale / (X.D1 + OFFSET.DI1);
+END_IF;
+]]></ST>
+		</Algorithm>
+	</BasicFB>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h2>Formula</h2>
+<pre>Y = (X + OFFSET) * SCALE</pre>
+
+<h2>Calibration (Two-Point)</h2>
+<ol>
+<li><strong>Offset (CO):</strong> Apply low reference, set <code>Y_Offset</code> to desired output, trigger <code>CO</code><br/>
+<code>OFFSET := Y_Offset - X</code> &rarr; shifts <code>X</code> so that <code>Y = Y_Offset * SCALE</code> at this point<br/>
+<strong>Note:</strong> Only correct when <code>SCALE = 1</code>.</li>
+<li><strong>Scale (CS):</strong> Apply high reference, set <code>Y_Scale</code> to desired output, trigger <code>CS</code><br/>
+<code>SCALE := Y_Scale / (X + OFFSET)</code> &rarr; scales so that <code>Y = Y_Scale</code> at this point</li>
+</ol>
+<p><strong>Note:</strong> Both <code>Y_Offset</code> and <code>Y_Scale</code> are target values on the <strong>output side</strong>.</p>
+<p><strong>&#9888; Order requirement:</strong> <code>CO</code> must be executed <strong>before</strong> <code>CS</code>, because <code>CS</code> uses <code>OFFSET</code>.</p>
+]]></Attribute>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

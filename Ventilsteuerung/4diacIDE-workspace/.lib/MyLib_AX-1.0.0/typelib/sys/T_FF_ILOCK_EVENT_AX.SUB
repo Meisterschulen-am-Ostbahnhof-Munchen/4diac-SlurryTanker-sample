@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="T_FF_ILOCK_EVENT_AX" Comment="Toggle-Flip-Flop mit Interlock / Reset-Eingang und SET-Event-Ausgang (AX Adapter&#10;Version)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-10" Remarks="initial API and implementation (AX Adapter Version)">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="IND" Type="Event" Comment="Event Input (Clock / Click)"/>
+			<SubAppEvent Name="RESET" Type="Event" Comment="External Reset Input"/>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="SET" Type="Event" Comment="Fired when switched ON (for Interlock reset of partner)"/>
+		</SubAppEventOutputs>
+		<Plugs>
+			<AdapterDeclaration Name="Q" Type="adapter::types::unidirectional::AX" Comment="Adapter Output Q"/>
+		</Plugs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="AX_E_SWITCH" Type="adapter::events::unidirectional::AX_E_SWITCH" x="0" y="0">
+		</FB>
+		<FB Name="AX_SR" Type="adapter::events::unidirectional::AX_SR" x="1400" y="0">
+		</FB>
+		<FB Name="AX_SPLIT_2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="2600" y="0">
+		</FB>
+		<EventConnections>
+			<Connection Source="IND" Destination="AX_E_SWITCH.EI" dx1="1000"/>
+			<Connection Source="AX_E_SWITCH.EO0" Destination="AX_SR.S" dx1="400"/>
+			<Connection Source="AX_E_SWITCH.EO0" Destination="SET" dx1="2600"/>
+			<Connection Source="AX_E_SWITCH.EO1" Destination="AX_SR.R" dx1="400"/>
+			<Connection Source="RESET" Destination="AX_SR.R" dx1="1200"/>
+		</EventConnections>
+		<AdapterConnections>
+			<Connection Source="AX_SR.Q" Destination="AX_SPLIT_2.IN" dx1="400"/>
+			<Connection Source="AX_SPLIT_2.OUT1" Destination="Q" dx1="1000"/>
+			<Connection Source="AX_SPLIT_2.OUT2" Destination="AX_E_SWITCH.G" dx1="80" dx2="80" dy="160"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="INI_IN_AND_STORE_AR2" Comment="INI Laden und Speichern von AR2-Daten mit zusaetzlichem VALUEO (AR, plain) fuer&#10;einen weiteren Consumer - da INI_AR2 keinen eigenen Ausgangs-Plug hat, wird&#10;AR_TO_AR2.AR_OUT gesplittet (Q_NumericValue_PHYSA + VALUEO)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-10-13" Remarks="Keine funktionale Aenderung, nur Doku: siehe INI_IN_AND_STORE_AR2_OVERRIDE fuer die Variante mit OVERRIDE_ACTIVE-Socket (analog INI_IN_AND_STORE_AUDI2/_OVERRIDE).">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-08-31" Remarks="AR2 adapter variant of INI_IN_AND_STORE_AR - NumericValue_PHYSA + AR_TO_AR2 + INI_AR2 (Speicherung via AR2 Socket), AR_TO_AR2.AR_OUT gesplittet auf Q_NumericValue_PHYSA (VT-Anzeige) und VALUEO (weiterer Consumer)">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+		<Import declaration="logiBUS::utils::conversion::phys::NumericObjectPool_S"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="KEY" Type="STRING" Comment="Key name."/>
+			<VarDeclaration Name="SECTION" Type="STRING" Comment="Section name."/>
+			<VarDeclaration Name="stObj" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 0)"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="VALUEO" Type="adapter::types::unidirectional::AR"/>
+		</Plugs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="NumericValue_PHYSA" Type="isobus::UT::io::NumericValue::NumericValue_PHYSA" x="-2800" y="-200">
+		</FB>
+		<FB Name="AR_TO_AR2" Type="adapter::conversion::bidirectional::AR_TO_AR2" x="400" y="600">
+		</FB>
+		<FB Name="INI_AR2" Type="eclipse4diac::storage::INI_AR2" x="2400" y="-93.33">
+			<Parameter Name="SETM" Value="TRUE"/>
+			<Parameter Name="DEFAULT_VALUE" Value="REAL#0.0"/>
+		</FB>
+		<FB Name="AR_SPLIT_2" Type="adapter::events::unidirectional::AR_SPLIT_2" x="3900" y="700">
+		</FB>
+		<FB Name="Q_NumericValue_PHYSA" Type="isobus::UT::Q::Q_NumericValue_PHYSA" x="6500" y="1300">
+		</FB>
+		<Comment Comment="SETM=TRUE - der Boot-Wert laedt so oder so automatisch (INIT -&gt; INITO -&gt; GET -&gt; GETO, unabhaengig von SETM). SETM=TRUE sorgt dafuer, dass auch eine LIVE-Aenderung waehrend des laufenden Betriebs sofort bestaetigt/zurueckgemeldet wird - wichtig, falls der frische Wert noch im selben Lauf weiterverwendet werden soll (z.B. hier ueber VALUEO)." x="2400" y="-700" width="2400" height="500"/>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_3" x="8800" y="200">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="NumericValue_PHYSA.INIT" dx1="80" dx2="80" dy="-313.33"/>
+			<Connection Source="NumericValue_PHYSA.INITO" Destination="INI_AR2.INIT" dx1="2080"/>
+			<Connection Source="INI_AR2.INITO" Destination="Q_NumericValue_PHYSA.INIT" dx1="1560"/>
+			<Connection Source="Q_NumericValue_PHYSA.INITO" Destination="INITO" dx1="4026.67"/>
+			<Connection Source="Q_NumericValue_PHYSA.INITO" Destination="AND_QO.REQ" dx1="633.33"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="stObj" Destination="Q_NumericValue_PHYSA.stObj" dx1="8246.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="KEY" Destination="INI_AR2.KEY" dx1="2846.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="SECTION" Destination="INI_AR2.SECTION" dx1="2846.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="stObj" Destination="NumericValue_PHYSA.stObj" dx1="1046.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="Q_NumericValue_PHYSA.QI" dx1="3053.33"/>
+			<Connection Source="QI" Destination="NumericValue_PHYSA.QI" dx1="80" dx2="80" dy="-206.67"/>
+			<Connection Source="QI" Destination="INI_AR2.QI" dx1="1000"/>
+			<Connection Source="Q_NumericValue_PHYSA.QO" Destination="AND_QO.IN1" dx1="633.33"/>
+			<Connection Source="NumericValue_PHYSA.QO" Destination="AND_QO.IN2" dx1="880"/>
+			<Connection Source="INI_AR2.QO" Destination="AND_QO.IN3" dx1="1260"/>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="3293.33"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="NumericValue_PHYSA.rPhys" Destination="AR_TO_AR2.AR_IN" dx1="1233.33"/>
+			<Connection Source="AR_TO_AR2.AR2_BIDIR" Destination="INI_AR2.VAL" dx1="880"/>
+			<Connection Source="AR_TO_AR2.AR_OUT" Destination="AR_SPLIT_2.IN" dx1="1106.67"/>
+			<Connection Source="AR_SPLIT_2.OUT1" Destination="VALUEO" dx1="2220"/>
+			<Connection Source="AR_SPLIT_2.OUT2" Destination="Q_NumericValue_PHYSA.rPhys" dx1="873.33"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

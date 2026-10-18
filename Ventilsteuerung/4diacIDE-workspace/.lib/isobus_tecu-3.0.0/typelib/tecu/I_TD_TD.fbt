@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="I_TD_TD" Comment="ISOBUS Time/Date Wrapper with TD Struct Output">
+	<Identification Standard="ISO 11783-7" Classification="PGN 65254" Description="Copyright (c) 2024-2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0&#10;&#10;Wrapper around I_TD providing time/date as TD struct.&#10;&#10;https://docs.ms-muc-docs.de/projects/isobus-other-docs/de/latest/PGN/PGN_65254.html">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-04-24" Remarks="Wrapper combining time/date components into TD struct">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::tecu">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+				<With Var="QI"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+			</Event>
+			<Event Name="IND" Type="Event" Comment="Indication from Resource">
+				<With Var="QO"/>
+				<With Var="timestamp_data"/>
+				<With Var="STATUS"/>
+				<With Var="Q_timeout"/>
+				<With Var="LOCAL_MINUTE_OFFSET"/>
+				<With Var="LOCAL_HOUR_OFFSET"/>
+			</Event>
+			<Event Name="TIMEOUT" Type="Event">
+				<With Var="timestamp_timeout"/>
+				<With Var="STATUS"/>
+				<With Var="Q_timeout"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
+			<VarDeclaration Name="STATUS" Type="STRING"/>
+			<VarDeclaration Name="Q_timeout" Type="BOOL"/>
+			<VarDeclaration Name="timestamp_timeout" Type="DINT"/>
+			<VarDeclaration Name="timestamp_data" Type="DINT"/>
+			<VarDeclaration Name="TD" Type="DT" Comment="Time/Date as defined in IEC 61131-3"/>
+			<VarDeclaration Name="LOCAL_MINUTE_OFFSET" Type="SINT" Comment="Local minute offset (see Attributes for Details)">
+				<Attribute Name="SPN" Type="INT" Value="1601"/>
+				<Attribute Name="SP_Name" Type="STRING" Value="'Local minute offset'"/>
+				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'7'"/>
+				<Attribute Name="SP_Length" Type="INT" Value="8" Comment="8 bits"/>
+				<Attribute Name="Scaling" Type="STRING" Value="'1 min/bit'"/>
+				<Attribute Name="Offset" Type="INT" Value="-125"/>
+				<Attribute Name="Link" Type="STRING" Value="'https://docs.ms-muc-docs.de/projects/isobus-other-docs/de/latest/PGN/PGN_65254.html#spn-1601-local-minute-offset'"/>
+			</VarDeclaration>
+			<VarDeclaration Name="LOCAL_HOUR_OFFSET" Type="SINT" Comment="Local hour offset (see Attributes for Details)">
+				<Attribute Name="SPN" Type="INT" Value="1602"/>
+				<Attribute Name="SP_Name" Type="STRING" Value="'Local hour offset'"/>
+				<Attribute Name="SP_Position_In_PG" Type="STRING" Value="'8'"/>
+				<Attribute Name="SP_Length" Type="INT" Value="8" Comment="8 bits"/>
+				<Attribute Name="Scaling" Type="STRING" Value="'1 h/bit'"/>
+				<Attribute Name="Offset" Type="INT" Value="-125"/>
+				<Attribute Name="Link" Type="STRING" Value="'https://docs.ms-muc-docs.de/projects/isobus-other-docs/de/latest/PGN/PGN_65254.html#spn-1602-local-hour-offset'"/>
+			</VarDeclaration>
+		</OutputVars>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="I_CORE" Type="isobus::tecu::I_TD" x="680" y="106.67">
+		</FB>
+		<FB Name="F_CONCAT_DT" Type="iec61131::charString::F_CONCAT_DT" x="2673.33" y="853.33">
+			<Parameter Name="MILLISECOND" Value="DINT#0"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="I_CORE.INIT" dx1="1546.67"/>
+			<Connection Source="I_CORE.INITO" Destination="INITO" dx1="66.67" dx2="1120" dy="-80"/>
+			<Connection Source="I_CORE.TIMEOUT" Destination="TIMEOUT" dx1="4426.67"/>
+			<Connection Source="I_CORE.IND" Destination="F_CONCAT_DT.REQ" dx1="466.67"/>
+			<Connection Source="F_CONCAT_DT.CNF" Destination="IND" dx1="2580"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="QI" Destination="I_CORE.QI" dx1="66.67"/>
+			<Connection Source="I_CORE.QO" Destination="QO" dx1="133.33" dx2="633.33" dy="-273.33"/>
+			<Connection Source="I_CORE.STATUS" Destination="STATUS" dx1="200" dx2="546.67" dy="-293.33"/>
+			<Connection Source="I_CORE.Q_timeout" Destination="Q_timeout" dx1="266.67" dx2="486.67" dy="-306.67"/>
+			<Connection Source="I_CORE.LOCAL_MINUTE_OFFSET" Destination="LOCAL_MINUTE_OFFSET" dx1="133.33" dx2="80" dy="233.33"/>
+			<Connection Source="I_CORE.LOCAL_HOUR_OFFSET" Destination="LOCAL_HOUR_OFFSET" dx1="66.67" dx2="80" dy="213.33"/>
+			<Connection Source="I_CORE.timestamp_timeout" Destination="timestamp_timeout" dx1="333.33" dx2="333.33" dy="-326.67"/>
+			<Connection Source="I_CORE.timestamp_data" Destination="timestamp_data" dx1="400" dx2="266.67" dy="-340"/>
+			<Connection Source="I_CORE.YEAR" Destination="F_CONCAT_DT.YEAR"/>
+			<Connection Source="I_CORE.MONTH" Destination="F_CONCAT_DT.MONTH"/>
+			<Connection Source="I_CORE.DAY" Destination="F_CONCAT_DT.DAY"/>
+			<Connection Source="I_CORE.HOURS" Destination="F_CONCAT_DT.HOUR"/>
+			<Connection Source="I_CORE.MINUTES" Destination="F_CONCAT_DT.MINUTE"/>
+			<Connection Source="I_CORE.SECONDS" Destination="F_CONCAT_DT.SECOND"/>
+			<Connection Source="F_CONCAT_DT.OUT" Destination="TD" dx1="3353.33"/>
+		</DataConnections>
+	</FBNetwork>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

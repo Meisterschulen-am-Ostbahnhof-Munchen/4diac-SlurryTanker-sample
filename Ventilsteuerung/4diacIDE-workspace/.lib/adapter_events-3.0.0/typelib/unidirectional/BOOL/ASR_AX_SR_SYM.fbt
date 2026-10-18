@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="ASR_AX_SR_SYM" Comment="Event-driven bistable, symmetric Start-Up Behaviour">
+	<Identification Standard="61499-1 Annex A" Description="Copyright (c) 2017 fortiss GmbH, HR Agrartechnik GmbH&#10; &#10;This program and the accompanying materials are made&#10;available under the terms of the Eclipse Public License 2.0&#10;which is available at https://www.eclipse.org/legal/epl-2.0/&#10;&#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Version="3.0" Author="Patrick Aigner" Date="2025-04-14" Remarks="changed package">
+	</VersionInfo>
+	<VersionInfo Organization="fortiss GmbH" Version="1.0" Author="Alois Zoitl" Date="2017-09-22" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::events::unidirectional">
+	</CompilerInfo>
+	<InterfaceList>
+		<Plugs>
+			<AdapterDeclaration Name="Q" Type="adapter::types::unidirectional::AX" Comment="value of flip flop"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="S_R" Type="adapter::types::unidirectional::ASR" Comment="Set/Reset"/>
+		</Sockets>
+	</InterfaceList>
+	<BasicFB>
+		<ECC>
+			<ECState Name="START" Comment="Initial State" x="240" y="640">
+			</ECState>
+			<ECState Name="SET" x="1200" y="400">
+				<ECAction Algorithm="SET" Output="Q.E1"/>
+			</ECState>
+			<ECState Name="RESET" x="1200" y="1440">
+				<ECAction Algorithm="RESET" Output="Q.E1"/>
+			</ECState>
+			<ECTransition Source="START" Destination="SET" Condition="S_R.SET" x="713.33" y="453.33"/>
+			<ECTransition Source="SET" Destination="RESET" Condition="S_R.RESET" x="1113.33" y="966.67"/>
+			<ECTransition Source="RESET" Destination="SET" Condition="S_R.SET" x="1740" y="953.33"/>
+			<ECTransition Source="START" Destination="RESET" Condition="S_R.RESET" x="633.33" y="1240"/>
+		</ECC>
+		<Algorithm Name="SET">
+			<ST><![CDATA[
+Q.D1 := TRUE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="RESET">
+			<ST><![CDATA[
+Q.D1 := FALSE;
+]]></ST>
+		</Algorithm>
+	</BasicFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="AuxiliaryState" Comment="Value of auxiliary inputs constants">
+	<Identification Standard="61499-1" Description="Copyright (c) 2024 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2024-01-25">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::UT::io::Auxiliary::IN">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="AuxDisabled" Type="isobus::UT::io::Auxiliary::IN::AuxiliaryState_S" Comment="Off - backward, down, left, or not pressed" InitialValue="(value := 0)"/>
+		<VarDeclaration Name="AuxDisabled_START" Type="isobus::UT::io::Auxiliary::IN::AuxiliaryState_S" Comment="Off - backward, down, left, or not pressed" InitialValue="(value := 0, bCyclic := FALSE)"/>
+		<VarDeclaration Name="AuxEnabled" Type="isobus::UT::io::Auxiliary::IN::AuxiliaryState_S" Comment="On  - forward, up, right, or pressed" InitialValue="(value := 1)"/>
+		<VarDeclaration Name="AuxEnabled_START" Type="isobus::UT::io::Auxiliary::IN::AuxiliaryState_S" Comment="On  - forward, up, right, or pressed" InitialValue="(value := 1, bCyclic := FALSE)"/>
+		<VarDeclaration Name="AuxHeld" Type="isobus::UT::io::Auxiliary::IN::AuxiliaryState_S" Comment="Held (forward, up, or right)" InitialValue="(value := 2)"/>
+		<VarDeclaration Name="AuxHeld_START" Type="isobus::UT::io::Auxiliary::IN::AuxiliaryState_S" Comment="Held (forward, up, or right)" InitialValue="(value := 2, bCyclic := FALSE)"/>
+		<VarDeclaration Name="AuxEnabledBackwards" Type="isobus::UT::io::Auxiliary::IN::AuxiliaryState_S" Comment="On momentary - backward, down or left" InitialValue="(value := 4)"/>
+		<VarDeclaration Name="AuxHeldBackwards" Type="isobus::UT::io::Auxiliary::IN::AuxiliaryState_S" Comment="Held (backwards, down, or left)" InitialValue="(value := 8)"/>
+		<VarDeclaration Name="AuxHeldBackwards_START" Type="isobus::UT::io::Auxiliary::IN::AuxiliaryState_S" Comment="Held (backwards, down, or left)" InitialValue="(value := 8, bCyclic := FALSE)"/>
+		<VarDeclaration Name="AuxDefault" Type="isobus::UT::io::Auxiliary::IN::AuxiliaryState_S" Comment="-" InitialValue="(value := 9)"/>
+		<VarDeclaration Name="Invalid" Type="isobus::UT::io::Auxiliary::IN::AuxiliaryState_S" InitialValue="(value := 255)"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE isobus::UT::io::Auxiliary::IN;
+
+GLOBALCONSTANTS AuxiliaryState
+	VAR_GLOBAL CONSTANT
+		AuxDisabled : AuxiliaryState_S := (value := 0); // Off - backward, down, left, or not pressed
+		AuxDisabled_START : AuxiliaryState_S := (value := 0, bCyclic := FALSE); // Off - backward, down, left, or not pressed
+		AuxEnabled : AuxiliaryState_S := (value := 1); // On  - forward, up, right, or pressed
+		AuxEnabled_START : AuxiliaryState_S := (value := 1, bCyclic := FALSE); // On  - forward, up, right, or pressed
+		AuxHeld : AuxiliaryState_S := (value := 2); // Held (forward, up, or right)
+		AuxHeld_START : AuxiliaryState_S := (value := 2, bCyclic := FALSE); // Held (forward, up, or right)
+		AuxEnabledBackwards : AuxiliaryState_S := (value := 4); // On momentary - backward, down or left
+		AuxHeldBackwards : AuxiliaryState_S := (value := 8); // Held (backwards, down, or left)
+		AuxHeldBackwards_START : AuxiliaryState_S := (value := 8, bCyclic := FALSE); // Held (backwards, down, or left)
+		AuxDefault : AuxiliaryState_S := (value := 9); // -
+		Invalid : AuxiliaryState_S := (value := 255);
+	END_VAR
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</GlobalConstants>

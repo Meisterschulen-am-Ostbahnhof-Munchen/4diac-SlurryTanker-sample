@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Manifest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="platform:/resource/org.eclipse.fordiac.ide.library.model/model/library.xsd" Scope="Library">
+  <Dependencies>
+    <Required SymbolicName="adapter_types" Version="3.0.0"/>
+  </Dependencies>
+  <Product Comment="CAN-Digitaleingang-Treiber (logiBUS_2_CAN_IX/IXA), herausgeloest aus logiBUS-3.0.0/typelib/io/DI_CAN" Name="logiBUS_DI_CAN" SymbolicName="logiBUS_DI_CAN">
+    <VersionInfo Author="HR Agrartechnik GmbH" Date="2026-10-09" Version="3.0.0"/>
+  </Product>
+</Manifest>

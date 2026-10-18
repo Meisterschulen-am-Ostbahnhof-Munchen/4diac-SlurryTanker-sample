@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="AUDI_AUI_MUX_8_VAL" Comment="8-Wege-Multiplexer fuer AUDI-Werte mit 8 internen initval_AUDI und AUI_MUX_8 /&#10;AUDI_AUI_MUX_8. Schaltet per Event-Input (EI1..EI8) zwischen val1..val8 um.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-10" Remarks="8-fach Variante von AUDI_AUI_MUX_3_VAL">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="EI1" Type="Event" Comment="Event zur Auswahl von val1">
+			</SubAppEvent>
+			<SubAppEvent Name="EI2" Type="Event" Comment="Event zur Auswahl von val2">
+			</SubAppEvent>
+			<SubAppEvent Name="EI3" Type="Event" Comment="Event zur Auswahl von val3">
+			</SubAppEvent>
+			<SubAppEvent Name="EI4" Type="Event" Comment="Event zur Auswahl von val4">
+			</SubAppEvent>
+			<SubAppEvent Name="EI5" Type="Event" Comment="Event zur Auswahl von val5">
+			</SubAppEvent>
+			<SubAppEvent Name="EI6" Type="Event" Comment="Event zur Auswahl von val6">
+			</SubAppEvent>
+			<SubAppEvent Name="EI7" Type="Event" Comment="Event zur Auswahl von val7">
+			</SubAppEvent>
+			<SubAppEvent Name="EI8" Type="Event" Comment="Event zur Auswahl von val8">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<InputVars>
+			<VarDeclaration Name="val1" Type="UDINT" Comment="Initialer Ausgabewert bei EI1"/>
+			<VarDeclaration Name="val2" Type="UDINT" Comment="Initialer Ausgabewert bei EI2"/>
+			<VarDeclaration Name="val3" Type="UDINT" Comment="Initialer Ausgabewert bei EI3"/>
+			<VarDeclaration Name="val4" Type="UDINT" Comment="Initialer Ausgabewert bei EI4"/>
+			<VarDeclaration Name="val5" Type="UDINT" Comment="Initialer Ausgabewert bei EI5"/>
+			<VarDeclaration Name="val6" Type="UDINT" Comment="Initialer Ausgabewert bei EI6"/>
+			<VarDeclaration Name="val7" Type="UDINT" Comment="Initialer Ausgabewert bei EI7"/>
+			<VarDeclaration Name="val8" Type="UDINT" Comment="Initialer Ausgabewert bei EI8"/>
+		</InputVars>
+		<Plugs>
+			<AdapterDeclaration Name="OUT" Type="adapter::types::unidirectional::AUDI" Comment="Ausgewaehlter AUDI-Adapter Output"/>
+		</Plugs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="AUI_MUX_8" Type="adapter::events::unidirectional::AUI_MUX_8" x="-2200" y="-1700">
+		</FB>
+		<FB Name="AUDI_AUI_MUX_8" Type="adapter::selection::unidirectional::AUDI_AUI_MUX_8" x="100" y="-800">
+		</FB>
+		<FB Name="initval_AUDI_1" Type="adapter::types::unidirectional::AUDI::initval::initval_AUDI" x="-2300" y="-400">
+		</FB>
+		<FB Name="initval_AUDI_2" Type="adapter::types::unidirectional::AUDI::initval::initval_AUDI" x="-2300" y="200">
+		</FB>
+		<FB Name="initval_AUDI_3" Type="adapter::types::unidirectional::AUDI::initval::initval_AUDI" x="-2300" y="800">
+		</FB>
+		<FB Name="initval_AUDI_4" Type="adapter::types::unidirectional::AUDI::initval::initval_AUDI" x="-2300" y="1400">
+		</FB>
+		<FB Name="initval_AUDI_5" Type="adapter::types::unidirectional::AUDI::initval::initval_AUDI" x="-2300" y="2000">
+		</FB>
+		<FB Name="initval_AUDI_6" Type="adapter::types::unidirectional::AUDI::initval::initval_AUDI" x="-2300" y="2600">
+		</FB>
+		<FB Name="initval_AUDI_7" Type="adapter::types::unidirectional::AUDI::initval::initval_AUDI" x="-2300" y="3200">
+		</FB>
+		<FB Name="initval_AUDI_8" Type="adapter::types::unidirectional::AUDI::initval::initval_AUDI" x="-2300" y="3800">
+		</FB>
+		<EventConnections>
+			<Connection Source="EI1" Destination="AUI_MUX_8.EI1" dx1="1660"/>
+			<Connection Source="EI2" Destination="AUI_MUX_8.EI2" dx1="1626.67"/>
+			<Connection Source="EI3" Destination="AUI_MUX_8.EI3" dx1="1593.33"/>
+			<Connection Source="EI4" Destination="AUI_MUX_8.EI4" dx1="1560"/>
+			<Connection Source="EI5" Destination="AUI_MUX_8.EI5" dx1="1526.67"/>
+			<Connection Source="EI6" Destination="AUI_MUX_8.EI6" dx1="1493.33"/>
+			<Connection Source="EI7" Destination="AUI_MUX_8.EI7" dx1="1460"/>
+			<Connection Source="EI8" Destination="AUI_MUX_8.EI8" dx1="1426.67"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="val1" Destination="initval_AUDI_1.INIT_VAL" dx1="1393.33"/>
+			<Connection Source="val2" Destination="initval_AUDI_2.INIT_VAL" dx1="1360"/>
+			<Connection Source="val3" Destination="initval_AUDI_3.INIT_VAL" dx1="1326.67"/>
+			<Connection Source="val4" Destination="initval_AUDI_4.INIT_VAL" dx1="1293.33"/>
+			<Connection Source="val5" Destination="initval_AUDI_5.INIT_VAL" dx1="1260"/>
+			<Connection Source="val6" Destination="initval_AUDI_6.INIT_VAL" dx1="1226.67"/>
+			<Connection Source="val7" Destination="initval_AUDI_7.INIT_VAL" dx1="1193.33"/>
+			<Connection Source="val8" Destination="initval_AUDI_8.INIT_VAL" dx1="1160"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="AUI_MUX_8.K" Destination="AUDI_AUI_MUX_8.K" dx1="800"/>
+			<Connection Source="initval_AUDI_1.OUT" Destination="AUDI_AUI_MUX_8.IN1" dx1="640"/>
+			<Connection Source="initval_AUDI_2.OUT" Destination="AUDI_AUI_MUX_8.IN2" dx1="673.33"/>
+			<Connection Source="initval_AUDI_3.OUT" Destination="AUDI_AUI_MUX_8.IN3" dx1="706.67"/>
+			<Connection Source="initval_AUDI_4.OUT" Destination="AUDI_AUI_MUX_8.IN4" dx1="773.33"/>
+			<Connection Source="initval_AUDI_5.OUT" Destination="AUDI_AUI_MUX_8.IN5" dx1="740"/>
+			<Connection Source="initval_AUDI_6.OUT" Destination="AUDI_AUI_MUX_8.IN6" dx1="773.33"/>
+			<Connection Source="initval_AUDI_7.OUT" Destination="AUDI_AUI_MUX_8.IN7" dx1="806.67"/>
+			<Connection Source="initval_AUDI_8.OUT" Destination="AUDI_AUI_MUX_8.IN8" dx1="840"/>
+			<Connection Source="AUDI_AUI_MUX_8.OUT" Destination="OUT" dx1="666.67"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

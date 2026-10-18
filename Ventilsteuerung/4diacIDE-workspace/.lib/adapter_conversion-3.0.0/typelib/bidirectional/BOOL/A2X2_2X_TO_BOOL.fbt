@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="A2X2_2X_TO_BOOL" Comment="Composite FB for convert A2X2 to 2 BOOLS">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-08-31">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::conversion::bidirectional">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ_UP" Type="Event" Comment="Request UP to Adapter">
+				<With Var="OUT_UP"/>
+			</Event>
+			<Event Name="REQ_DOWN" Type="Event" Comment="Request DOWN to Adapter">
+				<With Var="OUT_DOWN"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF_UP" Type="Event" Comment="Confirmation UP from Adapter">
+				<With Var="IN_UP"/>
+			</Event>
+			<Event Name="CNF_DOWN" Type="Event" Comment="Confirmation DOWN from Adapter">
+				<With Var="IN_DOWN"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="OUT_UP" Type="BOOL" Comment="TRUE = forward, up, right, clockwise"/>
+			<VarDeclaration Name="OUT_DOWN" Type="BOOL" Comment="TRUE = backward, down, left, counter-clockwise"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="IN_UP" Type="BOOL" Comment="UP data from Adapter"/>
+			<VarDeclaration Name="IN_DOWN" Type="BOOL" Comment="DOWN data from Adapter"/>
+		</OutputVars>
+		<Sockets>
+			<AdapterDeclaration Name="A2X2_IN" Type="adapter::types::bidirectional::A2X2" Comment="Adapter Input" x="1100" y="-900"/>
+		</Sockets>
+	</InterfaceList>
+	<FBNetwork>
+		<EventConnections>
+			<Connection Source="A2X2_IN.EO_UP" Destination="CNF_UP" dx1="1426.67"/>
+			<Connection Source="A2X2_IN.EO_DOWN" Destination="CNF_DOWN" dx1="1460"/>
+			<Connection Source="REQ_UP" Destination="A2X2_IN.EI_UP" dx1="1706.67"/>
+			<Connection Source="REQ_DOWN" Destination="A2X2_IN.EI_DOWN" dx1="1673.33"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="A2X2_IN.DO_UP" Destination="IN_UP" dx1="1493.33"/>
+			<Connection Source="A2X2_IN.DO_DOWN" Destination="IN_DOWN" dx1="1526.67"/>
+			<Connection Source="OUT_UP" Destination="A2X2_IN.DI_UP" dx1="1640"/>
+			<Connection Source="OUT_DOWN" Destination="A2X2_IN.DI_DOWN" dx1="1606.67"/>
+		</DataConnections>
+	</FBNetwork>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

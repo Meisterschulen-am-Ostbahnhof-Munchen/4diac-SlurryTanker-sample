@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Softkey_Aux_Method_Button_IE" Comment="Softkey_Aux_Method_IE (SoftKey ODER AUX ODER lokale OPC-UA-Methode) ODER&#10;zusaetzlich ein weiterer Button (Button_IE, eigener CButton - z.B.&#10;IO-Diag-Testbutton, kann aber auch ein regulaerer Button sein) aktiviert -&gt; 1&#10;gemeinsames IND-Event. Fuer Ausgaenge, die sowohl echt bedient&#10;(SoftKey/AUX/Web/Dashboard) als auch per zusaetzlichem Button gleichberechtigt&#10;getriggert werden sollen - Background des Buttons wird vom Aufrufer separat aus&#10;dem resultierenden Zustand gespeist (dafuer bleibt u16ObjIdB beim Aufrufer&#10;verfuegbar).">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-15" Remarks="u16ObjId_TEST auf u16ObjIdB umbenannt (Button_IE_TEST -&gt; Button_IE_B) - dieser zusaetzliche Button ist nicht immer nur ein IO-Diag-Testbutton, kann auch ein regulaerer Button sein.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+		<Import declaration="isobus::UT::io::Button::ButtonActivationCode::BT_RELEASED_UNLATCHED"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+			<SubAppEvent Name="IND" Type="Event" Comment="Feuert wenn SoftKey, AUX, die lokale Methode ODER der IO-Diag-Testbutton aktiviert/aufgerufen wird">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID SoftKey"/>
+			<VarDeclaration Name="u16ObjIdA" Type="UINT" Comment="Object ID AuxFunction2"/>
+			<VarDeclaration Name="u16ObjIdB" Type="UINT" Comment="Object ID weiterer Button (z.B. IO-Diag-Testbutton, Ausgaenge-Diagnoseseite - kann aber auch ein regulaerer Button sein), gleichberechtigt zu SoftKey/AUX/Methode" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="ID_METHOD" Type="WSTRING" Comment="Lokale Methodenadresse (ACTION=CREATE_METHOD) fuer den argumentlosen Trigger - wird von Web-Client (vt-ui-mirror) UND direkt vom OPC-Dashboard aufgerufen"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<SubApp Name="SoftkeyAuxMethod" Type="MyLib::sys::Softkey_Aux_Method_IE" x="0" y="0">
+		</SubApp>
+		<FB Name="Button_IE_B" Type="isobus::UT::io::Button::Button_IE" x="0" y="1000">
+			<Parameter Name="InputEvent" Value="BT_RELEASED_UNLATCHED"/>
+		</FB>
+		<FB Name="MERGE" Type="iec61499::events::E_MERGE_2" x="2100" y="500">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_2" x="5800" y="0">
+		</FB>
+		<EventConnections>
+			<Connection Source="SoftkeyAuxMethod.IND" Destination="MERGE.EI1" dx1="753.33"/>
+			<Connection Source="Button_IE_B.IND" Destination="MERGE.EI2" dx1="1133.33"/>
+			<Connection Source="MERGE.EO" Destination="IND" dx1="800"/>
+			<Connection Source="INIT" Destination="Button_IE_B.INIT" dx1="1453.33"/>
+			<Connection Source="Button_IE_B.INITO" Destination="SoftkeyAuxMethod.INIT" dx1="286.67" dx2="593.33" dy="-213.33"/>
+			<Connection Source="SoftkeyAuxMethod.INITO" Destination="INITO" dx1="1873.33"/>
+			<Connection Source="SoftkeyAuxMethod.INITO" Destination="AND_QO.REQ">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="u16ObjId" Destination="SoftkeyAuxMethod.u16ObjId" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjIdA" Destination="SoftkeyAuxMethod.u16ObjIdA" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_METHOD" Destination="SoftkeyAuxMethod.ID_METHOD" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjIdB" Destination="Button_IE_B.u16ObjId" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="Button_IE_B.QI" dx1="940">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="SoftkeyAuxMethod.QI" dx1="986.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Button_IE_B.QO" Destination="AND_QO.IN1" dx1="1506.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="SoftkeyAuxMethod.QO" Destination="AND_QO.IN2">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="1040"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

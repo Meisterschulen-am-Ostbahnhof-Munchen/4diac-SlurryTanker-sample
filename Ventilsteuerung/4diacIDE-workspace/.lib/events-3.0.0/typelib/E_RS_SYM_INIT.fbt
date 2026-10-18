@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="E_RS_SYM_INIT" Comment="Event-driven bistable, symmetric Start-Up Behaviour and INIT">
+	<Identification Standard="61499-1 Annex A" Description="Copyright (c) 2017 fortiss GmbH, HR Agrartechnik GmbH&#10; &#10;This program and the accompanying materials are made&#10;available under the terms of the Eclipse Public License 2.0&#10;which is available at https://www.eclipse.org/legal/epl-2.0/&#10;&#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-05-12" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="iec61499::events">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Initialization Request">
+				<With Var="QI"/>
+				<With Var="Q_INIT"/>
+			</Event>
+			<Event Name="R" Type="Event" Comment="Reset output Q">
+			</Event>
+			<Event Name="S" Type="Event" Comment="Set output Q">
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
+			</Event>
+			<Event Name="EO" Type="Event" Comment="Output Q has changed">
+				<With Var="Q"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Input event qualifier"/>
+			<VarDeclaration Name="Q_INIT" Type="BOOL" Comment="Value of Q at INIT"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Output event qualifier"/>
+			<VarDeclaration Name="Q" Type="BOOL" Comment="value of flip flop"/>
+		</OutputVars>
+	</InterfaceList>
+	<BasicFB>
+		<ECC>
+			<ECState Name="START" Comment="Initial State" x="1920" y="640">
+			</ECState>
+			<ECState Name="Init" Comment="Initialization" x="2880" y="480">
+				<ECAction Algorithm="initialize" Output="INITO"/>
+			</ECState>
+			<ECState Name="DeInit" x="2880" y="880">
+				<ECAction Algorithm="deInitialize" Output="INITO"/>
+			</ECState>
+			<ECState Name="SET" x="5233.33" y="1073.33">
+				<ECAction Algorithm="SET" Output="EO"/>
+			</ECState>
+			<ECState Name="RESET" x="5200" y="1520">
+				<ECAction Algorithm="RESET" Output="EO"/>
+			</ECState>
+			<ECTransition Source="SET" Destination="RESET" Condition="R" x="5240" y="1360"/>
+			<ECTransition Source="RESET" Destination="SET" Condition="S" x="5493.33" y="1346.67"/>
+			<ECTransition Source="START" Destination="Init" Condition="INIT[TRUE = QI]" x="2220" y="466.67"/>
+			<ECTransition Source="Init" Destination="RESET" Condition="[FALSE = Q_INIT]" x="4120" y="266.67"/>
+			<ECTransition Source="DeInit" Destination="START" Condition="1" x="2273.33" y="953.33"/>
+			<ECTransition Source="RESET" Destination="DeInit" Condition="INIT[FALSE = QI]" x="4160" y="1280"/>
+			<ECTransition Source="SET" Destination="DeInit" Condition="INIT[FALSE = QI]" x="4046.67" y="1133.33"/>
+			<ECTransition Source="Init" Destination="SET" Condition="[TRUE = Q_INIT]" x="4353.33" y="6.67"/>
+		</ECC>
+		<Algorithm Name="initialize" Comment="Initialization algorithm">
+			<ST><![CDATA[
+QO := QI;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="deInitialize" Comment="Normally executed algorithm">
+			<ST><![CDATA[
+QO := FALSE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="SET" Comment="SET algorithm">
+			<ST><![CDATA[
+QO := QI;
+IF TRUE = QI THEN
+	(* only perform normal operation of QI is true *)
+	Q := TRUE;
+END_IF;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="RESET" Comment="RESET algorithm">
+			<ST><![CDATA[
+QO := QI;
+IF TRUE = QI THEN
+	(* only perform normal operation of QI is true *)
+	Q := FALSE;
+END_IF;
+]]></ST>
+		</Algorithm>
+	</BasicFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

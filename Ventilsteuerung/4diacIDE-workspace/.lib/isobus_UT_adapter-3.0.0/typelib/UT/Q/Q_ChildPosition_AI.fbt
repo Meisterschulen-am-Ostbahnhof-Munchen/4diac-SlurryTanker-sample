@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="Q_ChildPosition_AI" Comment="Command change child position ( Part 6 - F.16 ) — X/Y position via AI adapter&#10;sockets (wraps Q_ChildPosition)">
+	<Identification Standard="ISO 11783-6" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0&#10;&#10;AI adapter wrapper around Q_ChildPosition: s16Xposition and s16Yposition are each received via their own AI adapter socket instead of a plain REQ/data pair. Either socket&apos;s own event triggers a position update (Q_ChildPosition.REQ), reading whichever INT value currently sits on both sockets&apos; D1. Object IDs (u16ObjId/u16ObjIdParent) are unchanged plain INIT inputs, same as Q_ChildPosition itself.">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-05" Remarks="Add xScale flag">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-05" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::UT::Q">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+				<With Var="QI"/>
+				<With Var="u16ObjId"/>
+				<With Var="u16ObjIdParent"/>
+				<With Var="xScale"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+				<With Var="s16OldXposition"/>
+				<With Var="s16OldYposition"/>
+				<With Var="s16result"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObjIdParent" Type="UINT" Comment="Parent object ID" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="xScale" Type="BOOL" Comment="FALSE (default) = bypass, send s16Xposition/s16Yposition through unchanged. TRUE = scale them by the DM/SKM factor for u16ObjIdParent." InitialValue="FALSE"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status - passthrough from the internal Q_ChildPosition"/>
+			<VarDeclaration Name="s16OldXposition" Type="INT" Comment="Old X position - passthrough from the internal Q_ChildPosition"/>
+			<VarDeclaration Name="s16OldYposition" Type="INT" Comment="Old Y position - passthrough from the internal Q_ChildPosition"/>
+			<VarDeclaration Name="s16result" Type="INT" Comment="retval - passthrough from the internal Q_ChildPosition, see Q_ChildPosition"/>
+		</OutputVars>
+		<Sockets>
+			<AdapterDeclaration Name="s16Xposition" Type="adapter::types::unidirectional::AI" Comment="New X position relative to the top left corner of parent object" x="-1400" y="700"/>
+			<AdapterDeclaration Name="s16Yposition" Type="adapter::types::unidirectional::AI" Comment="New Y position relative to the top left corner of parent object" x="-1400" y="1300"/>
+		</Sockets>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="Inner" Type="isobus::UT::Q::Q_ChildPosition" x="533.33" y="420">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="Inner.INIT" dx1="1306.67"/>
+			<Connection Source="s16Xposition.E1" Destination="Inner.REQ" dx1="320"/>
+			<Connection Source="s16Yposition.E1" Destination="Inner.REQ" dx1="320"/>
+			<Connection Source="Inner.INITO" Destination="INITO" dx1="1506.67"/>
+			<Connection Source="Inner.CNF" Destination="CNF" dx1="1760"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="u16ObjId" Destination="Inner.u16ObjId" dx1="973.33"/>
+			<Connection Source="u16ObjIdParent" Destination="Inner.u16ObjIdParent" dx1="973.33"/>
+			<Connection Source="xScale" Destination="Inner.xScale" dx1="973.33"/>
+			<Connection Source="s16Xposition.D1" Destination="Inner.s16Xposition" dx1="1120"/>
+			<Connection Source="s16Yposition.D1" Destination="Inner.s16Yposition" dx1="1120"/>
+			<Connection Source="Inner.STATUS" Destination="STATUS" dx1="2000"/>
+			<Connection Source="Inner.s16OldXposition" Destination="s16OldXposition" dx1="2000"/>
+			<Connection Source="Inner.s16OldYposition" Destination="s16OldYposition" dx1="2000"/>
+			<Connection Source="Inner.s16result" Destination="s16result" dx1="2573.33"/>
+			<Connection Source="QI" Destination="Inner.QI"/>
+			<Connection Source="Inner.QO" Destination="QO"/>
+		</DataConnections>
+	</FBNetwork>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

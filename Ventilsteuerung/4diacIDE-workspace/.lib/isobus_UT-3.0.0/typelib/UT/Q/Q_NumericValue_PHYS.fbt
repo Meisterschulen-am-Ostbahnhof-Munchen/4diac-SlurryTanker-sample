@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="Q_NumericValue_PHYS" Comment="Command change numeric value — accepts NumericObjectPool_S struct ( Part 6 -&#10;F.22 )">
+	<Identification Standard="ISO 11783-6" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-10-11" Remarks="ObjID-Extraktion nutzt jetzt F_NumericObjectPool_S_TO_OBJID statt iec61131::selection::F_MOVE - damit entfaellt die iec61131-3-Abhaengigkeit dieser Library.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-04-14" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::UT::Q">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+		<Import declaration="logiBUS::utils::conversion::phys::NumericObjectPool_S"/>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+				<With Var="QI"/>
+				<With Var="stObj"/>
+			</Event>
+			<Event Name="REQ" Type="Event" Comment="Service Request">
+				<With Var="QI"/>
+				<With Var="rPhys"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+				<With Var="u32OldValue"/>
+				<With Var="s16result"/>
+				<With Var="xOver"/>
+				<With Var="xUnder"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="stObj" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object pool properties (u16ObjId, scale, offset, decimals)" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 0)"/>
+			<VarDeclaration Name="rPhys" Type="REAL" Comment="New raw value — use F_PHYS_TO_RAW to convert from physical value"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
+			<VarDeclaration Name="u32OldValue" Type="UDINT" Comment="Old raw value of ID"/>
+			<VarDeclaration Name="s16result" Type="INT" Comment="retval see Q_NumericValue"/>
+			<VarDeclaration Name="xOver" Type="BOOL" Comment="Physical value exceeds upper ISOBUS limit"/>
+			<VarDeclaration Name="xUnder" Type="BOOL" Comment="Physical value below lower ISOBUS limit"/>
+		</OutputVars>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue" x="700" y="500">
+		</FB>
+		<FB Name="F_PHYS_TO_RAW" Type="logiBUS::utils::conversion::phys::F_PHYS_TO_RAW" x="-1100" y="1300">
+		</FB>
+		<FB Name="F_MOVE" Type="logiBUS::utils::conversion::phys::F_NumericObjectPool_S_TO_OBJID" x="-2500" y="300">
+		</FB>
+		<EventConnections>
+			<Connection Source="Q_NumericValue.INITO" Destination="INITO" dx1="1506.67"/>
+			<Connection Source="Q_NumericValue.CNF" Destination="CNF" dx1="1760"/>
+			<Connection Source="F_PHYS_TO_RAW.CNF" Destination="Q_NumericValue.REQ" dx1="266.67"/>
+			<Connection Source="INIT" Destination="F_MOVE.REQ" dx1="1513.33"/>
+			<Connection Source="REQ" Destination="F_PHYS_TO_RAW.REQ" dx1="1306.67"/>
+			<Connection Source="F_MOVE.CNF" Destination="Q_NumericValue.INIT" dx1="953.33"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="Q_NumericValue.STATUS" Destination="STATUS" dx1="2000"/>
+			<Connection Source="Q_NumericValue.u32OldValue" Destination="u32OldValue" dx1="2333.33"/>
+			<Connection Source="Q_NumericValue.s16result" Destination="s16result" dx1="2573.33"/>
+			<Connection Source="stObj" Destination="F_PHYS_TO_RAW.stObj" dx1="713.33"/>
+			<Connection Source="F_PHYS_TO_RAW." Destination="Q_NumericValue.u32NewValue" dx1="480"/>
+			<Connection Source="rPhys" Destination="F_PHYS_TO_RAW.rPhys" dx1="593.33"/>
+			<Connection Source="stObj" Destination="F_MOVE.stObj" dx1="1100"/>
+			<Connection Source="F_MOVE." Destination="Q_NumericValue.u16ObjId" dx1="533.33"/>
+			<Connection Source="QI" Destination="Q_NumericValue.QI" dx1="533.33"/>
+			<Connection Source="Q_NumericValue.QO" Destination="QO" dx1="2000"/>
+			<Connection Source="F_PHYS_TO_RAW.xOver" Destination="xOver" dx1="4740"/>
+			<Connection Source="F_PHYS_TO_RAW.xUnder" Destination="xUnder" dx1="4853.33"/>
+		</DataConnections>
+	</FBNetwork>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>Command change numeric value ( Part 6 - F.22 ) — physical-value variant</h1>
+
+<p>This FB accepts the raw value in <strong>physical form</strong> via <code>rPhys</code> (REAL). The physical value is converted with <strong>F_PHYS_TO_RAW</strong> using the scale/offset/decimals of the <code>stObj</code> pool (<code>NumericObjectPool_S</code>) and then sent by the internally instantiated <strong>Q_NumericValue</strong>. The Object ID to command is taken from <code>stObj.u16ObjId</code>.</p>
+
+<h2>Valid Object IDs</h2>
+
+<p>stObj.u16ObjId is valid if it falls within one of the following ISO 11783-6 ID ranges (Annex F.22 — see Q_NumericValue):</p>
+<ul>
+	<li><strong>InputBooleanField</strong>: 7000 – 7999</li>
+	<li><strong>InputNumberField</strong>: 9000 – 9999</li>
+	<li><strong>InputListField</strong>: 10000 – 10999</li>
+	<li><strong>OutputNumberField</strong>: 12000 – 12999</li>
+	<li><strong>Meter</strong>: 17000 – 17999</li>
+	<li><strong>LinearBarGraph</strong>: 18000 – 18999</li>
+	<li><strong>ArchedBarGraph</strong>: 19000 – 19999</li>
+	<li><strong>NumberVariable</strong>: 21000 – 21999</li>
+	<li><strong>ObjectPointer</strong>: 27000 – 27999</li>
+	<li><strong>OutputListObject</strong>: 37000 – 37999</li>
+	<li><strong>ExternalObjectPointer</strong>: 43000 – 43999</li>
+	<li><strong>AnimationObject</strong>: 44000 – 44999</li>
+	<li><strong>ScaledGraphicObject</strong>: 48000 – 48999</li>
+</ul>
+
+<p>ID_NULL (65535) is not a command target but can be used in stObj.u16ObjId via INIT to deactivate the FB. Any ID outside these ranges is invalid for commanding. The result codes (s16result) are identical to <strong>Q_NumericValue</strong>; <code>xOver</code>/<code>xUnder</code> signal physical values outside the ISO 11783-6 range limits.</p>
+]]></Attribute>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

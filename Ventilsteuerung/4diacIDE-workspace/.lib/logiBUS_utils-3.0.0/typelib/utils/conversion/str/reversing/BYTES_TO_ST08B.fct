@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Function Name="BYTES_TO_ST08B" Comment="this Function combines 8 BYTES to a 8-BYTE Struct">
+	<Identification Standard="61499-1" Description="Copyright (c) 2024 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2024-02-22">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::utils::conversion::str::reversing">
+		<Import declaration="logiBUS::utils::conversion::types::ST08B"/>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event">
+				<With Var="IN_00"/>
+				<With Var="IN_01"/>
+				<With Var="IN_02"/>
+				<With Var="IN_03"/>
+				<With Var="IN_04"/>
+				<With Var="IN_05"/>
+				<With Var="IN_06"/>
+				<With Var="IN_07"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event">
+				<With Var="OUT"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="IN_00" Type="BYTE" Comment="BYTE 00"/>
+			<VarDeclaration Name="IN_01" Type="BYTE" Comment="BYTE 01"/>
+			<VarDeclaration Name="IN_02" Type="BYTE" Comment="BYTE 02"/>
+			<VarDeclaration Name="IN_03" Type="BYTE" Comment="BYTE 03"/>
+			<VarDeclaration Name="IN_04" Type="BYTE" Comment="BYTE 04"/>
+			<VarDeclaration Name="IN_05" Type="BYTE" Comment="BYTE 05"/>
+			<VarDeclaration Name="IN_06" Type="BYTE" Comment="BYTE 06"/>
+			<VarDeclaration Name="IN_07" Type="BYTE" Comment="BYTE 07"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="OUT" Type="logiBUS::utils::conversion::types::ST08B" Comment="ST08B Output"/>
+		</OutputVars>
+	</InterfaceList>
+	<FunctionBody>
+		<ST><![CDATA[PACKAGE logiBUS::utils::conversion::str::reversing;
+
+IMPORT logiBUS::utils::conversion::types::ST08B;
+
+(* this Function combines 8 BYTES to a 8-BYTE Struct *)
+FUNCTION BYTES_TO_ST08B
+
+VAR_INPUT
+	IN_00 : BYTE; // BYTE 00
+	IN_01 : BYTE; // BYTE 01
+	IN_02 : BYTE; // BYTE 02
+	IN_03 : BYTE; // BYTE 03
+	IN_04 : BYTE; // BYTE 04
+	IN_05 : BYTE; // BYTE 05
+	IN_06 : BYTE; // BYTE 06
+	IN_07 : BYTE; // BYTE 07
+END_VAR
+
+VAR_OUTPUT
+	OUT : ST08B; // ST08B Output
+END_VAR
+
+OUT.B_00 := IN_00;
+OUT.B_01 := IN_01;
+OUT.B_02 := IN_02;
+OUT.B_03 := IN_03;
+OUT.B_04 := IN_04;
+OUT.B_05 := IN_05;
+OUT.B_06 := IN_06;
+OUT.B_07 := IN_07;
+
+END_FUNCTION
+]]></ST>
+	</FunctionBody>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</Function>

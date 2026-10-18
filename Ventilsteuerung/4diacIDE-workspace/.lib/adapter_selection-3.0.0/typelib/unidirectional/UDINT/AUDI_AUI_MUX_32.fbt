@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="AUDI_AUI_MUX_32" Comment="AUDI multiplexor (generic FB) Adapter-Ausgang wird nur bei Wertänderung&#10;aktualisiert (Event nur bei tatsächlicher Änderung).">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-08-13">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::selection::unidirectional">
+	</CompilerInfo>
+	<InterfaceList>
+		<Plugs>
+			<AdapterDeclaration Name="OUT" Type="adapter::types::unidirectional::AUDI" Comment="IN1 for K = 0..IN32 for K = 31"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="K" Type="adapter::types::unidirectional::AUI" Comment="index"/>
+			<AdapterDeclaration Name="IN1" Type="adapter::types::unidirectional::AUDI" Comment="Input value 1 (selected when K = 0)"/>
+			<AdapterDeclaration Name="IN2" Type="adapter::types::unidirectional::AUDI" Comment="Input value 2 (selected when K = 1)"/>
+			<AdapterDeclaration Name="IN3" Type="adapter::types::unidirectional::AUDI" Comment="Input value 3 (selected when K = 2)"/>
+			<AdapterDeclaration Name="IN4" Type="adapter::types::unidirectional::AUDI" Comment="Input value 4 (selected when K = 3)"/>
+			<AdapterDeclaration Name="IN5" Type="adapter::types::unidirectional::AUDI" Comment="Input value 5 (selected when K = 4)"/>
+			<AdapterDeclaration Name="IN6" Type="adapter::types::unidirectional::AUDI" Comment="Input value 6 (selected when K = 5)"/>
+			<AdapterDeclaration Name="IN7" Type="adapter::types::unidirectional::AUDI" Comment="Input value 7 (selected when K = 6)"/>
+			<AdapterDeclaration Name="IN8" Type="adapter::types::unidirectional::AUDI" Comment="Input value 8 (selected when K = 7)"/>
+			<AdapterDeclaration Name="IN9" Type="adapter::types::unidirectional::AUDI" Comment="Input value 9 (selected when K = 8)"/>
+			<AdapterDeclaration Name="IN10" Type="adapter::types::unidirectional::AUDI" Comment="Input value 10 (selected when K = 9)"/>
+			<AdapterDeclaration Name="IN11" Type="adapter::types::unidirectional::AUDI" Comment="Input value 11 (selected when K = 10)"/>
+			<AdapterDeclaration Name="IN12" Type="adapter::types::unidirectional::AUDI" Comment="Input value 12 (selected when K = 11)"/>
+			<AdapterDeclaration Name="IN13" Type="adapter::types::unidirectional::AUDI" Comment="Input value 13 (selected when K = 12)"/>
+			<AdapterDeclaration Name="IN14" Type="adapter::types::unidirectional::AUDI" Comment="Input value 14 (selected when K = 13)"/>
+			<AdapterDeclaration Name="IN15" Type="adapter::types::unidirectional::AUDI" Comment="Input value 15 (selected when K = 14)"/>
+			<AdapterDeclaration Name="IN16" Type="adapter::types::unidirectional::AUDI" Comment="Input value 16 (selected when K = 15)"/>
+			<AdapterDeclaration Name="IN17" Type="adapter::types::unidirectional::AUDI" Comment="Input value 17 (selected when K = 16)"/>
+			<AdapterDeclaration Name="IN18" Type="adapter::types::unidirectional::AUDI" Comment="Input value 18 (selected when K = 17)"/>
+			<AdapterDeclaration Name="IN19" Type="adapter::types::unidirectional::AUDI" Comment="Input value 19 (selected when K = 18)"/>
+			<AdapterDeclaration Name="IN20" Type="adapter::types::unidirectional::AUDI" Comment="Input value 20 (selected when K = 19)"/>
+			<AdapterDeclaration Name="IN21" Type="adapter::types::unidirectional::AUDI" Comment="Input value 21 (selected when K = 20)"/>
+			<AdapterDeclaration Name="IN22" Type="adapter::types::unidirectional::AUDI" Comment="Input value 22 (selected when K = 21)"/>
+			<AdapterDeclaration Name="IN23" Type="adapter::types::unidirectional::AUDI" Comment="Input value 23 (selected when K = 22)"/>
+			<AdapterDeclaration Name="IN24" Type="adapter::types::unidirectional::AUDI" Comment="Input value 24 (selected when K = 23)"/>
+			<AdapterDeclaration Name="IN25" Type="adapter::types::unidirectional::AUDI" Comment="Input value 25 (selected when K = 24)"/>
+			<AdapterDeclaration Name="IN26" Type="adapter::types::unidirectional::AUDI" Comment="Input value 26 (selected when K = 25)"/>
+			<AdapterDeclaration Name="IN27" Type="adapter::types::unidirectional::AUDI" Comment="Input value 27 (selected when K = 26)"/>
+			<AdapterDeclaration Name="IN28" Type="adapter::types::unidirectional::AUDI" Comment="Input value 28 (selected when K = 27)"/>
+			<AdapterDeclaration Name="IN29" Type="adapter::types::unidirectional::AUDI" Comment="Input value 29 (selected when K = 28)"/>
+			<AdapterDeclaration Name="IN30" Type="adapter::types::unidirectional::AUDI" Comment="Input value 30 (selected when K = 29)"/>
+			<AdapterDeclaration Name="IN31" Type="adapter::types::unidirectional::AUDI" Comment="Input value 31 (selected when K = 30)"/>
+			<AdapterDeclaration Name="IN32" Type="adapter::types::unidirectional::AUDI" Comment="Input value 32 (selected when K = 31)"/>
+		</Sockets>
+	</InterfaceList>
+	<Attribute Name="eclipse4diac::core::GenericClassName" Value="'GEN_AUDI_AUI_MUX'"/>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

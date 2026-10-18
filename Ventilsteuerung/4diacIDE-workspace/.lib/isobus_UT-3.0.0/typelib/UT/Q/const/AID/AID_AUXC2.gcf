@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="AID_AUXC2" Comment="Auxiliary control designator type 2 object attribute ids">
+	<Identification Standard="61499-1" Description="Copyright (c) 2023 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-06-20">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::UT::Q::const::AID">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="PTR_TYPE" Type="USINT" Comment="1: AID_AUXC2_PTR_TYPE (read-only) - Pointer Type: 0=Points to Aux Object, 1=Points to Aux Function/Input" InitialValue="USINT#1"/>
+		<VarDeclaration Name="OBJ_ID" Type="USINT" Comment="2: AID_AUXC2_OBJ_ID - Object ID of a referenced Auxiliary Function or Auxiliary Input object or" InitialValue="USINT#2"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE isobus::UT::Q::const::AID;
+
+// auxiliary control designator type 2 object attribute ids
+GLOBALCONSTANTS AID_AUXC2
+	VAR_GLOBAL CONSTANT
+		PTR_TYPE : USINT := USINT#1; // 1: AID_AUXC2_PTR_TYPE (read-only) - Pointer Type: 0=Points to Aux Object, 1=Points to Aux Function/Input
+		                             // assigned to Aux Object, 2=Points to Working Set owner of pointer, 3=Points to Working Set owner
+		                             // of assigned function/input.
+		OBJ_ID : USINT := USINT#2; // 2: AID_AUXC2_OBJ_ID - Object ID of a referenced Auxiliary Function or Auxiliary Input object or
+		                           // NULL.
+	END_VAR
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</GlobalConstants>

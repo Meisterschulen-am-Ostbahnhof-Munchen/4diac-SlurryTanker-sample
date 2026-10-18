@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="DualHysteresis_AR_A2X" Comment="2-way conversion of Analog to Digital with Hysteresis (Switch-on = MI +/-&#10;(ABS(DEAD) + ABS(HYSTERESIS)), Switch-off = MI +/- ABS(DEAD)), UP/DOWN output on&#10;a single A2X adapter">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 HR Agrartechnik GmbH&#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0 ">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-09-05" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::signalprocessing::hysteresis">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Initialization Request">
+				<With Var="QI"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Input event qualifier"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="OUT" Type="adapter::types::unidirectional::A2X" Comment="UP/DOWN output"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="INPUT" Type="adapter::types::unidirectional::AR" Comment="Input value"/>
+			<AdapterDeclaration Name="MI" Type="adapter::types::unidirectional::AR" Comment="Center point (e.g. 0.5 for 50%)"/>
+			<AdapterDeclaration Name="DEAD" Type="adapter::types::unidirectional::AR" Comment="Deadband around MI (absolute value). Switch-off points = MI +/- ABS(DEAD)"/>
+			<AdapterDeclaration Name="HYSTERESIS" Type="adapter::types::unidirectional::AR" Comment="Hysteresis value (absolute value). Switch-on points = MI +/- (ABS(DEAD) + ABS(HYSTERESIS))"/>
+		</Sockets>
+	</InterfaceList>
+	<BasicFB>
+		<ECC>
+			<ECState Name="START" Comment="Initial State" x="840" y="2460">
+			</ECState>
+			<ECState Name="Init" Comment="Initialization" x="1600" y="2000">
+				<ECAction Algorithm="initialize" Output="INITO"/>
+			</ECState>
+			<ECState Name="UP" Comment="Normal execution" x="6666.67" y="1066.67">
+				<ECAction Algorithm="alUp"/>
+				<ECAction Output="OUT.E_UP"/>
+				<ECAction Output="OUT.E_DOWN"/>
+			</ECState>
+			<ECState Name="Neutral" x="2266.67" y="2480">
+				<ECAction Algorithm="alNeutral"/>
+				<ECAction Output="OUT.E_UP"/>
+				<ECAction Output="OUT.E_DOWN"/>
+			</ECState>
+			<ECState Name="DeInit" x="1520" y="3040">
+				<ECAction Algorithm="deInitialize" Output="INITO"/>
+			</ECState>
+			<ECState Name="DOWN" x="6666.67" y="3466.67">
+				<ECAction Algorithm="alDown"/>
+				<ECAction Output="OUT.E_UP"/>
+				<ECAction Output="OUT.E_DOWN"/>
+			</ECState>
+			<ECTransition Source="START" Destination="Init" Condition="INIT[TRUE = QI]" x="1206.67" y="2260"/>
+			<ECTransition Source="Init" Destination="Neutral" Condition="INPUT.E1" x="2026.67" y="2313.33"/>
+			<ECTransition Source="Neutral" Destination="DeInit" Condition="INIT[FALSE = QI]" x="2053.33" y="2680"/>
+			<ECTransition Source="Neutral" Destination="UP" Condition="INPUT.E1[INPUT.D1 &gt;= MI.D1 + ABS(DEAD.D1) + ABS(HYSTERESIS.D1)]" Comment="Switch-on UP (inclusive)" x="5040" y="1173.33"/>
+			<ECTransition Source="DeInit" Destination="START" Condition="1" x="1306.67" y="2780"/>
+			<ECTransition Source="Neutral" Destination="DOWN" Condition="INPUT.E1[INPUT.D1 &lt;= MI.D1 - ABS(DEAD.D1) - ABS(HYSTERESIS.D1)]" Comment="Switch-on DOWN (inclusive)" x="5513.33" y="3013.33"/>
+			<ECTransition Source="DOWN" Destination="Neutral" Condition="INPUT.E1[INPUT.D1 &gt; MI.D1 - ABS(DEAD.D1)]" Comment="Switch-off DOWN (strict)" x="5173.33" y="3480"/>
+			<ECTransition Source="UP" Destination="Neutral" Condition="INPUT.E1[INPUT.D1 &lt; MI.D1 + ABS(DEAD.D1)]" Comment="Switch-off UP (strict)" x="5173.33" y="2026.67"/>
+		</ECC>
+		<Algorithm Name="initialize">
+			<ST><![CDATA[
+
+QO := QI;
+(* in any case go safe State *)
+OUT.UP := BOOL#FALSE;
+OUT.DOWN := BOOL#FALSE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="deInitialize">
+			<ST><![CDATA[
+
+QO := BOOL#FALSE;
+(* in any case go safe State *)
+OUT.UP := BOOL#FALSE;
+OUT.DOWN := BOOL#FALSE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="alNeutral">
+			<ST><![CDATA[
+QO := QI;
+(* in any case go safe State *)
+OUT.UP := BOOL#FALSE;
+OUT.DOWN := BOOL#FALSE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="alUp">
+			<ST><![CDATA[
+QO := QI;
+IF TRUE = QI THEN
+	(* only perform normal operation of QI is true *)
+	OUT.UP := BOOL#TRUE;
+	OUT.DOWN := BOOL#FALSE;
+END_IF;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="alDown">
+			<ST><![CDATA[
+QO := QI;
+IF TRUE = QI THEN
+	(* only perform normal operation of QI is true *)
+	OUT.UP := BOOL#FALSE;
+	OUT.DOWN := BOOL#TRUE;
+END_IF;
+]]></ST>
+		</Algorithm>
+	</BasicFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

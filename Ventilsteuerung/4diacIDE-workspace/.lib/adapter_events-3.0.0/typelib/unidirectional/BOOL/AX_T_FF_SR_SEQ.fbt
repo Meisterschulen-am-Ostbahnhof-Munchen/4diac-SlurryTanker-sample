@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="AX_T_FF_SR_SEQ" Comment="Event-driven bistable and Toggle, zusaetzlich echt bidirektional kettenfaehig&#10;ueber ASR2 (CHAIN_IN/CHAIN_OUT) fuer gestaffeltes Ein-/Ausschalten mehrerer&#10;Baender - Vorwaerts (CHAIN_IN.EO_SET/EO_RESET -&gt; CHAIN_OUT.EO_SET/EO_RESET) UND&#10;Rueckwaerts (CHAIN_OUT.EI_SET/EI_RESET -&gt; CHAIN_IN.EI_SET/EI_RESET), 4 strikt&#10;getrennte Pfade, keine Verzweigung.">
+	<Identification Standard="61499-1 Annex A" Description="Copyright (c) 2017 fortiss GmbH, HR Agrartechnik GmbH&#10; &#10;This program and the accompanying materials are made&#10;available under the terms of the Eclipse Public License 2.0&#10;which is available at https://www.eclipse.org/legal/epl-2.0/&#10;&#10;SPDX-License-Identifier: EPL-2.0" Function="Lokales S/R/CLK verhaelt sich exakt wie AX_T_FF_SR und loest NIE CHAIN_IN/CHAIN_OUT aus. 4 strikt getrennte, nicht verzweigende Pfade: (1) CHAIN_IN.EO_SET -&gt; lokal SET + CHAIN_OUT.EO_SET (Vorwaerts-Set). (2) CHAIN_IN.EO_RESET -&gt; lokal RESET + CHAIN_OUT.EO_RESET (Vorwaerts-Reset). (3) CHAIN_OUT.EI_SET -&gt; lokal SET + CHAIN_IN.EI_SET (Rueckwaerts-Set). (4) CHAIN_OUT.EI_RESET -&gt; lokal RESET + CHAIN_IN.EI_RESET (Rueckwaerts-Reset). Ein ueber Pfad (1) ankommendes Set loest NIEMALS zusaetzlich Pfad (3)/(4) aus und umgekehrt - jeder Zustand feuert genau eine Chain-Aktion.">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.1" Author="Franz Höpfinger" Date="2026-09-17" Remarks="Echte Bidirektionalitaet ergaenzt (Franz: 'Chain IN SET --&gt; Chain Out Set, und Rueckwaerts auch so. keine Events verdoppeln... insgesamt 4 Pfade. keine Verzweigungen'): 2 neue Zustaende SET_CHAIN_BWD/RESET_CHAIN_BWD fuer die Rueckwaerts-Richtung (CHAIN_OUT.EI_SET/EI_RESET -&gt; lokal + CHAIN_IN.EI_SET/EI_RESET), symmetrisch zu SET_CHAIN/RESET_CHAIN aber mit eigener, getrennter ECAction (nie CHAIN_OUT.EO_*, nur CHAIN_IN.EI_*) - dadurch koennen z.B. Igel/Elevator/Querband ueber denselben physischen Kettenaufbau sowohl vorwaerts (SET, Downstream zuerst) als auch rueckwaerts (RESET, Upstream zuerst) gestaffelt geschaltet werden, ohne dass ein Vorwaerts-Event versehentlich auch rueckwaerts weiterlaeuft oder umgekehrt.">
+	</VersionInfo>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-09-17" Remarks="Kopiert von AX_T_FF_SR und um CHAIN_IN/CHAIN_OUT (ASR2-Adapter) fuer gestaffeltes kaskadiertes Set/Reset via ASR2_DELAY erweitert - lokales S/R/CLK loest CHAIN_OUT nie aus">
+	</VersionInfo>
+	<VersionInfo Version="3.0" Author="Patrick Aigner" Date="2025-04-14" Remarks="changed package">
+	</VersionInfo>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.1" Author="Franz Höpfinger" Date="2024-08-27" Remarks="Copy E_SR and make this FB">
+	</VersionInfo>
+	<VersionInfo Organization="fortiss GmbH" Version="1.0" Author="Alois Zoitl" Date="2017-09-22" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::events::unidirectional">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="S" Type="Event" Comment="Set output Q (lokal, wirkt nie auf CHAIN_IN/CHAIN_OUT)">
+			</Event>
+			<Event Name="R" Type="Event" Comment="Reset output Q (lokal, wirkt nie auf CHAIN_IN/CHAIN_OUT)">
+			</Event>
+			<Event Name="CLK" Type="Event" Comment="Clock for triggering a output toggle (lokal, wirkt nie auf CHAIN_IN/CHAIN_OUT)">
+			</Event>
+		</EventInputs>
+		<Plugs>
+			<AdapterDeclaration Name="Q" Type="adapter::types::unidirectional::AX" Comment="value of flip flop" x="4200" y="200"/>
+			<AdapterDeclaration Name="CHAIN_OUT" Type="adapter::types::bidirectional::ASR2" Comment="Vorwaerts: Set/Reset an naechstes Kettenglied (EO_SET/EO_RESET). Rueckwaerts: Set/Reset VOM naechsten Kettenglied empfangen (EI_SET/EI_RESET)." x="4200" y="1400"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="CHAIN_IN" Type="adapter::types::bidirectional::ASR2" Comment="Vorwaerts: Set/Reset vom vorherigen Kettenglied empfangen (EO_SET/EO_RESET). Rueckwaerts: Set/Reset an vorheriges Kettenglied weiterreichen (EI_SET/EI_RESET)." x="-1200" y="1400"/>
+		</Sockets>
+	</InterfaceList>
+	<BasicFB>
+		<ECC>
+			<ECState Name="START" Comment="Initial State" x="200" y="700">
+			</ECState>
+			<ECState Name="SET" x="1400" y="100">
+				<ECAction Algorithm="SET" Output="Q.E1"/>
+			</ECState>
+			<ECState Name="RESET" x="1400" y="1300">
+				<ECAction Algorithm="RESET" Output="Q.E1"/>
+			</ECState>
+			<ECState Name="SET_CHAIN" Comment="Set kam vorwaerts ueber CHAIN_IN.EO_SET - reicht NUR vorwaerts an CHAIN_OUT.EO_SET weiter" x="2800" y="100">
+				<ECAction Algorithm="SET" Output="Q.E1"/>
+				<ECAction Output="CHAIN_OUT.EO_SET"/>
+			</ECState>
+			<ECState Name="RESET_CHAIN" Comment="Reset kam vorwaerts ueber CHAIN_IN.EO_RESET - reicht NUR vorwaerts an CHAIN_OUT.EO_RESET weiter" x="2800" y="1300">
+				<ECAction Algorithm="RESET" Output="Q.E1"/>
+				<ECAction Output="CHAIN_OUT.EO_RESET"/>
+			</ECState>
+			<ECState Name="SET_CHAIN_BWD" Comment="Set kam rueckwaerts ueber CHAIN_OUT.EI_SET - reicht NUR rueckwaerts an CHAIN_IN.EI_SET weiter" x="4200" y="100">
+				<ECAction Algorithm="SET" Output="Q.E1"/>
+				<ECAction Output="CHAIN_IN.EI_SET"/>
+			</ECState>
+			<ECState Name="RESET_CHAIN_BWD" Comment="Reset kam rueckwaerts ueber CHAIN_OUT.EI_RESET - reicht NUR rueckwaerts an CHAIN_IN.EI_RESET weiter" x="4200" y="1300">
+				<ECAction Algorithm="RESET" Output="Q.E1"/>
+				<ECAction Output="CHAIN_IN.EI_RESET"/>
+			</ECState>
+
+			<ECTransition Source="START" Destination="SET" Condition="S" x="800" y="400"/>
+			<ECTransition Source="START" Destination="SET" Condition="CLK" x="840" y="440"/>
+			<ECTransition Source="START" Destination="SET_CHAIN" Condition="CHAIN_IN.EO_SET" x="1580" y="480"/>
+			<ECTransition Source="START" Destination="RESET_CHAIN" Condition="CHAIN_IN.EO_RESET" x="1620" y="1120"/>
+			<ECTransition Source="START" Destination="SET_CHAIN_BWD" Condition="CHAIN_OUT.EI_SET" x="2360" y="560"/>
+			<ECTransition Source="START" Destination="RESET_CHAIN_BWD" Condition="CHAIN_OUT.EI_RESET" x="2400" y="1200"/>
+
+			<ECTransition Source="SET" Destination="RESET" Condition="R" x="1400" y="700"/>
+			<ECTransition Source="SET" Destination="RESET" Condition="CLK" x="1440" y="740"/>
+			<ECTransition Source="SET" Destination="SET_CHAIN" Condition="CHAIN_IN.EO_SET" x="2180" y="180"/>
+			<ECTransition Source="SET" Destination="RESET_CHAIN" Condition="CHAIN_IN.EO_RESET" x="2220" y="820"/>
+			<ECTransition Source="SET" Destination="SET_CHAIN_BWD" Condition="CHAIN_OUT.EI_SET" x="2960" y="260"/>
+			<ECTransition Source="SET" Destination="RESET_CHAIN_BWD" Condition="CHAIN_OUT.EI_RESET" x="3000" y="900"/>
+
+			<ECTransition Source="RESET" Destination="SET" Condition="S" x="1400" y="700"/>
+			<ECTransition Source="RESET" Destination="SET" Condition="CLK" x="1440" y="740"/>
+			<ECTransition Source="RESET" Destination="SET_CHAIN" Condition="CHAIN_IN.EO_SET" x="2180" y="780"/>
+			<ECTransition Source="RESET" Destination="RESET_CHAIN" Condition="CHAIN_IN.EO_RESET" x="2220" y="1420"/>
+			<ECTransition Source="RESET" Destination="SET_CHAIN_BWD" Condition="CHAIN_OUT.EI_SET" x="2960" y="860"/>
+			<ECTransition Source="RESET" Destination="RESET_CHAIN_BWD" Condition="CHAIN_OUT.EI_RESET" x="3000" y="1500"/>
+
+			<ECTransition Source="SET_CHAIN" Destination="RESET" Condition="R" x="2100" y="700"/>
+			<ECTransition Source="SET_CHAIN" Destination="RESET" Condition="CLK" x="2140" y="740"/>
+			<ECTransition Source="SET_CHAIN" Destination="SET_CHAIN" Condition="CHAIN_IN.EO_SET" x="2880" y="180"/>
+			<ECTransition Source="SET_CHAIN" Destination="RESET_CHAIN" Condition="CHAIN_IN.EO_RESET" x="2920" y="820"/>
+			<ECTransition Source="SET_CHAIN" Destination="SET_CHAIN_BWD" Condition="CHAIN_OUT.EI_SET" x="3660" y="260"/>
+			<ECTransition Source="SET_CHAIN" Destination="RESET_CHAIN_BWD" Condition="CHAIN_OUT.EI_RESET" x="3700" y="900"/>
+
+			<ECTransition Source="RESET_CHAIN" Destination="SET" Condition="S" x="2100" y="700"/>
+			<ECTransition Source="RESET_CHAIN" Destination="SET" Condition="CLK" x="2140" y="740"/>
+			<ECTransition Source="RESET_CHAIN" Destination="SET_CHAIN" Condition="CHAIN_IN.EO_SET" x="2880" y="780"/>
+			<ECTransition Source="RESET_CHAIN" Destination="RESET_CHAIN" Condition="CHAIN_IN.EO_RESET" x="2920" y="1420"/>
+			<ECTransition Source="RESET_CHAIN" Destination="SET_CHAIN_BWD" Condition="CHAIN_OUT.EI_SET" x="3660" y="860"/>
+			<ECTransition Source="RESET_CHAIN" Destination="RESET_CHAIN_BWD" Condition="CHAIN_OUT.EI_RESET" x="3700" y="1500"/>
+
+			<ECTransition Source="SET_CHAIN_BWD" Destination="RESET" Condition="R" x="2800" y="700"/>
+			<ECTransition Source="SET_CHAIN_BWD" Destination="RESET" Condition="CLK" x="2840" y="740"/>
+			<ECTransition Source="SET_CHAIN_BWD" Destination="SET_CHAIN" Condition="CHAIN_IN.EO_SET" x="3580" y="180"/>
+			<ECTransition Source="SET_CHAIN_BWD" Destination="RESET_CHAIN" Condition="CHAIN_IN.EO_RESET" x="3620" y="820"/>
+			<ECTransition Source="SET_CHAIN_BWD" Destination="SET_CHAIN_BWD" Condition="CHAIN_OUT.EI_SET" x="4360" y="260"/>
+			<ECTransition Source="SET_CHAIN_BWD" Destination="RESET_CHAIN_BWD" Condition="CHAIN_OUT.EI_RESET" x="4400" y="900"/>
+
+			<ECTransition Source="RESET_CHAIN_BWD" Destination="SET" Condition="S" x="2800" y="700"/>
+			<ECTransition Source="RESET_CHAIN_BWD" Destination="SET" Condition="CLK" x="2840" y="740"/>
+			<ECTransition Source="RESET_CHAIN_BWD" Destination="SET_CHAIN" Condition="CHAIN_IN.EO_SET" x="3580" y="780"/>
+			<ECTransition Source="RESET_CHAIN_BWD" Destination="RESET_CHAIN" Condition="CHAIN_IN.EO_RESET" x="3620" y="1420"/>
+			<ECTransition Source="RESET_CHAIN_BWD" Destination="SET_CHAIN_BWD" Condition="CHAIN_OUT.EI_SET" x="4360" y="860"/>
+			<ECTransition Source="RESET_CHAIN_BWD" Destination="RESET_CHAIN_BWD" Condition="CHAIN_OUT.EI_RESET" x="4400" y="1500"/>
+		</ECC>
+		<Algorithm Name="SET">
+			<ST><![CDATA[
+Q.D1 := TRUE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="RESET">
+			<ST><![CDATA[
+Q.D1 := FALSE;
+]]></ST>
+		</Algorithm>
+	</BasicFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

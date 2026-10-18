@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Funk_IXA_TO_DataPanel_MI_QXA" Comment="Funk_IXA auf DataPanel_MI_QXA (generisch), adapter-basiert">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-09" Remarks="Ausgelagert aus Uebung_003b2_sub_AX (Uebung_003b3_sub_AX war ein exaktes Duplikat davon - entfernt, beide Parents zeigen jetzt hierher).">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="DataPanel::io::MI::DQ::DataPanel_MI_DO_S"/>
+		<Import declaration="DataPanel::io::MI::const::MI"/>
+		<Import declaration="Funk::io::DI::Funk_DI"/>
+		<Import declaration="Funk::io::DI::Funk_DI_S"/>
+		<Import declaration="DataPanel::io::MI::DQ::DataPanel_MI_DO::Invalid"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<InputVars>
+			<VarDeclaration Name="Input" Type="Funk::io::DI::Funk_DI_S" Comment="Identify the Input DigitalInput_Key_01 etc.." InitialValue="Funk_DI::Invalid"/>
+			<VarDeclaration Name="u8SAMember" Type="USINT" Comment="Node SA 224..239" InitialValue="MI::MI_00"/>
+			<VarDeclaration Name="Output" Type="DataPanel::io::MI::DQ::DataPanel_MI_DO_S" Comment="Identify the Output DigitalOutput_1A..8B and Input_Power_Port_5..8" InitialValue="Invalid"/>
+		</InputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="QXA" Type="DataPanel::io::MI::DQ::DataPanel_MI_QXA" x="-2500" y="-900">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
+		<FB Name="IXA" Type="Funk::io::DI::Funk_IXA" x="-4600" y="-700">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+		</FB>
+		<DataConnections>
+			<Connection Source="Input" Destination="IXA.Input" dx1="1858.82">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u8SAMember" Destination="QXA.u8SAMember" dx1="3813.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Output" Destination="QXA.Output" dx1="3813.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="IXA.IN" Destination="QXA.OUT"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Manifest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="platform:/resource/org.eclipse.fordiac.ide.library.model/model/library.xsd" Scope="Library">
+  <Dependencies>
+    <Required SymbolicName="adapter_types" Version="3.0.0"/>
+    <Required SymbolicName="events" Version="3.0.0"/>
+  </Dependencies>
+  <Product Comment="INI-Datei-Speicherbausteine (INI, INI_AX/AR/.../AUDI2) + storageStatusMessages, herausgeloest aus logiBUS-3.0.0/typelib/storage - entspricht dem FORTE-Modul storage" Name="logiBUS_storage" SymbolicName="logiBUS_storage">
+    <VersionInfo Author="HR Agrartechnik GmbH" Date="2026-10-09" Version="3.0.0"/>
+  </Product>
+</Manifest>

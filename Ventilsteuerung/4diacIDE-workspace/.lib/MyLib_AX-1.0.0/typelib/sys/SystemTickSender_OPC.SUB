@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="SystemTickSender_OPC" Comment="SystemTick-Heartbeat NUR per OPC-UA publizieren, fuer Module ohne eigene&#10;VT-Anbindung">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-08-07" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="ID_WRITE" Type="WSTRING" Comment="OPC-UA Publish-Key fuer den Tick-Zaehlerstand (fuer Remote-Subscribe durch andere Module)"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<SubApp Name="System_Tick" Type="MyLib::sys::SystemTick" x="0" y="0">
+		</SubApp>
+		<FB Name="ADI_PUBLISH_1" Type="adapter::net::ADI_PUBLISH_1" x="4100" y="-400">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="ADI_PUBLISH_1.INIT"/>
+			<Connection Source="ADI_PUBLISH_1.INITO" Destination="INITO"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="ID_WRITE" Destination="ADI_PUBLISH_1.ID" dx1="2513.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="ADI_PUBLISH_1.QI"/>
+			<Connection Source="ADI_PUBLISH_1.QO" Destination="QO"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="System_Tick.ADI_OUT" Destination="ADI_PUBLISH_1.IN" dx1="1920"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>SystemTick-Heartbeat nur per OPC-UA publizieren</h1>
+
+<p>Schlankste Variante für Module ohne eigene VT-Anbindung: der laufende Tick-Zähler von
+<code>System_Tick</code> wird direkt per OPC-UA veröffentlicht (<code>ADI_PUBLISH_1</code>,
+<code>ID_WRITE</code>), ohne lokale VT-Anzeige. Ein anderes Modul mit VT kann diesen Wert per
+Remote-Subscribe abonnieren und anzeigen, um die Lebendigkeit dieses Moduls zu überwachen.</p>
+
+<p>Wird zusätzlich eine lokale VT-Anzeige gebraucht, <code>SystemTickSender_ISO_OPC</code> (VT +
+OPC-UA) bzw. <code>SystemTickSender_ISO</code> (nur VT) verwenden.</p>
+]]></Attribute>
+</SubAppType>

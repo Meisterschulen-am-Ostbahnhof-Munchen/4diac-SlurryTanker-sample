@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="Global_NAME_Functions" Comment="Industry non-specific function defines">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Organization="Demmler Andreas Fahrzeugbau" Version="1.0" Author="Franz Höpfinger" Date="2026-06-29">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::pgn::const">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="F_ENGINE" Type="BYTE" Comment="Function: Engine - While the function identifies what is typically the mechanical power source of" InitialValue="0"/>
+		<VarDeclaration Name="F_AUX_POWER_UNIT" Type="BYTE" Comment="Function: Auxiliary Power Unit (APU) - Power source for operating systems without the use of the" InitialValue="1"/>
+		<VarDeclaration Name="F_ELEC_PROPULSION_CONTROL" Type="BYTE" Comment="Function: Electric Propulsion Control - Control system which operates the drive mechanism when it" InitialValue="2"/>
+		<VarDeclaration Name="F_TRANSMISSION" Type="BYTE" Comment="Function: Transmission - A mechanical system for alter the speed vs torque output of the engine" InitialValue="3"/>
+		<VarDeclaration Name="F_BATTERY_PACK_MONITOR" Type="BYTE" Comment="Function: Battery Pack Monitor - Monitors the condition - charge, temperature, power remaining," InitialValue="4"/>
+		<VarDeclaration Name="F_SHIFT_CONTROL_CONSOLE" Type="BYTE" Comment="Function: Shift Control/Console - The device which determines and transmit onto the network the" InitialValue="5"/>
+		<VarDeclaration Name="F_POWER_TAKEOFF_MAIN_OR_REAR" Type="BYTE" Comment="Function: Power TakeOff - (Main or Rear) - The system which controls the mechanical power derived" InitialValue="6"/>
+		<VarDeclaration Name="F_AXLE_STEERING" Type="BYTE" Comment="Function: Axle - Steering - Adjust attack angle as function of steering" InitialValue="7"/>
+		<VarDeclaration Name="F_AXLE_DRIVE" Type="BYTE" Comment="Function: Axle - Drive" InitialValue="8"/>
+		<VarDeclaration Name="F_BRAKES_SYSTEMCONTROL" Type="BYTE" Comment="Function: Brakes - System Controller - Controls service braking system electronically – might be" InitialValue="9"/>
+		<VarDeclaration Name="F_BRAKES_STEER_AXLE" Type="BYTE" Comment="Function: Brakes - Steer Axle - Control for actuating the service brakes on a steered axle" InitialValue="10"/>
+		<VarDeclaration Name="F_BRAKES_DRIVE_AXLE" Type="BYTE" Comment="Function: Brakes - Drive axle - Control for actuating the service brakes on a drive axle" InitialValue="11"/>
+		<VarDeclaration Name="F_RETARDER_ENGINE" Type="BYTE" Comment="Function: Retarder - Engine - The control for the retarder capabilities of the engine. There are" InitialValue="12"/>
+		<VarDeclaration Name="F_RETARDER_DRIVELINE" Type="BYTE" Comment="Function: Retarder - Driveline - The control for the retarder capabilities of the driveline." InitialValue="13"/>
+		<VarDeclaration Name="F_CRUISE_CONTROL" Type="BYTE" Comment="Function: Cruise Control - Control system for maintaining the vehicle’s speed at a fixed operator" InitialValue="14"/>
+		<VarDeclaration Name="F_FUEL_SYSTEM" Type="BYTE" Comment="Function: Fuel System - Controls fuel flow from the tank to the filter to the" InitialValue="15"/>
+		<VarDeclaration Name="F_STEERING_CONTROL" Type="BYTE" Comment="Function: Steering Controller - Controls steering in steer-by-wire" InitialValue="16"/>
+		<VarDeclaration Name="F_SUSPENSION_STEER_AXLE" Type="BYTE" Comment="Function: Suspension - Steer Axle - Control system for the suspension of a steered axle" InitialValue="17"/>
+		<VarDeclaration Name="F_SUSPENSION_DRIVE_AXLE" Type="BYTE" Comment="Function: Suspension - Drive Axle - Control system for the suspension of a driven axle" InitialValue="18"/>
+		<VarDeclaration Name="F_INSTRUMENT_CLUSTER" Type="BYTE" Comment="Function: Instrument Cluster - A gauge display for a vehicle. Typically mounted in the cab within" InitialValue="19"/>
+		<VarDeclaration Name="F_TRIP_RECORDER" Type="BYTE" Comment="Function: Trip Recorder - A system for accumulating data versus travel of the vehicle (machine)," InitialValue="20"/>
+		<VarDeclaration Name="F_CAB_CLIMATE_CONTROL" Type="BYTE" Comment="Function: Cab Climate Control - A system for controlling the climate within the cab of the" InitialValue="21"/>
+		<VarDeclaration Name="F_AERODYNAMIC_CONTROL" Type="BYTE" Comment="Function: Aerodynamic Control - Modify drag by altering Body panels – lower air ferrings when" InitialValue="22"/>
+		<VarDeclaration Name="F_VEHICLE_NAVIGATION" Type="BYTE" Comment="Function: Vehicle Navigation - System associated with the vehicles physical location – may be as" InitialValue="23"/>
+		<VarDeclaration Name="F_VEHICLE_SECURITY" Type="BYTE" Comment="Function: Vehicle Security - System for comparing operator provided data sequences against" InitialValue="24"/>
+		<VarDeclaration Name="F_NETWORK_INTERCONNECT_UNIT" Type="BYTE" Comment="Function: Network Interconnect ECU - ECU for connecting different network segments together – may" InitialValue="25"/>
+		<VarDeclaration Name="F_BODY_CONTROLLER" Type="BYTE" Comment="Function: Body Controller - May handle suspension control for the body sections independent from" InitialValue="26"/>
+		<VarDeclaration Name="F_POWER_TAKEOFF_SECONDARY_OR_FRONT" Type="BYTE" Comment="Function: Power TakeOff (Secondary or Front) - The system which controls the mechanical power" InitialValue="27"/>
+		<VarDeclaration Name="F_OFF_VEHICLE_GATEWAY" Type="BYTE" Comment="Function: Off Vehicle Gateway - ECU for connecting between vehicle network(s) and an off-vehicle" InitialValue="28"/>
+		<VarDeclaration Name="F_VTERMINAL" Type="BYTE" Comment="Function: Virtual Terminal (in cab) - A general purpose ‘intelligent’ display with a specific" InitialValue="29"/>
+		<VarDeclaration Name="F_MANAGEMENT_COMPUTER" Type="BYTE" Comment="Function: Management Computer - Manages vehicle systems, i.e. powertrain." InitialValue="30"/>
+		<VarDeclaration Name="F_PROPULSION_BATTERY_CHARGER" Type="BYTE" Comment="Function: Propulsion Battery Charger - A device used to charge propulsion batteries in an" InitialValue="31"/>
+		<VarDeclaration Name="F_HEADWAY_CONTROLLER" Type="BYTE" Comment="Function: Headway Controller - Forward-looking collision avoidance, collision warning, speed" InitialValue="32"/>
+		<VarDeclaration Name="F_SYSTEM_MONITOR" Type="BYTE" Comment="Function: System Monitor" InitialValue="33"/>
+		<VarDeclaration Name="F_HYDRAULIC_PUMP_CONTROLLER" Type="BYTE" Comment="Function: Hydraulic Pump Controller - Pump which provides hydraulic power to operate installed" InitialValue="34"/>
+		<VarDeclaration Name="F_SUSPENSION_SYSTEM_CONTROLLER" Type="BYTE" Comment="Function: Suspension - System Controller - A controller responsible for co-ordinating the" InitialValue="35"/>
+		<VarDeclaration Name="F_PNEUMATIC_SYSTEM_CONTROLLER" Type="BYTE" Comment="Function: Pneumatic - System Controller" InitialValue="36"/>
+		<VarDeclaration Name="F_CAB_CONTROLLER" Type="BYTE" Comment="Function: Cab Controller - A controller located in/near vehicle cab to perform functions that are" InitialValue="37"/>
+		<VarDeclaration Name="F_TIRE_PRESSURE_CONTROL" Type="BYTE" Comment="Function: Tire Pressure Control - The device providing centralised tire inflation" InitialValue="38"/>
+		<VarDeclaration Name="F_IGNITION_CONTROL_MODULE" Type="BYTE" Comment="Function: Ignition Control Module - A device for altering the ignition of an engine and with" InitialValue="39"/>
+		<VarDeclaration Name="F_SEAT_CONTROL" Type="BYTE" Comment="Function: Seat Control - A system for controlling the seats (operator and passenger) within the" InitialValue="40"/>
+		<VarDeclaration Name="F_LIGHTING_OPERATOR_CONTROLS" Type="BYTE" Comment="Function: Lighting - Operator Controls - The controller for sending the operator lighting" InitialValue="41"/>
+		<VarDeclaration Name="F_WATER_PUMP_CONTROL" Type="BYTE" Comment="Function: Water Pump Control - Controller for a water pump mounted on the vehicle/machine. For" InitialValue="42"/>
+		<VarDeclaration Name="F_TRANSMISSION_DISPLAY" Type="BYTE" Comment="Function: Transmission Display - Display designed specifically to display transmission" InitialValue="43"/>
+		<VarDeclaration Name="F_EXHAUST_EMISSION_CONTROL" Type="BYTE" Comment="Function: Exhaust Emission Control" InitialValue="44"/>
+		<VarDeclaration Name="F_VEHICLE_DYNAMIC_STABILITY_CONTROL" Type="BYTE" Comment="Function: Vehicle Dynamic Stability Control" InitialValue="45"/>
+		<VarDeclaration Name="F_OIL_SENSOR_UNIT" Type="BYTE" Comment="Function: Oil Sensor Unit" InitialValue="46"/>
+		<VarDeclaration Name="F_INFORMATION_SYSTEM_CONTROLLER" Type="BYTE" Comment="Function: Information System Controller - Information management for the vehicle&apos;s application," InitialValue="47"/>
+		<VarDeclaration Name="F_RAMP_CONTROL" Type="BYTE" Comment="Function: Ramp Control - Loading unloading – chairlift, ramps, lifts, or tailgates" InitialValue="48"/>
+		<VarDeclaration Name="F_CLUTCH_CONVERTER_CONTROL" Type="BYTE" Comment="Function: Clutch/Converter Control - When transmission is distributed this handles torque" InitialValue="49"/>
+		<VarDeclaration Name="F_AUXILIARY_HEATER" Type="BYTE" Comment="Function: Auxiliary Heater - Primary heat is typically taken from the engine coolant. This is the" InitialValue="50"/>
+		<VarDeclaration Name="F_FORWARD_LOOKING_COLLISION_WARNING_SYSTEM" Type="BYTE" Comment="Function: Forward-Looking Collision Warning System - A system which detects and warns of" InitialValue="51"/>
+		<VarDeclaration Name="F_CHASSIS_CONTROLLER" Type="BYTE" Comment="Function: Chassis Controller - Controls the chassis (not body or cab) components" InitialValue="52"/>
+		<VarDeclaration Name="F_ALTERNATOR_CHARGING_SYSTEM" Type="BYTE" Comment="Function: Alternator/Charging System - Vehicle&apos;s primary on-board charging controller -" InitialValue="53"/>
+		<VarDeclaration Name="F_COMMUNICATIONS_UNIT_CELLULAR" Type="BYTE" Comment="Function: Communications Unit, Cellular - Radio communications device designed specifically to" InitialValue="54"/>
+		<VarDeclaration Name="F_COMMUNICATIONS_UNIT_SATELLITE" Type="BYTE" Comment="Function: Communications Unit, Satellite - Radio communications device designed specifically to" InitialValue="55"/>
+		<VarDeclaration Name="F_COMMUNICATIONS_UNIT_RADIO" Type="BYTE" Comment="Function: Communications Unit, Radio - Radio communications device designed specifically to" InitialValue="56"/>
+		<VarDeclaration Name="F_AUXILIARY_DEVICE" Type="BYTE" Comment="Function: Steering Column Unit - Device that gathers the operator inputs from switches/levers/etc" InitialValue="57"/>
+		<VarDeclaration Name="F_FAN_DRIVE_CONTROL" Type="BYTE" Comment="Function: Fan Drive Control - Primary control system affecting the operation of the main cooling" InitialValue="58"/>
+		<VarDeclaration Name="F_STARTER" Type="BYTE" Comment="Function: Starter - A mechanical system for initiating rotation in an engine that is stopped." InitialValue="59"/>
+		<VarDeclaration Name="F_CAB_DISPLAY" Type="BYTE" Comment="Function: Cab Display - Cab Display is for a fairly elaborate in cab display, typically capable" InitialValue="60"/>
+		<VarDeclaration Name="F_FILESERVER" Type="BYTE" Comment="Function: File Server / Printer - A printing or file storage unit on the network - A permanent" InitialValue="61"/>
+		<VarDeclaration Name="F_ON_BOARD_DIAGNOSTIC_UNIT" Type="BYTE" Comment="Function: On-Board Diagnostic Unit - A tool which may be permanently mounted on the vehicle and" InitialValue="62"/>
+		<VarDeclaration Name="F_ENGINE_VALVE_CONTROLLER" Type="BYTE" Comment="Function: Engine Valve Controller - Control system used to manipulate the actuation of engine" InitialValue="63"/>
+		<VarDeclaration Name="F_ENDURANCE_BRAKING" Type="BYTE" Comment="Function: Endurance Braking - Sum of all devices in a vehicle which enable the driver with" InitialValue="64"/>
+		<VarDeclaration Name="F_GAS_FLOW_MEASUREMENT" Type="BYTE" Comment="Function: Gas Flow Measurement - Provides measurement of gas flow rates and associated" InitialValue="65"/>
+		<VarDeclaration Name="F_I_O_CONTROLLER" Type="BYTE" Comment="Function: I/O Controller - Reporting and/or control device for external input and output channels" InitialValue="66"/>
+		<VarDeclaration Name="F_ELECTRICAL_SYSTEM_CONTROLLER" Type="BYTE" Comment="Function: Electrical System Controller - This may include Load Centers, Fuseboxes, &amp; Power" InitialValue="67"/>
+		<VarDeclaration Name="F_AFTERTREATMENT_SYSTEM_GAS_MEASUREMENT" Type="BYTE" Comment="Function: Aftertreatment system gas measurement - Sensor for measuring gas properties before and" InitialValue="68"/>
+		<VarDeclaration Name="F_ENGINE_EMISSION_AFTERTREATMENT_SYSTEM" Type="BYTE" Comment="Function: Engine Emission Aftertreatment System - Engine Emission Aftertreatment System" InitialValue="69"/>
+		<VarDeclaration Name="F_AUXILIARY_REGENERATION_DEVICE" Type="BYTE" Comment="Function: Auxiliary Regeneration Device - Auxiliary Regeneration Device used as part of an after" InitialValue="70"/>
+		<VarDeclaration Name="F_TRANSFER_CASE_CONTROL" Type="BYTE" Comment="Function: Transfer Case Control - The device which controls the selection of the number of drive" InitialValue="71"/>
+		<VarDeclaration Name="F_COOLANT_VALVE_CONTROLLER" Type="BYTE" Comment="Function: Coolant Valve Controller - Device used to control the flow of coolant (water, oil, air," InitialValue="72"/>
+		<VarDeclaration Name="F_ROLLOVER_DETECTION_CONTROL" Type="BYTE" Comment="Function: Rollover Detection Control - Device designed for detection of vehicle rollover." InitialValue="73"/>
+		<VarDeclaration Name="F_LUBRICATION_SYSTEM" Type="BYTE" Comment="Function: Lubrication System - The Lubrication System pumps quantities of lubricant to each" InitialValue="74"/>
+		<VarDeclaration Name="F_SUPPLEMENTAL_FAN" Type="BYTE" Comment="Function: Supplemental Fan - This is an auxillary fan used for additional cooling. It is in" InitialValue="75"/>
+		<VarDeclaration Name="F_TEMPERATURE_SENSOR" Type="BYTE" Comment="Function: Temperature Sensor - Device which measures temperature." InitialValue="76"/>
+		<VarDeclaration Name="F_FUEL_PROPERTIES_SENSOR" Type="BYTE" Comment="Function: Fuel Properties Sensor - Device which measures fuel properties" InitialValue="77"/>
+		<VarDeclaration Name="F_FIRE_SUPPRESSION_SYSTEM" Type="BYTE" Comment="Function: Fire Suppression System - Fire Suppression System" InitialValue="78"/>
+		<VarDeclaration Name="F_POWER_SYSTEMS_MANAGER" Type="BYTE" Comment="Function: Power Systems Manager - Controller application that manages the power output of one or" InitialValue="79"/>
+		<VarDeclaration Name="F_ELECTRIC_POWERTRAIN" Type="BYTE" Comment="Function: Electric Powertrain - Controller application in charge of controlling and coordinating" InitialValue="80"/>
+		<VarDeclaration Name="F_HYDRAULIC_POWERTRAIN" Type="BYTE" Comment="Function: Hydraulic Powertrain - Controller application in charge of controlling and coordinating" InitialValue="81"/>
+		<VarDeclaration Name="F_FILE_SERVER" Type="BYTE" Comment="Function: File Server - A file storage unit on the network - A permanent connection may exist and" InitialValue="82"/>
+		<VarDeclaration Name="F_PRINTER" Type="BYTE" Comment="Function: Printer - A printing unit on the network - A permanent connection may exist and the" InitialValue="83"/>
+		<VarDeclaration Name="F_START_AID_DEVICE" Type="BYTE" Comment="Function: Start Aid Device - Device that controls hardware and/or conveys information related to" InitialValue="84"/>
+		<VarDeclaration Name="F_ENGINE_INJECTION_CONTROL_MODULE" Type="BYTE" Comment="Function: Engine Injection Control Module - A device for direct or port injection of fuel for" InitialValue="85"/>
+		<VarDeclaration Name="F_EV_COMMUNICATION_CONTROLLER" Type="BYTE" Comment="Function: EV Communication Controller - A controller or application that manages the connection" InitialValue="86"/>
+		<VarDeclaration Name="F_DRIVER_IMPAIRMENT_DEVICE" Type="BYTE" Comment="Function: Driver Impairment Device - Device which prevents the starting of a vehicle motor due to" InitialValue="87"/>
+		<VarDeclaration Name="F_ELECTRIC_POWER_CONVERTER" Type="BYTE" Comment="Function: Electric Power Converter - An inverter or converter used to transform AC or DC power to" InitialValue="88"/>
+		<VarDeclaration Name="F_SUPPLY_EQUIPMENT_COMMUNICATION_CONTROLLER_SECC" Type="BYTE" Comment="Function: Supply Equipment Communication Controller (SECC) - Typically part of an Electrical" InitialValue="89"/>
+		<VarDeclaration Name="F_VEHICLE_ADAPTER_COMMUNICATION_CONTROLLER_VACC" Type="BYTE" Comment="Function: Vehicle Adapter Communication Controller (VACC) - A controller inside of the adapter" InitialValue="90"/>
+		<VarDeclaration Name="F_ACCESSORY_ELECTRIC_MOTOR_CONTROLLER" Type="BYTE" Comment="Function: Accessory Electric Motor Controller - Controller responsible for the operation and" InitialValue="91"/>
+		<VarDeclaration Name="F_CURRENT_SENSOR" Type="BYTE" Comment="Function: Current Sensor - Sensor for measuring current" InitialValue="92"/>
+		<VarDeclaration Name="F_FUEL_CELL_SYSTEM" Type="BYTE" Comment="Function: Fuel Cell System - Controller for a system that converts fuel (e.g., hydrogen) to" InitialValue="93"/>
+		<VarDeclaration Name="F_AUXILIARY_DISPLAY" Type="BYTE" Comment="Function: Auxiliary Display - Auxiliary Display for displaying information. It is located inside" InitialValue="94"/>
+		<VarDeclaration Name="F_NOT_AVAILABLE" Type="BYTE" Comment="Function: not available function; used as a placeholder for all functions" InitialValue="255"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE isobus::pgn::const;
+
+// Industry non-specific function defines (other see
+// https://www.isobus.net/isobus/nameFunction/index )
+GLOBALCONSTANTS Global_NAME_Functions
+	VAR_GLOBAL CONSTANT
+		F_ENGINE : BYTE := 0; // Function: Engine - While the function identifies what is typically the mechanical power source of
+		                      // the machine, the reference tends to be to the management system that controls the torque vs speed
+		                      // v...
+		F_AUX_POWER_UNIT : BYTE := 1; // Function: Auxiliary Power Unit (APU) - Power source for operating systems without the use of the
+		                              // prime ‘drive’ engine.
+		F_ELEC_PROPULSION_CONTROL : BYTE := 2; // Function: Electric Propulsion Control - Control system which operates the drive mechanism when it
+		                                       // is electrically powered, such as battery-motor, or engine-generator-motor hybrids
+		F_TRANSMISSION : BYTE := 3; // Function: Transmission - A mechanical system for alter the speed vs torque output of the engine
+		                            // to a level usable by another system on the machine. Although again the network reference is
+		                            // actually ...
+		F_BATTERY_PACK_MONITOR : BYTE := 4; // Function: Battery Pack Monitor - Monitors the condition - charge, temperature, power remaining,
+		                                    // etc. for an internal battery pack - typically used with electric propulsion
+		F_SHIFT_CONTROL_CONSOLE : BYTE := 5; // Function: Shift Control/Console - The device which determines and transmit onto the network the
+		                                     // gear, the range, the operating mode or any or all of these that the operator desires for the
+		                                     // transmis...
+		F_POWER_TAKEOFF_MAIN_OR_REAR : BYTE := 6; // Function: Power TakeOff - (Main or Rear) - The system which controls the mechanical power derived
+		                                          // from a prime engine and used to operate auxiliary items such as compressors in on highway
+		                                          // vehicles ...
+		F_AXLE_STEERING : BYTE := 7; // Function: Axle - Steering - Adjust attack angle as function of steering
+		F_AXLE_DRIVE : BYTE := 8; // Function: Axle - Drive
+		F_BRAKES_SYSTEMCONTROL : BYTE := 9; // Function: Brakes - System Controller - Controls service braking system electronically – might be
+		                                    // any of a number of schemes – may also control (at least partly) the endurance braking system in
+		                                    // the ...
+		F_BRAKES_STEER_AXLE : BYTE := 10; // Function: Brakes - Steer Axle - Control for actuating the service brakes on a steered axle
+		F_BRAKES_DRIVE_AXLE : BYTE := 11; // Function: Brakes - Drive axle - Control for actuating the service brakes on a drive axle
+		F_RETARDER_ENGINE : BYTE := 12; // Function: Retarder - Engine - The control for the retarder capabilities of the engine. There are
+		                                // several types of retarders possible and these are defined within the parameter - Retarder Type,
+		                                // (SPN...
+		F_RETARDER_DRIVELINE : BYTE := 13; // Function: Retarder - Driveline - The control for the retarder capabilities of the driveline.
+		                                   // There are several types of retarders possible and these are defined within the parameter -
+		                                   // Retarder Type...
+		F_CRUISE_CONTROL : BYTE := 14; // Function: Cruise Control - Control system for maintaining the vehicle’s speed at a fixed operator
+		                               // selectable value with various over-rides linked to other systems
+		F_FUEL_SYSTEM : BYTE := 15; // Function: Fuel System - Controls fuel flow from the tank to the filter to the
+		                            // water-removal/separator to the engine and then back to the tank.
+		F_STEERING_CONTROL : BYTE := 16; // Function: Steering Controller - Controls steering in steer-by-wire
+		F_SUSPENSION_STEER_AXLE : BYTE := 17; // Function: Suspension - Steer Axle - Control system for the suspension of a steered axle
+		F_SUSPENSION_DRIVE_AXLE : BYTE := 18; // Function: Suspension - Drive Axle - Control system for the suspension of a driven axle
+		F_INSTRUMENT_CLUSTER : BYTE := 19; // Function: Instrument Cluster - A gauge display for a vehicle. Typically mounted in the cab within
+		                                   // the driver’s field of view and generally a somewhat limited display such as: dedicated dials or a
+		                                   // s...
+		F_TRIP_RECORDER : BYTE := 20; // Function: Trip Recorder - A system for accumulating data versus travel of the vehicle (machine),
+		                              // since a specific starting point sometimes expressed in terms of distance or time traveled.
+		F_CAB_CLIMATE_CONTROL : BYTE := 21; // Function: Cab Climate Control - A system for controlling the climate within the cab of the
+		                                    // vehicle (machine). Note: The operator controls (message) for this system should be designed to
+		                                    // allow any s...
+		F_AERODYNAMIC_CONTROL : BYTE := 22; // Function: Aerodynamic Control - Modify drag by altering Body panels – lower air ferrings when
+		                                    // dead heading, extend side panels when on interstate
+		F_VEHICLE_NAVIGATION : BYTE := 23; // Function: Vehicle Navigation - System associated with the vehicles physical location – may be as
+		                                   // simple as display of current location, driving instructions from current to desired location, (do
+		                                   // we...
+		F_VEHICLE_SECURITY : BYTE := 24; // Function: Vehicle Security - System for comparing operator provided data sequences against
+		                                 // reference to verify that operation or certain operations should be allowed for the particular
+		                                 // operator. Al...
+		F_NETWORK_INTERCONNECT_UNIT : BYTE := 25; // Function: Network Interconnect ECU - ECU for connecting different network segments together – may
+		                                          // be bridge or gateway - see J1939 –31 for details For any vehicle system (tractor or trailer)
+		F_BODY_CONTROLLER : BYTE := 26; // Function: Body Controller - May handle suspension control for the body sections independent from
+		                                // the axle sections - Controls the body (not chassis or cab) components
+		F_POWER_TAKEOFF_SECONDARY_OR_FRONT : BYTE := 27; // Function: Power TakeOff (Secondary or Front) - The system which controls the mechanical power
+		                                                 // derived from a prime engine and used to operate auxiliary items such as compressors in on highway
+		                                                 // vehic...
+		F_OFF_VEHICLE_GATEWAY : BYTE := 28; // Function: Off Vehicle Gateway - ECU for connecting between vehicle network(s) and an off-vehicle
+		                                    // system or network, such as fleet management. Connection may be wireless. Performs Gateway
+		                                    // functions,...
+		F_VTERMINAL : BYTE := 29; // Function: Virtual Terminal (in cab) - A general purpose ‘intelligent’ display with a specific
+		                          // message set (J1939-72 or ISO 11783 –6) specifically mounted in cab for the operators use, which
+		                          // may be ...
+		F_MANAGEMENT_COMPUTER : BYTE := 30; // Function: Management Computer - Manages vehicle systems, i.e. powertrain.
+		F_PROPULSION_BATTERY_CHARGER : BYTE := 31; // Function: Propulsion Battery Charger - A device used to charge propulsion batteries in an
+		                                           // electric vehicle from an off-board source of electrical energy.
+		F_HEADWAY_CONTROLLER : BYTE := 32; // Function: Headway Controller - Forward-looking collision avoidance, collision warning, speed
+		                                   // controller, or speed matching
+		F_SYSTEM_MONITOR : BYTE := 33; // Function: System Monitor
+		F_HYDRAULIC_PUMP_CONTROLLER : BYTE := 34; // Function: Hydraulic Pump Controller - Pump which provides hydraulic power to operate installed
+		                                          // equipment, such as: Man buckets, cranes, augers, shredders Example vehicles: Digger Derrick –
+		                                          // plants t...
+		F_SUSPENSION_SYSTEM_CONTROLLER : BYTE := 35; // Function: Suspension - System Controller - A controller responsible for co-ordinating the
+		                                             // over-all suspension of a vehicle. It may cause inter action between the axle suspension controls
+		                                             // and the bo...
+		F_PNEUMATIC_SYSTEM_CONTROLLER : BYTE := 36; // Function: Pneumatic - System Controller
+		F_CAB_CONTROLLER : BYTE := 37; // Function: Cab Controller - A controller located in/near vehicle cab to perform functions that are
+		                               // grouped together for convenience and proximity. May handle any number of vehicle specific items
+		                               // but...
+		F_TIRE_PRESSURE_CONTROL : BYTE := 38; // Function: Tire Pressure Control - The device providing centralised tire inflation
+		F_IGNITION_CONTROL_MODULE : BYTE := 39; // Function: Ignition Control Module - A device for altering the ignition of an engine and with
+		                                        // which an engine controller may communicate.
+		F_SEAT_CONTROL : BYTE := 40; // Function: Seat Control - A system for controlling the seats (operator and passenger) within the
+		                             // cab of the vehicle (machine). May include position and suspension of seat. Note: The operator
+		                             // control...
+		F_LIGHTING_OPERATOR_CONTROLS : BYTE := 41; // Function: Lighting - Operator Controls - The controller for sending the operator lighting
+		                                           // controls messages when they are coming from a device dedicated to transmitting these specific
+		                                           // messages on t...
+		F_WATER_PUMP_CONTROL : BYTE := 42; // Function: Water Pump Control - Controller for a water pump mounted on the vehicle/machine. For
+		                                   // Instance – Emergency equipment with pump for pumping water onto fire. A Utilities delivery truck
+		                                   // for d...
+		F_TRANSMISSION_DISPLAY : BYTE := 43; // Function: Transmission Display - Display designed specifically to display transmission
+		                                     // information, such as the transmission gear.
+		F_EXHAUST_EMISSION_CONTROL : BYTE := 44; // Function: Exhaust Emission Control
+		F_VEHICLE_DYNAMIC_STABILITY_CONTROL : BYTE := 45; // Function: Vehicle Dynamic Stability Control
+		F_OIL_SENSOR_UNIT : BYTE := 46; // Function: Oil Sensor Unit
+		F_INFORMATION_SYSTEM_CONTROLLER : BYTE := 47; // Function: Information System Controller - Information management for the vehicle's application,
+		                                              // such as transit passenger/fare monitoring, truck cargo management, etc. Handles grouping and
+		                                              // processi...
+		F_RAMP_CONTROL : BYTE := 48; // Function: Ramp Control - Loading unloading – chairlift, ramps, lifts, or tailgates
+		F_CLUTCH_CONVERTER_CONTROL : BYTE := 49; // Function: Clutch/Converter Control - When transmission is distributed this handles torque
+		                                         // converter lock-up or engine - transmission connection
+		F_AUXILIARY_HEATER : BYTE := 50; // Function: Auxiliary Heater - Primary heat is typically taken from the engine coolant. This is the
+		                                 // heater for use without the prime ‘drive’ engine operating or when it is unable to supply
+		                                 // sufficient...
+		F_FORWARD_LOOKING_COLLISION_WARNING_SYSTEM : BYTE := 51; // Function: Forward-Looking Collision Warning System - A system which detects and warns of
+		                                                         // impending collision with object in path of present forward travel - Not to be confused with #32,
+		                                                         // Headway Con...
+		F_CHASSIS_CONTROLLER : BYTE := 52; // Function: Chassis Controller - Controls the chassis (not body or cab) components
+		F_ALTERNATOR_CHARGING_SYSTEM : BYTE := 53; // Function: Alternator/Charging System - Vehicle's primary on-board charging controller -
+		                                           // Alternator used to generate electrical power for vehicle electrical system and storage battery.
+		F_COMMUNICATIONS_UNIT_CELLULAR : BYTE := 54; // Function: Communications Unit, Cellular - Radio communications device designed specifically to
+		                                             // communicate via the ‘Cellular telephone system’. May be either receiver only, transmitter only or
+		                                             // tran...
+		F_COMMUNICATIONS_UNIT_SATELLITE : BYTE := 55; // Function: Communications Unit, Satellite - Radio communications device designed specifically to
+		                                              // communicate via some satellite system. May be either receiver only, transmitter only or
+		                                              // transceiver.
+		F_COMMUNICATIONS_UNIT_RADIO : BYTE := 56; // Function: Communications Unit, Radio - Radio communications device designed specifically to
+		                                          // communicate via a terrestrial point to point system. May be either receiver only, transmitter
+		                                          // only or tra...
+		F_AUXILIARY_DEVICE : BYTE := 57; // Function: Steering Column Unit - Device that gathers the operator inputs from switches/levers/etc
+		                                 // located in and/or around the steering wheel/column and transmits the associated messages on the
+		                                 // net...
+		F_FAN_DRIVE_CONTROL : BYTE := 58; // Function: Fan Drive Control - Primary control system affecting the operation of the main cooling
+		                                  // fan on the engine coolant. Other systems may send commands or requests to this device.
+		F_STARTER : BYTE := 59; // Function: Starter - A mechanical system for initiating rotation in an engine that is stopped.
+		                        // Although here the reference is more to the system that controls the starter than the starter
+		                        // itself.
+		F_CAB_DISPLAY : BYTE := 60; // Function: Cab Display - Cab Display is for a fairly elaborate in cab display, typically capable
+		                            // of greater than 30 ‘ascii’ characters and differentiated from the Instrument Cluster and Virtual
+		                            // Term...
+		F_FILESERVER : BYTE := 61; // Function: File Server / Printer - A printing or file storage unit on the network - A permanent
+		                           // connection may exist and the unit is expected to be able to print (paper type output) or store
+		                           // data (a...
+		F_ON_BOARD_DIAGNOSTIC_UNIT : BYTE := 62; // Function: On-Board Diagnostic Unit - A tool which may be permanently mounted on the vehicle and
+		                                         // that may not support all of the J1939-73 messages (services).
+		F_ENGINE_VALVE_CONTROLLER : BYTE := 63; // Function: Engine Valve Controller - Control system used to manipulate the actuation of engine
+		                                        // intake and/or exhaust valves in response to other factors
+		F_ENDURANCE_BRAKING : BYTE := 64; // Function: Endurance Braking - Sum of all devices in a vehicle which enable the driver with
+		                                  // virtually no friction brake wear / tear to reduce the speed or to maintain the speed on a long
+		                                  // descent. Ma...
+		F_GAS_FLOW_MEASUREMENT : BYTE := 65; // Function: Gas Flow Measurement - Provides measurement of gas flow rates and associated
+		                                     // parameters.
+		F_I_O_CONTROLLER : BYTE := 66; // Function: I/O Controller - Reporting and/or control device for external input and output channels
+		F_ELECTRICAL_SYSTEM_CONTROLLER : BYTE := 67; // Function: Electrical System Controller - This may include Load Centers, Fuseboxes, & Power
+		                                             // Distribution boards
+		F_AFTERTREATMENT_SYSTEM_GAS_MEASUREMENT : BYTE := 68; // Function: Aftertreatment system gas measurement - Sensor for measuring gas properties before and
+		                                                      // after an aftertreatment system. For example measurement of NOx or Oxygen level.
+		F_ENGINE_EMISSION_AFTERTREATMENT_SYSTEM : BYTE := 69; // Function: Engine Emission Aftertreatment System - Engine Emission Aftertreatment System
+		F_AUXILIARY_REGENERATION_DEVICE : BYTE := 70; // Function: Auxiliary Regeneration Device - Auxiliary Regeneration Device used as part of an after
+		                                              // treatment system
+		F_TRANSFER_CASE_CONTROL : BYTE := 71; // Function: Transfer Case Control - The device which controls the selection of the number of drive
+		                                      // wheels (for example 2 or 4 wheel drive).
+		F_COOLANT_VALVE_CONTROLLER : BYTE := 72; // Function: Coolant Valve Controller - Device used to control the flow of coolant (water, oil, air,
+		                                         // etc…) for any thermal management system.
+		F_ROLLOVER_DETECTION_CONTROL : BYTE := 73; // Function: Rollover Detection Control - Device designed for detection of vehicle rollover.
+		F_LUBRICATION_SYSTEM : BYTE := 74; // Function: Lubrication System - The Lubrication System pumps quantities of lubricant to each
+		                                   // machine/vehicle joint that need to be lubricated.
+		F_SUPPLEMENTAL_FAN : BYTE := 75; // Function: Supplemental Fan - This is an auxillary fan used for additional cooling. It is in
+		                                 // addition to the primary cooling fan.
+		F_TEMPERATURE_SENSOR : BYTE := 76; // Function: Temperature Sensor - Device which measures temperature.
+		F_FUEL_PROPERTIES_SENSOR : BYTE := 77; // Function: Fuel Properties Sensor - Device which measures fuel properties
+		F_FIRE_SUPPRESSION_SYSTEM : BYTE := 78; // Function: Fire Suppression System - Fire Suppression System
+		F_POWER_SYSTEMS_MANAGER : BYTE := 79; // Function: Power Systems Manager - Controller application that manages the power output of one or
+		                                      // more power systems. See also IG 5 Function 129 - Generator Set Controller.
+		F_ELECTRIC_POWERTRAIN : BYTE := 80; // Function: Electric Powertrain - Controller application in charge of controlling and coordinating
+		                                    // the operation of an electric drive system.
+		F_HYDRAULIC_POWERTRAIN : BYTE := 81; // Function: Hydraulic Powertrain - Controller application in charge of controlling and coordinating
+		                                     // the operation of a hydraulic drive system.
+		F_FILE_SERVER : BYTE := 82; // Function: File Server - A file storage unit on the network - A permanent connection may exist and
+		                            // the unit is expected to store data (as in magnetic or eerom devices). See Function 61 for a
+		                            // combina...
+		F_PRINTER : BYTE := 83; // Function: Printer - A printing unit on the network - A permanent connection may exist and the
+		                        // unit is expected to be able to print (paper type output). See Function 61 for a combination File
+		                        // Server...
+		F_START_AID_DEVICE : BYTE := 84; // Function: Start Aid Device - Device that controls hardware and/or conveys information related to
+		                                 // assisting an engine in starting, such as a glow plug, grid heater, etc.
+		F_ENGINE_INJECTION_CONTROL_MODULE : BYTE := 85; // Function: Engine Injection Control Module - A device for direct or port injection of fuel for
+		                                                // engine combustion and with which an engine controller may communicate.
+		F_EV_COMMUNICATION_CONTROLLER : BYTE := 86; // Function: EV Communication Controller - A controller or application that manages the connection
+		                                            // to an external power source, i.e. the Electric Vehicle Supply Equipment (EVSE). Relevant
+		                                            // standards fo...
+		F_DRIVER_IMPAIRMENT_DEVICE : BYTE := 87; // Function: Driver Impairment Device - Device which prevents the starting of a vehicle motor due to
+		                                         // driver impairment. An example is an alcohol interlock device according to CENELEC EN 50436-4
+		                                         // which ...
+		F_ELECTRIC_POWER_CONVERTER : BYTE := 88; // Function: Electric Power Converter - An inverter or converter used to transform AC or DC power to
+		                                         // or from an AC or DC source.
+		F_SUPPLY_EQUIPMENT_COMMUNICATION_CONTROLLER_SECC : BYTE := 89; // Function: Supply Equipment Communication Controller (SECC) - Typically part of an Electrical
+		                                                               // Vehicle Supply Equipment (EVSE) in an electric vehicle charging station
+		F_VEHICLE_ADAPTER_COMMUNICATION_CONTROLLER_VACC : BYTE := 90; // Function: Vehicle Adapter Communication Controller (VACC) - A controller inside of the adapter
+		                                                              // placed between an Electric Vehicle Supply Equipment (EVSE) vehicle connector and the vehicle
+		                                                              // inlet.
+		F_ACCESSORY_ELECTRIC_MOTOR_CONTROLLER : BYTE := 91; // Function: Accessory Electric Motor Controller - Controller responsible for the operation and
+		                                                    // monitoring of electrified accessory components driven by electric motors.
+		F_CURRENT_SENSOR : BYTE := 92; // Function: Current Sensor - Sensor for measuring current
+		F_FUEL_CELL_SYSTEM : BYTE := 93; // Function: Fuel Cell System - Controller for a system that converts fuel (e.g., hydrogen) to
+		                                 // electricity through an electrochemical process.
+		F_AUXILIARY_DISPLAY : BYTE := 94; // Function: Auxiliary Display - Auxiliary Display for displaying information. It is located inside
+		                                  // or outside the cab, but separate from the Cab Display, and differentiated from the Instrument
+		                                  // Cluste...
+		F_NOT_AVAILABLE : BYTE := 255; // Function: not available function; used as a placeholder for all functions
+	END_VAR
+
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</GlobalConstants>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="AID_KG" Comment="Key group object attribute ids">
+	<Identification Standard="61499-1" Description="Copyright (c) 2023 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-06-20">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::UT::Q::const::AID">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="OPTIONS" Type="USINT" Comment="1: AID_KG_OPTIONS - Bitmask: Bit 0=Available, Bit 1=Transparent." InitialValue="USINT#1"/>
+		<VarDeclaration Name="NAME" Type="USINT" Comment="2: AID_KG_NAME - Object ID of an Output String or Object Pointer containing the name." InitialValue="USINT#2"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE isobus::UT::Q::const::AID;
+
+// key group object attribute ids
+GLOBALCONSTANTS AID_KG
+	VAR_GLOBAL CONSTANT
+		OPTIONS : USINT := USINT#1; // 1: AID_KG_OPTIONS - Bitmask: Bit 0=Available, Bit 1=Transparent.
+		NAME : USINT := USINT#2; // 2: AID_KG_NAME - Object ID of an Output String or Object Pointer containing the name.
+	END_VAR
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</GlobalConstants>

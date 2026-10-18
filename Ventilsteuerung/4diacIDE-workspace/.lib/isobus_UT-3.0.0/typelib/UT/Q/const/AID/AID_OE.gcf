@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="AID_OE" Comment="Output ellipse object attribute ids">
+	<Identification Standard="61499-1" Description="Copyright (c) 2023 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-06-20">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::UT::Q::const::AID">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="LINE_ATT" Type="USINT" Comment="1: AID_OE_LINE_ATT - Object ID of a Line Attributes object." InitialValue="USINT#1"/>
+		<VarDeclaration Name="WIDTH" Type="USINT" Comment="2: AID_OE_WIDTH - Width in pixels." InitialValue="USINT#2"/>
+		<VarDeclaration Name="HEIGHT" Type="USINT" Comment="3: AID_OE_HEIGHT - Height in pixels." InitialValue="USINT#3"/>
+		<VarDeclaration Name="ELLIPSE_TYPE" Type="USINT" Comment="4: AID_OE_ELLIPSE_TYPE - 0=Closed Ellipse, 1=Open Ellipse, 2=Closed Segment, 3=Closed Section." InitialValue="USINT#4"/>
+		<VarDeclaration Name="START_ANGLE" Type="USINT" Comment="5: AID_OE_START_ANGLE" InitialValue="USINT#5"/>
+		<VarDeclaration Name="END_ANGLE" Type="USINT" Comment="6: AID_OE_END_ANGLE" InitialValue="USINT#6"/>
+		<VarDeclaration Name="FILL_ATT" Type="USINT" Comment="7: AID_OE_FILL_ATT - Object ID of a Fill Attributes object." InitialValue="USINT#7"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE isobus::UT::Q::const::AID;
+
+// output ellipse object attribute ids
+GLOBALCONSTANTS AID_OE
+	VAR_GLOBAL CONSTANT
+		LINE_ATT : USINT := USINT#1; // 1: AID_OE_LINE_ATT - Object ID of a Line Attributes object.
+		WIDTH : USINT := USINT#2; // 2: AID_OE_WIDTH - Width in pixels.
+		HEIGHT : USINT := USINT#3; // 3: AID_OE_HEIGHT - Height in pixels.
+		ELLIPSE_TYPE : USINT := USINT#4; // 4: AID_OE_ELLIPSE_TYPE - 0=Closed Ellipse, 1=Open Ellipse, 2=Closed Segment, 3=Closed Section.
+		START_ANGLE : USINT := USINT#5; // 5: AID_OE_START_ANGLE
+		END_ANGLE : USINT := USINT#6; // 6: AID_OE_END_ANGLE
+		FILL_ATT : USINT := USINT#7; // 7: AID_OE_FILL_ATT - Object ID of a Fill Attributes object.
+	END_VAR
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</GlobalConstants>

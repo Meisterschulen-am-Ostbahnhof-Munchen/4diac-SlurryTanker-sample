@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="SPLIT_MI_DO_S_Octal_SA" Comment="Splits a DataPanel_MI_DO_S_Octal_SA into 8 DataPanel_MI_DO_S_Single_SA">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 HR Agrartechnik GmbH&#10;&#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="franz" Date="2026-05-28">
+	</VersionInfo>
+	<CompilerInfo packageName="DataPanel::io::MI::DQ">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event" Comment="Service Request">
+				<With Var="IN"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+				<With Var="OUT1"/>
+				<With Var="OUT2"/>
+				<With Var="OUT3"/>
+				<With Var="OUT4"/>
+				<With Var="OUT5"/>
+				<With Var="OUT6"/>
+				<With Var="OUT7"/>
+				<With Var="OUT8"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="IN" Type="DataPanel::io::MI::DQ::DataPanel_MI_DO_S_Octal_SA" Comment="Octal Input"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="OUT1" Type="DataPanel::io::MI::DQ::DataPanel_MI_DO_S_Single_SA" Comment="Single Output 1"/>
+			<VarDeclaration Name="OUT2" Type="DataPanel::io::MI::DQ::DataPanel_MI_DO_S_Single_SA" Comment="Single Output 2"/>
+			<VarDeclaration Name="OUT3" Type="DataPanel::io::MI::DQ::DataPanel_MI_DO_S_Single_SA" Comment="Single Output 3"/>
+			<VarDeclaration Name="OUT4" Type="DataPanel::io::MI::DQ::DataPanel_MI_DO_S_Single_SA" Comment="Single Output 4"/>
+			<VarDeclaration Name="OUT5" Type="DataPanel::io::MI::DQ::DataPanel_MI_DO_S_Single_SA" Comment="Single Output 5"/>
+			<VarDeclaration Name="OUT6" Type="DataPanel::io::MI::DQ::DataPanel_MI_DO_S_Single_SA" Comment="Single Output 6"/>
+			<VarDeclaration Name="OUT7" Type="DataPanel::io::MI::DQ::DataPanel_MI_DO_S_Single_SA" Comment="Single Output 7"/>
+			<VarDeclaration Name="OUT8" Type="DataPanel::io::MI::DQ::DataPanel_MI_DO_S_Single_SA" Comment="Single Output 8"/>
+		</OutputVars>
+	</InterfaceList>
+	<SimpleFB>
+		<ECState Name="REQ">
+			<ECAction Algorithm="REQ" Output="CNF"/>
+		</ECState>
+		<Algorithm Name="REQ" Comment="Normally executed algorithm">
+			<ST><![CDATA[
+OUT1.u8SAMember := IN.u8SAMember;
+OUT1.Port := IN.Port1;
+OUT2.u8SAMember := IN.u8SAMember;
+OUT2.Port := IN.Port2;
+OUT3.u8SAMember := IN.u8SAMember;
+OUT3.Port := IN.Port3;
+OUT4.u8SAMember := IN.u8SAMember;
+OUT4.Port := IN.Port4;
+OUT5.u8SAMember := IN.u8SAMember;
+OUT5.Port := IN.Port5;
+OUT6.u8SAMember := IN.u8SAMember;
+OUT6.Port := IN.Port6;
+OUT7.u8SAMember := IN.u8SAMember;
+OUT7.Port := IN.Port7;
+OUT8.u8SAMember := IN.u8SAMember;
+OUT8.Port := IN.Port8;
+]]></ST>
+		</Algorithm>
+	</SimpleFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

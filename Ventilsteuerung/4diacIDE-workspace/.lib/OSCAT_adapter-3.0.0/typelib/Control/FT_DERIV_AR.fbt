@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="FT_DERIV_AR" Comment="AR-Adapter-Wrapper um OSCAT FT_DERIV - bruckt zwischen adapter und OSCAT, ohne&#10;dass eine der beiden Basisbibliotheken von der anderen abhaengt. K/run als&#10;Klartext-InputVars durchgereicht (Default K=1.0, run=TRUE)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.4" Author="Franz Höpfinger" Date="2026-09-20" Remarks="Bugfix: K/run wurden nur per plain DataConnection an FT_DERIV durchgereicht, ausgeloest einzig ueber AR_IN.E1 - kein Event auf diesem Wrapper hatte je eine With-Verknuepfung fuer diese Vars (IEC 61499 - ungebundene Vars werden nicht zuverlaessig gelesen). Neues explizites REQ-EventInput ergaenzt (parallel zu AR_IN.E1, beide -&gt; FT_DERIV.REQ) mit With K/run.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.3" Author="Franz Höpfinger" Date="2026-08-30" Remarks="Reine Adapter-Grenze: delta_t/delta_in als eigene Adapter (AUDI/AR) statt Klartext-Event; K/run als Klartext-InputVars durchgereicht, kein Adapter noetig, da beides pro Aufruf konstant ist">
+	</VersionInfo>
+	<CompilerInfo packageName="OSCAT_adapter::Control">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization (durchgereicht an FT_DERIV.EINIT)">
+			</Event>
+			<Event Name="REQ" Type="Event" Comment="Explizite Ausfuehrungsanforderung (durchgereicht an FT_DERIV.REQ, zusaetzlich zu AR_IN.E1)">
+				<With Var="K"/>
+				<With Var="run"/>
+			</Event>
+			<Event Name="RST" Type="Event" Comment="Reset der Ableitungshistorie (durchgereicht an FT_DERIV.RST)">
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="K" Type="REAL" Comment="Ableitungsfaktor (durchgereicht an FT_DERIV.K)" InitialValue="1.0"/>
+			<VarDeclaration Name="run" Type="BOOL" Comment="Berechnung aktiv (durchgereicht an FT_DERIV.run)" InitialValue="TRUE"/>
+		</InputVars>
+		<Plugs>
+			<AdapterDeclaration Name="AR_OUT" Type="adapter::types::unidirectional::AR" Comment="Berechnete Ableitung (REAL, bei K=1.0 direkt in Hz, wenn IN Impulse/Zaehlerstand ist)" x="5300" y="200"/>
+			<AdapterDeclaration Name="AR_DELTA_IN" Type="adapter::types::unidirectional::AR" Comment="Differenz des Eingangssignals (REAL, durchgereicht von FT_DERIV.delta_in)" x="5100" y="1200"/>
+			<AdapterDeclaration Name="AUDI_DELTA_T" Type="adapter::types::unidirectional::AUDI" Comment="Zeitdifferenz in Mikrosekunden (UDINT, durchgereicht von FT_DERIV.delta_t)" x="5100" y="700"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="AR_IN" Type="adapter::types::unidirectional::AR" Comment="Eingangssignal (REAL)" x="-900" y="1200"/>
+		</Sockets>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="FT_DERIV" Type="OSCAT::Basic::POUs::Engineering::Control::FT_DERIV" x="800" y="0">
+		</FB>
+		<FB Name="E_D_FF_ANY" Type="iec61499::events::E_D_FF_ANY_3" x="2400" y="200">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="FT_DERIV.EINIT" dx1="2800"/>
+			<Connection Source="FT_DERIV.INITO" Destination="INITO" dx1="453.33"/>
+			<Connection Source="RST" Destination="FT_DERIV.RST" dx1="2473.33"/>
+			<Connection Source="AR_IN.E1" Destination="FT_DERIV.REQ" dx1="626.67"/>
+			<Connection Source="REQ" Destination="FT_DERIV.REQ" dx1="626.67"/>
+			<Connection Source="E_D_FF_ANY.EO" Destination="AR_OUT.E1"/>
+			<Connection Source="E_D_FF_ANY.EO" Destination="AR_DELTA_IN.E1" dx1="906.67"/>
+			<Connection Source="E_D_FF_ANY.EO" Destination="AUDI_DELTA_T.E1" dx1="906.67"/>
+			<Connection Source="FT_DERIV.CNF" Destination="E_D_FF_ANY.CLK" dx1="453.33"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="K" Destination="FT_DERIV.K" dx1="846.67"/>
+			<Connection Source="run" Destination="FT_DERIV.run" dx1="540"/>
+			<Connection Source="AR_IN.D1" Destination="FT_DERIV.in" dx1="540"/>
+			<Connection Source="E_D_FF_ANY.Q1" Destination="AR_OUT.D1"/>
+			<Connection Source="E_D_FF_ANY.Q3" Destination="AR_DELTA_IN.D1" dx1="873.33"/>
+			<Connection Source="E_D_FF_ANY.Q2" Destination="AUDI_DELTA_T.D1" dx1="940"/>
+			<Connection Source="FT_DERIV.out" Destination="E_D_FF_ANY.D1" dx1="453.33"/>
+			<Connection Source="FT_DERIV.delta_t" Destination="E_D_FF_ANY.D2" dx1="453.33"/>
+			<Connection Source="FT_DERIV.delta_in" Destination="E_D_FF_ANY.D3" dx1="453.33"/>
+		</DataConnections>
+	</FBNetwork>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>FT_DERIV_AR</h1>
+
+<h2>🇩🇪 Deutsch</h2>
+
+<p>AR-Adapter-Wrapper um <code>OSCAT::Basic::POUs::Engineering::Control::FT_DERIV</code>. <code>K</code> (Ableitungsfaktor, Default 1.0) und <code>run</code> (Berechnung aktiv, Default TRUE) sind Klartext-<code>InputVars</code> auf diesem Wrapper. Ein explizites <code>REQ</code>-EventInput (mit <code>With K</code> und <code>With run</code>) erlaubt den manuellen/periodischen Aufruf zusaetzlich zum automatischen Ausloesen ueber <code>AR_IN.E1</code> (IEC 61499 - With-Verknuepfung fuer zuverlaessiges Einlesen der Parameter).</p>
+
+<h3>Reine Adapter-Grenze</h3>
+
+<p>Alle drei von <code>FT_DERIV</code> gelieferten Werte werden als eigene Adapter exponiert - kein Klartext-Event/-Datum verlaesst diesen Baustein:</p>
+<ul>
+	<li><strong>AR_OUT</strong> (Plug, <code>AR</code>): die berechnete Ableitung (<code>out</code>, REAL)</li>
+	<li><strong>AR_DELTA_IN</strong> (Plug, <code>AR</code>): Differenz des Eingangssignals (<code>delta_in</code>, REAL)</li>
+	<li><strong>AUDI_DELTA_T</strong> (Plug, <code>AUDI</code>): Zeitdifferenz in Mikrosekunden (<code>delta_t</code>, UDINT - <code>AUDI</code> ist der passende Adapter-Typ fuer UDINT)</li>
+</ul>
+
+<p><code>INIT</code>/<code>INITO</code> und <code>RST</code> werden 1:1 an <code>FT_DERIV.EINIT</code>/<code>.INITO</code>/<code>.RST</code> durchgereicht - wie bei den uebrigen Service-Wrappern in diesem Repo (z. B. <code>Q_NumericValue_AUDI</code>, <code>logiBUS_PI_IDA</code>), damit Lebenszyklus und Reset auch fuer diesen Baustein von aussen ansteuerbar sind. Bleibt <code>INIT</code> unverdrahtet, feuert es einmalig beim Deployment automatisch (Standardkonvention fuer unverdrahtete <code>EInit</code>-Events).</p>
+
+<p>Braucht eine aufrufende Komposition einen Klartext-Wert (z. B. fuer <code>Q_NumericValue_PHYS.rPhys</code>, das keinen Adapter hat), wird dafuer der bereits vorhandene generische Baustein <code>adapter::conversion::unidirectional::AR_R_TO_REAL</code> verwendet (Socket <code>AR_IN</code> -&gt; Klartext-<code>CNF</code>/<code>IN</code>) - nicht ein eigener Klartext-Ausgang an diesem Wrapper.</p>
+
+<h3>Warum ein eigener Wrapper (und nicht direkt FT_DERIV in der Komposition verdrahten)?</h3>
+
+<p><code>FT_DERIV</code> ist ein reines OSCAT-FB ohne Adapter-Schnittstelle (<code>REQ</code>/<code>CNF</code> sind einfache Events, keine <code>AR</code>-Sockets/Plugs). Ein einzelnes Roh-Sub-Signal (<code>.E1</code>/<code>.D1</code>) eines FREMD-instanzierten Adapter-Bausteins (z. B. <code>AD_TO_AR_NUM.AR_OUT</code>) laesst sich in einem uebergeordneten SubApp-Netzwerk NICHT direkt an ein einfaches Event/Datum eines anderen, ebenfalls fremd-instanzierten FBs verdrahten - diese <code>.E1</code>/<code>.D1</code>-Zugriffssyntax ist nur INNERHALB der Definition eines FBTyps fuer dessen EIGENE Grenz-Sockets/-Plugs gueltig (siehe z. B. <code>Q_NumericValue_AUDI</code>, das genau so intern <code>Q_NumericValue</code> einwickelt).</p>
+
+<p>Zugleich soll <code>adapter</code> nicht von <code>OSCAT</code> abhaengen (und umgekehrt) - beide sollen unabhaengige, generische Basisbibliotheken bleiben. Die Loesung: ein DRITTES, eigenes Bibliotheks-Projekt (<code>OSCAT_adapter</code>), das von BEIDEN abhaengt und die Bruecke in einem eigenen FBTyp kapselt - mit einer rein adapter-basierten Aussengrenze, damit auch dieser Baustein selbst wieder ganz normal ueber <code>AdapterConnections</code> mit anderen AR/AUDI-Bausteinen verbunden werden kann (kein <code>.E1</code>/<code>.D1</code> noetig).</p>
+
+<h2>🇬🇧 English</h2>
+
+<p>AR-adapter wrapper around <code>OSCAT::Basic::POUs::Engineering::Control::FT_DERIV</code>. <code>K</code> (derivation factor, default 1.0) and <code>run</code> (calculation enabled, default TRUE) are plain <code>InputVars</code> on this wrapper. An explicit <code>REQ</code> event input (with <code>With K</code> and <code>With run</code> bindings) enables manual or periodic execution in addition to automatic triggering via <code>AR_IN.E1</code> (per IEC 61499, binding input variables via With for reliable reading).</p>
+
+<h3>Pure adapter boundary</h3>
+
+<p>All three values FT_DERIV produces are exposed as their own adapters - no plain event/data leaves this block:</p>
+<ul>
+	<li><strong>AR_OUT</strong> (plug, <code>AR</code>): the calculated derivative (<code>out</code>, REAL)</li>
+	<li><strong>AR_DELTA_IN</strong> (plug, <code>AR</code>): input signal difference (<code>delta_in</code>, REAL)</li>
+	<li><strong>AUDI_DELTA_T</strong> (plug, <code>AUDI</code>): time difference in microseconds (<code>delta_t</code>, UDINT - <code>AUDI</code> is the matching adapter type for UDINT)</li>
+</ul>
+
+<p><code>INIT</code>/<code>INITO</code> and <code>RST</code> are passed through 1:1 to <code>FT_DERIV.EINIT</code>/<code>.INITO</code>/<code>.RST</code> - as with the other service wrappers in this repo (e.g. <code>Q_NumericValue_AUDI</code>, <code>logiBUS_PI_IDA</code>), so lifecycle and reset remain controllable from the outside. If <code>INIT</code> is left unconnected, it auto-fires once at deployment (standard convention for unconnected <code>EInit</code> events).</p>
+
+<p>If a calling composition needs a plain value (e.g. for <code>Q_NumericValue_PHYS.rPhys</code>, which has no adapter), it uses the existing generic block <code>adapter::conversion::unidirectional::AR_R_TO_REAL</code> for that (socket <code>AR_IN</code> -&gt; plain <code>CNF</code>/<code>IN</code>) - not a dedicated plain output on this wrapper.</p>
+
+<h3>Why a dedicated wrapper (instead of wiring FT_DERIV directly into a composition)?</h3>
+
+<p><code>FT_DERIV</code> is a plain OSCAT FB with no adapter interface (<code>REQ</code>/<code>CNF</code> are ordinary events, not <code>AR</code> sockets/plugs). A raw sub-signal (<code>.E1</code>/<code>.D1</code>) of an EXTERNALLY instantiated adapter FB (e.g. <code>AD_TO_AR_NUM.AR_OUT</code>) cannot be wired directly, from a parent SubApp network, into a plain event/data pin of another externally instantiated FB - this <code>.E1</code>/<code>.D1</code> access syntax is only valid INSIDE an FBType's own definition, for its OWN boundary sockets/plugs (see e.g. <code>Q_NumericValue_AUDI</code>, which wraps <code>Q_NumericValue</code> internally in exactly this way).</p>
+
+<p>At the same time, <code>adapter</code> must not depend on <code>OSCAT</code> (nor vice versa) - both should stay independent, generic base libraries. The solution: a THIRD, dedicated library project (<code>OSCAT_adapter</code>) that depends on BOTH and encapsulates the bridge in its own FBType, with a purely adapter-based outer boundary so this block itself can again be wired up via ordinary <code>AdapterConnections</code> to other AR/AUDI blocks (no <code>.E1</code>/<code>.D1</code> needed).</p>
+]]></Attribute>
+</FBType>

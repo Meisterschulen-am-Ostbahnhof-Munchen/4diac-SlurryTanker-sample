@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="A2X_SUBSCRIBE_2" Comment="Subscribe to a PUBLISH_2 Block and buffer both received BOOLs with a D_FF each,&#10;delivered on an A2X adapter Plug">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 HR Agrartechnik GmbH&#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0"/>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-09-05" Remarks="initial API and implementation and/or initial documentation"/>
+	<CompilerInfo packageName="adapter::net">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Initialization">
+				<With Var="QI"/>
+				<With Var="ID"/>
+			</Event>
+			<Event Name="RSP" Type="Event" Comment="Response to the received data">
+				<With Var="QI"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+			</Event>
+			<Event Name="IND" Type="Event" Comment="New data available">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL"/>
+			<VarDeclaration Name="ID" Type="WSTRING"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL"/>
+			<VarDeclaration Name="STATUS" Type="WSTRING"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="OUT" Type="adapter::types::unidirectional::A2X" Comment="Buffered received UP/DOWN BOOLs" x="700" y="700"/>
+		</Plugs>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="SUBSCRIBE_2" Type="iec61499::net::SUBSCRIBE_2" x="-2900" y="0">
+		</FB>
+		<FB Name="E_D_FF_UP" Type="iec61499::events::E_D_FF" x="-300" y="400">
+		</FB>
+		<FB Name="E_D_FF_DOWN" Type="iec61499::events::E_D_FF" x="-300" y="1000">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="SUBSCRIBE_2.INIT" dx1="1593.33"/>
+			<Connection Source="RSP" Destination="SUBSCRIBE_2.RSP" dx1="1280"/>
+			<Connection Source="SUBSCRIBE_2.INITO" Destination="INITO" dx1="2686.67"/>
+			<Connection Source="SUBSCRIBE_2.IND" Destination="E_D_FF_UP.CLK" dx1="673.33"/>
+			<Connection Source="SUBSCRIBE_2.IND" Destination="E_D_FF_DOWN.CLK" dx1="673.33"/>
+			<Connection Source="E_D_FF_UP.EO" Destination="OUT.E_UP"/>
+			<Connection Source="E_D_FF_DOWN.EO" Destination="OUT.E_DOWN"/>
+			<Connection Source="SUBSCRIBE_2.IND" Destination="IND"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="QI" Destination="SUBSCRIBE_2.QI" dx1="1060"/>
+			<Connection Source="ID" Destination="SUBSCRIBE_2.ID" dx1="800"/>
+			<Connection Source="SUBSCRIBE_2.QO" Destination="QO"/>
+			<Connection Source="SUBSCRIBE_2.STATUS" Destination="STATUS"/>
+			<Connection Source="SUBSCRIBE_2.RD_1" Destination="E_D_FF_UP.D" dx1="506.67"/>
+			<Connection Source="SUBSCRIBE_2.RD_2" Destination="E_D_FF_DOWN.D" dx1="506.67"/>
+			<Connection Source="E_D_FF_UP.Q" Destination="OUT.UP"/>
+			<Connection Source="E_D_FF_DOWN.Q" Destination="OUT.DOWN"/>
+		</DataConnections>
+	</FBNetwork>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

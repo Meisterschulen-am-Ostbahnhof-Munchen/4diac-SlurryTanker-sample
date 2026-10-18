@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="AX_E_PERMIT_INVERT_1" Comment="Invertiertes Event-Freigabe-Gate mit Adapter-Signalen (AX_NOT_INIT +&#10;AX_E_PERMIT_1)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-10" Remarks="initial implementation">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="EI" Type="Event" Comment="Event input (wird durchgelassen wenn PERMIT FALSE ist)"/>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="EO" Type="Event" Comment="Event output (feuert wenn EI eintrifft und PERMIT FALSE ist)"/>
+		</SubAppEventOutputs>
+		<Sockets>
+			<AdapterDeclaration Name="PERMIT" Type="adapter::types::unidirectional::AX" Comment="Invertiertes Freigabesignal"/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="AX_NOT_INIT" Type="adapter::booleanOperators::AX_NOT_INIT" x="-3200" y="-400">
+		</FB>
+		<FB Name="AX_E_PERMIT_1" Type="adapter::events::unidirectional::AX_E_PERMIT_1" x="-1400" y="0">
+		</FB>
+		<EventConnections>
+			<Connection Source="EI" Destination="AX_E_PERMIT_1.EI1" dx1="500"/>
+			<Connection Source="AX_E_PERMIT_1.EO1" Destination="EO" dx1="500"/>
+		</EventConnections>
+		<AdapterConnections>
+			<Connection Source="PERMIT" Destination="AX_NOT_INIT.IN" dx1="500"/>
+			<Connection Source="AX_NOT_INIT.OUT" Destination="AX_E_PERMIT_1.PERMIT" dx1="500"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>Invertiertes Event-Freigabe-Gate (AX_NOT_INIT + AX_E_PERMIT_1)</h1>
+
+<p>Kombination aus <code>AX_NOT_INIT</code> und <code>AX_E_PERMIT_1</code> zur Freigabe von Ereignissen bei <b>inaktiver</b> (FALSE) Adapter-Bedingung.</p>
+
+<h2>Funktionsbeschreibung</h2>
+
+<ul>
+	<li><code>PERMIT</code> (Socket <code>AX</code>): Eingehendes Freigabesignal.</li>
+	<li><code>AX_NOT_INIT</code>: Invertiert das <code>AX</code>-Signal.</li>
+	<li><code>AX_E_PERMIT_1</code>: L&auml;sst Events von <code>EI</code> nach <code>EO</code> durch, wenn das invertierte Signal TRUE ist (also wenn <code>PERMIT</code> FALSE ist).</li>
+</ul>
+]]></Attribute>
+</SubAppType>

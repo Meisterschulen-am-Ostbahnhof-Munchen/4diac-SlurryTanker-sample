@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="Q_SoftKeyMask_AUI" Comment="Command change soft key mask with AUI adapter ( Part 6 - F.36 )">
+	<Identification Standard="ISO 11783-6" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-11" Remarks="AUI adapter wrapper for Q_SoftKeyMask">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::UT::Q">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+				<With Var="QI"/>
+				<With Var="u8MaskType"/>
+				<With Var="u16DataMaskId"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+				<With Var="s16result"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="u8MaskType" Type="USINT" Comment="Mask Type (1: DataMask, 2: AlarmMask)"/>
+			<VarDeclaration Name="u16DataMaskId" Type="UINT" Comment="Object ID of data/alarm mask" InitialValue="ID_NULL"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
+			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description"/>
+		</OutputVars>
+		<Sockets>
+			<AdapterDeclaration Name="u16SoftKeyMaskId" Type="adapter::types::unidirectional::AUI" Comment="New soft key mask ID" x="-600" y="1200"/>
+		</Sockets>
+		<Plugs>
+			<AdapterDeclaration Name="u16OldSoftKeyMaskId" Type="adapter::types::unidirectional::AUI" Comment="Old soft key mask ID" x="3900" y="1100"/>
+		</Plugs>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="Q_SoftKeyMask" Type="isobus::UT::Q::Q_SoftKeyMask" x="533.33" y="420">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="Q_SoftKeyMask.INIT" dx1="1306.67"/>
+			<Connection Source="Q_SoftKeyMask.INITO" Destination="INITO" dx1="1506.67"/>
+			<Connection Source="Q_SoftKeyMask.CNF" Destination="CNF" dx1="1760"/>
+			<Connection Source="u16SoftKeyMaskId.E1" Destination="Q_SoftKeyMask.REQ" dx1="320"/>
+			<Connection Source="Q_SoftKeyMask.CNF" Destination="u16OldSoftKeyMaskId.E1" dx1="906.67"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="Q_SoftKeyMask.STATUS" Destination="STATUS" dx1="2000"/>
+			<Connection Source="u8MaskType" Destination="Q_SoftKeyMask.u8MaskType" dx1="860"/>
+			<Connection Source="u16DataMaskId" Destination="Q_SoftKeyMask.u16DataMaskId" dx1="973.33"/>
+			<Connection Source="u16SoftKeyMaskId.D1" Destination="Q_SoftKeyMask.u16SoftKeyMaskId" dx1="486.67"/>
+			<Connection Source="Q_SoftKeyMask.u16OldSoftKeyMaskId" Destination="u16OldSoftKeyMaskId.D1" dx1="606.67"/>
+			<Connection Source="Q_SoftKeyMask.s16result" Destination="s16result" dx1="2573.33"/>
+			<Connection Source="QI" Destination="Q_SoftKeyMask.QI"/>
+			<Connection Source="Q_SoftKeyMask.QO" Destination="QO"/>
+		</DataConnections>
+	</FBNetwork>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>Command change soft key mask with AUI adapter ( Part 6 - F.36 )</h1>
+
+<p>This FB is an AUI adapter wrapper around <strong>Q_SoftKeyMask</strong>.</p>
+]]></Attribute>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

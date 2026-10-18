@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="SwitchPic_2_3" Comment="Bild umschalten VT SK, AUX und VT Button; 2 Zustände">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="franz" Date="2026-05-29">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+		<Import declaration="isobus::UT::Q::types::s2x2ObjectIDs"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+			<SubAppEvent Name="EI" Type="Event">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="Picture" Type="UINT" Comment="Object ID of the ObjectPointer to the Picture (SK)"/>
+			<VarDeclaration Name="PictureB" Type="UINT" Comment="Object ID of the ObjectPointer to the Picture (Button)"/>
+			<VarDeclaration Name="pictures" Type="isobus::UT::Q::types::s2x2ObjectIDs" Comment="the single Pictures" InitialValue="(up := (u16ObjId := ID_NULL, u16ObjIdA := ID_NULL), down := (u16ObjId := ID_NULL, u16ObjIdA := ID_NULL))"/>
+			<VarDeclaration Name="DI1" Type="BOOL" Comment="Selector" InitialValue="FALSE"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully (AND aller 3 Instanzen)"/>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue" x="5500" y="-700">
+		</FB>
+		<FB Name="Q_NumericValueAux" Type="isobus::UT::Q::Q_NumericValueAux" x="5500" y="200">
+		</FB>
+		<FB Name="Q_NumericValue_B" Type="isobus::UT::Q::Q_NumericValue" x="5500" y="1100">
+		</FB>
+		<FB Name="F_MOVE" Type="iec61131::selection::F_MOVE" x="-100" y="100">
+			<Attribute Name="DataType" Value="isobus::UT::Q::types::s2x2ObjectIDs"/>
+			<Parameter Name="OUT" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="OUT.up.u16ObjId" Value="">
+				<Attribute Name="Visible" Value="true"/>
+			</Parameter>
+			<Parameter Name="OUT.up.u16ObjIdA" Value="">
+				<Attribute Name="Visible" Value="true"/>
+			</Parameter>
+			<Parameter Name="OUT.down.u16ObjId" Value="">
+				<Attribute Name="Visible" Value="true"/>
+			</Parameter>
+			<Parameter Name="OUT.down.u16ObjIdA" Value="">
+				<Attribute Name="Visible" Value="true"/>
+			</Parameter>
+		</FB>
+		<FB Name="F_MUX_s" Type="iec61131::selection::F_SEL" x="2100" y="0">
+		</FB>
+		<FB Name="F_MUX_a" Type="iec61131::selection::F_SEL" x="2100" y="700">
+		</FB>
+		<FB Name="E_MERGE_QO" Type="iec61499::events::E_MERGE_4" x="5800" y="-2300">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_3" x="5700" y="-1600">
+		</FB>
+		<EventConnections>
+			<Connection Source="EI" Destination="F_MUX_s.REQ" dx1="4026.67"/>
+			<Connection Source="F_MUX_s.CNF" Destination="Q_NumericValue.REQ" dx1="440"/>
+			<Connection Source="F_MUX_s.CNF" Destination="Q_NumericValueAux.REQ" dx1="440"/>
+			<Connection Source="F_MUX_s.CNF" Destination="Q_NumericValue_B.REQ" dx1="440"/>
+			<Connection Source="INIT" Destination="F_MOVE.REQ" dx1="1246.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="F_MOVE.CNF" Destination="Q_NumericValue.INIT" dx1="613.33"/>
+			<Connection Source="Q_NumericValue.INITO" Destination="Q_NumericValueAux.INIT" dx1="80" dx2="80" dy="693.33"/>
+			<Connection Source="Q_NumericValueAux.INITO" Destination="Q_NumericValue_B.INIT" dx1="80" dx2="80" dy="693.33"/>
+			<Connection Source="Q_NumericValue_B.INITO" Destination="INITO" dx1="500"/>
+			<Connection Source="F_MUX_a.CNF" Destination="Q_NumericValue.REQ" dx1="440"/>
+			<Connection Source="F_MUX_a.CNF" Destination="Q_NumericValueAux.REQ" dx1="440"/>
+			<Connection Source="F_MUX_a.CNF" Destination="Q_NumericValue_B.REQ" dx1="440"/>
+			<Connection Source="EI" Destination="F_MUX_a.REQ" dx1="4026.67"/>
+			<Connection Source="Q_NumericValue_B.INITO" Destination="E_MERGE_QO.EI1" dx1="80" dx2="80" dy="-546.67"/>
+			<Connection Source="Q_NumericValue.CNF" Destination="E_MERGE_QO.EI2" dx1="80" dx2="80" dy="346.67"/>
+			<Connection Source="Q_NumericValueAux.CNF" Destination="E_MERGE_QO.EI3" dx1="80" dx2="80" dy="-46.67"/>
+			<Connection Source="Q_NumericValue_B.CNF" Destination="E_MERGE_QO.EI4" dx1="80" dx2="80" dy="-440"/>
+			<Connection Source="E_MERGE_QO.EO" Destination="AND_QO.REQ" dx1="80" dx2="80" dy="346.67"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="Picture" Destination="Q_NumericValue.u16ObjId" dx1="7360"/>
+			<Connection Source="PictureB" Destination="Q_NumericValue_B.u16ObjId" dx1="7200"/>
+			<Connection Source="pictures" Destination="F_MOVE.IN" dx1="826.67"/>
+			<Connection Source="DI1" Destination="F_MUX_s.G" dx1="3433.33"/>
+			<Connection Source="F_MUX_a.OUT" Destination="Q_NumericValue.u32NewValue" dx1="706.67"/>
+			<Connection Source="F_MUX_a.OUT" Destination="Q_NumericValueAux.u32NewValue" dx1="706.67"/>
+			<Connection Source="F_MOVE.OUT.up.u16ObjId" Destination="F_MUX_s.IN0" dx1="586.67"/>
+			<Connection Source="F_MOVE.OUT.down.u16ObjId" Destination="F_MUX_s.IN1" dx1="586.67"/>
+			<Connection Source="DI1" Destination="F_MUX_a.G" dx1="3433.33"/>
+			<Connection Source="F_MOVE.OUT.up.u16ObjIdA" Destination="F_MUX_a.IN0" dx1="560"/>
+			<Connection Source="F_MOVE.OUT.down.u16ObjIdA" Destination="F_MUX_a.IN1" dx1="560"/>
+			<Connection Source="F_MUX_s.OUT" Destination="Q_NumericValue_B.u32NewValue" dx1="1440"/>
+			<Connection Source="Picture" Destination="Q_NumericValueAux.u16ObjId" dx1="7360"/>
+			<Connection Source="QI" Destination="Q_NumericValue.QI" dx1="2526.67"/>
+			<Connection Source="QI" Destination="Q_NumericValueAux.QI" dx1="2526.67"/>
+			<Connection Source="QI" Destination="Q_NumericValue_B.QI" dx1="2526.67"/>
+			<Connection Source="Q_NumericValue.QO" Destination="AND_QO.IN1" dx1="80" dx2="80" dy="293.33"/>
+			<Connection Source="Q_NumericValueAux.QO" Destination="AND_QO.IN2" dx1="80" dx2="80" dy="-100"/>
+			<Connection Source="Q_NumericValue_B.QO" Destination="AND_QO.IN3" dx1="80" dx2="80" dy="-493.33"/>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="1140"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="ILOCK_SWITCH_2_QXA_TASTER_OPC" Comment="Kopie von ILOCK_SWITCH_2_QXA_OPC mit drittem Kommando-Eingang je Richtung&#10;(z.B. Hardware-Taster einer anderen Station, Remote-Subscribe) - Test, Funktion&#10;und Taster werden per AX_OR_3 zusammengefuehrt. Original:&#10;2-Richtungs-Doppelwirkungs-Ausgang (Last-Wins mit Schutzzeit): je Richtung wird&#10;das echte Funktions-Kommando (Remote-Subscribe) mit dem bestehenden&#10;IO-Test-Kommando (Remote-Subscribe) per AX_OR_2 zusammengefuehrt, bevor es in&#10;den Interlock geht - IO-Test bleibt nutzbar, kann aber die beiden Richtungen&#10;nicht mehr dauerhaft gleichzeitig schalten. Interlocked Ausgang treibt den&#10;physischen logiBUS-Kanal UND meldet seinen tatsaechlichen Zustand sowohl an die&#10;bestehende IO-Test-Ueberwachung als auch an die echte Funktions-Rueckmeldung&#10;(z.B. GreenWhiteBackground am SoftKey) zurueck. Generisch fuer jeden 'digital&#10;DW'-Aktor (siehe IO-Liste_Vereinheitlicht.md) mit Bedienung von einem Modul ohne&#10;eigenes VT.">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-17" Remarks="initial implementation - Kopie von ILOCK_SWITCH_2_QXA_OPC v1.3 (Original bleibt unveraendert), neue Eingaenge ID_TASTER_READ_UP/DOWN, OR_UP/OR_DOWN jetzt AX_OR_3, AND_QO jetzt AND_BOOL_12. Erstnutzung: Reihenverstellung KVE16 (Taster S1.7/S1.8 an STG4 I4/I5, Ventil an STG3 Q5/Q6).">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO_S"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<InputVars>
+			<VarDeclaration Name="Output_UP" Type="logiBUS::io::DQ::logiBUS_DO_S" Comment="Physischer Ausgang Richtung UP/Links" InitialValue="logiBUS_DO::Invalid"/>
+			<VarDeclaration Name="Output_DOWN" Type="logiBUS::io::DQ::logiBUS_DO_S" Comment="Physischer Ausgang Richtung DOWN/Rechts" InitialValue="logiBUS_DO::Invalid"/>
+			<VarDeclaration Name="DT_PROTECT" Type="TIME" Comment="Schutz-Totzeit vor Richtungswechsel" InitialValue="T#300ms"/>
+			<VarDeclaration Name="ID_TEST_READ_UP" Type="WSTRING" Comment="Bestehende IO-Test-Subscribe-Adresse UP (z.B. STG3_Q0x_READ)"/>
+			<VarDeclaration Name="ID_TEST_WRITE_UP" Type="WSTRING" Comment="Bestehende IO-Test-Publish-Adresse UP (z.B. STG3_Q0x_WRITE)"/>
+			<VarDeclaration Name="ID_TEST_READ_DOWN" Type="WSTRING" Comment="Bestehende IO-Test-Subscribe-Adresse DOWN"/>
+			<VarDeclaration Name="ID_TEST_WRITE_DOWN" Type="WSTRING" Comment="Bestehende IO-Test-Publish-Adresse DOWN"/>
+			<VarDeclaration Name="ID_READ_UP" Type="WSTRING" Comment="Echtes Funktions-Kommando UP (Subscribe)"/>
+			<VarDeclaration Name="ID_WRITE_UP" Type="WSTRING" Comment="Echte Funktions-Rueckmeldung UP (Publish)"/>
+			<VarDeclaration Name="ID_READ_DOWN" Type="WSTRING" Comment="Echtes Funktions-Kommando DOWN (Subscribe)"/>
+			<VarDeclaration Name="ID_TASTER_READ_UP" Type="WSTRING" Comment="Dritte Kommando-Quelle UP, z.B. Hardware-Taster (Subscribe)"/>
+			<VarDeclaration Name="ID_TASTER_READ_DOWN" Type="WSTRING" Comment="Dritte Kommando-Quelle DOWN, z.B. Hardware-Taster (Subscribe)"/>
+			<VarDeclaration Name="ID_WRITE_DOWN" Type="WSTRING" Comment="Echte Funktions-Rueckmeldung DOWN (Publish)"/>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Qualifier fuer die physischen Ausgaenge - FALSE haelt diese Instanz komplett inaktiv (keine Hardware-Bindung), fuer den Fall dass derselbe physische Kanal je nach Maschinenvariante anderweitig genutzt wird" InitialValue="TRUE"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully (AND aller Subscribe/Publish/DigitalOutput-Instanzen)"/>
+		</OutputVars>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialisierung - vom Aufrufer sequenziert statt per Auto-Verteilung, damit QI vor der physischen Kanalbindung feststeht"/>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialisierung bestaetigt (von DigitalOutput_UP.INITO) - fuer Aufrufer, die eine echte Confirm-Kette brauchen (z.B. hinter einem Option::AOption-Adapter)"/>
+		</SubAppEventOutputs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="SUBSCRIBE_TEST_UP" Type="adapter::net::AX_SUBSCRIBE_1" x="-6600" y="-1900">
+		</FB>
+		<FB Name="SUBSCRIBE_CMD_UP" Type="adapter::net::AX_SUBSCRIBE_1" x="-6600" y="-1000">
+		</FB>
+		<FB Name="SUBSCRIBE_TASTER_UP" Type="adapter::net::AX_SUBSCRIBE_1" x="-6600" y="-2800">
+		</FB>
+		<FB Name="SUBSCRIBE_TASTER_DOWN" Type="adapter::net::AX_SUBSCRIBE_1" x="-6500" y="1900">
+		</FB>
+		<FB Name="OR_UP" Type="adapter::booleanOperators::AX_OR_3" x="-4800" y="-1100">
+		</FB>
+		<FB Name="SUBSCRIBE_TEST_DOWN" Type="adapter::net::AX_SUBSCRIBE_1" x="-6600" y="0">
+		</FB>
+		<FB Name="SUBSCRIBE_CMD_DOWN" Type="adapter::net::AX_SUBSCRIBE_1" x="-6500" y="1000">
+		</FB>
+		<FB Name="OR_DOWN" Type="adapter::booleanOperators::AX_OR_3" x="-4800" y="700">
+		</FB>
+		<FB Name="ILOCK" Type="logiBUS::signalprocessing::interlock::ILOCK_SWITCH_PROTECT_AX" x="-2800" y="-200">
+		</FB>
+		<FB Name="E_TimeOut" Type="iec61499::events::E_TimeOut" x="-700" y="1500">
+		</FB>
+		<FB Name="SPLIT_UP" Type="adapter::events::unidirectional::AX_SPLIT_3" x="-800" y="-1300">
+		</FB>
+		<FB Name="SPLIT_DOWN" Type="adapter::events::unidirectional::AX_SPLIT_3" x="-800" y="700">
+		</FB>
+		<FB Name="DigitalOutput_UP" Type="logiBUS::io::DQ::logiBUS_QXA" x="1500" y="-2300">
+		</FB>
+		<FB Name="DigitalOutput_DOWN" Type="logiBUS::io::DQ::logiBUS_QXA" x="1500" y="200">
+		</FB>
+		<FB Name="PUBLISH_TEST_UP" Type="adapter::net::AX_PUBLISH_1" x="1500" y="-1400">
+		</FB>
+		<FB Name="PUBLISH_STATE_UP" Type="adapter::net::AX_PUBLISH_1" x="1500" y="-600">
+		</FB>
+		<FB Name="PUBLISH_TEST_DOWN" Type="adapter::net::AX_PUBLISH_1" x="1500" y="1100">
+		</FB>
+		<FB Name="PUBLISH_STATE_DOWN" Type="adapter::net::AX_PUBLISH_1" x="1500" y="1900">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_12" x="1500" y="2700">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="SUBSCRIBE_TEST_UP.INIT"/>
+			<Connection Source="SUBSCRIBE_TEST_UP.INITO" Destination="SUBSCRIBE_CMD_UP.INIT"/>
+			<Connection Source="SUBSCRIBE_CMD_UP.INITO" Destination="SUBSCRIBE_TEST_DOWN.INIT"/>
+			<Connection Source="SUBSCRIBE_TEST_DOWN.INITO" Destination="SUBSCRIBE_CMD_DOWN.INIT"/>
+			<Connection Source="SUBSCRIBE_CMD_DOWN.INITO" Destination="SUBSCRIBE_TASTER_UP.INIT"/>
+			<Connection Source="SUBSCRIBE_TASTER_UP.INITO" Destination="SUBSCRIBE_TASTER_DOWN.INIT"/>
+			<Connection Source="SUBSCRIBE_TASTER_DOWN.INITO" Destination="PUBLISH_TEST_UP.INIT"/>
+			<Connection Source="PUBLISH_TEST_UP.INITO" Destination="PUBLISH_STATE_UP.INIT"/>
+			<Connection Source="PUBLISH_STATE_UP.INITO" Destination="PUBLISH_TEST_DOWN.INIT"/>
+			<Connection Source="PUBLISH_TEST_DOWN.INITO" Destination="PUBLISH_STATE_DOWN.INIT"/>
+			<Connection Source="PUBLISH_STATE_DOWN.INITO" Destination="DigitalOutput_UP.INIT"/>
+			<Connection Source="DigitalOutput_UP.INITO" Destination="DigitalOutput_DOWN.INIT"/>
+			<Connection Source="DigitalOutput_DOWN.INITO" Destination="INITO"/>
+			<Connection Source="DigitalOutput_DOWN.INITO" Destination="AND_QO.REQ"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="ID_TEST_READ_UP" Destination="SUBSCRIBE_TEST_UP.ID" dx1="280">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_READ_UP" Destination="SUBSCRIBE_CMD_UP.ID" dx1="280">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_TEST_READ_DOWN" Destination="SUBSCRIBE_TEST_DOWN.ID" dx1="280">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_READ_DOWN" Destination="SUBSCRIBE_CMD_DOWN.ID" dx1="280">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_TASTER_READ_UP" Destination="SUBSCRIBE_TASTER_UP.ID" dx1="280">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_TASTER_READ_DOWN" Destination="SUBSCRIBE_TASTER_DOWN.ID" dx1="280">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="DT_PROTECT" Destination="ILOCK.DT_PROTECT" dx1="1200">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Output_UP" Destination="DigitalOutput_UP.Output" dx1="2913.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Output_DOWN" Destination="DigitalOutput_DOWN.Output" dx1="2913.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="DigitalOutput_UP.QI" dx1="2913.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="DigitalOutput_DOWN.QI" dx1="2913.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_TEST_WRITE_UP" Destination="PUBLISH_TEST_UP.ID" dx1="1280">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_WRITE_UP" Destination="PUBLISH_STATE_UP.ID" dx1="1280">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_TEST_WRITE_DOWN" Destination="PUBLISH_TEST_DOWN.ID" dx1="1280">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_WRITE_DOWN" Destination="PUBLISH_STATE_DOWN.ID" dx1="1280">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="SUBSCRIBE_TEST_UP.QI"/>
+			<Connection Source="QI" Destination="SUBSCRIBE_CMD_UP.QI"/>
+			<Connection Source="QI" Destination="SUBSCRIBE_TEST_DOWN.QI"/>
+			<Connection Source="QI" Destination="SUBSCRIBE_CMD_DOWN.QI"/>
+			<Connection Source="QI" Destination="SUBSCRIBE_TASTER_UP.QI"/>
+			<Connection Source="QI" Destination="SUBSCRIBE_TASTER_DOWN.QI"/>
+			<Connection Source="QI" Destination="PUBLISH_TEST_UP.QI"/>
+			<Connection Source="QI" Destination="PUBLISH_STATE_UP.QI"/>
+			<Connection Source="QI" Destination="PUBLISH_TEST_DOWN.QI"/>
+			<Connection Source="QI" Destination="PUBLISH_STATE_DOWN.QI"/>
+			<Connection Source="SUBSCRIBE_TEST_UP.QO" Destination="AND_QO.IN1"/>
+			<Connection Source="SUBSCRIBE_CMD_UP.QO" Destination="AND_QO.IN2"/>
+			<Connection Source="SUBSCRIBE_TEST_DOWN.QO" Destination="AND_QO.IN3"/>
+			<Connection Source="SUBSCRIBE_CMD_DOWN.QO" Destination="AND_QO.IN4"/>
+			<Connection Source="PUBLISH_TEST_UP.QO" Destination="AND_QO.IN5"/>
+			<Connection Source="PUBLISH_STATE_UP.QO" Destination="AND_QO.IN6"/>
+			<Connection Source="PUBLISH_TEST_DOWN.QO" Destination="AND_QO.IN7"/>
+			<Connection Source="PUBLISH_STATE_DOWN.QO" Destination="AND_QO.IN8"/>
+			<Connection Source="DigitalOutput_UP.QO" Destination="AND_QO.IN9"/>
+			<Connection Source="DigitalOutput_DOWN.QO" Destination="AND_QO.IN10"/>
+			<Connection Source="SUBSCRIBE_TASTER_UP.QO" Destination="AND_QO.IN11"/>
+			<Connection Source="SUBSCRIBE_TASTER_DOWN.QO" Destination="AND_QO.IN12"/>
+			<Connection Source="AND_QO.OUT" Destination="QO"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="SUBSCRIBE_TEST_UP.OUT" Destination="OR_UP.IN1" dx1="280"/>
+			<Connection Source="SUBSCRIBE_CMD_UP.OUT" Destination="OR_UP.IN2" dx1="280"/>
+			<Connection Source="SUBSCRIBE_TASTER_UP.OUT" Destination="OR_UP.IN3" dx1="280"/>
+			<Connection Source="OR_UP.OUT" Destination="ILOCK.UP_IN" dx1="1150"/>
+			<Connection Source="SUBSCRIBE_TEST_DOWN.OUT" Destination="OR_DOWN.IN1" dx1="280"/>
+			<Connection Source="SUBSCRIBE_CMD_DOWN.OUT" Destination="OR_DOWN.IN2" dx1="280"/>
+			<Connection Source="SUBSCRIBE_TASTER_DOWN.OUT" Destination="OR_DOWN.IN3" dx1="280"/>
+			<Connection Source="OR_DOWN.OUT" Destination="ILOCK.DOWN_IN" dx1="1150"/>
+			<Connection Source="ILOCK.timeOut" Destination="E_TimeOut.TimeOutSocket" dx1="280"/>
+			<Connection Source="ILOCK.UP_OUT" Destination="SPLIT_UP.IN" dx1="560"/>
+			<Connection Source="SPLIT_UP.OUT1" Destination="DigitalOutput_UP.OUT" dx1="600"/>
+			<Connection Source="SPLIT_UP.OUT2" Destination="PUBLISH_TEST_UP.IN" dx1="600"/>
+			<Connection Source="SPLIT_UP.OUT3" Destination="PUBLISH_STATE_UP.IN" dx1="466.67"/>
+			<Connection Source="ILOCK.DOWN_OUT" Destination="SPLIT_DOWN.IN" dx1="560"/>
+			<Connection Source="SPLIT_DOWN.OUT1" Destination="DigitalOutput_DOWN.OUT" dx1="600"/>
+			<Connection Source="SPLIT_DOWN.OUT2" Destination="PUBLISH_TEST_DOWN.IN" dx1="600"/>
+			<Connection Source="SPLIT_DOWN.OUT3" Destination="PUBLISH_STATE_DOWN.IN" dx1="420"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

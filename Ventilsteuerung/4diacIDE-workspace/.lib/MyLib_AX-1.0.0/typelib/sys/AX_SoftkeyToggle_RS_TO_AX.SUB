@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="AX_SoftkeyToggle_RS_TO_AX" Comment="Toggle-Trigger (SoftKey ODER AUX ODER lokale Web-/Dashboard-Methode ODER&#10;IO-Diag-Testbutton, via Softkey_Aux_Method_Button_IE) und Reset-Trigger (SoftKey&#10;ODER AUX ODER lokale Web-/Dashboard-Methode, via Softkey_Aux_Method_IE) treiben&#10;einen reinen AX-Zustand (AX_T_FF_SR.Q) - KEIN physischer Ausgang, KEINE&#10;Hintergrundfarbe, KEIN State-Publish. Basis-Baustein: fuer 1 Ausgang&#10;MyLib::sys::AX_SoftkeyToggle_RS_TO_QXA_BG (wrapt diesen Baustein), fuer mehrere&#10;zeitversetzte Ausgaenge (z.B. Baender-Sequenzierung) diesen Baustein direkt&#10;verwenden und den OUT-Zustand selbst mit AX_TON/AX_TOF pro Kanal&#10;weiterverarbeiten.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.4" Author="Franz Höpfinger" Date="2026-09-16" Remarks="Event-Input RESET in AUS umbenannt (Franz: 'der Eingang soll AUS heissen') - Namenskonsistenz mit Baender_Individual_Toggle/Baender_EinAus/Aufnahme_Automatik/Ernteseite_Antriebe, die alle denselben zentralen 'Alles Aus'-Softkey verteilen.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.3" Author="Franz Höpfinger" Date="2026-09-16" Remarks="Event-Input RESET ergaenzt (rein additiv, zusaetzlich zum bestehenden Reset.IND-Pfad auf AX_T_FF_SR.R verdrahtet) - fuer einen zentral gelesenen, gemeinsamen SoftKey (z.B. 'Alles Aus'), der mehrere Toggle-Instanzen gleichzeitig per Event zuruecksetzen soll, statt dass jede Instanz denselben SoftKey/AuxFunction2 nochmal einzeln selbst liest.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.2" Author="Franz Höpfinger" Date="2026-09-15" Remarks="FORCE_OFF Socket (AX) ergaenzt - analog Automatik_Toggle_Button.FORCE_OFF: steigende Flanke (AX_R_TRIG) resettet AX_T_FF_SR zusaetzlich zum bestehenden VT-Reset. Fuer eine uebergeordnete Sicherheitsabschaltung (z.B. Zapfwelle_Ueberwachung, KVE14 Zeile 33) - rein additiv, bestehende Instanzen muessen den neuen Socket verdrahten (z.B. auf einen festen FALSE-Literal, wenn nicht gebraucht).">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-15" Remarks="Toggle.u16ObjId_TEST -&gt; Toggle.u16ObjIdB nachgezogen (Softkey_Aux_Method_Button_IE v1.1: u16ObjId_TEST dort auf u16ObjIdB umbenannt). Eigenes u16ObjId_TEST bleibt unveraendert.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+			<SubAppEvent Name="AUS" Type="Event" Comment="Reset hart auf AUS, von aussen als Event (z.B. 1 zentral gelesener gemeinsamer SoftKey) - zusaetzlich zum eigenen u16ObjId_RESET/u16ObjIdA_RESET/ID_RESET_METHOD-Pfad. Unverdrahtet lassen, wenn nicht gebraucht.">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID Softkey Ein/Aus (Toggle)" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObjIdA" Type="UINT" Comment="Object ID AuxFunction2 (Joystick) fuer den Toggle - gleichberechtigt zum SoftKey" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObjIdB" Type="UINT" Comment="Object ID IO-Diag-Testbutton (Ausgaenge-Diagnoseseite) - toggelt gleichberechtigt mit. ID_NULL lassen, wenn kein IO-Diag-Testbutton an diesem Toggle beteiligt sein soll" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObjId_RESET" Type="UINT" Comment="Object ID Softkey &apos;Alles Aus&apos; (Reset, hart auf AUS) - z.B. SoftKey_AUS" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObjIdA_RESET" Type="UINT" Comment="Object ID AuxFunction2 (Joystick) fuer den Reset - gleichberechtigt zum Softkey &apos;Alles Aus&apos;" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="ID_TOGGLE_METHOD" Type="WSTRING" Comment="Lokale Methodenadresse (ACTION=CREATE_METHOD) fuer den argumentlosen Toggle-Trigger - wird von Web-Client (vt-ui-mirror) UND direkt vom OPC-Dashboard aufgerufen"/>
+			<VarDeclaration Name="ID_RESET_METHOD" Type="WSTRING" Comment="Lokale Methodenadresse (ACTION=CREATE_METHOD) fuer den argumentlosen Reset-Trigger (hart auf AUS) - wird von Web-Client UND OPC-Dashboard aufgerufen"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="OUT" Type="adapter::types::unidirectional::AX" Comment="Toggle-Zustand (AX_T_FF_SR.Q) - Weiterverarbeitung (Ausgang, Hintergrund, Verzoegerung) bleibt dem Aufrufer ueberlassen"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="FORCE_OFF" Type="adapter::types::unidirectional::AX" Comment="Optional: steigende Flanke resettet hart auf AUS (z.B. Sicherheitsabschaltung). Unverdrahtet lassen (fester FALSE-Literal), wenn nicht gebraucht."/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<SubApp Name="Toggle" Type="MyLib::sys::Softkey_Aux_Method_Button_IE" x="-800" y="1200">
+		</SubApp>
+		<SubApp Name="Reset" Type="MyLib::sys::Softkey_Aux_Method_IE" x="-600" y="100">
+		</SubApp>
+		<FB Name="AX_T_FF_SR" Type="adapter::events::unidirectional::AX_T_FF_SR" x="1700" y="400">
+		</FB>
+		<FB Name="AX_R_TRIG_ForceOff" Type="adapter::events::unidirectional::AX_R_TRIG" x="-700" y="2400">
+		</FB>
+		<Comment Comment="AX_T_FF_SR.Q ist die EINZIGE Source of Truth - Toggle (SoftKey+AUX+Web/Dashboard-Methode+IO-Diag-Testbutton) und Reset (SoftKey+AUX+Web/Dashboard-Methode) sind alle reine argumentlose Event-Trigger - keine gemeinsame Variable." x="-1000" y="3000" width="4000" height="500"/>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_2" x="5600" y="400">
+		</FB>
+		<EventConnections>
+			<Connection Source="Toggle.IND" Destination="AX_T_FF_SR.CLK" dx1="726.67"/>
+			<Connection Source="Reset.IND" Destination="AX_T_FF_SR.R" dx1="953.33"/>
+			<Connection Source="AX_R_TRIG_ForceOff.EO" Destination="AX_T_FF_SR.R" dx1="1053.33"/>
+			<Connection Source="AUS" Destination="AX_T_FF_SR.R" dx1="6120"/>
+			<Connection Source="INIT" Destination="Toggle.INIT" dx1="526.67"/>
+			<Connection Source="Toggle.INITO" Destination="Reset.INIT" dx1="80" dx2="80" dy="-346.67"/>
+			<Connection Source="Reset.INITO" Destination="INITO" dx1="4886.67"/>
+			<Connection Source="Reset.INITO" Destination="AND_QO.REQ" dx1="1813.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="u16ObjId" Destination="Toggle.u16ObjId" dx1="973.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjIdA" Destination="Toggle.u16ObjIdA" dx1="973.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_TOGGLE_METHOD" Destination="Toggle.ID_METHOD" dx1="973.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjIdB" Destination="Toggle.u16ObjIdB" dx1="973.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId_RESET" Destination="Reset.u16ObjId" dx1="1846.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjIdA_RESET" Destination="Reset.u16ObjIdA" dx1="1846.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_RESET_METHOD" Destination="Reset.ID_METHOD" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="Toggle.QI" dx1="526.67"/>
+			<Connection Source="QI" Destination="Reset.QI" dx1="1960"/>
+			<Connection Source="Toggle.QO" Destination="AND_QO.IN1" dx1="1653.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Reset.QO" Destination="AND_QO.IN2" dx1="1813.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="1240"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="AX_T_FF_SR.Q" Destination="OUT" dx1="600"/>
+			<Connection Source="FORCE_OFF" Destination="AX_R_TRIG_ForceOff.QI" dx1="600"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

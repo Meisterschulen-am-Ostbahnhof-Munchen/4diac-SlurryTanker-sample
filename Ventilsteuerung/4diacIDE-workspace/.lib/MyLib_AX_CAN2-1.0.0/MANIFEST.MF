@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Manifest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="platform:/resource/org.eclipse.fordiac.ide.library.model/model/library.xsd" Scope="Library">
+  <Dependencies>
+    <Required SymbolicName="DataPanel" Version="3.0.0"/>
+    <Required SymbolicName="Funk" Version="3.0.0"/>
+  </Dependencies>
+  <Product Comment="CAN2-Bausteine aus test_AX, die DataPanel und Funk verbinden (aus MyLib_AX herausgeloest, um MyLib_AX von diesen beiden Abhaengigkeiten zu befreien)" Name="MyLib_AX_CAN2" SymbolicName="MyLib_AX_CAN2">
+    <VersionInfo Author="Franz Höpfinger" Date="2026-10-11" Version="1.0.0"/>
+  </Product>
+</Manifest>

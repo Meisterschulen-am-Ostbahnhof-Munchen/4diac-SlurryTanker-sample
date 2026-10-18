@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="GreenBlueBackground1S" Comment="Hintergrundfarbe (TRUE -&gt; Blau, FALSE -&gt; Weiß) für 1 Objekt">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="franz" Date="2024-01-01">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+		<Import declaration="isobus::UT::Q::const::colours"/>
+		<Import declaration="isobus::UT::Q::types::s1ObjectID"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+			<SubAppEvent Name="REQ" Type="Event" Comment="Normal Execution Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+			<SubAppEvent Name="CNF_1" Type="Event" Comment="Execution Confirmation">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="DI1" Type="BOOL" Comment="Selector"/>
+			<VarDeclaration Name="u16ObjIds" Type="isobus::UT::Q::types::s1ObjectID" Comment="Object IDs" InitialValue="(u16ObjId := ID_NULL)"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+			<VarDeclaration Name="STATUS_1" Type="STRING" Comment="Service Status"/>
+			<VarDeclaration Name="u8OldColour_1" Type="USINT" Comment="Old value of ID"/>
+			<VarDeclaration Name="result_1" Type="INT" Comment="retval see description"/>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="Q_BackgroundColour" Type="isobus::UT::Q::Q_BackgroundColour" x="933.33" y="933.33">
+		</FB>
+		<FB Name="F_SEL_I" Type="iec61131::selection::F_SEL" x="-266.67" y="2266.67">
+			<Parameter Name="IN0" Value="colours::COLOR_WHITE"/>
+			<Parameter Name="IN1" Value="colours::COLOR_BLUE"/>
+		</FB>
+		<FB Name="F_MOVE" Type="iec61131::selection::F_MOVE" x="-1500" y="900">
+			<Attribute Name="DataType" Value="isobus::UT::Q::types::s1ObjectID"/>
+			<Parameter Name="OUT.u16ObjId" Value="">
+				<Attribute Name="Visible" Value="true"/>
+			</Parameter>
+		</FB>
+		<EventConnections>
+			<Connection Source="Q_BackgroundColour.CNF" Destination="CNF_1" dx1="960"/>
+			<Connection Source="F_SEL_I.CNF" Destination="Q_BackgroundColour.REQ" dx1="373.33"/>
+			<Connection Source="REQ" Destination="F_MOVE.REQ" dx1="80"/>
+			<Connection Source="F_MOVE.CNF" Destination="F_SEL_I.REQ" dx1="200"/>
+			<Connection Source="INIT" Destination="Q_BackgroundColour.INIT"/>
+			<Connection Source="Q_BackgroundColour.INITO" Destination="INITO"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="u16ObjIds" Destination="F_MOVE.IN" dx1="80"/>
+			<Connection Source="F_MOVE.OUT.u16ObjId" Destination="Q_BackgroundColour.u16ObjId" dx1="500"/>
+			<Connection Source="Q_BackgroundColour.s16result" Destination="result_1" dx1="926.67"/>
+			<Connection Source="Q_BackgroundColour.u8OldColour" Destination="u8OldColour_1" dx1="960"/>
+			<Connection Source="Q_BackgroundColour.STATUS" Destination="STATUS_1" dx1="946.67"/>
+			<Connection Source="F_SEL_I.OUT" Destination="Q_BackgroundColour.u8Colour" dx1="406.67"/>
+			<Connection Source="DI1" Destination="F_SEL_I.G" dx1="440"/>
+			<Connection Source="QI" Destination="Q_BackgroundColour.QI"/>
+			<Connection Source="Q_BackgroundColour.QO" Destination="QO"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

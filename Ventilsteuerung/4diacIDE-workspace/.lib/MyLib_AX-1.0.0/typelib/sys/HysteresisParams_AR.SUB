@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="HysteresisParams_AR" Comment="Buendelt MI/DEAD/HYSTERESIS als 3 feste AR-Konstanten (initval_AR) fuer&#10;DualHysteresis_AR_AX/_A2X - Werte per Parameter am Aufruf einstellbar">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-07" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<InputVars>
+			<VarDeclaration Name="rMI" Type="REAL" Comment="Mittelwert/Sollwert" InitialValue="500.0"/>
+			<VarDeclaration Name="rDEAD" Type="REAL" Comment="Totzone um MI (absolut)" InitialValue="20.0"/>
+			<VarDeclaration Name="rHYSTERESIS" Type="REAL" Comment="Hysterese zusaetzlich zur Totzone (absolut)" InitialValue="30.0"/>
+		</InputVars>
+		<Plugs>
+			<AdapterDeclaration Name="MI" Type="adapter::types::unidirectional::AR"/>
+			<AdapterDeclaration Name="DEAD" Type="adapter::types::unidirectional::AR"/>
+			<AdapterDeclaration Name="HYSTERESIS" Type="adapter::types::unidirectional::AR"/>
+		</Plugs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="initval_AR_MI" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="0" y="0">
+		</FB>
+		<FB Name="initval_AR_DEAD" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="0" y="900">
+		</FB>
+		<FB Name="initval_AR_HYSTERESIS" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="0" y="1800">
+		</FB>
+		<DataConnections>
+			<Connection Source="rMI" Destination="initval_AR_MI.INIT_VAL" dx1="500"/>
+			<Connection Source="rDEAD" Destination="initval_AR_DEAD.INIT_VAL" dx1="500"/>
+			<Connection Source="rHYSTERESIS" Destination="initval_AR_HYSTERESIS.INIT_VAL" dx1="500"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="initval_AR_MI.OUT" Destination="MI" dx1="500"/>
+			<Connection Source="initval_AR_DEAD.OUT" Destination="DEAD" dx1="500"/>
+			<Connection Source="initval_AR_HYSTERESIS.OUT" Destination="HYSTERESIS" dx1="500"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>MI/DEAD/HYSTERESIS als 3 feste AR-Konstanten gebündelt</h1>
+
+<p>Fasst die drei <code>initval_AR</code>-Instanzen, die <code>DualHysteresis_AR_AX</code>/
+<code>_AR_A2X</code> für ihre Parameter-Sockets (<code>MI</code>, <code>DEAD</code>,
+<code>HYSTERESIS</code>) brauchen, zu einem Baustein zusammen - statt sie in jeder Übung/SubApp
+einzeln zu wiederholen (wie zuerst in <code>Uebung_234_AX</code>/<code>Uebung_235_AX</code>
+geschehen).</p>
+
+<h2>Funktionsbeschreibung</h2>
+
+<ul>
+	<li><code>rMI</code>/<code>rDEAD</code>/<code>rHYSTERESIS</code> sind normale
+	<code>InputVars</code> mit sinnvollen Standardwerten (500.0/20.0/30.0) - am Aufruf per
+	Parameter überschreibbar, genau wie <code>u16ObjId</code> bei den GreenWhiteBackground-
+	Bausteinen.</li>
+	<li>Je ein <code>initval_AR</code> wandelt den jeweiligen Wert in einen festen
+	<code>AR</code>-Plug um, der direkt an <code>DualHysteresis_AR_AX.MI</code>/<code>.DEAD</code>/
+	<code>.HYSTERESIS</code> (bzw. <code>_AR_A2X</code>) angeschlossen wird.</li>
+</ul>
+
+<p>Verwendet in <code>Uebung_234_AX</code> (Hardware) und <code>Uebung_235_AX</code> (VT) -
+identische Parameter, damit beide Übungen direkt vergleichbar bleiben.</p>
+]]></Attribute>
+</SubAppType>

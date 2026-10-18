@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="AX_TO_BG_PUBLISH_SWITCHPIC_Option" Comment="Reine Anzeige: AX-Zustand auf Hintergrundfarbe (SoftKey+AUX), lokalen&#10;State-Publish und ObjectPointer-Statusanzeige, aktiviert per AOption (INIT/QI&#10;ueber AOption_X_TO_EVENT, INIT_CNF echt nach ObjPtr.INITO).">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-17" Remarks="initial implementation - Anzeige-Teil von AX_TO_QXA_BG_PUBLISH_SWITCHPIC_OPT als eigener Baustein (Franz: an AOption_OR_2_Anzeige ein reiner Anzeige-Baustein).">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+		<Import declaration="isobus::UT::Q::types::s2x1ObjectIDs"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<InputVars>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID Softkey - traegt die Hintergrundfarbe" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObjIdA" Type="UINT" Comment="Object ID AuxFunction2 (Joystick) - zeigt Hintergrundfarbe am Aux-Handle mit" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="ID_STATE_WRITE" Type="WSTRING" Comment="Lokale Publish-Adresse (ACTION=WRITE) fuer den Zustand - wird remote abonniert"/>
+			<VarDeclaration Name="Picture" Type="UINT" Comment="Object ID des ObjectPointer, der den Status-Kaestchen-Inhalt traegt"/>
+			<VarDeclaration Name="pictures" Type="isobus::UT::Q::types::s2x1ObjectIDs" Comment="die beiden Ziel-Object-IDs (up=aus, down=an)" InitialValue="(up := (u16ObjId := ID_NULL), down := (u16ObjId := ID_NULL))"/>
+		</InputVars>
+		<Sockets>
+			<AdapterDeclaration Name="AOption_IN" Type="Option::AOption" Comment="Aktiviert/deaktiviert die Anzeige"/>
+			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AX" Comment="Fertiger AX-Zustand fuer Hintergrund, Publish und ObjectPointer"/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="AOption_X_TO_EVENT" Type="Option::conversion::AOption_X_TO_EVENT" x="-3000" y="0">
+		</FB>
+		<FB Name="AX_SPLIT_3" Type="adapter::events::unidirectional::AX_SPLIT_3" Comment="Adapter-Fanout ist strikt 1:1" x="-1200" y="800">
+		</FB>
+		<SubApp Name="Background" Type="MyLib::sys::GreenWhiteBackground3_AX" x="1000" y="-1500">
+		</SubApp>
+		<FB Name="PUBLISH_STATE" Type="adapter::net::AX_PUBLISH_1" x="1000" y="600">
+		</FB>
+		<SubApp Name="ObjPtr" Type="MyLib::sys::AX_SwitchPic_2_1" x="1000" y="1800">
+		</SubApp>
+		<EventConnections>
+			<Connection Source="AOption_X_TO_EVENT.INIT_REQ" Destination="Background.INIT" dx1="833.33"/>
+			<Connection Source="Background.INITO" Destination="PUBLISH_STATE.INIT" dx1="80" dx2="80" dy="1846.67"/>
+			<Connection Source="PUBLISH_STATE.INITO" Destination="ObjPtr.INIT" dx1="80" dx2="80" dy="680"/>
+			<Connection Source="ObjPtr.INITO" Destination="AOption_X_TO_EVENT.INIT_CNF" dx1="80" dx2="80" dy="746.67"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="AOption_X_TO_EVENT.QI_OUT" Destination="Background.QI" dx1="1533.33"/>
+			<Connection Source="AOption_X_TO_EVENT.QI_OUT" Destination="PUBLISH_STATE.QI" dx1="1533.33"/>
+			<Connection Source="AOption_X_TO_EVENT.QI_OUT" Destination="ObjPtr.QI" dx1="1533.33"/>
+			<Connection Source="u16ObjId" Destination="Background.u16ObjId" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjIdA" Destination="Background.u16ObjIdA" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_STATE_WRITE" Destination="PUBLISH_STATE.ID" dx1="1280">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Picture" Destination="ObjPtr.Picture" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="pictures" Destination="ObjPtr.pictures" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="AOption_IN" Destination="AOption_X_TO_EVENT.AOption_IN" dx1="806.67"/>
+			<Connection Source="IN" Destination="AX_SPLIT_3.IN" dx1="600"/>
+			<Connection Source="AX_SPLIT_3.OUT1" Destination="Background.DI1" dx1="600"/>
+			<Connection Source="AX_SPLIT_3.OUT2" Destination="PUBLISH_STATE.IN" dx1="600"/>
+			<Connection Source="AX_SPLIT_3.OUT3" Destination="ObjPtr.DI1" dx1="600"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

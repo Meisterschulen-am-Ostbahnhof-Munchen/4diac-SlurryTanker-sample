@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="FB_MM710_IMU" Comment="Service interface function block for Bosch MM7.10 IMU sensor via CAN/J1939">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="AI" Date="2026-04-24" Remarks="Initial SIFB for MM710 IMU">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::bosch::imu">
+		<Import declaration="isobus::pgn::ISO_CAN_NODE"/>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+				<With Var="QI"/>
+				<With Var="PARAMS"/>
+				<With Var="u8CanIdx"/>
+				<With Var="SA"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+			</Event>
+			<Event Name="IND" Type="Event" Comment="Indication from Resource - feuert bei jedem Zyklus ohne aktiven Fehler und publiziert dabei auch den Reset von bCommError/bCRCError auf false.">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+				<With Var="rAccX"/>
+				<With Var="rAccY"/>
+				<With Var="rAccZ"/>
+				<With Var="rRateX"/>
+				<With Var="rRateY"/>
+				<With Var="rRateZ"/>
+				<With Var="rRoll"/>
+				<With Var="rPitch"/>
+				<With Var="rYaw"/>
+				<With Var="rTempRateZ"/>
+				<With Var="uiHW_Index"/>
+				<With Var="eStatusAccX"/>
+				<With Var="eStatusAccY"/>
+				<With Var="eStatusAccZ"/>
+				<With Var="eStatusRateX"/>
+				<With Var="eStatusRateY"/>
+				<With Var="eStatusRateZ"/>
+				<With Var="bAllSignalsReady"/>
+				<With Var="uiSysStatus"/>
+				<With Var="uiSysStatus5"/>
+				<With Var="uiSysDiag"/>
+				<With Var="uiMessageCounter"/>
+			</Event>
+			<Event Name="ERROR" Type="Event" Comment="Feuert ausschliesslich beim tatsaechlichen Eintreten eines Fehlers (Entry-Trigger). Das Zuruecksetzen von bCommError/bCRCError auf false wird NICHT hier, sondern ueber IND gemeldet.">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+				<With Var="bCommError"/>
+				<With Var="bCRCError"/>
+				<With Var="sErrorMsg"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
+			<VarDeclaration Name="PARAMS" Type="STRING" Comment="Service Parameters (e.g. CAN interface config)"/>
+			<VarDeclaration Name="u8CanIdx" Type="USINT" Comment="ISO_CAN_NODE" InitialValue="ISO_CAN_NODE::INVALID"/>
+			<VarDeclaration Name="SA" Type="BYTE" Comment="Source Address" InitialValue="16#DA"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
+			<VarDeclaration Name="rAccX" Type="REAL" Comment="Acceleration X [m/s^2]"/>
+			<VarDeclaration Name="rAccY" Type="REAL" Comment="Acceleration Y [m/s^2]"/>
+			<VarDeclaration Name="rAccZ" Type="REAL" Comment="Acceleration Z [m/s^2]"/>
+			<VarDeclaration Name="rRateX" Type="REAL" Comment="Rotation rate X [deg/s]"/>
+			<VarDeclaration Name="rRateY" Type="REAL" Comment="Rotation rate Y [deg/s]"/>
+			<VarDeclaration Name="rRateZ" Type="REAL" Comment="Rotation rate Z [deg/s]"/>
+			<VarDeclaration Name="rRoll" Type="REAL" Comment="Inclination Roll [deg]"/>
+			<VarDeclaration Name="rPitch" Type="REAL" Comment="Inclination Pitch [deg]"/>
+			<VarDeclaration Name="rYaw" Type="REAL" Comment="Inclination Yaw [deg]"/>
+			<VarDeclaration Name="rTempRateZ" Type="REAL" Comment="Sensor temperature [degC]"/>
+			<VarDeclaration Name="uiHW_Index" Type="UINT" Comment="Hardware index (0=MM5.10, 1=MM7.10)"/>
+			<VarDeclaration Name="eStatusAccX" Type="BYTE" Comment="Signal status AccX (0=ready, 1..7=error)"/>
+			<VarDeclaration Name="eStatusAccY" Type="BYTE" Comment="Signal status AccY (0=ready, 1..7=error)"/>
+			<VarDeclaration Name="eStatusAccZ" Type="BYTE" Comment="Signal status AccZ (0=ready, 1..7=error)"/>
+			<VarDeclaration Name="eStatusRateX" Type="BYTE" Comment="Signal status RateX (0=ready, 1..7=error)"/>
+			<VarDeclaration Name="eStatusRateY" Type="BYTE" Comment="Signal status RateY (0=ready, 1..7=error)"/>
+			<VarDeclaration Name="eStatusRateZ" Type="BYTE" Comment="Signal status RateZ (0=ready, 1..7=error)"/>
+			<VarDeclaration Name="bAllSignalsReady" Type="BOOL" Comment="TRUE if all status = 0"/>
+			<VarDeclaration Name="uiSysStatus" Type="BYTE" Comment="System status (from TX1)"/>
+			<VarDeclaration Name="uiSysStatus5" Type="BYTE" Comment="System status (from TX2)"/>
+			<VarDeclaration Name="uiSysDiag" Type="BYTE" Comment="System diagnostic code (from TX2)"/>
+			<VarDeclaration Name="uiMessageCounter" Type="UINT" Comment="Message counter (0..15) for timeout monitoring"/>
+			<VarDeclaration Name="bCommError" Type="BOOL" Comment="TRUE if CAN timeout exceeded"/>
+			<VarDeclaration Name="bCRCError" Type="BOOL" Comment="TRUE if CRC check failed"/>
+			<VarDeclaration Name="sErrorMsg" Type="STRING" Comment="Error message text"/>
+		</OutputVars>
+	</InterfaceList>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<p>Service interface function block for Bosch MM7.10 IMU sensor via CAN/J1939</p>
+
+<p>&nbsp;</p>
+
+<p><strong>ERROR / IND Vertrag:</strong> ERROR feuert ausschliesslich beim tatsaechlichen Eintreten eines Fehlers (bCommError oder bCRCError wird true). Das Zuruecksetzen auf false (Fehler vorbei) wird bewusst NICHT nochmal separat ueber ERROR gemeldet, sondern kommt ueber IND - das feuert bei jedem Zyklus ohne aktiven Fehler und publiziert die Fehler-Flags mit. Nachgeschaltete Bausteine, die auf das Ende eines Fehlers reagieren muessen, werten dafuer IND mit bCommError/bCRCError==false aus, nicht ein zweites ERROR-Event.</p>
+]]></Attribute>
+</FBType>

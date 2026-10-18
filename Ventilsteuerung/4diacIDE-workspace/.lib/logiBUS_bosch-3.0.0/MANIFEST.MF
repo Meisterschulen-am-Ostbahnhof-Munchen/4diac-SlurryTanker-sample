@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Manifest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="platform:/resource/org.eclipse.fordiac.ide.library.model/model/library.xsd" Scope="Library">
+  <Dependencies>
+    <Required SymbolicName="core" Version="3.0.0"/>
+    <Required SymbolicName="isobus_pgn" Version="3.0.0"/>
+  </Dependencies>
+  <Product Comment="Bosch IMU (FB_MM710_IMU, nutzt ISO_CAN_NODE), herausgeloest aus logiBUS-3.0.0/typelib/bosch - bewusst eigenstaendig statt mit isobus_tecu zusammengelegt (FORTE buendelt beides im Modul isobus_TECU, in der IDE getrennt gehalten)" Name="logiBUS_bosch" SymbolicName="logiBUS_bosch">
+    <VersionInfo Author="HR Agrartechnik GmbH" Date="2026-10-09" Version="3.0.0"/>
+  </Product>
+</Manifest>

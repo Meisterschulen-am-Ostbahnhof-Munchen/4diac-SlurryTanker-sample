@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Softkey_Aux_Switch_Auto_TO_Remote_WRITE" Comment="VT-SoftKey lesen ODER AUX-Zuweisung (Joystick) lesen ODER lokaler Web-Override&#10;ODER ein zusaetzlicher physischer Taster auf einem ANDEREN Modul&#10;(Remote-Subscribe) ODER Automatik-Kommando + Remote-OPC-UA-Write an Zielmodul&#10;(generisch, ein Kanal, ohne Status-Feedback) - 5-Quellen-Erweiterung von&#10;Softkey_Aux_Switch_TO_Remote_WRITE um einen zusaetzlichen AUTO_IN-Socket (z.B.&#10;Befuellautomatik-Hysterese, die dieselbe Fuellband-Heben-Leitung ansteuert wie&#10;SoftKey/AUX/Web/physischer Taster S08).">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.2" Author="Franz Höpfinger" Date="2026-09-27" Remarks="Franz: 'die Automatik muss auch ausschalten wenn man das Fuellband manuell hebt, sonst faengt der Bunkerboden an zu laufen wenn man ueber die Schwelle kommt' - neuer Plug MANUAL_OUT (NUR SoftKey/Aux/Web/Switch, OHNE Automatik-Anteil - sonst wuerde die Automatik sich durch ihr eigenes Kommando selbst abschalten). OR_MERGE (AX_OR_5) aufgeteilt in OR_Manual (AX_OR_4, die 4 manuellen Quellen) + OR_Automatik (AX_OR_2, OR_Manual ODER AUTO_IN) - unveraendertes Gesamtverhalten fuer CMD_OUT/Remote-Write.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-13" Remarks="initial implementation - 5-Quellen-Variante von Softkey_Aux_Switch_TO_Remote_WRITE (AX_OR_5 statt AX_OR_4, zusaetzlicher AUTO_IN-Socket), fuer Fuellband Heben (Befuellautomatik-Hysterese zusaetzlich zu SoftKey/AUX/Web/physischem Taster S08).">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID SoftKey (VT)" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObjIdA" Type="UINT" Comment="Object ID AuxFunction2 (VT)" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="ID_WRITE_REMOTE" Type="WSTRING" Comment="Remote-Write-Adresse zum Zielmodul (Befehl, ACTION=WRITE, CLIENT)"/>
+			<VarDeclaration Name="ID_WEB_READ" Type="WSTRING" Comment="Lokale Subscribe-Adresse fuer einen Web-Client (z.B. vt-ui-mirror) auf demselben Modul, ODER-verknuepft mit SoftKey und AUX"/>
+			<VarDeclaration Name="ID_SWITCH_REMOTE" Type="WSTRING" Comment="Remote-Subscribe-Adresse eines zusaetzlichen physischen Tasters auf einem ANDEREN Modul, ODER-verknuepft mit SoftKey/AUX/Web/Automatik"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="AUTOMATIC_OUT" Type="adapter::types::unidirectional::AX" Comment="Optional: lokal gemergter Rohbefehl (SoftKey ODER AUX ODER Web ODER Switch ODER Automatik), VOR dem Remote-Write - unverdrahtet lassen, wenn nicht gebraucht"/>
+			<AdapterDeclaration Name="MANUAL_OUT" Type="adapter::types::unidirectional::AX" Comment="Optional: NUR die manuellen Quellen (SoftKey ODER AUX ODER Web ODER Switch), OHNE AUTO_IN - z.B. um eine Automatik abzuschalten, wenn der Bediener manuell eingreift, ohne dass sich die Automatik durch ihr eigenes Kommando selbst abschaltet. Unverdrahtet lassen, wenn nicht gebraucht."/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="AUTO_IN" Type="adapter::types::unidirectional::AX" Comment="Autonomes Kommando (z.B. Befuellautomatik-Hysterese), ODER-verknuepft mit SoftKey/Aux/Web/physischem Taster"/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="Softkey_IXA" Type="isobus::UT::io::Softkey::Softkey_IXA" x="-1300" y="900">
+		</FB>
+		<FB Name="Aux_IXA" Type="isobus::UT::io::Auxiliary::IN::Aux_IXA" x="-1300" y="1800">
+		</FB>
+		<FB Name="SUBSCRIBE_WEB" Type="adapter::net::AX_SUBSCRIBE_1" x="-1400" y="3100">
+		</FB>
+		<FB Name="SUBSCRIBE_SWITCH" Type="adapter::net::AX_SUBSCRIBE_1" x="-1400" y="3900">
+		</FB>
+		<FB Name="OR_Manual" Type="adapter::booleanOperators::AX_OR_4" x="700" y="2600">
+		</FB>
+		<FB Name="AX_SPLIT_2_Manual" Type="adapter::events::unidirectional::AX_SPLIT_2" x="1500" y="2600">
+		</FB>
+		<FB Name="OR_Automatik" Type="adapter::booleanOperators::AX_OR_2" x="3300" y="900">
+		</FB>
+		<FB Name="AX_CLIENT_1_0" Type="adapter::net::AX_CLIENT_1_0" x="6300" y="900">
+		</FB>
+		<FB Name="AX_SPLIT_2_CmdOut" Type="adapter::events::unidirectional::AX_SPLIT_2" x="4300" y="900">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_5">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="Softkey_IXA.INIT"/>
+			<Connection Source="Softkey_IXA.INITO" Destination="Aux_IXA.INIT"/>
+			<Connection Source="Aux_IXA.INITO" Destination="SUBSCRIBE_WEB.INIT"/>
+			<Connection Source="SUBSCRIBE_WEB.INITO" Destination="SUBSCRIBE_SWITCH.INIT"/>
+			<Connection Source="SUBSCRIBE_SWITCH.INITO" Destination="AX_CLIENT_1_0.INIT"/>
+			<Connection Source="AX_CLIENT_1_0.INITO" Destination="INITO"/>
+			<Connection Source="AX_CLIENT_1_0.INITO" Destination="AND_QO.REQ"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="u16ObjId" Destination="Softkey_IXA.u16ObjId" dx1="846.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjIdA" Destination="Aux_IXA.u16ObjId" dx1="846.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_WEB_READ" Destination="SUBSCRIBE_WEB.ID" dx1="80">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_SWITCH_REMOTE" Destination="SUBSCRIBE_SWITCH.ID" dx1="80">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_WRITE_REMOTE" Destination="AX_CLIENT_1_0.ID" dx1="613.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="Softkey_IXA.QI"/>
+			<Connection Source="QI" Destination="Aux_IXA.QI"/>
+			<Connection Source="QI" Destination="SUBSCRIBE_WEB.QI"/>
+			<Connection Source="QI" Destination="SUBSCRIBE_SWITCH.QI"/>
+			<Connection Source="QI" Destination="AX_CLIENT_1_0.QI"/>
+			<Connection Source="Softkey_IXA.QO" Destination="AND_QO.IN1"/>
+			<Connection Source="Aux_IXA.QO" Destination="AND_QO.IN2"/>
+			<Connection Source="SUBSCRIBE_WEB.QO" Destination="AND_QO.IN3"/>
+			<Connection Source="SUBSCRIBE_SWITCH.QO" Destination="AND_QO.IN4"/>
+			<Connection Source="AX_CLIENT_1_0.QO" Destination="AND_QO.IN5"/>
+			<Connection Source="AND_QO.OUT" Destination="QO"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="Softkey_IXA.IN" Destination="OR_Manual.IN1" dx1="246.67"/>
+			<Connection Source="Aux_IXA.IN" Destination="OR_Manual.IN2" dx1="100"/>
+			<Connection Source="SUBSCRIBE_WEB.OUT" Destination="OR_Manual.IN3" dx1="100"/>
+			<Connection Source="SUBSCRIBE_SWITCH.OUT" Destination="OR_Manual.IN4" dx1="346.67"/>
+			<Connection Source="OR_Manual.OUT" Destination="AX_SPLIT_2_Manual.IN"/>
+			<Connection Source="AX_SPLIT_2_Manual.OUT2" Destination="MANUAL_OUT" dx1="6086.67"/>
+			<Connection Source="AUTO_IN" Destination="OR_Automatik.IN2" dx1="100">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="OR_Automatik.OUT" Destination="AX_SPLIT_2_CmdOut.IN"/>
+			<Connection Source="AX_SPLIT_2_CmdOut.OUT1" Destination="AUTOMATIC_OUT" dx1="400"/>
+			<Connection Source="AX_SPLIT_2_CmdOut.OUT2" Destination="AX_CLIENT_1_0.IN" dx1="613.33"/>
+			<Connection Source="AX_SPLIT_2_Manual.OUT1" Destination="OR_Automatik.IN1" dx1="513.33"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

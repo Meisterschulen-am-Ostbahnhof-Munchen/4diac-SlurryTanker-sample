@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="AX_SoftkeySR_TO_QXA_BG" Comment="3 Softkeys (SET/RESET/TOGGLE) auf AX_T_FF_SR, Ausgang QXA + Background (am&#10;TOGGLE-Key). Generisch.">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-09" Remarks="Ausgelagert aus Uebung_010e2_sub_AX zur Wiederverwendung; u16ObjId_SET/_RESET/_TOGGLE und Output zuvor fest importiert (SoftKey_F1/F2/F3, Output_Q1), jetzt generische Defaults (ID_NULL/Invalid).">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO_S"/>
+		<Import declaration="isobus::UT::io::Softkey::SoftKeyActivationCode::SK_RELEASED"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="u16ObjId_SET" Type="UINT" Comment="Object ID SET SoftKey" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObjId_RESET" Type="UINT" Comment="Object ID RESET SoftKey" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObjId_TOGGLE" Type="UINT" Comment="Object ID TOGGLE SoftKey (auch fuer GreenWhiteBackground)" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="Output" Type="logiBUS::io::DQ::logiBUS_DO_S" Comment="Identify the Output Output_Q1..Q8" InitialValue="logiBUS_DO::Invalid"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="SoftKey_SET" Type="isobus::UT::io::Softkey::Softkey_IE" x="100" y="-900">
+			<Parameter Name="InputEvent" Value="SK_RELEASED"/>
+		</FB>
+		<FB Name="SoftKey_RESET" Type="isobus::UT::io::Softkey::Softkey_IE" x="100" y="200">
+			<Parameter Name="InputEvent" Value="SK_RELEASED"/>
+		</FB>
+		<FB Name="SoftKey_TOGGLE" Type="isobus::UT::io::Softkey::Softkey_IE" x="100" y="1300">
+			<Parameter Name="InputEvent" Value="SK_RELEASED"/>
+		</FB>
+		<FB Name="AX_T_FF_SR" Type="adapter::events::unidirectional::AX_T_FF_SR" x="1600" y="300">
+		</FB>
+		<FB Name="AX_SPLIT_2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="2900" y="600">
+		</FB>
+		<FB Name="DigitalOutput_Q1" Type="logiBUS::io::DQ::logiBUS_QXA" x="4400" y="-300">
+		</FB>
+		<SubApp Name="GreenWhiteBackground_AX" Type="MyLib::sys::GreenWhiteBackground1_AX" x="5900" y="1500">
+		</SubApp>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_5" x="6800" y="-1000">
+		</FB>
+		<EventConnections>
+			<Connection Source="SoftKey_SET.IND" Destination="AX_T_FF_SR.S" dx1="533.33"/>
+			<Connection Source="SoftKey_RESET.IND" Destination="AX_T_FF_SR.R" dx1="373.33"/>
+			<Connection Source="SoftKey_TOGGLE.IND" Destination="AX_T_FF_SR.CLK" dx1="373.33"/>
+			<Connection Source="INIT" Destination="SoftKey_SET.INIT" dx1="1000"/>
+			<Connection Source="SoftKey_SET.INITO" Destination="SoftKey_RESET.INIT" dx1="273.33" dx2="80" dy="860"/>
+			<Connection Source="SoftKey_RESET.INITO" Destination="SoftKey_TOGGLE.INIT" dx1="193.33" dx2="80" dy="926.67"/>
+			<Connection Source="SoftKey_TOGGLE.INITO" Destination="DigitalOutput_Q1.INIT" dx1="1706.67"/>
+			<Connection Source="DigitalOutput_Q1.INITO" Destination="GreenWhiteBackground_AX.INIT" dx1="346.67"/>
+			<Connection Source="GreenWhiteBackground_AX.INITO" Destination="INITO" dx1="2366.67"/>
+			<Connection Source="GreenWhiteBackground_AX.INITO" Destination="AND_QO.REQ" dx1="80" dx2="80" dy="-1246.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="u16ObjId_SET" Destination="SoftKey_SET.u16ObjId" dx1="1920">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId_RESET" Destination="SoftKey_RESET.u16ObjId" dx1="1920">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId_TOGGLE" Destination="SoftKey_TOGGLE.u16ObjId" dx1="1920">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId_TOGGLE" Destination="GreenWhiteBackground_AX.u16ObjId" dx1="4393.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Output" Destination="DigitalOutput_Q1.Output" dx1="4646.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="SoftKey_SET.QI" dx1="1000">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="SoftKey_RESET.QI" dx1="1000">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="SoftKey_TOGGLE.QI" dx1="1000">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="DigitalOutput_Q1.QI" dx1="1813.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="SoftKey_SET.QO" Destination="AND_QO.IN1" dx1="1706.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="SoftKey_RESET.QO" Destination="AND_QO.IN2" dx1="1706.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="SoftKey_TOGGLE.QO" Destination="AND_QO.IN3" dx1="1706.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="DigitalOutput_Q1.QO" Destination="AND_QO.IN4" dx1="800">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="2440"/>
+			<Connection Source="QI" Destination="GreenWhiteBackground_AX.QI" dx1="1713.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="GreenWhiteBackground_AX.QO" Destination="AND_QO.IN5" dx1="80" dx2="80" dy="-1086.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="AX_T_FF_SR.Q" Destination="AX_SPLIT_2.IN" dx1="466.67"/>
+			<Connection Source="AX_SPLIT_2.OUT1" Destination="DigitalOutput_Q1.OUT" dx1="366.67"/>
+			<Connection Source="AX_SPLIT_2.OUT2" Destination="GreenWhiteBackground_AX.DI1" dx1="466.67"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

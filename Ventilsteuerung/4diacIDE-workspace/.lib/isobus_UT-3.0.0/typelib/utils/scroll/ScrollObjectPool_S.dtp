@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataType Name="ScrollObjectPool_S" Comment="ISOBUS UT scroll list object pool properties (list + scrollbar geometry)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-08-09" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::utils::scroll">
+		<Import declaration="isobus::UT::Q::const::IDs"/>
+	</CompilerInfo>
+	<StructuredType>
+		<VarDeclaration Name="u16ListParentId" Type="UINT" Comment="Object ID of the list viewport container (Change Child Position parent)" InitialValue="IDs::ID_NULL"/>
+		<VarDeclaration Name="u16ListContentId" Type="UINT" Comment="Object ID of the moved list content container (Change Child Position child)" InitialValue="IDs::ID_NULL"/>
+		<VarDeclaration Name="i32RowHeight" Type="DINT" Comment="Row height in pixels" InitialValue="0"/>
+		<VarDeclaration Name="u16BarParentId" Type="UINT" Comment="Object ID of the scrollbar viewport container (Change Child Position parent)" InitialValue="IDs::ID_NULL"/>
+		<VarDeclaration Name="u16BarContentId" Type="UINT" Comment="Object ID of the moved scrollbar indicator content container (Change Child Position child)" InitialValue="IDs::ID_NULL"/>
+		<VarDeclaration Name="i32BarBaseOffset" Type="DINT" Comment="BarContent.Top at position 0 (negative of the indicator's fixed internal Top)" InitialValue="0"/>
+		<VarDeclaration Name="i32BarTravel" Type="DINT" Comment="Total pixels the indicator travels: window height minus indicator height" InitialValue="0"/>
+		<VarDeclaration Name="i32PosMax" Type="DINT" Comment="Upper bound of the scroll position: row count minus visible rows" InitialValue="0"/>
+		<VarDeclaration Name="i32Step" Type="DINT" Comment="Step size for the fast (page) scroll events" InitialValue="1"/>
+	</StructuredType>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</DataType>

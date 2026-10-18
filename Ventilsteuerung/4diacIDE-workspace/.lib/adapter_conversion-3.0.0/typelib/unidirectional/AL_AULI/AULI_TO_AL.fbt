@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="AULI_TO_AL" Comment="Composite FB for converting AULI (ULINT) adapter to AL (LWORD) adapter — stores&#10;the integer's bit pattern, as expected for a bit-string destination (truncates&#10;if the destination is narrower than the source).">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-02-17">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::conversion::unidirectional">
+	</CompilerInfo>
+	<InterfaceList>
+		<Plugs>
+			<AdapterDeclaration Name="AL_OUT" Type="adapter::types::unidirectional::AL" Comment="LWORD Adapter Output" x="2300" y="0"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="AULI_IN" Type="adapter::types::unidirectional::AULI" Comment="ULINT Adapter Input" x="0" y="0"/>
+		</Sockets>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="Convert" Type="iec61131::conversion::F_ULINT_TO_LWORD" x="1000" y="0">
+		</FB>
+		<EventConnections>
+			<Connection Source="AULI_IN.E1" Destination="Convert.REQ" dx1="100"/>
+			<Connection Source="Convert.CNF" Destination="AL_OUT.E1" dx1="100"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="AULI_IN.D1" Destination="Convert.IN" dx1="100"/>
+			<Connection Source="Convert.OUT" Destination="AL_OUT.D1" dx1="100"/>
+		</DataConnections>
+	</FBNetwork>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

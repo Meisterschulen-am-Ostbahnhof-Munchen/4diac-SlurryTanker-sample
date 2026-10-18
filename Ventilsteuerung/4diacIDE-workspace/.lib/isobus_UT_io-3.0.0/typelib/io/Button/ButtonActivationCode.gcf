@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="ButtonActivationCode" Comment="ButtonActivationCode constants">
+	<Identification Standard="61499-1" Description="Copyright (c) 2024 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2024-01-25">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::UT::io::Button">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="BT_RELEASED_UNLATCHED" Type="isobus::UT::io::Button::ButtonActivationCode_S" Comment="Button has been unlatched or released (state change)" InitialValue="(code := 0)"/>
+		<VarDeclaration Name="BT_PRESSED_LATCHED" Type="isobus::UT::io::Button::ButtonActivationCode_S" Comment="Button has been “pressed” or latched (state change)" InitialValue="(code := 1)"/>
+		<VarDeclaration Name="BT_STILL_HELD" Type="isobus::UT::io::Button::ButtonActivationCode_S" Comment="Button is still held (latchable buttons do not repeat)" InitialValue="(code := 2)"/>
+		<VarDeclaration Name="BT_STILL_HELD_START" Type="isobus::UT::io::Button::ButtonActivationCode_S" Comment="Button is still held (latchable buttons do not repeat)" InitialValue="(code := 2, bCyclic := FALSE)"/>
+		<VarDeclaration Name="BT_ABORTED" Type="isobus::UT::io::Button::ButtonActivationCode_S" Comment="Button press aborted (Applies to VT version 4 and later)" InitialValue="(code := 3)"/>
+		<VarDeclaration Name="Invalid" Type="isobus::UT::io::Button::ButtonActivationCode_S" InitialValue="(code := 255)"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE isobus::UT::io::Button;
+
+GLOBALCONSTANTS ButtonActivationCode
+	VAR_GLOBAL CONSTANT
+		(* ***************************************************************************************************************************** *)
+		(* Transmission repetition rate: On button press/release and every 200 ms when button is held.
+		 * Latchable buttons do not repeat *)
+		(* ***************************************************************************************************************************** *)
+		BT_RELEASED_UNLATCHED : ButtonActivationCode_S := (code := 0); // Button has been unlatched or released (state change)
+		BT_PRESSED_LATCHED : ButtonActivationCode_S := (code := 1); // Button has been “pressed” or latched (state change)
+		BT_STILL_HELD : ButtonActivationCode_S := (code := 2); // Button is still held (latchable buttons do not repeat)
+		BT_STILL_HELD_START : ButtonActivationCode_S := (code := 2, bCyclic := FALSE); // Button is still held (latchable buttons do not repeat)
+		BT_ABORTED : ButtonActivationCode_S := (code := 3); // Button press aborted (Applies to VT version 4 and later)
+		Invalid : ButtonActivationCode_S := (code := 255);
+	END_VAR
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</GlobalConstants>

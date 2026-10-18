@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="SAFE_ADD_4" Comment="Calculate arithmetical sum of magnitude inputs, saturating on overflow (generic&#10;FB)">
+	<Identification Standard="61131-3" Classification="saturating arithmetic function" Description="Copyright (c) 2026 HR Agrartechnik GmbH&#10; &#10;This program and the accompanying materials are made&#10;available under the terms of the Eclipse Public License 2.0&#10;which is available at https://www.eclipse.org/legal/epl-2.0/&#10;&#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-08-27" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="SafeArithmetic::arithmetic">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event" Comment="Normal Execution Request">
+				<With Var="IN1"/>
+				<With Var="IN2"/>
+				<With Var="IN3"/>
+				<With Var="IN4"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event" Comment="Execution Confirmation">
+				<With Var="OUT"/>
+				<With Var="LIMIT_HIT"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="IN1" Type="ANY_MAGNITUDE" Comment="first summand"/>
+			<VarDeclaration Name="IN2" Type="ANY_MAGNITUDE" Comment="second summand"/>
+			<VarDeclaration Name="IN3" Type="ANY_MAGNITUDE" Comment="third summand"/>
+			<VarDeclaration Name="IN4" Type="ANY_MAGNITUDE" Comment="fourth summand"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="OUT" Type="ANY_MAGNITUDE" Comment="ADD result, clamped to the valid range of the result type"/>
+			<VarDeclaration Name="LIMIT_HIT" Type="BOOL" Comment="TRUE if the result was clamped due to overflow"/>
+		</OutputVars>
+	</InterfaceList>
+	<Attribute Name="eclipse4diac::core::GenericClassName" Value="'GEN_SAFE_ADD'"/>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

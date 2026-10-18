@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="F_PWM_PERCENT_TO_RAW" Comment="PWM-Sollwert-Anteil (REAL 0.0-1.0) in Fieldbus-Rohwert (DINT, 0-64255)&#10;umrechnen, fuer RampLimitFS.PV">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="franz" Date="2026-08-28">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="REQ" Type="Event" Comment="Normal Execution Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="CNF" Type="Event" Comment="Execution Confirmation">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="IN" Type="REAL" Comment="Sollwert-Anteil 0.0-1.0 (nicht Prozent 0-100!), z.B. RampLimitFS-Sollwert / 100.0"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="OUT" Type="DINT" Comment="Fieldbus-Rohwert 0-64255 (0x0000-0xFAFF, SAE J1939/ISO 11783 VALID_SIGNAL_W), fuer RampLimitFS.PV"/>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="FIELDBUS_PERCENT_TO_WORD" Type="eclipse4diac::signalprocessing::FIELDBUS_PERCENT_TO_WORD" x="-400" y="0">
+		</FB>
+		<FB Name="F_WORD_TO_DINT" Type="iec61131::conversion::F_WORD_TO_DINT" x="1600" y="100">
+		</FB>
+		<EventConnections>
+			<Connection Source="FIELDBUS_PERCENT_TO_WORD.CNF" Destination="F_WORD_TO_DINT.REQ" dx1="293.33"/>
+			<Connection Source="REQ" Destination="FIELDBUS_PERCENT_TO_WORD.REQ" dx1="1026.67"/>
+			<Connection Source="F_WORD_TO_DINT.CNF" Destination="CNF" dx1="1946.67"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="FIELDBUS_PERCENT_TO_WORD." Destination="F_WORD_TO_DINT.IN" dx1="93.33"/>
+			<Connection Source="IN" Destination="FIELDBUS_PERCENT_TO_WORD.RI" dx1="400"/>
+			<Connection Source="F_WORD_TO_DINT.OUT" Destination="OUT" dx1="2480"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

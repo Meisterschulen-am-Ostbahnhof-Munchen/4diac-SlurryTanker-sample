@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="IA_Lighting" Comment="ISOBUS Adapter for Lighting Data (LD)">
+	<Identification Standard="ISO 11783-7" Classification="PGN 65088" Description="Copyright (c) 2024-2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.3" Author="Franz Höpfinger" Date="2026-09-17" Remarks="Dokumentation (Franz: 'das passt, wir dokumentieren das in den Bausteinen. E_D_FF ist ein IEC 61499 Standardbaustein, wir halten uns STRENG an die Norm. E_D_FF_ANY ist davon abgeleitet, sollte sich gleich verhalten'): E_D_FF_Timeout (E_D_FF, IEC 61499-1 Annex A Standardbaustein) feuert EO NICHT beim allerersten CLK, wenn der erste echte Wert mit dem default-initialisierten Vergleichszustand (FALSE) uebereinstimmt - bleibt I_CORE.Q_timeout von Anfang an FALSE (Normalfall, kein Timeout), feuert TIMEOUT.E1 nie initial. Bewusst kein Bug, sondern standardkonformes Verhalten (analog E_RS/E_SR, wo genau dasselbe Verhalten Anlass fuer die Sonderformen E_RS_SYM/E_SR_SYM war) - hier bewusst KEINE eigene SYM-Variante, da nachgelagerte Verbraucher TIMEOUT.D1 als Datenwert lesen, nicht nur das Event.">
+	</VersionInfo>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.2" Author="Franz Höpfinger" Date="2026-09-17" Remarks="Bugfix (PR #241 Review, qodo-code-review[bot]: 'Normal traffic floods timeout consumers - every IND republishes Q_timeout even when it did not change'): E_D_FF_Timeout (E_D_FF_ANY) vor TIMEOUT eingefuegt, wie schon fuer die anderen Signale dieser Datei - I_CORE.TIMEOUT und I_CORE.IND feuern jetzt beide nur noch E_D_FF_Timeout.CLK, TIMEOUT.E1/D1 werden nur noch bei tatsaechlicher Aenderung von Q_timeout aktualisiert, nicht mehr bei jeder einzelnen Botschaft im gesunden Normalbetrieb.">
+	</VersionInfo>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.1" Author="Franz Höpfinger" Date="2026-09-17" Remarks="Bugfix (Franz: 'IA_VDS hat einen Bug, moeglicherweise alle anderen auch'): .IND-&gt;TIMEOUT.E1 ergaenzt (analog IA_VDS) - bisher wurde TIMEOUT.E1 NUR von .TIMEOUT gefeuert (Timeout-Beginn), nie beim Eintreffen einer normalen Botschaft (.IND) - TIMEOUT.D1 (Q_timeout=FALSE) wurde also gesetzt, aber nie an den TIMEOUT-Plug propagiert, sobald der Timeout wieder endete.">
+	</VersionInfo>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-04-24" Remarks="initial API and implementation (Adapter Wrapper for I_Lighting)">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::tecu">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+				<With Var="QI"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
+			<VarDeclaration Name="STATUS" Type="STRING"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="DAYTIME_RUNNING_LIGHTS" Type="adapter::types::unidirectional::AX" Comment="Daytime Running Lights" x="6093.33" y="1533.33"/>
+			<AdapterDeclaration Name="ALTERNATE_HEADLIGHTS" Type="adapter::types::unidirectional::AX" Comment="Alternate Headlights" x="6000" y="2326.67"/>
+			<AdapterDeclaration Name="LOW_BEAM_HEADLIGHTS" Type="adapter::types::unidirectional::AX" Comment="Low Beam Headlights" x="5953.33" y="3120"/>
+			<AdapterDeclaration Name="HIGH_BEAM_HEADLIGHTS" Type="adapter::types::unidirectional::AX" Comment="High Beam Headlights" x="6000" y="3913.33"/>
+			<AdapterDeclaration Name="TRACTOR_FRONT_FOG_LIGHTS" Type="adapter::types::unidirectional::AX" Comment="Tractor Front Fog Lights" x="6186.67" y="4706.67"/>
+			<AdapterDeclaration Name="ROTATING_BEACON_LIGHT" Type="adapter::types::unidirectional::AX" Comment="Rotating Beacon Light" x="6046.67" y="5500"/>
+			<AdapterDeclaration Name="RIGHT_TURN_SIGNAL_LIGHTS" Type="adapter::types::unidirectional::AX" Comment="Right Turn Signal Lights" x="6186.67" y="6293.33"/>
+			<AdapterDeclaration Name="LEFT_TURN_SIGNAL_LIGHTS" Type="adapter::types::unidirectional::AX" Comment="Left Turn Signal Lights" x="6140" y="7086.67"/>
+			<AdapterDeclaration Name="BACK_UP_LIGHTS_AND_ALARM_HORN" Type="adapter::types::unidirectional::AX" Comment="Back Up Lights And Alarm Horn" x="6420" y="7880"/>
+			<AdapterDeclaration Name="CENTER_STOP_LIGHTS" Type="adapter::types::unidirectional::AX" Comment="Center Stop Lights" x="5953.33" y="8673.33"/>
+			<AdapterDeclaration Name="RIGHT_STOP_LIGHTS" Type="adapter::types::unidirectional::AX" Comment="Right Stop Lights" x="5953.33" y="9466.67"/>
+			<AdapterDeclaration Name="LEFT_STOP_LIGHTS" Type="adapter::types::unidirectional::AX" Comment="Left Stop Lights" x="5953.33" y="10260"/>
+			<AdapterDeclaration Name="IMPLEMENT_CLEARANCE_LIGHTS" Type="adapter::types::unidirectional::AX" Comment="Implement Clearance Lights" x="6280" y="11053.33"/>
+			<AdapterDeclaration Name="TRACTOR_CLEARANCE_LIGHTS" Type="adapter::types::unidirectional::AX" Comment="Tractor Clearance Lights" x="6186.67" y="11846.67"/>
+			<AdapterDeclaration Name="IMPLEMENT_MARKER_LIGHTS" Type="adapter::types::unidirectional::AX" Comment="Implement Marker Lights" x="6140" y="12640"/>
+			<AdapterDeclaration Name="TRACTOR_MARKER_LIGHTS" Type="adapter::types::unidirectional::AX" Comment="Tractor Marker Lights" x="6046.67" y="13433.33"/>
+			<AdapterDeclaration Name="REAR_FOG_LIGHTS" Type="adapter::types::unidirectional::AX" Comment="Rear Fog Lights" x="5953.33" y="14226.67"/>
+			<AdapterDeclaration Name="TRACTOR_UNDERSIDE_MOUNTED_WORK_LIGHTS" Type="adapter::types::unidirectional::AX" Comment="Tractor Underside Mounted Work Lights" x="6793.33" y="15020"/>
+			<AdapterDeclaration Name="TRACTOR_REAR_LOW_MOUNTED_WORK_LIGHTS" Type="adapter::types::unidirectional::AX" Comment="Tractor Rear Low Mounted Work Lights" x="6746.67" y="15813.33"/>
+			<AdapterDeclaration Name="TRACTOR_REAR_HIGH_MOUNTED_WORK_LIGHTS" Type="adapter::types::unidirectional::AX" Comment="Tractor Rear High Mounted Work Lights" x="6793.33" y="16606.67"/>
+			<AdapterDeclaration Name="TRACTOR_SIDE_LOW_MOUNTED_WORK_LIGHTS" Type="adapter::types::unidirectional::AX" Comment="Tractor Side Low Mounted Work Lights" x="6746.67" y="17400"/>
+			<AdapterDeclaration Name="TRACTOR_SIDE_HIGH_MOUNTED_WORK_LIGHTS" Type="adapter::types::unidirectional::AX" Comment="Tractor Side High Mounted Work Lights" x="6793.33" y="18193.33"/>
+			<AdapterDeclaration Name="TRACTOR_FRONT_LOW_MOUNTED_WORK_LIGHTS" Type="adapter::types::unidirectional::AX" Comment="Tractor Front Low Mounted Work Lights" x="6793.33" y="18986.67"/>
+			<AdapterDeclaration Name="TRACTOR_FRONT_HIGH_MOUNTED_WORK_LIGHTS" Type="adapter::types::unidirectional::AX" Comment="Tractor Front High Mounted Work Lights" x="6840" y="19780"/>
+			<AdapterDeclaration Name="IMPLEMENT_OEM_OPTION_2_LIGHT" Type="adapter::types::unidirectional::AX" Comment="Implement Oem Option 2 Light" x="6373.33" y="20573.33"/>
+			<AdapterDeclaration Name="IMPLEMENT_OEM_OPTION_1_LIGHT" Type="adapter::types::unidirectional::AX" Comment="Implement Oem Option 1 Light" x="6373.33" y="21366.67"/>
+			<AdapterDeclaration Name="IMPLEMENT_RIGHT_FORWARD_WORK_LIGHTS" Type="adapter::types::unidirectional::AX" Comment="Implement Right Forward Work Lights" x="6700" y="22160"/>
+			<AdapterDeclaration Name="IMPLEMENT_LEFT_FORWARD_WORK_LIGHTS" Type="adapter::types::unidirectional::AX" Comment="Implement Left Forward Work Lights" x="6653.33" y="22953.33"/>
+			<AdapterDeclaration Name="IMPLEMENT_RIGHT_FACING_WORK_LIGHTS" Type="adapter::types::unidirectional::AX" Comment="Implement Right Facing Work Lights" x="6653.33" y="23746.67"/>
+			<AdapterDeclaration Name="IMPLEMENT_LEFT_FACING_WORK_LIGHTS" Type="adapter::types::unidirectional::AX" Comment="Implement Left Facing Work Lights" x="6606.67" y="24540"/>
+			<AdapterDeclaration Name="IMPLEMENT_REAR_WORK_LIGHTS" Type="adapter::types::unidirectional::AX" Comment="Implement Rear Work Lights" x="6280" y="25333.33"/>
+			<AdapterDeclaration Name="TIMEOUT" Type="adapter::types::unidirectional::AX" Comment="Timeout Status" x="6600" y="700"/>
+		</Plugs>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="I_CORE" Type="isobus::tecu::I_Lighting" x="1200" y="10400">
+		</FB>
+		<FB Name="C_DAYTIME_RUNNING_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="1533.33">
+		</FB>
+		<FB Name="C_ALTERNATE_HEADLIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="2326.67">
+		</FB>
+		<FB Name="C_LOW_BEAM_HEADLIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="3120">
+		</FB>
+		<FB Name="C_HIGH_BEAM_HEADLIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="3913.33">
+		</FB>
+		<FB Name="C_TRACTOR_FRONT_FOG_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="4706.67">
+		</FB>
+		<FB Name="C_ROTATING_BEACON_LIGHT" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="5500">
+		</FB>
+		<FB Name="C_RIGHT_TURN_SIGNAL_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="6293.33">
+		</FB>
+		<FB Name="C_LEFT_TURN_SIGNAL_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="7086.67">
+		</FB>
+		<FB Name="C_BACK_UP_LIGHTS_AND_ALARM_HORN" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="7880">
+		</FB>
+		<FB Name="C_CENTER_STOP_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="8673.33">
+		</FB>
+		<FB Name="C_RIGHT_STOP_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="9466.67">
+		</FB>
+		<FB Name="C_LEFT_STOP_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="10260">
+		</FB>
+		<FB Name="C_IMPLEMENT_CLEARANCE_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="11053.33">
+		</FB>
+		<FB Name="C_TRACTOR_CLEARANCE_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="11846.67">
+		</FB>
+		<FB Name="C_IMPLEMENT_MARKER_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="12640">
+		</FB>
+		<FB Name="C_TRACTOR_MARKER_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="13433.33">
+		</FB>
+		<FB Name="C_REAR_FOG_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="14226.67">
+		</FB>
+		<FB Name="C_TRACTOR_UNDERSIDE_MOUNTED_WORK_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="15020">
+		</FB>
+		<FB Name="C_TRACTOR_REAR_LOW_MOUNTED_WORK_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="15813.33">
+		</FB>
+		<FB Name="C_TRACTOR_REAR_HIGH_MOUNTED_WORK_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="16606.67">
+		</FB>
+		<FB Name="C_TRACTOR_SIDE_LOW_MOUNTED_WORK_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="17400">
+		</FB>
+		<FB Name="C_TRACTOR_SIDE_HIGH_MOUNTED_WORK_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="18193.33">
+		</FB>
+		<FB Name="C_TRACTOR_FRONT_LOW_MOUNTED_WORK_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="18986.67">
+		</FB>
+		<FB Name="C_TRACTOR_FRONT_HIGH_MOUNTED_WORK_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="19780">
+		</FB>
+		<FB Name="C_IMPLEMENT_OEM_OPTION_2_LIGHT" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="20573.33">
+		</FB>
+		<FB Name="C_IMPLEMENT_OEM_OPTION_1_LIGHT" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="21366.67">
+		</FB>
+		<FB Name="C_IMPLEMENT_RIGHT_FORWARD_WORK_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="22160">
+		</FB>
+		<FB Name="C_IMPLEMENT_LEFT_FORWARD_WORK_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="22953.33">
+		</FB>
+		<FB Name="C_IMPLEMENT_RIGHT_FACING_WORK_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="23746.67">
+		</FB>
+		<FB Name="C_IMPLEMENT_LEFT_FACING_WORK_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="24540">
+		</FB>
+		<FB Name="C_IMPLEMENT_REAR_WORK_LIGHTS" Type="logiBUS::utils::quarter::QUARTER_TO_BOOL" x="4653.33" y="25333.33">
+		</FB>
+		<FB Name="E_D_FF_Timeout" Type="iec61499::events::E_D_FF" x="4900" y="800">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="I_CORE.INIT" dx1="66.67"/>
+			<Connection Source="I_CORE.INITO" Destination="INITO" dx1="66.67"/>
+			<Connection Source="I_CORE.IND" Destination="C_DAYTIME_RUNNING_LIGHTS.REQ" dx1="1333.33"/>
+			<Connection Source="C_DAYTIME_RUNNING_LIGHTS.CNF" Destination="DAYTIME_RUNNING_LIGHTS.E1"/>
+			<Connection Source="I_CORE.IND" Destination="C_ALTERNATE_HEADLIGHTS.REQ" dx1="1333.33"/>
+			<Connection Source="C_ALTERNATE_HEADLIGHTS.CNF" Destination="ALTERNATE_HEADLIGHTS.E1"/>
+			<Connection Source="I_CORE.IND" Destination="C_LOW_BEAM_HEADLIGHTS.REQ" dx1="1333.33"/>
+			<Connection Source="C_LOW_BEAM_HEADLIGHTS.CNF" Destination="LOW_BEAM_HEADLIGHTS.E1"/>
+			<Connection Source="I_CORE.IND" Destination="C_HIGH_BEAM_HEADLIGHTS.REQ" dx1="1333.33"/>
+			<Connection Source="C_HIGH_BEAM_HEADLIGHTS.CNF" Destination="HIGH_BEAM_HEADLIGHTS.E1"/>
+			<Connection Source="I_CORE.IND" Destination="C_TRACTOR_FRONT_FOG_LIGHTS.REQ" dx1="1333.33"/>
+			<Connection Source="C_TRACTOR_FRONT_FOG_LIGHTS.CNF" Destination="TRACTOR_FRONT_FOG_LIGHTS.E1"/>
+			<Connection Source="I_CORE.IND" Destination="C_ROTATING_BEACON_LIGHT.REQ" dx1="1333.33"/>
+			<Connection Source="C_ROTATING_BEACON_LIGHT.CNF" Destination="ROTATING_BEACON_LIGHT.E1"/>
+			<Connection Source="I_CORE.IND" Destination="C_RIGHT_TURN_SIGNAL_LIGHTS.REQ" dx1="1333.33"/>
+			<Connection Source="C_RIGHT_TURN_SIGNAL_LIGHTS.CNF" Destination="RIGHT_TURN_SIGNAL_LIGHTS.E1"/>
+			<Connection Source="I_CORE.IND" Destination="C_LEFT_TURN_SIGNAL_LIGHTS.REQ" dx1="1333.33"/>
+			<Connection Source="C_LEFT_TURN_SIGNAL_LIGHTS.CNF" Destination="LEFT_TURN_SIGNAL_LIGHTS.E1"/>
+			<Connection Source="I_CORE.IND" Destination="C_BACK_UP_LIGHTS_AND_ALARM_HORN.REQ" dx1="1333.33"/>
+			<Connection Source="C_BACK_UP_LIGHTS_AND_ALARM_HORN.CNF" Destination="BACK_UP_LIGHTS_AND_ALARM_HORN.E1"/>
+			<Connection Source="I_CORE.IND" Destination="C_CENTER_STOP_LIGHTS.REQ" dx1="1333.33"/>
+			<Connection Source="C_CENTER_STOP_LIGHTS.CNF" Destination="CENTER_STOP_LIGHTS.E1"/>
+			<Connection Source="I_CORE.IND" Destination="C_RIGHT_STOP_LIGHTS.REQ" dx1="1333.33"/>
+			<Connection Source="C_RIGHT_STOP_LIGHTS.CNF" Destination="RIGHT_STOP_LIGHTS.E1"/>
+			<Connection Source="I_CORE.IND" Destination="C_LEFT_STOP_LIGHTS.REQ" dx1="1333.33"/>
+			<Connection Source="C_LEFT_STOP_LIGHTS.CNF" Destination="LEFT_STOP_LIGHTS.E1"/>
+			<Connection Source="I_CORE.IND" Destination="C_IMPLEMENT_CLEARANCE_LIGHTS.REQ" dx1="1333.33"/>
+			<Connection Source="C_IMPLEMENT_CLEARANCE_LIGHTS.CNF" Destination="IMPLEMENT_CLEARANCE_LIGHTS.E1"/>
+			<Connection Source="I_CORE.IND" Destination="C_TRACTOR_CLEARANCE_LIGHTS.REQ" dx1="1333.33"/>
+			<Connection Source="C_TRACTOR_CLEARANCE_LIGHTS.CNF" Destination="TRACTOR_CLEARANCE_LIGHTS.E1"/>
+			<Connection Source="I_CORE.IND" Destination="C_IMPLEMENT_MARKER_LIGHTS.REQ" dx1="1333.33"/>
+			<Connection Source="C_IMPLEMENT_MARKER_LIGHTS.CNF" Destination="IMPLEMENT_MARKER_LIGHTS.E1"/>
+			<Connection Source="I_CORE.IND" Destination="C_TRACTOR_MARKER_LIGHTS.REQ" dx1="1333.33"/>
+			<Connection Source="C_TRACTOR_MARKER_LIGHTS.CNF" Destination="TRACTOR_MARKER_LIGHTS.E1"/>
+			<Connection Source="I_CORE.IND" Destination="C_REAR_FOG_LIGHTS.REQ" dx1="1333.33"/>
+			<Connection Source="C_REAR_FOG_LIGHTS.CNF" Destination="REAR_FOG_LIGHTS.E1"/>
+			<Connection Source="I_CORE.IND" Destination="C_TRACTOR_UNDERSIDE_MOUNTED_WORK_LIGHTS.REQ" dx1="1333.33"/>
+			<Connection Source="C_TRACTOR_UNDERSIDE_MOUNTED_WORK_LIGHTS.CNF" Destination="TRACTOR_UNDERSIDE_MOUNTED_WORK_LIGHTS.E1"/>
+			<Connection Source="I_CORE.IND" Destination="C_TRACTOR_REAR_LOW_MOUNTED_WORK_LIGHTS.REQ" dx1="1333.33"/>
+			<Connection Source="C_TRACTOR_REAR_LOW_MOUNTED_WORK_LIGHTS.CNF" Destination="TRACTOR_REAR_LOW_MOUNTED_WORK_LIGHTS.E1"/>
+			<Connection Source="I_CORE.IND" Destination="C_TRACTOR_REAR_HIGH_MOUNTED_WORK_LIGHTS.REQ" dx1="1333.33"/>
+			<Connection Source="C_TRACTOR_REAR_HIGH_MOUNTED_WORK_LIGHTS.CNF" Destination="TRACTOR_REAR_HIGH_MOUNTED_WORK_LIGHTS.E1"/>
+			<Connection Source="I_CORE.IND" Destination="C_TRACTOR_SIDE_LOW_MOUNTED_WORK_LIGHTS.REQ" dx1="1333.33"/>
+			<Connection Source="C_TRACTOR_SIDE_LOW_MOUNTED_WORK_LIGHTS.CNF" Destination="TRACTOR_SIDE_LOW_MOUNTED_WORK_LIGHTS.E1"/>
+			<Connection Source="I_CORE.IND" Destination="C_TRACTOR_SIDE_HIGH_MOUNTED_WORK_LIGHTS.REQ" dx1="1333.33"/>
+			<Connection Source="C_TRACTOR_SIDE_HIGH_MOUNTED_WORK_LIGHTS.CNF" Destination="TRACTOR_SIDE_HIGH_MOUNTED_WORK_LIGHTS.E1"/>
+			<Connection Source="I_CORE.IND" Destination="C_TRACTOR_FRONT_LOW_MOUNTED_WORK_LIGHTS.REQ" dx1="1333.33"/>
+			<Connection Source="C_TRACTOR_FRONT_LOW_MOUNTED_WORK_LIGHTS.CNF" Destination="TRACTOR_FRONT_LOW_MOUNTED_WORK_LIGHTS.E1"/>
+			<Connection Source="I_CORE.IND" Destination="C_TRACTOR_FRONT_HIGH_MOUNTED_WORK_LIGHTS.REQ" dx1="1333.33"/>
+			<Connection Source="C_TRACTOR_FRONT_HIGH_MOUNTED_WORK_LIGHTS.CNF" Destination="TRACTOR_FRONT_HIGH_MOUNTED_WORK_LIGHTS.E1"/>
+			<Connection Source="I_CORE.IND" Destination="C_IMPLEMENT_OEM_OPTION_2_LIGHT.REQ" dx1="1333.33"/>
+			<Connection Source="C_IMPLEMENT_OEM_OPTION_2_LIGHT.CNF" Destination="IMPLEMENT_OEM_OPTION_2_LIGHT.E1"/>
+			<Connection Source="I_CORE.IND" Destination="C_IMPLEMENT_OEM_OPTION_1_LIGHT.REQ" dx1="1333.33"/>
+			<Connection Source="C_IMPLEMENT_OEM_OPTION_1_LIGHT.CNF" Destination="IMPLEMENT_OEM_OPTION_1_LIGHT.E1"/>
+			<Connection Source="I_CORE.IND" Destination="C_IMPLEMENT_RIGHT_FORWARD_WORK_LIGHTS.REQ" dx1="1333.33"/>
+			<Connection Source="C_IMPLEMENT_RIGHT_FORWARD_WORK_LIGHTS.CNF" Destination="IMPLEMENT_RIGHT_FORWARD_WORK_LIGHTS.E1"/>
+			<Connection Source="I_CORE.IND" Destination="C_IMPLEMENT_LEFT_FORWARD_WORK_LIGHTS.REQ" dx1="1333.33"/>
+			<Connection Source="C_IMPLEMENT_LEFT_FORWARD_WORK_LIGHTS.CNF" Destination="IMPLEMENT_LEFT_FORWARD_WORK_LIGHTS.E1"/>
+			<Connection Source="I_CORE.IND" Destination="C_IMPLEMENT_RIGHT_FACING_WORK_LIGHTS.REQ" dx1="1333.33"/>
+			<Connection Source="C_IMPLEMENT_RIGHT_FACING_WORK_LIGHTS.CNF" Destination="IMPLEMENT_RIGHT_FACING_WORK_LIGHTS.E1"/>
+			<Connection Source="I_CORE.IND" Destination="C_IMPLEMENT_LEFT_FACING_WORK_LIGHTS.REQ" dx1="1333.33"/>
+			<Connection Source="C_IMPLEMENT_LEFT_FACING_WORK_LIGHTS.CNF" Destination="IMPLEMENT_LEFT_FACING_WORK_LIGHTS.E1"/>
+			<Connection Source="I_CORE.IND" Destination="C_IMPLEMENT_REAR_WORK_LIGHTS.REQ" dx1="1333.33"/>
+			<Connection Source="C_IMPLEMENT_REAR_WORK_LIGHTS.CNF" Destination="IMPLEMENT_REAR_WORK_LIGHTS.E1"/>
+			<Connection Source="I_CORE.TIMEOUT" Destination="E_D_FF_Timeout.CLK" dx1="266.67"/>
+			<Connection Source="I_CORE.IND" Destination="E_D_FF_Timeout.CLK" dx1="266.67"/>
+			<Connection Source="E_D_FF_Timeout.EO" Destination="TIMEOUT.E1" dx1="866.67"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="QI" Destination="I_CORE.QI" dx1="1540"/>
+			<Connection Source="I_CORE.QO" Destination="QO" dx1="133.33"/>
+			<Connection Source="I_CORE.STATUS" Destination="STATUS" dx1="200"/>
+			<Connection Source="I_CORE.DAYTIME_RUNNING_LIGHTS" Destination="C_DAYTIME_RUNNING_LIGHTS.IB" dx1="400"/>
+			<Connection Source="C_DAYTIME_RUNNING_LIGHTS.Q" Destination="DAYTIME_RUNNING_LIGHTS.D1"/>
+			<Connection Source="I_CORE.ALTERNATE_HEADLIGHTS" Destination="C_ALTERNATE_HEADLIGHTS.IB" dx1="466.67"/>
+			<Connection Source="C_ALTERNATE_HEADLIGHTS.Q" Destination="ALTERNATE_HEADLIGHTS.D1"/>
+			<Connection Source="I_CORE.LOW_BEAM_HEADLIGHTS" Destination="C_LOW_BEAM_HEADLIGHTS.IB" dx1="533.33"/>
+			<Connection Source="C_LOW_BEAM_HEADLIGHTS.Q" Destination="LOW_BEAM_HEADLIGHTS.D1"/>
+			<Connection Source="I_CORE.HIGH_BEAM_HEADLIGHTS" Destination="C_HIGH_BEAM_HEADLIGHTS.IB" dx1="600"/>
+			<Connection Source="C_HIGH_BEAM_HEADLIGHTS.Q" Destination="HIGH_BEAM_HEADLIGHTS.D1"/>
+			<Connection Source="I_CORE.TRACTOR_FRONT_FOG_LIGHTS" Destination="C_TRACTOR_FRONT_FOG_LIGHTS.IB" dx1="666.67"/>
+			<Connection Source="C_TRACTOR_FRONT_FOG_LIGHTS.Q" Destination="TRACTOR_FRONT_FOG_LIGHTS.D1"/>
+			<Connection Source="I_CORE.ROTATING_BEACON_LIGHT" Destination="C_ROTATING_BEACON_LIGHT.IB" dx1="733.33"/>
+			<Connection Source="C_ROTATING_BEACON_LIGHT.Q" Destination="ROTATING_BEACON_LIGHT.D1"/>
+			<Connection Source="I_CORE.RIGHT_TURN_SIGNAL_LIGHTS" Destination="C_RIGHT_TURN_SIGNAL_LIGHTS.IB" dx1="800"/>
+			<Connection Source="C_RIGHT_TURN_SIGNAL_LIGHTS.Q" Destination="RIGHT_TURN_SIGNAL_LIGHTS.D1"/>
+			<Connection Source="I_CORE.LEFT_TURN_SIGNAL_LIGHTS" Destination="C_LEFT_TURN_SIGNAL_LIGHTS.IB" dx1="866.67"/>
+			<Connection Source="C_LEFT_TURN_SIGNAL_LIGHTS.Q" Destination="LEFT_TURN_SIGNAL_LIGHTS.D1"/>
+			<Connection Source="I_CORE.BACK_UP_LIGHTS_AND_ALARM_HORN" Destination="C_BACK_UP_LIGHTS_AND_ALARM_HORN.IB" dx1="933.33"/>
+			<Connection Source="C_BACK_UP_LIGHTS_AND_ALARM_HORN.Q" Destination="BACK_UP_LIGHTS_AND_ALARM_HORN.D1"/>
+			<Connection Source="I_CORE.CENTER_STOP_LIGHTS" Destination="C_CENTER_STOP_LIGHTS.IB" dx1="1000"/>
+			<Connection Source="C_CENTER_STOP_LIGHTS.Q" Destination="CENTER_STOP_LIGHTS.D1"/>
+			<Connection Source="I_CORE.RIGHT_STOP_LIGHTS" Destination="C_RIGHT_STOP_LIGHTS.IB" dx1="1066.67"/>
+			<Connection Source="C_RIGHT_STOP_LIGHTS.Q" Destination="RIGHT_STOP_LIGHTS.D1"/>
+			<Connection Source="I_CORE.LEFT_STOP_LIGHTS" Destination="C_LEFT_STOP_LIGHTS.IB" dx1="1133.33"/>
+			<Connection Source="C_LEFT_STOP_LIGHTS.Q" Destination="LEFT_STOP_LIGHTS.D1"/>
+			<Connection Source="I_CORE.IMPLEMENT_CLEARANCE_LIGHTS" Destination="C_IMPLEMENT_CLEARANCE_LIGHTS.IB" dx1="1200"/>
+			<Connection Source="C_IMPLEMENT_CLEARANCE_LIGHTS.Q" Destination="IMPLEMENT_CLEARANCE_LIGHTS.D1"/>
+			<Connection Source="I_CORE.TRACTOR_CLEARANCE_LIGHTS" Destination="C_TRACTOR_CLEARANCE_LIGHTS.IB" dx1="1266.67"/>
+			<Connection Source="C_TRACTOR_CLEARANCE_LIGHTS.Q" Destination="TRACTOR_CLEARANCE_LIGHTS.D1"/>
+			<Connection Source="I_CORE.IMPLEMENT_MARKER_LIGHTS" Destination="C_IMPLEMENT_MARKER_LIGHTS.IB"/>
+			<Connection Source="C_IMPLEMENT_MARKER_LIGHTS.Q" Destination="IMPLEMENT_MARKER_LIGHTS.D1"/>
+			<Connection Source="I_CORE.TRACTOR_MARKER_LIGHTS" Destination="C_TRACTOR_MARKER_LIGHTS.IB" dx1="1066.67"/>
+			<Connection Source="C_TRACTOR_MARKER_LIGHTS.Q" Destination="TRACTOR_MARKER_LIGHTS.D1"/>
+			<Connection Source="I_CORE.REAR_FOG_LIGHTS" Destination="C_REAR_FOG_LIGHTS.IB" dx1="1000"/>
+			<Connection Source="C_REAR_FOG_LIGHTS.Q" Destination="REAR_FOG_LIGHTS.D1"/>
+			<Connection Source="I_CORE.TRACTOR_UNDERSIDE_MOUNTED_WORK_LIGHTS" Destination="C_TRACTOR_UNDERSIDE_MOUNTED_WORK_LIGHTS.IB" dx1="933.33"/>
+			<Connection Source="C_TRACTOR_UNDERSIDE_MOUNTED_WORK_LIGHTS.Q" Destination="TRACTOR_UNDERSIDE_MOUNTED_WORK_LIGHTS.D1"/>
+			<Connection Source="I_CORE.TRACTOR_REAR_LOW_MOUNTED_WORK_LIGHTS" Destination="C_TRACTOR_REAR_LOW_MOUNTED_WORK_LIGHTS.IB" dx1="866.67"/>
+			<Connection Source="C_TRACTOR_REAR_LOW_MOUNTED_WORK_LIGHTS.Q" Destination="TRACTOR_REAR_LOW_MOUNTED_WORK_LIGHTS.D1"/>
+			<Connection Source="I_CORE.TRACTOR_REAR_HIGH_MOUNTED_WORK_LIGHTS" Destination="C_TRACTOR_REAR_HIGH_MOUNTED_WORK_LIGHTS.IB" dx1="800"/>
+			<Connection Source="C_TRACTOR_REAR_HIGH_MOUNTED_WORK_LIGHTS.Q" Destination="TRACTOR_REAR_HIGH_MOUNTED_WORK_LIGHTS.D1"/>
+			<Connection Source="I_CORE.TRACTOR_SIDE_LOW_MOUNTED_WORK_LIGHTS" Destination="C_TRACTOR_SIDE_LOW_MOUNTED_WORK_LIGHTS.IB" dx1="733.33"/>
+			<Connection Source="C_TRACTOR_SIDE_LOW_MOUNTED_WORK_LIGHTS.Q" Destination="TRACTOR_SIDE_LOW_MOUNTED_WORK_LIGHTS.D1"/>
+			<Connection Source="I_CORE.TRACTOR_SIDE_HIGH_MOUNTED_WORK_LIGHTS" Destination="C_TRACTOR_SIDE_HIGH_MOUNTED_WORK_LIGHTS.IB" dx1="666.67"/>
+			<Connection Source="C_TRACTOR_SIDE_HIGH_MOUNTED_WORK_LIGHTS.Q" Destination="TRACTOR_SIDE_HIGH_MOUNTED_WORK_LIGHTS.D1"/>
+			<Connection Source="I_CORE.TRACTOR_FRONT_LOW_MOUNTED_WORK_LIGHTS" Destination="C_TRACTOR_FRONT_LOW_MOUNTED_WORK_LIGHTS.IB" dx1="600"/>
+			<Connection Source="C_TRACTOR_FRONT_LOW_MOUNTED_WORK_LIGHTS.Q" Destination="TRACTOR_FRONT_LOW_MOUNTED_WORK_LIGHTS.D1"/>
+			<Connection Source="I_CORE.TRACTOR_FRONT_HIGH_MOUNTED_WORK_LIGHTS" Destination="C_TRACTOR_FRONT_HIGH_MOUNTED_WORK_LIGHTS.IB" dx1="533.33"/>
+			<Connection Source="C_TRACTOR_FRONT_HIGH_MOUNTED_WORK_LIGHTS.Q" Destination="TRACTOR_FRONT_HIGH_MOUNTED_WORK_LIGHTS.D1"/>
+			<Connection Source="I_CORE.IMPLEMENT_OEM_OPTION_2_LIGHT" Destination="C_IMPLEMENT_OEM_OPTION_2_LIGHT.IB" dx1="466.67"/>
+			<Connection Source="C_IMPLEMENT_OEM_OPTION_2_LIGHT.Q" Destination="IMPLEMENT_OEM_OPTION_2_LIGHT.D1"/>
+			<Connection Source="I_CORE.IMPLEMENT_OEM_OPTION_1_LIGHT" Destination="C_IMPLEMENT_OEM_OPTION_1_LIGHT.IB" dx1="400"/>
+			<Connection Source="C_IMPLEMENT_OEM_OPTION_1_LIGHT.Q" Destination="IMPLEMENT_OEM_OPTION_1_LIGHT.D1"/>
+			<Connection Source="I_CORE.IMPLEMENT_RIGHT_FORWARD_WORK_LIGHTS" Destination="C_IMPLEMENT_RIGHT_FORWARD_WORK_LIGHTS.IB" dx1="333.33"/>
+			<Connection Source="C_IMPLEMENT_RIGHT_FORWARD_WORK_LIGHTS.Q" Destination="IMPLEMENT_RIGHT_FORWARD_WORK_LIGHTS.D1"/>
+			<Connection Source="I_CORE.IMPLEMENT_LEFT_FORWARD_WORK_LIGHTS" Destination="C_IMPLEMENT_LEFT_FORWARD_WORK_LIGHTS.IB" dx1="266.67"/>
+			<Connection Source="C_IMPLEMENT_LEFT_FORWARD_WORK_LIGHTS.Q" Destination="IMPLEMENT_LEFT_FORWARD_WORK_LIGHTS.D1"/>
+			<Connection Source="I_CORE.IMPLEMENT_RIGHT_FACING_WORK_LIGHTS" Destination="C_IMPLEMENT_RIGHT_FACING_WORK_LIGHTS.IB" dx1="200"/>
+			<Connection Source="C_IMPLEMENT_RIGHT_FACING_WORK_LIGHTS.Q" Destination="IMPLEMENT_RIGHT_FACING_WORK_LIGHTS.D1"/>
+			<Connection Source="I_CORE.IMPLEMENT_LEFT_FACING_WORK_LIGHTS" Destination="C_IMPLEMENT_LEFT_FACING_WORK_LIGHTS.IB" dx1="133.33"/>
+			<Connection Source="C_IMPLEMENT_LEFT_FACING_WORK_LIGHTS.Q" Destination="IMPLEMENT_LEFT_FACING_WORK_LIGHTS.D1"/>
+			<Connection Source="I_CORE.IMPLEMENT_REAR_WORK_LIGHTS" Destination="C_IMPLEMENT_REAR_WORK_LIGHTS.IB" dx1="66.67"/>
+			<Connection Source="C_IMPLEMENT_REAR_WORK_LIGHTS.Q" Destination="IMPLEMENT_REAR_WORK_LIGHTS.D1"/>
+			<Connection Source="I_CORE.Q_timeout" Destination="E_D_FF_Timeout.D" dx1="333.33"/>
+			<Connection Source="E_D_FF_Timeout.Q" Destination="TIMEOUT.D1" dx1="866.67"/>
+		</DataConnections>
+	</FBNetwork>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<p>ISOBUS Adapter for Lighting Data (LD)</p>
+
+<p>&nbsp;</p>
+
+<p><strong>TIMEOUT.E1-Verdrahtung:</strong> I_CORE.TIMEOUT (echter Timeout-Eintritt) UND I_CORE.IND (Normalbetrieb) feuern beide E_D_FF_Timeout.CLK; E_D_FF_Timeout (E_D_FF_ANY, gespeist von I_CORE.Q_timeout) laesst TIMEOUT.E1 nur bei tatsaechlicher Wertaenderung durch - so wird TIMEOUT.D1 (Q_timeout) am Adapter-Plug beim Zuruecksetzen auf false weiterhin zuverlaessig aktualisiert, ohne bei jeder einzelnen Botschaft im gesunden Normalbetrieb erneut zu feuern. Der zugrundeliegende TIMEOUT/IND-Vertrag von I_CORE selbst ist in dessen eigener .fbt-Datei dokumentiert.</p>
+]]></Attribute>
+</FBType>

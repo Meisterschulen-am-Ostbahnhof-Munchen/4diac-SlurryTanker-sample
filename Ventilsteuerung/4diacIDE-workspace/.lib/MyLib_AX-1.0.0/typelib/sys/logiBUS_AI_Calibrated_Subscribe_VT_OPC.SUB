@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="logiBUS_AI_Calibrated_Subscribe_VT_OPC" Comment="Remote-Subscribe eines bereits kalibrierten physikalischen Werts (M2M, von der&#10;Sensor-Station) -&gt; VT-Anzeige (Q_NumericValue_PHYSA) + lokaler Re-Publish. Die&#10;physischen VT-Elemente bleiben hier (dort wo die VT ist): CO/CS-Tasten rufen per&#10;CLIENT_0 direkt die ID_CO_METHOD/ID_CS_METHOD auf der Sensor-Station auf&#10;(logiBUS_AI_Calibrate_IDA_OPC) - echter Event-zu-Event-Methodenaufruf, kein&#10;Toggle/Publish/Subscribe-Umweg (siehe OPC_UA_VERNETZUNG.md Punkt 14).&#10;ZERO/SPAN-Referenzwert-Eingabefelder (stObjZero/stObjSpan, siehe v1.8) sind&#10;optional - ID_NULL/unbeschrieben lassen, wenn der Sensor feste Referenzwerte hat&#10;(Fuellband-Winkel: 0/100 als Literal auf der Sensor-Station), echte Werte&#10;durchreichen, wenn der Bediener sie selbst eingibt (Druck: 0/250 bar, kein&#10;Kalibrator immer griffbereit). Ersetzt logiBUS_AI_Calibrate_Remote_IDA_OPC:&#10;Kalibrierung selbst laeuft jetzt auf der Sensor-Station&#10;(logiBUS_AI_Calibrate_IDA_OPC), hier bleibt nur noch Anzeige +&#10;VT-Bedienelemente-Weiterleitung.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.2" Author="Franz Höpfinger" Date="2026-09-17" Remarks="CO/CS-Weiterleitung von AX_CLIENT_1_0 (Remote-Write) auf AX_PUBLISH_1 (lokaler Publish, Sensor-Station abonniert remote) umgestellt - konsistenter mit der ZERO/SPAN-Weiterleitung (die ohnehin schon so funktioniert, siehe v1.1) und mit dem im Projekt dominanten Subscribe-Richtungsmuster (DRUCK_RAW_M2M etc: der Sensor-seitige Publisher ist immer lokal, die Gegenseite abonniert remote). AX_CLIENT_1_0 war unnoetig - dieser Mechanismus ist im Projekt der Spezialfall fuer 'alleinige Source of Truth'-Kommandos (z.B. Kuehlermotor), nicht das allgemeine Signal-Weiterleitungsmuster.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.3" Author="Franz Höpfinger" Date="2026-09-18" Remarks="Franz: 'solche Scheiße muss komplett raus' - v1.2s AX_T_FF_SR-Toggle+AX_PUBLISH_1 war selbst wieder ein Event-&gt;Pegel-&gt;Event-Umweg (Button_IE.IND ist schon ein atomares Event, wird kuenstlich zum Toggle gemacht, nur damit die Sensor-Station es per AX_SUBSCRIBE_1+AX_RF_TRIG wieder zu einem Event zurueckverwandelt). Jetzt: Button_CO/CS.IND direkt auf CLIENT_0.REQ (ACTION=CALL_METHOD), ruft ID_CO_METHOD/ID_CS_METHOD auf der Sensor-Station direkt auf - kein Toggle/Publish/Subscribe/Flankenerkennung mehr noetig. ID_CO_WRITE/ID_CS_WRITE (BOOL-Publish-Adressen) durch ID_CO_CALL/ID_CS_CALL (CALL_METHOD-Adressen) ersetzt. Siehe OPC_UA_VERNETZUNG.md Punkt 14.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-17" Remarks="ZERO/SPAN-Referenzwert-Eingabefelder ergaenzt (uebersehen in v1.0) - ohne diese kann der Kalibrier-Referenzwert (z.B. '0 bar'/'250 bar' bei Druck) nicht mehr von der VT auf STG1 zur jetzt auf der Sensor-Station laufenden CALIBRATE weitergereicht werden. Zwei NumericValue_TO_AR2_OPC-Instanzen (VT-Eingabefeld + OPC-Publish, unveraendert aus dem bisherigen logiBUS_AI_Calibrate_Remote_IDA_OPC-Innenleben wiederverwendet).">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-17" Remarks="initial implementation - Franz: 'Analog-Kalibrierung LOKAL, Speichern LOKAL, nur der ENDWERT wird ueber OPC-UA verteilt'.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.5" Author="Franz Höpfinger" Date="2026-09-21" Remarks="Franz: 'Min Max ist beim Fuellband FEST 0-100 ENDE, das UT braucht keinen Schreibzugriff auf Min/Max' - ZERO/SPAN-Referenzwert-Eingabefelder (stObjZero/stObjSpan/ID_ZERO_READ/WRITE/ID_SPAN_READ/WRITE, SubApps ZeroRef/SpanRef) ersatzlos entfernt. Dieser Typ ist bisher nur fuer Fuellband-Winkel instanziiert, kein anderer Aufrufer betroffen.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.4" Author="Franz Höpfinger" Date="2026-09-21" Remarks="Neuer Plug CAL_OUT (AR) ergaenzt - durchgereicht von ValueDisplay.VALUE_OUT (AR_M2M_Subscribe_TO_Q_Publish_OPC v1.1) - erster echter Verwendungsfall: Fuellband-Winkel zieht von STG1-Remote-Kalibrierung auf STG2-lokale Kalibrierung um, Befuellautomatik/Fuellband_Oben (beide auf STG1) brauchen den kalibrierten Wert weiterhin als lokalen AR-Plug statt eigenem OPC-UA-Self-Subscribe (Doppel-Self-Subscribe-Vermeidung, wie zuvor ueber AnalogChannel_Fuellband_Winkel.CAL_OUT).">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.6" Author="Franz Höpfinger" Date="2026-09-22" Remarks="Franz: 'Button_IE CLIENT_0 kann eine Subapp werden, das ist ein generelles Muster zum Rufen einer Methode vom VT aus' - Button_CO/Button_CS + CLIENT_CO/CLIENT_CS (Button_IE.IND -&gt; CLIENT_0.REQ) durch je eine Instanz des neuen MyLib::sys::Button_CLIENT_Method_IE ersetzt (TriggerCO/TriggerCS). InputEvent ist dort Parameter statt hartcodiert.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.8" Author="Franz Höpfinger" Date="2026-09-23" Remarks="ZERO/SPAN-Referenzwert-Eingabefelder wieder ergaenzt (in v1.5 fuer Fuellband entfernt, da dort fest 0/100) - Druck (B20) braucht echte, vom Bediener editierbare Referenzwerte (Franz: 'hier brauchen wir Eingabe, weil man nicht immer einen Kalibrator dabei hat'), kein fester Wert wie bei Fuellband. Neue SubApps ZeroRef/SpanRef (NumericValue_TO_AR2_OPC, identisches Innenleben wie das damals entfernte v1.1/wie im alten logiBUS_AI_Calibrate_Remote_IDA_OPC) - VT-Eingabefeld + optionaler Web-Override hier auf STG1, ID_..._WRITE publiziert den Wert jetzt aber zur Sensor-Station statt ihn nur lokal zu verarbeiten. Optional: stObjZero/stObjSpan default ID_NULL, bestehender Aufrufer (Fuellband) bekommt fuer ID_ZERO/SPAN_READ/WRITE bewusst nie beschriebene Platzhalter-Adressen (wie schon bei FUELLBAND_WINKEL_MINREF_LOC_READ etc.) statt leerem WSTRING-Default, aus Vorsicht vor einer leeren OPC-UA-Adresse zur Laufzeit.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.7" Author="Franz Höpfinger" Date="2026-09-22" Remarks="Rohwert-Anzeige (RAW/MINRAW/MAXRAW) ergaenzt - fehlte bisher komplett auf STG1: die VT-Objekte existierten schon im Pool und die Sensor-Station (STG2) publiziert sie bereits (siehe logiBUS_AI_Calibrate_2P_IDA_OPC.SUB ID_RAW_WRITE/ID_ZERO_RAW_WRITE/ID_SPAN_RAW_WRITE), aber STG1 hat sie nie abonniert - FUELLBAND_WINKEL_RAW_M2M wurde bei der Umstellung auf lokale Kalibrierung (v1.0-Aera, RemoteSubStrings.gcf v1.19) faelschlich als 'nicht mehr gebraucht' entfernt, MINRAW/MAXRAW-Subscribe gab es nie (kam erst mit der Rohwert-Anzeige-Erweiterung auf der Sensor-Station danach dazu). Drei neue RawDisplay/MinRawDisplay/MaxRawDisplay-Instanzen (AR_M2M_Subscribe_TO_Q_Publish_OPC), analog ValueDisplay fuer CAL - reine Diagnose-Anzeige, kein AR-Plug-Output noetig (VALUE_OUT bleibt unverbunden), aber lokaler Re-Publish (ID_..._WRITE) fuer Web-Mirror/Dashboard-Konsistenz mit CAL.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+		<Import declaration="isobus::UT::io::Button::ButtonActivationCode::BT_PRESSED_LATCHED"/>
+		<Import declaration="logiBUS::utils::conversion::phys::NumericObjectPool_S"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="ID_CAL_M2M_READ" Type="WSTRING" Comment="Remote-Subscribe-Adresse des bereits kalibrierten physikalischen Werts (REAL) - Gegenstueck zu ID_CAL_WRITE auf der Sensor-Station (logiBUS_AI_Calibrate_IDA_OPC)"/>
+			<VarDeclaration Name="stObjCal" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object ID + Scale/Offset/Decimals CNumberVariable (kalibrierter Wert)" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 1)"/>
+			<VarDeclaration Name="ID_WRITE" Type="WSTRING" Comment="Lokale Re-Publish-Adresse (REAL, ACTION=PUBLISH) fuer weitere lokale Konsumenten auf dieser Station"/>
+			<VarDeclaration Name="u16ObjId_CO" Type="UINT" Comment="Object ID Taste &apos;CO&apos; (Kalibrier-Nullpunkt) - physisch hier auf der VT" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObjId_CS" Type="UINT" Comment="Object ID Taste &apos;CS&apos; (Kalibrier-Spanne) - physisch hier auf der VT" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="ID_CO_CALL" Type="WSTRING" Comment="Remote-Methodenadresse (ACTION=CALL_METHOD) fuer den CO-Trigger - ruft ID_CO_METHOD direkt auf der Sensor-Station auf (logiBUS_AI_Calibrate_IDA_OPC)"/>
+			<VarDeclaration Name="ID_CS_CALL" Type="WSTRING" Comment="Remote-Methodenadresse (ACTION=CALL_METHOD) fuer den CS-Trigger - ruft ID_CS_METHOD direkt auf der Sensor-Station auf (logiBUS_AI_Calibrate_IDA_OPC)"/>
+			<VarDeclaration Name="ID_RAW_M2M_READ" Type="WSTRING" Comment="Remote-Subscribe-Adresse des unkalibrierten Rohwerts (DWORD 0-4095, reine Diagnose-Anzeige) - Gegenstueck zu ID_RAW_WRITE auf der Sensor-Station"/>
+			<VarDeclaration Name="stObjRaw" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object ID + Scale/Offset/Decimals CNumberVariable (Rohwert-Anzeige)" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 0)"/>
+			<VarDeclaration Name="ID_RAW_WRITE" Type="WSTRING" Comment="Lokale Re-Publish-Adresse (DWORD, ACTION=PUBLISH) fuer weitere lokale Konsumenten auf dieser Station"/>
+			<VarDeclaration Name="ID_MINRAW_M2M_READ" Type="WSTRING" Comment="Remote-Subscribe-Adresse des Rohwerts am MIN-Kalibrierpunkt (reine Diagnose-Anzeige) - Gegenstueck zu ID_ZERO_RAW_WRITE auf der Sensor-Station"/>
+			<VarDeclaration Name="stObjMinRaw" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object ID + Scale/Offset/Decimals CNumberVariable (Rohwert-Anzeige am MIN-Kalibrierpunkt)" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 0)"/>
+			<VarDeclaration Name="ID_MINRAW_WRITE" Type="WSTRING" Comment="Lokale Re-Publish-Adresse (DWORD, ACTION=PUBLISH) fuer weitere lokale Konsumenten auf dieser Station"/>
+			<VarDeclaration Name="ID_MAXRAW_M2M_READ" Type="WSTRING" Comment="Remote-Subscribe-Adresse des Rohwerts am MAX-Kalibrierpunkt (reine Diagnose-Anzeige) - Gegenstueck zu ID_SPAN_RAW_WRITE auf der Sensor-Station"/>
+			<VarDeclaration Name="stObjMaxRaw" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object ID + Scale/Offset/Decimals CNumberVariable (Rohwert-Anzeige am MAX-Kalibrierpunkt)" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 0)"/>
+			<VarDeclaration Name="ID_MAXRAW_WRITE" Type="WSTRING" Comment="Lokale Re-Publish-Adresse (DWORD, ACTION=PUBLISH) fuer weitere lokale Konsumenten auf dieser Station"/>
+			<VarDeclaration Name="stObjZero" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object ID + Scale/Offset/Decimals CNumberVariable (ZERO-Referenzwert, VT-Eingabefeld) - ID_NULL lassen, wenn der Sensor feste Referenzwerte hat (z.B. Fuellband-Winkel)" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 1)"/>
+			<VarDeclaration Name="stObjSpan" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S" Comment="Object ID + Scale/Offset/Decimals CNumberVariable (SPAN-Referenzwert, VT-Eingabefeld) - ID_NULL lassen, wenn der Sensor feste Referenzwerte hat" InitialValue="(u16ObjId := ID_NULL, r32Scale := 1.0, i32Offset := 0, u8Decimals := 1)"/>
+			<VarDeclaration Name="ID_ZERO_READ" Type="WSTRING" Comment="Remote-Subscribe-Adresse ZERO-Referenzwert (REAL, ACTION=SUBSCRIBE) - optionaler Web-Override des VT-Eingabefelds, letzter Schreiber gewinnt"/>
+			<VarDeclaration Name="ID_ZERO_WRITE" Type="WSTRING" Comment="Publish-Adresse ZERO-Referenzwert (REAL, ACTION=PUBLISH) - wird von der Sensor-Station remote abonniert (Gegenstueck zu deren ID_ZERO_READ)"/>
+			<VarDeclaration Name="ID_SPAN_READ" Type="WSTRING" Comment="Remote-Subscribe-Adresse SPAN-Referenzwert (REAL, ACTION=SUBSCRIBE) - optionaler Web-Override des VT-Eingabefelds, letzter Schreiber gewinnt"/>
+			<VarDeclaration Name="ID_SPAN_WRITE" Type="WSTRING" Comment="Publish-Adresse SPAN-Referenzwert (REAL, ACTION=PUBLISH) - wird von der Sensor-Station remote abonniert (Gegenstueck zu deren ID_SPAN_READ)"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="CAL_OUT" Type="adapter::types::unidirectional::AR" Comment="Nur-Lese-Spiegel des kalibrierten Werts (= ValueDisplay.VALUE_OUT) fuer weitere lokale Konsumenten auf dieser Station, statt eigenem OPC-UA-Self-Subscribe"/>
+		</Plugs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<SubApp Name="ValueDisplay" Type="MyLib::sys::AR_M2M_Subscribe_TO_Q_Publish_OPC" x="700" y="-600">
+		</SubApp>
+		<SubApp Name="TriggerCO" Type="MyLib::sys::Button_CLIENT_Method_IE" x="800" y="300">
+			<Parameter Name="InputEvent" Value="BT_PRESSED_LATCHED"/>
+		</SubApp>
+		<SubApp Name="TriggerCS" Type="MyLib::sys::Button_CLIENT_Method_IE" x="900" y="1100">
+			<Parameter Name="InputEvent" Value="BT_PRESSED_LATCHED"/>
+		</SubApp>
+		<SubApp Name="RawDisplay" Type="MyLib::sys::AR_M2M_Subscribe_TO_Q_Publish_OPC" x="900" y="1900">
+		</SubApp>
+		<SubApp Name="MinRawDisplay" Type="MyLib::sys::AR_M2M_Subscribe_TO_Q_Publish_OPC" x="900" y="2800">
+		</SubApp>
+		<SubApp Name="MaxRawDisplay" Type="MyLib::sys::AR_M2M_Subscribe_TO_Q_Publish_OPC" x="900" y="4000">
+		</SubApp>
+		<SubApp Name="ZeroRef" Type="MyLib::sys::NumericValue_TO_AR2_OPC" x="900" y="4900">
+		</SubApp>
+		<SubApp Name="SpanRef" Type="MyLib::sys::NumericValue_TO_AR2_OPC" x="900" y="5900">
+		</SubApp>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_8" x="4600" y="1100">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="ValueDisplay.INIT" dx1="1080"/>
+			<Connection Source="ValueDisplay.INITO" Destination="TriggerCO.INIT" dx1="80" dx2="80" dy="346.67"/>
+			<Connection Source="TriggerCO.INITO" Destination="TriggerCS.INIT" dx1="80" dx2="80" dy="300"/>
+			<Connection Source="TriggerCS.INITO" Destination="RawDisplay.INIT" dx1="80" dx2="80" dy="346.67"/>
+			<Connection Source="RawDisplay.INITO" Destination="MinRawDisplay.INIT" dx1="80" dx2="80" dy="346.67"/>
+			<Connection Source="MinRawDisplay.INITO" Destination="MaxRawDisplay.INIT" dx1="80" dx2="80" dy="346.67"/>
+			<Connection Source="MaxRawDisplay.INITO" Destination="ZeroRef.INIT" dx1="80" dx2="80" dy="346.67"/>
+			<Connection Source="ZeroRef.INITO" Destination="SpanRef.INIT" dx1="80" dx2="80" dy="500"/>
+			<Connection Source="SpanRef.INITO" Destination="INITO" dx1="3093.33"/>
+			<Connection Source="SpanRef.INITO" Destination="AND_QO.REQ" dx1="1320"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="ID_CAL_M2M_READ" Destination="ValueDisplay.ID_M2M_READ" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="stObjCal" Destination="ValueDisplay.stObj" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_WRITE" Destination="ValueDisplay.ID_WRITE" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId_CO" Destination="TriggerCO.u16ObjId" dx1="973.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId_CS" Destination="TriggerCS.u16ObjId" dx1="973.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_CO_CALL" Destination="TriggerCO.ID_CALL" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_CS_CALL" Destination="TriggerCS.ID_CALL" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_RAW_M2M_READ" Destination="RawDisplay.ID_M2M_READ" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="stObjRaw" Destination="RawDisplay.stObj" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_RAW_WRITE" Destination="RawDisplay.ID_WRITE" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_MINRAW_M2M_READ" Destination="MinRawDisplay.ID_M2M_READ" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="stObjMinRaw" Destination="MinRawDisplay.stObj" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_MINRAW_WRITE" Destination="MinRawDisplay.ID_WRITE" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_MAXRAW_M2M_READ" Destination="MaxRawDisplay.ID_M2M_READ" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="stObjMaxRaw" Destination="MaxRawDisplay.stObj" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_MAXRAW_WRITE" Destination="MaxRawDisplay.ID_WRITE" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="stObjZero" Destination="ZeroRef.stObj" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_ZERO_READ" Destination="ZeroRef.ID_READ" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_ZERO_WRITE" Destination="ZeroRef.ID_WRITE" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="stObjSpan" Destination="SpanRef.stObj" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_SPAN_READ" Destination="SpanRef.ID_READ" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_SPAN_WRITE" Destination="SpanRef.ID_WRITE" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="ValueDisplay.QI" dx1="1080"/>
+			<Connection Source="QI" Destination="TriggerCO.QI" dx1="1280"/>
+			<Connection Source="QI" Destination="TriggerCS.QI" dx1="1326.67"/>
+			<Connection Source="QI" Destination="RawDisplay.QI" dx1="1326.67"/>
+			<Connection Source="QI" Destination="MinRawDisplay.QI" dx1="880"/>
+			<Connection Source="QI" Destination="MaxRawDisplay.QI" dx1="880"/>
+			<Connection Source="QI" Destination="ZeroRef.QI" dx1="880"/>
+			<Connection Source="QI" Destination="SpanRef.QI" dx1="880"/>
+			<Connection Source="ValueDisplay.QO" Destination="AND_QO.IN1" dx1="1086.67"/>
+			<Connection Source="TriggerCO.QO" Destination="AND_QO.IN2" dx1="1120"/>
+			<Connection Source="TriggerCS.QO" Destination="AND_QO.IN3" dx1="1120"/>
+			<Connection Source="RawDisplay.QO" Destination="AND_QO.IN4" dx1="1086.67"/>
+			<Connection Source="MinRawDisplay.QO" Destination="AND_QO.IN5" dx1="1086.67"/>
+			<Connection Source="MaxRawDisplay.QO" Destination="AND_QO.IN6" dx1="1086.67"/>
+			<Connection Source="ZeroRef.QO" Destination="AND_QO.IN7" dx1="1320"/>
+			<Connection Source="SpanRef.QO" Destination="AND_QO.IN8" dx1="1320"/>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="2113.33"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="ValueDisplay.VALUE_OUT" Destination="CAL_OUT" dx1="300"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Function Name="TIME_TO_REAL" Comment="SPEZIAL-Hilfsfunktion dieses Projekts (NICHT Teil der echten OSCAT_basic-Konvertierungsbibliothek, KEIN Standard-IEC-61131-3-Block) - liefert TM als REAL in Millisekunden (UDINT_TO_REAL(TIME_IN_MS_TO_UDINT(TM))). Trotz generischem Namen beim Suchen/Portieren nicht mit einem echten Standardblock verwechseln.">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Version="1.0" Author="Franz Höpfinger" Date="2025-12-21" Remarks="Eigene Hilfsfunktion, nicht aus OSCAT_basic portiert - liefert TIME als REAL-Millisekunden. Franz (2026-09-17, nach Verwechslungsgefahr bei der FT_PT1-Portierung): 'TIME_TO_REAL gibt es nicht... aaaaaaaaaaaaaah SPEZIAL' - dieser Kommentar/Remark soll genau diese Verwechslung kuenftig verhindern.">
+	</VersionInfo>
+	<CompilerInfo packageName="OSCAT::Basic::POUs::conversion">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event">
+				<With Var="TM"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event">
+				<With Var=""/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="TM" Type="TIME"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="" Type="REAL"/>
+		</OutputVars>
+	</InterfaceList>
+	<FunctionBody>
+		<ST><![CDATA[PACKAGE OSCAT::Basic::POUs::conversion;
+
+FUNCTION TIME_TO_REAL : REAL
+VAR_INPUT
+	TM : TIME;
+END_VAR
+
+TIME_TO_REAL := UDINT_TO_REAL(TIME_IN_MS_TO_UDINT(TM));
+
+END_FUNCTION
+
+]]></ST>
+	</FunctionBody>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</Function>

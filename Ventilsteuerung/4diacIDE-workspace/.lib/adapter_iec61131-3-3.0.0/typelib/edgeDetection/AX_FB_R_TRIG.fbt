@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="AX_FB_R_TRIG" Comment="Detect rising edge with AX Adapter">
+	<Identification Standard="61499-1" Description="Copyright (c) 2023 Martin Erich Jobst, HR Agrartechnik GmbH&#10; &#10;This program and the accompanying materials are made&#10;available under the terms of the Eclipse Public License 2.0&#10;which is available at https://www.eclipse.org/legal/epl-2.0/&#10;&#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Version="3.0" Author="Franz Höpfinger" Date="2025-02-01" Remarks="AX version">
+	</VersionInfo>
+	<VersionInfo Version="1.0" Author="Martin Jobst" Date="2023-04-28" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::iec61131::edgeDetection">
+	</CompilerInfo>
+	<InterfaceList>
+		<Plugs>
+			<AdapterDeclaration Name="Q" Type="adapter::types::unidirectional::AX" Comment="Output"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="CLK" Type="adapter::types::unidirectional::AX" Comment="Clock"/>
+		</Sockets>
+	</InterfaceList>
+	<BasicFB>
+		<InternalVars>
+			<VarDeclaration Name="MEM" Type="BOOL"/>
+		</InternalVars>
+		<ECC>
+			<ECState Name="REQ" x="0" y="0">
+				<ECAction Algorithm="REQ" Output="Q.E1"/>
+			</ECState>
+			<ECTransition Source="REQ" Destination="REQ" Condition="CLK.E1" x="240" y="420"/>
+		</ECC>
+		<Algorithm Name="REQ">
+			<ST><![CDATA[
+Q.D1 := CLK.D1 AND NOT MEM;
+MEM := CLK.D1;
+]]></ST>
+		</Algorithm>
+	</BasicFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

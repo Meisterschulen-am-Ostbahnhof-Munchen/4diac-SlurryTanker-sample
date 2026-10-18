@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="sequence_ET_04_04_AX" Comment="Sequence with 8 Outputs, Transition by EVENT or TIME, with AX Adapter">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 HR Agrartechnik GmbH &#10; &#10;This program and the accompanying materials are made &#10;available under the terms of the Eclipse Public License 2.0 &#10;which is available at https://www.eclipse.org/legal/epl-2.0/ &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Moritz Ortmeier" Date="2026-01-07">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::utils::sequence::combi">
+		<Import declaration="logiBUS::utils::sequence::const::sequence"/>
+		<Import declaration="logiBUS::utils::sequence::const::sequence::NO_TIME"/>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="EI1" Type="Event">
+				<With Var="DT_S1_S2"/>
+				<With Var="DT_S2_S3"/>
+				<With Var="DT_S3_S4"/>
+				<With Var="DT_S5_S6"/>
+				<With Var="DT_S6_S7"/>
+				<With Var="DT_S7_S8"/>
+				<With Var="DT_S8_START"/>
+			</Event>
+			<Event Name="START_S1" Type="Event" Comment="jump from START to State_01">
+				<With Var="DT_S1_S2"/>
+				<With Var="DT_S2_S3"/>
+				<With Var="DT_S3_S4"/>
+				<With Var="DT_S5_S6"/>
+				<With Var="DT_S6_S7"/>
+				<With Var="DT_S7_S8"/>
+				<With Var="DT_S8_START"/>
+			</Event>
+			<Event Name="S4_S5" Type="Event" Comment="jump from State_04 to State_05">
+			</Event>
+			<Event Name="EI_RESET" Type="Event" Comment="Reset from any State to START">
+			</Event>
+		</EventInputs>
+		<InputVars>
+			<VarDeclaration Name="DT_S1_S2" Type="TIME" Comment="State_01 to State_02 timed, set to NO_TIME to disable" InitialValue="NO_TIME"/>
+			<VarDeclaration Name="DT_S2_S3" Type="TIME" Comment="State_02 to State_03 timed, set to NO_TIME to disable" InitialValue="NO_TIME"/>
+			<VarDeclaration Name="DT_S3_S4" Type="TIME" Comment="State_03 to State_04 timed, set to NO_TIME to disable" InitialValue="NO_TIME"/>
+			<VarDeclaration Name="DT_S5_S6" Type="TIME" Comment="State_05 to State_06 timed, set to NO_TIME to disable" InitialValue="NO_TIME"/>
+			<VarDeclaration Name="DT_S6_S7" Type="TIME" Comment="State_06 to State_07 timed, set to NO_TIME to disable" InitialValue="NO_TIME"/>
+			<VarDeclaration Name="DT_S7_S8" Type="TIME" Comment="State_07 to State_08 timed, set to NO_TIME to disable" InitialValue="NO_TIME"/>
+			<VarDeclaration Name="DT_S8_START" Type="TIME" Comment="State_08 to START timed, set to NO_TIME to disable" InitialValue="NO_TIME"/>
+		</InputVars>
+		<Plugs>
+			<AdapterDeclaration Name="STATE_NR" Type="adapter::types::unidirectional::AS" Comment="State Number Adapter"/>
+<AdapterDeclaration Name="DO_S1" Type="adapter::types::unidirectional::AX" Comment="Output if State_01 is active"/>
+			<AdapterDeclaration Name="DO_S2" Type="adapter::types::unidirectional::AX" Comment="Output if State_02 is active"/>
+			<AdapterDeclaration Name="DO_S3" Type="adapter::types::unidirectional::AX" Comment="Output if State_03 is active"/>
+			<AdapterDeclaration Name="DO_S4" Type="adapter::types::unidirectional::AX" Comment="Output if State_04 is active "/>
+			<AdapterDeclaration Name="DO_S5" Type="adapter::types::unidirectional::AX" Comment="Output if State_05 is active "/>
+			<AdapterDeclaration Name="DO_S6" Type="adapter::types::unidirectional::AX" Comment="Output if State_06 is active "/>
+			<AdapterDeclaration Name="DO_S7" Type="adapter::types::unidirectional::AX" Comment="Output if State_07 is active "/>
+			<AdapterDeclaration Name="DO_S8" Type="adapter::types::unidirectional::AX" Comment="Output if State_08 is active "/>
+			<AdapterDeclaration Name="timeOut" Type="iec61499::events::ATimeOut" Comment="timeOut Adapter"/>
+		</Plugs>
+	</InterfaceList>
+	<BasicFB>
+		<ECC>
+			<ECState Name="xSTART" Comment="Initial State" x="-800" y="800">
+			</ECState>
+			<ECState Name="sState_01" x="2400" y="1600">
+				<ECAction Algorithm="State_01_C" Output="STATE_NR.E1"/>
+				<ECAction Algorithm="State_01_E" Output="DO_S1.E1"/>
+				<ECAction Output="timeOut.START"/>
+			</ECState>
+			<ECState Name="sState_02" x="2400" y="2400">
+				<ECAction Algorithm="State_01_X" Output="DO_S1.E1"/>
+				<ECAction Algorithm="State_02_C" Output="STATE_NR.E1"/>
+				<ECAction Algorithm="State_02_E" Output="DO_S2.E1"/>
+				<ECAction Output="timeOut.START"/>
+			</ECState>
+			<ECState Name="sState_03" x="2400" y="3200">
+				<ECAction Algorithm="State_02_X" Output="DO_S2.E1"/>
+				<ECAction Algorithm="State_03_C" Output="STATE_NR.E1"/>
+				<ECAction Algorithm="State_03_E" Output="DO_S3.E1"/>
+				<ECAction Output="timeOut.START"/>
+			</ECState>
+			<ECState Name="sState_04" x="2400" y="4000">
+				<ECAction Algorithm="State_03_X" Output="DO_S3.E1"/>
+				<ECAction Algorithm="State_04_C" Output="STATE_NR.E1"/>
+				<ECAction Algorithm="State_04_E" Output="DO_S4.E1"/>
+			</ECState>
+			<ECState Name="sState_05" x="2400" y="4800">
+				<ECAction Algorithm="State_04_X" Output="DO_S4.E1"/>
+				<ECAction Algorithm="State_05_C" Output="STATE_NR.E1"/>
+				<ECAction Algorithm="State_05_E" Output="DO_S5.E1"/>
+				<ECAction Output="timeOut.START"/>
+			</ECState>
+			<ECState Name="sState_06" x="2400" y="5600">
+				<ECAction Algorithm="State_05_X" Output="DO_S5.E1"/>
+				<ECAction Algorithm="State_06_C" Output="STATE_NR.E1"/>
+				<ECAction Algorithm="State_06_E" Output="DO_S6.E1"/>
+				<ECAction Output="timeOut.START"/>
+			</ECState>
+			<ECState Name="sState_07" x="2400" y="6400">
+				<ECAction Algorithm="State_06_X" Output="DO_S6.E1"/>
+				<ECAction Algorithm="State_07_C" Output="STATE_NR.E1"/>
+				<ECAction Algorithm="State_07_E" Output="DO_S7.E1"/>
+				<ECAction Output="timeOut.START"/>
+			</ECState>
+			<ECState Name="sState_08" x="2400" y="7200">
+				<ECAction Algorithm="State_07_X" Output="DO_S7.E1"/>
+				<ECAction Algorithm="State_08_C" Output="STATE_NR.E1"/>
+				<ECAction Algorithm="State_08_E" Output="DO_S8.E1"/>
+				<ECAction Output="timeOut.START"/>
+			</ECState>
+			<ECState Name="sState_00" x="2400" y="8000">
+				<ECAction Algorithm="State_08_X" Output="DO_S8.E1"/>
+				<ECAction Algorithm="State_00_C" Output="STATE_NR.E1"/>
+				<ECAction/>
+				<ECAction/>
+			</ECState>
+			<ECState Name="sRESET" x="-2400" y="8000">
+				<ECAction Output="timeOut.STOP"/>
+				<ECAction Algorithm="State_01_X" Output="DO_S1.E1"/>
+				<ECAction Algorithm="State_02_X" Output="DO_S2.E1"/>
+				<ECAction Algorithm="State_03_X" Output="DO_S3.E1"/>
+				<ECAction Algorithm="State_04_X" Output="DO_S4.E1"/>
+				<ECAction Algorithm="State_05_X" Output="DO_S5.E1"/>
+				<ECAction Algorithm="State_06_X" Output="DO_S6.E1"/>
+				<ECAction Algorithm="State_07_X" Output="DO_S7.E1"/>
+				<ECAction Algorithm="State_08_X" Output="DO_S8.E1"/>
+				<ECAction/>
+			</ECState>
+			<ECState Name="sState_05_RESET" x="5440" y="3760">
+				<ECAction Output="timeOut.STOP"/>
+				<ECAction Algorithm="State_01_X" Output="DO_S1.E1"/>
+				<ECAction Algorithm="State_02_X" Output="DO_S2.E1"/>
+				<ECAction Algorithm="State_03_X" Output="DO_S3.E1"/>
+				<ECAction/>
+			</ECState>
+			<ECState Name="sState_00_RESET" x="5200" y="8000">
+				<ECAction Output="timeOut.STOP"/>
+				<ECAction Algorithm="State_04_X" Output="DO_S4.E1"/>
+				<ECAction Algorithm="State_05_X" Output="DO_S5.E1"/>
+				<ECAction Algorithm="State_06_X" Output="DO_S6.E1"/>
+				<ECAction Algorithm="State_07_X" Output="DO_S7.E1"/>
+				<ECAction Algorithm="State_08_X" Output="DO_S8.E1"/>
+				<ECAction/>
+			</ECState>
+			<ECTransition Source="sState_01" Destination="sState_02" Condition="timeOut.TimeOut" x="2620" y="1993.33"/>
+			<ECTransition Source="sState_02" Destination="sState_03" Condition="timeOut.TimeOut" x="2653.33" y="2806.67"/>
+			<ECTransition Source="sState_03" Destination="sState_04" Condition="timeOut.TimeOut" x="2653.33" y="3606.67"/>
+			<ECTransition Source="sState_00" Destination="sState_01" Condition="START_S1" x="606.67" y="4866.67"/>
+			<ECTransition Source="xSTART" Destination="sState_01" Condition="START_S1" x="593.33" y="920"/>
+			<ECTransition Source="sState_01" Destination="sRESET" Condition="EI_RESET" x="-1500" y="2160"/>
+			<ECTransition Source="sState_02" Destination="sRESET" Condition="EI_RESET" x="-1186.67" y="2680"/>
+			<ECTransition Source="sState_03" Destination="sRESET" Condition="EI_RESET" x="-986.67" y="3493.33"/>
+			<ECTransition Source="sState_04" Destination="sState_05" Condition="S4_S5" x="2653.33" y="4446.67"/>
+			<ECTransition Source="sState_04" Destination="sRESET" Condition="EI_RESET" x="-1046.67" y="4740"/>
+			<ECTransition Source="sState_05" Destination="sState_06" Condition="timeOut.TimeOut" x="2653.33" y="5240"/>
+			<ECTransition Source="sState_05" Destination="sRESET" Condition="EI_RESET" x="-946.67" y="5286.67"/>
+			<ECTransition Source="sRESET" Destination="sState_00" Condition="1" x="-473.33" y="7646.67"/>
+			<ECTransition Source="sState_07" Destination="sState_08" Condition="timeOut.TimeOut" x="2680" y="6793.33"/>
+			<ECTransition Source="sState_07" Destination="sRESET" Condition="EI_RESET" x="-966.67" y="6500"/>
+			<ECTransition Source="sState_06" Destination="sState_07" Condition="timeOut.TimeOut" x="2620" y="6000"/>
+			<ECTransition Source="sState_08" Destination="sState_00" Condition="timeOut.TimeOut" x="2660" y="7626.67"/>
+			<ECTransition Source="sState_08" Destination="sRESET" Condition="EI_RESET" x="-780" y="7253.33"/>
+			<ECTransition Source="sState_06" Destination="sRESET" Condition="EI_RESET" x="-966.67" y="5853.33"/>
+			<ECTransition Source="sState_00_RESET" Destination="sState_00" Condition="1" x="3686.67" y="7906.67"/>
+			<ECTransition Source="sState_01" Destination="sState_05_RESET" Condition="START_S1" x="5666.67" y="2960"/>
+			<ECTransition Source="sState_02" Destination="sState_05_RESET" Condition="START_S1" x="5300" y="3073.33"/>
+			<ECTransition Source="sState_03" Destination="sState_05_RESET" Condition="START_S1" x="5086.67" y="3226.67"/>
+			<ECTransition Source="sState_08" Destination="sState_00_RESET" Condition="START_S1" x="5206.67" y="6993.33"/>
+			<ECTransition Source="sState_07" Destination="sState_00_RESET" Condition="START_S1" x="5233.33" y="6586.67"/>
+			<ECTransition Source="sState_06" Destination="sState_00_RESET" Condition="START_S1" x="5193.33" y="6200"/>
+			<ECTransition Source="sState_05" Destination="sState_00_RESET" Condition="START_S1" x="5266.67" y="5780"/>
+			<ECTransition Source="sState_05_RESET" Destination="sState_04" Condition="1" x="4120" y="3953.33"/>
+			<ECTransition Source="xSTART" Destination="xSTART" Condition="EI1" x="-566.67" y="1186.67"/>
+		</ECC>
+		<Algorithm Name="State_00_C">
+			<ST><![CDATA[ // State_00 Confirmation Step
+STATE_NR.D1 := sequence::State_00;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="State_01_C">
+			<ST><![CDATA[ // State_01 Confirmation Step
+STATE_NR.D1 := sequence::State_01;
+timeOut.DT := DT_S1_S2;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="State_02_C">
+			<ST><![CDATA[ // State_02 Confirmation Step
+STATE_NR.D1 := sequence::State_02;
+timeOut.DT := DT_S2_S3;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="State_03_C">
+			<ST><![CDATA[ // State_03 Confirmation Step
+STATE_NR.D1 := sequence::State_03;
+timeOut.DT := DT_S3_S4;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="State_04_C">
+			<ST><![CDATA[ // State_04 Confirmation Step
+STATE_NR.D1 := sequence::State_04;
+// no.
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="State_05_C">
+			<ST><![CDATA[ // State_05 Confirmation Step
+STATE_NR.D1 := sequence::State_05;
+timeOut.DT := DT_S5_S6;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="State_06_C">
+			<ST><![CDATA[ // State_06 Confirmation Step
+STATE_NR.D1 := sequence::State_06;
+timeOut.DT := DT_S6_S7;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="State_07_C">
+			<ST><![CDATA[ // State_07 Confirmation Step
+STATE_NR.D1 := sequence::State_07;
+timeOut.DT := DT_S7_S8;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="State_08_C">
+			<ST><![CDATA[ // State_08 Confirmation Step
+STATE_NR.D1 := sequence::State_08;
+timeOut.DT := DT_S8_START;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="State_01_E">
+			<ST><![CDATA[ // State_01 Entry Step
+DO_S1.D1 := BOOL#TRUE; // ON
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="State_01_X">
+			<ST><![CDATA[ // State_01 Exit Step
+DO_S1.D1 := BOOL#FALSE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="State_02_E">
+			<ST><![CDATA[ // State_02 Entry Step
+DO_S2.D1 := BOOL#TRUE; // ON
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="State_02_X">
+			<ST><![CDATA[ // State_02 Exit Step
+DO_S2.D1 := BOOL#FALSE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="State_03_E">
+			<ST><![CDATA[ // State_03 Entry Step
+DO_S3.D1 := BOOL#TRUE; // ON
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="State_03_X">
+			<ST><![CDATA[ // State_03 Exit Step
+DO_S3.D1 := BOOL#FALSE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="State_04_E">
+			<ST><![CDATA[ // State_04 Entry Step
+DO_S4.D1 := BOOL#TRUE; // ON
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="State_04_X">
+			<ST><![CDATA[ // State_04 Exit Step
+DO_S4.D1 := BOOL#FALSE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="State_05_E">
+			<ST><![CDATA[ // State_05 Entry Step
+DO_S5.D1 := BOOL#TRUE; // ON
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="State_05_X">
+			<ST><![CDATA[ // State_05 Exit Step
+DO_S5.D1 := BOOL#FALSE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="State_06_E">
+			<ST><![CDATA[ // State_06 Entry Step
+DO_S6.D1 := BOOL#TRUE; // ON
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="State_06_X">
+			<ST><![CDATA[ // State_06 Exit Step
+DO_S6.D1 := BOOL#FALSE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="State_07_E">
+			<ST><![CDATA[ // State_07 Entry Step
+DO_S7.D1 := BOOL#TRUE; // ON
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="State_07_X">
+			<ST><![CDATA[ // State_07 Exit Step
+DO_S7.D1 := BOOL#FALSE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="State_08_E">
+			<ST><![CDATA[ // State_08 Entry Step
+DO_S8.D1 := BOOL#TRUE; // ON
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="State_08_X">
+			<ST><![CDATA[ // State_08 Exit Step
+DO_S8.D1 := BOOL#FALSE;
+]]></ST>
+		</Algorithm>
+	</BasicFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

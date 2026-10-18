@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="FT_PIWL" Comment="PI Controller with Anti-Windup">
+	<Identification Standard="61499-1" Description="version 1.3&#9;11. mar. 2009&#10;programmer &#9;hugo&#10;tested by&#9;&#9;oscat&#10;&#10;FT_PIWL is a PI controller.&#10;The PID controller works according to the fomula Y = IN *(KP+ KI * INTEG(e) ).&#10;a rst will reset the integrator to 0&#10;lim_h and Lim_l set the possible output range of the controller.&#10;the output flag lim will signal that the output limits are active.&#10;the integrator ist equipped with anti wind-up circuitry which limits trhe total output ranke to lim_l and lim_h&#10;&#10;default values for KP = 1, KI = 1, ILIM_L = -1E37, iLIM_H = +1E38.">
+	</Identification>
+	<VersionInfo Version="1.0" Author="Coding-Assistent" Date="2025-12-19" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="OSCAT::Basic::POUs::Engineering::Control">
+		<Import declaration="OSCAT::Basic::POUs::Engineering::measurements::T_PLC_US"/>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="EINIT" Type="EInit" Comment="Init Request">
+			</Event>
+			<Event Name="REQ" Type="Event" Comment="Normal Execution Request">
+				<With Var="IN"/>
+				<With Var="KP"/>
+				<With Var="KI"/>
+				<With Var="LIM_L"/>
+				<With Var="LIM_H"/>
+			</Event>
+			<Event Name="RST" Type="Event" Comment="Reset Integrator">
+				<With Var="IN"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Init Confirmation">
+				<With Var="Y"/>
+				<With Var="LIM"/>
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Execution Confirmation">
+				<With Var="Y"/>
+				<With Var="LIM"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="IN" Type="REAL" Comment="Process Variable / Error Input"/>
+			<VarDeclaration Name="KP" Type="REAL" Comment="Proportional Gain" InitialValue="1.0"/>
+			<VarDeclaration Name="KI" Type="REAL" Comment="Integral Gain" InitialValue="1.0"/>
+			<VarDeclaration Name="LIM_L" Type="REAL" Comment="Lower Limit" InitialValue="-1.0E38"/>
+			<VarDeclaration Name="LIM_H" Type="REAL" Comment="Upper Limit" InitialValue="1.0E38"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="Y" Type="REAL" Comment="Controller Output"/>
+			<VarDeclaration Name="LIM" Type="BOOL" Comment="Limit Reached Flag"/>
+		</OutputVars>
+	</InterfaceList>
+	<SimpleFB>
+		<InternalVars>
+			<VarDeclaration Name="init" Type="BOOL" Comment="Initialization Flag"/>
+			<VarDeclaration Name="tx" Type="UDINT" Comment="Current Time"/>
+			<VarDeclaration Name="tc" Type="REAL" Comment="Cycle Time (us)"/>
+			<VarDeclaration Name="t_last" Type="UDINT" Comment="Last Cycle Time"/>
+			<VarDeclaration Name="in_last" Type="REAL" Comment="Last Input Value"/>
+			<VarDeclaration Name="i" Type="REAL" Comment="Integrator Value"/>
+			<VarDeclaration Name="p" Type="REAL" Comment="Proportional Value"/>
+		</InternalVars>
+		<ECState Name="EINIT">
+			<ECAction Algorithm="EINIT" Output="INITO"/>
+		</ECState>
+		<ECState Name="REQ">
+			<ECAction Algorithm="REQ" Output="CNF"/>
+		</ECState>
+		<ECState Name="RST">
+			<ECAction Algorithm="RST" Output="CNF"/>
+		</ECState>
+		<Algorithm Name="EINIT">
+			<ST><![CDATA[
+(* Reset internal states *)
+init := FALSE;
+in_last := IN;
+t_last := T_PLC_US();
+i := 0.0;
+tc := 0.0;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="RST">
+			<ST><![CDATA[
+this.EINIT();
+init := TRUE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="REQ">
+			<ST><![CDATA[
+(* initialize at power_up *)
+IF NOT init THEN
+	this.RST();
+ELSE
+	(* read last cycle time in Microseconds *)
+	tx := T_PLC_US();
+	tc := UDINT_TO_REAL(tx - t_last);
+	t_last := tx;
+
+		(* calculate proportional part *)
+	p := KP * IN;
+
+		(* run integrator *)
+	i := (IN + in_last) * 5.0E-7 * KI * tc + i;
+	in_last := IN;
+
+		(* calculate output Y *)
+	Y := p + i;
+
+		(* check output for limits *)
+	IF Y >= LIM_H THEN
+		Y := LIM_H;
+		IF KI <> 0.0 THEN
+			i := LIM_H - p;
+		ELSE
+			i := 0.0;
+		END_IF;
+		LIM := TRUE;
+	ELSIF Y <= LIM_L THEN
+		Y := LIM_L;
+		IF KI <> 0.0 THEN
+			i := LIM_L - p;
+		ELSE
+			i := 0.0;
+		END_IF;
+		LIM := TRUE;
+	ELSE
+		LIM := FALSE;
+	END_IF;
+END_IF;
+]]></ST>
+		</Algorithm>
+	</SimpleFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

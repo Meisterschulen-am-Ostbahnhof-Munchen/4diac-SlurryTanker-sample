@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataType Name="ISONETEVENT_T" Comment="typedef of the network event structure">
+	<Identification>
+	</Identification>
+	<VersionInfo Version="1.0" Author="Franz Höpfinger" Date="2025-10-18" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::pgn">
+	</CompilerInfo>
+	<StructuredType>
+		<VarDeclaration Name="eNetEvent" Type="USINT" Comment="Which event occurs in the network member administration?" InitialValue="ISO_NETEVENT_e::Isonet_Last"/>
+		<VarDeclaration Name="eMemberRefer" Type="SINT" Comment="Which member concerned: Owner of this callback, another internal or external CF" InitialValue="ISOUSERHOME_e::notdef"/>
+		<VarDeclaration Name="s16OwnCfHnd" Type="INT" Comment="CF handle of the entry for which the callback is triggered"/>
+		<VarDeclaration Name="s16Handle" Type="INT" Comment="Network member handle of the CF / user (event source CF handle)"/>
+		<VarDeclaration Name="u8SAMember" Type="USINT" Comment="Current source address (SA) of the network member"/>
+		<VarDeclaration Name="cfName" Type="isobus::pgn::CF_NAME_T" Comment="ISOBUS name of the control function"/>
+	</StructuredType>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</DataType>

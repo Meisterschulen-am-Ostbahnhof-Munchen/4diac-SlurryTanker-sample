@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Manifest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="platform:/resource/org.eclipse.fordiac.ide.library.model/model/library.xsd" Scope="Library">
+  <Dependencies>
+    <Required SymbolicName="core" Version="3.0.0"/>
+  </Dependencies>
+  <Product Comment="OSCAT Building (bisher nur Platzhalter, keine echte Nutzung)" Name="OSCAT_Building" SymbolicName="OSCAT_Building">
+    <VersionInfo Author="Franz Höpfinger" Date="2026-10-09" Version="0.1.0"/>
+  </Product>
+</Manifest>

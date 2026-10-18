@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="ASR_SWITCH" Comment="Switching (demultiplexing) ASR events (SET/RESET) based on boolean input G">
+	<Identification Standard="61499-1 Annex A" Description="Copyright (c) 2017 fortiss GmbH&#10; &#10;This program and the accompanying materials are made&#10;available under the terms of the Eclipse Public License 2.0&#10;which is available at https://www.eclipse.org/legal/epl-2.0/&#10;&#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Version="3.0" Author="Patrick Aigner" Date="2025-04-14" Remarks="changed package">
+	</VersionInfo>
+	<VersionInfo Organization="fortiss GmbH" Version="1.0" Author="Alois Zoitl" Date="2017-09-21" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::events::unidirectional">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="EIG" Type="Event" Comment="set G">
+				<With Var="G"/>
+			</Event>
+		</EventInputs>
+		<InputVars>
+			<VarDeclaration Name="G" Type="BOOL" Comment="Switch EI to EO0 when G=0, to EO1 when G=1 "/>
+		</InputVars>
+		<Plugs>
+			<AdapterDeclaration Name="EO0" Type="adapter::types::unidirectional::ASR" Comment="Output, switched from EI when G=0"/>
+			<AdapterDeclaration Name="EO1" Type="adapter::types::unidirectional::ASR" Comment="Output, switched from EI when G=1"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="EI" Type="adapter::types::unidirectional::ASR" Comment="Event Input"/>
+		</Sockets>
+	</InterfaceList>
+	<BasicFB>
+		<ECC>
+			<ECState Name="START" Comment="Initial State" x="560" y="400">
+			</ECState>
+			<ECState Name="G0_SET" Comment="Issue EO0.SET when EI.SET arrives with G=0" x="1680" y="720">
+				<ECAction Output="EO0.SET"/>
+			</ECState>
+			<ECState Name="G1_SET" Comment="Issue EO1.SET when EI.SET arrives with G=1" x="1680" y="1200">
+				<ECAction Output="EO1.SET"/>
+			</ECState>
+			<ECState Name="G0_RESET" Comment="Issue EO0.RESET when EI.RESET arrives with G=0" x="1680" y="960">
+				<ECAction Output="EO0.RESET"/>
+			</ECState>
+			<ECState Name="G1_RESET" Comment="Issue EO1.RESET when EI.RESET arrives with G=1" x="1680" y="1360">
+				<ECAction Output="EO1.RESET"/>
+			</ECState>
+			<ECTransition Source="G0_SET" Destination="START" Condition="1" x="1255" y="660"/>
+			<ECTransition Source="START" Destination="G0_SET" Condition="EI.SET[NOT G]" x="1435" y="440"/>
+			<ECTransition Source="START" Destination="G1_SET" Condition="EI.SET[G]" x="1006.67" y="1000"/>
+			<ECTransition Source="START" Destination="START" Condition="EIG" x="680" y="180"/>
+			<ECTransition Source="START" Destination="G0_RESET" Condition="EI.RESET[NOT G]" x="1213.33" y="766.67"/>
+			<ECTransition Source="G0_RESET" Destination="START" Condition="1" x="1006.67" y="786.67"/>
+			<ECTransition Source="START" Destination="G1_RESET" Condition="EI.RESET[G]" x="653.33" y="1180"/>
+			<ECTransition Source="G1_SET" Destination="START" Condition="1" x="840" y="1113.33"/>
+			<ECTransition Source="G1_RESET" Destination="START" Condition="1" x="280" y="1266.67"/>
+		</ECC>
+	</BasicFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

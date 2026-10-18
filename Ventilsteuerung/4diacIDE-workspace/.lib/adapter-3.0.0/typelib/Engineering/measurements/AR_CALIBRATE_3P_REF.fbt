@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="AR_CALIBRATE_3P_REF" Comment="Adapter-based 3-point calibration for joysticks/sensors with a center position&#10;(Min, Mid, Max), free order like AR_CALIBRATE_3P - reference targets&#10;(Y_MIN/Y_MID/Y_MAX) are live AR sockets, persisted via 3 additional AR2 plugs&#10;(MIN_REF/MID_REF/MAX_REF), same live-echo pattern as&#10;AR_CALIBRATE_SQ_REF/AR_CALIBRATE_2P_REF">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Version="1.0" Author="Meisterschulen am Ostbahnhof" Date="2026-09-11" Remarks="3-Punkt-Pendant zu AR_CALIBRATE_2P_REF - fuer Sensoren mit definierter Mittelstellung (z.B. Lenkwinkelsensor: links/geradeaus/rechts). Keine ECC-Reihenfolge-Erzwingung: C_MIN/C_MID/C_MAX speichern unabhaengig, wie AR_CALIBRATE_3P.">
+	</VersionInfo>
+	<VersionInfo Version="1.3" Author="Franz Höpfinger" Date="2026-09-21" Remarks="Code-Review-Fund (PR #260): xClipping clippte bisher unconditional auf [MIN_REF,MAX_REF], auch wenn nur EIN Punkt kalibriert war - der Partial-Kalibrierung-Fallback (Y.D1 := MIN_REF.DI1/MID_REF.DI1/MAX_REF.DI1) wurde durch den noch unkalibrierten Gegenpart (INI_AR2-Default 0.0) sofort wieder zurueckgeklemmt. Clipping jetzt zusaetzlich an xMinCal AND xMaxCal gegated (MID irrelevant, da Clipping nur gegen MIN_REF/MAX_REF vergleicht).">
+	</VersionInfo>
+	<VersionInfo Version="1.2" Author="Franz Höpfinger" Date="2026-09-21" Remarks="Bugfix (Franz live am Geraet: 'wenn ich MIN druecke aendert sich der Ausgangswert nicht, erst wenn ich dann auch MID druecke uebernimmt er den MIN wert'): REQ pivotierte bisher immer auf X_MID.DI1, das vor der ersten MID-Kalibrierung beim INI_AR2-Default 0.0 steht - da reale Rohwerte praktisch nie 0.0 sind, war die Bedingung X.D1 &lt; X_MID.DI1 bis zur ersten MID-Kalibrierung permanent falsch und ignorierte MIN/MIN_REF komplett. Neue interne Kalibriert-Flags xMinCal/xMidCal/xMaxCal (latchen TRUE, sobald der jeweilige Rohwert vom INI-Default abweicht - ueberlebt Neustart, da ein echt kalibrierter Punkt nach dem Boot-Restore ebenfalls sofort wieder &lt;&gt; 0.0 ist) lassen REQ bei unvollstaendiger Kalibrierung sauber auf die 1-2-Punkt-Teilloesung bzw. den einzelnen REF-Wert ausweichen, statt mit einem Rohwert-Default von 0.0 zu rechnen. Zusaetzlich: neuer Input xClipping (Default TRUE) macht das bisher fest eingebaute Clipping auf MIN_REF..MAX_REF abschaltbar (FALSE = Extrapolation erlaubt).">
+	</VersionInfo>
+	<VersionInfo Version="1.1" Author="Franz Höpfinger" Date="2026-09-18" Remarks="C_MIN/C_MID/C_MAX von AX-Sockets (mit [C_x.D1]-Flankenwaechter) auf reine EventInputs umgestellt - jeder echte Aufrufer liefert ohnehin ein atomares Event, der D1-Wert war immer hartcodiert TRUE (via AX_BOOL_TO_X) und der Guard filterte nie etwas. Aufrufer muessen jetzt direkt ein Event statt eines AX-Adapters anschliessen. Siehe AR_CALIBRATE_2P_REF fuer die identische Aenderung.">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::Engineering::measurements">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Initialization Request">
+				<With Var="QI"/>
+				<With Var="xClipping"/>
+			</Event>
+			<Event Name="C_MIN" Type="Event" Comment="Calibrate Min Point - atomarer Trigger">
+			</Event>
+			<Event Name="C_MID" Type="Event" Comment="Calibrate Mid Point (Center) - atomarer Trigger">
+			</Event>
+			<Event Name="C_MAX" Type="Event" Comment="Calibrate Max Point - atomarer Trigger">
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Input event qualifier"/>
+			<VarDeclaration Name="xClipping" Type="BOOL" Comment="TRUE (Default) = Ausgang wird auf MIN_REF..MAX_REF geklemmt; FALSE = kein Clipping, Extrapolation ueber die Kalibrierpunkte hinaus erlaubt" InitialValue="TRUE"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Output event qualifier"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="Y" Type="adapter::types::unidirectional::AR" Comment="Calibrated Output"/>
+			<AdapterDeclaration Name="X_MIN" Type="adapter::types::bidirectional::AR2" Comment="Persisted raw input value at the Min calibration point"/>
+			<AdapterDeclaration Name="X_MID" Type="adapter::types::bidirectional::AR2" Comment="Persisted raw input value at the Mid (center) calibration point"/>
+			<AdapterDeclaration Name="X_MAX" Type="adapter::types::bidirectional::AR2" Comment="Persisted raw input value at the Max calibration point"/>
+			<AdapterDeclaration Name="MIN_REF" Type="adapter::types::bidirectional::AR2" Comment="Persisted Min-point target reference (Y_MIN)"/>
+			<AdapterDeclaration Name="MID_REF" Type="adapter::types::bidirectional::AR2" Comment="Persisted Mid-point target reference (Y_MID)"/>
+			<AdapterDeclaration Name="MAX_REF" Type="adapter::types::bidirectional::AR2" Comment="Persisted Max-point target reference (Y_MAX)"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="X" Type="adapter::types::unidirectional::AR" Comment="Raw Input"/>
+			<AdapterDeclaration Name="Y_MIN" Type="adapter::types::bidirectional::AR2" Comment="Target output Y at the Min calibration point - live edit in via EO1/DO1 (Socket-side swap), persisted/restored value echoed back out via EI1/DI1 for VT/web display"/>
+			<AdapterDeclaration Name="Y_MID" Type="adapter::types::bidirectional::AR2" Comment="Target output Y at the Mid calibration point - live edit in via EO1/DO1 (Socket-side swap), persisted/restored value echoed back out via EI1/DI1 for VT/web display"/>
+			<AdapterDeclaration Name="Y_MAX" Type="adapter::types::bidirectional::AR2" Comment="Target output Y at the Max calibration point - live edit in via EO1/DO1 (Socket-side swap), persisted/restored value echoed back out via EI1/DI1 for VT/web display"/>
+		</Sockets>
+	</InterfaceList>
+	<BasicFB>
+		<InternalVars>
+			<VarDeclaration Name="xMinCal" Type="BOOL" InitialValue="FALSE" Comment="Latched TRUE sobald X_MIN.DI1 vom INI-Default 0.0 abweicht - MIN wurde mindestens einmal kalibriert (diese Session oder ueber Boot-Restore)"/>
+			<VarDeclaration Name="xMidCal" Type="BOOL" InitialValue="FALSE" Comment="Latched TRUE sobald X_MID.DI1 vom INI-Default 0.0 abweicht - MID wurde mindestens einmal kalibriert (diese Session oder ueber Boot-Restore)"/>
+			<VarDeclaration Name="xMaxCal" Type="BOOL" InitialValue="FALSE" Comment="Latched TRUE sobald X_MAX.DI1 vom INI-Default 0.0 abweicht - MAX wurde mindestens einmal kalibriert (diese Session oder ueber Boot-Restore)"/>
+		</InternalVars>
+		<ECC>
+			<ECState Name="START" Comment="Initial State" x="-3240" y="-2100">
+			</ECState>
+			<ECState Name="Init" Comment="Initialization" x="-2480" y="-2560">
+				<ECAction Algorithm="initialize" Output="INITO"/>
+			</ECState>
+			<ECState Name="DeInit" x="-2573.33" y="-1706.67">
+				<ECAction Algorithm="deInitialize" Output="INITO"/>
+			</ECState>
+			<ECState Name="IDLE" x="720" y="-1920">
+			</ECState>
+			<ECState Name="REQ" x="-400" y="-3200">
+				<ECAction Algorithm="REQ" Output="Y.E1"/>
+			</ECState>
+			<ECState Name="C_MIN" x="3040" y="-1760">
+				<ECAction Algorithm="C_MIN" Output="X_MIN.EO1"/>
+			</ECState>
+			<ECState Name="C_MID" x="3720" y="-2320">
+				<ECAction Algorithm="C_MID" Output="X_MID.EO1"/>
+			</ECState>
+			<ECState Name="C_MAX" x="4080" y="-2160">
+				<ECAction Algorithm="C_MAX" Output="X_MAX.EO1"/>
+			</ECState>
+			<ECState Name="MIN_REF_ECHO" x="2880" y="-1120">
+				<ECAction Algorithm="MIN_REF_ECHO" Output="MIN_REF.EO1"/>
+			</ECState>
+			<ECState Name="MID_REF_ECHO" x="2480" y="-800">
+				<ECAction Algorithm="MID_REF_ECHO" Output="MID_REF.EO1"/>
+			</ECState>
+			<ECState Name="MAX_REF_ECHO" x="2080" y="-480">
+				<ECAction Algorithm="MAX_REF_ECHO" Output="MAX_REF.EO1"/>
+			</ECState>
+			<ECState Name="Y_MIN_DISP" x="-1360" y="160">
+				<ECAction Algorithm="Y_MIN_DISP" Output="Y_MIN.EI1"/>
+			</ECState>
+			<ECState Name="Y_MID_DISP" x="-1080" y="-40">
+				<ECAction Algorithm="Y_MID_DISP" Output="Y_MID.EI1"/>
+			</ECState>
+			<ECState Name="Y_MAX_DISP" x="-800" y="-240">
+				<ECAction Algorithm="Y_MAX_DISP" Output="Y_MAX.EI1"/>
+			</ECState>
+			<ECTransition Source="START" Destination="Init" Condition="INIT[TRUE = QI]" x="-2880" y="-2320"/>
+			<ECTransition Source="DeInit" Destination="START" Condition="1" x="-2786.67" y="-1793.33"/>
+			<ECTransition Source="IDLE" Destination="REQ" Condition="X.E1" x="453.33" y="-2866.67"/>
+			<ECTransition Source="REQ" Destination="IDLE" Condition="1" x="180" y="-2753.33"/>
+			<ECTransition Source="IDLE" Destination="C_MIN" Condition="C_MIN" x="2246.67" y="-1893.33"/>
+			<ECTransition Source="C_MIN" Destination="IDLE" Condition="1" x="2606.67" y="-1833.33"/>
+			<ECTransition Source="IDLE" Destination="C_MID" Condition="C_MID" x="2906.67" y="-2086.67"/>
+			<ECTransition Source="C_MID" Destination="IDLE" Condition="1" x="3206.67" y="-2126.67"/>
+			<ECTransition Source="IDLE" Destination="C_MAX" Condition="C_MAX" x="3386.67" y="-2233.33"/>
+			<ECTransition Source="C_MAX" Destination="IDLE" Condition="1" x="3606.67" y="-2193.33"/>
+			<ECTransition Source="IDLE" Destination="REQ" Condition="X_MIN.EI1" x="213.33" y="-2500"/>
+			<ECTransition Source="IDLE" Destination="REQ" Condition="X_MID.EI1" x="60" y="-2426.67"/>
+			<ECTransition Source="IDLE" Destination="REQ" Condition="X_MAX.EI1" x="-100" y="-2366.67"/>
+			<ECTransition Source="IDLE" Destination="MIN_REF_ECHO" Condition="Y_MIN.EO1" x="2293.33" y="-1280"/>
+			<ECTransition Source="MIN_REF_ECHO" Destination="IDLE" Condition="1" x="2673.33" y="-1366.67"/>
+			<ECTransition Source="IDLE" Destination="MID_REF_ECHO" Condition="Y_MID.EO1" x="1913.33" y="-1106.67"/>
+			<ECTransition Source="MID_REF_ECHO" Destination="IDLE" Condition="1" x="2206.67" y="-1226.67"/>
+			<ECTransition Source="IDLE" Destination="MAX_REF_ECHO" Condition="Y_MAX.EO1" x="1606.67" y="-920"/>
+			<ECTransition Source="MAX_REF_ECHO" Destination="IDLE" Condition="1" x="1833.33" y="-1146.67"/>
+			<ECTransition Source="IDLE" Destination="Y_MIN_DISP" Condition="MIN_REF.EI1" x="-986.67" y="-1406.67"/>
+			<ECTransition Source="Y_MIN_DISP" Destination="IDLE" Condition="1" x="-766.67" y="-1166.67"/>
+			<ECTransition Source="IDLE" Destination="Y_MID_DISP" Condition="MID_REF.EI1" x="-486.67" y="-1213.33"/>
+			<ECTransition Source="Y_MID_DISP" Destination="IDLE" Condition="1" x="-640" y="-1133.33"/>
+			<ECTransition Source="IDLE" Destination="Y_MAX_DISP" Condition="MAX_REF.EI1" x="-53.33" y="-993.33"/>
+			<ECTransition Source="Y_MAX_DISP" Destination="IDLE" Condition="1" x="-340" y="-1086.67"/>
+			<ECTransition Source="Init" Destination="IDLE" Condition="1" x="-880" y="-2240"/>
+			<ECTransition Source="IDLE" Destination="DeInit" Condition="INIT[FALSE = QI]" x="-926.67" y="-1813.33"/>
+		</ECC>
+		<Algorithm Name="initialize" Comment="Initialization algorithm">
+			<ST><![CDATA[
+QO := QI;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="deInitialize" Comment="Normally executed algorithm">
+			<ST><![CDATA[
+QO := FALSE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="REQ" Comment="REQ algorithm">
+			<ST><![CDATA[
+QO := QI;
+
+IF TRUE = QI THEN
+	(* only perform normal operation if QI is true *)
+
+	(* latch "has been calibrated at least once" per point - a never-calibrated point stays
+	 * exactly at the INI_AR2 DEFAULT_VALUE (0.0) forever, a real raw sensor value practically
+	 * never is; a re-boot restores an already-calibrated point straight back to its non-0.0
+	 * persisted value, so the latch stays correctly set across restarts *)
+	IF X_MIN.DI1 <> 0.0 THEN xMinCal := TRUE; END_IF;
+	IF X_MID.DI1 <> 0.0 THEN xMidCal := TRUE; END_IF;
+	IF X_MAX.DI1 <> 0.0 THEN xMaxCal := TRUE; END_IF;
+
+	IF xMinCal AND xMidCal AND xMaxCal THEN
+		(* full 3-point piecewise-linear interpolation, exactly as before *)
+		IF X.D1 < X_MID.DI1 THEN
+			IF X_MID.DI1 > X_MIN.DI1 THEN
+				Y.D1 := MIN_REF.DI1 + (X.D1 - X_MIN.DI1) * (MID_REF.DI1 - MIN_REF.DI1) / (X_MID.DI1 - X_MIN.DI1);
+			ELSE
+				Y.D1 := MIN_REF.DI1;
+			END_IF;
+		ELSE
+			IF X_MAX.DI1 > X_MID.DI1 THEN
+				Y.D1 := MID_REF.DI1 + (X.D1 - X_MID.DI1) * (MAX_REF.DI1 - MID_REF.DI1) / (X_MAX.DI1 - X_MID.DI1);
+			ELSE
+				Y.D1 := MID_REF.DI1;
+			END_IF;
+		END_IF;
+	ELSIF xMinCal AND xMidCal THEN
+		(* only MIN+MID calibrated so far - 2-point line between them, MAX not usable yet *)
+		IF X_MID.DI1 <> X_MIN.DI1 THEN
+			Y.D1 := MIN_REF.DI1 + (X.D1 - X_MIN.DI1) * (MID_REF.DI1 - MIN_REF.DI1) / (X_MID.DI1 - X_MIN.DI1);
+		ELSE
+			Y.D1 := MIN_REF.DI1;
+		END_IF;
+	ELSIF xMidCal AND xMaxCal THEN
+		(* only MID+MAX calibrated so far - 2-point line between them, MIN not usable yet *)
+		IF X_MAX.DI1 <> X_MID.DI1 THEN
+			Y.D1 := MID_REF.DI1 + (X.D1 - X_MID.DI1) * (MAX_REF.DI1 - MID_REF.DI1) / (X_MAX.DI1 - X_MID.DI1);
+		ELSE
+			Y.D1 := MID_REF.DI1;
+		END_IF;
+	ELSIF xMinCal AND xMaxCal THEN
+		(* only MIN+MAX calibrated so far (MID skipped) - direct 2-point line, ignores MID entirely *)
+		IF X_MAX.DI1 <> X_MIN.DI1 THEN
+			Y.D1 := MIN_REF.DI1 + (X.D1 - X_MIN.DI1) * (MAX_REF.DI1 - MIN_REF.DI1) / (X_MAX.DI1 - X_MIN.DI1);
+		ELSE
+			Y.D1 := MIN_REF.DI1;
+		END_IF;
+	ELSIF xMinCal THEN
+		Y.D1 := MIN_REF.DI1;
+	ELSIF xMidCal THEN
+		Y.D1 := MID_REF.DI1;
+	ELSIF xMaxCal THEN
+		Y.D1 := MAX_REF.DI1;
+	ELSE
+		(* nothing calibrated yet *)
+		Y.D1 := MID_REF.DI1;
+	END_IF;
+
+	(* only clip once both outer bounding points are calibrated - otherwise
+	 * the still-uncalibrated bound sits at its INI_AR2 default (0.0) and
+	 * would clamp the partial-calibration fallback above right back to
+	 * garbage. MID is irrelevant here - clipping only ever compares
+	 * against MIN_REF/MAX_REF. *)
+	IF xClipping AND xMinCal AND xMaxCal THEN
+		IF Y.D1 < MIN_REF.DI1 THEN
+			Y.D1 := MIN_REF.DI1;
+		ELSIF Y.D1 > MAX_REF.DI1 THEN
+			Y.D1 := MAX_REF.DI1;
+		END_IF;
+	END_IF;
+END_IF;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="C_MIN" Comment="Store current raw input as the Min calibration point - independent, repeatable any time">
+			<ST><![CDATA[
+X_MIN.DO1 := X.D1;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="C_MID" Comment="Store current raw input as the Mid (center) calibration point - independent, repeatable any time">
+			<ST><![CDATA[
+X_MID.DO1 := X.D1;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="C_MAX" Comment="Store current raw input as the Max calibration point - independent, repeatable any time">
+			<ST><![CDATA[
+X_MAX.DO1 := X.D1;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="MIN_REF_ECHO" Comment="Persist live Y_MIN reference to INI">
+			<ST><![CDATA[
+MIN_REF.DO1 := Y_MIN.DO1;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="MID_REF_ECHO" Comment="Persist live Y_MID reference to INI">
+			<ST><![CDATA[
+MID_REF.DO1 := Y_MID.DO1;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="MAX_REF_ECHO" Comment="Persist live Y_MAX reference to INI">
+			<ST><![CDATA[
+MAX_REF.DO1 := Y_MAX.DO1;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="Y_MIN_DISP" Comment="Echo the persisted/restored MIN_REF value back out through Y_MIN for VT/web display (boot and&#10;after every change)">
+			<ST><![CDATA[
+Y_MIN.DI1 := MIN_REF.DI1;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="Y_MID_DISP" Comment="Echo the persisted/restored MID_REF value back out through Y_MID for VT/web display (boot and&#10;after every change)">
+			<ST><![CDATA[
+Y_MID.DI1 := MID_REF.DI1;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="Y_MAX_DISP" Comment="Echo the persisted/restored MAX_REF value back out through Y_MAX for VT/web display (boot and&#10;after every change)">
+			<ST><![CDATA[
+Y_MAX.DI1 := MAX_REF.DI1;
+]]></ST>
+		</Algorithm>
+	</BasicFB>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h2>Formula</h2>
+<pre>Y = piecewise linear interpolation between (X_MIN,MIN_REF), (X_MID,MID_REF), (X_MAX,MAX_REF), clipped to MIN_REF..MAX_REF unless xClipping = FALSE</pre>
+
+<h2>Partial Calibration (before all 3 points are set)</h2>
+<p>Each point is tracked internally (<code>xMinCal</code>/<code>xMidCal</code>/<code>xMaxCal</code>, latched TRUE once its raw value differs from the INI_AR2 default 0.0). Until all three are calibrated, <code>REQ</code> falls back cleanly instead of pivoting on a still-uncalibrated <code>X_MID.DI1</code> (which would otherwise sit at 0.0 and make the MIN branch permanently unreachable):</p>
+<ul>
+<li>Only one point calibrated: <code>Y</code> = that point's own REF value (no interpolation possible)</li>
+<li>Two points calibrated: 2-point line between exactly those two, ignoring the uncalibrated third</li>
+<li>All three calibrated: full piecewise interpolation as above</li>
+<li>None calibrated: <code>Y := MID_REF</code></li>
+</ul>
+
+<h2>Calibration (3-Point, Free Order)</h2>
+<ol>
+<li><strong>Min (C_MIN):</strong> Move to minimum, set Y_MIN, trigger C_MIN &rarr; <code>X_MIN := X</code></li>
+<li><strong>Mid (C_MID):</strong> Move to center, set Y_MID, trigger C_MID &rarr; <code>X_MID := X</code></li>
+<li><strong>Max (C_MAX):</strong> Move to maximum, set Y_MAX, trigger C_MAX &rarr; <code>X_MAX := X</code></li>
+</ol>
+<p>Exactly like <code>AR_CALIBRATE_3P</code>: no ECC-enforced order, each point stores independently and can be re-calibrated on its own (e.g. re-trimming a drifted center without touching Min/Max) - unlike a 2-point offset/scale scheme, there is no data dependency between the calibration actions themselves, so an enforced order would only add friction without preventing any actual error.</p>
+
+<h2>Typical use: steering angle sensor</h2>
+<p>Min = full lock left, Mid = straight ahead (center), Max = full lock right. <code>MIN_REF</code>/<code>MID_REF</code>/<code>MAX_REF</code> hold the desired calibrated angle values (e.g. -30.0 / 0.0 / 30.0 degrees); <code>X_MIN</code>/<code>X_MID</code>/<code>X_MAX</code> hold whatever raw sensor values were actually measured at those three physical positions.</p>
+
+<h2>Reference Targets (Y_MIN/Y_MID/Y_MAX) are live AR Sockets</h2>
+<p>Same live-echo mechanism as <code>AR_CALIBRATE_2P_REF</code>/<code>AR_CALIBRATE_SQ_REF</code>: <code>Y_MIN</code>/<code>Y_MID</code>/<code>Y_MAX</code> are bidirectional AR2 Sockets fed from an external VT/web reader, mirrored out through the AR2 Plugs <code>MIN_REF</code>/<code>MID_REF</code>/<code>MAX_REF</code> for persistence (<code>INI_AR2</code>/<code>NVS_AR2</code>), and echoed back via <code>MIN_REF.EI1</code>/<code>MID_REF.EI1</code>/<code>MAX_REF.EI1</code> so a boot-restored value shows up on screen without the operator re-entering it.</p>
+]]></Attribute>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

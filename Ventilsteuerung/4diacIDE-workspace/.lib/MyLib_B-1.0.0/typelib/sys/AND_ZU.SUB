@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="AND_ZU" Comment="Logisches UND (IN1 AND NOT IN2) für ZU-Bedingung">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="franz" Date="2025-01-15">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="REQ" Type="Event">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="CNF" Type="Event">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="IN1" Type="BOOL"/>
+			<VarDeclaration Name="IN2" Type="BOOL"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="OUT" Type="BOOL"/>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="AND_3" Type="iec61131::bitwiseOperators::AND_2" x="2100" y="-100">
+		</FB>
+		<FB Name="F_NOT" Type="iec61131::booleanOperators::F_NOT_BOOL_INIT" x="0" y="-100">
+		</FB>
+		<EventConnections>
+			<Connection Source="AND_3.CNF" Destination="CNF" dx1="2400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="REQ" Destination="F_NOT.REQ" dx1="1126.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="F_NOT.CNF" Destination="AND_3.REQ" dx1="453.33"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="IN1" Destination="AND_3.IN1" dx1="4480">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AND_3.OUT" Destination="OUT" dx1="2400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="IN2" Destination="F_NOT.IN" dx1="1126.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="F_NOT.OUT" Destination="AND_3.IN2" dx1="613.33"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

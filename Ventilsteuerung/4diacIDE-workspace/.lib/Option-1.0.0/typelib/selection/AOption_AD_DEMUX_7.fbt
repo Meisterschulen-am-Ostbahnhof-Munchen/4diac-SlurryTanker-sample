@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="AOption_AD_DEMUX_7" Comment="AOption Bitmasken-Demultiplexor (generic FB): aktiviert per Bitmaske K beliebig viele von 7 Options-Ausgaengen (INIT_REQ), Multi-Select.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-13">
+	</VersionInfo>
+	<CompilerInfo packageName="Option::selection">
+	</CompilerInfo>
+	<InterfaceList>
+		<Plugs>
+			<AdapterDeclaration Name="OUT1" Type="Option::AOption" Comment="Option 1 (aktiv wenn Bit 0 von K gesetzt ist, Wert 1)"/>
+			<AdapterDeclaration Name="OUT2" Type="Option::AOption" Comment="Option 2 (aktiv wenn Bit 1 von K gesetzt ist, Wert 2)"/>
+			<AdapterDeclaration Name="OUT3" Type="Option::AOption" Comment="Option 3 (aktiv wenn Bit 2 von K gesetzt ist, Wert 4)"/>
+			<AdapterDeclaration Name="OUT4" Type="Option::AOption" Comment="Option 4 (aktiv wenn Bit 3 von K gesetzt ist, Wert 8)"/>
+			<AdapterDeclaration Name="OUT5" Type="Option::AOption" Comment="Option 5 (aktiv wenn Bit 4 von K gesetzt ist, Wert 16)"/>
+			<AdapterDeclaration Name="OUT6" Type="Option::AOption" Comment="Option 6 (aktiv wenn Bit 5 von K gesetzt ist, Wert 32)"/>
+			<AdapterDeclaration Name="OUT7" Type="Option::AOption" Comment="Option 7 (aktiv wenn Bit 6 von K gesetzt ist, Wert 64)"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="K" Type="adapter::types::bidirectional::AD2" Comment="Bitmaske (Bit0=OUT1, Bit1=OUT2, ...), bidirektional: EO1/DO1 = neuer Bitmasken-Wunsch rein, EI1/DI1 = Quittung mit der uebernommenen Bitmaske zurueck"/>
+		</Sockets>
+	</InterfaceList>
+	<Attribute Name="eclipse4diac::core::GenericClassName" Value="'GEN_AOption_AD_DEMUX'"/>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<p>Demultiplexer (natives Generic-FB, kein ECC/Algorithmus in diesem Typ) fuer <code>N=7</code> Options-Ausgaenge vom Typ <code>Option::AOption</code>, ausgewaehlt ueber den bidirektionalen Bitmasken-Adapter <code>K</code> (<code>adapter::types::bidirectional::AD2</code>, DWORD).</p>
+<p><b>Bitzuordnung (Multi-Select, im Gegensatz zum Single-Select von <code>AOption_AUI_DEMUX_7</code>):</b></p>
+<ul>
+<li><code>Bit 0</code> (Wert <code>1</code>) &ndash; <code>OUT1</code></li>
+<li><code>Bit 1</code> (Wert <code>2</code>) &ndash; <code>OUT2</code></li>
+<li><code>Bit 2</code> (Wert <code>4</code>) &ndash; <code>OUT3</code></li>
+<li><code>Bit 3</code> (Wert <code>8</code>) &ndash; <code>OUT4</code></li>
+<li><code>Bit 4</code> (Wert <code>16</code>) &ndash; <code>OUT5</code></li>
+<li><code>Bit 5</code> (Wert <code>32</code>) &ndash; <code>OUT6</code></li>
+<li><code>Bit 6</code> (Wert <code>64</code>) &ndash; <code>OUT7</code></li>
+</ul>
+<p>Beispiel: <code>K = 3</code> (Bit 0 + Bit 1 gesetzt) &ndash; <code>OUT1</code> UND <code>OUT2</code> an, alle anderen aus. Es koennen beliebig viele bzw. alle Ausgaenge gleichzeitig aktiv sein.</p>
+<p><b>Umschaltverhalten:</b> nur Bits, die sich gegenueber dem vorherigen <code>K</code>-Wert aendern, loesen an dem zugehoerigen Ausgang ein <code>INIT_REQ</code> aus (0&rarr;1: <code>QI=TRUE</code> aktivieren, 1&rarr;0: <code>QI=FALSE</code> deaktivieren). Unveraenderte Bits werden nicht erneut getriggert - jeder Ausgang wird also pro eintreffendem <code>K</code>-Wert maximal 1x getriggert.</p>
+<p><b>Busy-Gating ueber den bidirektionalen K-Adapter:</b> Waehrend noch auf <code>INIT_CNF</code> von mindestens einem durch den letzten K-Wechsel betroffenen Ausgang gewartet wird, wird jeder weitere ueber <code>K</code> (Richtung Plug -&gt; Socket, <code>EO1</code>/<code>DO1</code>) eintreffende Bitmasken-Wunsch ignoriert - er wird weder gepuffert noch nachgeholt. Erst wenn alle durch den letzten Wechsel ausgeloesten <code>INIT_CNF</code> eingetroffen sind, meldet der DEMUX dies rueckwaerts ueber <code>K</code> (Richtung Socket -&gt; Plug, <code>EI1</code>/<code>DI1</code>) mit der uebernommenen Bitmaske zurueck (nicht mit dem Zustand der Ausgaenge: auch Bits ausserhalb der vorhandenen Ausgaenge werden unveraendert quittiert); erst danach werden wieder neue K-Wuensche angenommen. Damit sind sowohl langsame Umschaltvorgaenge als auch mehrfache, einander widersprechende K-Werte in kurzer Folge sauber abgedeckt.</p>
+]]></Attribute>
+</FBType>

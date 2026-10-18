@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="IG4_Source_Addresses" Comment="Industry Group 4 specific source addresses">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Organization="Demmler Andreas Fahrzeugbau" Version="1.0" Author="Franz Höpfinger" Date="2026-06-29">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::pgn::const">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="SA_RESERVED_128" Type="BYTE" Comment="Source Address: thru 207 are reserved for future assignment by SAE - Used for dynamic address" InitialValue="128"/>
+		<VarDeclaration Name="SA_RESERVED_208" Type="BYTE" Comment="Source Address: thru 227 are reserved for future assignment - Used for individual preassigned" InitialValue="208"/>
+		<VarDeclaration Name="SA_PROPULSION_SENSOR_HUB_GATEWAY_1" Type="BYTE" Comment="Source Address: Propulsion Sensor Hub &amp; Gateway #1 - The first device that interfaces with" InitialValue="228"/>
+		<VarDeclaration Name="SA_PROPULSION_SENSOR_HUB_GATEWAY_2" Type="BYTE" Comment="Source Address: Propulsion Sensor Hub &amp; Gateway #2 - The second device that interfaces with" InitialValue="229"/>
+		<VarDeclaration Name="SA_PROPULSION_SENSOR_HUB_GATEWAY_3" Type="BYTE" Comment="Source Address: Propulsion Sensor Hub &amp; Gateway #3 - The third device that interfaces with" InitialValue="230"/>
+		<VarDeclaration Name="SA_PROPULSION_SENSOR_HUB_GATEWAY_4" Type="BYTE" Comment="Source Address: Propulsion Sensor Hub &amp; Gateway #4 - The fourth device that interfaces with" InitialValue="231"/>
+		<VarDeclaration Name="SA_TRANSMISSION_3" Type="BYTE" Comment="Source Address: Transmission #3 - The Transmission ECU for the third transmission within a system" InitialValue="232"/>
+		<VarDeclaration Name="SA_TRANSMISSION_4" Type="BYTE" Comment="Source Address: Transmission #4 - The Transmission ECU for the fourth transmission within a" InitialValue="233"/>
+		<VarDeclaration Name="SA_TRANSMISSION_5" Type="BYTE" Comment="Source Address: Transmission #5 - The Transmission ECU for the fifth transmission within a system" InitialValue="234"/>
+		<VarDeclaration Name="SA_TRANSMISSION_6" Type="BYTE" Comment="Source Address: Transmission #6 - The Transmission ECU for the sixth transmission within a system" InitialValue="235"/>
+		<VarDeclaration Name="SA_DISPLAY_1_FOR_PROTECTION_SYSTEM_FOR_MARINE_ENGINES" Type="BYTE" Comment="Source Address: Display #1 for Protection System for Marine Engines - The first ecu that provides" InitialValue="236"/>
+		<VarDeclaration Name="SA_PROTECTION_SYSTEM_FOR_MARINE_ENGINES" Type="BYTE" Comment="Source Address: Protection System for Marine Engines - The first ecu that controls the Protection" InitialValue="237"/>
+		<VarDeclaration Name="SA_ALARM_SYSTEM_CONTROL_1_FOR_MARINE_ENGINES" Type="BYTE" Comment="Source Address: Alarm System Control #1 for Marine Engines - The first ecu that controls the" InitialValue="238"/>
+		<VarDeclaration Name="SA_ENGINE_3" Type="BYTE" Comment="Source Address: Engine #3 - The Engine ECU for the third engine within a system." InitialValue="239"/>
+		<VarDeclaration Name="SA_ENGINE_4" Type="BYTE" Comment="Source Address: Engine #4 - The Engine ECU for the fourth engine within a system." InitialValue="240"/>
+		<VarDeclaration Name="SA_ENGINE_5" Type="BYTE" Comment="Source Address: Engine #5 - The Engine ECU for the fifth engine within a system." InitialValue="241"/>
+		<VarDeclaration Name="SA_MARINE_DISPLAY_1" Type="BYTE" Comment="Source Address: Marine Display #1 - The first Marine Display for an engine." InitialValue="242"/>
+		<VarDeclaration Name="SA_MARINE_DISPLAY_2" Type="BYTE" Comment="Source Address: Marine Display #2 - The second Marine Display for an engine." InitialValue="243"/>
+		<VarDeclaration Name="SA_MARINE_DISPLAY_3" Type="BYTE" Comment="Source Address: Marine Display #3 - The third Marine Display for an engine." InitialValue="244"/>
+		<VarDeclaration Name="SA_MARINE_DISPLAY_4" Type="BYTE" Comment="Source Address: Marine Display #4 - The fourth Marine Display for an engine." InitialValue="245"/>
+		<VarDeclaration Name="SA_MARINE_DISPLAY_5" Type="BYTE" Comment="Source Address: Marine Display #5 - The fifth Marine Display for an engine." InitialValue="246"/>
+		<VarDeclaration Name="SA_MARINE_DISPLAY_6" Type="BYTE" Comment="Source Address: Marine Display #6 - The sixth Marine Display for an engine." InitialValue="247"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE isobus::pgn::const;
+
+// Industry Group 4 specific source addresses
+GLOBALCONSTANTS IG4_Source_Addresses
+	VAR_GLOBAL CONSTANT
+		SA_RESERVED_128 : BYTE := 128; // Source Address: thru 207 are reserved for future assignment by SAE - Used for dynamic address
+		                               // assignment (self-configurable)
+		SA_RESERVED_208 : BYTE := 208; // Source Address: thru 227 are reserved for future assignment - Used for individual preassigned
+		                               // addresses
+		SA_PROPULSION_SENSOR_HUB_GATEWAY_1 : BYTE := 228; // Source Address: Propulsion Sensor Hub & Gateway #1 - The first device that interfaces with
+		                                                  // propulsion sensors and acts as a gateway to other networks in the system.
+		SA_PROPULSION_SENSOR_HUB_GATEWAY_2 : BYTE := 229; // Source Address: Propulsion Sensor Hub & Gateway #2 - The second device that interfaces with
+		                                                  // propulsion sensors and acts as a gateway to other networks in the system.
+		SA_PROPULSION_SENSOR_HUB_GATEWAY_3 : BYTE := 230; // Source Address: Propulsion Sensor Hub & Gateway #3 - The third device that interfaces with
+		                                                  // propulsion sensors and acts as a gateway to other networks in the system.
+		SA_PROPULSION_SENSOR_HUB_GATEWAY_4 : BYTE := 231; // Source Address: Propulsion Sensor Hub & Gateway #4 - The fourth device that interfaces with
+		                                                  // propulsion sensors and acts as a gateway to other networks in the system.
+		SA_TRANSMISSION_3 : BYTE := 232; // Source Address: Transmission #3 - The Transmission ECU for the third transmission within a system
+		SA_TRANSMISSION_4 : BYTE := 233; // Source Address: Transmission #4 - The Transmission ECU for the fourth transmission within a
+		                                 // system
+		SA_TRANSMISSION_5 : BYTE := 234; // Source Address: Transmission #5 - The Transmission ECU for the fifth transmission within a system
+		SA_TRANSMISSION_6 : BYTE := 235; // Source Address: Transmission #6 - The Transmission ECU for the sixth transmission within a system
+		SA_DISPLAY_1_FOR_PROTECTION_SYSTEM_FOR_MARINE_ENGINES : BYTE := 236; // Source Address: Display #1 for Protection System for Marine Engines - The first ecu that provides
+		                                                                     // the display of information and/or indicators associated specifically with the protection system
+		                                                                     // on ...
+		SA_PROTECTION_SYSTEM_FOR_MARINE_ENGINES : BYTE := 237; // Source Address: Protection System for Marine Engines - The first ecu that controls the Protection
+		                                                       // functions on the first engine of a Marine System.
+		SA_ALARM_SYSTEM_CONTROL_1_FOR_MARINE_ENGINES : BYTE := 238; // Source Address: Alarm System Control #1 for Marine Engines - The first ecu that controls the
+		                                                            // Alarm functions on the first engine of a Marine System.
+		SA_ENGINE_3 : BYTE := 239; // Source Address: Engine #3 - The Engine ECU for the third engine within a system.
+		SA_ENGINE_4 : BYTE := 240; // Source Address: Engine #4 - The Engine ECU for the fourth engine within a system.
+		SA_ENGINE_5 : BYTE := 241; // Source Address: Engine #5 - The Engine ECU for the fifth engine within a system.
+		SA_MARINE_DISPLAY_1 : BYTE := 242; // Source Address: Marine Display #1 - The first Marine Display for an engine.
+		SA_MARINE_DISPLAY_2 : BYTE := 243; // Source Address: Marine Display #2 - The second Marine Display for an engine.
+		SA_MARINE_DISPLAY_3 : BYTE := 244; // Source Address: Marine Display #3 - The third Marine Display for an engine.
+		SA_MARINE_DISPLAY_4 : BYTE := 245; // Source Address: Marine Display #4 - The fourth Marine Display for an engine.
+		SA_MARINE_DISPLAY_5 : BYTE := 246; // Source Address: Marine Display #5 - The fifth Marine Display for an engine.
+		SA_MARINE_DISPLAY_6 : BYTE := 247; // Source Address: Marine Display #6 - The sixth Marine Display for an engine.
+	END_VAR
+
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</GlobalConstants>

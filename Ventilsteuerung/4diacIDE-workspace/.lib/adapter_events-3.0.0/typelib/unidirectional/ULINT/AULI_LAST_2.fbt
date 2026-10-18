@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="AULI_LAST_2" Comment="MERGE 2 AULI in 1 AULI (LAST WRITER WINS, nicht naiv gemergt) - welcher der&#10;beiden Sockets zuletzt geschrieben hat, gewinnt und wird sofort an OUT&#10;durchgereicht">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-08-31" Remarks="generic 2-way AULI last-writer-wins merge, plain BasicFB (like E_D_FF/E_SR) instead of wiring F_SEL/E_RS inline every time - whichever Socket's own event fires IS the last-writer signal, no SR-latch needed">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::events::unidirectional">
+	</CompilerInfo>
+	<InterfaceList>
+		<Plugs>
+			<AdapterDeclaration Name="OUT" Type="adapter::types::unidirectional::AULI"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="IN1" Type="adapter::types::unidirectional::AULI"/>
+			<AdapterDeclaration Name="IN2" Type="adapter::types::unidirectional::AULI"/>
+		</Sockets>
+	</InterfaceList>
+	<BasicFB>
+		<ECC>
+			<ECState Name="START" Comment="Initial State" x="1200" y="80">
+			</ECState>
+			<ECState Name="PASS1" Comment="IN1 zuletzt geschrieben" x="1840" y="-640">
+				<ECAction Algorithm="PASS1" Output="OUT.E1"/>
+			</ECState>
+			<ECState Name="PASS2" Comment="IN2 zuletzt geschrieben" x="1360" y="1120">
+				<ECAction Algorithm="PASS2" Output="OUT.E1"/>
+			</ECState>
+			<ECTransition Source="START" Destination="PASS1" Condition="IN1.E1" x="1593.33" y="-313.33"/>
+			<ECTransition Source="START" Destination="PASS2" Condition="IN2.E1" x="1380" y="513.33"/>
+			<ECTransition Source="PASS2" Destination="START" Condition="1" x="720" y="386.67"/>
+			<ECTransition Source="PASS1" Destination="START" Condition="1" x="633.33" y="-440"/>
+		</ECC>
+		<Algorithm Name="PASS1" Comment="IN1 durchreichen">
+			<ST><![CDATA[
+OUT.D1 := IN1.D1;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="PASS2" Comment="IN2 durchreichen">
+			<ST><![CDATA[
+OUT.D1 := IN2.D1;
+]]></ST>
+		</Algorithm>
+	</BasicFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

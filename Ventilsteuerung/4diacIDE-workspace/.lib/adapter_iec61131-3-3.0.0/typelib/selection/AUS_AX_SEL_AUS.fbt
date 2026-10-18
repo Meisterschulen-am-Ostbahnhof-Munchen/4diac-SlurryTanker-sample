@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="AUS_AX_SEL_AUS" Comment="binary selection">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-04-19" Remarks="initial API and implementation">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::iec61131::selection">
+	</CompilerInfo>
+	<InterfaceList>
+		<Plugs>
+			<AdapterDeclaration Name="OUT" Type="adapter::types::unidirectional::AUS" Comment="Selected Output" x="4400" y="-200"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="IN0" Type="adapter::types::unidirectional::AUS" Comment="Selectable input variable" x="-1600" y="300"/>
+			<AdapterDeclaration Name="IN1" Type="adapter::types::unidirectional::AUS" Comment="Selectable input variable" x="-1600" y="800"/>
+			<AdapterDeclaration Name="G" Type="adapter::types::unidirectional::AX" Comment="Selector" x="-1600" y="-200"/>
+		</Sockets>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="F_SEL" Type="iec61131::selection::F_SEL" x="1500" y="-200">
+		</FB>
+		<FB Name="E_D_FF_ANY_OUT" Type="iec61499::events::E_D_FF_ANY" x="3400" y="-200">
+		</FB>
+		<FB Name="F_MOVE_OUT" Type="iec61131::selection::F_MOVE" x="2400" y="-200">
+			<Attribute Name="DataType" Value="USINT"/>
+		</FB>
+		<FB Name="E_D_FF_ANY_IN1" Type="iec61499::events::E_D_FF_ANY" x="-800" y="800">
+		</FB>
+		<FB Name="E_D_FF_ANY_IN0" Type="iec61499::events::E_D_FF_ANY" x="-800" y="300">
+		</FB>
+		<FB Name="E_D_FF_G" Type="iec61499::events::E_D_FF" x="-800" y="-200">
+		</FB>
+		<FB Name="F_MOVE_IN0" Type="iec61131::selection::F_MOVE" x="100" y="300">
+			<Attribute Name="DataType" Value="USINT"/>
+		</FB>
+		<FB Name="F_MOVE_IN1" Type="iec61131::selection::F_MOVE" x="100" y="800">
+			<Attribute Name="DataType" Value="USINT"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="E_D_FF_ANY_OUT.EO" Destination="OUT.E1"/>
+			<Connection Source="F_MOVE_OUT.CNF" Destination="E_D_FF_ANY_OUT.CLK"/>
+			<Connection Source="F_SEL.CNF" Destination="F_MOVE_OUT.REQ"/>
+			<Connection Source="G.E1" Destination="E_D_FF_G.CLK"/>
+			<Connection Source="IN0.E1" Destination="E_D_FF_ANY_IN0.CLK"/>
+			<Connection Source="IN1.E1" Destination="E_D_FF_ANY_IN1.CLK"/>
+			<Connection Source="E_D_FF_G.EO" Destination="F_SEL.REQ"/>
+			<Connection Source="E_D_FF_ANY_IN0.EO" Destination="F_MOVE_IN0.REQ"/>
+			<Connection Source="E_D_FF_ANY_IN1.EO" Destination="F_MOVE_IN1.REQ"/>
+			<Connection Source="F_MOVE_IN1.CNF" Destination="F_SEL.REQ" dx1="413.33"/>
+			<Connection Source="F_MOVE_IN0.CNF" Destination="F_SEL.REQ" dx1="413.33"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="E_D_FF_ANY_OUT.Q" Destination="OUT.D1"/>
+			<Connection Source="F_MOVE_OUT.OUT" Destination="E_D_FF_ANY_OUT.D"/>
+			<Connection Source="F_SEL.OUT" Destination="F_MOVE_OUT.IN"/>
+			<Connection Source="G.D1" Destination="E_D_FF_G.D"/>
+			<Connection Source="IN0.D1" Destination="E_D_FF_ANY_IN0.D"/>
+			<Connection Source="IN1.D1" Destination="E_D_FF_ANY_IN1.D"/>
+			<Connection Source="E_D_FF_G.Q" Destination="F_SEL.G"/>
+			<Connection Source="E_D_FF_ANY_IN0.Q" Destination="F_MOVE_IN0.IN"/>
+			<Connection Source="E_D_FF_ANY_IN1.Q" Destination="F_MOVE_IN1.IN"/>
+			<Connection Source="F_MOVE_IN1.OUT" Destination="F_SEL.IN1" dx1="753.33"/>
+			<Connection Source="F_MOVE_IN0.OUT" Destination="F_SEL.IN0" dx1="613.33"/>
+		</DataConnections>
+	</FBNetwork>
+	<Service RightInterface="RESOURCE" LeftInterface="APPLICATION">
+	</Service>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

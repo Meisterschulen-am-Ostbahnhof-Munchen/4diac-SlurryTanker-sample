@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="NVS_AX" Comment="Load and Store BOOL Data from NVS by Key (AX Adapter Interface)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-04-24" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::storage::esp32_nvs">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+				<With Var="QI"/>
+				<With Var="SETM"/>
+				<With Var="KEY"/>
+				<With Var="DEFAULT_VALUE"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
+			<VarDeclaration Name="SETM" Type="BOOL" Comment="Enable Mirroring on SET"/>
+			<VarDeclaration Name="KEY" Type="STRING" Comment="Key name."/>
+			<VarDeclaration Name="DEFAULT_VALUE" Type="BOOL" Comment="The value to read if there is nothing in the NVS"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="AX_OUT" Type="adapter::types::unidirectional::AX" Comment="Stored value output (GETO)" x="4700" y="3000"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="AX_IN" Type="adapter::types::unidirectional::AX" Comment="Value to store (SET)" x="-900" y="1200"/>
+		</Sockets>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="NVS" Type="logiBUS::storage::esp32_nvs::NVS" x="1366.67" y="1940">
+		</FB>
+		<FB Name="SET_PERMIT" Type="iec61499::events::E_PERMIT" x="3600" y="2100">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="NVS.INIT" dx1="333.33"/>
+			<Connection Source="NVS.INITO" Destination="INITO" dx1="200"/>
+			<Connection Source="NVS.INITO" Destination="NVS.GET" dx1="133.33" dx2="133.33" dy="-226.67"/>
+			<Connection Source="AX_IN.E1" Destination="NVS.SET" dx1="313.33"/>
+			<Connection Source="SET_PERMIT.EO" Destination="AX_OUT.E1" dx1="120"/>
+			<Connection Source="NVS.GETO" Destination="AX_OUT.E1" dx1="700"/>
+			<Connection Source="NVS.SETO" Destination="SET_PERMIT.EI" dx1="433.33"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="QI" Destination="NVS.QI" dx1="266.67"/>
+			<Connection Source="SETM" Destination="SET_PERMIT.PERMIT" dx1="2746.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="KEY" Destination="NVS.KEY" dx1="200"/>
+			<Connection Source="DEFAULT_VALUE" Destination="NVS.DEFAULT_VALUE" dx1="66.67"/>
+			<Connection Source="AX_IN.D1" Destination="NVS.VALUE" dx1="100"/>
+			<Connection Source="NVS.VALUEO" Destination="AX_OUT.D1" dx1="133.33"/>
+			<Connection Source="NVS.QO" Destination="QO" dx1="2613.33"/>
+			<Connection Source="NVS.STATUS" Destination="STATUS" dx1="2613.33"/>
+		</DataConnections>
+	</FBNetwork>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

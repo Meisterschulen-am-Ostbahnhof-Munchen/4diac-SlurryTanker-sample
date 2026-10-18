@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="ILOCK_BLOCK_PROTECT_A2X" Comment="Prioritizes the first active input with protection dead-time (Adapter Version,&#10;UP/DOWN fed from a single A2X input/output).">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-09-05" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::signalprocessing::interlock">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="UPDATE" Type="Event" Comment="Update parameters">
+				<With Var="DT_PROTECT"/>
+			</Event>
+		</EventInputs>
+		<InputVars>
+			<VarDeclaration Name="DT_PROTECT" Type="TIME" Comment="Protection Time" InitialValue="T#50ms"/>
+		</InputVars>
+		<Plugs>
+			<AdapterDeclaration Name="OUT" Type="adapter::types::unidirectional::A2X" Comment="Output for forward/up and backward/down direction"/>
+			<AdapterDeclaration Name="timeOut" Type="iec61499::events::ATimeOut" Comment="timeOut Adapter"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::A2X" Comment="Input for forward/up and backward/down direction"/>
+		</Sockets>
+	</InterfaceList>
+	<BasicFB>
+		<ECC>
+			<ECState Name="STOP" x="2800" y="1440">
+			</ECState>
+			<ECState Name="UP" x="5120" y="640">
+				<ECAction Algorithm="UP" Output="OUT.E_UP"/>
+			</ECState>
+			<ECState Name="DOWN" x="4800" y="1920">
+				<ECAction Algorithm="DOWN" Output="OUT.E_DOWN"/>
+			</ECState>
+			<ECState Name="UP_STOP" x="5040" y="1280">
+				<ECAction Algorithm="STOP" Output="OUT.E_UP"/>
+				<ECAction Output="timeOut.START"/>
+			</ECState>
+			<ECState Name="DOWN_STOP" x="4720" y="2640">
+				<ECAction Algorithm="STOP" Output="OUT.E_DOWN"/>
+				<ECAction Output="timeOut.START"/>
+			</ECState>
+			<ECState Name="EVAL" x="8080" y="1520">
+			</ECState>
+			<ECTransition Source="STOP" Destination="DOWN" Condition="IN.E_DOWN[IN.DOWN]" x="4133.33" y="1733.33"/>
+			<ECTransition Source="STOP" Destination="UP" Condition="IN.E_UP[IN.UP]" x="4173.33" y="1020"/>
+			<ECTransition Source="DOWN" Destination="DOWN_STOP" Condition="IN.E_DOWN[NOT IN.DOWN]" x="4766.67" y="2293.33"/>
+			<ECTransition Source="UP" Destination="UP_STOP" Condition="IN.E_UP[NOT IN.UP]" x="5146.67" y="1053.33"/>
+			<ECTransition Source="UP_STOP" Destination="EVAL" Condition="timeOut.TimeOut" x="5273.33" y="1700"/>
+			<ECTransition Source="DOWN_STOP" Destination="EVAL" Condition="timeOut.TimeOut" x="5653.33" y="2206.67"/>
+			<ECTransition Source="EVAL" Destination="UP" Condition="[IN.UP AND NOT IN.DOWN]" x="6433.33" y="1073.33"/>
+			<ECTransition Source="EVAL" Destination="DOWN" Condition="[IN.DOWN AND NOT IN.UP]" x="6520" y="1833.33"/>
+			<ECTransition Source="EVAL" Destination="STOP" Condition="[(NOT IN.UP AND NOT IN.DOWN) OR (IN.UP AND IN.DOWN)]" x="5400" y="260"/>
+			<ECTransition Source="STOP" Destination="STOP" Condition="UPDATE" x="2500" y="1980"/>
+			<ECTransition Source="UP" Destination="UP" Condition="UPDATE" x="5400" y="500"/>
+			<ECTransition Source="DOWN" Destination="DOWN" Condition="UPDATE" x="4500" y="2200"/>
+		</ECC>
+		<Algorithm Name="UP">
+			<ST><![CDATA[
+timeOut.DT := DT_PROTECT;
+OUT.UP := BOOL#TRUE;
+OUT.DOWN := BOOL#FALSE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="DOWN">
+			<ST><![CDATA[
+timeOut.DT := DT_PROTECT;
+OUT.UP := BOOL#FALSE;
+OUT.DOWN := BOOL#TRUE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="STOP">
+			<ST><![CDATA[
+timeOut.DT := DT_PROTECT;
+OUT.UP := BOOL#FALSE;
+OUT.DOWN := BOOL#FALSE;
+]]></ST>
+		</Algorithm>
+	</BasicFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

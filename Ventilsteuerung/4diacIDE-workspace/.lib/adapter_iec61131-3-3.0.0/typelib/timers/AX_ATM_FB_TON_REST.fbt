@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="AX_ATM_FB_TON_REST" Comment="AX_ATM_FB_TON, zusaetzlich mit REST (verbleibende Zeit PT-ET) als AR-Ausgang">
+	<Identification Standard="61131-3" Classification="standard timer function block" Description="Copyright (c) 2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0  &#10; &#10;Kapselt die in mehreren Anwendungen wiederkehrende Kette&#10;AX_ATM_FB_TON -&gt; ATM_SUB(PT,ET) -&gt; ATM_IN_S_TO_ALR -&gt; ALR_TO_AR&#10;in einem Baustein. REST ist die verbleibende Zeit in Sekunden (PT-ET),&#10;ohne Sentinel-Konvention (kein -1 bei inaktiv) - ein Aufrufer, der z.B.&#10;-1=inaktiv braucht, gated REST selbst mit einem AR_AX_SEL_AR davor/danach.&#10;REST aktualisiert sich mit derselben Aufloesung wie ET (E_D_FF_ANY, nur bei&#10;tatsaechlicher Wertaenderung von ET oder PT).">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-08-26" Remarks="initial API and implementation">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::iec61131::timers">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event" Comment="wie AX_ATM_FB_TON.REQ - gleichwertig zu IN.E1/PT.E1">
+			</Event>
+		</EventInputs>
+		<Plugs>
+			<AdapterDeclaration Name="Q" Type="adapter::types::unidirectional::AX" Comment="Output" x="8200" y="700"/>
+			<AdapterDeclaration Name="ET" Type="adapter::types::unidirectional::ATM" Comment="Elapsed time" x="8200" y="1400"/>
+			<AdapterDeclaration Name="REST" Type="adapter::types::unidirectional::AR" Comment="Verbleibende Zeit PT-ET, Sekunden, kein Sentinel" x="8200" y="2000"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AX" Comment="Input" x="-1000" y="500"/>
+			<AdapterDeclaration Name="PT" Type="adapter::types::unidirectional::ATM" Comment="Process time" x="-1700" y="1900"/>
+		</Sockets>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="AX_ATM_FB_TON" Type="adapter::iec61131::timers::AX_ATM_FB_TON" x="1100" y="1400">
+		</FB>
+		<FB Name="PT_SPLIT" Type="adapter::events::unidirectional::ATM_SPLIT_2" x="100" y="2100">
+		</FB>
+		<FB Name="ET_SPLIT" Type="adapter::events::unidirectional::ATM_SPLIT_2" x="2200" y="1800">
+		</FB>
+		<FB Name="REST_SUB" Type="adapter::iec61131::arithmetic::ATM_SUB" x="3300" y="2200">
+		</FB>
+		<FB Name="S_TO_ALR" Type="adapter::conversion::unidirectional::ATM_IN_S_TO_ALR" x="4400" y="2200">
+		</FB>
+		<FB Name="ALR_TO_R" Type="adapter::conversion::unidirectional::ALR_TO_AR" x="5700" y="2200">
+		</FB>
+		<FB Name="AR_R_TO_REAL" Type="adapter::conversion::unidirectional::AR_R_TO_REAL" x="6800" y="2000">
+		</FB>
+		<FB Name="AX_X_TO_BOOL" Type="adapter::conversion::unidirectional::AX_X_TO_BOOL" x="6700" y="700">
+		</FB>
+		<FB Name="ATM_TM_TO_TIME" Type="adapter::conversion::unidirectional::ATM_TM_TO_TIME" x="6700" y="1400">
+		</FB>
+		<FB Name="AX_BOOL_TO_X" Type="adapter::conversion::unidirectional::AX_BOOL_TO_X" x="-500" y="500">
+		</FB>
+		<FB Name="ATM_TIME_TO_TM" Type="adapter::conversion::unidirectional::ATM_TIME_TO_TM" x="-1000" y="1900">
+		</FB>
+		<EventConnections>
+			<Connection Source="REQ" Destination="AX_ATM_FB_TON.REQ" dx1="500"/>
+			<Connection Source="AR_R_TO_REAL.CNF" Destination="REST.E1"/>
+			<Connection Source="AX_X_TO_BOOL.CNF" Destination="Q.E1"/>
+			<Connection Source="ATM_TM_TO_TIME.CNF" Destination="ET.E1"/>
+			<Connection Source="IN.E1" Destination="AX_BOOL_TO_X.REQ"/>
+			<Connection Source="PT.E1" Destination="ATM_TIME_TO_TM.REQ"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="AR_R_TO_REAL.IN" Destination="REST.D1"/>
+			<Connection Source="AX_X_TO_BOOL.IN" Destination="Q.D1"/>
+			<Connection Source="ATM_TM_TO_TIME.IN" Destination="ET.D1"/>
+			<Connection Source="IN.D1" Destination="AX_BOOL_TO_X.OUT"/>
+			<Connection Source="PT.D1" Destination="ATM_TIME_TO_TM.OUT"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="PT_SPLIT.OUT1" Destination="AX_ATM_FB_TON.PT" dx1="100"/>
+			<Connection Source="PT_SPLIT.OUT2" Destination="REST_SUB.IN1" dx1="1300"/>
+			<Connection Source="AX_ATM_FB_TON.ET" Destination="ET_SPLIT.IN" dx1="126.67"/>
+			<Connection Source="ET_SPLIT.OUT2" Destination="REST_SUB.IN2" dx1="120"/>
+			<Connection Source="REST_SUB.OUT" Destination="S_TO_ALR.IN"/>
+			<Connection Source="S_TO_ALR.OUT" Destination="ALR_TO_R.ALR_IN"/>
+			<Connection Source="ALR_TO_R.AR_OUT" Destination="AR_R_TO_REAL.AR_IN" dx1="166.67"/>
+			<Connection Source="AX_ATM_FB_TON.Q" Destination="AX_X_TO_BOOL.AX_IN" dx1="2400"/>
+			<Connection Source="ET_SPLIT.OUT1" Destination="ATM_TM_TO_TIME.ATM_IN" dx1="1746.67"/>
+			<Connection Source="AX_BOOL_TO_X.AX_OUT" Destination="AX_ATM_FB_TON.IN" dx1="373.33"/>
+			<Connection Source="ATM_TIME_TO_TM.ATM_OUT" Destination="PT_SPLIT.IN" dx1="80" dx2="80" dy="-6.67"/>
+		</AdapterConnections>
+	</FBNetwork>
+	<Service RightInterface="RESOURCE" LeftInterface="APPLICATION">
+	</Service>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

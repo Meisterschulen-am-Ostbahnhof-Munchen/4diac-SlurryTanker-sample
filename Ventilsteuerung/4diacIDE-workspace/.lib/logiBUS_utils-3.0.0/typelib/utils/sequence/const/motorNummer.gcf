@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="motorNummer" Comment="Motor-Identitaet als SINT (0 = keiner, 1..6 = Mx), fuer AnlagenSequenz_06.TRANSIT_MOTOR, s. KONZEPT_Anlagensequenz.md">
+	<Identification Standard="61499-1" Description="Copyright (c) 2026 HR Agrartechnik GmbH &#10; &#10;This program and the accompanying materials are made &#10;available under the terms of the Eclipse Public License 2.0 &#10;which is available at https://www.eclipse.org/legal/epl-2.0/ &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-08-25">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::utils::sequence::const">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="MOTOR_KEINER" Type="SINT" Comment="kein Motor" InitialValue="SINT#0"/>
+		<VarDeclaration Name="MOTOR_M1" Type="SINT" Comment="Motor 1" InitialValue="SINT#1"/>
+		<VarDeclaration Name="MOTOR_M2" Type="SINT" Comment="Motor 2" InitialValue="SINT#2"/>
+		<VarDeclaration Name="MOTOR_M3" Type="SINT" Comment="Motor 3" InitialValue="SINT#3"/>
+		<VarDeclaration Name="MOTOR_M4" Type="SINT" Comment="Motor 4" InitialValue="SINT#4"/>
+		<VarDeclaration Name="MOTOR_M5" Type="SINT" Comment="Motor 5" InitialValue="SINT#5"/>
+		<VarDeclaration Name="MOTOR_M6" Type="SINT" Comment="Motor 6" InitialValue="SINT#6"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE logiBUS::utils::sequence::const;
+
+GLOBALCONSTANTS motorNummer
+	VAR_GLOBAL CONSTANT
+		MOTOR_KEINER : SINT := SINT#0; // kein Motor
+		MOTOR_M1 : SINT := SINT#1; // Motor 1
+		MOTOR_M2 : SINT := SINT#2; // Motor 2
+		MOTOR_M3 : SINT := SINT#3; // Motor 3
+		MOTOR_M4 : SINT := SINT#4; // Motor 4
+		MOTOR_M5 : SINT := SINT#5; // Motor 5
+		MOTOR_M6 : SINT := SINT#6; // Motor 6
+	END_VAR
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</GlobalConstants>

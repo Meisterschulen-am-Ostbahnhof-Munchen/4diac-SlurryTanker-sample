@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="AE2_ILOCK_T_FF_TO_BOOL_EVENT" Comment="Ein Kettenglied eines wechselseitig verriegelten Toggle-Flip-Flops via&#10;AE2-Bidirektional-Adapter (SOCKET/PLUG-Kette), Ausgang als BOOL Q + Event EO.&#10;Generisch fuer beliebig viele Teilnehmer nutzbar, indem PLUG des einen an SOCKET&#10;des naechsten angeschlossen wird. Schwester-Baustein zu&#10;MyLib::sys::AE2_ILOCK_T_FF_TO_AX (dort Ausgang als AX-Adapter statt BOOL+Event).">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-09" Remarks="Ausgelagert aus Uebung_004b3c_sub zur Wiederverwendung fuer weitere verriegelte Toggle-Ketten.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="IND" Type="Event">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="EO" Type="Event">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<OutputVars>
+			<VarDeclaration Name="Q" Type="BOOL"/>
+		</OutputVars>
+		<Sockets>
+			<AdapterDeclaration Name="SOCKET" Type="adapter::types::bidirectional::AE2"/>
+		</Sockets>
+		<Plugs>
+			<AdapterDeclaration Name="PLUG" Type="adapter::types::bidirectional::AE2"/>
+		</Plugs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="E_SR_I1" Type="iec61499::events::E_SR" x="2100" y="-900">
+		</FB>
+		<FB Name="E_SWITCH_I1" Type="iec61499::events::E_SWITCH" x="-1100" y="-900">
+		</FB>
+		<FB Name="AE2_EVENT_TO_E" Type="adapter::conversion::bidirectional::AE2_EVENT_TO_E" x="600" y="600">
+		</FB>
+		<FB Name="AE2_E_TO_EVENT" Type="adapter::conversion::bidirectional::AE2_E_TO_EVENT" x="600" y="0">
+		</FB>
+		<EventConnections>
+			<Connection Source="E_SWITCH_I1.EO0" Destination="E_SR_I1.S"/>
+			<Connection Source="E_SWITCH_I1.EO1" Destination="E_SR_I1.R"/>
+			<Connection Source="E_SR_I1.EO" Destination="EO" dx1="780"/>
+			<Connection Source="IND" Destination="E_SWITCH_I1.EI" dx1="693.33"/>
+			<Connection Source="E_SWITCH_I1.EO0" Destination="AE2_EVENT_TO_E.REQ" dx1="353.33"/>
+			<Connection Source="AE2_E_TO_EVENT.CNF" Destination="E_SR_I1.R" dx1="300"/>
+			<Connection Source="AE2_EVENT_TO_E.CNF" Destination="E_SR_I1.R" dx1="426.67"/>
+			<Connection Source="E_SWITCH_I1.EO0" Destination="AE2_E_TO_EVENT.REQ" dx1="593.33"/>
+			<Connection Source="AE2_E_TO_EVENT.CNF" Destination="AE2_EVENT_TO_E.REQ" dx1="80" dx2="80" dy="300"/>
+			<Connection Source="AE2_EVENT_TO_E.CNF" Destination="AE2_E_TO_EVENT.REQ" dx1="80" dx2="80" dy="-300"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="E_SR_I1.Q" Destination="E_SWITCH_I1.G" dx1="80" dx2="80" dy="160"/>
+			<Connection Source="E_SR_I1.Q" Destination="Q" dx1="1306.67"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="SOCKET" Destination="AE2_E_TO_EVENT.AE2_IN" dx1="80"/>
+			<Connection Source="AE2_EVENT_TO_E.AE2_OUT" Destination="PLUG" dx1="3313.33"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

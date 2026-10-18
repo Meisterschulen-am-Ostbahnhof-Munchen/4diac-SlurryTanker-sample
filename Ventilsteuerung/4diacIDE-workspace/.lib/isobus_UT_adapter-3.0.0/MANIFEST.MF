@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Manifest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="platform:/resource/org.eclipse.fordiac.ide.library.model/model/library.xsd" Scope="Library">
+  <Dependencies>
+    <Required SymbolicName="adapter_types" Version="3.0.0"/>
+    <Required SymbolicName="isobus_UT" Version="3.1.1"/>
+  </Dependencies>
+  <Product Comment="AR/AX/AD-Adapter-Wrapper um isobus_UT (nur UT/Q), herausgeloest aus isobus_adapter-3.0.0 - getrennt von isobus_tecu_adapter, da UT und tecu keine gegenseitigen Referenzen haben. UT/io am 2026-10-10 nach isobus_UT_io_adapter ausgelagert, um 1:1 mit der Trennung isobus_UT/isobus_UT_io mitzuziehen (Franz: Namensraum-Mehrdeutigkeit im ELF-Lib-Zuordnungsskript vermeiden)" Name="isobus_UT_adapter" SymbolicName="isobus_UT_adapter">
+    <VersionInfo Author="HR Agrartechnik GmbH" Date="2026-10-14" Version="3.1.1"/>
+  </Product>
+</Manifest>

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="ILOCK_CONFLICT_TRIP_PROTECT" Comment="Prioritizes the first active input and trips on conflict (requires RESET), with&#10;a configurable dead-time (DT_PROTECT) after release before a new direction can&#10;be activated.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-07" Remarks="ILOCK_CONFLICT_TRIP + Totzeit nach Freigabe, wie ILOCK_BLOCK_PROTECT sie fuer ILOCK_BLOCK ergaenzt - TRAINING_GAPS.md Punkt 6">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::signalprocessing::interlock">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="EI_UP" Type="Event">
+				<With Var="DI_UP"/>
+				<With Var="DT_PROTECT"/>
+			</Event>
+			<Event Name="EI_DOWN" Type="Event">
+				<With Var="DI_DOWN"/>
+				<With Var="DT_PROTECT"/>
+			</Event>
+			<Event Name="EI_RESET" Type="Event">
+				<With Var="DI_UP"/>
+				<With Var="DI_DOWN"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="EO_UP" Type="Event">
+				<With Var="DO_UP"/>
+			</Event>
+			<Event Name="EO_DOWN" Type="Event">
+				<With Var="DO_DOWN"/>
+			</Event>
+			<Event Name="EO_TRIP" Type="Event">
+				<With Var="DO_TRIP"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="DI_UP" Type="BOOL" Comment="TRUE = forward, up, right, clockwise"/>
+			<VarDeclaration Name="DI_DOWN" Type="BOOL" Comment="TRUE = backward, down, left, counter-clockwise"/>
+			<VarDeclaration Name="DT_PROTECT" Type="TIME" Comment="Protection Time" InitialValue="T#50ms"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="DO_UP" Type="BOOL" Comment="TRUE = forward, up, right, clockwise"/>
+			<VarDeclaration Name="DO_DOWN" Type="BOOL" Comment="TRUE = backward, down, left, counter-clockwise"/>
+			<VarDeclaration Name="DO_TRIP" Type="BOOL" Comment="TRUE = Conflict/Trip state active"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="timeOut" Type="iec61499::events::ATimeOut" Comment="timeOut Adapter"/>
+		</Plugs>
+	</InterfaceList>
+	<BasicFB>
+		<ECC>
+			<ECState Name="STOP" x="2800" y="1440">
+				<ECAction Algorithm="STOP" Output="EO_UP"/>
+				<ECAction Output="EO_DOWN"/>
+				<ECAction Output="EO_TRIP"/>
+			</ECState>
+			<ECState Name="UP" x="5120" y="640">
+				<ECAction Algorithm="UP" Output="EO_UP"/>
+			</ECState>
+			<ECState Name="DOWN" x="5040" y="1920">
+				<ECAction Algorithm="DOWN" Output="EO_DOWN"/>
+			</ECState>
+			<ECState Name="TRIP" x="7200" y="1440">
+				<ECAction Algorithm="TRIP" Output="EO_UP"/>
+				<ECAction Output="EO_DOWN"/>
+				<ECAction Output="EO_TRIP"/>
+			</ECState>
+			<ECState Name="UP_STOP" x="5040" y="1280">
+				<ECAction Algorithm="STOP" Output="EO_UP"/>
+				<ECAction Output="timeOut.START"/>
+			</ECState>
+			<ECState Name="DOWN_STOP" x="4720" y="2640">
+				<ECAction Algorithm="STOP" Output="EO_DOWN"/>
+				<ECAction Output="timeOut.START"/>
+			</ECState>
+			<ECState Name="EVAL" x="8080" y="1520">
+			</ECState>
+			<ECTransition Source="STOP" Destination="UP" Condition="EI_UP[DI_UP AND NOT DI_DOWN]" x="4173.33" y="1020"/>
+			<ECTransition Source="STOP" Destination="DOWN" Condition="EI_DOWN[DI_DOWN AND NOT DI_UP]" x="4133.33" y="1733.33"/>
+			<ECTransition Source="STOP" Destination="TRIP" Condition="EI_UP[DI_UP AND DI_DOWN]" x="5000" y="1200"/>
+			<ECTransition Source="STOP" Destination="TRIP" Condition="EI_DOWN[DI_UP AND DI_DOWN]" x="5000" y="1400"/>
+			<ECTransition Source="UP" Destination="UP_STOP" Condition="EI_UP[NOT DI_UP]" x="5146.67" y="1053.33"/>
+			<ECTransition Source="UP" Destination="TRIP" Condition="EI_DOWN[DI_DOWN]" x="6200" y="1000"/>
+			<ECTransition Source="DOWN" Destination="DOWN_STOP" Condition="EI_DOWN[NOT DI_DOWN]" x="4766.67" y="2293.33"/>
+			<ECTransition Source="DOWN" Destination="TRIP" Condition="EI_UP[DI_UP]" x="6000" y="1600"/>
+			<ECTransition Source="UP_STOP" Destination="EVAL" Condition="timeOut.TimeOut" x="5273.33" y="1700"/>
+			<ECTransition Source="DOWN_STOP" Destination="EVAL" Condition="timeOut.TimeOut" x="5653.33" y="2206.67"/>
+			<ECTransition Source="EVAL" Destination="UP" Condition="[DI_UP AND NOT DI_DOWN]" x="6433.33" y="1073.33"/>
+			<ECTransition Source="EVAL" Destination="DOWN" Condition="[DI_DOWN AND NOT DI_UP]" x="6520" y="1833.33"/>
+			<ECTransition Source="EVAL" Destination="STOP" Condition="[NOT DI_UP AND NOT DI_DOWN]" x="5400" y="260"/>
+			<ECTransition Source="EVAL" Destination="TRIP" Condition="[DI_UP AND DI_DOWN]" x="7600" y="1900"/>
+			<ECTransition Source="TRIP" Destination="STOP" Condition="EI_RESET[NOT DI_UP AND NOT DI_DOWN]" x="5000" y="2400"/>
+		</ECC>
+		<Algorithm Name="UP">
+			<ST><![CDATA[
+timeOut.DT := DT_PROTECT;
+DO_UP := BOOL#TRUE;
+DO_DOWN := BOOL#FALSE;
+DO_TRIP := BOOL#FALSE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="DOWN">
+			<ST><![CDATA[
+timeOut.DT := DT_PROTECT;
+DO_UP := BOOL#FALSE;
+DO_DOWN := BOOL#TRUE;
+DO_TRIP := BOOL#FALSE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="STOP">
+			<ST><![CDATA[
+timeOut.DT := DT_PROTECT;
+DO_UP := BOOL#FALSE;
+DO_DOWN := BOOL#FALSE;
+DO_TRIP := BOOL#FALSE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="TRIP">
+			<ST><![CDATA[
+DO_UP := BOOL#FALSE;
+DO_DOWN := BOOL#FALSE;
+DO_TRIP := BOOL#TRUE;
+]]></ST>
+		</Algorithm>
+	</BasicFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>ILOCK_CONFLICT_TRIP + Dead-Time</h1>
+
+<p>Kombiniert <code>ILOCK_CONFLICT_TRIP</code> (First-Wins, TRIP bei Konflikt, RESET nötig) mit der
+Schutz-Totzeit (<code>DT_PROTECT</code>) von <code>ILOCK_BLOCK_PROTECT</code>: nach Freigabe des
+aktiven Eingangs wird <code>DT_PROTECT</code> abgewartet, bevor eine neue Richtung (oder erneut ein
+TRIP, falls währenddessen der andere Eingang aktiviert wurde) übernommen wird.</p>
+
+<h2>Unterschied zu ILOCK_CONFLICT_TRIP</h2>
+
+<p><code>ILOCK_CONFLICT_TRIP</code> reagiert sofort auf Freigabe des aktiven Eingangs (kein
+Schutzzeit-Zustand). Dieser Baustein fügt - analog zu <code>ILOCK_BLOCK_PROTECT</code> gegenüber
+<code>ILOCK_BLOCK</code> - die Zustände <code>UP_STOP</code>/<code>DOWN_STOP</code> ein: nach
+Freigabe läuft <code>timeOut</code> (<code>DT_PROTECT</code>), erst danach (Zustand
+<code>EVAL</code>) wird der tatsächlich aktuelle Zustand von <code>DI_UP</code>/<code>DI_DOWN</code>
+neu bewertet - inklusive TRIP, falls beide während der Totzeit aktiv wurden.</p>
+
+<p>Die TRIP-Semantik selbst (Konflikt löst sofort TRIP aus, unabhängig von der Totzeit; RESET nur
+akzeptiert, wenn beide Eingänge inaktiv sind) bleibt unverändert gegenüber
+<code>ILOCK_CONFLICT_TRIP</code>.</p>
+]]></Attribute>
+</FBType>

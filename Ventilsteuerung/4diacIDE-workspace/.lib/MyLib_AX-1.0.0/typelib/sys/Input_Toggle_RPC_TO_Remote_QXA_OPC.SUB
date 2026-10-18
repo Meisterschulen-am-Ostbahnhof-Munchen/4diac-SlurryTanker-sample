@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Input_Toggle_RPC_TO_Remote_QXA_OPC" Comment="Wie Softkey_Toggle_RPC_TO_Remote_BG_OPC, aber ohne VT: Tastendruck an Input ruft die Toggle-Methode auf, Zustand auf Output">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-18" Remarks="logiBUS_IE statt Softkey_IE, logiBUS_QXA statt GreenWhiteBackground - fuer Tests ohne ISOBUS (Meins/OPC_UA_Lokal L03)">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="logiBUS::io::DI::logiBUS_DI"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_S"/>
+		<Import declaration="logiBUS::io::DI::logiBUS_DI_Events::BUTTON_PRESS_DOWN"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO_S"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="Input" Type="logiBUS::io::DI::logiBUS_DI_S" Comment="Taster Input_I1..I8 (Tastendruck ruft die Methode)" InitialValue="logiBUS_DI::Invalid"/>
+			<VarDeclaration Name="Output" Type="logiBUS::io::DQ::logiBUS_DO_S" Comment="Anzeige des Flipflop-Zustands Output_Q1..Q8" InitialValue="logiBUS_DO::Invalid"/>
+			<VarDeclaration Name="ID_TRIGGER_CALL" Type="WSTRING" Comment="Methodenadresse (ACTION=CALL_METHOD, mit Endpunkt)"/>
+			<VarDeclaration Name="ID_STATE_READ" Type="WSTRING" Comment="Lokale Adresse (BOOL, ACTION=READ) fuer den Zustand"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="TRIGGER_INPUT" Type="logiBUS::io::DI::logiBUS_IE" x="-7400" y="-300">
+			<Parameter Name="InputEvent" Value="BUTTON_PRESS_DOWN"/>
+		</FB>
+		<FB Name="TRIGGER_CLIENT" Type="iec61499::net::CLIENT_0" x="-5500" y="200">
+		</FB>
+		<FB Name="STATE_SUBSCRIBE" Type="adapter::net::AX_SUBSCRIBE_1" x="-4200" y="600">
+		</FB>
+		<FB Name="STATE_OUTPUT" Type="logiBUS::io::DQ::logiBUS_QXA" x="-2000" y="1600">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_4" x="500" y="100">
+		</FB>
+		<EventConnections>
+			<Connection Source="TRIGGER_INPUT.IND" Destination="TRIGGER_CLIENT.REQ" dx1="600"/>
+			<Connection Source="INIT" Destination="TRIGGER_INPUT.INIT" dx1="680"/>
+			<Connection Source="TRIGGER_INPUT.INITO" Destination="TRIGGER_CLIENT.INIT" dx1="933.33"/>
+			<Connection Source="TRIGGER_CLIENT.INITO" Destination="STATE_SUBSCRIBE.INIT" dx1="560"/>
+			<Connection Source="STATE_SUBSCRIBE.INITO" Destination="STATE_OUTPUT.INIT" dx1="680"/>
+			<Connection Source="STATE_OUTPUT.INITO" Destination="INITO" dx1="660"/>
+			<Connection Source="STATE_OUTPUT.INITO" Destination="AND_QO.REQ" dx1="420">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="Input" Destination="TRIGGER_INPUT.Input" dx1="473.33"/>
+			<Connection Source="Output" Destination="STATE_OUTPUT.Output" dx1="193.33"/>
+			<Connection Source="ID_TRIGGER_CALL" Destination="TRIGGER_CLIENT.ID" dx1="373.33"/>
+			<Connection Source="ID_STATE_READ" Destination="STATE_SUBSCRIBE.ID" dx1="326.67"/>
+			<Connection Source="QI" Destination="TRIGGER_INPUT.QI" dx1="580">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="TRIGGER_CLIENT.QI" dx1="2700">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="STATE_SUBSCRIBE.QI" dx1="2200">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="STATE_OUTPUT.QI" dx1="3500">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="TRIGGER_INPUT.QO" Destination="AND_QO.IN1" dx1="2753.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="TRIGGER_CLIENT.QO" Destination="AND_QO.IN2" dx1="2166.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="STATE_SUBSCRIBE.QO" Destination="AND_QO.IN3" dx1="1826.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="STATE_OUTPUT.QO" Destination="AND_QO.IN4" dx1="420">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="1006.67"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="STATE_SUBSCRIBE.OUT" Destination="STATE_OUTPUT.OUT" dx1="166.67"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

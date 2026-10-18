@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="USERFUNC_e" Comment="Global constants">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Version="1.0" Author="Franz Höpfinger" Date="2025-09-04">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::pgn">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="working_set_master" Type="SINT" InitialValue="0"/>
+		<VarDeclaration Name="task_controller" Type="SINT" InitialValue="1"/>
+		<VarDeclaration Name="virtual_terminal" Type="SINT" InitialValue="2"/>
+		<VarDeclaration Name="tractor_ecu" Type="SINT" InitialValue="3"/>
+		<VarDeclaration Name="auxiliary" Type="SINT" InitialValue="4"/>
+		<VarDeclaration Name="sequence_control_master" Type="SINT" InitialValue="5"/>
+		<VarDeclaration Name="working_set_member" Type="SINT" InitialValue="6"/>
+		<VarDeclaration Name="steering_control" Type="SINT" InitialValue="7"/>
+		<VarDeclaration Name="off_vehicle_gateway" Type="SINT" InitialValue="8"/>
+		<VarDeclaration Name="network_interconnection_unit" Type="SINT" InitialValue="9"/>
+		<VarDeclaration Name="unknown" Type="SINT" InitialValue="10"/>
+		<VarDeclaration Name="file_server" Type="SINT" InitialValue="11"/>
+		<VarDeclaration Name="virtual_cf" Type="SINT" InitialValue="12"/>
+		<VarDeclaration Name="bridged_cf" Type="SINT" Comment="virtual CF on this network segment managed from the NIU" InitialValue="13"/>
+		<VarDeclaration Name="datalogger" Type="SINT" Comment="NIU bridged CF on this network segment" InitialValue="14"/>
+		<VarDeclaration Name="tim_server" Type="SINT" InitialValue="16"/>
+		<VarDeclaration Name="tim_server_slave" Type="SINT" InitialValue="17"/>
+		<VarDeclaration Name="sequence_control_client" Type="SINT" Comment="&lt; Use only in clients see IsoClientsReadListofExtHandles()" InitialValue="18"/>
+		<VarDeclaration Name="all_clients" Type="SINT" InitialValue="20"/>
+		<VarDeclaration Name="all_server" Type="SINT" InitialValue="21"/>
+		<VarDeclaration Name="undefined" Type="SINT" InitialValue="-1"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE isobus::pgn;
+
+GLOBALCONSTANTS USERFUNC_e
+	VAR_GLOBAL CONSTANT
+		working_set_master : SINT := 0;
+		task_controller : SINT := 1;
+		virtual_terminal : SINT := 2;
+		tractor_ecu : SINT := 3;
+		auxiliary : SINT := 4;
+		sequence_control_master : SINT := 5;
+		working_set_member : SINT := 6;
+		steering_control : SINT := 7;
+		off_vehicle_gateway : SINT := 8;
+		network_interconnection_unit : SINT := 9;
+		unknown : SINT := 10;
+		file_server : SINT := 11;
+		virtual_cf : SINT := 12; (* virtual CF on this network segment managed from the NIU *)
+		bridged_cf : SINT := 13; (* NIU bridged CF on this network segment *)
+		datalogger : SINT := 14;
+		tim_server : SINT := 16;
+		tim_server_slave : SINT := 17; (* *< Use only in clients see IsoClientsReadListofExtHandles() *)
+		sequence_control_client : SINT := 18;
+		all_clients : SINT := 20;
+		all_server : SINT := 21;
+		undefined : SINT := -1;
+	END_VAR
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</GlobalConstants>

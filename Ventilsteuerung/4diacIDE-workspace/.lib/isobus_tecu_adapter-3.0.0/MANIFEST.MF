@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Manifest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="platform:/resource/org.eclipse.fordiac.ide.library.model/model/library.xsd" Scope="Library">
+  <Dependencies>
+    <Required SymbolicName="adapter_types" Version="3.0.0"/>
+    <Required SymbolicName="events" Version="3.0.0"/>
+    <Required SymbolicName="isobus_tecu" Version="3.0.0"/>
+    <Required SymbolicName="quarter" Version="3.0.0"/>
+  </Dependencies>
+  <Product Comment="AR/AX/AD-Adapter-Wrapper um isobus_tecu (IA_*-Bausteine), herausgeloest aus isobus_adapter-3.0.0 - getrennt von isobus_UT_adapter, da UT und tecu keine gegenseitigen Referenzen haben" Name="isobus_tecu_adapter" SymbolicName="isobus_tecu_adapter">
+    <VersionInfo Author="HR Agrartechnik GmbH" Date="2026-10-09" Version="3.0.0"/>
+  </Product>
+</Manifest>

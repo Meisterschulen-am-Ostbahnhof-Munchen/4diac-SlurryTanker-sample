@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Manifest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="platform:/resource/org.eclipse.fordiac.ide.library.model/model/library.xsd" Scope="Library">
+  <Dependencies>
+    <Required SymbolicName="OSCAT_adapter" Version="3.0.0"/>
+    <Required SymbolicName="adapter" Version="3.0.0"/>
+    <Required SymbolicName="adapter_conversion" Version="3.0.0"/>
+    <Required SymbolicName="adapter_events" Version="3.0.0"/>
+    <Required SymbolicName="adapter_iec61131-3" Version="3.0.0"/>
+    <Required SymbolicName="adapter_selection" Version="3.0.0"/>
+    <Required SymbolicName="adapter_types" Version="3.0.0"/>
+    <Required SymbolicName="events" Version="3.0.0"/>
+    <Required SymbolicName="isobus_UT" Version="3.1.1"/>
+    <Required SymbolicName="isobus_UT_adapter" Version="3.1.1"/>
+    <Required SymbolicName="isobus_UT_io" Version="3.0.1"/>
+    <Required SymbolicName="isobus_UT_io_adapter" Version="3.0.0"/>
+    <Required SymbolicName="isobus_signalprocessing_adapter" Version="3.0.0"/>
+    <Required SymbolicName="logiBUS_io" Version="3.0.0"/>
+    <Required SymbolicName="Option" Version="1.0.0"/>
+    <Required SymbolicName="logiBUS_signalprocessing" Version="3.0.0"/>
+    <Required SymbolicName="logiBUS_signalprocessing_adapter" Version="3.0.0"/>
+    <Required SymbolicName="logiBUS_storage" Version="3.0.0"/>
+    <Required SymbolicName="logiBUS_storage_esp32" Version="3.0.0"/>
+    <Required SymbolicName="net" Version="3.0.0"/>
+    <Required SymbolicName="net_adapter" Version="3.0.0"/>
+    <Required SymbolicName="signalprocessing" Version="3.0.0"/>
+  </Dependencies>
+  <Product Comment="Wiederverwendbare Composite-Bausteine aus test_AX (vormals test_AX/Type Library/MyLib/sys)" Name="MyLib_AX" SymbolicName="MyLib_AX">
+    <VersionInfo Author="Franz Höpfinger" Date="2026-09-02" Version="1.0.0"/>
+  </Product>
+</Manifest>

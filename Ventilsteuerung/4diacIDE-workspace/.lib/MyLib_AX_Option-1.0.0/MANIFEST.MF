@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Manifest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="platform:/resource/org.eclipse.fordiac.ide.library.model/model/library.xsd" Scope="Library">
+  <Dependencies>
+    <Required SymbolicName="core" Version="3.0.0"/>
+    <Required SymbolicName="logiBUS_io" Version="3.0.0"/>
+    <Required SymbolicName="iec61131-3-bool" Version="3.0.1"/>
+    <Required SymbolicName="Option" Version="1.0.0"/>
+  </Dependencies>
+  <Product Comment="Optionsmanagement-Bausteine fuer MyLib_AX (analog zu MyLib_AX_CAN2 aus MyLib_AX herausgeloest, damit optionale Programmteile nicht in MyLib_AX selbst liegen): SubApps, die den AOption-Adapter aus der Option-Library nutzen, um I/O-Gruppen freizuschalten." Name="MyLib_AX_Option" SymbolicName="MyLib_AX_Option">
+    <VersionInfo Author="Franz Höpfinger" Date="2026-10-13" Version="1.0.0"/>
+  </Product>
+</Manifest>

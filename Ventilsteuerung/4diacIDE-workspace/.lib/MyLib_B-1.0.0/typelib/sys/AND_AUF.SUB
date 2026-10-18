@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="AND_AUF" Comment="Logisches UND (IN1 AND IN2) für AUF-Bedingung">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="franz" Date="2025-01-15">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="REQ" Type="Event">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="CNF" Type="Event">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="IN1" Type="BOOL"/>
+			<VarDeclaration Name="IN2" Type="BOOL"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="OUT" Type="BOOL"/>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="AND_2" Type="iec61131::bitwiseOperators::AND_2" x="800" y="-500">
+		</FB>
+		<EventConnections>
+			<Connection Source="REQ" Destination="AND_2.REQ" dx1="2100">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AND_2.CNF" Destination="CNF" dx1="4646.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="IN1" Destination="AND_2.IN1" dx1="2100">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="IN2" Destination="AND_2.IN2" dx1="2100">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AND_2.OUT" Destination="OUT" dx1="4646.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

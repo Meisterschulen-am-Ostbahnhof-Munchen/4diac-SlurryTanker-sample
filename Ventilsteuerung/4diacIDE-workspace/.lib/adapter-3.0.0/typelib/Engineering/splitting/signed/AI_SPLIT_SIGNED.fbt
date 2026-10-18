@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="AI_SPLIT_SIGNED" Comment="Teilt einen INT-Wert in 2 einseitige Betragswerte auf (z.B. fuer 2 getrennte&#10;Bargraphen links/rechts einer Mittelstellung): NEG_MAG = MAX(0,-Y), POS_MAG =&#10;MAX(0,Y). Sonderfall Y=INT#-32768 (INT-Minimum): -Y wuerde ueberlaufen&#10;(Zweierkomplement, |MIN| &gt; MAX) - in diesem Fall wird NEG_MAG auf INT#32767&#10;(INT-Maximum) begrenzt (Regelungstechnik: Saettigung statt&#10;Ueberlauf/Vorzeichenwechsel). Adapter-Wrapper um SPLIT_SIGNED_INT (reine&#10;Value/Event-Berechnung), Event je Seite nur bei tatsaechlicher Wertaenderung&#10;dank je einem E_D_FF_ANY (generischer Standardbaustein) pro Ausgang.">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="3.0" Author="Franz Höpfinger" Date="2026-09-11" Remarks="Vereinfacht: kombinatorische 3-Zustands-ECC (EMIT_BOTH/EMIT_NEG_ONLY/EMIT_POS_ONLY) durch Composite-FB ersetzt - reine Berechnung jetzt in SPLIT_SIGNED_INT (Value/Event), Event-Dedup je Seite durch je einen generischen E_D_FF_ANY">
+	</VersionInfo>
+	<VersionInfo Version="2.3" Author="Franz Höpfinger" Date="2026-09-11" Remarks="Alle Literale vollqualifiziert (INT#...) statt unqualifizierter Zahlenliterale">
+	</VersionInfo>
+	<VersionInfo Version="2.2" Author="Franz Höpfinger" Date="2026-09-11" Remarks="Ueberlauf bei Y=INT#-32768 (INT-Minimum) abgefangen: -Y waere nicht als INT darstellbar (|MIN|&gt;MAX bei Zweierkomplement) - NEG_MAG saettigt in diesem Fall auf INT#32767 statt zu ueberlaufen">
+	</VersionInfo>
+	<VersionInfo Version="2.1" Author="Franz Höpfinger" Date="2026-09-11" Remarks="Kein eigener prevNeg/prevPos-Internal mehr noetig - Vergleich direkt gegen NEG_MAG.D1/POS_MAG.D1 (Plug-Ausgang haelt den letzten Wert bereits selbst)">
+	</VersionInfo>
+	<VersionInfo Version="2.0" Author="Franz Höpfinger" Date="2026-09-11" Remarks="Event nur noch bei tatsaechlicher Wertaenderung je Seite (vorher: bei jedem Y-Update immer beide Events, unabhaengig ob sich der Wert aendert)">
+	</VersionInfo>
+	<VersionInfo Version="1.0" Author="Franz Höpfinger" Date="2026-09-11" Remarks="Typfamilie zu AR_SPLIT_SIGNED, generisch fuer jede aehnliche Anzeige">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::Engineering::splitting::signed">
+	</CompilerInfo>
+	<InterfaceList>
+		<Plugs>
+			<AdapterDeclaration Name="NEG_MAG" Type="adapter::types::unidirectional::AI" Comment="MAX(0, -Y) - Betrag der negativen Auslenkung, bei Y=INT#-32768 gesaettigt auf INT#32767, Event nur bei Aenderung" x="5000" y="600"/>
+			<AdapterDeclaration Name="POS_MAG" Type="adapter::types::unidirectional::AI" Comment="MAX(0, Y) - Betrag der positiven Auslenkung, Event nur bei Aenderung" x="5000" y="1100"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="Y" Type="adapter::types::unidirectional::AI" Comment="Eingangswert" x="300" y="700"/>
+		</Sockets>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="SPLIT" Type="adapter::Engineering::splitting::signed::SPLIT_SIGNED_INT" x="1400" y="700">
+		</FB>
+		<FB Name="DEDUP_NEG" Type="iec61499::events::E_D_FF_ANY" x="3700" y="600">
+		</FB>
+		<FB Name="DEDUP_POS" Type="iec61499::events::E_D_FF_ANY" x="3700" y="1100">
+		</FB>
+		<EventConnections>
+			<Connection Source="Y.E1" Destination="SPLIT.REQ"/>
+			<Connection Source="SPLIT.CNF" Destination="DEDUP_NEG.CLK" dx1="606.67"/>
+			<Connection Source="SPLIT.CNF" Destination="DEDUP_POS.CLK" dx1="660"/>
+			<Connection Source="DEDUP_NEG.EO" Destination="NEG_MAG.E1"/>
+			<Connection Source="DEDUP_POS.EO" Destination="POS_MAG.E1"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="Y.D1" Destination="SPLIT.Y"/>
+			<Connection Source="SPLIT.NEG_MAG" Destination="DEDUP_NEG.D" dx1="606.67"/>
+			<Connection Source="SPLIT.POS_MAG" Destination="DEDUP_POS.D" dx1="660"/>
+			<Connection Source="DEDUP_NEG.Q" Destination="NEG_MAG.D1"/>
+			<Connection Source="DEDUP_POS.Q" Destination="POS_MAG.D1"/>
+		</DataConnections>
+	</FBNetwork>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

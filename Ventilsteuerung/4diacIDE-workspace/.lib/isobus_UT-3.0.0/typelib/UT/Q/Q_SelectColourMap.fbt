@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="Q_SelectColourMap" Comment="Command Select Colour Map ( VT version 4 and later ) ( Part 6 - F.60 )">
+	<Identification Standard="ISO 11783-6" Description="Copyright (c) 2022 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0  &#10;   &#10;   &#10;see Description Tab">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2022-07-08">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::UT::Q">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+				<With Var="QI"/>
+			</Event>
+			<Event Name="REQ" Type="Event" Comment="Service Request">
+				<With Var="QI"/>
+				<With Var="u16ObjIdColourMap"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+				<With Var="s16result"/>
+				<With Var="u16OldObjIdColourMap"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="u16ObjIdColourMap" Type="UINT" Comment="Object ID of Colour map object or FFFF to restore the default colour table (see A.3) " InitialValue="ID_NULL"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
+			<VarDeclaration Name="u16OldObjIdColourMap" Type="UINT" Comment="Old object ID of Colour map object or FFFF to restore the default colour table (see A.3) "/>
+			<VarDeclaration Name="s16result" Type="INT" Comment="retval see description"/>
+		</OutputVars>
+	</InterfaceList>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>Command Select Colour Map ( VT version 4 and later ) ( Part 6 - F.60 )</h1>
+
+<p>The Select Colour Map command is used to select the active Colour Map.
+This command can take a long time to execute.
+The command applies to any presentation from the originating Working Set, which includes objects that may be shown on other Working Set screens
+(e.g. Auxiliary Control objects as may be presented on VT proprietary and other Working Set masks using the Auxiliary Control Designator Type 2 Object Pointer).</p>
+
+<h2>Valid values for u16ObjIdColourMap</h2>
+
+<p>The Select Colour Map or Palette command (F.60) carries, in bytes 2,3, the Object ID of the Colour Map object, the Colour Palette object, or FFFF16 to restore the default colour mapping (see A.3):</p>
+<ul>
+	<li><strong>ColourMap</strong>: 39000 – 39999 (VT version 4 and later)</li>
+	<li><strong>ColourPalette</strong>: 45000 – 45999 (VT version 6 and later, per Annex F.60)</li>
+	<li><strong>FFFF16</strong>: restores the default colour table (see A.3)</li>
+</ul>
+
+<p><em>Implementation note (VTClientHelper):</em> <code>iso_is_colour_map_id</code> only accepts the ColourMap range — a ColourPalette ID (45000 – 45999) is rejected. In addition, ID_NULL (65535), the documented FFFF16 value to restore the default colour table, is swallowed by <code>cmd_select_colour_map_or_palette</code>, which returns VT_E_NO_ERR (0) without sending any command to the VT. These are known deviations.</p>
+
+<h2>param[in] {objectID, uint16_t}</h2>
+
+<p>Object ID of Colour map object or FFFF to restore the default colour table (see A.3)</p>
+
+<h2>Return Values (s16result):</h2>
+
+<h3>int16_t</h3>
+
+<ul>
+	<li><span style="color:#27ae60">VT_E_NO_ERR (0)</span> - OK</li>
+	<li><span style="color:#e74c3c">VT_E_NOT_READY (-131)</span> - VT client not yet ready</li>
+	<li><span style="color:#e74c3c">VT_E_OVERFLOW (-6)</span> - buffer overflow</li>
+	<li><span style="color:#e74c3c">VT_E_NOACT (-8)</span> - Command not possible in current state</li>
+	<li><span style="color:#e74c3c">VT_E_NO_INSTANCE (-21)</span> - No VT client available</li>
+	<li><span style="color:#e74c3c">VT_E_ISO_INSTANCE_INVALID (-129)</span> - Identifier for instance (connection) invalid</li>
+	<li><span style="color:#e74c3c">VT_E_NOT_ALIVE (-130)</span> - Identifier for instance valid, but VT Dead.</li>
+	<li><span style="color:#2980b9">VT_OK_BUFFERED (18)</span> - command buffered, waiting for VT to be ready</li>
+</ul>
+<h2>Instanz-Eindeutigkeit (Instance Uniqueness)</h2>
+
+<p>Dieser Baustein ist konzeptionell als Singleton (genau eine Instanz im gesamten Programm) vorgesehen.</p>
+]]></Attribute>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

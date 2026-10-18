@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="IG2_Device_Classes" Comment="Industry Group 2 specific device classes (vehicle systems)">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Organization="Demmler Andreas Fahrzeugbau" Version="1.0" Author="Franz Höpfinger" Date="2026-06-30">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::pgn::const">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="DC_NON_SPECIFIC_SYSTEM" Type="BYTE" Comment="Device Class / Vehicle System: Non-specific System" InitialValue="0"/>
+		<VarDeclaration Name="DC_TRACTOR" Type="BYTE" Comment="Device Class / Vehicle System: Tractor" InitialValue="1"/>
+		<VarDeclaration Name="DC_TILLAGE" Type="BYTE" Comment="Device Class / Vehicle System: Tillage" InitialValue="2"/>
+		<VarDeclaration Name="DC_SECONDARY_TILLAGE" Type="BYTE" Comment="Device Class / Vehicle System: Secondary Tillage" InitialValue="3"/>
+		<VarDeclaration Name="DC_PLANTERS_SEEDERS" Type="BYTE" Comment="Device Class / Vehicle System: Planters/Seeders" InitialValue="4"/>
+		<VarDeclaration Name="DC_FERTILIZERS" Type="BYTE" Comment="Device Class / Vehicle System: Fertilizers" InitialValue="5"/>
+		<VarDeclaration Name="DC_SPRAYERS" Type="BYTE" Comment="Device Class / Vehicle System: Sprayers" InitialValue="6"/>
+		<VarDeclaration Name="DC_HARVESTERS" Type="BYTE" Comment="Device Class / Vehicle System: Harvesters" InitialValue="7"/>
+		<VarDeclaration Name="DC_ROOT_HARVESTERS" Type="BYTE" Comment="Device Class / Vehicle System: Root Harvesters" InitialValue="8"/>
+		<VarDeclaration Name="DC_FORAGE" Type="BYTE" Comment="Device Class / Vehicle System: Forage" InitialValue="9"/>
+		<VarDeclaration Name="DC_IRRIGATION" Type="BYTE" Comment="Device Class / Vehicle System: Irrigation" InitialValue="10"/>
+		<VarDeclaration Name="DC_TRANSPORT_TRAILER" Type="BYTE" Comment="Device Class / Vehicle System: Transport/Trailer" InitialValue="11"/>
+		<VarDeclaration Name="DC_FARM_YARD_OPERATIONS" Type="BYTE" Comment="Device Class / Vehicle System: Farm Yard Operations" InitialValue="12"/>
+		<VarDeclaration Name="DC_POWERED_AUXILIARY_DEVICES" Type="BYTE" Comment="Device Class / Vehicle System: Powered Auxiliary Devices" InitialValue="13"/>
+		<VarDeclaration Name="DC_SPECIAL_CROPS" Type="BYTE" Comment="Device Class / Vehicle System: Special Crops" InitialValue="14"/>
+		<VarDeclaration Name="DC_EARTH_WORK" Type="BYTE" Comment="Device Class / Vehicle System: Earth Work" InitialValue="15"/>
+		<VarDeclaration Name="DC_SKIDDER" Type="BYTE" Comment="Device Class / Vehicle System: Skidder" InitialValue="16"/>
+		<VarDeclaration Name="DC_SENSOR_SYSTEMS" Type="BYTE" Comment="Device Class / Vehicle System: Sensor Systems" InitialValue="17"/>
+		<VarDeclaration Name="DC_TIMBER_HARVESTERS" Type="BYTE" Comment="Device Class / Vehicle System: Timber Harvesters" InitialValue="19"/>
+		<VarDeclaration Name="DC_FORWARDERS" Type="BYTE" Comment="Device Class / Vehicle System: Forwarders" InitialValue="20"/>
+		<VarDeclaration Name="DC_TIMBER_LOADERS" Type="BYTE" Comment="Device Class / Vehicle System: Timber Loaders" InitialValue="21"/>
+		<VarDeclaration Name="DC_TIMBER_PROCESSING_MACHINES" Type="BYTE" Comment="Device Class / Vehicle System: Timber Processing Machines" InitialValue="22"/>
+		<VarDeclaration Name="DC_MULCHERS" Type="BYTE" Comment="Device Class / Vehicle System: Mulchers" InitialValue="23"/>
+		<VarDeclaration Name="DC_UTILITY_VEHICLES" Type="BYTE" Comment="Device Class / Vehicle System: Utility Vehicles" InitialValue="24"/>
+		<VarDeclaration Name="DC_SLURRY_MANURE_APPLICATORS" Type="BYTE" Comment="Device Class / Vehicle System: Slurry/Manure Applicators" InitialValue="25"/>
+		<VarDeclaration Name="DC_FEEDERS_MIXERS" Type="BYTE" Comment="Device Class / Vehicle System: Feeders/Mixers" InitialValue="26"/>
+		<VarDeclaration Name="DC_WEEDERS" Type="BYTE" Comment="Device Class / Vehicle System: Weeders - Non-chemical weed control. The device class Weeders is" InitialValue="27"/>
+		<VarDeclaration Name="DC_TURF_AND_LAWN_CARE_MOWERS" Type="BYTE" Comment="Device Class / Vehicle System: Turf and Lawn Care Mowers" InitialValue="28"/>
+		<VarDeclaration Name="DC_PRODUCT_MATERIAL_HANDLING" Type="BYTE" Comment="Device Class / Vehicle System: Product/Material Handling" InitialValue="29"/>
+		<VarDeclaration Name="DC_NOT_AVAILABLE" Type="BYTE" Comment="Device Class / Vehicle System: Not Available" InitialValue="127"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE isobus::pgn::const;
+
+// Industry Group 2 specific device classes (vehicle systems)
+GLOBALCONSTANTS IG2_Device_Classes
+	VAR_GLOBAL CONSTANT
+		DC_NON_SPECIFIC_SYSTEM : BYTE := 0; // Device Class / Vehicle System: Non-specific System
+		DC_TRACTOR : BYTE := 1; // Device Class / Vehicle System: Tractor
+		DC_TILLAGE : BYTE := 2; // Device Class / Vehicle System: Tillage
+		DC_SECONDARY_TILLAGE : BYTE := 3; // Device Class / Vehicle System: Secondary Tillage
+		DC_PLANTERS_SEEDERS : BYTE := 4; // Device Class / Vehicle System: Planters/Seeders
+		DC_FERTILIZERS : BYTE := 5; // Device Class / Vehicle System: Fertilizers
+		DC_SPRAYERS : BYTE := 6; // Device Class / Vehicle System: Sprayers
+		DC_HARVESTERS : BYTE := 7; // Device Class / Vehicle System: Harvesters
+		DC_ROOT_HARVESTERS : BYTE := 8; // Device Class / Vehicle System: Root Harvesters
+		DC_FORAGE : BYTE := 9; // Device Class / Vehicle System: Forage
+		DC_IRRIGATION : BYTE := 10; // Device Class / Vehicle System: Irrigation
+		DC_TRANSPORT_TRAILER : BYTE := 11; // Device Class / Vehicle System: Transport/Trailer
+		DC_FARM_YARD_OPERATIONS : BYTE := 12; // Device Class / Vehicle System: Farm Yard Operations
+		DC_POWERED_AUXILIARY_DEVICES : BYTE := 13; // Device Class / Vehicle System: Powered Auxiliary Devices
+		DC_SPECIAL_CROPS : BYTE := 14; // Device Class / Vehicle System: Special Crops
+		DC_EARTH_WORK : BYTE := 15; // Device Class / Vehicle System: Earth Work
+		DC_SKIDDER : BYTE := 16; // Device Class / Vehicle System: Skidder
+		DC_SENSOR_SYSTEMS : BYTE := 17; // Device Class / Vehicle System: Sensor Systems
+		DC_TIMBER_HARVESTERS : BYTE := 19; // Device Class / Vehicle System: Timber Harvesters
+		DC_FORWARDERS : BYTE := 20; // Device Class / Vehicle System: Forwarders
+		DC_TIMBER_LOADERS : BYTE := 21; // Device Class / Vehicle System: Timber Loaders
+		DC_TIMBER_PROCESSING_MACHINES : BYTE := 22; // Device Class / Vehicle System: Timber Processing Machines
+		DC_MULCHERS : BYTE := 23; // Device Class / Vehicle System: Mulchers
+		DC_UTILITY_VEHICLES : BYTE := 24; // Device Class / Vehicle System: Utility Vehicles
+		DC_SLURRY_MANURE_APPLICATORS : BYTE := 25; // Device Class / Vehicle System: Slurry/Manure Applicators
+		DC_FEEDERS_MIXERS : BYTE := 26; // Device Class / Vehicle System: Feeders/Mixers
+		DC_WEEDERS : BYTE := 27; // Device Class / Vehicle System: Weeders - Non-chemical weed control. The device class Weeders is
+		                         // used by devices that control and eliminate weeds through the use of operation techniques other
+		                         // than s...
+		DC_TURF_AND_LAWN_CARE_MOWERS : BYTE := 28; // Device Class / Vehicle System: Turf and Lawn Care Mowers
+		DC_PRODUCT_MATERIAL_HANDLING : BYTE := 29; // Device Class / Vehicle System: Product/Material Handling
+		DC_NOT_AVAILABLE : BYTE := 127; // Device Class / Vehicle System: Not Available
+	END_VAR
+
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</GlobalConstants>

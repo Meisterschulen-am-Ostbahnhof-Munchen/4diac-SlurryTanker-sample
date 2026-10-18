@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="GreenBlueBackground1_auxSC" Comment="Hintergrundfarbe (TRUE -&gt; Blau, FALSE -&gt; Weiß) für 1 Objekt (Kompakt)">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="franz" Date="2024-01-01">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+		<Import declaration="isobus::UT::Q::types::s1ObjectID"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+			<SubAppEvent Name="EO" Type="Event">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="DI1" Type="BOOL" Comment="Selector"/>
+			<VarDeclaration Name="u16ObjIds" Type="isobus::UT::Q::types::s1ObjectID" Comment="Object IDs" InitialValue="(u16ObjId := ID_NULL)"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<SubApp Name="GreenBlueBackground" Type="MyLib::sys::GreenBlueBackground1_auxS" x="1700" y="-800">
+		</SubApp>
+		<EventConnections>
+			<Connection Source="EO" Destination="GreenBlueBackground.REQ" dx1="666.67"/>
+			<Connection Source="INIT" Destination="GreenBlueBackground.INIT"/>
+			<Connection Source="GreenBlueBackground.INITO" Destination="INITO"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="u16ObjIds" Destination="GreenBlueBackground.u16ObjIds" dx1="440"/>
+			<Connection Source="DI1" Destination="GreenBlueBackground.DI1" dx1="606.67"/>
+			<Connection Source="QI" Destination="GreenBlueBackground.QI"/>
+			<Connection Source="GreenBlueBackground.QO" Destination="QO"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

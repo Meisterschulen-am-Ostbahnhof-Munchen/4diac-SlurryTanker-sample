@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="RedGreenBackground4_AXSC" Comment="Hintergrundfarbe (TRUE -&gt; Rot, FALSE -&gt; Grün) für 4 Objekte (AX-Adapter)&#10;(Kompakt)">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2022-11-10">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+		<Import declaration="isobus::UT::Q::types::s3ObjectIDs"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="u16ObjIds" Type="isobus::UT::Q::types::s3ObjectIDs" Comment="Object IDs" InitialValue="(u16ObjId := ID_NULL, u16ObjIdA := ID_NULL, u16ObjIdB := ID_NULL)"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+		<Sockets>
+			<AdapterDeclaration Name="DI1" Type="adapter::types::unidirectional::AX" Comment="Selector"/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<SubApp Name="RedGreenBackground" Type="MyLib::sys::RedGreenBackground4_AXS" x="1000" y="500">
+		</SubApp>
+		<EventConnections>
+			<Connection Source="INIT" Destination="RedGreenBackground.INIT"/>
+			<Connection Source="RedGreenBackground.INITO" Destination="INITO"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="u16ObjIds" Destination="RedGreenBackground.u16ObjIds" dx1="100"/>
+			<Connection Source="QI" Destination="RedGreenBackground.QI"/>
+			<Connection Source="RedGreenBackground.QO" Destination="QO"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="DI1" Destination="RedGreenBackground.DI1" dx1="100"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="AX_TO_Checkbox" Comment="Gegenstueck zu Checkbox_IDA_TO_AX: AX (Pegel) auf eine VT-Checkbox&#10;schreiben (AX_TO_AD + F_DWORD_TO_UDINT + isobus::UT::Q::Q_NumericValue),&#10;schreibt bei jeder Wertaenderung von AX_IN neu auf den VT-Knoten.&#10;WICHTIG: u16ObjId ist die ObjectID der CNumberVariable, die die Checkbox als&#10;Wertspeicher referenziert (z.B. NumberVariable_Bunker_Fuellstand_Hoehe_Automatik)&#10;- NICHT die ObjectID der Checkbox (CInputBoolean) selbst, die VT erwartet&#10;Value-Aenderungen unter der NumberVariable-ID (analog Checkbox_IDA_TO_AX,&#10;Franz, live verifiziert). Instanz-Eindeutigkeit beachten: Q_NumericValue&#10;erlaubt nur eine Instanz je Ziel-ObjId im gesamten Projekt.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Büngener Schuder GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Büngener Schuder GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-10-13" Remarks="initial implementation - Gegenstelle zu Checkbox_IDA_TO_AX (ECU-&gt;VT statt VT-&gt;ECU). AX_TO_AD (bit-reinterpretiert BOOL-&gt;DWORD, feuert nur bei echter Wertaenderung) -&gt; F_DWORD_TO_UDINT -&gt; Q_NumericValue.REQ, analog zu Q_NumericValue_AUDI's eigenem u32NewValue-Adapter-Socket-Muster (isobus_UT_adapter), nur ohne eigenen Adapter-Typ dafuer - hier als SubApp-Komposition.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID der VT-NumberVariable hinter der Checkbox" InitialValue="ID_NULL"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+		<Sockets>
+			<AdapterDeclaration Name="AX_IN" Type="adapter::types::unidirectional::AX" Comment="Zu schreibender Pegel (0/1)"/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="AX_TO_AD" Type="adapter::conversion::unidirectional::AX_TO_AUDI" x="1300" y="-500">
+		</FB>
+		<FB Name="Q_NumericValue" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="3500" y="-900">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="Q_NumericValue.INIT"/>
+			<Connection Source="Q_NumericValue.INITO" Destination="INITO"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="u16ObjId" Destination="Q_NumericValue.u16ObjId" dx1="600">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="Q_NumericValue.QI"/>
+			<Connection Source="Q_NumericValue.QO" Destination="QO"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="AX_IN" Destination="AX_TO_AD.AX_IN" dx1="600"/>
+			<Connection Source="AX_TO_AD.AUDI_OUT" Destination="Q_NumericValue.u32NewValue" dx1="740"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

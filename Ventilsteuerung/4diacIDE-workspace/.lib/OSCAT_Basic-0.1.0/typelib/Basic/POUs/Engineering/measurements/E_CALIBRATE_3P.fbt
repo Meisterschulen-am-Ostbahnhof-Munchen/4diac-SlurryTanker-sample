@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="E_CALIBRATE_3P" Comment="Event-driven 3-point calibration for joysticks (Min, Mid, Max)">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Version="1.0" Author="Meisterschulen am Ostbahnhof" Date="2026-06-01">
+	</VersionInfo>
+	<CompilerInfo packageName="OSCAT::Basic::POUs::Engineering::measurements">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event" Comment="Normal Execution Request">
+				<With Var="X"/>
+				<With Var="MIN_REF"/>
+				<With Var="MID_REF"/>
+				<With Var="MAX_REF"/>
+				<With Var="X_MIN"/>
+				<With Var="X_MID"/>
+				<With Var="X_MAX"/>
+			</Event>
+			<Event Name="EI_MIN" Type="Event" Comment="Calibrate Min Point">
+				<With Var="X"/>
+			</Event>
+			<Event Name="EI_MID" Type="Event" Comment="Calibrate Mid Point (Center)">
+				<With Var="X"/>
+			</Event>
+			<Event Name="EI_MAX" Type="Event" Comment="Calibrate Max Point">
+				<With Var="X"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event" Comment="Execution Confirmation">
+				<With Var="Y"/>
+			</Event>
+			<Event Name="EO_MIN" Type="Event" Comment="Min Calibration Confirmed">
+				<With Var="X_MIN"/>
+			</Event>
+			<Event Name="EO_MID" Type="Event" Comment="Mid Calibration Confirmed">
+				<With Var="X_MID"/>
+			</Event>
+			<Event Name="EO_MAX" Type="Event" Comment="Max Calibration Confirmed">
+				<With Var="X_MAX"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="X" Type="REAL" Comment="Raw Input"/>
+			<VarDeclaration Name="MIN_REF" Type="REAL" Comment="Target value for Min" InitialValue="0.0"/>
+			<VarDeclaration Name="MID_REF" Type="REAL" Comment="Target value for Mid" InitialValue="50.0"/>
+			<VarDeclaration Name="MAX_REF" Type="REAL" Comment="Target value for Max" InitialValue="100.0"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="Y" Type="REAL" Comment="Calibrated Output"/>
+		</OutputVars>
+		<InOutVars>
+			<VarDeclaration Name="X_MIN" Type="REAL" Comment="Stored Min Value" InitialValue="0.0"/>
+			<VarDeclaration Name="X_MID" Type="REAL" Comment="Stored Mid Value" InitialValue="50.0"/>
+			<VarDeclaration Name="X_MAX" Type="REAL" Comment="Stored Max Value" InitialValue="100.0"/>
+		</InOutVars>
+	</InterfaceList>
+	<BasicFB>
+		<ECC>
+			<ECState Name="START" x="400" y="400">
+			</ECState>
+			<ECState Name="REQ" x="1200" y="400">
+				<ECAction Algorithm="REQ" Output="CNF"/>
+			</ECState>
+			<ECState Name="C_MIN" x="1200" y="0">
+				<ECAction Algorithm="C_MIN" Output="EO_MIN"/>
+			</ECState>
+			<ECState Name="C_MID" x="1200" y="800">
+				<ECAction Algorithm="C_MID" Output="EO_MID"/>
+			</ECState>
+			<ECState Name="C_MAX" x="1200" y="1200">
+				<ECAction Algorithm="C_MAX" Output="EO_MAX"/>
+			</ECState>
+			<ECTransition Source="START" Destination="REQ" Condition="REQ" x="800" y="400"/>
+			<ECTransition Source="REQ" Destination="START" Condition="1" x="800" y="500"/>
+			<ECTransition Source="START" Destination="C_MIN" Condition="EI_MIN" x="800" y="200"/>
+			<ECTransition Source="C_MIN" Destination="START" Condition="1" x="800" y="100"/>
+			<ECTransition Source="START" Destination="C_MID" Condition="EI_MID" x="800" y="600"/>
+			<ECTransition Source="C_MID" Destination="START" Condition="1" x="800" y="700"/>
+			<ECTransition Source="START" Destination="C_MAX" Condition="EI_MAX" x="800" y="1000"/>
+			<ECTransition Source="C_MAX" Destination="START" Condition="1" x="800" y="1100"/>
+		</ECC>
+		<Algorithm Name="REQ">
+			<ST><![CDATA[
+(* calculate output *)
+IF X < X_MID THEN
+	IF X_MID > X_MIN THEN
+		Y := MIN_REF + (X - X_MIN) * (MID_REF - MIN_REF) / (X_MID - X_MIN);
+	ELSE
+		Y := MIN_REF;
+	END_IF;
+ELSE
+	IF X_MAX > X_MID THEN
+		Y := MID_REF + (X - X_MID) * (MAX_REF - MID_REF) / (X_MAX - X_MID);
+	ELSE
+		Y := MID_REF;
+	END_IF;
+END_IF;
+
+(* clipping *)
+IF Y < MIN_REF THEN
+	Y := MIN_REF;
+ELSIF Y > MAX_REF THEN
+	Y := MAX_REF;
+END_IF;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="C_MIN">
+			<ST><![CDATA[
+(* store current raw input as Min calibration point *)
+X_MIN := X;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="C_MID">
+			<ST><![CDATA[
+(* store current raw input as Mid calibration point (center) *)
+X_MID := X;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="C_MAX">
+			<ST><![CDATA[
+(* store current raw input as Max calibration point *)
+X_MAX := X;
+]]></ST>
+		</Algorithm>
+	</BasicFB>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h2>Formula</h2>
+
+<pre>
+Y = piecewise linear interpolation between stored calibration points</pre>
+
+<h2>Calibration (3-Point)</h2>
+
+<ol>
+	<li><strong>Min (EI_MIN):</strong> Move joystick to minimum position, fire EI_MIN<br />
+	X_MIN := X &rarr; stores current raw value as Min point</li>
+	<li><strong>Mid (EI_MID):</strong> Move joystick to center, fire EI_MID<br />
+	X_MID := X &rarr; stores current raw value as Mid point (center)</li>
+	<li><strong>Max (EI_MAX):</strong> Move joystick to maximum position, fire EI_MAX<br />
+	X_MAX := X &rarr; stores current raw value as Max point</li>
+</ol>
+
+<p><strong>Note:</strong> The calibration points can be calibrated in <strong>any order</strong> and can be repeated individually.</p>
+
+<h2>Output Calculation</h2>
+
+<ul>
+	<li>If X &lt; X_MID: linear interpolation between (X_MIN, MIN_REF) and (X_MID, MID_REF)</li>
+	<li>If X &gt;= X_MID: linear interpolation between (X_MID, MID_REF) and (X_MAX, MAX_REF)</li>
+	<li>Output is clipped to MIN_REF..MAX_REF</li>
+</ul>
+
+<h2>ECC State Machine</h2>
+
+<pre>
+START --REQ--&gt; REQ --1--&gt; START       (normal operation)
+START -EI_MIN-&gt; C_MIN --1--&gt; START    (calibrate minimum)
+START -EI_MID-&gt; C_MID --1--&gt; START    (calibrate center)
+START -EI_MAX-&gt; C_MAX --1--&gt; START    (calibrate maximum)</pre>
+
+<p>All calibration events are independently accessible from the START state &ndash; no enforced order.</p>
+
+<h2>Example</h2>
+
+<p><strong>Scenario:</strong> Joystick with center drift. Raw range 0..1000, desired output -100..0..100.</p>
+
+<table border="1" cellpadding="4" cellspacing="0" style="border-collapse:collapse">
+	<tbody>
+		<tr>
+			<th>Step</th>
+			<th>Action</th>
+			<th>Result</th>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>Move joystick to <strong>min</strong>, fire EI_MIN</td>
+			<td>X_MIN = 50 (drifted from ideal 0)</td>
+		</tr>
+		<tr>
+			<td>2</td>
+			<td>Move joystick to <strong>center</strong>, fire EI_MID</td>
+			<td>X_MID = 520 (drifted from ideal 500)</td>
+		</tr>
+		<tr>
+			<td>3</td>
+			<td>Move joystick to <strong>max</strong>, fire EI_MAX</td>
+			<td>X_MAX = 980 (drifted from ideal 1000)</td>
+		</tr>
+	</tbody>
+</table>
+
+<p><strong>Output:</strong> Interpolated between MIN_REF=-100, MID_REF=0, MAX_REF=100 with clipping.</p>
+]]></Attribute>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="AX_CLIENT_1_0" Comment="Send a BOOL from an AX adapter as a remote OPC-UA write via CLIENT_1_0, buffered&#10;with a E_D_FF">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 HR Agrartechnik GmbH&#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0"/>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-08-27" Remarks="initial API and implementation and/or initial documentation"/>
+	<CompilerInfo packageName="adapter::net">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Initialization">
+				<With Var="QI"/>
+				<With Var="ID"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Data was sent">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL"/>
+			<VarDeclaration Name="ID" Type="WSTRING"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL"/>
+			<VarDeclaration Name="STATUS" Type="WSTRING"/>
+		</OutputVars>
+		<Sockets>
+			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AX" Comment="BOOL to send" x="-3700" y="300"/>
+		</Sockets>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="E_D_FF" Type="iec61499::events::E_D_FF" x="-2600" y="300">
+		</FB>
+		<FB Name="CLIENT_1_0" Type="iec61499::net::CLIENT_1_0" x="-300" y="0">
+		</FB>
+		<EventConnections>
+			<Connection Source="CLIENT_1_0.INITO" Destination="INITO" dx1="873.33"/>
+			<Connection Source="CLIENT_1_0.CNF" Destination="CNF" dx1="1280"/>
+			<Connection Source="IN.E1" Destination="E_D_FF.CLK"/>
+			<Connection Source="E_D_FF.EO" Destination="CLIENT_1_0.REQ" dx1="673.33"/>
+			<Connection Source="INIT" Destination="CLIENT_1_0.INIT" dx1="4520"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="CLIENT_1_0.QO" Destination="QO" dx1="1540"/>
+			<Connection Source="CLIENT_1_0.STATUS" Destination="STATUS" dx1="1713.33"/>
+			<Connection Source="IN.D1" Destination="E_D_FF.D"/>
+			<Connection Source="E_D_FF.Q" Destination="CLIENT_1_0.SD_1" dx1="506.67"/>
+			<Connection Source="QI" Destination="CLIENT_1_0.QI" dx1="4160"/>
+			<Connection Source="ID" Destination="CLIENT_1_0.ID" dx1="3846.67"/>
+		</DataConnections>
+	</FBNetwork>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

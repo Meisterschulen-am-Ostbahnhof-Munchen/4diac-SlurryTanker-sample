@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Checkbox_IDA_TO_AX" Comment="VT-Checkbox live als AX (Pegel) weiterreichen&#10;(isobus::UT::io::NumericValue::NumericValue_IDA + AD_TO_AX), reiner&#10;Ein/Aus-Zustand ohne Skalierung/Persistenz, z.B. fuer Automatik_Toggle.PERMIT.&#10;WICHTIG: u16ObjId ist die ObjectID der CNumberVariable, die die Checkbox als&#10;Wertspeicher referenziert (z.B.&#10;NumberVariable_Bunker_Fuellstand_Hoehe_Automatik) - NICHT die ObjectID der&#10;Checkbox (CInputBoolean) selbst, die VT meldet Value-Aenderungen unter der&#10;NumberVariable-ID (Franz, live verifiziert).">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-27" Remarks="initial implementation - Franz: 'NumberVariable_Bunker_Fuellstand_Hoehe_Automatik soll das GESAMTE AN/Aus der Befuellautomatik gaten, wirkt wie ein AX_PERMIT' - liest die neue VT-Checkbox (InputBoolean) roh per ObjectID via NumericValue_IDA (AD) + AD_TO_AX (DWORD&lt;&gt;0), fuer Automatik_Toggle.PERMIT.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID der VT-Checkbox (InputBoolean)" InitialValue="ID_NULL"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="PERMIT_OUT" Type="adapter::types::unidirectional::AX" Comment="Roher Checkbox-Zustand (0/1) als Pegel"/>
+		</Plugs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="NumericValue_IDA" Type="isobus::UT::io::NumericValue::NumericValue_IDA" x="0" y="0">
+		</FB>
+		<FB Name="AD_TO_AX" Type="adapter::conversion::unidirectional::AD_TO_AX" x="2000" y="0">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="NumericValue_IDA.INIT"/>
+			<Connection Source="NumericValue_IDA.INITO" Destination="INITO"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="u16ObjId" Destination="NumericValue_IDA.u16ObjId" dx1="600">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="NumericValue_IDA.QI"/>
+			<Connection Source="NumericValue_IDA.QO" Destination="QO"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="NumericValue_IDA.IN" Destination="AD_TO_AX.AD_IN" dx1="600"/>
+			<Connection Source="AD_TO_AX.AX_OUT" Destination="PERMIT_OUT" dx1="600"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

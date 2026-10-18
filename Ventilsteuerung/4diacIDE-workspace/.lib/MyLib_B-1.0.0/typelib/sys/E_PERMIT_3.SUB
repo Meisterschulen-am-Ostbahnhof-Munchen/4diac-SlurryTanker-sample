@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="E_PERMIT_3" Comment="3-Kanal Event-Freigabe-Gate (E_PERMIT x 3)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-10" Remarks="initial implementation">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="EI1" Type="Event" Comment="Event input channel 1"/>
+			<SubAppEvent Name="EI2" Type="Event" Comment="Event input channel 2"/>
+			<SubAppEvent Name="EI3" Type="Event" Comment="Event input channel 3"/>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="EO1" Type="Event" Comment="Event output channel 1"/>
+			<SubAppEvent Name="EO2" Type="Event" Comment="Event output channel 2"/>
+			<SubAppEvent Name="EO3" Type="Event" Comment="Event output channel 3"/>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="PERMIT" Type="BOOL" Comment="Freigabebedingung"/>
+		</InputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="E_PERMIT_1" Type="iec61499::events::E_PERMIT" x="-1400" y="0">
+		</FB>
+		<FB Name="E_PERMIT_2" Type="iec61499::events::E_PERMIT" x="-1400" y="800">
+		</FB>
+		<FB Name="E_PERMIT_3" Type="iec61499::events::E_PERMIT" x="-1400" y="1600">
+		</FB>
+		<EventConnections>
+			<Connection Source="EI1" Destination="E_PERMIT_1.EI" dx1="500"/>
+			<Connection Source="E_PERMIT_1.EO" Destination="EO1" dx1="500"/>
+			<Connection Source="EI2" Destination="E_PERMIT_2.EI" dx1="500"/>
+			<Connection Source="E_PERMIT_2.EO" Destination="EO2" dx1="500"/>
+			<Connection Source="EI3" Destination="E_PERMIT_3.EI" dx1="500"/>
+			<Connection Source="E_PERMIT_3.EO" Destination="EO3" dx1="500"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="PERMIT" Destination="E_PERMIT_1.PERMIT" dx1="500"/>
+			<Connection Source="PERMIT" Destination="E_PERMIT_2.PERMIT" dx1="500"/>
+			<Connection Source="PERMIT" Destination="E_PERMIT_3.PERMIT" dx1="500"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

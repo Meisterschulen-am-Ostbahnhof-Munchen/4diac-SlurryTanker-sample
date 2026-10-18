@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Softkey_Aux_Method_IE" Comment="SoftKey ODER AUX (Joystick, via Softkey_Aux_IE) ODER lokale argumentlose&#10;OPC-UA-Methode (ACTION=CREATE_METHOD, SERVER_0 - z.B. von&#10;Web-Client/vt-ui-mirror oder OPC-Dashboard aufgerufen) aktiviert -&gt; 1&#10;gemeinsames IND-Event. Baut auf Softkey_Aux_IE auf und ergaenzt den&#10;Methoden-Kanal - Gegenstueck zu Softkey_Aux_Web_IE (dort: Web per&#10;SUBSCRIBE_R_TRIG auf eine geschriebene Variable, hier: Web/Dashboard per echtem&#10;RPC-Methodenaufruf, keine gemeinsame Variable).">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-11" Remarks="initial implementation - herausgeloest aus AX_SoftkeyToggle_RS_TO_QXA_BG (Softkey_Aux_IE + SERVER_0 kam dort 2x vor, fuer Toggle und fuer Reset), wiederverwendbar fuer jeden Event-Trigger, der per SoftKey/AUX/Web-Methode/Dashboard gleichberechtigt ausgeloest werden soll.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+			<SubAppEvent Name="IND" Type="Event" Comment="Feuert wenn SoftKey, AUX ODER die lokale Methode aktiviert/aufgerufen wird">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID SoftKey"/>
+			<VarDeclaration Name="u16ObjIdA" Type="UINT" Comment="Object ID AuxFunction2"/>
+			<VarDeclaration Name="ID_METHOD" Type="WSTRING" Comment="Lokale Methodenadresse (ACTION=CREATE_METHOD) fuer den argumentlosen Trigger - wird von Web-Client (vt-ui-mirror) UND direkt vom OPC-Dashboard aufgerufen"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<SubApp Name="SoftkeyAux" Type="MyLib::sys::Softkey_Aux_IE" x="-200" y="0">
+		</SubApp>
+		<FB Name="METHOD_SERVER" Type="iec61499::net::SERVER_0" x="-100" y="1200">
+		</FB>
+		<FB Name="MERGE" Type="iec61499::events::E_MERGE_2" x="1600" y="450">
+		</FB>
+		<Comment Comment="RSP MUSS auf IND zurueckverdrahtet werden (argumentloser Trigger, keine Verarbeitung noetig) - sonst blockiert FORTEs onServerMethodCall den OPC-UA-Server-Thread bis zu 4s und haelt dabei open62541s globalen serviceMutex, den JEDER AX_PUBLISH_1 auf einem anderen FORTE-Thread ebenfalls braucht. Siehe Ventilsteuerung/OPC_UA_VERNETZUNG.md Punkt 12." x="-1200" y="2000" width="2800" height="500"/>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_2" x="4600" y="400">
+		</FB>
+		<EventConnections>
+			<Connection Source="SoftkeyAux.IND" Destination="MERGE.EI1" dx1="780"/>
+			<Connection Source="METHOD_SERVER.IND" Destination="MERGE.EI2" dx1="800"/>
+			<Connection Source="METHOD_SERVER.IND" Destination="METHOD_SERVER.RSP" dx1="80" dx2="80" dy="160"/>
+			<Connection Source="MERGE.EO" Destination="IND" dx1="800"/>
+			<Connection Source="INIT" Destination="METHOD_SERVER.INIT" dx1="1040"/>
+			<Connection Source="METHOD_SERVER.INITO" Destination="SoftkeyAux.INIT" dx1="80" dx2="80" dy="-346.67"/>
+			<Connection Source="SoftkeyAux.INITO" Destination="INITO" dx1="3466.67"/>
+			<Connection Source="SoftkeyAux.INITO" Destination="AND_QO.REQ" dx1="1526.67"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="u16ObjId" Destination="SoftkeyAux.u16ObjId" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjIdA" Destination="SoftkeyAux.u16ObjIdA" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_METHOD" Destination="METHOD_SERVER.ID" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="METHOD_SERVER.QI" dx1="1040"/>
+			<Connection Source="QI" Destination="SoftkeyAux.QI" dx1="80" dx2="80" dy="-306.67"/>
+			<Connection Source="METHOD_SERVER.QO" Destination="AND_QO.IN1" dx1="3400"/>
+			<Connection Source="SoftkeyAux.QO" Destination="AND_QO.IN2" dx1="3226.67"/>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="2240"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

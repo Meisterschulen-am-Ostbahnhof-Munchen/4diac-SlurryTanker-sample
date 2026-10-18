@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="AUI_AUI_MUX_8_VAL" Comment="8-Wege-Multiplexer fuer AUI/UINT-Werte mit 8 internen initval_AUI und AUI_MUX_8&#10;/ AUI_AUI_MUX_8. Schaltet per Event-Input (EI1..EI8) zwischen val1..val8 um.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-10" Remarks="8-fach AUI/UINT MUX mit initval">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="EI1" Type="Event" Comment="Event zur Auswahl von val1">
+			</SubAppEvent>
+			<SubAppEvent Name="EI2" Type="Event" Comment="Event zur Auswahl von val2">
+			</SubAppEvent>
+			<SubAppEvent Name="EI3" Type="Event" Comment="Event zur Auswahl von val3">
+			</SubAppEvent>
+			<SubAppEvent Name="EI4" Type="Event" Comment="Event zur Auswahl von val4">
+			</SubAppEvent>
+			<SubAppEvent Name="EI5" Type="Event" Comment="Event zur Auswahl von val5">
+			</SubAppEvent>
+			<SubAppEvent Name="EI6" Type="Event" Comment="Event zur Auswahl von val6">
+			</SubAppEvent>
+			<SubAppEvent Name="EI7" Type="Event" Comment="Event zur Auswahl von val7">
+			</SubAppEvent>
+			<SubAppEvent Name="EI8" Type="Event" Comment="Event zur Auswahl von val8">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<InputVars>
+			<VarDeclaration Name="val1" Type="UINT" Comment="Initialer Ausgabewert bei EI1"/>
+			<VarDeclaration Name="val2" Type="UINT" Comment="Initialer Ausgabewert bei EI2"/>
+			<VarDeclaration Name="val3" Type="UINT" Comment="Initialer Ausgabewert bei EI3"/>
+			<VarDeclaration Name="val4" Type="UINT" Comment="Initialer Ausgabewert bei EI4"/>
+			<VarDeclaration Name="val5" Type="UINT" Comment="Initialer Ausgabewert bei EI5"/>
+			<VarDeclaration Name="val6" Type="UINT" Comment="Initialer Ausgabewert bei EI6"/>
+			<VarDeclaration Name="val7" Type="UINT" Comment="Initialer Ausgabewert bei EI7"/>
+			<VarDeclaration Name="val8" Type="UINT" Comment="Initialer Ausgabewert bei EI8"/>
+		</InputVars>
+		<Plugs>
+			<AdapterDeclaration Name="OUT" Type="adapter::types::unidirectional::AUI" Comment="Ausgewaehlter AUI-Adapter Output"/>
+		</Plugs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="AUI_MUX_8" Type="adapter::events::unidirectional::AUI_MUX_8" x="-2200" y="-1700">
+		</FB>
+		<FB Name="AUI_AUI_MUX_8" Type="adapter::selection::unidirectional::AUI_AUI_MUX_8" x="800" y="-800">
+		</FB>
+		<FB Name="initval_AUI_1" Type="adapter::types::unidirectional::AUI::initval::initval_AUI" x="-2300" y="-400">
+		</FB>
+		<FB Name="initval_AUI_2" Type="adapter::types::unidirectional::AUI::initval::initval_AUI" x="-2300" y="200">
+		</FB>
+		<FB Name="initval_AUI_3" Type="adapter::types::unidirectional::AUI::initval::initval_AUI" x="-2300" y="800">
+		</FB>
+		<FB Name="initval_AUI_4" Type="adapter::types::unidirectional::AUI::initval::initval_AUI" x="-2300" y="1400">
+		</FB>
+		<FB Name="initval_AUI_5" Type="adapter::types::unidirectional::AUI::initval::initval_AUI" x="-2300" y="2000">
+		</FB>
+		<FB Name="initval_AUI_6" Type="adapter::types::unidirectional::AUI::initval::initval_AUI" x="-2300" y="2600">
+		</FB>
+		<FB Name="initval_AUI_7" Type="adapter::types::unidirectional::AUI::initval::initval_AUI" x="-2300" y="3200">
+		</FB>
+		<FB Name="initval_AUI_8" Type="adapter::types::unidirectional::AUI::initval::initval_AUI" x="-2300" y="3800">
+		</FB>
+		<EventConnections>
+			<Connection Source="EI1" Destination="AUI_MUX_8.EI1" dx1="1660"/>
+			<Connection Source="EI2" Destination="AUI_MUX_8.EI2" dx1="1626.67"/>
+			<Connection Source="EI3" Destination="AUI_MUX_8.EI3" dx1="1593.33"/>
+			<Connection Source="EI4" Destination="AUI_MUX_8.EI4" dx1="1560"/>
+			<Connection Source="EI5" Destination="AUI_MUX_8.EI5" dx1="1526.67"/>
+			<Connection Source="EI6" Destination="AUI_MUX_8.EI6" dx1="1493.33"/>
+			<Connection Source="EI7" Destination="AUI_MUX_8.EI7" dx1="1460"/>
+			<Connection Source="EI8" Destination="AUI_MUX_8.EI8" dx1="1426.67"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="val1" Destination="initval_AUI_1.INIT_VAL" dx1="1393.33"/>
+			<Connection Source="val2" Destination="initval_AUI_2.INIT_VAL" dx1="1360"/>
+			<Connection Source="val3" Destination="initval_AUI_3.INIT_VAL" dx1="1326.67"/>
+			<Connection Source="val4" Destination="initval_AUI_4.INIT_VAL" dx1="1293.33"/>
+			<Connection Source="val5" Destination="initval_AUI_5.INIT_VAL" dx1="1260"/>
+			<Connection Source="val6" Destination="initval_AUI_6.INIT_VAL" dx1="1226.67"/>
+			<Connection Source="val7" Destination="initval_AUI_7.INIT_VAL" dx1="1193.33"/>
+			<Connection Source="val8" Destination="initval_AUI_8.INIT_VAL" dx1="1160"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="AUI_MUX_8.K" Destination="AUI_AUI_MUX_8.K" dx1="1133.33"/>
+			<Connection Source="initval_AUI_1.OUT" Destination="AUI_AUI_MUX_8.IN1" dx1="593.33"/>
+			<Connection Source="initval_AUI_2.OUT" Destination="AUI_AUI_MUX_8.IN2" dx1="733.33"/>
+			<Connection Source="initval_AUI_3.OUT" Destination="AUI_AUI_MUX_8.IN3" dx1="900"/>
+			<Connection Source="initval_AUI_4.OUT" Destination="AUI_AUI_MUX_8.IN4" dx1="1013.33"/>
+			<Connection Source="initval_AUI_5.OUT" Destination="AUI_AUI_MUX_8.IN5" dx1="1086.67"/>
+			<Connection Source="initval_AUI_6.OUT" Destination="AUI_AUI_MUX_8.IN6" dx1="1120"/>
+			<Connection Source="initval_AUI_7.OUT" Destination="AUI_AUI_MUX_8.IN7" dx1="1153.33"/>
+			<Connection Source="initval_AUI_8.OUT" Destination="AUI_AUI_MUX_8.IN8" dx1="1186.67"/>
+			<Connection Source="AUI_AUI_MUX_8.OUT" Destination="OUT" dx1="1673.33"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

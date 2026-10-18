@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="DataPanel_MI_DI" Comment="DataPanel Modules with medium IO density DI constants">
+	<Identification Standard="61499-1" Description="Copyright (c) 2024 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2024-01-25">
+	</VersionInfo>
+	<CompilerInfo packageName="DataPanel::io::MI::DI">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="DigitalInput_5A" Type="DataPanel::io::MI::DI::DataPanel_MI_DI_S" InitialValue="(Pin := 9)"/>
+		<VarDeclaration Name="DigitalInput_5B" Type="DataPanel::io::MI::DI::DataPanel_MI_DI_S" InitialValue="(Pin := 10)"/>
+		<VarDeclaration Name="DigitalInput_6A" Type="DataPanel::io::MI::DI::DataPanel_MI_DI_S" InitialValue="(Pin := 11)"/>
+		<VarDeclaration Name="DigitalInput_6B" Type="DataPanel::io::MI::DI::DataPanel_MI_DI_S" InitialValue="(Pin := 12)"/>
+		<VarDeclaration Name="DigitalInput_7A" Type="DataPanel::io::MI::DI::DataPanel_MI_DI_S" InitialValue="(Pin := 13)"/>
+		<VarDeclaration Name="DigitalInput_7B" Type="DataPanel::io::MI::DI::DataPanel_MI_DI_S" InitialValue="(Pin := 14)"/>
+		<VarDeclaration Name="DigitalInput_8A" Type="DataPanel::io::MI::DI::DataPanel_MI_DI_S" InitialValue="(Pin := 15)"/>
+		<VarDeclaration Name="DigitalInput_8B" Type="DataPanel::io::MI::DI::DataPanel_MI_DI_S" InitialValue="(Pin := 16)"/>
+		<VarDeclaration Name="Invalid" Type="DataPanel::io::MI::DI::DataPanel_MI_DI_S" InitialValue="(Pin := 255)"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE DataPanel::io::MI::DI;
+
+GLOBALCONSTANTS DataPanel_MI_DI
+	VAR_GLOBAL CONSTANT
+		DigitalInput_5A : DataPanel_MI_DI_S := (Pin := 9);
+		DigitalInput_5B : DataPanel_MI_DI_S := (Pin := 10);
+		DigitalInput_6A : DataPanel_MI_DI_S := (Pin := 11);
+		DigitalInput_6B : DataPanel_MI_DI_S := (Pin := 12);
+		DigitalInput_7A : DataPanel_MI_DI_S := (Pin := 13);
+		DigitalInput_7B : DataPanel_MI_DI_S := (Pin := 14);
+		DigitalInput_8A : DataPanel_MI_DI_S := (Pin := 15);
+		DigitalInput_8B : DataPanel_MI_DI_S := (Pin := 16);
+		Invalid : DataPanel_MI_DI_S := (Pin := 255);
+	END_VAR
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</GlobalConstants>

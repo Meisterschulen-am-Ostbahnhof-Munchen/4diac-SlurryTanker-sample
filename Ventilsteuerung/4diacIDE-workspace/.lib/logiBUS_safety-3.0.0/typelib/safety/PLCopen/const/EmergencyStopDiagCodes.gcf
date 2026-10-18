@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="EmergencyStopDiagCodes" Comment="PLCopen Safety Part 1 Ch. 6.5.6 - SF_EmergencyStop-specific DiagCode values">
+	<Identification Standard="61499-1" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-09" Remarks="Source: PLCopen TC5 Safety Part 1, Version 2.10, Chapter 6.5.6 DiagCode table. See also DiagCodes.gcf for the shared IDLE code.">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::safety::PLCopen::const">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="INIT" Type="WORD" Comment="8001 - activated, checking S_StartReset" InitialValue="16#8001"/>
+		<VarDeclaration Name="WAIT_ESTOP_IN_1" Type="WORD" Comment="8802 - first activation, waiting for S_EStopIn" InitialValue="16#8802"/>
+		<VarDeclaration Name="WAIT_RESET_1" Type="WORD" Comment="8402 - first activation, waiting for Reset edge" InitialValue="16#8402"/>
+		<VarDeclaration Name="WAIT_ESTOP_IN_2" Type="WORD" Comment="8804 - safety demand detected, waiting for S_EStopIn" InitialValue="16#8804"/>
+		<VarDeclaration Name="WAIT_RESET_2" Type="WORD" Comment="8404 - waiting for S_AutoReset or Reset edge" InitialValue="16#8404"/>
+		<VarDeclaration Name="SAFETY_OUTPUT_ENABLED" Type="WORD" Comment="8000 - S_EStopOut is TRUE" InitialValue="16#8000"/>
+		<VarDeclaration Name="RESET_ERROR_1" Type="WORD" Comment="C001 - Reset stuck TRUE while waiting for S_EStopIn (1st)" InitialValue="16#C001"/>
+		<VarDeclaration Name="RESET_ERROR_2" Type="WORD" Comment="C011 - Reset stuck TRUE while waiting for S_EStopIn (2nd)" InitialValue="16#C011"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE logiBUS::safety::PLCopen::const;
+
+GLOBALCONSTANTS EmergencyStopDiagCodes
+	VAR_GLOBAL CONSTANT
+		INIT : WORD := 16#8001;
+		WAIT_ESTOP_IN_1 : WORD := 16#8802;
+		WAIT_RESET_1 : WORD := 16#8402;
+		WAIT_ESTOP_IN_2 : WORD := 16#8804;
+		WAIT_RESET_2 : WORD := 16#8404;
+		SAFETY_OUTPUT_ENABLED : WORD := 16#8000;
+		RESET_ERROR_1 : WORD := 16#C001;
+		RESET_ERROR_2 : WORD := 16#C011;
+	END_VAR
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</GlobalConstants>

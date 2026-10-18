@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="MI" Comment="Global constants Modules with medium IO density">
+	<Identification Standard="61499-1" Description="Copyright (c) 2024 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2024-01-25">
+	</VersionInfo>
+	<CompilerInfo packageName="DataPanel::io::MI::const">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="MI_00" Type="USINT" InitialValue="224"/>
+		<VarDeclaration Name="MI_01" Type="USINT" InitialValue="225"/>
+		<VarDeclaration Name="MI_02" Type="USINT" InitialValue="226"/>
+		<VarDeclaration Name="MI_03" Type="USINT" InitialValue="227"/>
+		<VarDeclaration Name="MI_04" Type="USINT" InitialValue="228"/>
+		<VarDeclaration Name="MI_05" Type="USINT" InitialValue="229"/>
+		<VarDeclaration Name="MI_06" Type="USINT" InitialValue="230"/>
+		<VarDeclaration Name="MI_07" Type="USINT" InitialValue="231"/>
+		<VarDeclaration Name="MI_08" Type="USINT" InitialValue="232"/>
+		<VarDeclaration Name="MI_09" Type="USINT" InitialValue="233"/>
+		<VarDeclaration Name="MI_10" Type="USINT" InitialValue="234"/>
+		<VarDeclaration Name="MI_11" Type="USINT" InitialValue="235"/>
+		<VarDeclaration Name="MI_12" Type="USINT" InitialValue="236"/>
+		<VarDeclaration Name="MI_13" Type="USINT" InitialValue="237"/>
+		<VarDeclaration Name="MI_14" Type="USINT" InitialValue="238"/>
+		<VarDeclaration Name="MI_15" Type="USINT" InitialValue="239"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE DataPanel::io::MI::const;
+
+GLOBALCONSTANTS MI
+	VAR_GLOBAL CONSTANT
+		MI_00 : USINT := 224;
+		MI_01 : USINT := 225;
+		MI_02 : USINT := 226;
+		MI_03 : USINT := 227;
+		MI_04 : USINT := 228;
+		MI_05 : USINT := 229;
+		MI_06 : USINT := 230;
+		MI_07 : USINT := 231;
+		MI_08 : USINT := 232;
+		MI_09 : USINT := 233;
+		MI_10 : USINT := 234;
+		MI_11 : USINT := 235;
+		MI_12 : USINT := 236;
+		MI_13 : USINT := 237;
+		MI_14 : USINT := 238;
+		MI_15 : USINT := 239;
+	END_VAR
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</GlobalConstants>

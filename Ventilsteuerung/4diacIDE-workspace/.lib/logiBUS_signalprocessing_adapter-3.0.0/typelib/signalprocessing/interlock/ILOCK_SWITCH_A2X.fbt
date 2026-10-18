@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="ILOCK_SWITCH_A2X" Comment="Prioritizes the last active input (Adapter Version, UP/DOWN fed from a single&#10;A2X input/output).">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-09-05" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::signalprocessing::interlock">
+	</CompilerInfo>
+	<InterfaceList>
+		<Plugs>
+			<AdapterDeclaration Name="OUT" Type="adapter::types::unidirectional::A2X" Comment="Output for forward/up and backward/down direction"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::A2X" Comment="Input for forward/up and backward/down direction"/>
+		</Sockets>
+	</InterfaceList>
+	<BasicFB>
+		<ECC>
+			<ECState Name="UP" x="5040" y="720">
+				<ECAction Algorithm="UP" Output="OUT.E_UP"/>
+				<ECAction Output="OUT.E_DOWN"/>
+			</ECState>
+			<ECState Name="DOWN" x="4800" y="1920">
+				<ECAction Algorithm="DOWN" Output="OUT.E_DOWN"/>
+				<ECAction Output="OUT.E_UP"/>
+			</ECState>
+			<ECState Name="STOP" x="2800" y="1440">
+			</ECState>
+			<ECState Name="UP_STOP" x="5040" y="1280">
+				<ECAction Algorithm="STOP" Output="OUT.E_UP"/>
+			</ECState>
+			<ECState Name="DOWN_STOP" x="4720" y="2720">
+				<ECAction Algorithm="STOP" Output="OUT.E_DOWN"/>
+			</ECState>
+			<ECTransition Source="STOP" Destination="UP" Condition="IN.E_UP[IN.UP]" x="4173.33" y="1020"/>
+			<ECTransition Source="STOP" Destination="DOWN" Condition="IN.E_DOWN[IN.DOWN]" x="4133.33" y="1733.33"/>
+			<ECTransition Source="UP" Destination="DOWN" Condition="IN.E_DOWN[IN.DOWN]" x="6306.67" y="1533.33"/>
+			<ECTransition Source="UP" Destination="DOWN" Condition="IN.E_UP[NOT IN.UP AND IN.DOWN]" x="7193.33" y="1400"/>
+			<ECTransition Source="UP" Destination="UP_STOP" Condition="IN.E_UP[NOT IN.UP AND NOT IN.DOWN]" x="5573.33" y="1093.33"/>
+			<ECTransition Source="DOWN" Destination="UP" Condition="IN.E_UP[IN.UP]" x="4586.67" y="1513.33"/>
+			<ECTransition Source="DOWN" Destination="UP" Condition="IN.E_DOWN[NOT IN.DOWN AND IN.UP]" x="8100" y="1286.67"/>
+			<ECTransition Source="DOWN" Destination="DOWN_STOP" Condition="IN.E_DOWN[NOT IN.DOWN AND NOT IN.UP]" x="5473.33" y="2306.67"/>
+			<ECTransition Source="UP_STOP" Destination="STOP" Condition="1" x="4133.33" y="1313.33"/>
+			<ECTransition Source="DOWN_STOP" Destination="STOP" Condition="1" x="3913.33" y="2120"/>
+		</ECC>
+		<Algorithm Name="UP">
+			<ST><![CDATA[
+OUT.UP := BOOL#TRUE;
+OUT.DOWN := BOOL#FALSE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="DOWN">
+			<ST><![CDATA[
+OUT.UP := BOOL#FALSE;
+OUT.DOWN := BOOL#TRUE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="STOP">
+			<ST><![CDATA[
+OUT.UP := BOOL#FALSE;
+OUT.DOWN := BOOL#FALSE;
+]]></ST>
+		</Algorithm>
+	</BasicFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

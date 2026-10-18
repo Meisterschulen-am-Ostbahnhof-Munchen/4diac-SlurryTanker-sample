@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="SchieberVerriegelung" Comment="Schieber verriegeln bei 3 Schieber">
+	<Identification Standard="61499-2" Description="Copyright (c) 2025 HR Agrartechnik GmbH &#10; &#10;This program and the accompanying materials are made &#10;available under the terms of the Eclipse Public License 2.0 &#10;which is available at https://www.eclipse.org/legal/epl-2.0/ &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2025-06-04">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::utils::sequence::schieber">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Initialization Request">
+				<With Var="QI"/>
+				<With Var="DI_LINKS_GESPERRT"/>
+				<With Var="DI_RECHTS_GESPERRT"/>
+			</Event>
+			<Event Name="EI_Hauptschieber_Open" Type="Event">
+				<With Var="QI"/>
+				<With Var="DI_LINKS_GESPERRT"/>
+				<With Var="DI_RECHTS_GESPERRT"/>
+			</Event>
+			<Event Name="EI_Hauptschieber_Close" Type="Event">
+				<With Var="QI"/>
+				<With Var="DI_LINKS_GESPERRT"/>
+				<With Var="DI_RECHTS_GESPERRT"/>
+			</Event>
+			<Event Name="EI_SchieberLinks_Open" Type="Event">
+				<With Var="QI"/>
+				<With Var="DI_LINKS_GESPERRT"/>
+				<With Var="DI_RECHTS_GESPERRT"/>
+			</Event>
+			<Event Name="EI_SchieberLinks_Close" Type="Event">
+				<With Var="QI"/>
+				<With Var="DI_LINKS_GESPERRT"/>
+				<With Var="DI_RECHTS_GESPERRT"/>
+			</Event>
+			<Event Name="EI_SchieberRechts_Open" Type="Event">
+				<With Var="QI"/>
+				<With Var="DI_LINKS_GESPERRT"/>
+				<With Var="DI_RECHTS_GESPERRT"/>
+			</Event>
+			<Event Name="EI_SchieberRechts_Close" Type="Event">
+				<With Var="QI"/>
+				<With Var="DI_LINKS_GESPERRT"/>
+				<With Var="DI_RECHTS_GESPERRT"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
+				<With Var="DO_LINKS_GESPERRT"/>
+				<With Var="DO_RECHTS_GESPERRT"/>
+			</Event>
+			<Event Name="EO_Hauptschieber_Open" Type="Event">
+				<With Var="DO_LINKS_GESPERRT"/>
+				<With Var="DO_RECHTS_GESPERRT"/>
+			</Event>
+			<Event Name="EO_Hauptschieber_Close" Type="Event">
+				<With Var="DO_LINKS_GESPERRT"/>
+				<With Var="DO_RECHTS_GESPERRT"/>
+			</Event>
+			<Event Name="EO_SchieberLinks_Open" Type="Event">
+				<With Var="DO_LINKS_GESPERRT"/>
+				<With Var="DO_RECHTS_GESPERRT"/>
+			</Event>
+			<Event Name="EO_SchieberLinks_Close" Type="Event">
+				<With Var="DO_LINKS_GESPERRT"/>
+				<With Var="DO_RECHTS_GESPERRT"/>
+			</Event>
+			<Event Name="EO_SchieberRechts_Open" Type="Event">
+				<With Var="DO_LINKS_GESPERRT"/>
+				<With Var="DO_RECHTS_GESPERRT"/>
+			</Event>
+			<Event Name="EO_SchieberRechts_Close" Type="Event">
+				<With Var="DO_LINKS_GESPERRT"/>
+				<With Var="DO_RECHTS_GESPERRT"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Input event qualifier"/>
+			<VarDeclaration Name="DI_LINKS_GESPERRT" Type="BOOL"/>
+			<VarDeclaration Name="DI_RECHTS_GESPERRT" Type="BOOL"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Output event qualifier"/>
+			<VarDeclaration Name="DO_LINKS_GESPERRT" Type="BOOL"/>
+			<VarDeclaration Name="DO_RECHTS_GESPERRT" Type="BOOL"/>
+		</OutputVars>
+	</InterfaceList>
+	<BasicFB>
+		<ECC>
+			<ECState Name="START" Comment="Initial State" x="475" y="1125">
+			</ECState>
+			<ECState Name="Init" Comment="Initialization" x="1235" y="665">
+				<ECAction Algorithm="initialize" Output="INITO"/>
+			</ECState>
+			<ECState Name="DeInit" x="1140" y="1520">
+				<ECAction Algorithm="deInitialize" Output="INITO"/>
+			</ECState>
+			<ECState Name="AlleZu" x="5760" y="1600">
+				<ECAction Output="EO_Hauptschieber_Close"/>
+				<ECAction Output="EO_SchieberLinks_Close"/>
+				<ECAction Output="EO_SchieberRechts_Close"/>
+			</ECState>
+			<ECState Name="AlleAuf" x="5600" y="4000">
+				<ECAction Output="EO_Hauptschieber_Open"/>
+				<ECAction Output="EO_SchieberLinks_Open"/>
+				<ECAction Output="EO_SchieberRechts_Open"/>
+			</ECState>
+			<ECState Name="LinksAuf" x="8000" y="4000">
+				<ECAction Output="EO_Hauptschieber_Open"/>
+				<ECAction Output="EO_SchieberLinks_Open"/>
+				<ECAction Output="EO_SchieberRechts_Close"/>
+			</ECState>
+			<ECState Name="rechtsAuf" x="3200" y="4000">
+				<ECAction Output="EO_Hauptschieber_Open"/>
+				<ECAction Output="EO_SchieberLinks_Close"/>
+				<ECAction Output="EO_SchieberRechts_Open"/>
+			</ECState>
+			<ECTransition Source="START" Destination="Init" Condition="INIT[TRUE = QI]" x="840" y="920"/>
+			<ECTransition Source="DeInit" Destination="START" Condition="1" x="940" y="1445"/>
+			<ECTransition Source="AlleZu" Destination="rechtsAuf" Condition="EI_SchieberRechts_Open" x="4226.67" y="3286.67"/>
+			<ECTransition Source="AlleZu" Destination="LinksAuf" Condition="EI_SchieberLinks_Open" x="7386.67" y="3180"/>
+			<ECTransition Source="rechtsAuf" Destination="AlleZu" Condition="EI_SchieberRechts_Close" x="3746.67" y="3133.33"/>
+			<ECTransition Source="LinksAuf" Destination="AlleZu" Condition="EI_SchieberLinks_Close" x="8013.33" y="3046.67"/>
+			<ECTransition Source="LinksAuf" Destination="AlleAuf" Condition="EI_SchieberRechts_Open" x="6966.67" y="4960"/>
+			<ECTransition Source="rechtsAuf" Destination="AlleAuf" Condition="EI_SchieberLinks_Open" x="4420" y="4940"/>
+			<ECTransition Source="AlleAuf" Destination="rechtsAuf" Condition="EI_SchieberLinks_Close" x="4700" y="3693.33"/>
+			<ECTransition Source="AlleAuf" Destination="LinksAuf" Condition="EI_SchieberRechts_Close" x="7053.33" y="3773.33"/>
+			<ECTransition Source="AlleAuf" Destination="AlleZu" Condition="EI_Hauptschieber_Close" x="5593.33" y="3206.67"/>
+			<ECTransition Source="rechtsAuf" Destination="AlleZu" Condition="EI_Hauptschieber_Close" x="3193.33" y="2826.67"/>
+			<ECTransition Source="LinksAuf" Destination="AlleZu" Condition="EI_Hauptschieber_Close" x="8653.33" y="2593.33"/>
+			<ECTransition Source="AlleZu" Destination="DeInit" Condition="INIT[FALSE = QI]" x="2686.67" y="1153.33"/>
+			<ECTransition Source="Init" Destination="AlleZu" Condition="1" x="3666.67" y="953.33"/>
+			<ECTransition Source="AlleZu" Destination="LinksAuf" Condition="EI_Hauptschieber_Open[TRUE = DI_RECHTS_GESPERRT]" x="9486.67" y="2160"/>
+			<ECTransition Source="AlleZu" Destination="rechtsAuf" Condition="EI_Hauptschieber_Open[TRUE = DI_LINKS_GESPERRT]" x="2180" y="2600"/>
+			<ECTransition Source="AlleZu" Destination="AlleAuf" Condition="EI_Hauptschieber_Open" x="6373.33" y="3313.33"/>
+		</ECC>
+		<Algorithm Name="initialize">
+			<ST><![CDATA[
+
+QO := QI;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="deInitialize">
+			<ST><![CDATA[
+
+QO := FALSE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="normalOperation">
+			<ST><![CDATA[
+QO := QI;
+
+IF TRUE = QI THEN
+	(* only perform normal operation of QI is true *)
+	DO_LINKS_GESPERRT := DI_LINKS_GESPERRT;
+	DO_RECHTS_GESPERRT := DI_RECHTS_GESPERRT;
+
+END_IF;
+
+]]></ST>
+		</Algorithm>
+	</BasicFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

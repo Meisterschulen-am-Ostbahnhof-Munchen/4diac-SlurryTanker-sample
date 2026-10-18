@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Manifest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="platform:/resource/org.eclipse.fordiac.ide.library.model/model/library.xsd" Scope="Library">
+  <Dependencies>
+    <Required SymbolicName="adapter_types" Version="3.0.0"/>
+    <Required SymbolicName="events" Version="3.0.0"/>
+    <Required SymbolicName="iec61131-3" Version="3.0.1"/>
+    <Required SymbolicName="iec61131-3-bool" Version="3.0.1"/>
+    <Required SymbolicName="logiBUS_signalprocessing" Version="3.0.0"/>
+    <Required SymbolicName="signalprocessing" Version="3.0.0"/>
+  </Dependencies>
+  <Product Comment="AR/AX/A2X/AUDI-Adapter-Wrapper um logiBUS-Signalverarbeitung und Standard-Lib signalprocessing (Hysterese, Interlock, Fieldbus, Bypass, Distance, Ramp), konsolidiert aus adapter-3.0.0/typelib/{signalprocessing/hysteresis,signalprocessing/ramp,events/unidirectional/*_D_FF_HYS} und logiBUS_signalprocessing-3.0.0/typelib - reine lineare Abhaengigkeit, keine Rueckwaertsreferenz mehr" Name="logiBUS_signalprocessing_adapter" SymbolicName="logiBUS_signalprocessing_adapter">
+    <VersionInfo Author="HR Agrartechnik GmbH" Date="2026-10-09" Version="3.0.0"/>
+  </Product>
+</Manifest>

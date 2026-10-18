@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="AUDI_RampLimitFS" Comment="Wrapper around RampLimitFS with AUDI load socket, AUDI out plug, and two AX&#10;status plugs (qAtZero, qAtFull) latched via E_D_FF">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof&#10;&#10;This program and the accompanying materials are made&#10;available under the terms of the Eclipse Public License 2.0&#10;which is available at https://www.eclipse.org/legal/epl-2.0/&#10;&#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-10" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::signalprocessing::ramp">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Initialization Request">
+				<With Var="VAL_ZERO"/>
+				<With Var="SLOW"/>
+				<With Var="FAST"/>
+				<With Var="VAL_FULL"/>
+			</Event>
+			<Event Name="ZERO" Type="Event" Comment="Jump to VAL_ZERO">
+			</Event>
+			<Event Name="DOWN_FAST" Type="Event" Comment="Ramp down fast">
+			</Event>
+			<Event Name="DOWN_SLOW" Type="Event" Comment="Ramp down slow">
+			</Event>
+			<Event Name="UP_SLOW" Type="Event" Comment="Ramp up slow">
+			</Event>
+			<Event Name="UP_FAST" Type="Event" Comment="Ramp up fast">
+			</Event>
+			<Event Name="FULL" Type="Event" Comment="Jump to VAL_FULL">
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="VAL_ZERO" Type="DINT" Comment="Minimum value (default 0)" InitialValue="0"/>
+			<VarDeclaration Name="SLOW" Type="DINT" Comment="Slow step size per cycle (default 1)" InitialValue="1"/>
+			<VarDeclaration Name="FAST" Type="DINT" Comment="Fast step size per cycle (default 10)" InitialValue="10"/>
+			<VarDeclaration Name="VAL_FULL" Type="DINT" Comment="Maximum value (default 100)" InitialValue="100"/>
+		</InputVars>
+		<Plugs>
+			<AdapterDeclaration Name="OUT" Type="adapter::types::unidirectional::AUDI" Comment="Ramped output value as AUDI adapter plug" x="5800" y="-100"/>
+			<AdapterDeclaration Name="qAtZero" Type="adapter::types::unidirectional::AX" Comment="TRUE when OUT is at VAL_ZERO, latched via E_D_FF" x="5300" y="900"/>
+			<AdapterDeclaration Name="qAtFull" Type="adapter::types::unidirectional::AX" Comment="TRUE when OUT is at VAL_FULL, latched via E_D_FF" x="5000" y="1900"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="LOAD" Type="adapter::types::unidirectional::AUDI" Comment="LOAD event and PV value as AUDI adapter socket" x="-1700" y="800"/>
+		</Sockets>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="RampLimitFS" Type="eclipse4diac::signalprocessing::RampLimitFS" x="2100" y="0">
+		</FB>
+		<FB Name="F_UDINT_TO_DINT" Type="iec61131::conversion::F_UDINT_TO_DINT" x="-800" y="800">
+		</FB>
+		<FB Name="F_DINT_TO_UDINT" Type="iec61131::conversion::F_DINT_TO_UDINT" x="4000" y="-100">
+		</FB>
+		<FB Name="E_D_FF_ZERO" Type="iec61499::events::E_D_FF" x="4000" y="900">
+		</FB>
+		<FB Name="E_D_FF_FULL" Type="iec61499::events::E_D_FF" x="4000" y="1900">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="RampLimitFS.INIT" dx1="6073.33"/>
+			<Connection Source="RampLimitFS.INITO" Destination="INITO" dx1="493.33"/>
+			<Connection Source="LOAD.E1" Destination="F_UDINT_TO_DINT.REQ"/>
+			<Connection Source="F_UDINT_TO_DINT.CNF" Destination="RampLimitFS.LOAD" dx1="940"/>
+			<Connection Source="ZERO" Destination="RampLimitFS.ZERO" dx1="6040"/>
+			<Connection Source="DOWN_FAST" Destination="RampLimitFS.DOWN_FAST" dx1="5906.67"/>
+			<Connection Source="DOWN_SLOW" Destination="RampLimitFS.DOWN_SLOW" dx1="5940"/>
+			<Connection Source="UP_SLOW" Destination="RampLimitFS.UP_SLOW" dx1="6006.67"/>
+			<Connection Source="UP_FAST" Destination="RampLimitFS.UP_FAST" dx1="5973.33"/>
+			<Connection Source="FULL" Destination="RampLimitFS.FULL" dx1="5873.33"/>
+			<Connection Source="RampLimitFS.CNF" Destination="F_DINT_TO_UDINT.REQ" dx1="526.67"/>
+			<Connection Source="F_DINT_TO_UDINT.CNF" Destination="OUT.E1"/>
+			<Connection Source="RampLimitFS.CNF" Destination="E_D_FF_ZERO.CLK" dx1="506.67"/>
+			<Connection Source="E_D_FF_ZERO.EO" Destination="qAtZero.E1"/>
+			<Connection Source="RampLimitFS.CNF" Destination="E_D_FF_FULL.CLK" dx1="506.67"/>
+			<Connection Source="E_D_FF_FULL.EO" Destination="qAtFull.E1"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="VAL_ZERO" Destination="RampLimitFS.VAL_ZERO" dx1="5840"/>
+			<Connection Source="SLOW" Destination="RampLimitFS.SLOW" dx1="5673.33"/>
+			<Connection Source="FAST" Destination="RampLimitFS.FAST" dx1="5806.67"/>
+			<Connection Source="VAL_FULL" Destination="RampLimitFS.VAL_FULL" dx1="5773.33"/>
+			<Connection Source="LOAD.D1" Destination="F_UDINT_TO_DINT.IN"/>
+			<Connection Source="F_UDINT_TO_DINT.OUT" Destination="RampLimitFS.PV" dx1="940"/>
+			<Connection Source="RampLimitFS.OUT" Destination="F_DINT_TO_UDINT.IN" dx1="540"/>
+			<Connection Source="F_DINT_TO_UDINT.OUT" Destination="OUT.D1"/>
+			<Connection Source="RampLimitFS.qAtZero" Destination="E_D_FF_ZERO.D" dx1="540"/>
+			<Connection Source="E_D_FF_ZERO.Q" Destination="qAtZero.D1"/>
+			<Connection Source="RampLimitFS.qAtFull" Destination="E_D_FF_FULL.D" dx1="473.33"/>
+			<Connection Source="E_D_FF_FULL.Q" Destination="qAtFull.D1"/>
+		</DataConnections>
+	</FBNetwork>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

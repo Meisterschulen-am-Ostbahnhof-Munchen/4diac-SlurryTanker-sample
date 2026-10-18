@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="IG3_NAME_Functions" Comment="Industry Group 3 specific function defines">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Organization="Demmler Andreas Fahrzeugbau" Version="1.0" Author="Franz Höpfinger" Date="2026-06-29">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::pgn::const">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="F_SUPPLEMENTAL_ENGINE_CONTROL_SENSING" Type="BYTE" Comment="Sys: Non-specific system, Func: Supplemental Engine Control Sensing" InitialValue="128"/>
+		<VarDeclaration Name="F_LASER_RECEIVER" Type="BYTE" Comment="Sys: Non-specific system, Func: Laser Receiver" InitialValue="129"/>
+		<VarDeclaration Name="F_LAND_LEVELING_SYSTEM_OPERATOR_INTERFACE" Type="BYTE" Comment="Sys: Non-specific system, Func: Land Leveling System Operator Interface - A component that allows" InitialValue="130"/>
+		<VarDeclaration Name="F_LAND_LEVELING_ELECTRIC_MAST" Type="BYTE" Comment="Sys: Non-specific system, Func: Land Leveling Electric Mast" InitialValue="131"/>
+		<VarDeclaration Name="F_SINGLE_LAND_LEVELING_SYSTEM_SUPERVISOR" Type="BYTE" Comment="Sys: Non-specific system, Func: Single Land Leveling System Supervisor" InitialValue="132"/>
+		<VarDeclaration Name="F_LAND_LEVELING_SYSTEM_DISPLAY" Type="BYTE" Comment="Sys: Non-specific system, Func: Land Leveling System Display" InitialValue="133"/>
+		<VarDeclaration Name="F_LASER_TRACER" Type="BYTE" Comment="Sys: Non-specific system, Func: Laser Tracer" InitialValue="134"/>
+		<VarDeclaration Name="F_LOADER_CONTROL" Type="BYTE" Comment="Sys: Non-specific system, Func: Loader Control" InitialValue="135"/>
+		<VarDeclaration Name="F_SLOPE_SENSOR" Type="BYTE" Comment="Sys: Non-specific system, Func: Slope Sensor - Measures the slope along a axis." InitialValue="136"/>
+		<VarDeclaration Name="F_LIFTARM_CONTROL" Type="BYTE" Comment="Sys: Non-specific system, Func: Liftarm Control - Controller whose primary purpose is to control" InitialValue="137"/>
+		<VarDeclaration Name="F_SUPPLEMENTAL_SENSOR_PROCESSING_UNITS" Type="BYTE" Comment="Sys: Non-specific system, Func: Supplemental Sensor Processing Units - An ECU functioning as an" InitialValue="138"/>
+		<VarDeclaration Name="F_HYDRAULIC_SYSTEM_PLANNER" Type="BYTE" Comment="Sys: Non-specific system, Func: Hydraulic System Planner - Coordinates the functions of a number" InitialValue="139"/>
+		<VarDeclaration Name="F_HYDRAULIC_VALVE_CONTROLLER" Type="BYTE" Comment="Sys: Non-specific system, Func: Hydraulic Valve Controller - The valve controller will typically" InitialValue="140"/>
+		<VarDeclaration Name="F_JOYSTICK_CONTROL" Type="BYTE" Comment="Sys: Non-specific system, Func: Joystick Control - Joystick Control" InitialValue="141"/>
+		<VarDeclaration Name="F_ROTATION_SENSOR" Type="BYTE" Comment="Sys: Non-specific system, Func: Rotation Sensor - A device that measures the rotational angle" InitialValue="142"/>
+		<VarDeclaration Name="F_SONIC_SENSOR" Type="BYTE" Comment="Sys: Non-specific system, Func: Sonic Sensor - A device that measures distance via ultrasonic" InitialValue="143"/>
+		<VarDeclaration Name="F_SURVEY_TOTAL_STATION_TARGET" Type="BYTE" Comment="Sys: Non-specific System, Func: Survey Total Station Target - A survey total station target shall" InitialValue="144"/>
+		<VarDeclaration Name="F_HEADING_SENSOR" Type="BYTE" Comment="Sys: Non-specific System, Func: Heading Sensor - A device that measures vehicle azimuth." InitialValue="145"/>
+		<VarDeclaration Name="F_ALARM_DEVICE" Type="BYTE" Comment="Sys: Non-specific System, Func: Alarm device - Device that provides an audible and/or visual" InitialValue="146"/>
+		<VarDeclaration Name="F_NOT_AVAILABLE" Type="BYTE" Comment="Sys: Non-specific system, Func: Not Available - This assignment can be used until an explicit" InitialValue="255"/>
+		<VarDeclaration Name="F_SKID_STEER_LOADER_MAIN_CONTROLLER" Type="BYTE" Comment="Sys: Skid Steer Loader, Func: Main Controller" InitialValue="128"/>
+		<VarDeclaration Name="F_SKID_STEER_LOADER_NOT_AVAILABLE" Type="BYTE" Comment="Sys: Skid Steer Loader, Func: Not Available - This assignment can be used until an explicit" InitialValue="255"/>
+		<VarDeclaration Name="F_ARTICULATED_DUMP_TRUCK_NOT_AVAILABLE" Type="BYTE" Comment="Sys: Articulated Dump Truck, Func: Not Available - This assignment can be used until an explicit" InitialValue="255"/>
+		<VarDeclaration Name="F_BACKHOE_NOT_AVAILABLE" Type="BYTE" Comment="Sys: Backhoe, Func: Not Available - This assignment can be used until an explicit function has" InitialValue="255"/>
+		<VarDeclaration Name="F_CRAWLER_BLADE_CONTROLLER" Type="BYTE" Comment="Sys: Crawler, Func: Blade Controller - Controller for blade height." InitialValue="128"/>
+		<VarDeclaration Name="F_CRAWLER_NOT_AVAILABLE" Type="BYTE" Comment="Sys: Crawler, Func: Not Available - This assignment can be used until an explicit function has" InitialValue="255"/>
+		<VarDeclaration Name="F_EXCAVATOR_SLOPE_SENSOR" Type="BYTE" Comment="Sys: Excavator, Func: Slope Sensor - Measures the slope along a axis." InitialValue="128"/>
+		<VarDeclaration Name="F_EXCAVATOR_NOT_AVAILABLE" Type="BYTE" Comment="Sys: Excavator, Func: Not Available - This assignment can be used until an explicit function has" InitialValue="255"/>
+		<VarDeclaration Name="F_FORKLIFT_NOT_AVAILABLE" Type="BYTE" Comment="Sys: Forklift, Func: Not Available - This assignment can be used until an explicit function has" InitialValue="255"/>
+		<VarDeclaration Name="F_FOUR_WHEEL_DRIVE_LOADER_NOT_AVAILABLE" Type="BYTE" Comment="Sys: Four Wheel Drive Loader, Func: Not Available - This assignment can be used until an explicit" InitialValue="255"/>
+		<VarDeclaration Name="F_GRADER_HFWD_CONTROLLER" Type="BYTE" Comment="Sys: Grader, Func: HFWD Controller - Hydraulic front wheel drive controller" InitialValue="128"/>
+		<VarDeclaration Name="F_GRADER_NOT_AVAILABLE" Type="BYTE" Comment="Sys: Grader, Func: Not Available - This assignment can be used until an explicit function has" InitialValue="255"/>
+		<VarDeclaration Name="F_MILLING_MACHINE_NOT_AVAILABLE" Type="BYTE" Comment="Sys: Milling Machine, Func: Not Available - The milling machine is used for cutting (or chipping)" InitialValue="255"/>
+		<VarDeclaration Name="F_RECYCLER_AND_SOIL_STABILIZER_NOT_AVAILABLE" Type="BYTE" Comment="Sys: Recycler and Soil Stabilizer, Func: Not Available - Cold recyclers are used to prepare the" InitialValue="255"/>
+		<VarDeclaration Name="F_BINDING_AGENT_SPREADER_NOT_AVAILABLE" Type="BYTE" Comment="Sys: Binding Agent Spreader, Func: Not Available - Spreading large quantities of binding agents" InitialValue="255"/>
+		<VarDeclaration Name="F_PAVER_NOT_AVAILABLE" Type="BYTE" Comment="Sys: Paver, Func: Not Available - A paver (road paver for asphalt or slipform paver for concrete)" InitialValue="255"/>
+		<VarDeclaration Name="F_FEEDER_NOT_AVAILABLE" Type="BYTE" Comment="Sys: Feeder, Func: Not Available - A feeder is used to convey paver material from a hopper to the" InitialValue="255"/>
+		<VarDeclaration Name="F_SCREENING_PLANT_NOT_AVAILABLE" Type="BYTE" Comment="Sys: Screening Plant, Func: Not Available - Mobile screening plants are used for screening" InitialValue="255"/>
+		<VarDeclaration Name="F_STACKER_NOT_AVAILABLE" Type="BYTE" Comment="Sys: Stacker, Func: Not Available - Stackers are used to improve tipping onto conical or" InitialValue="255"/>
+		<VarDeclaration Name="F_ROLLER_NOT_AVAILABLE" Type="BYTE" Comment="Sys: Roller, Func: Not Available - A roller is used for asphalt and earthwork constuction to" InitialValue="255"/>
+		<VarDeclaration Name="F_CRUSHER_NOT_AVAILABLE" Type="BYTE" Comment="Sys: Crusher, Func: Not Available - The crusher is used for crushing natural stone and for" InitialValue="255"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE isobus::pgn::const;
+
+// Industry Group 3 specific function defines
+GLOBALCONSTANTS IG3_NAME_Functions
+	// Non-specific system (DC_NON_SPECIFIC_SYSTEM = 0)
+	VAR_GLOBAL CONSTANT
+		F_SUPPLEMENTAL_ENGINE_CONTROL_SENSING : BYTE := 128; // Sys: Non-specific system, Func: Supplemental Engine Control Sensing
+		F_LASER_RECEIVER : BYTE := 129; // Sys: Non-specific system, Func: Laser Receiver
+		F_LAND_LEVELING_SYSTEM_OPERATOR_INTERFACE : BYTE := 130; // Sys: Non-specific system, Func: Land Leveling System Operator Interface - A component that allows
+		                                                         // the user to control the Land Leveling System and display information about the operation of the
+		                                                         // sys...
+		F_LAND_LEVELING_ELECTRIC_MAST : BYTE := 131; // Sys: Non-specific system, Func: Land Leveling Electric Mast
+		F_SINGLE_LAND_LEVELING_SYSTEM_SUPERVISOR : BYTE := 132; // Sys: Non-specific system, Func: Single Land Leveling System Supervisor
+		F_LAND_LEVELING_SYSTEM_DISPLAY : BYTE := 133; // Sys: Non-specific system, Func: Land Leveling System Display
+		F_LASER_TRACER : BYTE := 134; // Sys: Non-specific system, Func: Laser Tracer
+		F_LOADER_CONTROL : BYTE := 135; // Sys: Non-specific system, Func: Loader Control
+		F_SLOPE_SENSOR : BYTE := 136; // Sys: Non-specific system, Func: Slope Sensor - Measures the slope along a axis.
+		F_LIFTARM_CONTROL : BYTE := 137; // Sys: Non-specific system, Func: Liftarm Control - Controller whose primary purpose is to control
+		                                 // the lift arms and tilt functions on a construction loader, skid steer loader, or similar machine.
+		                                 // No...
+		F_SUPPLEMENTAL_SENSOR_PROCESSING_UNITS : BYTE := 138; // Sys: Non-specific system, Func: Supplemental Sensor Processing Units - An ECU functioning as an
+		                                                      // I/O module connected to the bus with the designed purpose of data collection (input or output)
+		                                                      // and no...
+		F_HYDRAULIC_SYSTEM_PLANNER : BYTE := 139; // Sys: Non-specific system, Func: Hydraulic System Planner - Coordinates the functions of a number
+		                                          // of valve controllers.
+		F_HYDRAULIC_VALVE_CONTROLLER : BYTE := 140; // Sys: Non-specific system, Func: Hydraulic Valve Controller - The valve controller will typically
+		                                            // control the flow of oil to a specific cylinder.
+		F_JOYSTICK_CONTROL : BYTE := 141; // Sys: Non-specific system, Func: Joystick Control - Joystick Control
+		F_ROTATION_SENSOR : BYTE := 142; // Sys: Non-specific system, Func: Rotation Sensor - A device that measures the rotational angle
+		                                 // around an axis.
+		F_SONIC_SENSOR : BYTE := 143; // Sys: Non-specific system, Func: Sonic Sensor - A device that measures distance via ultrasonic
+		                              // pulse/echo range techniques.
+		F_SURVEY_TOTAL_STATION_TARGET : BYTE := 144; // Sys: Non-specific System, Func: Survey Total Station Target - A survey total station target shall
+		                                             // be located on a construction machine and shall be connected to the CAN network. It is targeted by
+		                                             // t...
+		F_HEADING_SENSOR : BYTE := 145; // Sys: Non-specific System, Func: Heading Sensor - A device that measures vehicle azimuth.
+		F_ALARM_DEVICE : BYTE := 146; // Sys: Non-specific System, Func: Alarm device - Device that provides an audible and/or visual
+		                              // alarm
+		F_NOT_AVAILABLE : BYTE := 255; // Sys: Non-specific system, Func: Not Available - This assignment can be used until an explicit
+		                               // function has been assigned.
+	END_VAR
+
+	// Skid Steer Loader (DC_SKID_STEER_LOADER = 1)
+	VAR_GLOBAL CONSTANT
+		F_SKID_STEER_LOADER_MAIN_CONTROLLER : BYTE := 128; // Sys: Skid Steer Loader, Func: Main Controller
+		F_SKID_STEER_LOADER_NOT_AVAILABLE : BYTE := 255; // Sys: Skid Steer Loader, Func: Not Available - This assignment can be used until an explicit
+		                                                 // function has been assigned.
+	END_VAR
+
+	// Articulated Dump Truck (DC_ARTICULATED_DUMP_TRUCK = 2)
+	VAR_GLOBAL CONSTANT
+		F_ARTICULATED_DUMP_TRUCK_NOT_AVAILABLE : BYTE := 255; // Sys: Articulated Dump Truck, Func: Not Available - This assignment can be used until an explicit
+		                                                      // function has been assigned.
+	END_VAR
+
+	// Backhoe (DC_BACKHOE = 3)
+	VAR_GLOBAL CONSTANT
+		F_BACKHOE_NOT_AVAILABLE : BYTE := 255; // Sys: Backhoe, Func: Not Available - This assignment can be used until an explicit function has
+		                                       // been assigned.
+	END_VAR
+
+	// Crawler (DC_CRAWLER = 4)
+	VAR_GLOBAL CONSTANT
+		F_CRAWLER_BLADE_CONTROLLER : BYTE := 128; // Sys: Crawler, Func: Blade Controller - Controller for blade height.
+		F_CRAWLER_NOT_AVAILABLE : BYTE := 255; // Sys: Crawler, Func: Not Available - This assignment can be used until an explicit function has
+		                                       // been assigned.
+	END_VAR
+
+	// Excavator (DC_EXCAVATOR = 5)
+	VAR_GLOBAL CONSTANT
+		F_EXCAVATOR_SLOPE_SENSOR : BYTE := 128; // Sys: Excavator, Func: Slope Sensor - Measures the slope along a axis.
+		F_EXCAVATOR_NOT_AVAILABLE : BYTE := 255; // Sys: Excavator, Func: Not Available - This assignment can be used until an explicit function has
+		                                         // been assigned.
+	END_VAR
+
+	// Forklift (DC_FORKLIFT = 6)
+	VAR_GLOBAL CONSTANT
+		F_FORKLIFT_NOT_AVAILABLE : BYTE := 255; // Sys: Forklift, Func: Not Available - This assignment can be used until an explicit function has
+		                                        // been assigned.
+	END_VAR
+
+	// Four Wheel Drive Loader (DC_FOUR_WHEEL_DRIVE_LOADER = 7)
+	VAR_GLOBAL CONSTANT
+		F_FOUR_WHEEL_DRIVE_LOADER_NOT_AVAILABLE : BYTE := 255; // Sys: Four Wheel Drive Loader, Func: Not Available - This assignment can be used until an explicit
+		                                                       // function has been assigned.
+	END_VAR
+
+	// Grader (DC_GRADER = 8)
+	VAR_GLOBAL CONSTANT
+		F_GRADER_HFWD_CONTROLLER : BYTE := 128; // Sys: Grader, Func: HFWD Controller - Hydraulic front wheel drive controller
+		F_GRADER_NOT_AVAILABLE : BYTE := 255; // Sys: Grader, Func: Not Available - This assignment can be used until an explicit function has
+		                                      // been assigned.
+	END_VAR
+
+	// Milling Machine (DC_MILLING_MACHINE = 9)
+	VAR_GLOBAL CONSTANT
+		F_MILLING_MACHINE_NOT_AVAILABLE : BYTE := 255; // Sys: Milling Machine, Func: Not Available - The milling machine is used for cutting (or chipping)
+		                                               // surface of the pavement and moves the material away from the road. This assignment can be used
+		                                               // unti...
+	END_VAR
+
+	// Recycler and Soil Stabilizer (DC_RECYCLER_AND_SOIL_STABILIZER = 10)
+	VAR_GLOBAL CONSTANT
+		F_RECYCLER_AND_SOIL_STABILIZER_NOT_AVAILABLE : BYTE := 255; // Sys: Recycler and Soil Stabilizer, Func: Not Available - Cold recyclers are used to prepare the
+		                                                            // asphalt pavement on site. This assignment can be used until an explicit function has been
+		                                                            // assigned.
+	END_VAR
+
+	// Binding Agent Spreader (DC_BINDING_AGENT_SPREADER = 11)
+	VAR_GLOBAL CONSTANT
+		F_BINDING_AGENT_SPREADER_NOT_AVAILABLE : BYTE := 255; // Sys: Binding Agent Spreader, Func: Not Available - Spreading large quantities of binding agents
+		                                                      // while adhering to the specified accuracy is of paramount importance in both soil stabilization
+		                                                      // and co...
+	END_VAR
+
+	// Paver (DC_PAVER = 12)
+	VAR_GLOBAL CONSTANT
+		F_PAVER_NOT_AVAILABLE : BYTE := 255; // Sys: Paver, Func: Not Available - A paver (road paver for asphalt or slipform paver for concrete)
+		                                     // is a piece of construction equipment used to lay surface of pavement on roads, bridges, parking
+		                                     // lot...
+	END_VAR
+
+	// Feeder (DC_FEEDER = 13)
+	VAR_GLOBAL CONSTANT
+		F_FEEDER_NOT_AVAILABLE : BYTE := 255; // Sys: Feeder, Func: Not Available - A feeder is used to convey paver material from a hopper to the
+		                                      // prepared road surface. This assignment can be used until an explicit function has been assigned.
+	END_VAR
+
+	// Screening Plant (DC_SCREENING_PLANT = 14)
+	VAR_GLOBAL CONSTANT
+		F_SCREENING_PLANT_NOT_AVAILABLE : BYTE := 255; // Sys: Screening Plant, Func: Not Available - Mobile screening plants are used for screening
+		                                               // natural stone used for recycling. This assignment can be used until an explicit function has been
+		                                               // assigned.
+	END_VAR
+
+	// Stacker (DC_STACKER = 15)
+	VAR_GLOBAL CONSTANT
+		F_STACKER_NOT_AVAILABLE : BYTE := 255; // Sys: Stacker, Func: Not Available - Stackers are used to improve tipping onto conical or
+		                                       // kidney-shaped stockpiles. This assignment can be used until an explicit function has been
+		                                       // assigned.
+	END_VAR
+
+	// Roller (DC_ROLLER = 16)
+	VAR_GLOBAL CONSTANT
+		F_ROLLER_NOT_AVAILABLE : BYTE := 255; // Sys: Roller, Func: Not Available - A roller is used for asphalt and earthwork constuction to
+		                                      // compact soil, gravel, or asphalt. This assignment can be used until an explicit function has been
+		                                      // assigned.
+	END_VAR
+
+	// Crusher (DC_CRUSHER = 17)
+	VAR_GLOBAL CONSTANT
+		F_CRUSHER_NOT_AVAILABLE : BYTE := 255; // Sys: Crusher, Func: Not Available - The crusher is used for crushing natural stone and for
+		                                       // recycling. This assignment can be used until an explicit function has been assigned.
+	END_VAR
+
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</GlobalConstants>

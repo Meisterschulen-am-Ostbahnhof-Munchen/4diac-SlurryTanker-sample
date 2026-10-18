@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="AID_OS" Comment="Output string object attribute ids">
+	<Identification Standard="61499-1" Description="Copyright (c) 2023 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-06-20">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::UT::Q::const::AID">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="WIDTH" Type="USINT" Comment="1: AID_OS_WIDTH - Width in pixels." InitialValue="USINT#1"/>
+		<VarDeclaration Name="HEIGHT" Type="USINT" Comment="2: AID_OS_HEIGHT - Height in pixels." InitialValue="USINT#2"/>
+		<VarDeclaration Name="BACKGROUND_COLOUR" Type="USINT" Comment="3: AID_OS_BACKGROUND_COLOUR - Background colour index." InitialValue="USINT#3"/>
+		<VarDeclaration Name="FONT_ATT" Type="USINT" Comment="4: AID_OS_FONT_ATT - Object ID of a Font Attributes object." InitialValue="USINT#4"/>
+		<VarDeclaration Name="OPTIONS" Type="USINT" Comment="5: AID_OS_OPTIONS - Bitmask: Bit 0=Transparent, Bit 1=Auto-Wrap, Bit 2=Wrap on Hyphen." InitialValue="USINT#5"/>
+		<VarDeclaration Name="VARIABLE_REF" Type="USINT" Comment="6: AID_OS_VARIABLE_REF - Object ID of a Variable object." InitialValue="USINT#6"/>
+		<VarDeclaration Name="JUSTIFICATION" Type="USINT" Comment="7: AID_OS_JUSTIFICATION - Justification: Bits 0-1 (Horizontal: 0=Left, 1=Middle, 2=Right), Bits" InitialValue="USINT#7"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE isobus::UT::Q::const::AID;
+
+// output string object attribute ids
+GLOBALCONSTANTS AID_OS
+	VAR_GLOBAL CONSTANT
+		WIDTH : USINT := USINT#1; // 1: AID_OS_WIDTH - Width in pixels.
+		HEIGHT : USINT := USINT#2; // 2: AID_OS_HEIGHT - Height in pixels.
+		BACKGROUND_COLOUR : USINT := USINT#3; // 3: AID_OS_BACKGROUND_COLOUR - Background colour index.
+		FONT_ATT : USINT := USINT#4; // 4: AID_OS_FONT_ATT - Object ID of a Font Attributes object.
+		OPTIONS : USINT := USINT#5; // 5: AID_OS_OPTIONS - Bitmask: Bit 0=Transparent, Bit 1=Auto-Wrap, Bit 2=Wrap on Hyphen.
+		VARIABLE_REF : USINT := USINT#6; // 6: AID_OS_VARIABLE_REF - Object ID of a Variable object.
+		JUSTIFICATION : USINT := USINT#7; // 7: AID_OS_JUSTIFICATION - Justification: Bits 0-1 (Horizontal: 0=Left, 1=Middle, 2=Right), Bits
+		                                  // 2-3 (Vertical: 0=Top, 1=Middle, 2=Bottom).
+	END_VAR
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</GlobalConstants>

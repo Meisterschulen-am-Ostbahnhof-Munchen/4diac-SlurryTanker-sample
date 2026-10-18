@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="FT_PT1_AR" Comment="AR-Adapter-Wrapper um OSCAT FT_PT1 (PT1-Tiefpassfilter) - bruckt zwischen&#10;adapter und OSCAT, ohne dass eine der beiden Basisbibliotheken von der anderen&#10;abhaengt. TM (Zeitkonstante) als ATM-Socket (kein Klartext-InputVar, sauber&#10;initialisierbar ueber initval_ATM), K als Klartext-InputVar durchgereicht&#10;(Default 1.0)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.3" Author="Franz Höpfinger" Date="2026-09-26" Remarks="Schema-Fix: Sockets/Plugs-Reihenfolge im InterfaceList vertauscht (IDE-Resave hatte Plugs vor Sockets geschrieben) - block-common.xsd verlangt strikt Sockets vor Plugs, sonst schlaegt validate.py mit 'Element Sockets: This element is not expected' fehl. Beim Gegenchecken des Review-Bot-Funds zu FT_PT1 v1.2 (fehlendes Organization-Attribut) entdeckt, unabhaengiges Problem.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.2" Author="Franz Höpfinger" Date="2026-09-26" Remarks="Franz: 'Sind alle WITH dafuer noch passend?' - Kommentare/Doku zu RST korrigiert, beschrieben bisher noch das alte Verhalten (out := K * in direkt in RST). Seit FT_PT1 v1.3 (Review-Bot-Fund auf training1 PR #269) setzt RST nur noch init:=FALSE, das Seeding passiert im naechsten REQ mit frisch abgetastetem in. With-Var-Deklarationen selbst unveraendert/weiterhin korrekt (REQ braucht in/TM/K, RST brauchte und braucht keine - referenziert weder in noch TM noch K); CNF (delta_t/out) bleibt syntaktisch gueltig, traegt beim RST-Fall aber jetzt bewusst die unveraenderten alten Werte (kein Bug, siehe Doku unten).">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-17" Remarks="Franz: 'RST muss raus gefuehrt werden' - neues EventInput RST, 1:1 durchgereicht an FT_PT1.RST (analog INIT/EINIT), seit FT_PT1.fbt v1.1 das RST-Event wieder hat. Kein zusaetzlicher CNF-Pfad noetig: FT_PT1.CNF (RST und REQ feuern beide denselben CNF-Ausgang) ist bereits an E_D_FF_ANY.CLK angeschlossen. Franz: 'K muss ein WITH Konstrukt haben, z.B. mit INIT' - K jetzt als With-Var am INIT-Event deklariert (analog QI/PARAMS bei den IXA/IX-Bausteinen), statt nur ueber eine formlose durchgehende DataConnection - K ist ein statischer Konfigurationswert, kein pro-Zyklus-Datum wie in/out.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-17" Remarks="Initial implementation of FT_PT1_AR wrapper FB (Franz: 'portiere diese Bausteine hier her', OSCAT_basic FT_PT1.TcPOU) - E_D_FF_ANY als Aenderungsfilter (EO/AR_OUT.E1 nur bei tatsaechlicher Wertaenderung), analog ROUND_AR/FT_DERIV_AR in diesem Projekt. TM als ATM-Socket statt Klartext-InputVar (Section 13 des iec61499-creator-Skills: TIME-Konfigurationswerte gehoeren auf einen Adapter-Socket, initialisiert per initval_ATM an der Instanziierungsstelle - gleiches Muster wie AE_DELAY/ASR2_DELAY).">
+	</VersionInfo>
+	<CompilerInfo packageName="OSCAT_adapter::Control">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization (durchgereicht an FT_PT1.EINIT)">
+				<With Var="K"/>
+			</Event>
+			<Event Name="RST" Type="Event" Comment="Filter zuruecksetzen (durchgereicht an FT_PT1.RST) - invalidiert nur den Zustand (init:=FALSE), das naechste REQ seedet mit frisch abgetastetem in (FT_PT1 v1.3)">
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="K" Type="REAL" Comment="Faktor (durchgereicht an FT_PT1.K)" InitialValue="1.0"/>
+		</InputVars>
+		<Sockets>
+			<AdapterDeclaration Name="AR_IN" Type="adapter::types::unidirectional::AR" Comment="Eingangssignal (REAL)" x="-800" y="800"/>
+			<AdapterDeclaration Name="TM" Type="adapter::types::unidirectional::ATM" Comment="Zeitkonstante (durchgereicht an FT_PT1.TM)" x="-800" y="1300"/>
+		</Sockets>
+		<Plugs>
+			<AdapterDeclaration Name="AR_OUT" Type="adapter::types::unidirectional::AR" Comment="Gefilterter Ausgangswert (REAL, durchgereicht von FT_PT1.out)" x="5300" y="200"/>
+		</Plugs>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="FT_PT1" Type="OSCAT::Basic::POUs::Engineering::Control::FT_PT1" x="800" y="0">
+		</FB>
+		<FB Name="E_D_FF_ANY" Type="iec61499::events::E_D_FF_ANY" x="2400" y="200">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="FT_PT1.EINIT" dx1="2800"/>
+			<Connection Source="FT_PT1.INITO" Destination="INITO" dx1="453.33"/>
+			<Connection Source="RST" Destination="FT_PT1.RST" dx1="2473.33"/>
+			<Connection Source="AR_IN.E1" Destination="FT_PT1.REQ" dx1="440"/>
+			<Connection Source="FT_PT1.CNF" Destination="E_D_FF_ANY.CLK" dx1="453.33"/>
+			<Connection Source="E_D_FF_ANY.EO" Destination="AR_OUT.E1" dx1="906.67"/>
+			<Connection Source="TM.E1" Destination="FT_PT1.RST" dx1="780"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="AR_IN.D1" Destination="FT_PT1.in" dx1="540"/>
+			<Connection Source="TM.D1" Destination="FT_PT1.TM" dx1="946.67"/>
+			<Connection Source="K" Destination="FT_PT1.K" dx1="846.67"/>
+			<Connection Source="FT_PT1.out" Destination="E_D_FF_ANY.D" dx1="453.33"/>
+			<Connection Source="E_D_FF_ANY.Q" Destination="AR_OUT.D1" dx1="940"/>
+		</DataConnections>
+	</FBNetwork>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>FT_PT1_AR</h1>
+
+<h2>🇩🇪 Deutsch</h2>
+
+<p>AR-Adapter-Wrapper um <code>OSCAT::Basic::POUs::Engineering::Control::FT_PT1</code> (PT1-Tiefpassfilter mit programmierbarer Zeitkonstante <code>TM</code> und Faktor <code>K</code>). <code>TM</code> ist ein <code>ATM</code>-Socket (kein Klartext-<code>InputVar</code>) - an der Instanziierungsstelle ueber <code>adapter::types::unidirectional::TIME::initval::initval_ATM</code> zu initialisieren, damit die Zeitkonstante sauber ueber <code>INIT</code>/<code>INITO</code> gesetzt wird (Section 13 des <code>iec61499-creator</code>-Skills: TIME-Konfigurationswerte gehoeren nicht auf einen nackten <code>InputVar</code>). <code>K</code> (Faktor, Default 1.0) bleibt ein Klartext-<code>InputVar</code>, ist aber als With-Var am <code>INIT</code>-Event deklariert (statt nur formlos durchgehend verdrahtet) - ein statischer Konfigurationswert wie bei den IXA/IX-Bausteinen (<code>QI</code>/<code>PARAMS</code> als With-Var an <code>INIT</code>), nicht wie <code>in</code>/<code>out</code> ein pro-Zyklus-Datum.</p>
+
+<h3>Reine Adapter-Grenze</h3>
+
+<ul>
+	<li><strong>AR_IN</strong> (Socket, <code>AR</code>): Eingangssignal (REAL)</li>
+	<li><strong>TM</strong> (Socket, <code>ATM</code>): Zeitkonstante</li>
+	<li><strong>AR_OUT</strong> (Plug, <code>AR</code>): gefilterter Ausgangswert (REAL)</li>
+</ul>
+
+<p><code>E_D_FF_ANY</code> filtert Aenderungen: <code>AR_OUT.E1</code> feuert nur, wenn sich der gefilterte Wert seit dem letzten Aufruf tatsaechlich geaendert hat - gleiches Muster wie bei <code>ROUND_AR</code>/<code>FT_DERIV_AR</code> in diesem Projekt.</p>
+
+<p><code>INIT</code>/<code>INITO</code> werden 1:1 an <code>FT_PT1.EINIT</code>/<code>.INITO</code> durchgereicht - wie bei den uebrigen Service-Wrappern in diesem Repo. Bleibt <code>INIT</code> unverdrahtet, feuert es einmalig beim Deployment automatisch (Standardkonvention fuer unverdrahtete <code>EInit</code>-Events).</p>
+
+<p><code>RST</code> (EventInput) wird 1:1 an <code>FT_PT1.RST</code> durchgereicht - invalidiert nur den Zustand (<code>init:=FALSE</code>), ohne selbst <code>out</code> zu setzen: RST hat kein <code>in</code>-With-Var und koennte sonst mit einem veralteten oder (bei TM.E1-getriggertem RST vor der ersten Messung) noch nie gesetzten Wert falsch seeden. Das naechste <code>REQ</code> (mit garantiert frischem <code>in</code> per With-Var) macht das eigentliche Seeding (<code>out := K * in</code>) selbst inline (FT_PT1 v1.3). Kein eigener CNF-Pfad noetig: <code>FT_PT1.CNF</code> feuert bei <code>RST</code> genauso wie bei <code>REQ</code> und ist bereits an <code>E_D_FF_ANY.CLK</code> angeschlossen - traegt beim RST-Fall allerdings noch die alten <code>delta_t</code>/<code>out</code>-Werte (unveraendert seit dem letzten REQ), <code>AR_OUT.E1</code> feuert also erst wieder beim naechsten REQ, sobald sich der Wert dadurch tatsaechlich aendert.</p>
+
+<h3>Warum ein eigener Wrapper?</h3>
+
+<p><code>FT_PT1</code> ist ein reines OSCAT-FB (<code>SimpleFB</code>, zustandsbehaftet: <code>last</code>/<code>tx</code>/<code>init</code>) ohne Adapter-Schnittstelle. <code>adapter</code> soll nicht von <code>OSCAT</code> abhaengen (und umgekehrt) - die Bruecke liegt daher in diesem dritten Bibliotheksprojekt (<code>OSCAT_adapter</code>), das von beiden abhaengt.</p>
+
+<h2>🇬🇧 English</h2>
+
+<p>AR-adapter wrapper around <code>OSCAT::Basic::POUs::Engineering::Control::FT_PT1</code> (PT1 low-pass filter with programmable time constant <code>TM</code> and factor <code>K</code>). <code>TM</code> is an <code>ATM</code> socket (not a plain <code>InputVar</code>) - initialize it at the instantiation site via <code>adapter::types::unidirectional::TIME::initval::initval_ATM</code> so the time constant is set cleanly via <code>INIT</code>/<code>INITO</code> (per section 13 of the <code>iec61499-creator</code> skill: TIME configuration values do not belong on a bare <code>InputVar</code>). <code>K</code> (factor, default 1.0) stays a plain <code>InputVar</code>, but is declared as a With-Var on the <code>INIT</code> event (instead of just an informally always-wired connection) - a static configuration value like <code>QI</code>/<code>PARAMS</code> on the IXA/IX blocks (With-Var on <code>INIT</code>), not a per-cycle datum like <code>in</code>/<code>out</code>.</p>
+
+<h3>Pure adapter boundary</h3>
+
+<ul>
+	<li><strong>AR_IN</strong> (socket, <code>AR</code>): input signal (REAL)</li>
+	<li><strong>TM</strong> (socket, <code>ATM</code>): time constant</li>
+	<li><strong>AR_OUT</strong> (plug, <code>AR</code>): filtered output value (REAL)</li>
+</ul>
+
+<p><code>E_D_FF_ANY</code> filters changes: <code>AR_OUT.E1</code> only fires when the filtered value actually changed since the last call - same pattern as <code>ROUND_AR</code>/<code>FT_DERIV_AR</code> in this project.</p>
+
+<p><code>INIT</code>/<code>INITO</code> are passed through 1:1 to <code>FT_PT1.EINIT</code>/<code>.INITO</code> - as with the other service wrappers in this repo. If <code>INIT</code> is left unconnected, it auto-fires once at deployment (standard convention for unconnected <code>EInit</code> events).</p>
+
+<p><code>RST</code> (event input) is passed through 1:1 to <code>FT_PT1.RST</code> - only invalidates the state (<code>init:=FALSE</code>) without setting <code>out</code> itself: RST has no <code>in</code> With-Var and could otherwise seed with a stale or (when triggered via TM.E1 before the first measurement) never-set value. The next <code>REQ</code> (with guaranteed-fresh <code>in</code> via its own With-Var) does the actual seeding (<code>out := K * in</code>) inline (FT_PT1 v1.3). No separate CNF path needed: <code>FT_PT1.CNF</code> fires on <code>RST</code> just like on <code>REQ</code> and is already wired to <code>E_D_FF_ANY.CLK</code> - though on the RST path it still carries the old, unchanged <code>delta_t</code>/<code>out</code> values, so <code>AR_OUT.E1</code> only fires again on the next <code>REQ</code> once the value actually changes.</p>
+
+<h3>Why a dedicated wrapper?</h3>
+
+<p><code>FT_PT1</code> is a plain OSCAT FB (<code>SimpleFB</code>, stateful: <code>last</code>/<code>tx</code>/<code>init</code>) with no adapter interface. <code>adapter</code> must not depend on <code>OSCAT</code> (nor vice versa) - the bridge lives in this third library project (<code>OSCAT_adapter</code>), which depends on both.</p>
+]]></Attribute>
+</FBType>

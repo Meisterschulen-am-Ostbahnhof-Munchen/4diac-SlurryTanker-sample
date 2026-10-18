@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="CALIBRATE" Comment="Two-point calibration (offset &amp; scale) of an analog input with BOOL-triggered&#10;calibration.">
+	<Identification Standard="61499-1" Description="&#9;version 1.3&#9;11. mar. 2009&#10;&#9;programmer &#9;hugo&#10;&#9;tested BY&#9;&#9;hans&#10;&#10;">
+	</Identification>
+	<VersionInfo Version="2.0" Author="Meisterschulen am Ostbahnhof" Date="2026-06-01">
+	</VersionInfo>
+	<CompilerInfo packageName="OSCAT::Basic::POUs::Engineering::measurements">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event" Comment="Normal Execution Request">
+				<With Var="X"/>
+				<With Var="CO"/>
+				<With Var="CS"/>
+				<With Var="Y_Offset"/>
+				<With Var="Y_Scale"/>
+				<With Var="OFFSET"/>
+				<With Var="SCALE"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event" Comment="Execution Confirmation">
+				<With Var="Y"/>
+				<With Var="OFFSET"/>
+				<With Var="SCALE"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="X" Type="REAL" Comment="Input"/>
+			<VarDeclaration Name="CO" Type="BOOL" Comment="Calibrate Offset"/>
+			<VarDeclaration Name="CS" Type="BOOL" Comment="Calibrate Scale"/>
+			<VarDeclaration Name="Y_Offset" Type="REAL" Comment="Reference for offset calibration"/>
+			<VarDeclaration Name="Y_Scale" Type="REAL" Comment="Reference for scale calibration"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="Y" Type="REAL" Comment="Calibrated Output"/>
+		</OutputVars>
+		<InOutVars>
+			<VarDeclaration Name="OFFSET" Type="REAL" Comment="Offset value" InitialValue="0.0"/>
+			<VarDeclaration Name="SCALE" Type="REAL" Comment="Scale value" InitialValue="1.0"/>
+		</InOutVars>
+	</InterfaceList>
+	<SimpleFB>
+		<ECState Name="REQ">
+			<ECAction Algorithm="REQ" Output="CNF"/>
+		</ECState>
+		<Algorithm Name="REQ">
+			<ST><![CDATA[
+(* offset calibration: store offset so Y = Y_Offset at current X *)
+IF CO THEN
+	OFFSET := Y_Offset - X;
+ELSIF CS THEN
+	(* scale calibration: store scale so Y = Y_Scale at current X (requires OFFSET from CO!) *)
+	IF (X + OFFSET) <> 0.0 THEN
+		SCALE := Y_Scale / (X + OFFSET);
+	END_IF;
+END_IF;
+(* calculate calibrated output *)
+Y := (X + OFFSET) * SCALE;
+]]></ST>
+		</Algorithm>
+	</SimpleFB>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h2>Formula</h2>
+
+<pre>
+Y = (X + OFFSET) * SCALE</pre>
+
+<h2>Calibration (Two-Point)</h2>
+
+<ol>
+	<li><strong>Offset (CO):</strong> Apply low reference, set Y_Offset to desired output, set CO=TRUE<br />
+	OFFSET := Y_Offset - X &rarr; shifts X so that Y = Y_Offset at this point</li>
+	<li><strong>Scale (CS):</strong> Apply high reference, set Y_Scale to desired output, set CS=TRUE<br />
+	SCALE := Y_Scale / (X + OFFSET) &rarr; scales so that Y = Y_Scale at this point</li>
+</ol>
+
+<p><strong>Note:</strong> Both Y_Offset and Y_Scale are target values on the <strong>output side</strong>.</p>
+
+<p><strong>⚠ IMPORTANT:</strong> CO must be executed <strong>before</strong> CS, because CS uses OFFSET from CO.<br />
+In a SimpleFB this order cannot be enforced by the FB itself.<br />
+See E_CALIBRATE_SQ for an event-driven variant with ECC-enforced sequencing.</p>
+
+<h2>Example</h2>
+
+<p><strong>Scenario:</strong> 4&ndash;20 mA pressure sensor via logiBUS (0&ndash;10 V, normalized to 0.0..1.0).<br />
+Desired output range: 0.0..500.0</p>
+
+<table border="1" cellpadding="4" cellspacing="0" style="border-collapse:collapse">
+	<tbody>
+		<tr>
+			<th>Step</th>
+			<th>Action</th>
+			<th>Result</th>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>Apply 4 mA (X=0.0), set Y_Offset=0.0, CO=TRUE</td>
+			<td>OFFSET = 0</td>
+		</tr>
+		<tr>
+			<td>2</td>
+			<td>Apply 20 mA (X=1.0), set Y_Scale=500.0, CS=TRUE</td>
+			<td>SCALE = 500</td>
+		</tr>
+	</tbody>
+</table>
+
+<p><strong>Output:</strong> Y = (X + 0) * 500 = X * 500 = 0..500 ✓</p>
+]]></Attribute>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="SPLIT_SIGNED_LINT" Comment="Teilt einen LINT-Wert in 2 einseitige Betragswerte auf: NEG_MAG = MAX(0,-Y),&#10;POS_MAG = MAX(0,Y). Sonderfall Y=LINT#-9223372036854775808 (LINT-Minimum): -Y&#10;wuerde ueberlaufen (Zweierkomplement, |MIN| &gt; MAX) - in diesem Fall wird NEG_MAG&#10;auf LINT#9223372036854775807 (LINT-Maximum) begrenzt (Regelungstechnik:&#10;Saettigung statt Ueberlauf/Vorzeichenwechsel). Feuert CNF bei jedem REQ,&#10;unabhaengig von Wertaenderung - Event-Deduplizierung erfolgt aussen im&#10;Adapter-Wrapper ALI_SPLIT_SIGNED ueber je einen E_D_FF_ANY pro Seite.">
+	<Identification Standard="61499-2">
+	</Identification>
+	<VersionInfo Version="1.0" Author="Franz Höpfinger" Date="2026-09-11" Remarks="Einfacher Value/Event-Baustein ohne Event-Dedup - wird vom Adapter-Wrapper ALI_SPLIT_SIGNED mit je einem E_D_FF_ANY pro Seite dedupliziert">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::Engineering::splitting::signed">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event" Comment="Neuer Y-Wert liegt an">
+				<With Var="Y"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event" Comment="NEG_MAG/POS_MAG berechnet">
+				<With Var="NEG_MAG"/>
+				<With Var="POS_MAG"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="Y" Type="LINT" Comment="Eingangswert"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="NEG_MAG" Type="LINT" Comment="MAX(0, -Y), bei Y=LINT#-9223372036854775808 gesaettigt auf LINT#9223372036854775807"/>
+			<VarDeclaration Name="POS_MAG" Type="LINT" Comment="MAX(0, Y)"/>
+		</OutputVars>
+	</InterfaceList>
+	<BasicFB>
+		<ECC>
+			<ECState Name="START" Comment="Initial State" x="0" y="0">
+			</ECState>
+			<ECState Name="EMIT" x="800" y="0">
+				<ECAction Algorithm="SPLIT" Output="CNF"/>
+			</ECState>
+			<ECTransition Source="START" Destination="EMIT" Condition="REQ" x="400" y="-120"/>
+			<ECTransition Source="EMIT" Destination="START" Condition="1" x="400" y="120"/>
+		</ECC>
+		<Algorithm Name="SPLIT">
+			<ST><![CDATA[
+IF Y = LINT#-9223372036854775808 THEN
+	NEG_MAG := LINT#9223372036854775807;
+ELSE
+	NEG_MAG := MAX(LINT#0,-Y);
+END_IF;
+POS_MAG := MAX(LINT#0,Y);
+]]></ST>
+		</Algorithm>
+	</BasicFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

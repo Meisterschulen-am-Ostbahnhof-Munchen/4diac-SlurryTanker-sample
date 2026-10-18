@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="AR_SPLIT_2_3" Comment="Verzweigt 3 unabhaengige AR-Werte auf je 2 Ziele (IN1 auf OUT1a/OUT1b, IN2 auf&#10;OUT2a/OUT2b, IN3 auf OUT3a/OUT3b) ueber je einen AR_SPLIT_2. Spart 3x AR_SPLIT_2&#10;als Einzelbausteine, wo mehrere Werte gleichzeitig an zwei unabhaengige&#10;Verbraucher verteilt werden muessen (z.B. Schwelle/Totzone/Hysterese an&#10;Regel-Logik UND Positions-/Anzeige-Logik, wie in Befuellautomatik).">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-27" Remarks="initial implementation - 3x AR_SPLIT_2 gebuendelt fuer den wiederkehrenden Fall 'mehrere INI-/Referenzwerte gleichzeitig an zwei unabhaengige Verbraucher'.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<Plugs>
+			<AdapterDeclaration Name="OUT1a" Type="adapter::types::unidirectional::AR" Comment="IN1, erstes Ziel"/>
+			<AdapterDeclaration Name="OUT2a" Type="adapter::types::unidirectional::AR" Comment="IN2, erstes Ziel"/>
+			<AdapterDeclaration Name="OUT3a" Type="adapter::types::unidirectional::AR" Comment="IN3, erstes Ziel"/>
+			<AdapterDeclaration Name="OUT1b" Type="adapter::types::unidirectional::AR" Comment="IN1, zweites Ziel"/>
+			<AdapterDeclaration Name="OUT2b" Type="adapter::types::unidirectional::AR" Comment="IN2, zweites Ziel"/>
+			<AdapterDeclaration Name="OUT3b" Type="adapter::types::unidirectional::AR" Comment="IN3, zweites Ziel"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="IN1" Type="adapter::types::unidirectional::AR" Comment="Wird auf OUT1a und OUT1b verzweigt"/>
+			<AdapterDeclaration Name="IN2" Type="adapter::types::unidirectional::AR" Comment="Wird auf OUT2a und OUT2b verzweigt"/>
+			<AdapterDeclaration Name="IN3" Type="adapter::types::unidirectional::AR" Comment="Wird auf OUT3a und OUT3b verzweigt"/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="Split_1" Type="adapter::events::unidirectional::AR_SPLIT_2" x="200" y="-100">
+		</FB>
+		<FB Name="Split_2" Type="adapter::events::unidirectional::AR_SPLIT_2" x="200" y="400">
+		</FB>
+		<FB Name="Split_3" Type="adapter::events::unidirectional::AR_SPLIT_2" x="200" y="900">
+		</FB>
+		<AdapterConnections>
+			<Connection Source="IN1" Destination="Split_1.IN" dx1="2713.33"/>
+			<Connection Source="Split_1.OUT1" Destination="OUT1a" dx1="1160">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Split_1.OUT2" Destination="OUT1b" dx1="1253.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="IN2" Destination="Split_2.IN" dx1="2553.33"/>
+			<Connection Source="Split_2.OUT1" Destination="OUT2a" dx1="1780">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Split_2.OUT2" Destination="OUT2b" dx1="1900">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="IN3" Destination="Split_3.IN" dx1="2020"/>
+			<Connection Source="Split_3.OUT1" Destination="OUT3a" dx1="2133.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Split_3.OUT2" Destination="OUT3b" dx1="2300">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

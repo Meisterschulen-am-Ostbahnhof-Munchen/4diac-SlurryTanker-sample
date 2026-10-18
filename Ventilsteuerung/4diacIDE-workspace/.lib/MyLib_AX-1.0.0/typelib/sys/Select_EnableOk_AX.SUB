@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Select_EnableOk_AX" Comment="Wie MyLib::sys::Select_EnableOk, aber vollstaendig adapter-nativ: bEnable/bOk&#10;kommen als AX-Adapter, value geht als AUS-Adapter raus - kein Event-Handling&#10;noetig, jede Aenderung an bEnable/bOk propagiert automatisch ueber die&#10;Adapter-Kette.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-08-31" Remarks="Adapter-native Variante von Select_EnableOk: AUS_AX_SEL_AUS (2-stufig) statt F_SEL+Event-Merge, initval_AUS speist die 3 Parameter-Werte als Adapter ein - kein REQ/CNF mehr auf dieser Ebene">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<InputVars>
+			<VarDeclaration Name="valDisabled" Type="USINT" Comment="Ausgabewert wenn bEnable=FALSE - einmalig bei Instanziierung per Parameter gesetzt"/>
+			<VarDeclaration Name="valOk" Type="USINT" Comment="Ausgabewert wenn bEnable=TRUE und bOk=TRUE - einmalig bei Instanziierung per Parameter gesetzt"/>
+			<VarDeclaration Name="valFault" Type="USINT" Comment="Ausgabewert wenn bEnable=TRUE und bOk=FALSE - einmalig bei Instanziierung per Parameter gesetzt"/>
+		</InputVars>
+		<Plugs>
+			<AdapterDeclaration Name="value" Type="adapter::types::unidirectional::AUS" Comment="Ausgewaehlter Wert"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="bEnable" Type="adapter::types::unidirectional::AX" Comment="Aktiviert (BOOL, ueber Adapter statt Klartext)"/>
+			<AdapterDeclaration Name="bOk" Type="adapter::types::unidirectional::AX" Comment="OK-Zustand (BOOL, ueber Adapter statt Klartext) - nur relevant wenn bEnable=TRUE"/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="initval_AUS_FAULT" Type="adapter::types::unidirectional::AUS::initval::initval_AUS" x="-800" y="1000">
+		</FB>
+		<FB Name="initval_AUS_OK" Type="adapter::types::unidirectional::AUS::initval::initval_AUS" x="-800" y="400">
+		</FB>
+		<FB Name="initval_AUS_DISABLED" Type="adapter::types::unidirectional::AUS::initval::initval_AUS" x="-900" y="-200">
+		</FB>
+		<FB Name="F_SEL_OK_FAULT" Type="adapter::iec61131::selection::AUS_AX_SEL_AUS" x="2400" y="-1000">
+		</FB>
+		<FB Name="F_SEL_ENABLE" Type="adapter::iec61131::selection::AUS_AX_SEL_AUS" x="3800" y="-400">
+		</FB>
+		<DataConnections>
+			<Connection Source="valFault" Destination="initval_AUS_FAULT.INIT_VAL" dx1="493.33"/>
+			<Connection Source="valOk" Destination="initval_AUS_OK.INIT_VAL" dx1="600"/>
+			<Connection Source="valDisabled" Destination="initval_AUS_DISABLED.INIT_VAL" dx1="693.33"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="bOk" Destination="F_SEL_OK_FAULT.G" dx1="2440"/>
+			<Connection Source="initval_AUS_FAULT.OUT" Destination="F_SEL_OK_FAULT.IN0" dx1="300">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="initval_AUS_OK.OUT" Destination="F_SEL_OK_FAULT.IN1" dx1="300">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="initval_AUS_DISABLED.OUT" Destination="F_SEL_ENABLE.IN0" dx1="300">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="F_SEL_OK_FAULT.OUT" Destination="F_SEL_ENABLE.IN1" dx1="126.67"/>
+			<Connection Source="bEnable" Destination="F_SEL_ENABLE.G" dx1="3466.67"/>
+			<Connection Source="F_SEL_ENABLE.OUT" Destination="value" dx1="2780"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Function Name="F_RAW_TO_PHYS" Comment="Convert ISOBUS raw UDINT to physical REAL value.&#10;ISOBUS formula: display = (raw + offset) * scale&#10;&#10;Example: raw=50000, scale=0.01, offset=-100000 DINT(50000) + (-100000) = -50000 REAL(-50000)&#10;0.01     = -500.0">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-04-14">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::utils::conversion::phys">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event">
+				<With Var="u32Raw"/>
+				<With Var="stObj"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event">
+				<With Var=""/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="u32Raw" Type="UDINT"/>
+			<VarDeclaration Name="stObj" Type="logiBUS::utils::conversion::phys::NumericObjectPool_S"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="" Type="REAL"/>
+		</OutputVars>
+	</InterfaceList>
+	<FunctionBody>
+		<ST><![CDATA[PACKAGE logiBUS::utils::conversion::phys;
+
+(* Convert ISOBUS raw UDINT to physical REAL value.
+ * ISOBUS formula: display = (raw + offset) * scale
+ * *
+ * Example: raw=50000, scale=0.01, offset=-100000 DINT(50000) + (-100000) = -50000 REAL(-50000) *
+ * 0.01     = -500.0 *)
+FUNCTION F_RAW_TO_PHYS : REAL
+
+VAR_INPUT
+	u32Raw : UDINT;
+	stObj : NumericObjectPool_S;
+END_VAR
+
+VAR_TEMP
+	i64Raw : LINT; // to avoid overflow
+	i64Offset : LINT; // to avoid overflow
+END_VAR
+
+i64Raw := u32Raw; // no conversion needed
+i64Offset := stObj.i32Offset; // no conversion needed
+
+F_RAW_TO_PHYS := LINT_TO_REAL(i64Raw + i64Offset) * stObj.r32Scale;
+
+END_FUNCTION
+]]></ST>
+	</FunctionBody>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</Function>
