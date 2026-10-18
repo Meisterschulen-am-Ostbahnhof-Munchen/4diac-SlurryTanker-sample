@@ -46,7 +46,7 @@
 		<FB Name="E_PULSE" Type="E_PULSE" x="5300" y="926.67">
 			<Parameter Name="PT" Value="T#3s"/>
 		</FB>
-		<SubApp Name="GreenWhiteBackground_Function" Type="GreenWhiteBackground_Function" x="4940" y="0">
+		<SubApp Name="GreenWhiteBackground_Function" Type="MyLib::sys::GreenWhiteBackground3C" x="4940" y="0">
 		</SubApp>
 		<FB Name="SoftKey" Type="isobus::UT::io::Softkey::Softkey_IE" x="-200" y="1200">
 			<Parameter Name="QI" Value="TRUE"/>
@@ -88,7 +88,7 @@
 			<Connection Source="E_PULSE.Q" Destination="QXB.OUT" dx1="773.33"/>
 			<Connection Source="E_PULSE.Q" Destination="AND_2.IN1" dx1="600"/>
 			<Connection Source="E_T_FF_SR.Q" Destination="AND_2.IN2" dx1="2406.67"/>
-			<Connection Source="E_T_FF_SR.Q" Destination="GreenWhiteBackground_Function.Q" dx1="653.33"/>
+			<Connection Source="E_T_FF_SR.Q" Destination="GreenWhiteBackground_Function.DI" dx1="653.33"/>
 		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>
