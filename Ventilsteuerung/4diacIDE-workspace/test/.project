@@ -6,6 +6,11 @@
 	</projects>
 	<buildSpec>
 		<buildCommand>
+			<name>org.eclipse.fordiac.ide.library.builder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
 			<name>org.eclipse.xtext.ui.shared.xtextBuilder</name>
 			<arguments>
 			</arguments>
@@ -32,154 +37,549 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>Standard Libraries/convert</name>
+			<name>External Libraries/BlinkMarine</name>
 			<type>2</type>
-			<locationURI>ECLIPSE_HOME/typelibrary/convert-1.0.0/typelib</locationURI>
+			<locationURI>WORKSPACE_LOC/.lib/BlinkMarine-3.0.0/typelib</locationURI>
 		</link>
 		<link>
-			<name>Standard Libraries/core</name>
+			<name>External Libraries/DataPanel</name>
 			<type>2</type>
-			<locationURI>ECLIPSE_HOME/typelibrary/core-1.0.0/typelib</locationURI>
+			<locationURI>WORKSPACE_LOC/.lib/DataPanel-3.0.0/typelib</locationURI>
 		</link>
 		<link>
-			<name>Standard Libraries/devices</name>
+			<name>External Libraries/Funk</name>
 			<type>2</type>
-			<locationURI>ECLIPSE_HOME/typelibrary/devices-1.0.0/typelib</locationURI>
+			<locationURI>WORKSPACE_LOC/.lib/Funk-3.0.0/typelib</locationURI>
 		</link>
 		<link>
-			<name>Standard Libraries/events</name>
+			<name>External Libraries/MyLib_AX</name>
 			<type>2</type>
-			<locationURI>ECLIPSE_HOME/typelibrary/events-1.0.0/typelib</locationURI>
+			<locationURI>WORKSPACE_LOC/.lib/MyLib_AX-1.0.0/typelib</locationURI>
 		</link>
 		<link>
-			<name>Standard Libraries/iec61131-3</name>
+			<name>External Libraries/MyLib_AX_CAN2</name>
 			<type>2</type>
-			<locationURI>ECLIPSE_HOME/typelibrary/iec61131-3-1.0.0/typelib</locationURI>
+			<locationURI>WORKSPACE_LOC/.lib/MyLib_AX_CAN2-1.0.0/typelib</locationURI>
 		</link>
 		<link>
-			<name>Standard Libraries/io</name>
+			<name>External Libraries/MyLib_AX_Option</name>
 			<type>2</type>
-			<locationURI>ECLIPSE_HOME/typelibrary/io-1.0.0/typelib</locationURI>
+			<locationURI>WORKSPACE_LOC/.lib/MyLib_AX_Option-1.0.0/typelib</locationURI>
 		</link>
 		<link>
-			<name>Standard Libraries/math</name>
+			<name>External Libraries/MyLib_B</name>
 			<type>2</type>
-			<locationURI>ECLIPSE_HOME/typelibrary/math-1.0.0/typelib</locationURI>
+			<locationURI>WORKSPACE_LOC/.lib/MyLib_B-1.0.0/typelib</locationURI>
 		</link>
 		<link>
-			<name>Standard Libraries/net</name>
+			<name>External Libraries/MyLib_OPC</name>
 			<type>2</type>
-			<locationURI>ECLIPSE_HOME/typelibrary/net-1.0.0/typelib</locationURI>
+			<locationURI>WORKSPACE_LOC/.lib/MyLib_OPC-1.0.0/typelib</locationURI>
 		</link>
 		<link>
-			<name>Standard Libraries/reconfiguration</name>
+			<name>External Libraries/OSCAT_Basic</name>
 			<type>2</type>
-			<locationURI>ECLIPSE_HOME/typelibrary/reconfiguration-1.0.0/typelib</locationURI>
+			<locationURI>WORKSPACE_LOC/.lib/OSCAT_Basic-0.1.0/typelib</locationURI>
 		</link>
 		<link>
-			<name>Standard Libraries/resources</name>
+			<name>External Libraries/OSCAT_adapter</name>
 			<type>2</type>
-			<locationURI>ECLIPSE_HOME/typelibrary/resources-1.0.0/typelib</locationURI>
+			<locationURI>WORKSPACE_LOC/.lib/OSCAT_adapter-3.0.0/typelib</locationURI>
 		</link>
 		<link>
-			<name>Standard Libraries/rtevents</name>
+			<name>External Libraries/Option</name>
 			<type>2</type>
-			<locationURI>ECLIPSE_HOME/typelibrary/rtevents-1.0.0/typelib</locationURI>
+			<locationURI>WORKSPACE_LOC/.lib/Option-1.0.0/typelib</locationURI>
 		</link>
 		<link>
-			<name>Standard Libraries/segments</name>
+			<name>External Libraries/SafeArithmetic</name>
 			<type>2</type>
-			<locationURI>ECLIPSE_HOME/typelibrary/segments-1.0.0/typelib</locationURI>
+			<locationURI>WORKSPACE_LOC/.lib/SafeArithmetic-3.0.0/typelib</locationURI>
 		</link>
 		<link>
-			<name>Standard Libraries/signalprocessing</name>
+			<name>External Libraries/adapter</name>
 			<type>2</type>
-			<locationURI>ECLIPSE_HOME/typelibrary/signalprocessing-1.0.0/typelib</locationURI>
+			<locationURI>WORKSPACE_LOC/.lib/adapter-3.0.0/typelib</locationURI>
 		</link>
 		<link>
-			<name>Standard Libraries/storage</name>
+			<name>External Libraries/adapter_conversion</name>
 			<type>2</type>
-			<locationURI>ECLIPSE_HOME/typelibrary/storage-1.0.0/typelib</locationURI>
+			<locationURI>WORKSPACE_LOC/.lib/adapter_conversion-3.0.0/typelib</locationURI>
 		</link>
 		<link>
-			<name>Standard Libraries/utils</name>
+			<name>External Libraries/adapter_events</name>
 			<type>2</type>
-			<locationURI>ECLIPSE_HOME/typelibrary/utils-1.0.0/typelib</locationURI>
+			<locationURI>WORKSPACE_LOC/.lib/adapter_events-3.0.0/typelib</locationURI>
 		</link>
 		<link>
-			<name>Standard Libraries/convert/MANIFEST.MF</name>
-			<type>1</type>
-			<locationURI>ECLIPSE_HOME/typelibrary/convert-1.0.0/MANIFEST.MF</locationURI>
+			<name>External Libraries/adapter_iec61131-3</name>
+			<type>2</type>
+			<locationURI>WORKSPACE_LOC/.lib/adapter_iec61131-3-3.0.0/typelib</locationURI>
 		</link>
 		<link>
-			<name>Standard Libraries/core/MANIFEST.MF</name>
-			<type>1</type>
-			<locationURI>ECLIPSE_HOME/typelibrary/core-1.0.0/MANIFEST.MF</locationURI>
+			<name>External Libraries/adapter_selection</name>
+			<type>2</type>
+			<locationURI>WORKSPACE_LOC/.lib/adapter_selection-3.0.0/typelib</locationURI>
 		</link>
 		<link>
-			<name>Standard Libraries/devices/MANIFEST.MF</name>
-			<type>1</type>
-			<locationURI>ECLIPSE_HOME/typelibrary/devices-1.0.0/MANIFEST.MF</locationURI>
+			<name>External Libraries/adapter_types</name>
+			<type>2</type>
+			<locationURI>WORKSPACE_LOC/.lib/adapter_types-3.0.0/typelib</locationURI>
 		</link>
 		<link>
-			<name>Standard Libraries/events/MANIFEST.MF</name>
-			<type>1</type>
-			<locationURI>ECLIPSE_HOME/typelibrary/events-1.0.0/MANIFEST.MF</locationURI>
+			<name>External Libraries/convert</name>
+			<type>2</type>
+			<locationURI>WORKSPACE_LOC/.lib/convert-3.0.0/typelib</locationURI>
 		</link>
 		<link>
-			<name>Standard Libraries/iec61131-3/MANIFEST.MF</name>
-			<type>1</type>
-			<locationURI>ECLIPSE_HOME/typelibrary/iec61131-3-1.0.0/MANIFEST.MF</locationURI>
+			<name>External Libraries/core</name>
+			<type>2</type>
+			<locationURI>WORKSPACE_LOC/.lib/core-3.0.0/typelib</locationURI>
 		</link>
 		<link>
-			<name>Standard Libraries/io/MANIFEST.MF</name>
-			<type>1</type>
-			<locationURI>ECLIPSE_HOME/typelibrary/io-1.0.0/MANIFEST.MF</locationURI>
+			<name>External Libraries/events</name>
+			<type>2</type>
+			<locationURI>WORKSPACE_LOC/.lib/events-3.0.0/typelib</locationURI>
 		</link>
 		<link>
-			<name>Standard Libraries/math/MANIFEST.MF</name>
-			<type>1</type>
-			<locationURI>ECLIPSE_HOME/typelibrary/math-1.0.0/MANIFEST.MF</locationURI>
+			<name>External Libraries/iec61131-3</name>
+			<type>2</type>
+			<locationURI>WORKSPACE_LOC/.lib/iec61131-3-3.0.0/typelib</locationURI>
 		</link>
 		<link>
-			<name>Standard Libraries/net/MANIFEST.MF</name>
-			<type>1</type>
-			<locationURI>ECLIPSE_HOME/typelibrary/net-1.0.0/MANIFEST.MF</locationURI>
+			<name>External Libraries/iec61131-3-bool</name>
+			<type>2</type>
+			<locationURI>WORKSPACE_LOC/.lib/iec61131-3-bool-3.0.0/typelib</locationURI>
 		</link>
 		<link>
-			<name>Standard Libraries/reconfiguration/MANIFEST.MF</name>
-			<type>1</type>
-			<locationURI>ECLIPSE_HOME/typelibrary/reconfiguration-1.0.0/MANIFEST.MF</locationURI>
+			<name>External Libraries/isobus_TC</name>
+			<type>2</type>
+			<locationURI>WORKSPACE_LOC/.lib/isobus_TC-3.0.0/typelib</locationURI>
 		</link>
 		<link>
-			<name>Standard Libraries/resources/MANIFEST.MF</name>
-			<type>1</type>
-			<locationURI>ECLIPSE_HOME/typelibrary/resources-1.0.0/MANIFEST.MF</locationURI>
+			<name>External Libraries/isobus_UT</name>
+			<type>2</type>
+			<locationURI>WORKSPACE_LOC/.lib/isobus_UT-3.0.0/typelib</locationURI>
 		</link>
 		<link>
-			<name>Standard Libraries/rtevents/MANIFEST.MF</name>
-			<type>1</type>
-			<locationURI>ECLIPSE_HOME/typelibrary/rtevents-1.0.0/MANIFEST.MF</locationURI>
+			<name>External Libraries/isobus_UT_adapter</name>
+			<type>2</type>
+			<locationURI>WORKSPACE_LOC/.lib/isobus_UT_adapter-3.0.0/typelib</locationURI>
 		</link>
 		<link>
-			<name>Standard Libraries/segments/MANIFEST.MF</name>
-			<type>1</type>
-			<locationURI>ECLIPSE_HOME/typelibrary/segments-1.0.0/MANIFEST.MF</locationURI>
+			<name>External Libraries/isobus_UT_io</name>
+			<type>2</type>
+			<locationURI>WORKSPACE_LOC/.lib/isobus_UT_io-3.0.0/typelib</locationURI>
 		</link>
 		<link>
-			<name>Standard Libraries/signalprocessing/MANIFEST.MF</name>
-			<type>1</type>
-			<locationURI>ECLIPSE_HOME/typelibrary/signalprocessing-1.0.0/MANIFEST.MF</locationURI>
+			<name>External Libraries/isobus_UT_io_adapter</name>
+			<type>2</type>
+			<locationURI>WORKSPACE_LOC/.lib/isobus_UT_io_adapter-3.0.0/typelib</locationURI>
 		</link>
 		<link>
-			<name>Standard Libraries/storage/MANIFEST.MF</name>
-			<type>1</type>
-			<locationURI>ECLIPSE_HOME/typelibrary/storage-1.0.0/MANIFEST.MF</locationURI>
+			<name>External Libraries/isobus_pgn</name>
+			<type>2</type>
+			<locationURI>WORKSPACE_LOC/.lib/isobus_pgn-3.0.0/typelib</locationURI>
 		</link>
 		<link>
-			<name>Standard Libraries/utils/MANIFEST.MF</name>
+			<name>External Libraries/isobus_signalprocessing</name>
+			<type>2</type>
+			<locationURI>WORKSPACE_LOC/.lib/isobus_signalprocessing-3.0.0/typelib</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/isobus_signalprocessing_adapter</name>
+			<type>2</type>
+			<locationURI>WORKSPACE_LOC/.lib/isobus_signalprocessing_adapter-3.0.0/typelib</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/isobus_tecu</name>
+			<type>2</type>
+			<locationURI>WORKSPACE_LOC/.lib/isobus_tecu-3.0.0/typelib</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/isobus_tecu_adapter</name>
+			<type>2</type>
+			<locationURI>WORKSPACE_LOC/.lib/isobus_tecu_adapter-3.0.0/typelib</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/logiBUS_DI_CAN</name>
+			<type>2</type>
+			<locationURI>WORKSPACE_LOC/.lib/logiBUS_DI_CAN-3.0.0/typelib</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/logiBUS_bosch</name>
+			<type>2</type>
+			<locationURI>WORKSPACE_LOC/.lib/logiBUS_bosch-3.0.0/typelib</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/logiBUS_esp32</name>
+			<type>2</type>
+			<locationURI>WORKSPACE_LOC/.lib/logiBUS_esp32-3.0.0/typelib</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/logiBUS_io</name>
+			<type>2</type>
+			<locationURI>WORKSPACE_LOC/.lib/logiBUS_io-3.0.0/typelib</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/logiBUS_safety</name>
+			<type>2</type>
+			<locationURI>WORKSPACE_LOC/.lib/logiBUS_safety-3.0.0/typelib</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/logiBUS_schieber</name>
+			<type>2</type>
+			<locationURI>WORKSPACE_LOC/.lib/logiBUS_schieber-3.0.0/typelib</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/logiBUS_signalprocessing</name>
+			<type>2</type>
+			<locationURI>WORKSPACE_LOC/.lib/logiBUS_signalprocessing-3.0.0/typelib</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/logiBUS_signalprocessing_adapter</name>
+			<type>2</type>
+			<locationURI>WORKSPACE_LOC/.lib/logiBUS_signalprocessing_adapter-3.0.0/typelib</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/logiBUS_stations</name>
+			<type>2</type>
+			<locationURI>WORKSPACE_LOC/.lib/logiBUS_stations-3.0.0/typelib</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/logiBUS_storage</name>
+			<type>2</type>
+			<locationURI>WORKSPACE_LOC/.lib/logiBUS_storage-3.0.0/typelib</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/logiBUS_storage_esp32</name>
+			<type>2</type>
+			<locationURI>WORKSPACE_LOC/.lib/logiBUS_storage_esp32-3.0.0/typelib</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/logiBUS_utils</name>
+			<type>2</type>
+			<locationURI>WORKSPACE_LOC/.lib/logiBUS_utils-3.0.0/typelib</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/logiBUS_utils_adapter</name>
+			<type>2</type>
+			<locationURI>WORKSPACE_LOC/.lib/logiBUS_utils_adapter-3.0.0/typelib</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/net</name>
+			<type>2</type>
+			<locationURI>WORKSPACE_LOC/.lib/net-3.0.0/typelib</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/net_adapter</name>
+			<type>2</type>
+			<locationURI>WORKSPACE_LOC/.lib/net_adapter-3.0.0/typelib</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/quarter</name>
+			<type>2</type>
+			<locationURI>WORKSPACE_LOC/.lib/quarter-3.0.0/typelib</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/rtevents</name>
+			<type>2</type>
+			<locationURI>WORKSPACE_LOC/.lib/rtevents-3.0.0/typelib</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/signalprocessing</name>
+			<type>2</type>
+			<locationURI>WORKSPACE_LOC/.lib/signalprocessing-3.0.0/typelib</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/system</name>
+			<type>2</type>
+			<locationURI>WORKSPACE_LOC/.lib/system-3.0.0/typelib</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/utils</name>
+			<type>2</type>
+			<locationURI>WORKSPACE_LOC/.lib/utils-3.0.0/typelib</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/utils_adapter</name>
+			<type>2</type>
+			<locationURI>WORKSPACE_LOC/.lib/utils_adapter-3.0.0/typelib</locationURI>
+		</link>
+		<link>
+			<name>Links/boot-files</name>
+			<type>2</type>
+			<locationURI>PARENT-2-PROJECT_LOC/boot-files</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/BlinkMarine/MANIFEST.MF</name>
 			<type>1</type>
-			<locationURI>ECLIPSE_HOME/typelibrary/utils-1.0.0/MANIFEST.MF</locationURI>
+			<locationURI>WORKSPACE_LOC/.lib/BlinkMarine-3.0.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/DataPanel/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/DataPanel-3.0.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/Funk/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/Funk-3.0.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/MyLib_AX/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/MyLib_AX-1.0.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/MyLib_AX_CAN2/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/MyLib_AX_CAN2-1.0.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/MyLib_AX_Option/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/MyLib_AX_Option-1.0.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/MyLib_B/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/MyLib_B-1.0.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/MyLib_OPC/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/MyLib_OPC-1.0.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/OSCAT_Basic/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/OSCAT_Basic-0.1.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/OSCAT_adapter/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/OSCAT_adapter-3.0.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/Option/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/Option-1.0.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/SafeArithmetic/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/SafeArithmetic-3.0.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/adapter/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/adapter-3.0.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/adapter_conversion/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/adapter_conversion-3.0.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/adapter_events/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/adapter_events-3.0.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/adapter_iec61131-3/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/adapter_iec61131-3-3.0.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/adapter_selection/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/adapter_selection-3.0.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/adapter_types/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/adapter_types-3.0.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/convert/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/convert-3.0.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/core/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/core-3.0.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/events/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/events-3.0.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/iec61131-3/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/iec61131-3-3.0.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/iec61131-3-bool/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/iec61131-3-bool-3.0.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/isobus_TC/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/isobus_TC-3.0.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/isobus_UT/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/isobus_UT-3.0.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/isobus_UT_adapter/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/isobus_UT_adapter-3.0.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/isobus_UT_io/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/isobus_UT_io-3.0.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/isobus_UT_io_adapter/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/isobus_UT_io_adapter-3.0.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/isobus_pgn/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/isobus_pgn-3.0.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/isobus_signalprocessing/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/isobus_signalprocessing-3.0.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/isobus_signalprocessing_adapter/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/isobus_signalprocessing_adapter-3.0.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/isobus_tecu/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/isobus_tecu-3.0.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/isobus_tecu_adapter/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/isobus_tecu_adapter-3.0.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/logiBUS_DI_CAN/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/logiBUS_DI_CAN-3.0.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/logiBUS_bosch/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/logiBUS_bosch-3.0.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/logiBUS_esp32/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/logiBUS_esp32-3.0.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/logiBUS_io/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/logiBUS_io-3.0.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/logiBUS_safety/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/logiBUS_safety-3.0.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/logiBUS_schieber/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/logiBUS_schieber-3.0.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/logiBUS_signalprocessing/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/logiBUS_signalprocessing-3.0.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/logiBUS_signalprocessing_adapter/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/logiBUS_signalprocessing_adapter-3.0.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/logiBUS_stations/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/logiBUS_stations-3.0.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/logiBUS_storage/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/logiBUS_storage-3.0.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/logiBUS_storage_esp32/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/logiBUS_storage_esp32-3.0.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/logiBUS_utils/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/logiBUS_utils-3.0.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/logiBUS_utils_adapter/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/logiBUS_utils_adapter-3.0.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/net/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/net-3.0.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/net_adapter/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/net_adapter-3.0.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/quarter/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/quarter-3.0.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/rtevents/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/rtevents-3.0.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/signalprocessing/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/signalprocessing-3.0.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/system/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/system-3.0.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/utils/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/utils-3.0.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/utils_adapter/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/utils_adapter-3.0.0/MANIFEST.MF</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>
