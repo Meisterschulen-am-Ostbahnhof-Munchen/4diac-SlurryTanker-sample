@@ -13,8 +13,6 @@
 			<Parameter Name="DigitalInput_2" Value="'App.Control.functions.Dom.SoftKey'"/>
 			<Parameter Name="u16ObjId_3" Value="DefaultPool::SoftKey_Heckschieber"/>
 			<Parameter Name="DigitalInput_3" Value="'App.Control.functions.Heckschieber.SoftKey'"/>
-			<Parameter Name="u16ObjId_5" Value="DefaultPool::SoftKey_Schneidwerk"/>
-			<Parameter Name="DigitalInput_5" Value="'App.Control.functions.Schneidwerk.SoftKey'"/>
 			<Parameter Name="u16ObjId_6" Value="DefaultPool::SoftKey_Seitenschieber"/>
 			<Parameter Name="DigitalInput_6" Value="'App.Control.functions.Seitenschieber.SoftKey'"/>
 			<Parameter Name="u16ObjId_7" Value="DefaultPool::SoftKey_Abscheider"/>
