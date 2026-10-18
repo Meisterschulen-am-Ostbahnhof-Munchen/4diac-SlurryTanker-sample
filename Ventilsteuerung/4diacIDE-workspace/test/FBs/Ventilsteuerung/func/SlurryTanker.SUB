@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="SlurryTanker" Comment="Subapplication Type" >
+<SubAppType Name="SlurryTanker" Comment="Subapplication Type">
 	<Identification Standard="61499-2">
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2023-02-11">
@@ -16,49 +16,77 @@
 		<Import declaration="DataPanel::io::MI::DQ::DataPanel_MI_DO::DigitalOutput_6A"/>
 		<Import declaration="DataPanel::io::MI::DQ::DataPanel_MI_DO::DigitalOutput_7A"/>
 		<Import declaration="DataPanel::io::MI::DQ::DataPanel_MI_DO::DigitalOutput_7B"/>
+		<Import declaration="BlinkMarine::io::DI::PKP_2200_LI_DI::DigitalInput_Key_1"/>
+		<Import declaration="BlinkMarine::io::DI::PKP_2200_LI_DI::DigitalInput_Key_2"/>
+		<Import declaration="BlinkMarine::io::DI::PKP_2200_LI_DI::DigitalInput_Key_3"/>
+		<Import declaration="BlinkMarine::io::DI::PKP_2200_LI_DI::DigitalInput_Key_4"/>
+		<Import declaration="DefaultPool::AuxInput_Abscheider"/>
+		<Import declaration="DefaultPool::AuxInput_Auseinanderklappen"/>
+		<Import declaration="DefaultPool::AuxInput_Dom"/>
+		<Import declaration="DefaultPool::AuxInput_Heckschieber"/>
+		<Import declaration="DefaultPool::AuxInput_Knickdeichsel_heben"/>
+		<Import declaration="DefaultPool::AuxInput_Knickdeichsel_senken"/>
+		<Import declaration="DefaultPool::AuxInput_Licht"/>
+		<Import declaration="DefaultPool::AuxInput_Schneidwerk"/>
+		<Import declaration="DefaultPool::AuxInput_Seitenschieber"/>
+		<Import declaration="DefaultPool::AuxInput_Verteiler_heben"/>
+		<Import declaration="DefaultPool::AuxInput_Verteiler_senken"/>
+		<Import declaration="DefaultPool::AuxInput_Zusammenklappen"/>
+		<Import declaration="DefaultPool::SoftKey_Abscheider"/>
+		<Import declaration="DefaultPool::SoftKey_Auseinanderklappen"/>
+		<Import declaration="DefaultPool::SoftKey_Dom"/>
+		<Import declaration="DefaultPool::SoftKey_Heckschieber"/>
+		<Import declaration="DefaultPool::SoftKey_Knickdeichsel_heben"/>
+		<Import declaration="DefaultPool::SoftKey_Knickdeichsel_senken"/>
+		<Import declaration="DefaultPool::SoftKey_Licht"/>
+		<Import declaration="DefaultPool::SoftKey_Schneidwerk"/>
+		<Import declaration="DefaultPool::SoftKey_Seitenschieber"/>
+		<Import declaration="DefaultPool::SoftKey_Verteiler_heben"/>
+		<Import declaration="DefaultPool::SoftKey_Verteiler_senken"/>
+		<Import declaration="DefaultPool::SoftKey_Zusammenklappen"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<Group Name="funktionen" x="-1000" y="-2900" width="12293.33" height="10700" locked="false">
+		<Group Name="funktionen" x="-1060" y="-2900" width="12353.33" height="10700" locked="false">
 		</Group>
-		<Group Name="Vorsteuerventile" Comment="Vorsteuerventile"  x="-1000" y="-7200" width="12293.33" height="4200" locked="false">
+		<Group Name="Vorsteuerventile" Comment="Vorsteuerventile" x="-1000" y="-7200" width="12293.33" height="4200" locked="false">
 		</Group>
-		<Group Name="Vorgewendeautomatik" Comment="Vorgewendeautomatik"  x="-800" y="7866.67" width="12800" height="5073.33" locked="false">
+		<Group Name="Vorgewendeautomatik" Comment="Vorgewendeautomatik" x="-800" y="7866.67" width="12800" height="5073.33" locked="false">
 		</Group>
 		<SubApp Name="Automatik" Type="Automatik" x="1200" y="1633.33">
 			<Attribute Name="width" Type="LREAL" Value="1333.3333333333335"/>
 			<Attribute Name="height" Type="LREAL" Value="666.6666666666667"/>
 			<Attribute Name="GroupName" Type="STRING" Value="Vorgewendeautomatik"/>
 		</SubApp>
-		<SubApp Name="Dom" Type="TimedFunc" x="4300" y="500">
+		<SubApp Name="Dom" Type="TimedFunc" x="4360" y="500">
+			<Parameter Name="u16ObjId" Value="SoftKey_Dom"/>
+			<Parameter Name="u16ObjIdA" Value="AuxInput_Dom"/>
 			<Parameter Name="Output" Value="DigitalOutput_6A"/>
-			<Parameter Name="u16ObjId" Value="DefaultPool::SoftKey_Dom"/>
-			<Parameter Name="u16ObjIdA" Value="DefaultPool::AuxInput_Dom"/>
 			<Attribute Name="GroupName" Type="STRING" Value="funktionen"/>
 		</SubApp>
-		<SubApp Name="Seitenschieber" Type="TimedFunc" x="4300" y="1600">
+		<SubApp Name="Seitenschieber" Type="TimedFunc" x="4360" y="1600">
+			<Parameter Name="u16ObjId" Value="SoftKey_Seitenschieber"/>
+			<Parameter Name="u16ObjIdA" Value="AuxInput_Seitenschieber"/>
 			<Parameter Name="Output" Value="DigitalOutput_7A"/>
-			<Parameter Name="u16ObjId" Value="DefaultPool::SoftKey_Seitenschieber"/>
-			<Parameter Name="u16ObjIdA" Value="DefaultPool::AuxInput_Seitenschieber"/>
 			<Attribute Name="GroupName" Type="STRING" Value="funktionen"/>
 		</SubApp>
-		<SubApp Name="Klappen" Type="doppeltwirkend" x="4020" y="7286.67">
+		<SubApp Name="Klappen" Type="doppeltwirkend" x="4080" y="7286.67">
+			<Parameter Name="u16ObjId_heben" Value="SoftKey_Auseinanderklappen"/>
+			<Parameter Name="u16ObjId_senken" Value="SoftKey_Zusammenklappen"/>
+			<Parameter Name="u16ObjIdA_heben" Value="AuxInput_Auseinanderklappen"/>
+			<Parameter Name="u16ObjIdA_senken" Value="AuxInput_Zusammenklappen"/>
 			<Parameter Name="OutputA" Value="DigitalOutput_3A"/>
 			<Parameter Name="OutputB" Value="DigitalOutput_3B"/>
-			<Parameter Name="u16ObjId_heben" Value="DefaultPool::SoftKey_Auseinanderklappen"/>
-			<Parameter Name="u16ObjId_senken" Value="DefaultPool::SoftKey_Zusammenklappen"/>
-			<Parameter Name="u16ObjIdA_heben" Value="DefaultPool::AuxInput_Auseinanderklappen"/>
-			<Parameter Name="u16ObjIdA_senken" Value="DefaultPool::AuxInput_Zusammenklappen"/>
 			<Attribute Name="GroupName" Type="STRING" Value="funktionen"/>
 		</SubApp>
 		<SubApp Name="Verteiler" Type="doppeltwirkend" x="7013.33" y="0">
+			<Parameter Name="u16ObjId_heben" Value="SoftKey_Verteiler_heben"/>
+			<Parameter Name="u16ObjId_senken" Value="SoftKey_Verteiler_senken"/>
+			<Parameter Name="u16ObjIdA_heben" Value="AuxInput_Verteiler_heben"/>
+			<Parameter Name="u16ObjIdA_senken" Value="AuxInput_Verteiler_senken"/>
 			<Parameter Name="OutputA" Value="DigitalOutput_4A"/>
 			<Parameter Name="OutputB" Value="DigitalOutput_4B"/>
-			<Parameter Name="u16ObjId_heben" Value="DefaultPool::SoftKey_Verteiler_heben"/>
-			<Parameter Name="u16ObjId_senken" Value="DefaultPool::SoftKey_Verteiler_senken"/>
-			<Parameter Name="u16ObjIdA_heben" Value="DefaultPool::AuxInput_Verteiler_heben"/>
-			<Parameter Name="u16ObjIdA_senken" Value="DefaultPool::AuxInput_Verteiler_senken"/>
 			<Attribute Name="GroupName" Type="STRING" Value="Vorgewendeautomatik"/>
 		</SubApp>
 		<SubApp Name="Vorsteuerventil_2A" Type="Vorsteuerventil" x="2600" y="800">
@@ -69,46 +97,52 @@
 			<Parameter Name="Output" Value="DigitalOutput_2B"/>
 			<Attribute Name="GroupName" Type="STRING" Value="Vorsteuerventile"/>
 		</SubApp>
-		<SubApp Name="Knickdeichsel" Type="doppeltwirkend" x="4100" y="3400">
+		<SubApp Name="Knickdeichsel" Type="doppeltwirkend" x="4160" y="3400">
+			<Parameter Name="u16ObjId_heben" Value="SoftKey_Knickdeichsel_heben"/>
+			<Parameter Name="u16ObjId_senken" Value="SoftKey_Knickdeichsel_senken"/>
+			<Parameter Name="u16ObjIdA_heben" Value="AuxInput_Knickdeichsel_heben"/>
+			<Parameter Name="u16ObjIdA_senken" Value="AuxInput_Knickdeichsel_senken"/>
 			<Parameter Name="OutputA" Value="DigitalOutput_5A"/>
 			<Parameter Name="OutputB" Value="DigitalOutput_5B"/>
-			<Parameter Name="u16ObjId_heben" Value="DefaultPool::SoftKey_Knickdeichsel_heben"/>
-			<Parameter Name="u16ObjId_senken" Value="DefaultPool::SoftKey_Knickdeichsel_senken"/>
-			<Parameter Name="u16ObjIdA_heben" Value="DefaultPool::AuxInput_Knickdeichsel_heben"/>
-			<Parameter Name="u16ObjIdA_senken" Value="DefaultPool::AuxInput_Knickdeichsel_senken"/>
 			<Attribute Name="GroupName" Type="STRING" Value="funktionen"/>
 		</SubApp>
-		<SubApp Name="Licht" Type="Dauerfunktion" x="4126.67" y="5286.67">
-			<Parameter Name="u16ObjId" Value="DefaultPool::SoftKey_Licht"/>
-			<Parameter Name="u16ObjIdA" Value="DefaultPool::AuxInput_Licht"/>
+		<SubApp Name="Licht" Type="Dauerfunktion" x="4186.67" y="5286.67">
+			<Parameter Name="u16ObjId" Value="SoftKey_Licht"/>
+			<Parameter Name="u16ObjIdA" Value="AuxInput_Licht"/>
 			<Attribute Name="GroupName" Type="STRING" Value="funktionen"/>
 		</SubApp>
-		<SubApp Name="Abscheider" Type="TimedFunc" x="4200" y="6300">
+		<SubApp Name="Abscheider" Type="TimedFunc" x="4260" y="6300">
+			<Parameter Name="u16ObjId" Value="SoftKey_Abscheider"/>
+			<Parameter Name="u16ObjIdA" Value="AuxInput_Abscheider"/>
 			<Parameter Name="Output" Value="DigitalOutput_7B"/>
-			<Parameter Name="u16ObjId" Value="DefaultPool::SoftKey_Abscheider"/>
-			<Parameter Name="u16ObjIdA" Value="DefaultPool::AuxInput_Abscheider"/>
 			<Attribute Name="GroupName" Type="STRING" Value="funktionen"/>
 		</SubApp>
 		<SubApp Name="Schneidwerk" Type="Schneidwerk" x="7400" y="1833.33">
-			<Parameter Name="u16ObjId" Value="DefaultPool::SoftKey_Schneidwerk"/>
-			<Parameter Name="u16ObjIdA" Value="DefaultPool::AuxInput_Schneidwerk"/>
+			<Parameter Name="u16ObjId" Value="SoftKey_Schneidwerk"/>
+			<Parameter Name="u16ObjIdA" Value="AuxInput_Schneidwerk"/>
 			<Attribute Name="GroupName" Type="STRING" Value="Vorgewendeautomatik"/>
 		</SubApp>
 		<SubApp Name="Heckschieber" Type="Heckschieber" x="7020" y="3460">
-			<Parameter Name="u16ObjId" Value="DefaultPool::SoftKey_Heckschieber"/>
-			<Parameter Name="u16ObjIdA" Value="DefaultPool::AuxInput_Heckschieber"/>
+			<Parameter Name="u16ObjId" Value="SoftKey_Heckschieber"/>
+			<Parameter Name="u16ObjIdA" Value="AuxInput_Heckschieber"/>
 			<Attribute Name="GroupName" Type="STRING" Value="Vorgewendeautomatik"/>
 		</SubApp>
-		<SubApp Name="Knickdeichsel_heben" Type="IN" x="700" y="3400">
+		<FB Name="Knickdeichsel_heben" Type="BlinkMarine::io::DI::PKP_2200_LI_IX" x="760" y="3400">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="DigitalInput_Key_1"/>
+			<Attribute Name="GroupName" Type="STRING" Value="funktionen"/>
+		</FB>
+		<FB Name="Knickdeichsel_senken" Type="BlinkMarine::io::DI::PKP_2200_LI_IX" x="760" y="4393.33">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Input" Value="DigitalInput_Key_3"/>
+			<Attribute Name="GroupName" Type="STRING" Value="funktionen"/>
+		</FB>
+		<SubApp Name="Seitenschieber_Auf" Type="IN_UP" x="760" y="1600">
+			<Parameter Name="Input" Value="DigitalInput_Key_2"/>
 			<Attribute Name="GroupName" Type="STRING" Value="funktionen"/>
 		</SubApp>
-		<SubApp Name="Knickdeichsel_senken" Type="IN" x="700" y="3900">
-			<Attribute Name="GroupName" Type="STRING" Value="funktionen"/>
-		</SubApp>
-		<SubApp Name="Seitenschieber_Auf" Type="IN_UP" x="700" y="1600">
-			<Attribute Name="GroupName" Type="STRING" Value="funktionen"/>
-		</SubApp>
-		<SubApp Name="Seitenschieber_Zu" Type="IN_UP" x="700" y="2000">
+		<SubApp Name="Seitenschieber_Zu" Type="IN_UP" x="760" y="2193.33">
+			<Parameter Name="Input" Value="DigitalInput_Key_4"/>
 			<Attribute Name="GroupName" Type="STRING" Value="funktionen"/>
 		</SubApp>
 		<EventConnections>
@@ -121,7 +155,7 @@
 			<Connection Source="Abscheider.CNF" Destination="Vorsteuerventil_2B.REQ5" dx1="80" dx2="80" dy="-4000">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="Automatik.EO_Automatik_ein" Destination="Schneidwerk.S_ON"/>
+			<Connection Source="Automatik.EO_Automatik_ein" Destination="Schneidwerk.S_ON" dx1="2466.67"/>
 			<Connection Source="Automatik.EO_Automatik_aus_DOWN" Destination="Schneidwerk.S_OFF" dx1="4453.33"/>
 			<Connection Source="Automatik.EO_Automatik_ein_UP" Destination="Heckschieber.OPEN" dx1="2853.33"/>
 			<Connection Source="Automatik.EO_Automatik_aus_DOWN" Destination="Heckschieber.CLOSE" dx1="2620"/>
@@ -131,7 +165,7 @@
 			<Connection Source="Heckschieber.EO_Heckschieber_END" Destination="Automatik.CNF_Schieber" dx1="1386.67" dx2="793.33" dy="-633.33"/>
 			<Connection Source="Automatik.EO_Verteiler_heben" Destination="Verteiler.EI_heben" dx1="1240"/>
 			<Connection Source="Automatik.EO_Verteiler_senken" Destination="Verteiler.EI_senken" dx1="1333.33"/>
-			<Connection Source="Knickdeichsel_heben.IND" Destination="Knickdeichsel.EI_heben"/>
+			<Connection Source="Knickdeichsel_heben.IND" Destination="Knickdeichsel.EI_heben" dx1="1226.67"/>
 			<Connection Source="Knickdeichsel_senken.IND" Destination="Knickdeichsel.EI_senken" dx1="406.67"/>
 			<Connection Source="Knickdeichsel.CNF_senken" Destination="Vorsteuerventil_2A.REQ2" dx1="80" dx2="80" dy="-3446.67">
 				<Attribute Name="Visible" Value="false"/>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Heckschieber" Comment="Subapplication Type" >
+<SubAppType Name="Heckschieber" Comment="Subapplication Type">
 	<Identification Standard="61499-2">
 	</Identification>
 	<VersionInfo Version="1.0" Author="Franz" Date="2023-01-29">
@@ -33,27 +33,27 @@
 		</OutputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="E_F_TRIG" Type="E_F_TRIG" x="7053.33" y="926.67">
+		<FB Name="E_F_TRIG" Type="iec61499::events::E_F_TRIG" x="7053.33" y="926.67">
 		</FB>
-		<FB Name="QXB" Type="DataPanel::io::MI::DQ::DataPanel_MI_QX" x="7293.33" y="0">
+		<FB Name="QXB" Type="DataPanel::io::MI::DQ::DataPanel_MI_QX" x="7100" y="-300">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="Output" Value="DigitalOutput_6B"/>
 		</FB>
-		<FB Name="E_T_FF_SR" Type="E_T_FF_SR" x="3333.33" y="1566.67">
+		<FB Name="E_T_FF_SR" Type="iec61499::events::E_T_FF_SR" x="3333.33" y="1566.67">
 		</FB>
-		<FB Name="AND_2" Type="AND_2" x="7193.33" y="1566.67">
+		<FB Name="AND_2" Type="iec61131::bitwiseOperators::AND_2" x="7193.33" y="1566.67">
 		</FB>
-		<FB Name="E_PULSE" Type="E_PULSE" x="5300" y="926.67">
+		<FB Name="E_PULSE" Type="iec61499::events::timers::E_PULSE" x="5300" y="926.67">
 			<Parameter Name="PT" Value="T#3s"/>
 		</FB>
-		<SubApp Name="GreenWhiteBackground_Function" Type="MyLib::sys::GreenWhiteBackground3C" x="4940" y="0">
+		<SubApp Name="GreenWhiteBackground_Function" Type="MyLib::sys::GreenWhiteBackground3C" x="4900" y="-300">
 		</SubApp>
 		<FB Name="SoftKey" Type="isobus::UT::io::Softkey::Softkey_IE" x="-200" y="1200">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u16ObjId" Value="SoftKey_Heckschieber"/>
 			<Parameter Name="InputEvent" Value="SK_RELEASED"/>
 		</FB>
-		<FB Name="AuxInput" Type="isobus::UT::io::Auxiliary::IN::Aux_IE" x="-200" y="2100">
+		<FB Name="AuxInput" Type="isobus::UT::io::Auxiliary::IN::Aux_IE" x="-200" y="2300">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u16ObjId" Value="AuxInput_Heckschieber"/>
 			<Parameter Name="InputEvent" Value="AuxDisabled"/>
