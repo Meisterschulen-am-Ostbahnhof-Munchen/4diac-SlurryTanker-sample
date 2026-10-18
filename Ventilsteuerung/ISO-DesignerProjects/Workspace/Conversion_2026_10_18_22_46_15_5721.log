@@ -1,0 +1,18 @@
+  Message: Current Productversion: 5.7.2.6664
+  Message: Current Conversiontype: updateRemoveTagDbArraySize
+
+->Start Conversion - Workspace.
+  Org.version: 5.7.0.6283
+  Source file: 'C:\GIT\MS\4DIAC-SLURRYTANKER-SAMPLE\VENTILSTEUERUNG\ISO-DESIGNERPROJECTS\WORKSPACE\WORKSPACE.JVW'.
+  Target file: 'C:\GIT\MS\4DIAC-SLURRYTANKER-SAMPLE\VENTILSTEUERUNG\ISO-DESIGNERPROJECTS\WORKSPACE\WORKSPACE.JVW'.
+          Message: Current Conversiontype: updateRemoveTagDbArraySize
+          Message: Converting project: .\DefaultPool\DefaultPool.jvp
+          Message: Nothing to convert for project DefaultPool
+<-Stop Conversion - Workspace.
+
+
+Conversion completed with:
+
+  0: Warning
+  0: Error
+

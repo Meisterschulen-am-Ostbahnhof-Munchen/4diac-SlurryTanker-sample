@@ -581,5 +581,10 @@
 			<type>1</type>
 			<locationURI>WORKSPACE_LOC/.lib/utils_adapter-3.0.0/MANIFEST.MF</locationURI>
 		</link>
+		<link>
+			<name>Links/ISO-DesignerProjects/Workspace.jvw</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/ISO-DesignerProjects/Workspace/Workspace.jvw</locationURI>
+		</link>
 	</linkedResources>
 </projectDescription>

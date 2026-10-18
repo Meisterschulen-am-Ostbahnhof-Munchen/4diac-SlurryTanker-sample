@@ -201,6 +201,7 @@
 			<Connection Source="Button_C_MID.IND" Destination="E_MERGE_MID.EI1" dx1="1780"/>
 			<Connection Source="AX_RF_TRIG_MID.ER" Destination="E_MERGE_MID.EI2" dx1="400"/>
 			<Connection Source="AX_RF_TRIG_MID.EF" Destination="E_MERGE_MID.EI3" dx1="1150"/>
+			<Connection Source="SERVER_MID_TRIGGER.IND" Destination="SERVER_MID_TRIGGER.RSP"/>
 			<Connection Source="SERVER_MID_TRIGGER.IND" Destination="E_MERGE_MID.EI4" dx1="400"/>
 			<Connection Source="E_MERGE_MID.EO" Destination="CALIBRATE.C_MID" dx1="400"/>
 			<Connection Source="Button_C_MAX.IND" Destination="E_MERGE_MAX.EI1" dx1="1506.67"/>
