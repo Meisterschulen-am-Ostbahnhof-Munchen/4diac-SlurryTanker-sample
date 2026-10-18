@@ -7,6 +7,8 @@
 	<CompilerInfo>
 		<Import declaration="DefaultPool::SoftKey_Automatik_ein"/>
 		<Import declaration="DefaultPool::SoftKey_Automatik_aus"/>
+		<Import declaration="DefaultPool::AuxInput_Automatik_ein"/>
+		<Import declaration="DefaultPool::AuxInput_Automatik_aus"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
@@ -45,9 +47,11 @@
 		</FB>
 		<SubApp Name="ein" Type="ein" x="-500" y="500">
 			<Parameter Name="u16ObjId" Value="SoftKey_Automatik_ein"/>
+			<Parameter Name="u16ObjIdA" Value="AuxInput_Automatik_ein"/>
 		</SubApp>
 		<SubApp Name="aus" Type="ein" x="-600" y="2600">
 			<Parameter Name="u16ObjId" Value="SoftKey_Automatik_aus"/>
+			<Parameter Name="u16ObjIdA" Value="AuxInput_Automatik_aus"/>
 		</SubApp>
 		<EventConnections>
 			<Connection Source="E_SR_Verteiler_heben.EO" Destination="EO_Verteiler_heben" dx1="140"/>

@@ -4,6 +4,19 @@
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2023-02-11">
 	</VersionInfo>
+	<CompilerInfo>
+		<Import declaration="DataPanel::io::MI::DQ::DataPanel_MI_DO::DigitalOutput_2A"/>
+		<Import declaration="DataPanel::io::MI::DQ::DataPanel_MI_DO::DigitalOutput_2B"/>
+		<Import declaration="DataPanel::io::MI::DQ::DataPanel_MI_DO::DigitalOutput_3A"/>
+		<Import declaration="DataPanel::io::MI::DQ::DataPanel_MI_DO::DigitalOutput_3B"/>
+		<Import declaration="DataPanel::io::MI::DQ::DataPanel_MI_DO::DigitalOutput_4A"/>
+		<Import declaration="DataPanel::io::MI::DQ::DataPanel_MI_DO::DigitalOutput_4B"/>
+		<Import declaration="DataPanel::io::MI::DQ::DataPanel_MI_DO::DigitalOutput_5A"/>
+		<Import declaration="DataPanel::io::MI::DQ::DataPanel_MI_DO::DigitalOutput_5B"/>
+		<Import declaration="DataPanel::io::MI::DQ::DataPanel_MI_DO::DigitalOutput_6A"/>
+		<Import declaration="DataPanel::io::MI::DQ::DataPanel_MI_DO::DigitalOutput_7A"/>
+		<Import declaration="DataPanel::io::MI::DQ::DataPanel_MI_DO::DigitalOutput_7B"/>
+	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
@@ -19,16 +32,20 @@
 			<Attribute Name="GroupName" Type="STRING" Value="Vorgewendeautomatik"/>
 		</SubApp>
 		<SubApp Name="Dom" Type="TimedFunc" x="4300" y="500">
+			<Parameter Name="Output" Value="DigitalOutput_6A"/>
 			<Parameter Name="u16ObjId" Value="DefaultPool::SoftKey_Dom"/>
 			<Parameter Name="u16ObjIdA" Value="DefaultPool::AuxInput_Dom"/>
 			<Attribute Name="GroupName" Type="STRING" Value="funktionen"/>
 		</SubApp>
 		<SubApp Name="Seitenschieber" Type="TimedFunc" x="4300" y="1600">
+			<Parameter Name="Output" Value="DigitalOutput_7A"/>
 			<Parameter Name="u16ObjId" Value="DefaultPool::SoftKey_Seitenschieber"/>
 			<Parameter Name="u16ObjIdA" Value="DefaultPool::AuxInput_Seitenschieber"/>
 			<Attribute Name="GroupName" Type="STRING" Value="funktionen"/>
 		</SubApp>
 		<SubApp Name="Klappen" Type="doppeltwirkend" x="4020" y="7286.67">
+			<Parameter Name="OutputA" Value="DigitalOutput_3A"/>
+			<Parameter Name="OutputB" Value="DigitalOutput_3B"/>
 			<Parameter Name="u16ObjId_heben" Value="DefaultPool::SoftKey_Auseinanderklappen"/>
 			<Parameter Name="u16ObjId_senken" Value="DefaultPool::SoftKey_Zusammenklappen"/>
 			<Parameter Name="u16ObjIdA_heben" Value="DefaultPool::AuxInput_Auseinanderklappen"/>
@@ -36,6 +53,8 @@
 			<Attribute Name="GroupName" Type="STRING" Value="funktionen"/>
 		</SubApp>
 		<SubApp Name="Verteiler" Type="doppeltwirkend" x="7013.33" y="0">
+			<Parameter Name="OutputA" Value="DigitalOutput_4A"/>
+			<Parameter Name="OutputB" Value="DigitalOutput_4B"/>
 			<Parameter Name="u16ObjId_heben" Value="DefaultPool::SoftKey_Verteiler_heben"/>
 			<Parameter Name="u16ObjId_senken" Value="DefaultPool::SoftKey_Verteiler_senken"/>
 			<Parameter Name="u16ObjIdA_heben" Value="DefaultPool::AuxInput_Verteiler_heben"/>
@@ -43,12 +62,16 @@
 			<Attribute Name="GroupName" Type="STRING" Value="Vorgewendeautomatik"/>
 		</SubApp>
 		<SubApp Name="Vorsteuerventil_2A" Type="Vorsteuerventil" x="2600" y="800">
+			<Parameter Name="Output" Value="DigitalOutput_2A"/>
 			<Attribute Name="GroupName" Type="STRING" Value="Vorsteuerventile"/>
 		</SubApp>
 		<SubApp Name="Vorsteuerventil_2B" Type="Vorsteuerventil" x="2600" y="2200">
+			<Parameter Name="Output" Value="DigitalOutput_2B"/>
 			<Attribute Name="GroupName" Type="STRING" Value="Vorsteuerventile"/>
 		</SubApp>
 		<SubApp Name="Knickdeichsel" Type="doppeltwirkend" x="4100" y="3400">
+			<Parameter Name="OutputA" Value="DigitalOutput_5A"/>
+			<Parameter Name="OutputB" Value="DigitalOutput_5B"/>
 			<Parameter Name="u16ObjId_heben" Value="DefaultPool::SoftKey_Knickdeichsel_heben"/>
 			<Parameter Name="u16ObjId_senken" Value="DefaultPool::SoftKey_Knickdeichsel_senken"/>
 			<Parameter Name="u16ObjIdA_heben" Value="DefaultPool::AuxInput_Knickdeichsel_heben"/>
@@ -61,6 +84,7 @@
 			<Attribute Name="GroupName" Type="STRING" Value="funktionen"/>
 		</SubApp>
 		<SubApp Name="Abscheider" Type="TimedFunc" x="4200" y="6300">
+			<Parameter Name="Output" Value="DigitalOutput_7B"/>
 			<Parameter Name="u16ObjId" Value="DefaultPool::SoftKey_Abscheider"/>
 			<Parameter Name="u16ObjIdA" Value="DefaultPool::AuxInput_Abscheider"/>
 			<Attribute Name="GroupName" Type="STRING" Value="funktionen"/>

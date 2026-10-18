@@ -7,6 +7,9 @@
 	<CompilerInfo>
 		<Import declaration="DefaultPool::SoftKey_Heckschieber"/>
 		<Import declaration="isobus::UT::io::Softkey::SoftKeyActivationCode::SK_RELEASED"/>
+		<Import declaration="DefaultPool::AuxInput_Heckschieber"/>
+		<Import declaration="isobus::UT::io::Auxiliary::IN::AuxiliaryState::AuxDisabled"/>
+		<Import declaration="DataPanel::io::MI::DQ::DataPanel_MI_DO::DigitalOutput_6B"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
@@ -32,8 +35,9 @@
 	<SubAppNetwork>
 		<FB Name="E_F_TRIG" Type="E_F_TRIG" x="7053.33" y="926.67">
 		</FB>
-		<FB Name="QXB" Type="QX" x="7293.33" y="0">
+		<FB Name="QXB" Type="DataPanel::io::MI::DQ::DataPanel_MI_QX" x="7293.33" y="0">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="DigitalOutput_6B"/>
 		</FB>
 		<FB Name="E_T_FF_SR" Type="E_T_FF_SR" x="3333.33" y="1566.67">
 		</FB>
@@ -49,8 +53,10 @@
 			<Parameter Name="u16ObjId" Value="SoftKey_Heckschieber"/>
 			<Parameter Name="InputEvent" Value="SK_RELEASED"/>
 		</FB>
-		<FB Name="AuxInput" Type="IE" x="-200" y="2100">
+		<FB Name="AuxInput" Type="isobus::UT::io::Auxiliary::IN::Aux_IE" x="-200" y="2100">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="AuxInput_Heckschieber"/>
+			<Parameter Name="InputEvent" Value="AuxDisabled"/>
 		</FB>
 		<EventConnections>
 			<Connection Source="E_PULSE.CNF" Destination="E_F_TRIG.EI"/>

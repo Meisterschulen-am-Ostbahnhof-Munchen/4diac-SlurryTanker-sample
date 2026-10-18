@@ -4,6 +4,9 @@
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2023-02-11">
 	</VersionInfo>
+	<CompilerInfo>
+		<Import declaration="DataPanel::io::MI::DQ::DataPanel_MI_DO::Invalid"/>
+	</CompilerInfo>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
 			<SubAppEvent Name="CNF_heben" Type="Event">
@@ -20,15 +23,17 @@
 			<VarDeclaration Name="IN_senken" Type="BOOL">
 				<Attribute Name="YPOSITION" Type="INT" Value="0"/>
 			</VarDeclaration>
+			<VarDeclaration Name="OutputA" Type="DataPanel::io::MI::DQ::DataPanel_MI_DO_S" InitialValue="Invalid"/>
+			<VarDeclaration Name="OutputB" Type="DataPanel::io::MI::DQ::DataPanel_MI_DO_S" InitialValue="Invalid"/>
 		</InputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="OR_2" Type="OR_2" x="-713.33" y="526.67">
 		</FB>
-		<FB Name="QXB" Type="QX" x="293.33" y="526.67">
+		<FB Name="QXB" Type="DataPanel::io::MI::DQ::DataPanel_MI_QX" x="293.33" y="526.67">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="QXA" Type="QX" x="293.33" y="1366.67">
+		<FB Name="QXA" Type="DataPanel::io::MI::DQ::DataPanel_MI_QX" x="293.33" y="1366.67">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<EventConnections>
@@ -38,6 +43,12 @@
 			<Connection Source="CNF_senken" Destination="OR_2.REQ" dx1="226.67"/>
 		</EventConnections>
 		<DataConnections>
+			<Connection Source="OutputB" Destination="QXB.Output" dx1="300">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="OutputA" Destination="QXA.Output" dx1="300">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
 			<Connection Source="OR_2.OUT" Destination="QXB.OUT" dx1="193.33"/>
 			<Connection Source="OR_2.OUT" Destination="QXA.OUT" dx1="66.67"/>
 			<Connection Source="IN_heben" Destination="OR_2.IN1" dx1="93.33"/>

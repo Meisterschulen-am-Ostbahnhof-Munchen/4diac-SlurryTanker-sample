@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="Dauerfunktion" Comment="Subapplication Type" >
+<SubAppType Name="Dauerfunktion" Comment="Subapplication Type">
 	<Identification Standard="61499-2">
 	</Identification>
 	<VersionInfo Version="1.0" Author="Franz" Date="2023-01-29">
@@ -7,6 +7,9 @@
 	<CompilerInfo>
 		<Import declaration="DefaultPool::SoftKey_Licht"/>
 		<Import declaration="isobus::UT::io::Softkey::SoftKeyActivationCode::SK_RELEASED"/>
+		<Import declaration="DefaultPool::AuxInput_Licht"/>
+		<Import declaration="isobus::UT::io::Auxiliary::IN::AuxiliaryState::AuxDisabled"/>
+		<Import declaration="DataPanel::io::MI::DQ::DataPanel_MI_DO::DigitalOutput_8A"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<InputVars>
@@ -15,30 +18,33 @@
 		</InputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="E_T_FF" Type="E_T_FF" x="1600" y="100">
+		<FB Name="E_T_FF" Type="iec61499::events::E_T_FF" x="1600" y="100">
 		</FB>
-		<FB Name="QX" Type="QX" x="4400" y="1000">
+		<FB Name="QX" Type="DataPanel::io::MI::DQ::DataPanel_MI_QX" x="4400" y="1000">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="DigitalOutput_8A"/>
 		</FB>
-		<SubApp Name="GreenWhiteBackground_Function" Type="GreenWhiteBackground_Function" x="4400" y="0">
+		<SubApp Name="GreenWhiteBackground_Function" Type="MyLib::sys::GreenWhiteBackground3C" x="4800" y="-1100">
 		</SubApp>
 		<FB Name="SoftKey" Type="isobus::UT::io::Softkey::Softkey_IE" x="-600" y="-400">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u16ObjId" Value="SoftKey_Licht"/>
 			<Parameter Name="InputEvent" Value="SK_RELEASED"/>
 		</FB>
-		<FB Name="AuxInput" Type="IE" x="-600" y="700">
+		<FB Name="AuxInput" Type="isobus::UT::io::Auxiliary::IN::Aux_IE" x="-600" y="700">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="AuxInput_Licht"/>
+			<Parameter Name="InputEvent" Value="AuxDisabled"/>
 		</FB>
 		<EventConnections>
 			<Connection Source="E_T_FF.EO" Destination="QX.REQ" dx1="126.67"/>
-			<Connection Source="E_T_FF.EO" Destination="GreenWhiteBackground_Function.EO"/>
+			<Connection Source="E_T_FF.EO" Destination="GreenWhiteBackground_Function.EO" dx1="1113.33"/>
 			<Connection Source="SoftKey.IND" Destination="E_T_FF.CLK" dx1="753.33"/>
 			<Connection Source="AuxInput.IND" Destination="E_T_FF.CLK" dx1="753.33"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="E_T_FF.Q" Destination="QX.OUT" dx1="60"/>
-			<Connection Source="E_T_FF.Q" Destination="GreenWhiteBackground_Function.Q"/>
+			<Connection Source="E_T_FF.Q" Destination="GreenWhiteBackground_Function.DI" dx1="1440"/>
 			<Connection Source="u16ObjId" Destination="GreenWhiteBackground_Function.u16ObjId" dx1="2866.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>

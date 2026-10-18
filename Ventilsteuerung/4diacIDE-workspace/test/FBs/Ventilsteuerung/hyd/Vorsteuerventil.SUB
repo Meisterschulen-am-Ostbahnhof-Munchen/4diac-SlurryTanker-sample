@@ -4,6 +4,9 @@
 	</Identification>
 	<VersionInfo Version="1.0" Author="Franz" Date="2023-01-29">
 	</VersionInfo>
+	<CompilerInfo>
+		<Import declaration="DataPanel::io::MI::DQ::DataPanel_MI_DO::Invalid"/>
+	</CompilerInfo>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
 			<SubAppEvent Name="REQ1" Type="Event">
@@ -23,12 +26,13 @@
 			<VarDeclaration Name="IN3" Type="BOOL"/>
 			<VarDeclaration Name="IN4" Type="BOOL"/>
 			<VarDeclaration Name="IN5" Type="BOOL"/>
+			<VarDeclaration Name="Output" Type="DataPanel::io::MI::DQ::DataPanel_MI_DO_S" InitialValue="Invalid"/>
 		</InputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="OR_5" Type="OR_5" x="1100" y="253.33">
 		</FB>
-		<FB Name="QX" Type="QX" x="2560" y="0">
+		<FB Name="QX" Type="DataPanel::io::MI::DQ::DataPanel_MI_QX" x="2560" y="0">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<EventConnections>
@@ -40,6 +44,9 @@
 			<Connection Source="OR_5.CNF" Destination="QX.REQ" dx1="320"/>
 		</EventConnections>
 		<DataConnections>
+			<Connection Source="Output" Destination="QX.Output" dx1="300">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
 			<Connection Source="IN1" Destination="OR_5.IN1" dx1="846.67"/>
 			<Connection Source="IN2" Destination="OR_5.IN2" dx1="666.67"/>
 			<Connection Source="IN3" Destination="OR_5.IN3" dx1="566.67"/>

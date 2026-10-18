@@ -4,23 +4,35 @@
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2023-02-07">
 	</VersionInfo>
+	<CompilerInfo>
+		<Import declaration="isobus::UT::io::Auxiliary::IN::AuxiliaryState::AuxDisabled"/>
+	</CompilerInfo>
 	<SubAppInterfaceList>
 		<SubAppEventOutputs>
 			<SubAppEvent Name="IND" Type="Event">
 				<Attribute Name="YPOSITION" Type="INT" Value="255"/>
 			</SubAppEvent>
 		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="u16ObjIdA" Type="UINT"/>
+		</InputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="BTN" Type="IE" x="0" y="0">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="AUX" Type="IE" x="0" y="1000">
+		<FB Name="AUX" Type="isobus::UT::io::Auxiliary::IN::Aux_IE" x="0" y="1000">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="InputEvent" Value="AuxDisabled"/>
 		</FB>
 		<EventConnections>
 			<Connection Source="AUX.IND" Destination="IND" dx1="2673.33"/>
 			<Connection Source="BTN.IND" Destination="IND" dx1="2673.33"/>
 		</EventConnections>
+		<DataConnections>
+			<Connection Source="u16ObjIdA" Destination="AUX.u16ObjId" dx1="300">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</DataConnections>
 	</SubAppNetwork>
 </SubAppType>

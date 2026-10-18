@@ -4,6 +4,9 @@
 	</Identification>
 	<VersionInfo Version="1.0" Author="Franz" Date="2023-01-29">
 	</VersionInfo>
+	<CompilerInfo>
+		<Import declaration="DataPanel::io::MI::DQ::DataPanel_MI_DO::Invalid"/>
+	</CompilerInfo>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
 			<SubAppEvent Name="EI_heben" Type="Event">
@@ -24,6 +27,8 @@
 			<VarDeclaration Name="u16ObjId_senken" Type="UINT"/>
 			<VarDeclaration Name="u16ObjIdA_heben" Type="UINT"/>
 			<VarDeclaration Name="u16ObjIdA_senken" Type="UINT"/>
+			<VarDeclaration Name="OutputA" Type="DataPanel::io::MI::DQ::DataPanel_MI_DO_S" InitialValue="Invalid"/>
+			<VarDeclaration Name="OutputB" Type="DataPanel::io::MI::DQ::DataPanel_MI_DO_S" InitialValue="Invalid"/>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="OUT_heben" Type="BOOL"/>
@@ -44,13 +49,15 @@
 		<FB Name="SoftKey_heben" Type="isobus::UT::io::Softkey::Softkey_IX" x="600" y="1300">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<SubApp Name="AuxInput_heben" Type="IN" x="600" y="1800">
-		</SubApp>
+		<FB Name="AuxInput_heben" Type="isobus::UT::io::Auxiliary::IN::Aux_IX" x="600" y="1800">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
 		<FB Name="SoftKey_senken" Type="isobus::UT::io::Softkey::Softkey_IX" x="-200" y="2800">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<SubApp Name="AuxInput_senken" Type="IN" x="-200" y="3300">
-		</SubApp>
+		<FB Name="AuxInput_senken" Type="isobus::UT::io::Auxiliary::IN::Aux_IX" x="-200" y="3300">
+			<Parameter Name="QI" Value="TRUE"/>
+		</FB>
 		<EventConnections>
 			<Connection Source="EI_heben" Destination="OR_2_heben.REQ" dx1="3566.67"/>
 			<Connection Source="OR_2_heben.CNF" Destination="CNF_heben" dx1="2980"/>
@@ -66,6 +73,18 @@
 			<Connection Source="AuxInput_senken.IND" Destination="OR_2_senken.REQ" dx1="1106.67"/>
 		</EventConnections>
 		<DataConnections>
+			<Connection Source="OutputB" Destination="Sitzventile.OutputB" dx1="300">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="OutputA" Destination="Sitzventile.OutputA" dx1="300">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjIdA_senken" Destination="AuxInput_senken.u16ObjId" dx1="300">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjIdA_heben" Destination="AuxInput_heben.u16ObjId" dx1="300">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
 			<Connection Source="u16ObjId_heben" Destination="SoftKey_heben.u16ObjId" dx1="300">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>

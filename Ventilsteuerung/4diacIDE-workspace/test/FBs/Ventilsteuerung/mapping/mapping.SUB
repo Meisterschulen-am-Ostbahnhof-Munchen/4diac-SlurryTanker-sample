@@ -9,17 +9,11 @@
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<SubApp Name="mapping_AuxFunction2_IE" Type="mapping_AuxFunction2_IE" x="-1800" y="1400">
-		</SubApp>
-		<SubApp Name="mapping_AuxFunction2_IX" Type="mapping_AuxFunction2_IX" x="-1800" y="1700">
-		</SubApp>
 		<SubApp Name="mapping_blink" Type="mapping_blink" x="-1800" y="2000">
 		</SubApp>
 		<SubApp Name="mapping_Buttons_IE" Type="mapping_Buttons_IE" x="-1800" y="2300">
 		</SubApp>
 		<SubApp Name="mapping_Buttons_IX" Type="mapping_Buttons_IX" x="-1800" y="2600">
-		</SubApp>
-		<SubApp Name="mapping_DataPanel_QX" Type="mapping_DO_QX" x="-1800" y="2900">
 		</SubApp>
 	</SubAppNetwork>
 </SubAppType>

@@ -7,6 +7,10 @@
 	<CompilerInfo>
 		<Import declaration="DefaultPool::SoftKey_Schneidwerk"/>
 		<Import declaration="isobus::UT::io::Softkey::SoftKeyActivationCode::SK_RELEASED"/>
+		<Import declaration="DefaultPool::AuxInput_Schneidwerk"/>
+		<Import declaration="isobus::UT::io::Auxiliary::IN::AuxiliaryState::AuxDisabled"/>
+		<Import declaration="DataPanel::io::MI::DQ::DataPanel_MI_DO::DigitalOutput_1A"/>
+		<Import declaration="DataPanel::io::MI::DQ::DataPanel_MI_DO::DigitalOutput_1B"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
@@ -21,25 +25,29 @@
 		</InputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="rechtslauf" Type="QX" x="5900" y="1400">
+		<FB Name="rechtslauf" Type="DataPanel::io::MI::DQ::DataPanel_MI_QX" x="5900" y="1400">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="DigitalOutput_1A"/>
 		</FB>
 		<FB Name="E_T_FF_SR" Type="iec61499::events::E_T_FF_SR" x="3200" y="1500">
 		</FB>
-		<FB Name="linkslauf" Type="QX" x="5900" y="-100">
+		<FB Name="linkslauf" Type="DataPanel::io::MI::DQ::DataPanel_MI_QX" x="5900" y="-100">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="Output" Value="DigitalOutput_1B"/>
 		</FB>
-		<SubApp Name="GreenWhiteBackground_Function" Type="GreenWhiteBackground_Function" x="5900" y="2200">
+		<SubApp Name="GreenWhiteBackground_Function" Type="MyLib::sys::GreenWhiteBackground3" x="5900" y="2700">
 		</SubApp>
 		<FB Name="SoftKey" Type="isobus::UT::io::Softkey::Softkey_IE" x="100" y="600">
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="u16ObjId" Value="SoftKey_Schneidwerk"/>
 			<Parameter Name="InputEvent" Value="SK_RELEASED"/>
 		</FB>
-		<FB Name="AuxInput" Type="IE" x="100" y="1800">
+		<FB Name="AuxInput" Type="isobus::UT::io::Auxiliary::IN::Aux_IE" x="100" y="1800">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="AuxInput_Schneidwerk"/>
+			<Parameter Name="InputEvent" Value="AuxDisabled"/>
 		</FB>
-		<Comment Comment="TODO: Schneidwerk linkslauf bei jedem 2. Start.  &#10;" x="6800" y="0" width="1073.33" height="540"/>
+		<Comment Comment="TODO: Schneidwerk linkslauf bei jedem 2. Start.  &#10;" x="7300" y="0" width="1073.33" height="540"/>
 		<EventConnections>
 			<Connection Source="E_T_FF_SR.EO" Destination="rechtslauf.REQ" dx1="1046.67"/>
 			<Connection Source="S_ON" Destination="E_T_FF_SR.S" dx1="3300">
@@ -48,13 +56,13 @@
 			<Connection Source="S_OFF" Destination="E_T_FF_SR.R" dx1="3300">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="E_T_FF_SR.EO" Destination="GreenWhiteBackground_Function.EO" dx1="1400"/>
+			<Connection Source="E_T_FF_SR.EO" Destination="GreenWhiteBackground_Function.REQ" dx1="1040"/>
 			<Connection Source="SoftKey.IND" Destination="E_T_FF_SR.CLK" dx1="1206.67"/>
 			<Connection Source="AuxInput.IND" Destination="E_T_FF_SR.CLK" dx1="1206.67"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="E_T_FF_SR.Q" Destination="rechtslauf.OUT" dx1="1046.67"/>
-			<Connection Source="E_T_FF_SR.Q" Destination="GreenWhiteBackground_Function.Q" dx1="500"/>
+			<Connection Source="E_T_FF_SR.Q" Destination="GreenWhiteBackground_Function.DI1" dx1="500"/>
 			<Connection Source="u16ObjId" Destination="GreenWhiteBackground_Function.u16ObjId" dx1="3120">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>

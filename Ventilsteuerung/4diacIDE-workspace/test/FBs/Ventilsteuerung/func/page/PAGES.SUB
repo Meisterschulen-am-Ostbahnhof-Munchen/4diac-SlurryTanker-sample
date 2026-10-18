@@ -4,6 +4,10 @@
 	</Identification>
 	<VersionInfo Version="1.0" Author="franz" Date="2023-02-06">
 	</VersionInfo>
+	<CompilerInfo>
+		<Import declaration="DefaultPool::PAGE_1_AUX"/>
+		<Import declaration="DefaultPool::PAGE_2_AUX"/>
+	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
@@ -36,8 +40,10 @@
 			<Parameter Name="u16ObjIdA" Value="DefaultPool::PAGE_1_AUX"/>
 		</SubApp>
 		<SubApp Name="PAGE_1" Type="PAGE" x="0" y="0">
+			<Parameter Name="u16ObjIdA" Value="PAGE_1_AUX"/>
 		</SubApp>
 		<SubApp Name="PAGE_2" Type="PAGE" x="0" y="533.33">
+			<Parameter Name="u16ObjIdA" Value="PAGE_2_AUX"/>
 		</SubApp>
 		<EventConnections>
 			<Connection Source="F_SEL_I.CNF" Destination="Q_SoftKeyMask.REQ"/>

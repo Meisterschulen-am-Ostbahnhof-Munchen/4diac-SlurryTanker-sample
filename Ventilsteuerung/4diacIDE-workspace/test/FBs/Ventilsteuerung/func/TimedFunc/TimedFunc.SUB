@@ -6,6 +6,8 @@
 	</VersionInfo>
 	<CompilerInfo>
 		<Import declaration="isobus::UT::io::Softkey::SoftKeyActivationCode::SK_RELEASED"/>
+		<Import declaration="isobus::UT::io::Auxiliary::IN::AuxiliaryState::AuxDisabled"/>
+		<Import declaration="DataPanel::io::MI::DQ::DataPanel_MI_DO::Invalid"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
@@ -24,6 +26,7 @@
 		<InputVars>
 			<VarDeclaration Name="u16ObjId" Type="UINT"/>
 			<VarDeclaration Name="u16ObjIdA" Type="UINT"/>
+			<VarDeclaration Name="Output" Type="DataPanel::io::MI::DQ::DataPanel_MI_DO_S" InitialValue="Invalid"/>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="OUT" Type="BOOL">
@@ -34,7 +37,7 @@
 	<SubAppNetwork>
 		<FB Name="AND_2" Type="AND_2" x="4800" y="900">
 		</FB>
-		<FB Name="QX" Type="QX" x="4800" y="-100">
+		<FB Name="QX" Type="DataPanel::io::MI::DQ::DataPanel_MI_QX" x="4800" y="-100">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="E_PULSE" Type="E_PULSE" x="2666.67" y="0">
@@ -48,8 +51,9 @@
 			<Parameter Name="QI" Value="TRUE"/>
 			<Parameter Name="InputEvent" Value="SK_RELEASED"/>
 		</FB>
-		<FB Name="AuxInput" Type="IE" x="-2300" y="900">
+		<FB Name="AuxInput" Type="isobus::UT::io::Auxiliary::IN::Aux_IE" x="-2300" y="900">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="InputEvent" Value="AuxDisabled"/>
 		</FB>
 		<EventConnections>
 			<Connection Source="E_PULSE.CNF" Destination="AND_2.REQ" dx1="473.33"/>
@@ -64,6 +68,12 @@
 			<Connection Source="AuxInput.IND" Destination="E_T_FF_SR.CLK" dx1="673.33"/>
 		</EventConnections>
 		<DataConnections>
+			<Connection Source="Output" Destination="QX.Output" dx1="300">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjIdA" Destination="AuxInput.u16ObjId" dx1="300">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
 			<Connection Source="u16ObjId" Destination="SoftKey.u16ObjId" dx1="1000">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>

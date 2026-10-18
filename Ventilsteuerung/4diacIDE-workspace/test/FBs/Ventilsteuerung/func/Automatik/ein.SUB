@@ -14,13 +14,14 @@
 		</SubAppEventOutputs>
 		<InputVars>
 			<VarDeclaration Name="u16ObjId" Type="UINT"/>
+			<VarDeclaration Name="u16ObjIdA" Type="UINT"/>
 		</InputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
 		<FB Name="SoftKey" Type="isobus::UT::io::Softkey::Softkey_IX" x="-200" y="0">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
-		<FB Name="AuxInput" Type="IX" x="-200" y="1000">
+		<FB Name="AuxInput" Type="isobus::UT::io::Auxiliary::IN::Aux_IX" x="-200" y="1000">
 			<Parameter Name="QI" Value="TRUE"/>
 		</FB>
 		<FB Name="OR_2" Type="OR_2" x="1800" y="300">
@@ -35,6 +36,9 @@
 			<Connection Source="E_SWITCH.EO1" Destination="DOWN" dx1="133.33"/>
 		</EventConnections>
 		<DataConnections>
+			<Connection Source="u16ObjIdA" Destination="AuxInput.u16ObjId" dx1="300">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
 			<Connection Source="u16ObjId" Destination="SoftKey.u16ObjId" dx1="300">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
