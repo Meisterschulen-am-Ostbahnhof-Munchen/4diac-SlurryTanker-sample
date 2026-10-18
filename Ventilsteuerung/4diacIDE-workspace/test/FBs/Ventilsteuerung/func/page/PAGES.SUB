@@ -7,6 +7,8 @@
 	<CompilerInfo>
 		<Import declaration="DefaultPool::PAGE_1_AUX"/>
 		<Import declaration="DefaultPool::PAGE_2_AUX"/>
+		<Import declaration="DefaultPool::PAGE_1_BTN"/>
+		<Import declaration="DefaultPool::PAGE_2_BTN"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 	</SubAppInterfaceList>
@@ -40,9 +42,11 @@
 			<Parameter Name="u16ObjIdA" Value="DefaultPool::PAGE_1_AUX"/>
 		</SubApp>
 		<SubApp Name="PAGE_1" Type="PAGE" x="0" y="0">
+			<Parameter Name="u16ObjId" Value="PAGE_1_BTN"/>
 			<Parameter Name="u16ObjIdA" Value="PAGE_1_AUX"/>
 		</SubApp>
 		<SubApp Name="PAGE_2" Type="PAGE" x="0" y="533.33">
+			<Parameter Name="u16ObjId" Value="PAGE_2_BTN"/>
 			<Parameter Name="u16ObjIdA" Value="PAGE_2_AUX"/>
 		</SubApp>
 		<EventConnections>

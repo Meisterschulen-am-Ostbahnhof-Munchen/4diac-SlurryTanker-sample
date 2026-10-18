@@ -6,6 +6,7 @@
 	</VersionInfo>
 	<CompilerInfo>
 		<Import declaration="isobus::UT::io::Auxiliary::IN::AuxiliaryState::AuxDisabled"/>
+		<Import declaration="isobus::UT::io::Button::ButtonActivationCode::BT_RELEASED_UNLATCHED"/>
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<SubAppEventOutputs>
@@ -14,12 +15,14 @@
 			</SubAppEvent>
 		</SubAppEventOutputs>
 		<InputVars>
+			<VarDeclaration Name="u16ObjId" Type="UINT"/>
 			<VarDeclaration Name="u16ObjIdA" Type="UINT"/>
 		</InputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="BTN" Type="IE" x="0" y="0">
+		<FB Name="BTN" Type="isobus::UT::io::Button::Button_IE" x="0" y="0">
 			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="InputEvent" Value="BT_RELEASED_UNLATCHED"/>
 		</FB>
 		<FB Name="AUX" Type="isobus::UT::io::Auxiliary::IN::Aux_IE" x="0" y="1000">
 			<Parameter Name="QI" Value="TRUE"/>
@@ -30,6 +33,9 @@
 			<Connection Source="BTN.IND" Destination="IND" dx1="2673.33"/>
 		</EventConnections>
 		<DataConnections>
+			<Connection Source="u16ObjId" Destination="BTN.u16ObjId" dx1="300">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
 			<Connection Source="u16ObjIdA" Destination="AUX.u16ObjId" dx1="300">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
