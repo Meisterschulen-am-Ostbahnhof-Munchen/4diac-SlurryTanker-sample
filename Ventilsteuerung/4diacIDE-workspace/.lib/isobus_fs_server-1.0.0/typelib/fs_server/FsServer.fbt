@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="FsServer" Comment="Status and messages of the own file server of logiBUS">
+	<Identification Standard="61499-2" Description="The own ISO 11783-13 file server of logiBUS: one volume \\LOGIBUS\ = /data/fs with quota. \n&#10;Switched on with PART_13_FS = 1 in /data/functionalities.ini (restart), quota PART_13_FS_QUOTA_KB, bus share PART_13_FS_BUS_SHARE. \n&#10;IND for every file a client has written (closed after writing), with the local path. \n&#10;CHG when bRunning, u8Clients or u8OpenFiles changes (no polling with REQ needed). \n&#10;Only one FsServer per device: a second instance takes the messages over.">
+	</Identification>
+	<VersionInfo Version="1.0" Author="Franz Höpfinger" Date="2026-11-26" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::fs_server">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+			</Event>
+			<Event Name="REQ" Type="Event" Comment="Read the status">
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Status read">
+				<With Var="bRunning"/>
+				<With Var="u8Clients"/>
+				<With Var="u8OpenFiles"/>
+				<With Var="u32UsedKB"/>
+				<With Var="u32QuotaKB"/>
+			</Event>
+			<Event Name="IND" Type="Event" Comment="A client has written a file">
+				<With Var="sPath"/>
+				<With Var="u16Lost"/>
+			</Event>
+			<Event Name="CHG" Type="Event" Comment="Status changed (running, clients, open files)">
+				<With Var="bRunning"/>
+				<With Var="u8Clients"/>
+				<With Var="u8OpenFiles"/>
+				<With Var="u32UsedKB"/>
+				<With Var="u32QuotaKB"/>
+			</Event>
+		</EventOutputs>
+		<OutputVars>
+			<VarDeclaration Name="bRunning" Type="BOOL" Comment="Server switched on and address claimed"/>
+			<VarDeclaration Name="u8Clients" Type="USINT" Comment="Connected clients"/>
+			<VarDeclaration Name="u8OpenFiles" Type="USINT" Comment="Open files of all clients"/>
+			<VarDeclaration Name="u32UsedKB" Type="UDINT" Comment="Bytes below /data/fs in KB (updated every 10 s)"/>
+			<VarDeclaration Name="u32QuotaKB" Type="UDINT" Comment="Quota of /data/fs in KB"/>
+			<VarDeclaration Name="sPath" Type="STRING" Comment="With IND: local path of the written file, e.g. /data/fs/IMPORT/a.xml"/>
+			<VarDeclaration Name="u16Lost" Type="UINT" Comment="With IND: messages lost before this one (queue of 16 full)"/>
+		</OutputVars>
+	</InterfaceList>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>
