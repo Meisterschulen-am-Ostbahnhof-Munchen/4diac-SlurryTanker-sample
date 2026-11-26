@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="FsDir" Comment="List a directory of the file server">
+	<Identification Standard="61499-2" Description="Uses iso_FscOpenFile() (directory), iso_FscReadFile() and iso_FscCloseFile() of the CCI ISOBUS driver (ISO 11783-13). \n&#10;The smallest of the four arrays is the limit. More entries give ERR with s16Status E_OVERFLOW; the arrays then hold the first entries. \n&#10;adtModified is the local time of the server as stored on the medium (FAT, 2 s). \n&#10;Client is NmDestin.s16OwnCfHnd, file server is NmDestin.s16Handle (e.g. found with NmGetCfInfo, NAME function 61). \n&#10;The FB opens its own io channel to the server and closes it at the end. One job at a time: REQ during a job gives ERR with s16Status E_BUSY. \n&#10;Every REQ ends with exactly one CNF or ERR.">
+	</Identification>
+	<VersionInfo Version="1.0" Author="Franz Höpfinger" Date="2026-11-26" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::fs">
+		<Import declaration="isobus::pgn::ISONETEVENT_T"/>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+			</Event>
+			<Event Name="REQ" Type="Event" Comment="List the directory">
+				<With Var="NmDestin"/>
+				<With Var="sRemotePath"/>
+				<With Var="bHidden"/>
+				<With Var="asName"/>
+				<With Var="au32Size"/>
+				<With Var="au8Attr"/>
+				<With Var="adtModified"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Directory listed">
+				<With Var="u16Count"/>
+				<With Var="asName"/>
+				<With Var="au32Size"/>
+				<With Var="au8Attr"/>
+				<With Var="adtModified"/>
+			</Event>
+			<Event Name="ERR" Type="Event" Comment="Job failed">
+				<With Var="s16Status"/>
+				<With Var="u16FsError"/>
+				<With Var="u16Count"/>
+				<With Var="asName"/>
+				<With Var="au32Size"/>
+				<With Var="au8Attr"/>
+				<With Var="adtModified"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="NmDestin" Type="isobus::pgn::ISONETEVENT_T" Comment="Client (s16OwnCfHnd) and file server (s16Handle)"/>
+			<VarDeclaration Name="sRemotePath" Type="STRING" Comment="Directory on the file server, e.g. data or \\USB\"/>
+			<VarDeclaration Name="bHidden" Type="BOOL" Comment="TRUE: list hidden entries too"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="s16Status" Type="INT" Comment="With ERR: driver return value or own error (E_BUSY, E_RANGE, E_CONFIG)"/>
+			<VarDeclaration Name="u16FsError" Type="UINT" Comment="With ERR: file server or client error (ISO 11783-13 B.9, 6400 ff. client)"/>
+			<VarDeclaration Name="u16Count" Type="UINT" Comment="Number of entries in the arrays"/>
+		</OutputVars>
+		<InOutVars>
+			<VarDeclaration Name="asName" Type="STRING" Comment="Names" ArraySize="*"/>
+			<VarDeclaration Name="au32Size" Type="UDINT" Comment="Sizes in bytes" ArraySize="*"/>
+			<VarDeclaration Name="au8Attr" Type="BYTE" Comment="Attributes: 16#10 directory, 16#01 read-only, 16#02 hidden" ArraySize="*"/>
+			<VarDeclaration Name="adtModified" Type="DATE_AND_TIME" Comment="Last change" ArraySize="*"/>
+		</InOutVars>
+	</InterfaceList>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="FsInfo" Comment="Query the properties of the file server and the status of a volume">
+	<Identification Standard="61499-2" Description="Uses iso_FscGetServerProperties(), iso_FscGetVolumeStatus() and iso_FscGetCurrentDirectory() of the CCI ISOBUS driver (ISO 11783-13). \n&#10;The space is the one of the volume of the current directory. u8VolumeStatus is 255 if the server has no volume status (e.g. version 3). \n&#10;Client is NmDestin.s16OwnCfHnd, file server is NmDestin.s16Handle (e.g. found with NmGetCfInfo, NAME function 61). \n&#10;The FB opens its own io channel to the server and closes it at the end. One job at a time: REQ during a job gives ERR with s16Status E_BUSY. \n&#10;Every REQ ends with exactly one CNF or ERR.">
+	</Identification>
+	<VersionInfo Version="1.0" Author="Franz Höpfinger" Date="2026-11-26" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::fs">
+		<Import declaration="isobus::pgn::ISONETEVENT_T"/>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+			</Event>
+			<Event Name="REQ" Type="Event" Comment="Query the file server">
+				<With Var="NmDestin"/>
+				<With Var="sVolume"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Properties read">
+				<With Var="u8Version"/>
+				<With Var="u8MaxOpenFiles"/>
+				<With Var="u8Capabilities"/>
+				<With Var="u8VolumeStatus"/>
+				<With Var="u32TotalKB"/>
+				<With Var="u32FreeKB"/>
+			</Event>
+			<Event Name="ERR" Type="Event" Comment="Job failed">
+				<With Var="s16Status"/>
+				<With Var="u16FsError"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="NmDestin" Type="isobus::pgn::ISONETEVENT_T" Comment="Client (s16OwnCfHnd) and file server (s16Handle)"/>
+			<VarDeclaration Name="sVolume" Type="STRING" Comment="Volume for the volume status, e.g. \\USB\, empty = volume of the current directory"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="s16Status" Type="INT" Comment="With ERR: driver return value or own error (E_BUSY, E_RANGE, E_CONFIG)"/>
+			<VarDeclaration Name="u16FsError" Type="UINT" Comment="With ERR: file server or client error (ISO 11783-13 B.9, 6400 ff. client)"/>
+			<VarDeclaration Name="u8Version" Type="USINT" Comment="Version of the file server (3 = second edition, 4 = 2022)"/>
+			<VarDeclaration Name="u8MaxOpenFiles" Type="USINT" Comment="Maximum number of open files"/>
+			<VarDeclaration Name="u8Capabilities" Type="BYTE" Comment="Capabilities (ISO 11783-13 B.7)"/>
+			<VarDeclaration Name="u8VolumeStatus" Type="USINT" Comment="0 present, 1 in use, 2 prepared for removal, 3 removed, 255 unknown"/>
+			<VarDeclaration Name="u32TotalKB" Type="UDINT" Comment="Size of the volume in KB"/>
+			<VarDeclaration Name="u32FreeKB" Type="UDINT" Comment="Free space of the volume in KB"/>
+		</OutputVars>
+	</InterfaceList>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>
