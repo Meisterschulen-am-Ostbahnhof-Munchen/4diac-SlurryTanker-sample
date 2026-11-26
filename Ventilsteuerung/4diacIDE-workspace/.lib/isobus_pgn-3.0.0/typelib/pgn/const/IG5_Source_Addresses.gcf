@@ -12,7 +12,7 @@
 		<VarDeclaration Name="SA_GENERATOR_VOLTAGE_REGULATOR" Type="BYTE" Comment="Source Address: Generator Voltage Regulator - The voltage regulator controls the generator output" InitialValue="230"/>
 		<VarDeclaration Name="SA_ENGINE_3" Type="BYTE" Comment="Source Address: Engine #3 - The Engine ECU for the third engine within a system." InitialValue="231"/>
 		<VarDeclaration Name="SA_ENGINE_4" Type="BYTE" Comment="Source Address: Engine #4 - The Engine ECU for the fourth engine within a system." InitialValue="232"/>
-		<VarDeclaration Name="SA_ENGINE_5" Type="BYTE" Comment="Source Address: Engine #5 - The Engine ECU for the fifth engine within a system." InitialValue="233"/>
+		<VarDeclaration Name="SA_ENGINE_5" Type="BYTE" Comment="Source Address: Engine #5 - The Engine ECU for the fourth engine within a system." InitialValue="233"/>
 		<VarDeclaration Name="SA_GENERATOR_SET_CONTROLLER" Type="BYTE" Comment="Source Address: Generator Set Controller - Used for data collection and control of a generator" InitialValue="234"/>
 		<VarDeclaration Name="SA_SUPPLEMENTAL_SENSOR_PROCESSING_UNIT_1" Type="BYTE" Comment="Source Address: Supplemental Sensor Processing Unit #1" InitialValue="235"/>
 		<VarDeclaration Name="SA_SUPPLEMENTAL_SENSOR_PROCESSING_UNIT_2" Type="BYTE" Comment="Source Address: Supplemental Sensor Processing Unit #2" InitialValue="236"/>
@@ -41,7 +41,7 @@ GLOBALCONSTANTS IG5_Source_Addresses
 		                                              // voltage
 		SA_ENGINE_3 : BYTE := 231; // Source Address: Engine #3 - The Engine ECU for the third engine within a system.
 		SA_ENGINE_4 : BYTE := 232; // Source Address: Engine #4 - The Engine ECU for the fourth engine within a system.
-		SA_ENGINE_5 : BYTE := 233; // Source Address: Engine #5 - The Engine ECU for the fifth engine within a system.
+		SA_ENGINE_5 : BYTE := 233; // Source Address: Engine #5 - The Engine ECU for the fourth engine within a system.
 		SA_GENERATOR_SET_CONTROLLER : BYTE := 234; // Source Address: Generator Set Controller - Used for data collection and control of a generator
 		                                           // system
 		SA_SUPPLEMENTAL_SENSOR_PROCESSING_UNIT_1 : BYTE := 235; // Source Address: Supplemental Sensor Processing Unit #1

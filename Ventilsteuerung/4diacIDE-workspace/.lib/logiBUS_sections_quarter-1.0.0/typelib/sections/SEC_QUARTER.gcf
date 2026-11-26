@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="SEC_QUARTER" Comment="Werte einer Section im Condensed Work State (ISO 11783-10), 2 Bit je Section">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0"/>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-31" Remarks="initial implementation"/>
+	<CompilerInfo packageName="logiBUS::sections"/>
+	<GlobalConstants>
+		<VarDeclaration Name="QUARTER_OFF" Type="BYTE" Comment="aus" InitialValue="BYTE#2#00"/>
+		<VarDeclaration Name="QUARTER_ON" Type="BYTE" Comment="an" InitialValue="BYTE#2#01"/>
+		<VarDeclaration Name="QUARTER_ERROR" Type="BYTE" Comment="Fehler" InitialValue="BYTE#2#10"/>
+		<VarDeclaration Name="QUARTER_NA" Type="BYTE" Comment="nicht verfuegbar" InitialValue="BYTE#2#11"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE logiBUS::sections;
+
+GLOBALCONSTANTS SEC_QUARTER
+	VAR_GLOBAL CONSTANT
+		QUARTER_OFF : BYTE := BYTE#2#00; // aus
+		QUARTER_ON : BYTE := BYTE#2#01; // an
+		QUARTER_ERROR : BYTE := BYTE#2#10; // Fehler
+		QUARTER_NA : BYTE := BYTE#2#11; // nicht verfuegbar
+	END_VAR
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+</GlobalConstants>

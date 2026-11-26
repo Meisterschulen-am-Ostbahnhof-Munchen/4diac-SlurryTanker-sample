@@ -2,6 +2,8 @@
 <FBType Name="CTRL_PID" Comment="FT_PI is a PI controller with manual functionality.">
 	<Identification Standard="61499-1" Description="version 2.0&#9;30. jun. 2008&#10;programmer &#9;hugo&#10;tested by&#9;oscat&#10;&#10;FT_PI is a PI controller with manual functionality.&#10;The PID controller works according to the fomula Y = e *(KP+ KI * INTEG(e) ) + offset, while e = set_point - actual.&#10;a rst will reset all internal data, while a switch to manual will cause the controller to follow the function Y = manual_in + offset.&#10;limit_h and Limit_l set the possible output range of Y.&#10;the output flags lim will signal that the output limits are active.">
 	</Identification>
+	<VersionInfo Version="1.1" Author="Franz Höpfinger" Date="2026-11-14" Remarks="Stossfreie Umschaltung: im Handbetrieb wird der Integrator auf M_I nachgefuehrt (kein Weiterintegrieren in MAN)">
+	</VersionInfo>
 	<VersionInfo Version="1.0" Author="Franz Höpfinger" Date="2025-12-19" Remarks="initial API and implementation and/or initial documentation">
 	</VersionInfo>
 	<CompilerInfo packageName="OSCAT::Basic::POUs::Engineering::Control">
@@ -73,8 +75,14 @@ pid.RST();
 
 DIFF := CTRL_IN(SET, ACT, SUP);
 
-(* Call internal PID instance *)
-pid.REQ(in := DIFF, kp := KP, tn := TN, tv := TV, lim_l := LL, lim_h := LH);
+IF MAN THEN
+	(* Handbetrieb: Integrator auf M_I nachfuehren, damit der Regler beim Wechsel
+	 * auf Automatik stossfrei vom Handwert aus weiterregelt *)
+	pid.TRK(IN := DIFF, KP := KP, TN := TN, TV := TV, LIM_L := LL, LIM_H := LH, Y_TRK := M_I);
+ELSE
+	(* Call internal PID instance *)
+	pid.REQ(in := DIFF, kp := KP, tn := TN, tv := TV, lim_l := LL, lim_h := LH);
+END_IF;
 
 (* Call internal Control Output instance *)
 co(ci := pid.Y, OFFSET := OFS, man_in := M_I, lim_l := LL, lim_h := LH, MANUAL := MAN);

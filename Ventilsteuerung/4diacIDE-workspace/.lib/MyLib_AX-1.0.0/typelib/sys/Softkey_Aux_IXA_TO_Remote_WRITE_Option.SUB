@@ -2,6 +2,8 @@
 <SubAppType Name="Softkey_Aux_IXA_TO_Remote_WRITE_Option" Comment="VT-SoftKey lesen ODER AUX-Zuweisung (Joystick) lesen ODER lokaler Web-Override&#10;(z.B. vt-ui-mirror auf demselben Modul) + Remote-OPC-UA-Write an Zielmodul&#10;(generisch, ein Kanal, ohne Status-Feedback) - Option-Lib-Variante von&#10;Softkey_Aux_IXA_TO_Remote_WRITE: alle 4 Bausteine mit eigenem QI (Softkey_IXA,&#10;Aux_IXA, SUBSCRIBE_WEB, AX_CLIENT_1_0) werden von einem einzigen&#10;Option::AOption-Socket sequenziell initialisiert und gated (echtes&#10;INIT_REQ/INIT_CNF statt bloss einem QI-Bool, Franz: &apos;muss ein AOption Adapter&#10;sein&apos;). AOption_OUT reicht die Aktivierung an eine nachgeschaltete Gruppe weiter&#10;(Daisy-Chain, analog MyLib_AX_Option::sys::OptionalGroup_001a/Franz: &apos;ich&#10;zeige dir wie man 2 Dinge die zusammenhaengen machen kann&apos;) - fuer&#10;Softkey_Aux_IXA_TO_Remote_WRITE_BG_Option_OPC, wo die Status-Haelfte&#10;anschliessend dieselbe Option bekommt, und fuer mehrere SoftKeys, die&#10;dieselbe Option teilen (z.B. Bunker_Klappen_Auf -&gt; Bunker_Klappen_Zu).">
 	<Identification Standard="61499-2" Description="Copyright (c) 2026 Büngener Schuder GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
+	<VersionInfo Organization="Büngener Schuder GmbH" Version="1.2" Author="Franz Höpfinger" Date="2026-10-30" Remarks="Remote-Clients mit Remote_Init_Retry: Kette (und Option-INIT_CNF) wartet nicht mehr auf die Gegenstation, nach INITO- neuer Versuch nach 2 s (forte #1092, sonst 60 s pro fehlendem Node und danach tot).">
+	</VersionInfo>
 	<VersionInfo Organization="Büngener Schuder GmbH" Version="1.1" Author="Franz Höpfinger" Date="2026-10-13" Remarks="E_REND_3 (parallele Rendezvous-Variante) verworfen - Franz zeigte den etablierten Daisy-Chain-Stil (OptionalGroup_001a/b, training1): sequenzielle INIT-Verkettung (Softkey_IXA-&gt;Aux_IXA-&gt;SUBSCRIBE_WEB-&gt;AX_CLIENT_1_0) statt paralleler Rendezvous, plus neuer PLUG1-Ausgang (AOption_EVENT_TO_X) fuer Weiterverkettung. SUBSCRIBE_WEB jetzt auch gated (hat QI/INIT/INITO wie die anderen 3) - Franz: 'reicht es alle Bausteine auszumachen die einen QI haben'.">
 	</VersionInfo>
 	<VersionInfo Organization="Büngener Schuder GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-10-13" Remarks="initial implementation (verworfen, siehe v1.1) - Option-Lib-Variante von Softkey_Aux_IXA_TO_Remote_WRITE (bleibt fuer die 10+ nicht-optionalen Aufrufer unveraendert).">
@@ -38,15 +40,21 @@
 		</FB>
 		<FB Name="AOption_EVENT_TO_X" Type="Option::conversion::AOption_EVENT_TO_X" x="4000" y="2200">
 		</FB>
+		<SubApp Name="Retry_AX_CLIENT_1_0" Type="MyLib::sys::Remote_Init_Retry" x="-3000" y="-3500">
+		</SubApp>
 		<EventConnections>
+			<Connection Source="SUBSCRIBE_WEB.INITO" Destination="Retry_AX_CLIENT_1_0.INIT"/>
+			<Connection Source="Retry_AX_CLIENT_1_0.CLIENT_INIT" Destination="AX_CLIENT_1_0.INIT"/>
+			<Connection Source="AX_CLIENT_1_0.INITO" Destination="Retry_AX_CLIENT_1_0.CLIENT_INITO"/>
+			<Connection Source="Retry_AX_CLIENT_1_0.INITO" Destination="AOption_EVENT_TO_X.INIT_REQ"/>
 			<Connection Source="AOption_X_TO_EVENT.INIT_REQ" Destination="Softkey_IXA.INIT" dx1="600"/>
 			<Connection Source="Softkey_IXA.INITO" Destination="Aux_IXA.INIT" dx1="80" dx2="80" dy="-420"/>
 			<Connection Source="Aux_IXA.INITO" Destination="SUBSCRIBE_WEB.INIT" dx1="80" dx2="80" dy="-420"/>
-			<Connection Source="SUBSCRIBE_WEB.INITO" Destination="AX_CLIENT_1_0.INIT" dx1="80" dx2="80" dy="-420"/>
-			<Connection Source="AX_CLIENT_1_0.INITO" Destination="AOption_EVENT_TO_X.INIT_REQ" dx1="80" dx2="80" dy="-420"/>
 			<Connection Source="AOption_EVENT_TO_X.INIT_CNF" Destination="AOption_X_TO_EVENT.INIT_CNF" dx1="80" dx2="80" dy="-420"/>
 		</EventConnections>
 		<DataConnections>
+			<Connection Source="AOption_X_TO_EVENT.QI_OUT" Destination="Retry_AX_CLIENT_1_0.QI"/>
+			<Connection Source="AX_CLIENT_1_0.QO" Destination="Retry_AX_CLIENT_1_0.CLIENT_QO"/>
 			<Connection Source="u16ObjId" Destination="Softkey_IXA.u16ObjId" dx1="846.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>

@@ -185,7 +185,7 @@
 		<VarDeclaration Name="M_VERIS_TECHNOLOGIES" Type="UINT" Comment="Manufacturer: Veris Technologies, Inc. | Location: Salina, KS USA - 2005-01-20" InitialValue="175"/>
 		<VarDeclaration Name="M_MORITZ_AEROSPACE" Type="UINT" Comment="Manufacturer: Moritz Aerospace | Location: Dublin, PA USA - 2005-01-25" InitialValue="176"/>
 		<VarDeclaration Name="M_DIAGNOSTIC_SYSTEMS_ASSOCIATES" Type="UINT" Comment="Manufacturer: Diagnostic Systems Associates | Location: Kalamazoo, MI USA - 2005-03-02" InitialValue="177"/>
-		<VarDeclaration Name="M_CONTINENTAL_AUTOMOTIVE" Type="UINT" Comment="Manufacturer: Continental Automotive GmbH (formerly Siemens VDO Automotive AG) | Location:" InitialValue="178"/>
+		<VarDeclaration Name="M_CONTINENTAL_AUTOMOTIVE" Type="UINT" Comment="Manufacturer: AUMOVIO Germany GmbH (formerly Continental Automotive GmbH, formerly Siemens VDO" InitialValue="178"/>
 		<VarDeclaration Name="M_TEEJET_TECHNOLOGIES_SPRINGFIELD" Type="UINT" Comment="Manufacturer: TeeJet Technologies Springfield (formerly Midwest Technologies Illinois, LLC) |" InitialValue="179"/>
 		<VarDeclaration Name="M_SMART_POWER_SYSTEMS" Type="UINT" Comment="Manufacturer: Smart Power Systems | Location: Reed City, MI USA - 2005-04-15" InitialValue="180"/>
 		<VarDeclaration Name="M_CORETRONICS" Type="UINT" Comment="Manufacturer: Coretronics, Inc. | Location: Eagle, ID USA - 2005-04-15" InitialValue="181"/>
@@ -903,7 +903,7 @@
 		<VarDeclaration Name="M_NEXTFOUR_SOLUTIONS" Type="UINT" Comment="Manufacturer: NextFour Solutions Ltd | Location: Turku, Finland - 2018-02-10" InitialValue="896"/>
 		<VarDeclaration Name="M_DOT_TECHNOLOGY" Type="UINT" Comment="Manufacturer: Dot Technology Corp. | Location: Emerald Park, SK Canada - 2018-02-14" InitialValue="897"/>
 		<VarDeclaration Name="M_JOSEF_KOTTE_LANDTECHNIK_AND" Type="UINT" Comment="Manufacturer: Josef Kotte Landtechnik GmbH &amp; Co. KG | Location: Rieste, Germany - 2018-02-20" InitialValue="898"/>
-		<VarDeclaration Name="M_LIPPERT_COMPONENTS" Type="UINT" Comment="Manufacturer: Lippert Components, Inc | Location: Sterling Heights, MI USA - 2018-03-04" InitialValue="899"/>
+		<VarDeclaration Name="M_LIPPERT_COMPONENTS" Type="UINT" Comment="Manufacturer: Lippert (formerly Lippert Components, Inc.) | Location: Elkhart, IN, USA - 2026-05-07" InitialValue="899"/>
 		<VarDeclaration Name="M_OSB_CONNAGTIVE" Type="UINT" Comment="Manufacturer: OSB connagtive GmbH (formerly OSB AG) | Location: Munich, Germany - 2021-08-03" InitialValue="900"/>
 		<VarDeclaration Name="M_ZIVAN_SRL" Type="UINT" Comment="Manufacturer: Zivan Srl | Location: Poviglio, Italy - 2018-03-04" InitialValue="901"/>
 		<VarDeclaration Name="M_BUCHER_HYDRAULICS" Type="UINT" Comment="Manufacturer: Bucher Hydraulics | Location: Neuheim, Switzerland - 2018-03-04" InitialValue="902"/>
@@ -1043,7 +1043,7 @@
 		<VarDeclaration Name="M_BENDER_AND" Type="UINT" Comment="Manufacturer: Bender GmbH &amp; Co. KG | Location: Grünberg, Germany - 2019-08-16" InitialValue="1036"/>
 		<VarDeclaration Name="M_DRAGONFLY_ENERGY" Type="UINT" Comment="Manufacturer: Dragonfly Energy Corp. | Location: Sparks, NV USA - 2019-08-16" InitialValue="1037"/>
 		<VarDeclaration Name="M_EMIT_TECHNOLOGIES" Type="UINT" Comment="Manufacturer: EMIT Technologies, Inc. | Location: Sheridan, WY USA - 2019-08-16" InitialValue="1038"/>
-		<VarDeclaration Name="M_LIUGONG_DRESSTA_MACHINERY" Type="UINT" Comment="Manufacturer: Liugong Dressta Machinery | Location: Stalowa Wola, Poland - 2019-08-20" InitialValue="1039"/>
+		<VarDeclaration Name="M_LIUGONG_DRESSTA_MACHINERY" Type="UINT" Comment="Manufacturer: LiuGong Machinery (formerly Liugong Dressta Machinery) | Location: Liuzhou, Guangxi" InitialValue="1039"/>
 		<VarDeclaration Name="M_BPE_ELECTRONICS_SRL" Type="UINT" Comment="Manufacturer: BPE Electronics Srl | Location: Campagnola Emilia (RE), Italy - 2019-08-28" InitialValue="1040"/>
 		<VarDeclaration Name="M_EZ_LYNK" Type="UINT" Comment="Manufacturer: EZ Lynk | Location: Georgetown, Cayman Islands - 2019-08-28" InitialValue="1041"/>
 		<VarDeclaration Name="M_ENGCON_GROUP" Type="UINT" Comment="Manufacturer: engcon group | Location: Strömsund, Sweden - 2019-08-28" InitialValue="1042"/>
@@ -1552,6 +1552,7 @@
 		<VarDeclaration Name="M_ROADEAZY" Type="UINT" Comment="Manufacturer: RoadEazy | Location: Sunnyvale, CA USA - 2025-05-09" InitialValue="1545"/>
 		<VarDeclaration Name="M_ESMART" Type="UINT" Comment="Manufacturer: ESMART | Location: Indianapolis, IN USA - 2025-05-09" InitialValue="1546"/>
 		<VarDeclaration Name="M_WEICHAI_LOVOL_INTELLIGENT_AGRICULTURAL_TECHNOLOGY" Type="UINT" Comment="Manufacturer: Weichai Lovol Intelligent Agricultural Technology Co., Ltd. | Location: Weifang" InitialValue="1547"/>
+		<VarDeclaration Name="M_SAILGAUGE" Type="UINT" Comment="Manufacturer: Sailgauge LLC | Location: Hartford, WI, USA - 2026-07-23" InitialValue="1548"/>
 		<VarDeclaration Name="M_AM" Type="UINT" Comment="Manufacturer: AM Co., Ltd. | Location: Gwacheon-si, Gyeonggi-do, South Korea - 2025-05-09" InitialValue="1549"/>
 		<VarDeclaration Name="M_MARIO_TANZI" Type="UINT" Comment="Manufacturer: Mario Tanzi S.A. | Location: Arequito, Santa Fe, Argentina - 2025-05-09" InitialValue="1550"/>
 		<VarDeclaration Name="M_LMCE_GROUP" Type="UINT" Comment="Manufacturer: LMCE Group | Location: Loimaa, Finland - 2025-05-09" InitialValue="1551"/>
@@ -1615,7 +1616,7 @@
 		<VarDeclaration Name="M_NANONORD" Type="UINT" Comment="Manufacturer: NanoNord A/S | Location: Aalborg, Denmark - 2025-12-08" InitialValue="1609"/>
 		<VarDeclaration Name="M_SIMARINE_D_O_O" Type="UINT" Comment="Manufacturer: Simarine d.o.o. | Location: Maribor, Slovenia - 2025-12-08" InitialValue="1610"/>
 		<VarDeclaration Name="M_NINGBO_HAIBO_GROUP" Type="UINT" Comment="Manufacturer: Ningbo Haibo Group Co., Ltd. | Location: Ningbo, Zhejiang, China - 2025-12-08" InitialValue="1611"/>
-		<VarDeclaration Name="M_BLUETTI" Type="UINT" Comment="Manufacturer: BLUETTI | Location: Shenzhen, Guangdong, China - 2025-12-08" InitialValue="1612"/>
+		<VarDeclaration Name="M_BLUETTI" Type="UINT" Comment="Manufacturer: Shenzhen PowerOak Newener Co., Ltd. (formerly BLUETTI) | Location: Shenzhen" InitialValue="1612"/>
 		<VarDeclaration Name="M_WHISPERPOWER" Type="UINT" Comment="Manufacturer: Whisperpower | Location: Drachten, The Netherlands - 2025-12-08" InitialValue="1613"/>
 		<VarDeclaration Name="M_RISSEEUW_TECHNIEK" Type="UINT" Comment="Manufacturer: Risseeuw Techniek | Location: Schoondijke, The Netherlands - 2025-12-08" InitialValue="1614"/>
 		<VarDeclaration Name="M_J_ASSY" Type="UINT" Comment="Manufacturer: J.Assy | Location: Caldas Novas, Brazil - 2025-12-08" InitialValue="1615"/>
@@ -1643,8 +1644,49 @@
 		<VarDeclaration Name="M_SCHERZINGER_PUMPEN_AND" Type="UINT" Comment="Manufacturer: Scherzinger Pumpen GmbH &amp; Co. KG | Location: Furtwangen im Schwarzwald," InitialValue="1637"/>
 		<VarDeclaration Name="M_TEMPA_TEKNIK" Type="UINT" Comment="Manufacturer: TEMPA TEKNIK | Location: Tekirdag, Turkey - 2026-02-18" InitialValue="1638"/>
 		<VarDeclaration Name="M_GEA_FARM_TECHNOLOGIES_CANADA" Type="UINT" Comment="Manufacturer: GEA Farm Technologies Canada Inc. | Location: Drummondville, QC, Canada -" InitialValue="1639"/>
-		<VarDeclaration Name="M_SHANGHAI_INFIPAX_TECHNOLOGY" Type="UINT" Comment="Manufacturer: Shanghai Infipax Technology Co., Ltd. | Location: Shanghai, China - 2026-04-03" InitialValue="1650"/>
-		<VarDeclaration Name="M_SCHAFFER_FARMING_TECHNOLOGIES" Type="UINT" Comment="Manufacturer: Schaffer Farming Technologies | Location: Mercer, PA, USA - 2026-04-03" InitialValue="1653"/>
+		<VarDeclaration Name="M_PEIKA" Type="UINT" Comment="Manufacturer: PEIKA | Location: Bydgoszcz, Kujawsko-Pomorskie, Poland - 2026-04-02" InitialValue="1640"/>
+		<VarDeclaration Name="M_LITHOS_ENERGY" Type="UINT" Comment="Manufacturer: Lithos Energy | Location: Hayward, CA, USA - 2026-04-02" InitialValue="1641"/>
+		<VarDeclaration Name="M_KW_GENERATOR" Type="UINT" Comment="Manufacturer: KW-Generator GmbH | Location: Schwäbisch Gmünd, Baden-Württemberg, Germany" InitialValue="1642"/>
+		<VarDeclaration Name="M_CRMR_TECHNOLOGY" Type="UINT" Comment="Manufacturer: CRMR Technology, Inc. | Location: Miami, FL, USA - 2026-04-02" InitialValue="1643"/>
+		<VarDeclaration Name="M_U_AND_R_GMBH_HARDWARE_UND_SYSTEMDESIGN" Type="UINT" Comment="Manufacturer: U&amp;R GmbH Hardware- und Systemdesign | Location: Erbach, Baden-Wuerttemberg" InitialValue="1644"/>
+		<VarDeclaration Name="M_DC_ELECTRONICS" Type="UINT" Comment="Manufacturer: DC Electronics | Location: Maldon, Essex, UK - 2026-04-02" InitialValue="1645"/>
+		<VarDeclaration Name="M_WATT_AND_SEA" Type="UINT" Comment="Manufacturer: WATT AND SEA | Location: La Rochelle, France - 2026-04-02" InitialValue="1646"/>
+		<VarDeclaration Name="M_NOVATRON_OY" Type="UINT" Comment="Manufacturer: Novatron Oy | Location: Pirkkala, Pirkanmaa, Finland - 2026-04-02" InitialValue="1647"/>
+		<VarDeclaration Name="M_ALTEK" Type="UINT" Comment="Manufacturer: Altek GmbH | Location: Rottenburg, BW, Germany - 2026-07-23" InitialValue="1648"/>
+		<VarDeclaration Name="M_STARTER_AND_GENERATOR_EXCHANGE_SERVICE" Type="UINT" Comment="Manufacturer: Starter &amp; Generator Exchange Service Pty Ltd | Location: Brisbane, Queensland" InitialValue="1649"/>
+		<VarDeclaration Name="M_SHANGHAI_INFIPAX_TECHNOLOGY" Type="UINT" Comment="Manufacturer: Shanghai Infipax Technology Co., Ltd. | Location: Shanghai, China - 2026-07-23" InitialValue="1650"/>
+		<VarDeclaration Name="M_CREATIVE_WERKS" Type="UINT" Comment="Manufacturer: Creative Werks Inc. | Location: Des Moines, IA, USA - 2026-04-02" InitialValue="1651"/>
+		<VarDeclaration Name="M_COSTRUZIONI_MOTORI_DIESEL" Type="UINT" Comment="Manufacturer: Costruzioni Motori Diesel (CMD) | Location: San Nicola La Strada, CA, Italy" InitialValue="1652"/>
+		<VarDeclaration Name="M_SCHAFFER_FARMING_TECHNOLOGIES" Type="UINT" Comment="Manufacturer: Schaffer Farming Technologies | Location: Mercer, PA, USA - 2026-04-02" InitialValue="1653"/>
+		<VarDeclaration Name="M_INVENTURE_ELECTRONICS" Type="UINT" Comment="Manufacturer: Inventure Electronics | Location: Goshen, IN, USA - 2026-05-06" InitialValue="1654"/>
+		<VarDeclaration Name="M_ELECTROSEA" Type="UINT" Comment="Manufacturer: Electrosea | Location: Plymouth, MN, USA - 2026-05-06" InitialValue="1655"/>
+		<VarDeclaration Name="M_SUPERSTREAM_OY" Type="UINT" Comment="Manufacturer: Superstream Oy | Location: Helsinki, Finland - 2026-07-23" InitialValue="1656"/>
+		<VarDeclaration Name="M_ISRINGHAUSEN_GMBH_AND" Type="UINT" Comment="Manufacturer: ISRINGHAUSEN GmbH &amp; Co. KG | Location: Lemgo, Germany - 2026-05-06" InitialValue="1657"/>
+		<VarDeclaration Name="M_ROUSH" Type="UINT" Comment="Manufacturer: Roush | Location: Livonia, MI, USA - 2026-05-06" InitialValue="1658"/>
+		<VarDeclaration Name="M_TSM_SENSORS_S_R_L" Type="UINT" Comment="Manufacturer: TSM Sensors S.r.l. | Location: Erbusco, Italy - 2026-05-06" InitialValue="1659"/>
+		<VarDeclaration Name="M_ARETE_KLEJBUK_SPOLKA_JAWNA" Type="UINT" Comment="Manufacturer: ARETE Klejbuk Spolka Jawna | Location: Choroszcz, Poland - 2026-05-06" InitialValue="1660"/>
+		<VarDeclaration Name="M_CEFIROS" Type="UINT" Comment="Manufacturer: CEFIROS | Location: Cordoba, Argentina - 2026-05-06" InitialValue="1661"/>
+		<VarDeclaration Name="M_REMOTE_CONTROL_TECHNOLOGIES" Type="UINT" Comment="Manufacturer: Remote Control Technologies (RCT) | Location: Perth, WA, Australia - 2026-05-06" InitialValue="1662"/>
+		<VarDeclaration Name="M_WANDFLUH_AG" Type="UINT" Comment="Manufacturer: Wandfluh AG | Location: Frutigen, BE, Switzerland - 2026-05-12" InitialValue="1663"/>
+		<VarDeclaration Name="M_NAUTECH" Type="UINT" Comment="Manufacturer: Nautech Ltd. | Location: Balatonfured, Hungary - 2026-07-23" InitialValue="1664"/>
+		<VarDeclaration Name="M_ICP_SYSTEMS_B_V" Type="UINT" Comment="Manufacturer: ICP Systems B.V. | Location: Holten, Overijssel, Netherlands - 2026-07-23" InitialValue="1665"/>
+		<VarDeclaration Name="M_TERSUS_GNSS" Type="UINT" Comment="Manufacturer: Tersus GNSS Inc. | Location: Shanghai, China - 2026-07-23" InitialValue="1666"/>
+		<VarDeclaration Name="M_ADVANCED_FLOW_SOLUTIONS" Type="UINT" Comment="Manufacturer: Advanced Flow Solutions, Inc. | Location: Oklahoma City, OK, USA - 2026-07-23" InitialValue="1667"/>
+		<VarDeclaration Name="M_PERFECT_PRECISION_AGRICULTURE" Type="UINT" Comment="Manufacturer: Perfect Precision Agriculture | Location: Dundee, KZN, South Africa - 2026-08-04" InitialValue="1668"/>
+		<VarDeclaration Name="M_SHENZHEN_TOPBAND" Type="UINT" Comment="Manufacturer: Shenzhen Topband Co. Ltd. | Location: Shiyan, Guangdong Province, China" InitialValue="1669"/>
+		<VarDeclaration Name="M_MCT_TECHNIC_SENSOR_A_S" Type="UINT" Comment="Manufacturer: MCT TECHNIC SENSOR A.S. | Location: Bakirkoy, Istanbul, Turkey - 2026-07-23" InitialValue="1670"/>
+		<VarDeclaration Name="M_LOOKOUT" Type="UINT" Comment="Manufacturer: LOOKOUT | Location: Somerville, MA, USA - 2026-07-23" InitialValue="1671"/>
+		<VarDeclaration Name="M_ANDREAS_LUPOLD_HYDROTECHNIK" Type="UINT" Comment="Manufacturer: Andreas Lupold Hydrotechnik GmbH | Location: Voehringen, BW, Germany - 2026-07-23" InitialValue="1672"/>
+		<VarDeclaration Name="M_SISTEMATICA_S_R_L" Type="UINT" Comment="Manufacturer: SISTEMATICA S.r.l | Location: Turin, Italy - 2026-07-23" InitialValue="1673"/>
+		<VarDeclaration Name="M_YACHTWAVE" Type="UINT" Comment="Manufacturer: YACHTWAVE | Location: Sarasota, FL, USA - 2026-07-23" InitialValue="1674"/>
+		<VarDeclaration Name="M_TETRADYNE" Type="UINT" Comment="Manufacturer: Tetradyne Co., Ltd. | Location: Seoul, South Korea - 2026-07-23" InitialValue="1675"/>
+		<VarDeclaration Name="M_MERLIN_SOLAR_TECHNOLOGIES" Type="UINT" Comment="Manufacturer: Merlin Solar Technologies, Inc. | Location: San Jose, California, USA" InitialValue="1676"/>
+		<VarDeclaration Name="M_GINT" Type="UINT" Comment="Manufacturer: GINT Co., Ltd. | Location: Seongnam-si, Gyeonggi-do, Republic of Korea" InitialValue="1684"/>
+		<VarDeclaration Name="M_TANIE_NAWIGOWANIE" Type="UINT" Comment="Manufacturer: Tanie Nawigowanie | Location: Wroclaw, Poland - 2026-09-24" InitialValue="1685"/>
+		<VarDeclaration Name="M_PTM_S_R_L" Type="UINT" Comment="Manufacturer: PTM S.r.l. | Location: Visano, Italy - 2026-09-24" InitialValue="1695"/>
+		<VarDeclaration Name="M_COMESYS" Type="UINT" Comment="Manufacturer: ComeSys Ltd. | Location: Busan, South Korea - 2026-11-12" InitialValue="1700"/>
+		<VarDeclaration Name="M_INNOV_GPS" Type="UINT" Comment="Manufacturer: INNOV.GPS | Location: Villers les Cagnicourt, France - 2026-11-12" InitialValue="1704"/>
+		<VarDeclaration Name="M_OPTISENS_INTELLIGENT_TECHNOLOGY" Type="UINT" Comment="Manufacturer: Optisens Intelligent Technology Co., Ltd. | Location: Shanghai, China" InitialValue="1712"/>
 		<VarDeclaration Name="M_SEASTAR_SOLUTIONS" Type="UINT" Comment="Manufacturer: Seastar Solutions (formerly Teleflex) | Location: Litchfield, IL - 2021-08-26" InitialValue="1850"/>
 		<VarDeclaration Name="M_RAYMARINE" Type="UINT" Comment="Manufacturer: RayMarine | Location: Portsmouth, Hampshire UK - 2003-07-20" InitialValue="1851"/>
 		<VarDeclaration Name="M_NAVIONICS" Type="UINT" Comment="Manufacturer: Navionics | Location: Wareham, MA USA - 2003-07-20" InitialValue="1852"/>
@@ -1872,8 +1914,7 @@ GLOBALCONSTANTS Manufacturer_IDs
 		M_VERIS_TECHNOLOGIES : UINT := 175; // Manufacturer: Veris Technologies, Inc. | Location: Salina, KS USA - 2005-01-20
 		M_MORITZ_AEROSPACE : UINT := 176; // Manufacturer: Moritz Aerospace | Location: Dublin, PA USA - 2005-01-25
 		M_DIAGNOSTIC_SYSTEMS_ASSOCIATES : UINT := 177; // Manufacturer: Diagnostic Systems Associates | Location: Kalamazoo, MI USA - 2005-03-02
-		M_CONTINENTAL_AUTOMOTIVE : UINT := 178; // Manufacturer: Continental Automotive GmbH (formerly Siemens VDO Automotive AG) | Location:
-		                                        // Regensburg, Germany - 2015-07-16
+		M_CONTINENTAL_AUTOMOTIVE : UINT := 178; // Manufacturer: AUMOVIO Germany GmbH (formerly Continental Automotive GmbH, formerly Siemens VDO
 		M_TEEJET_TECHNOLOGIES_SPRINGFIELD : UINT := 179; // Manufacturer: TeeJet Technologies Springfield (formerly Midwest Technologies Illinois, LLC) |
 		                                                 // Location: Springfield, IL USA - 2008-09-05
 		M_SMART_POWER_SYSTEMS : UINT := 180; // Manufacturer: Smart Power Systems | Location: Reed City, MI USA - 2005-04-15
@@ -2646,7 +2687,7 @@ GLOBALCONSTANTS Manufacturer_IDs
 		M_NEXTFOUR_SOLUTIONS : UINT := 896; // Manufacturer: NextFour Solutions Ltd | Location: Turku, Finland - 2018-02-10
 		M_DOT_TECHNOLOGY : UINT := 897; // Manufacturer: Dot Technology Corp. | Location: Emerald Park, SK Canada - 2018-02-14
 		M_JOSEF_KOTTE_LANDTECHNIK_AND : UINT := 898; // Manufacturer: Josef Kotte Landtechnik GmbH & Co. KG | Location: Rieste, Germany - 2018-02-20
-		M_LIPPERT_COMPONENTS : UINT := 899; // Manufacturer: Lippert Components, Inc | Location: Sterling Heights, MI USA - 2018-03-04
+		M_LIPPERT_COMPONENTS : UINT := 899; // Manufacturer: Lippert (formerly Lippert Components, Inc.) | Location: Elkhart, IN, USA - 2026-05-07
 		M_OSB_CONNAGTIVE : UINT := 900; // Manufacturer: OSB connagtive GmbH (formerly OSB AG) | Location: Munich, Germany - 2021-08-03
 		M_ZIVAN_SRL : UINT := 901; // Manufacturer: Zivan Srl | Location: Poviglio, Italy - 2018-03-04
 		M_BUCHER_HYDRAULICS : UINT := 902; // Manufacturer: Bucher Hydraulics | Location: Neuheim, Switzerland - 2018-03-04
@@ -2794,7 +2835,7 @@ GLOBALCONSTANTS Manufacturer_IDs
 		M_BENDER_AND : UINT := 1036; // Manufacturer: Bender GmbH & Co. KG | Location: Grünberg, Germany - 2019-08-16
 		M_DRAGONFLY_ENERGY : UINT := 1037; // Manufacturer: Dragonfly Energy Corp. | Location: Sparks, NV USA - 2019-08-16
 		M_EMIT_TECHNOLOGIES : UINT := 1038; // Manufacturer: EMIT Technologies, Inc. | Location: Sheridan, WY USA - 2019-08-16
-		M_LIUGONG_DRESSTA_MACHINERY : UINT := 1039; // Manufacturer: Liugong Dressta Machinery | Location: Stalowa Wola, Poland - 2019-08-20
+		M_LIUGONG_DRESSTA_MACHINERY : UINT := 1039; // Manufacturer: LiuGong Machinery (formerly Liugong Dressta Machinery) | Location: Liuzhou, Guangxi
 		M_BPE_ELECTRONICS_SRL : UINT := 1040; // Manufacturer: BPE Electronics Srl | Location: Campagnola Emilia (RE), Italy - 2019-08-28
 		M_EZ_LYNK : UINT := 1041; // Manufacturer: EZ Lynk | Location: Georgetown, Cayman Islands - 2019-08-28
 		M_ENGCON_GROUP : UINT := 1042; // Manufacturer: engcon group | Location: Strömsund, Sweden - 2019-08-28
@@ -3339,6 +3380,7 @@ GLOBALCONSTANTS Manufacturer_IDs
 		M_ESMART : UINT := 1546; // Manufacturer: ESMART | Location: Indianapolis, IN USA - 2025-05-09
 		M_WEICHAI_LOVOL_INTELLIGENT_AGRICULTURAL_TECHNOLOGY : UINT := 1547; // Manufacturer: Weichai Lovol Intelligent Agricultural Technology Co., Ltd. | Location: Weifang
 		                                                                    // City, Shandong Province, China - 2025-06-16
+		M_SAILGAUGE : UINT := 1548; // Manufacturer: Sailgauge LLC | Location: Hartford, WI, USA - 2026-07-23
 		M_AM : UINT := 1549; // Manufacturer: AM Co., Ltd. | Location: Gwacheon-si, Gyeonggi-do, South Korea - 2025-05-09
 		M_MARIO_TANZI : UINT := 1550; // Manufacturer: Mario Tanzi S.A. | Location: Arequito, Santa Fe, Argentina - 2025-05-09
 		M_LMCE_GROUP : UINT := 1551; // Manufacturer: LMCE Group | Location: Loimaa, Finland - 2025-05-09
@@ -3407,7 +3449,7 @@ GLOBALCONSTANTS Manufacturer_IDs
 		M_NANONORD : UINT := 1609; // Manufacturer: NanoNord A/S | Location: Aalborg, Denmark - 2025-12-08
 		M_SIMARINE_D_O_O : UINT := 1610; // Manufacturer: Simarine d.o.o. | Location: Maribor, Slovenia - 2025-12-08
 		M_NINGBO_HAIBO_GROUP : UINT := 1611; // Manufacturer: Ningbo Haibo Group Co., Ltd. | Location: Ningbo, Zhejiang, China - 2025-12-08
-		M_BLUETTI : UINT := 1612; // Manufacturer: BLUETTI | Location: Shenzhen, Guangdong, China - 2025-12-08
+		M_BLUETTI : UINT := 1612; // Manufacturer: Shenzhen PowerOak Newener Co., Ltd. (formerly BLUETTI) | Location: Shenzhen
 		M_WHISPERPOWER : UINT := 1613; // Manufacturer: Whisperpower | Location: Drachten, The Netherlands - 2025-12-08
 		M_RISSEEUW_TECHNIEK : UINT := 1614; // Manufacturer: Risseeuw Techniek | Location: Schoondijke, The Netherlands - 2025-12-08
 		M_J_ASSY : UINT := 1615; // Manufacturer: J.Assy | Location: Caldas Novas, Brazil - 2025-12-08
@@ -3438,8 +3480,49 @@ GLOBALCONSTANTS Manufacturer_IDs
 		M_TEMPA_TEKNIK : UINT := 1638; // Manufacturer: TEMPA TEKNIK | Location: Tekirdag, Turkey - 2026-02-18
 		M_GEA_FARM_TECHNOLOGIES_CANADA : UINT := 1639; // Manufacturer: GEA Farm Technologies Canada Inc. | Location: Drummondville, QC, Canada -
 		                                               // 2026-02-18
-		M_SHANGHAI_INFIPAX_TECHNOLOGY : UINT := 1650; // Manufacturer: Shanghai Infipax Technology Co., Ltd. | Location: Shanghai, China - 2026-04-03
-		M_SCHAFFER_FARMING_TECHNOLOGIES : UINT := 1653; // Manufacturer: Schaffer Farming Technologies | Location: Mercer, PA, USA - 2026-04-03
+		M_PEIKA : UINT := 1640; // Manufacturer: PEIKA | Location: Bydgoszcz, Kujawsko-Pomorskie, Poland - 2026-04-02
+		M_LITHOS_ENERGY : UINT := 1641; // Manufacturer: Lithos Energy | Location: Hayward, CA, USA - 2026-04-02
+		M_KW_GENERATOR : UINT := 1642; // Manufacturer: KW-Generator GmbH | Location: Schwäbisch Gmünd, Baden-Württemberg, Germany
+		M_CRMR_TECHNOLOGY : UINT := 1643; // Manufacturer: CRMR Technology, Inc. | Location: Miami, FL, USA - 2026-04-02
+		M_U_AND_R_GMBH_HARDWARE_UND_SYSTEMDESIGN : UINT := 1644; // Manufacturer: U&R GmbH Hardware- und Systemdesign | Location: Erbach, Baden-Wuerttemberg
+		M_DC_ELECTRONICS : UINT := 1645; // Manufacturer: DC Electronics | Location: Maldon, Essex, UK - 2026-04-02
+		M_WATT_AND_SEA : UINT := 1646; // Manufacturer: WATT AND SEA | Location: La Rochelle, France - 2026-04-02
+		M_NOVATRON_OY : UINT := 1647; // Manufacturer: Novatron Oy | Location: Pirkkala, Pirkanmaa, Finland - 2026-04-02
+		M_ALTEK : UINT := 1648; // Manufacturer: Altek GmbH | Location: Rottenburg, BW, Germany - 2026-07-23
+		M_STARTER_AND_GENERATOR_EXCHANGE_SERVICE : UINT := 1649; // Manufacturer: Starter & Generator Exchange Service Pty Ltd | Location: Brisbane, Queensland
+		M_SHANGHAI_INFIPAX_TECHNOLOGY : UINT := 1650; // Manufacturer: Shanghai Infipax Technology Co., Ltd. | Location: Shanghai, China - 2026-07-23
+		M_CREATIVE_WERKS : UINT := 1651; // Manufacturer: Creative Werks Inc. | Location: Des Moines, IA, USA - 2026-04-02
+		M_COSTRUZIONI_MOTORI_DIESEL : UINT := 1652; // Manufacturer: Costruzioni Motori Diesel (CMD) | Location: San Nicola La Strada, CA, Italy
+		M_SCHAFFER_FARMING_TECHNOLOGIES : UINT := 1653; // Manufacturer: Schaffer Farming Technologies | Location: Mercer, PA, USA - 2026-04-02
+		M_INVENTURE_ELECTRONICS : UINT := 1654; // Manufacturer: Inventure Electronics | Location: Goshen, IN, USA - 2026-05-06
+		M_ELECTROSEA : UINT := 1655; // Manufacturer: Electrosea | Location: Plymouth, MN, USA - 2026-05-06
+		M_SUPERSTREAM_OY : UINT := 1656; // Manufacturer: Superstream Oy | Location: Helsinki, Finland - 2026-07-23
+		M_ISRINGHAUSEN_GMBH_AND : UINT := 1657; // Manufacturer: ISRINGHAUSEN GmbH & Co. KG | Location: Lemgo, Germany - 2026-05-06
+		M_ROUSH : UINT := 1658; // Manufacturer: Roush | Location: Livonia, MI, USA - 2026-05-06
+		M_TSM_SENSORS_S_R_L : UINT := 1659; // Manufacturer: TSM Sensors S.r.l. | Location: Erbusco, Italy - 2026-05-06
+		M_ARETE_KLEJBUK_SPOLKA_JAWNA : UINT := 1660; // Manufacturer: ARETE Klejbuk Spolka Jawna | Location: Choroszcz, Poland - 2026-05-06
+		M_CEFIROS : UINT := 1661; // Manufacturer: CEFIROS | Location: Cordoba, Argentina - 2026-05-06
+		M_REMOTE_CONTROL_TECHNOLOGIES : UINT := 1662; // Manufacturer: Remote Control Technologies (RCT) | Location: Perth, WA, Australia - 2026-05-06
+		M_WANDFLUH_AG : UINT := 1663; // Manufacturer: Wandfluh AG | Location: Frutigen, BE, Switzerland - 2026-05-12
+		M_NAUTECH : UINT := 1664; // Manufacturer: Nautech Ltd. | Location: Balatonfured, Hungary - 2026-07-23
+		M_ICP_SYSTEMS_B_V : UINT := 1665; // Manufacturer: ICP Systems B.V. | Location: Holten, Overijssel, Netherlands - 2026-07-23
+		M_TERSUS_GNSS : UINT := 1666; // Manufacturer: Tersus GNSS Inc. | Location: Shanghai, China - 2026-07-23
+		M_ADVANCED_FLOW_SOLUTIONS : UINT := 1667; // Manufacturer: Advanced Flow Solutions, Inc. | Location: Oklahoma City, OK, USA - 2026-07-23
+		M_PERFECT_PRECISION_AGRICULTURE : UINT := 1668; // Manufacturer: Perfect Precision Agriculture | Location: Dundee, KZN, South Africa - 2026-08-04
+		M_SHENZHEN_TOPBAND : UINT := 1669; // Manufacturer: Shenzhen Topband Co. Ltd. | Location: Shiyan, Guangdong Province, China
+		M_MCT_TECHNIC_SENSOR_A_S : UINT := 1670; // Manufacturer: MCT TECHNIC SENSOR A.S. | Location: Bakirkoy, Istanbul, Turkey - 2026-07-23
+		M_LOOKOUT : UINT := 1671; // Manufacturer: LOOKOUT | Location: Somerville, MA, USA - 2026-07-23
+		M_ANDREAS_LUPOLD_HYDROTECHNIK : UINT := 1672; // Manufacturer: Andreas Lupold Hydrotechnik GmbH | Location: Voehringen, BW, Germany - 2026-07-23
+		M_SISTEMATICA_S_R_L : UINT := 1673; // Manufacturer: SISTEMATICA S.r.l | Location: Turin, Italy - 2026-07-23
+		M_YACHTWAVE : UINT := 1674; // Manufacturer: YACHTWAVE | Location: Sarasota, FL, USA - 2026-07-23
+		M_TETRADYNE : UINT := 1675; // Manufacturer: Tetradyne Co., Ltd. | Location: Seoul, South Korea - 2026-07-23
+		M_MERLIN_SOLAR_TECHNOLOGIES : UINT := 1676; // Manufacturer: Merlin Solar Technologies, Inc. | Location: San Jose, California, USA
+		M_GINT : UINT := 1684; // Manufacturer: GINT Co., Ltd. | Location: Seongnam-si, Gyeonggi-do, Republic of Korea
+		M_TANIE_NAWIGOWANIE : UINT := 1685; // Manufacturer: Tanie Nawigowanie | Location: Wroclaw, Poland - 2026-09-24
+		M_PTM_S_R_L : UINT := 1695; // Manufacturer: PTM S.r.l. | Location: Visano, Italy - 2026-09-24
+		M_COMESYS : UINT := 1700; // Manufacturer: ComeSys Ltd. | Location: Busan, South Korea - 2026-11-12
+		M_INNOV_GPS : UINT := 1704; // Manufacturer: INNOV.GPS | Location: Villers les Cagnicourt, France - 2026-11-12
+		M_OPTISENS_INTELLIGENT_TECHNOLOGY : UINT := 1712; // Manufacturer: Optisens Intelligent Technology Co., Ltd. | Location: Shanghai, China
 		M_SEASTAR_SOLUTIONS : UINT := 1850; // Manufacturer: Seastar Solutions (formerly Teleflex) | Location: Litchfield, IL - 2021-08-26
 		M_RAYMARINE : UINT := 1851; // Manufacturer: RayMarine | Location: Portsmouth, Hampshire UK - 2003-07-20
 		M_NAVIONICS : UINT := 1852; // Manufacturer: Navionics | Location: Wareham, MA USA - 2003-07-20

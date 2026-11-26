@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="AX_SoftkeyAuxToggle_TO_QXA_BG" Comment="SoftKey (Loslassen) ODER AUX kippt ein Toggle-Flip-Flop (AX_T_FF) auf QXA, Hintergrund SoftKey+AUX spiegelt den Zustand">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-31" Remarks="Aus Getreidehacke func/Manual/Working_Light in MyLib::sys verschoben und umbenannt, INIT/INITO/QI/QO ergaenzt, Output als Parameter (vorher fest Output_Q1). Wie AX_SoftkeyToggle_TO_QXA_BG, zusaetzlich AUX.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO_S"/>
+		<Import declaration="isobus::UT::io::Softkey::SoftKeyActivationCode::SK_RELEASED"/>
+		<Import declaration="isobus::UT::io::Auxiliary::IN::AuxiliaryState::AuxDisabled_START"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID SoftKey" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObjIdA" Type="UINT" Comment="Object ID AuxFunction2" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="Output" Type="logiBUS::io::DQ::logiBUS_DO_S" Comment="logiBUS-Ausgang" InitialValue="logiBUS_DO::Invalid"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="Softkey" Type="isobus::UT::io::Softkey::Softkey_IE" x="-3000" y="-600">
+			<Parameter Name="InputEvent" Value="SK_RELEASED"/>
+		</FB>
+		<FB Name="Aux" Type="isobus::UT::io::Auxiliary::IN::Aux_IE" x="-3000" y="600">
+			<Parameter Name="InputEvent" Value="AuxDisabled_START"/>
+		</FB>
+		<FB Name="E_T_FF" Type="adapter::events::unidirectional::AX_T_FF" x="-1000" y="0">
+		</FB>
+		<FB Name="AX_SPLIT_2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="600" y="0">
+		</FB>
+		<FB Name="QX" Type="logiBUS::io::DQ::logiBUS_QXA" x="2400" y="-800">
+		</FB>
+		<SubApp Name="GreenWhiteBackground" Type="MyLib::sys::GreenWhiteBackground3_AX" x="2400" y="600">
+		</SubApp>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_4" x="6000" y="-1600">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="QX.INIT"/>
+			<Connection Source="QX.INITO" Destination="Softkey.INIT"/>
+			<Connection Source="Softkey.INITO" Destination="Aux.INIT"/>
+			<Connection Source="Aux.INITO" Destination="GreenWhiteBackground.INIT"/>
+			<Connection Source="GreenWhiteBackground.INITO" Destination="INITO"/>
+			<Connection Source="GreenWhiteBackground.INITO" Destination="AND_QO.REQ"/>
+			<Connection Source="Softkey.IND" Destination="E_T_FF.CLK"/>
+			<Connection Source="Aux.IND" Destination="E_T_FF.CLK"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="QI" Destination="QX.QI"/>
+			<Connection Source="QI" Destination="Softkey.QI"/>
+			<Connection Source="QI" Destination="Aux.QI"/>
+			<Connection Source="QI" Destination="GreenWhiteBackground.QI"/>
+			<Connection Source="u16ObjId" Destination="Softkey.u16ObjId"/>
+			<Connection Source="u16ObjIdA" Destination="Aux.u16ObjId"/>
+			<Connection Source="u16ObjId" Destination="GreenWhiteBackground.u16ObjId"/>
+			<Connection Source="u16ObjIdA" Destination="GreenWhiteBackground.u16ObjIdA"/>
+			<Connection Source="Output" Destination="QX.Output"/>
+			<Connection Source="QX.QO" Destination="AND_QO.IN1"/>
+			<Connection Source="Softkey.QO" Destination="AND_QO.IN2"/>
+			<Connection Source="Aux.QO" Destination="AND_QO.IN3"/>
+			<Connection Source="GreenWhiteBackground.QO" Destination="AND_QO.IN4"/>
+			<Connection Source="AND_QO.OUT" Destination="QO"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="E_T_FF.Q" Destination="AX_SPLIT_2.IN"/>
+			<Connection Source="AX_SPLIT_2.OUT1" Destination="QX.OUT"/>
+			<Connection Source="AX_SPLIT_2.OUT2" Destination="GreenWhiteBackground.DI1"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

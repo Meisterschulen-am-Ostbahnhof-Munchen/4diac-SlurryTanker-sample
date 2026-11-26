@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="AUF_AB_Button_BG" Comment="Manuell Auf/Ab mit 2 Buttons, nur Anzeige und AX-Ausgaenge (ohne eigene Ventilausgaenge)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-31" Remarks="Aus Getreidehacke func/Manual/ManFunc_AUF_AB0 in MyLib::sys verschoben und umbenannt, INIT/INITO/QI/QO ergaenzt.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="u16ObjId_AUF" Type="UINT" Comment="Object ID Button AUF" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObjId_AB" Type="UINT" Comment="Object ID Button AB" InitialValue="ID_NULL"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="AX_AUF" Type="adapter::types::unidirectional::AX" Comment="AUF aktiv"/>
+			<AdapterDeclaration Name="AX_AB" Type="adapter::types::unidirectional::AX" Comment="AB aktiv"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="AX_AUF01" Type="adapter::types::unidirectional::AX" Comment="externer Eingang AUF"/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<SubApp Name="AUF" Type="MyLib::sys::Button_IXA_OR_AX_BG" x="0" y="-800">
+		</SubApp>
+		<SubApp Name="AB" Type="MyLib::sys::Button_IXA_OR_AX_BG" x="0" y="800">
+		</SubApp>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_2" x="6000" y="-1600">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="AUF.INIT"/>
+			<Connection Source="AUF.INITO" Destination="AB.INIT"/>
+			<Connection Source="AB.INITO" Destination="INITO"/>
+			<Connection Source="AB.INITO" Destination="AND_QO.REQ"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="QI" Destination="AUF.QI"/>
+			<Connection Source="QI" Destination="AB.QI"/>
+			<Connection Source="u16ObjId_AUF" Destination="AUF.u16ObjId"/>
+			<Connection Source="u16ObjId_AB" Destination="AB.u16ObjId"/>
+			<Connection Source="AUF.QO" Destination="AND_QO.IN1"/>
+			<Connection Source="AB.QO" Destination="AND_QO.IN2"/>
+			<Connection Source="AND_QO.OUT" Destination="QO"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="AX_AUF01" Destination="AUF.IN"/>
+			<Connection Source="AUF.OUT" Destination="AX_AUF"/>
+			<Connection Source="AB.OUT" Destination="AX_AB"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

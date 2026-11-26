@@ -2,6 +2,8 @@
 <SubAppType Name="Button_IXA_TO_logiBUS_QXA_BG_OPC" Comment="Button IXA -&gt; logiBUS QXA + Hintergrundfarbe, plus OPC-UA Read/Write (generisch,&#10;ein Kanal)">
 	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.3" Author="Franz Höpfinger" Date="2026-11-06" Remarks="AX_OR_2 durch AX_LAST_2 ersetzt (last writer wins): mit READ und WRITE auf demselben Knoten hielt das Echo des eigenen PUBLISH den Ausgang ueber das ODER dauerhaft EIN">
+	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.2" Author="Franz Höpfinger" Date="2026-09-07" Remarks="Vorruebergehend non-latching: SR-Latch (AX_ASR_RF_TRIG x2 + ASR_MERGE_2 + ASR_AX_SR) durch einfaches AX_OR_2 ersetzt - Button UND Remote-Kommando sind jetzt tastend (Pegel), kein Klick-Toggle mehr">
 	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-07-20" Remarks="Background">
@@ -34,33 +36,35 @@
 		</OutputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="logiBUS_QXA" Type="logiBUS::io::DQ::logiBUS_QXA" x="-3700" y="-2200">
+		<FB Name="logiBUS_QXA" Type="logiBUS::io::DQ::logiBUS_QXA" x="-3600" y="-2200">
 			<Parameter Name="PARAMS" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
 		</FB>
-		<FB Name="Button_IXA" Type="isobus::UT::io::Button::Button_IXA" x="-8400" y="-1300">
+		<FB Name="Button_IXA" Type="isobus::UT::io::Button::Button_IXA" x="-8300" y="-1300">
 		</FB>
-		<SubApp Name="GreenWhiteBackground1_AX" Type="MyLib::sys::GreenWhiteBackground1_AX" x="-3700" y="-1200">
+		<SubApp Name="GreenWhiteBackground1_AX" Type="MyLib::sys::GreenWhiteBackground1_AX" x="-3600" y="-1200">
 		</SubApp>
 		<FB Name="AX_SUBSCRIBE_1" Type="adapter::net::AX_SUBSCRIBE_1" x="-8300" y="-2200">
 		</FB>
-		<FB Name="AX_PUBLISH_1" Type="adapter::net::AX_PUBLISH_1" x="-3700" y="-200">
+		<FB Name="AX_PUBLISH_1" Type="adapter::net::AX_PUBLISH_1" x="-3600" y="-200">
 		</FB>
-		<SubApp Name="AX_2_3" Type="AX_2_3" x="-5900" y="-1300">
-		</SubApp>
-		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_5">
+		<FB Name="AX_LAST_2" Type="adapter::events::unidirectional::AX_LAST_2" x="-6400" y="-1300">
+		</FB>
+		<FB Name="AX_SPLIT_3" Type="adapter::events::unidirectional::AX_SPLIT_3" x="-5300" y="-1300">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_5" x="-600" y="100">
 		</FB>
 		<EventConnections>
-			<Connection Source="AX_SUBSCRIBE_1.INITO" Destination="AX_PUBLISH_1.INIT" dx1="3580">
+			<Connection Source="INIT" Destination="AX_SUBSCRIBE_1.INIT" dx1="1846.67"/>
+			<Connection Source="AX_SUBSCRIBE_1.INITO" Destination="Button_IXA.INIT" dx1="80" dx2="80" dy="700"/>
+			<Connection Source="Button_IXA.INITO" Destination="logiBUS_QXA.INIT" dx1="720"/>
+			<Connection Source="GreenWhiteBackground1_AX.INITO" Destination="AX_PUBLISH_1.INIT" dx1="80" dx2="80" dy="833.33"/>
+			<Connection Source="logiBUS_QXA.INITO" Destination="GreenWhiteBackground1_AX.INIT" dx1="80" dx2="80" dy="753.33"/>
+			<Connection Source="AX_PUBLISH_1.INITO" Destination="AND_QO.REQ" dx1="1373.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="INIT" Destination="logiBUS_QXA.INIT"/>
-			<Connection Source="logiBUS_QXA.INITO" Destination="Button_IXA.INIT"/>
-			<Connection Source="Button_IXA.INITO" Destination="AX_SUBSCRIBE_1.INIT"/>
-			<Connection Source="AX_PUBLISH_1.INITO" Destination="GreenWhiteBackground1_AX.INIT"/>
-			<Connection Source="GreenWhiteBackground1_AX.INITO" Destination="INITO"/>
-			<Connection Source="GreenWhiteBackground1_AX.INITO" Destination="AND_QO.REQ"/>
+			<Connection Source="AX_PUBLISH_1.INITO" Destination="INITO" dx1="2546.67"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="u16ObjId" Destination="Button_IXA.u16ObjId" dx1="1546.67">
@@ -78,32 +82,56 @@
 			<Connection Source="ID_WRITE" Destination="AX_PUBLISH_1.ID" dx1="5026.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="QI" Destination="logiBUS_QXA.QI"/>
-			<Connection Source="QI" Destination="Button_IXA.QI"/>
-			<Connection Source="QI" Destination="AX_SUBSCRIBE_1.QI"/>
-			<Connection Source="QI" Destination="AX_PUBLISH_1.QI"/>
-			<Connection Source="logiBUS_QXA.QO" Destination="AND_QO.IN1"/>
-			<Connection Source="Button_IXA.QO" Destination="AND_QO.IN2"/>
-			<Connection Source="AX_SUBSCRIBE_1.QO" Destination="AND_QO.IN3"/>
-			<Connection Source="AX_PUBLISH_1.QO" Destination="AND_QO.IN4"/>
-			<Connection Source="AND_QO.OUT" Destination="QO"/>
-			<Connection Source="QI" Destination="GreenWhiteBackground1_AX.QI"/>
-			<Connection Source="GreenWhiteBackground1_AX.QO" Destination="AND_QO.IN5"/>
+			<Connection Source="QI" Destination="logiBUS_QXA.QI" dx1="3313.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="Button_IXA.QI" dx1="960">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="AX_SUBSCRIBE_1.QI" dx1="1013.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="AX_PUBLISH_1.QI" dx1="3313.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="logiBUS_QXA.QO" Destination="AND_QO.IN1" dx1="1446.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Button_IXA.QO" Destination="AND_QO.IN2" dx1="3800">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AX_SUBSCRIBE_1.QO" Destination="AND_QO.IN3" dx1="3680">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AX_PUBLISH_1.QO" Destination="AND_QO.IN4" dx1="1426.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="1706.67"/>
+			<Connection Source="QI" Destination="GreenWhiteBackground1_AX.QI" dx1="3313.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="GreenWhiteBackground1_AX.QO" Destination="AND_QO.IN5" dx1="1146.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
 		</DataConnections>
 		<AdapterConnections>
-			<Connection Source="Button_IXA.IN" Destination="AX_2_3.IN2" dx1="1580"/>
-			<Connection Source="AX_SUBSCRIBE_1.OUT" Destination="AX_2_3.IN1" dx1="1380"/>
-			<Connection Source="AX_2_3.OUT1" Destination="logiBUS_QXA.OUT" dx1="273.33"/>
-			<Connection Source="AX_2_3.OUT2" Destination="GreenWhiteBackground1_AX.DI1" dx1="800"/>
-			<Connection Source="AX_2_3.OUT3" Destination="AX_PUBLISH_1.IN" dx1="460"/>
+			<Connection Source="Button_IXA.IN" Destination="AX_LAST_2.IN2" dx1="826.67"/>
+			<Connection Source="AX_SUBSCRIBE_1.OUT" Destination="AX_LAST_2.IN1" dx1="880"/>
+			<Connection Source="AX_SPLIT_3.OUT1" Destination="logiBUS_QXA.OUT" dx1="273.33"/>
+			<Connection Source="AX_SPLIT_3.OUT2" Destination="GreenWhiteBackground1_AX.DI1" dx1="800"/>
+			<Connection Source="AX_SPLIT_3.OUT3" Destination="AX_PUBLISH_1.IN" dx1="460"/>
+			<Connection Source="AX_LAST_2.OUT" Destination="AX_SPLIT_3.IN"/>
 		</AdapterConnections>
 	</SubAppNetwork>
-	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>Button → logiBUS-Ausgang, tastend (Pegel-ODER)</h1>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>Button → logiBUS-Ausgang (wer zuletzt schreibt, gewinnt)</h1>
 
-<p>Lokaler VT-Button UND Remote-OPC-UA-Kommando sind beides kontinuierliche Pegel (keine Events) -
-<code>AX_OR_2</code> verknüpft sie direkt: der Ausgang ist EIN, solange irgendeine der beiden
-Quellen gerade aktiv ist, und fällt sofort wieder ab, sobald beide inaktiv sind. Kein
-Klick-Toggle, kein Latch, kein Stuck-On-Zustand.</p>
+<p>Lokaler VT-Button und Remote-OPC-UA-Kommando laufen über <code>AX_LAST_2</code>: Die Quelle,
+die zuletzt einen Wert geliefert hat, bestimmt den Ausgang. Der Ausgang wird per PUBLISH auf
+<code>ID_WRITE</code> gemeldet.</p>
+
+<p>Liegen <code>ID_READ</code> und <code>ID_WRITE</code> auf demselben Knoten, kommt das eigene
+PUBLISH als SUBSCRIBE zurück. Mit dem früheren <code>AX_OR_2</code> blieb der Ausgang dadurch
+dauerhaft EIN. Mit <code>AX_LAST_2</code> ist das Echo gleich dem aktuellen Wert und ändert nichts.</p>
 
 <p>Für die vorherige Klick-Toggle-Variante (SR-Latch, ein Klick EIN, nächster Klick AUS)
 <code>Button_IXA_TO_logiBUS_QXA_BG_OPC_LATCHING</code> verwenden - identisches Interface,

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Function Name="F_BYTES_TO_STRING" Comment="Die ersten SIZE Bytes eines BYTE-Arrays (z. B. von AlPgnRxNew_TP) als STRING auslesen">
+	<Identification Standard="61499-1" Description="Copyright (c) 2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.1" Author="Franz Höpfinger" Date="2026-11-14" Remarks="Eingang LEN in SIZE umbenannt (LEN ist reserviert, Export-Fehler)">
+	</VersionInfo>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-11-13" Remarks="Initial Version - STRING ueber CAN (mehr als 8 Byte)">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::utils::dyn_arr">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event">
+				<With Var="SIZE"/>
+				<With Var="STOP_AT_NUL"/>
+				<With Var="DATA"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event">
+				<With Var=""/>
+				<With Var="DATA"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="SIZE" Type="UINT" Comment="Anzahl gueltiger Bytes (z. B. u16DaSize), hoechstens die Groesse von DATA"/>
+			<VarDeclaration Name="STOP_AT_NUL" Type="BOOL" Comment="TRUE: Text endet vor dem ersten 16#00" InitialValue="TRUE"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="" Type="STRING" Comment="Text, je Byte 1 Zeichen"/>
+		</OutputVars>
+		<InOutVars>
+			<VarDeclaration Name="DATA" Type="BYTE" Comment="Quellpuffer, z. B. von PROVIDE_ARR_xxxx_BYTE" ArraySize="*"/>
+		</InOutVars>
+	</InterfaceList>
+	<FunctionBody>
+		<ST><![CDATA[PACKAGE logiBUS::utils::dyn_arr;
+
+(* Die ersten SIZE Bytes eines BYTE-Arrays als STRING auslesen *)
+FUNCTION F_BYTES_TO_STRING : STRING
+
+VAR_INPUT
+	SIZE : UINT; // Anzahl gueltiger Bytes (z. B. u16DaSize)
+	STOP_AT_NUL : BOOL := TRUE; // Text endet vor dem ersten 16#00
+END_VAR
+
+VAR_IN_OUT
+	DATA : ARRAY[*] OF BYTE; // Quellpuffer
+END_VAR
+
+VAR_TEMP
+	lo : DINT; // erster Index von DATA
+	cap : DINT; // Groesse von DATA
+	n : DINT; // Anzahl zu lesender Bytes
+	i : DINT; // Laufindex
+	b : BYTE; // aktuelles Byte
+	s : STRING; // Ergebnis in Arbeit
+END_VAR
+
+lo := LOWER_BOUND(DATA, 1);
+cap := UPPER_BOUND(DATA, 1) - lo + 1;
+n := SIZE;
+IF n < 0 THEN
+	n := 0;
+END_IF;
+IF n > cap THEN
+	n := cap;
+END_IF;
+s := '';
+FOR i := 1 TO n DO
+	b := DATA[lo + i - 1];
+	IF STOP_AT_NUL AND (b = BYTE#0) THEN
+		EXIT;
+	END_IF;
+	s := CONCAT(s, BYTE_TO_CHAR(b));
+END_FOR;
+F_BYTES_TO_STRING := s;
+
+END_FUNCTION
+
+]]></ST>
+	</FunctionBody>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</Function>

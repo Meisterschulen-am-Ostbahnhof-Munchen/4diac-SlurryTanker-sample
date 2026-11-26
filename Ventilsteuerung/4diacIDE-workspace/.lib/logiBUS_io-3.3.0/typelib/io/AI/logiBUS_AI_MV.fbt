@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="logiBUS_AI_MV" Comment="Input service interface function block for analog input in millivolts">
+	<Identification Description="Copyright (c) 2017 fortiss GmbH, HR Agrartechnik GmbH&#10; &#10;This program and the accompanying materials are made &#10;available under the terms of the Eclipse Public License 2.0 &#10;which is available at https://www.eclipse.org/legal/epl-2.0/ &#10;&#10;SPDX-License-Identifier: EPL-2.0&#10;&#10;AnalogInput_hysteresis = 0 switches the change trigger off (use 1 to see every change). TimeDelta = 0 or 16#FFFFFFFF switches the cyclic IND off. With both off the block sends no IND (value only via REQ).&#10;&#10;IN = calibrated voltage at the pin in mV (ADC calibration of the chip from eFuse, attenuation as for logiBUS_AI_ID: ESP32-S3 about 0-2900 mV, ESP32-P4 about 0-3300 mV). Without calibration for the channel (e.g. ESP32-S31 with the current ESP-IDF) INIT fails with STATUS = 'ADC calibration not available'.">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-11-13">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::io::AI">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+				<With Var="QI"/>
+				<With Var="PARAMS"/>
+				<With Var="Input"/>
+				<With Var="AnalogInput_hysteresis"/>
+				<With Var="TimeDelta"/>
+				<With Var="TimeRateLimit"/>
+			</Event>
+			<Event Name="REQ" Type="Event" Comment="Service Request">
+				<With Var="QI"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+				<With Var="IN"/>
+			</Event>
+			<Event Name="IND" Type="Event" Comment="Indication from Resource">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+				<With Var="IN"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
+			<VarDeclaration Name="PARAMS" Type="STRING" Comment="Service Parameters"/>
+			<VarDeclaration Name="Input" Type="logiBUS::io::AI::logiBUS_AI_S" Comment="Identify the Input Input_I1..I8" InitialValue="logiBUS_AI::Invalid"/>
+			<VarDeclaration Name="AnalogInput_hysteresis" Type="DWORD" Comment="IND when the voltage changes by more than this many mV (0 = off)"/>
+			<VarDeclaration Name="TimeDelta" Type="DWORD" Comment="After How many ms an IND (poll interval, 0 or 16#FFFFFFFF = off)" InitialValue="250"/>
+			<VarDeclaration Name="TimeRateLimit" Type="DWORD" Comment="Maximum 1 IND in how many ms. (&lt; delta)" InitialValue="100"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
+			<VarDeclaration Name="IN" Type="DWORD" Comment="Input data from resource, calibrated voltage at the pin in mV"/>
+		</OutputVars>
+	</InterfaceList>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>logiBUS_AI_MV</h1>
+
+<h2>🇩🇪 Deutsch</h2>
+
+<p>Service-Interface-Funktionsblock für einen analogen Eingang in Millivolt. Wie <code>logiBUS_AI_ID</code>, aber <code>IN</code> liefert die kalibrierte Spannung am Pin statt des Rohwerts.</p>
+
+<h3>Wert von IN</h3>
+
+<p><code>IN</code> ist die Spannung am Pin des Chips in <strong>Millivolt</strong> (<code>DWORD</code>). Die Firmware rechnet den gemittelten Rohwert mit der Kalibrierung des Chips um (ESP-IDF <code>adc_cali</code>, Werte aus dem eFuse). Die Dämpfung ist dieselbe wie bei <code>logiBUS_AI_ID</code>: ESP32-S3 etwa 0-2900 mV (±50 mV), ESP32-P4 etwa 0-3300 mV (±15 mV), laut Datenblatt.</p>
+
+<p>Die Spannung an der Klemme hängt vom Spannungsteiler der Platine ab und ist nicht eingerechnet.</p>
+
+<p>Gibt es für den Kanal keine Kalibrierung (z. B. ESP32-S31 mit dem aktuellen ESP-IDF), meldet INIT <code>QO</code> = FALSE und <code>STATUS</code> = <code>ADC calibration not available</code>.</p>
+
+<h3>Hysterese und Zeitsteuerung</h3>
+
+<p>Wie bei <code>logiBUS_AI_ID</code>, aber <code>AnalogInput_hysteresis</code> gilt in mV.</p>
+
+<h2>🇬🇧 English</h2>
+
+<p>Service interface function block for one analog input in millivolts. Like <code>logiBUS_AI_ID</code>, but <code>IN</code> delivers the calibrated voltage at the pin instead of the raw value.</p>
+
+<h3>Value of IN</h3>
+
+<p><code>IN</code> is the voltage at the chip pin in <strong>millivolts</strong> (<code>DWORD</code>). The firmware converts the averaged raw value with the chip calibration (ESP-IDF <code>adc_cali</code>, eFuse values). The attenuation is the same as for <code>logiBUS_AI_ID</code>: ESP32-S3 about 0-2900 mV (±50 mV), ESP32-P4 about 0-3300 mV (±15 mV), according to the datasheet.</p>
+
+<p>The voltage at the terminal depends on the voltage divider of the board and is not included.</p>
+
+<p>Without a calibration for the channel (e.g. ESP32-S31 with the current ESP-IDF), INIT returns <code>QO</code> = FALSE and <code>STATUS</code> = <code>ADC calibration not available</code>.</p>
+
+<h3>Hysteresis and timing</h3>
+
+<p>As for <code>logiBUS_AI_ID</code>, but <code>AnalogInput_hysteresis</code> is in mV.</p>
+]]></Attribute>
+</FBType>

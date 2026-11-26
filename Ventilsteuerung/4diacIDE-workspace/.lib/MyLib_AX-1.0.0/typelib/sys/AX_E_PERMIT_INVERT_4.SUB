@@ -8,39 +8,47 @@
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
-			<SubAppEvent Name="EI1" Type="Event" Comment="Event input channel 1"/>
-			<SubAppEvent Name="EI2" Type="Event" Comment="Event input channel 2"/>
-			<SubAppEvent Name="EI3" Type="Event" Comment="Event input channel 3"/>
-			<SubAppEvent Name="EI4" Type="Event" Comment="Event input channel 4"/>
+			<SubAppEvent Name="EI1" Type="Event" Comment="Event input channel 1">
+			</SubAppEvent>
+			<SubAppEvent Name="EI2" Type="Event" Comment="Event input channel 2">
+			</SubAppEvent>
+			<SubAppEvent Name="EI3" Type="Event" Comment="Event input channel 3">
+			</SubAppEvent>
+			<SubAppEvent Name="EI4" Type="Event" Comment="Event input channel 4">
+			</SubAppEvent>
 		</SubAppEventInputs>
 		<SubAppEventOutputs>
-			<SubAppEvent Name="EO1" Type="Event" Comment="Event output channel 1"/>
-			<SubAppEvent Name="EO2" Type="Event" Comment="Event output channel 2"/>
-			<SubAppEvent Name="EO3" Type="Event" Comment="Event output channel 3"/>
-			<SubAppEvent Name="EO4" Type="Event" Comment="Event output channel 4"/>
+			<SubAppEvent Name="EO1" Type="Event" Comment="Event output channel 1">
+			</SubAppEvent>
+			<SubAppEvent Name="EO2" Type="Event" Comment="Event output channel 2">
+			</SubAppEvent>
+			<SubAppEvent Name="EO3" Type="Event" Comment="Event output channel 3">
+			</SubAppEvent>
+			<SubAppEvent Name="EO4" Type="Event" Comment="Event output channel 4">
+			</SubAppEvent>
 		</SubAppEventOutputs>
 		<Sockets>
 			<AdapterDeclaration Name="PERMIT" Type="adapter::types::unidirectional::AX" Comment="Invertiertes Freigabesignal"/>
 		</Sockets>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="AX_NOT_INIT" Type="adapter::booleanOperators::AX_NOT_INIT" x="-3000" y="0">
+		<FB Name="AX_NOT_INIT" Type="adapter::booleanOperators::AX_NOT_INIT" x="-3200" y="800">
 		</FB>
 		<FB Name="AX_E_PERMIT_4" Type="adapter::events::unidirectional::AX_E_PERMIT_4" x="-1400" y="0">
 		</FB>
 		<EventConnections>
-			<Connection Source="EI1" Destination="AX_E_PERMIT_4.EI1" dx1="500"/>
-			<Connection Source="AX_E_PERMIT_4.EO1" Destination="EO1" dx1="500"/>
-			<Connection Source="EI2" Destination="AX_E_PERMIT_4.EI2" dx1="500"/>
-			<Connection Source="AX_E_PERMIT_4.EO2" Destination="EO2" dx1="500"/>
-			<Connection Source="EI3" Destination="AX_E_PERMIT_4.EI3" dx1="500"/>
-			<Connection Source="AX_E_PERMIT_4.EO3" Destination="EO3" dx1="500"/>
-			<Connection Source="EI4" Destination="AX_E_PERMIT_4.EI4" dx1="500"/>
-			<Connection Source="AX_E_PERMIT_4.EO4" Destination="EO4" dx1="500"/>
+			<Connection Source="EI1" Destination="AX_E_PERMIT_4.EI1" dx1="1820"/>
+			<Connection Source="AX_E_PERMIT_4.EO1" Destination="EO1" dx1="1646.67"/>
+			<Connection Source="EI2" Destination="AX_E_PERMIT_4.EI2" dx1="1786.67"/>
+			<Connection Source="AX_E_PERMIT_4.EO2" Destination="EO2" dx1="1680"/>
+			<Connection Source="EI3" Destination="AX_E_PERMIT_4.EI3" dx1="1753.33"/>
+			<Connection Source="AX_E_PERMIT_4.EO3" Destination="EO3" dx1="1713.33"/>
+			<Connection Source="EI4" Destination="AX_E_PERMIT_4.EI4" dx1="1720"/>
+			<Connection Source="AX_E_PERMIT_4.EO4" Destination="EO4" dx1="1746.67"/>
 		</EventConnections>
 		<AdapterConnections>
-			<Connection Source="PERMIT" Destination="AX_NOT_INIT.IN" dx1="500"/>
-			<Connection Source="AX_NOT_INIT.OUT" Destination="AX_E_PERMIT_4.PERMIT" dx1="500"/>
+			<Connection Source="PERMIT" Destination="AX_NOT_INIT.IN" dx1="873.33"/>
+			<Connection Source="AX_NOT_INIT.OUT" Destination="AX_E_PERMIT_4.PERMIT" dx1="486.67"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

@@ -37,6 +37,11 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
+			<name>External Libraries/DataPanel</name>
+			<type>2</type>
+			<locationURI>WORKSPACE_LOC/.lib/DataPanel-3.0.0/typelib</locationURI>
+		</link>
+		<link>
 			<name>External Libraries/OSCAT_Basic</name>
 			<type>2</type>
 			<locationURI>WORKSPACE_LOC/.lib/OSCAT_Basic-0.1.0/typelib</locationURI>
@@ -102,6 +107,11 @@
 			<locationURI>WORKSPACE_LOC/.lib/iec61131-3-bool-3.0.0/typelib</locationURI>
 		</link>
 		<link>
+			<name>External Libraries/init_stages</name>
+			<type>2</type>
+			<locationURI>WORKSPACE_LOC/.lib/init_stages-1.0.0/typelib</locationURI>
+		</link>
+		<link>
 			<name>External Libraries/isobus_UT</name>
 			<type>2</type>
 			<locationURI>WORKSPACE_LOC/.lib/isobus_UT-3.0.0/typelib</locationURI>
@@ -134,7 +144,7 @@
 		<link>
 			<name>External Libraries/logiBUS_io</name>
 			<type>2</type>
-			<locationURI>WORKSPACE_LOC/.lib/logiBUS_io-3.0.0/typelib</locationURI>
+			<locationURI>WORKSPACE_LOC/.lib/logiBUS_io-3.3.0/typelib</locationURI>
 		</link>
 		<link>
 			<name>External Libraries/logiBUS_signalprocessing</name>
@@ -170,6 +180,11 @@
 			<name>External Libraries/signalprocessing</name>
 			<type>2</type>
 			<locationURI>WORKSPACE_LOC/.lib/signalprocessing-3.0.0/typelib</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/DataPanel/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/DataPanel-3.0.0/MANIFEST.MF</locationURI>
 		</link>
 		<link>
 			<name>External Libraries/OSCAT_Basic/MANIFEST.MF</name>
@@ -237,6 +252,11 @@
 			<locationURI>WORKSPACE_LOC/.lib/iec61131-3-bool-3.0.0/MANIFEST.MF</locationURI>
 		</link>
 		<link>
+			<name>External Libraries/init_stages/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/init_stages-1.0.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
 			<name>External Libraries/isobus_UT/MANIFEST.MF</name>
 			<type>1</type>
 			<locationURI>WORKSPACE_LOC/.lib/isobus_UT-3.0.0/MANIFEST.MF</locationURI>
@@ -269,7 +289,7 @@
 		<link>
 			<name>External Libraries/logiBUS_io/MANIFEST.MF</name>
 			<type>1</type>
-			<locationURI>WORKSPACE_LOC/.lib/logiBUS_io-3.0.0/MANIFEST.MF</locationURI>
+			<locationURI>WORKSPACE_LOC/.lib/logiBUS_io-3.3.0/MANIFEST.MF</locationURI>
 		</link>
 		<link>
 			<name>External Libraries/logiBUS_signalprocessing/MANIFEST.MF</name>

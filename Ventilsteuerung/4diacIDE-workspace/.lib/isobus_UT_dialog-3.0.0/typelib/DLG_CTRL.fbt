@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="DLG_CTRL" Comment="Ablaufsteuerung eines VT-Dialogs (MessageBox)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-11-17" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::UT::dialog">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Initialisierung">
+				<With Var="QI"/>
+			</Event>
+			<Event Name="SHOW" Type="Event" Comment="Dialog zeigen">
+				<With Var="TEXT_ID"/>
+				<With Var="TITLE_ID"/>
+				<With Var="ICON"/>
+				<With Var="BUTTONS"/>
+				<With Var="DEFAULT_BUTTON"/>
+				<With Var="MODAL"/>
+				<With Var="TIMEOUT"/>
+				<With Var="AUDIO"/>
+			</Event>
+			<Event Name="CLOSE" Type="Event" Comment="Dialog vom Programm schliessen">
+			</Event>
+			<Event Name="SHOWN" Type="Event" Comment="Anzeige-Kette fertig">
+			</Event>
+			<Event Name="HIDDEN" Type="Event" Comment="Ausblenden fertig">
+			</Event>
+			<Event Name="TMO" Type="Event" Comment="Zeit abgelaufen">
+			</Event>
+			<Event Name="B_OK" Type="Event" Comment="Button OK losgelassen">
+			</Event>
+			<Event Name="B_CANCEL" Type="Event" Comment="Button Cancel losgelassen">
+			</Event>
+			<Event Name="B_ABORT" Type="Event" Comment="Button Abort losgelassen">
+			</Event>
+			<Event Name="B_RETRY" Type="Event" Comment="Button Retry losgelassen">
+			</Event>
+			<Event Name="B_IGNORE" Type="Event" Comment="Button Ignore losgelassen">
+			</Event>
+			<Event Name="B_YES" Type="Event" Comment="Button Yes losgelassen">
+			</Event>
+			<Event Name="B_NO" Type="Event" Comment="Button No losgelassen">
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialisierung fertig">
+				<With Var="QO"/>
+			</Event>
+			<Event Name="SHOWO" Type="Event" Comment="Anzeige-Kette starten">
+				<With Var="COVER_ID"/>
+				<With Var="ICON_ID"/>
+				<With Var="TITLE_ID_O"/>
+				<With Var="TEXT_ID_O"/>
+				<With Var="BUTTONS_ID"/>
+				<With Var="TITLE_COLOUR"/>
+				<With Var="FOCUS_K"/>
+				<With Var="AUDIO_O"/>
+			</Event>
+			<Event Name="HIDEO" Type="Event" Comment="Dialog ausblenden">
+			</Event>
+			<Event Name="START_T" Type="Event" Comment="Timeout starten">
+				<With Var="TIMEOUT_O"/>
+			</Event>
+			<Event Name="STOP_T" Type="Event" Comment="Timeout stoppen">
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Dialog beendet">
+				<With Var="QO"/>
+				<With Var="RESULT"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Freigabe" InitialValue="TRUE"/>
+			<VarDeclaration Name="TEXT_ID" Type="UINT" Comment="OutputString Meldungstext" InitialValue="UINT#65535"/>
+			<VarDeclaration Name="TITLE_ID" Type="UINT" Comment="OutputString Titel, NULL = Standard je Icon" InitialValue="UINT#65535"/>
+			<VarDeclaration Name="ICON" Type="USINT" Comment="DLG_ICON_*" InitialValue="USINT#1"/>
+			<VarDeclaration Name="BUTTONS" Type="USINT" Comment="DLG_BTN_*" InitialValue="USINT#1"/>
+			<VarDeclaration Name="DEFAULT_BUTTON" Type="USINT" Comment="Fokus auf Taste 1..3" InitialValue="USINT#1"/>
+			<VarDeclaration Name="MODAL" Type="BOOL" Comment="Maske abdecken" InitialValue="FALSE"/>
+			<VarDeclaration Name="TIMEOUT" Type="TIME" Comment="T#0s = kein Timeout" InitialValue="T#0s"/>
+			<VarDeclaration Name="AUDIO" Type="BOOL" Comment="Ton beim Oeffnen" InitialValue="FALSE"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Qualitaet"/>
+			<VarDeclaration Name="RESULT" Type="USINT" Comment="DLG_RES_*"/>
+			<VarDeclaration Name="COVER_ID" Type="UDINT" Comment="Ziel ObjectPointer_Dlg_Cover"/>
+			<VarDeclaration Name="ICON_ID" Type="UDINT" Comment="Ziel ObjectPointer_Dlg_Icon"/>
+			<VarDeclaration Name="TITLE_ID_O" Type="UDINT" Comment="Ziel ObjectPointer_Dlg_Title"/>
+			<VarDeclaration Name="TEXT_ID_O" Type="UDINT" Comment="Ziel ObjectPointer_Dlg_Text"/>
+			<VarDeclaration Name="BUTTONS_ID" Type="UDINT" Comment="Ziel ObjectPointer_Dlg_Buttons"/>
+			<VarDeclaration Name="TITLE_COLOUR" Type="USINT" Comment="VT-Farbindex Titelzeile"/>
+			<VarDeclaration Name="FOCUS_K" Type="UINT" Comment="Fokus-Button 0..6, 7 = keiner"/>
+			<VarDeclaration Name="AUDIO_O" Type="BOOL" Comment="Ton ja/nein"/>
+			<VarDeclaration Name="TIMEOUT_O" Type="TIME" Comment="Timeout"/>
+		</OutputVars>
+	</InterfaceList>
+	<BasicFB>
+		<InternalVars>
+			<VarDeclaration Name="xPendingShow" Type="BOOL" Comment="neues SHOW wartet"/>
+			<VarDeclaration Name="xPendingClose" Type="BOOL" Comment="Schliessen wartet"/>
+		</InternalVars>
+		<ECC>
+			<ECState Name="START" Comment="Initial State" x="400" y="300">
+			</ECState>
+			<ECState Name="S_INIT" Comment="" x="1800" y="300">
+				<ECAction Algorithm="INIT_ALG" Output="INITO"/>
+			</ECState>
+			<ECState Name="IDLE" Comment="kein Dialog offen" x="3200" y="300">
+			</ECState>
+			<ECState Name="S_PREP" Comment="Anzeige-Kette starten" x="4600" y="300">
+				<ECAction Algorithm="PREP" Output="SHOWO"/>
+			</ECState>
+			<ECState Name="OPENING" Comment="Anzeige-Kette laeuft" x="6000" y="300">
+			</ECState>
+			<ECState Name="S_O_SHOW" Comment="" x="7400" y="300">
+				<ECAction Algorithm="MARK_SHOW"/>
+			</ECState>
+			<ECState Name="S_O_CLOSE" Comment="" x="400" y="1200">
+				<ECAction Algorithm="R_NONE"/>
+				<ECAction Algorithm="MARK_CLOSE"/>
+			</ECState>
+			<ECState Name="S_REPLACE" Comment="alter Dialog ersetzt" x="1800" y="1200">
+				<ECAction Algorithm="R_NONE" Output="CNF"/>
+			</ECState>
+			<ECState Name="S_START_T" Comment="" x="3200" y="1200">
+				<ECAction Output="START_T"/>
+			</ECState>
+			<ECState Name="OPEN" Comment="Dialog sichtbar" x="4600" y="1200">
+			</ECState>
+			<ECState Name="S_R_OK" Comment="" x="6000" y="1200">
+				<ECAction Algorithm="R_OK"/>
+			</ECState>
+			<ECState Name="S_R_CANCEL" Comment="" x="7400" y="1200">
+				<ECAction Algorithm="R_CANCEL"/>
+			</ECState>
+			<ECState Name="S_R_ABORT" Comment="" x="400" y="2100">
+				<ECAction Algorithm="R_ABORT"/>
+			</ECState>
+			<ECState Name="S_R_RETRY" Comment="" x="1800" y="2100">
+				<ECAction Algorithm="R_RETRY"/>
+			</ECState>
+			<ECState Name="S_R_IGNORE" Comment="" x="3200" y="2100">
+				<ECAction Algorithm="R_IGNORE"/>
+			</ECState>
+			<ECState Name="S_R_YES" Comment="" x="4600" y="2100">
+				<ECAction Algorithm="R_YES"/>
+			</ECState>
+			<ECState Name="S_R_NO" Comment="" x="6000" y="2100">
+				<ECAction Algorithm="R_NO"/>
+			</ECState>
+			<ECState Name="S_R_TMO" Comment="" x="7400" y="2100">
+				<ECAction Algorithm="R_TMO"/>
+			</ECState>
+			<ECState Name="S_R_CLOSE" Comment="" x="400" y="3000">
+				<ECAction Algorithm="R_NONE"/>
+			</ECState>
+			<ECState Name="S_REPLACE_OPEN" Comment="neues SHOW waehrend offen" x="1800" y="3000">
+				<ECAction Algorithm="R_NONE" Output="STOP_T"/>
+				<ECAction Output="CNF"/>
+			</ECState>
+			<ECState Name="S_HIDE" Comment="" x="3200" y="3000">
+				<ECAction Output="STOP_T"/>
+				<ECAction Output="HIDEO"/>
+			</ECState>
+			<ECState Name="CLOSING" Comment="Ausblenden laeuft" x="4600" y="3000">
+			</ECState>
+			<ECState Name="S_C_SHOW" Comment="" x="6000" y="3000">
+				<ECAction Algorithm="MARK_SHOW"/>
+			</ECState>
+			<ECState Name="S_DONE_SHOW" Comment="" x="7400" y="3000">
+				<ECAction Output="CNF"/>
+			</ECState>
+			<ECState Name="S_DONE" Comment="" x="400" y="3900">
+				<ECAction Output="CNF"/>
+			</ECState>
+			<ECTransition Source="START" Destination="S_INIT" Condition="INIT" x="0" y="0"/>
+			<ECTransition Source="S_INIT" Destination="IDLE" Condition="1" x="0" y="0"/>
+			<ECTransition Source="IDLE" Destination="S_INIT" Condition="INIT" x="0" y="0"/>
+			<ECTransition Source="IDLE" Destination="S_PREP" Condition="SHOW" x="0" y="0"/>
+			<ECTransition Source="S_PREP" Destination="OPENING" Condition="1" x="0" y="0"/>
+			<ECTransition Source="OPENING" Destination="S_HIDE" Condition="SHOWN[xPendingClose]" x="0" y="0"/>
+			<ECTransition Source="OPENING" Destination="S_REPLACE" Condition="SHOWN[xPendingShow]" x="0" y="0"/>
+			<ECTransition Source="OPENING" Destination="S_START_T" Condition="SHOWN[TIMEOUT_O &gt; T#0s]" x="0" y="0"/>
+			<ECTransition Source="OPENING" Destination="OPEN" Condition="SHOWN" x="0" y="0"/>
+			<ECTransition Source="OPENING" Destination="S_O_SHOW" Condition="SHOW" x="0" y="0"/>
+			<ECTransition Source="OPENING" Destination="S_O_CLOSE" Condition="CLOSE" x="0" y="0"/>
+			<ECTransition Source="S_O_SHOW" Destination="OPENING" Condition="1" x="0" y="0"/>
+			<ECTransition Source="S_O_CLOSE" Destination="OPENING" Condition="1" x="0" y="0"/>
+			<ECTransition Source="S_REPLACE" Destination="S_PREP" Condition="1" x="0" y="0"/>
+			<ECTransition Source="S_START_T" Destination="OPEN" Condition="1" x="0" y="0"/>
+			<ECTransition Source="OPEN" Destination="S_R_OK" Condition="B_OK" x="0" y="0"/>
+			<ECTransition Source="S_R_OK" Destination="S_HIDE" Condition="1" x="0" y="0"/>
+			<ECTransition Source="OPEN" Destination="S_R_CANCEL" Condition="B_CANCEL" x="0" y="0"/>
+			<ECTransition Source="S_R_CANCEL" Destination="S_HIDE" Condition="1" x="0" y="0"/>
+			<ECTransition Source="OPEN" Destination="S_R_ABORT" Condition="B_ABORT" x="0" y="0"/>
+			<ECTransition Source="S_R_ABORT" Destination="S_HIDE" Condition="1" x="0" y="0"/>
+			<ECTransition Source="OPEN" Destination="S_R_RETRY" Condition="B_RETRY" x="0" y="0"/>
+			<ECTransition Source="S_R_RETRY" Destination="S_HIDE" Condition="1" x="0" y="0"/>
+			<ECTransition Source="OPEN" Destination="S_R_IGNORE" Condition="B_IGNORE" x="0" y="0"/>
+			<ECTransition Source="S_R_IGNORE" Destination="S_HIDE" Condition="1" x="0" y="0"/>
+			<ECTransition Source="OPEN" Destination="S_R_YES" Condition="B_YES" x="0" y="0"/>
+			<ECTransition Source="S_R_YES" Destination="S_HIDE" Condition="1" x="0" y="0"/>
+			<ECTransition Source="OPEN" Destination="S_R_NO" Condition="B_NO" x="0" y="0"/>
+			<ECTransition Source="S_R_NO" Destination="S_HIDE" Condition="1" x="0" y="0"/>
+			<ECTransition Source="OPEN" Destination="S_R_TMO" Condition="TMO" x="0" y="0"/>
+			<ECTransition Source="S_R_TMO" Destination="S_HIDE" Condition="1" x="0" y="0"/>
+			<ECTransition Source="OPEN" Destination="S_R_CLOSE" Condition="CLOSE" x="0" y="0"/>
+			<ECTransition Source="S_R_CLOSE" Destination="S_HIDE" Condition="1" x="0" y="0"/>
+			<ECTransition Source="OPEN" Destination="S_REPLACE_OPEN" Condition="SHOW" x="0" y="0"/>
+			<ECTransition Source="S_REPLACE_OPEN" Destination="S_PREP" Condition="1" x="0" y="0"/>
+			<ECTransition Source="S_HIDE" Destination="CLOSING" Condition="1" x="0" y="0"/>
+			<ECTransition Source="CLOSING" Destination="S_DONE_SHOW" Condition="HIDDEN[xPendingShow]" x="0" y="0"/>
+			<ECTransition Source="CLOSING" Destination="S_DONE" Condition="HIDDEN" x="0" y="0"/>
+			<ECTransition Source="CLOSING" Destination="S_C_SHOW" Condition="SHOW" x="0" y="0"/>
+			<ECTransition Source="S_C_SHOW" Destination="CLOSING" Condition="1" x="0" y="0"/>
+			<ECTransition Source="S_DONE_SHOW" Destination="S_PREP" Condition="1" x="0" y="0"/>
+			<ECTransition Source="S_DONE" Destination="IDLE" Condition="1" x="0" y="0"/>
+		</ECC>
+		<Algorithm Name="INIT_ALG">
+			<ST><![CDATA[QO := QI;
+RESULT := 0;
+xPendingShow := FALSE;
+xPendingClose := FALSE;]]></ST>
+		</Algorithm>
+		<Algorithm Name="PREP">
+			<ST><![CDATA[(* Pointer-Ziele aus der Vorlage Workspace_Dialog, IDs siehe DialogIDs.gcf *)
+IF MODAL THEN COVER_ID := 14400; ELSE COVER_ID := 65535; END_IF;
+CASE ICON OF
+  1: ICON_ID := 3402; TITLE_COLOUR := 2;      (* gruen *)
+  2: ICON_ID := 3403; TITLE_COLOUR := 15; (* navy *)
+  3: ICON_ID := 3404; TITLE_COLOUR := 6;   (* oliv *)
+  4: ICON_ID := 3405; TITLE_COLOUR := 12;    (* rot *)
+ELSE
+  ICON_ID := 65535; TITLE_COLOUR := 2;
+END_CASE;
+IF TITLE_ID <> 65535 THEN
+  TITLE_ID_O := TITLE_ID;
+ELSIF ICON >= 1 AND ICON <= 4 THEN
+  TITLE_ID_O := UDINT#11409 + ICON;
+ELSE
+  TITLE_ID_O := 11410;
+END_IF;
+TEXT_ID_O := TEXT_ID;
+(* FOCUS_K: 0 OK, 1 Cancel, 2 Abort, 3 Retry, 4 Ignore, 5 Yes, 6 No, 7 kein Fokus *)
+FOCUS_K := 7;
+CASE BUTTONS OF
+  1: BUTTONS_ID := 3410; FOCUS_K := 0;
+  2: BUTTONS_ID := 3411;
+     IF DEFAULT_BUTTON = 2 THEN FOCUS_K := 1; ELSE FOCUS_K := 0; END_IF;
+  3: BUTTONS_ID := 3412;
+     IF DEFAULT_BUTTON = 2 THEN FOCUS_K := 3; ELSIF DEFAULT_BUTTON = 3 THEN FOCUS_K := 4; ELSE FOCUS_K := 2; END_IF;
+  4: BUTTONS_ID := 3413;
+     IF DEFAULT_BUTTON = 2 THEN FOCUS_K := 6; ELSIF DEFAULT_BUTTON = 3 THEN FOCUS_K := 1; ELSE FOCUS_K := 5; END_IF;
+  5: BUTTONS_ID := 3414;
+     IF DEFAULT_BUTTON = 2 THEN FOCUS_K := 6; ELSE FOCUS_K := 5; END_IF;
+  6: BUTTONS_ID := 3415;
+     IF DEFAULT_BUTTON = 2 THEN FOCUS_K := 1; ELSE FOCUS_K := 3; END_IF;
+ELSE
+  BUTTONS_ID := 65535;
+END_CASE;
+TIMEOUT_O := TIMEOUT;
+AUDIO_O := AUDIO;
+xPendingShow := FALSE;
+xPendingClose := FALSE;]]></ST>
+		</Algorithm>
+		<Algorithm Name="R_NONE">
+			<ST><![CDATA[RESULT := 0;]]></ST>
+		</Algorithm>
+		<Algorithm Name="R_TMO">
+			<ST><![CDATA[RESULT := 8;]]></ST>
+		</Algorithm>
+		<Algorithm Name="MARK_SHOW">
+			<ST><![CDATA[xPendingShow := TRUE;]]></ST>
+		</Algorithm>
+		<Algorithm Name="MARK_CLOSE">
+			<ST><![CDATA[xPendingClose := TRUE;]]></ST>
+		</Algorithm>
+		<Algorithm Name="R_OK">
+			<ST><![CDATA[RESULT := 1;]]></ST>
+		</Algorithm>
+		<Algorithm Name="R_CANCEL">
+			<ST><![CDATA[RESULT := 2;]]></ST>
+		</Algorithm>
+		<Algorithm Name="R_ABORT">
+			<ST><![CDATA[RESULT := 3;]]></ST>
+		</Algorithm>
+		<Algorithm Name="R_RETRY">
+			<ST><![CDATA[RESULT := 4;]]></ST>
+		</Algorithm>
+		<Algorithm Name="R_IGNORE">
+			<ST><![CDATA[RESULT := 5;]]></ST>
+		</Algorithm>
+		<Algorithm Name="R_YES">
+			<ST><![CDATA[RESULT := 6;]]></ST>
+		</Algorithm>
+		<Algorithm Name="R_NO">
+			<ST><![CDATA[RESULT := 7;]]></ST>
+		</Algorithm>
+	</BasicFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Softkey_Aux_Switch_Auto_TO_Remote_WRITE_BG_ALIVE_OPC" Comment="VT-SoftKey lesen ODER AUX-Zuweisung (Joystick) lesen ODER lokaler Web-Override&#10;ODER physischer Remote-Taster auf einem dritten Modul ODER Automatik-Kommando +&#10;Remote-OPC-UA-Write an Zielmodul + VT-Hintergrundfarbe (SoftKey UND AUX) aus&#10;Remote-Subscribe (5-Quellen-Variante von&#10;Softkey_Aux_Switch_TO_Remote_WRITE_BG_OPC um einen zusaetzlichen AUTO_IN-Socket,&#10;z.B. Fuellband Heben: SoftKey/AUX/Web/physischer Taster S08 UND&#10;Befuellautomatik-Hysterese)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-29" Remarks="Kopie von Softkey_Aux_Switch_Auto_TO_Remote_WRITE_BG_OPC mit Socket ALIVE_IN: Rueckmelde-Farbe rot, solange die Zielstation nicht erreichbar ist.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID SoftKey/Hintergrund (VT)"/>
+			<VarDeclaration Name="u16ObjIdA" Type="UINT" Comment="Object ID AuxFunction2/Hintergrund (VT)"/>
+			<VarDeclaration Name="ID_SUBSCRIBE" Type="WSTRING" Comment="Remote-Subscribe-Adresse (Status/Farbe, ACTION=SUBSCRIBE)"/>
+			<VarDeclaration Name="ID_WRITE_REMOTE" Type="WSTRING" Comment="Remote-Write-Adresse zum Zielmodul (Befehl, ACTION=WRITE, CLIENT)"/>
+			<VarDeclaration Name="ID_WEB_READ" Type="WSTRING" Comment="Lokale Subscribe-Adresse fuer einen Web-Client (z.B. vt-ui-mirror) auf demselben Modul, ODER-verknuepft mit SoftKey und AUX"/>
+			<VarDeclaration Name="ID_SWITCH_REMOTE" Type="WSTRING" Comment="Remote-Subscribe-Adresse eines zusaetzlichen physischen Tasters auf einem ANDEREN Modul, ODER-verknuepft mit SoftKey/AUX/Web/Automatik"/>
+			<VarDeclaration Name="ID_STATUS_WEB" Type="WSTRING" Comment="Lokale Publish-Adresse (auf diesem Modul) fuer den vom Zielmodul zurueckgemeldeten Zustand - damit ein Web-Client (z.B. vt-ui-mirror) dieselbe Hintergrundfarbe wie das echte VT zeigen kann"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="AUTOMATIC_OUT" Type="adapter::types::unidirectional::AX" Comment="Optional: lokal gemergter Rohbefehl, durchgereicht von Command.CMD_OUT - unverdrahtet lassen, wenn nicht gebraucht"/>
+			<AdapterDeclaration Name="MANUAL_OUT" Type="adapter::types::unidirectional::AX" Comment="Optional: NUR die manuellen Quellen (SoftKey/AUX/Web/Switch), OHNE Automatik-Anteil, durchgereicht von Command.MANUAL_OUT - unverdrahtet lassen, wenn nicht gebraucht"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="ALIVE_IN" Type="adapter::types::unidirectional::AX" Comment="Zielstation erreichbar (Kommunikation_Diagnose)"/>
+			<AdapterDeclaration Name="AUTO_IN" Type="adapter::types::unidirectional::AX" Comment="Autonomes Kommando (z.B. Befuellautomatik-Hysterese), ODER-verknuepft mit SoftKey/Aux/Web/physischem Taster"/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<SubApp Name="Command" Type="MyLib::sys::Softkey_Aux_Switch_Auto_TO_Remote_WRITE" x="100" y="-200">
+		</SubApp>
+		<SubApp Name="Status" Type="MyLib::sys::AX_SUBSCRIBE_BG3_ALIVE_WEB_OPC" x="200" y="1300">
+		</SubApp>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_2" x="5400" y="600">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="Command.INIT" dx1="973.33"/>
+			<Connection Source="Command.INITO" Destination="Status.INIT" dx1="253.33" dx2="713.33" dy="1200"/>
+			<Connection Source="Status.INITO" Destination="INITO" dx1="2926.67"/>
+			<Connection Source="Status.INITO" Destination="AND_QO.REQ" dx1="1746.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="u16ObjId" Destination="Command.u16ObjId" dx1="366.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjIdA" Destination="Command.u16ObjIdA" dx1="366.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_WRITE_REMOTE" Destination="Command.ID_WRITE_REMOTE" dx1="366.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_WEB_READ" Destination="Command.ID_WEB_READ" dx1="366.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_SWITCH_REMOTE" Destination="Command.ID_SWITCH_REMOTE" dx1="366.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjId" Destination="Status.u16ObjId" dx1="366.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="u16ObjIdA" Destination="Status.u16ObjIdA" dx1="366.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_SUBSCRIBE" Destination="Status.ID_SUBSCRIBE" dx1="366.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_STATUS_WEB" Destination="Status.ID_STATUS_WEB" dx1="366.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="Command.QI" dx1="973.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="Status.QI" dx1="1026.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Command.QO" Destination="AND_QO.IN1" dx1="1393.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Status.QO" Destination="AND_QO.IN2" dx1="1746.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="1033.33"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="AUTO_IN" Destination="Command.AUTO_IN" dx1="366.67"/>
+			<Connection Source="Command.AUTOMATIC_OUT" Destination="AUTOMATIC_OUT" dx1="366.67"/>
+			<Connection Source="Command.MANUAL_OUT" Destination="MANUAL_OUT" dx1="800"/>
+			<Connection Source="ALIVE_IN" Destination="Status.ALIVE_IN"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

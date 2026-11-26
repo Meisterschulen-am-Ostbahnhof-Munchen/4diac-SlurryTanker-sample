@@ -2,6 +2,8 @@
 <SubAppType Name="TOGGLE_RPC_MERGE_QXA_OPC" Comment="1-Richtungs-Ausgang, klick-toggle statt tastend: ein per OPC-UA-Methodenaufruf&#10;(CREATE_METHOD/SERVER_0) empfangener Trigger taktet ein lokales AX_T_FF&#10;(Toggle-Flipflop) - dessen Zustand wird per AX_OR_2 mit dem bestehenden&#10;IO-Test-Kommando (Remote-Subscribe, gleiches Muster wie MERGE_SWITCH_1_QXA_OPC)&#10;zusammengefuehrt. Ausgang treibt den physischen logiBUS-Kanal UND meldet seinen&#10;Zustand sowohl an die bestehende IO-Test-Ueberwachung als auch an die echte&#10;Funktions-Rueckmeldung (z.B. GreenWhiteBackground am SoftKey, per lokalem&#10;Publish + Remote-Subscribe wie bei allen anderen Funktionen dieses Projekts -&#10;NICHT per aktivem Client-Write wie im urspruenglichen Uebungs-Vorbild, fuer&#10;Konsistenz mit ILOCK_SWITCH_2_QXA_OPC/MERGE_SWITCH_1_QXA_OPC). Fuer echte&#10;Klick-Toggle-Funktionen (z.B. Blitzlicht: 1x druecken AN, nochmal druecken AUS)&#10;statt tastender Doppelwirkungs-/Einzelausgaenge.">
 	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.2" Author="Franz Höpfinger" Date="2026-11-25" Remarks="SERVER_0 -&gt; MyLib::net::SERVER_0_QO (IND nur bei QO=TRUE, RSP intern). Ein gescheitertes RSP meldet IND mit QO=FALSE, direkt IND-&gt;RSP ergab eine Endlosschleife.">
+	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-09" Remarks="Fix: TRIGGER_SERVER.RSP war nie verdrahtet - blockierte den OPC-UA-Server-Thread bis zu 4s pro Aufruf (haelt open62541s globalen serviceMutex), verzoegerte dadurch JEDE OPC-UA-Statusmeldung projektweit. IND-&gt;RSP direkt verdrahtet (argumentloser Trigger, kein CNF noetig). Siehe OPC_UA_VERNETZUNG.md Punkt 12.">
 	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-07" Remarks="initial API and implementation and/or initial documentation - Klick-Toggle-Analogon zu MERGE_SWITCH_1_QXA_OPC, RPC-Trigger (SERVER_0/AX_T_FF) statt Pegel-Subscribe als echte Funktionsquelle">
@@ -32,8 +34,8 @@
 		</OutputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="TRIGGER_SERVER" Type="iec61499::net::SERVER_0" x="-6500" y="-1200">
-		</FB>
+		<SubApp Name="TRIGGER_SERVER" Type="MyLib::net::SERVER_0_QO" x="-6500" y="-1200">
+		</SubApp>
 		<FB Name="AX_T_FF" Type="adapter::events::unidirectional::AX_T_FF" x="-5000" y="-1100">
 		</FB>
 		<FB Name="SUBSCRIBE_TEST" Type="adapter::net::AX_SUBSCRIBE_1" x="-6500" y="-200">
@@ -52,7 +54,6 @@
 		</FB>
 		<EventConnections>
 			<Connection Source="TRIGGER_SERVER.IND" Destination="AX_T_FF.CLK" dx1="373.33"/>
-			<Connection Source="TRIGGER_SERVER.IND" Destination="TRIGGER_SERVER.RSP" dx1="80" dx2="80" dy="160"/>
 			<Connection Source="INIT" Destination="TRIGGER_SERVER.INIT" dx1="1653.33"/>
 			<Connection Source="TRIGGER_SERVER.INITO" Destination="SUBSCRIBE_TEST.INIT" dx1="80" dx2="80" dy="500"/>
 			<Connection Source="SUBSCRIBE_TEST.INITO" Destination="DigitalOutput.INIT" dx1="2580"/>

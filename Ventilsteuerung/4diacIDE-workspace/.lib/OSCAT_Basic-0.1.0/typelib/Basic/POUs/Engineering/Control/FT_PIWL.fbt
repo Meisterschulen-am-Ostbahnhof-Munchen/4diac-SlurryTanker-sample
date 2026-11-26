@@ -2,6 +2,8 @@
 <FBType Name="FT_PIWL" Comment="PI Controller with Anti-Windup">
 	<Identification Standard="61499-1" Description="version 1.3&#9;11. mar. 2009&#10;programmer &#9;hugo&#10;tested by&#9;&#9;oscat&#10;&#10;FT_PIWL is a PI controller.&#10;The PID controller works according to the fomula Y = IN *(KP+ KI * INTEG(e) ).&#10;a rst will reset the integrator to 0&#10;lim_h and Lim_l set the possible output range of the controller.&#10;the output flag lim will signal that the output limits are active.&#10;the integrator ist equipped with anti wind-up circuitry which limits trhe total output ranke to lim_l and lim_h&#10;&#10;default values for KP = 1, KI = 1, ILIM_L = -1E37, iLIM_H = +1E38.">
 	</Identification>
+	<VersionInfo Version="1.1" Author="Franz Höpfinger" Date="2026-11-14" Remarks="Event TRK: Integrator nachfuehren (stossfreie Umschaltung Hand/Automatik)">
+	</VersionInfo>
 	<VersionInfo Version="1.0" Author="Coding-Assistent" Date="2025-12-19" Remarks="initial API and implementation and/or initial documentation">
 	</VersionInfo>
 	<CompilerInfo packageName="OSCAT::Basic::POUs::Engineering::Control">
@@ -21,6 +23,14 @@
 			<Event Name="RST" Type="Event" Comment="Reset Integrator">
 				<With Var="IN"/>
 			</Event>
+			<Event Name="TRK" Type="Event" Comment="Integrator nachfuehren, so dass Y = Y_TRK">
+				<With Var="IN"/>
+				<With Var="KP"/>
+				<With Var="KI"/>
+				<With Var="LIM_L"/>
+				<With Var="LIM_H"/>
+				<With Var="Y_TRK"/>
+			</Event>
 		</EventInputs>
 		<EventOutputs>
 			<Event Name="INITO" Type="EInit" Comment="Init Confirmation">
@@ -38,6 +48,7 @@
 			<VarDeclaration Name="KI" Type="REAL" Comment="Integral Gain" InitialValue="1.0"/>
 			<VarDeclaration Name="LIM_L" Type="REAL" Comment="Lower Limit" InitialValue="-1.0E38"/>
 			<VarDeclaration Name="LIM_H" Type="REAL" Comment="Upper Limit" InitialValue="1.0E38"/>
+			<VarDeclaration Name="Y_TRK" Type="REAL" Comment="Ausgang, auf den bei TRK nachgefuehrt wird"/>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="Y" Type="REAL" Comment="Controller Output"/>
@@ -63,6 +74,9 @@
 		<ECState Name="RST">
 			<ECAction Algorithm="RST" Output="CNF"/>
 		</ECState>
+		<ECState Name="TRK">
+			<ECAction Algorithm="TRK" Output="CNF"/>
+		</ECState>
 		<Algorithm Name="EINIT">
 			<ST><![CDATA[
 (* Reset internal states *)
@@ -77,6 +91,34 @@ tc := 0.0;
 			<ST><![CDATA[
 this.EINIT();
 init := TRUE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="TRK">
+			<ST><![CDATA[
+(* Integrator so setzen, dass Y = Y_TRK ist (z. B. im Handbetrieb).
+ * Beim naechsten REQ rechnet der Regler stossfrei von Y_TRK aus weiter. *)
+IF NOT init THEN
+	this.RST();
+END_IF;
+t_last := T_PLC_US();
+tc := 0.0;
+in_last := IN;
+p := KP * IN;
+IF KI <> 0.0 THEN
+	i := LIMIT(LIM_L, Y_TRK, LIM_H) - p;
+ELSE
+	i := 0.0;
+END_IF;
+Y := p + i;
+IF Y >= LIM_H THEN
+	Y := LIM_H;
+	LIM := TRUE;
+ELSIF Y <= LIM_L THEN
+	Y := LIM_L;
+	LIM := TRUE;
+ELSE
+	LIM := FALSE;
+END_IF;
 ]]></ST>
 		</Algorithm>
 		<Algorithm Name="REQ">

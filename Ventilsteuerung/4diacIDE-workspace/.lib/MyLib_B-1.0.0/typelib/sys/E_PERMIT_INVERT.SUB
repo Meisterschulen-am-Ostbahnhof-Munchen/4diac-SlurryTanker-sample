@@ -8,23 +8,26 @@
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
-			<SubAppEvent Name="EI" Type="Event" Comment="Event input (wird durchgelassen wenn PERMIT FALSE ist)"/>
+			<SubAppEvent Name="EI" Type="Event" Comment="Event input (wird durchgelassen wenn PERMIT FALSE ist)">
+			</SubAppEvent>
 		</SubAppEventInputs>
 		<SubAppEventOutputs>
-			<SubAppEvent Name="EO" Type="Event" Comment="Event output (feuert wenn EI eintrifft und PERMIT FALSE ist)"/>
+			<SubAppEvent Name="EO" Type="Event" Comment="Event output (feuert wenn EI eintrifft und PERMIT FALSE ist)">
+			</SubAppEvent>
 		</SubAppEventOutputs>
 		<InputVars>
 			<VarDeclaration Name="PERMIT" Type="BOOL" Comment="Invertierte Freigabebedingung"/>
 		</InputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="F_NOT_BOOL_INIT" Type="iec61131::booleanOperators::F_NOT_BOOL_INIT" x="-3000" y="0">
+		<FB Name="F_NOT_BOOL_INIT" Type="iec61131::booleanOperators::F_NOT_BOOL_INIT" x="-3000" y="-100">
 		</FB>
 		<FB Name="E_PERMIT" Type="iec61499::events::E_PERMIT" x="-1400" y="0">
 		</FB>
 		<EventConnections>
-			<Connection Source="EI" Destination="E_PERMIT.EI" dx1="500"/>
+			<Connection Source="EI" Destination="F_NOT_BOOL_INIT.REQ" dx1="1406.67"/>
 			<Connection Source="E_PERMIT.EO" Destination="EO" dx1="500"/>
+			<Connection Source="F_NOT_BOOL_INIT.CNF" Destination="E_PERMIT.EI" dx1="306.67"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="PERMIT" Destination="F_NOT_BOOL_INIT.IN" dx1="500"/>

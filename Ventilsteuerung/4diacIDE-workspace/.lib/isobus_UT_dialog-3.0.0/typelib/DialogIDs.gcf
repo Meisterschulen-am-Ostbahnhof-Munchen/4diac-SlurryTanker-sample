@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="DialogIDs" Comment="Objekt-IDs der Dialog-Vorlage">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-11-17" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::UT::dialog">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="Container_Dialog" Type="UINT" Comment="Vorlage Workspace_Dialog" InitialValue="UINT#3400"/>
+		<VarDeclaration Name="Container_Dlg_Box" Type="UINT" Comment="Vorlage Workspace_Dialog" InitialValue="UINT#3401"/>
+		<VarDeclaration Name="Rectangle_Dlg_Cover" Type="UINT" Comment="Vorlage Workspace_Dialog" InitialValue="UINT#14400"/>
+		<VarDeclaration Name="FillAttributes_Dlg_Title" Type="UINT" Comment="Vorlage Workspace_Dialog" InitialValue="UINT#25402"/>
+		<VarDeclaration Name="ObjectPointer_Dlg_Cover" Type="UINT" Comment="Vorlage Workspace_Dialog" InitialValue="UINT#27900"/>
+		<VarDeclaration Name="ObjectPointer_Dlg_Icon" Type="UINT" Comment="Vorlage Workspace_Dialog" InitialValue="UINT#27901"/>
+		<VarDeclaration Name="ObjectPointer_Dlg_Title" Type="UINT" Comment="Vorlage Workspace_Dialog" InitialValue="UINT#27902"/>
+		<VarDeclaration Name="ObjectPointer_Dlg_Text" Type="UINT" Comment="Vorlage Workspace_Dialog" InitialValue="UINT#27903"/>
+		<VarDeclaration Name="ObjectPointer_Dlg_Buttons" Type="UINT" Comment="Vorlage Workspace_Dialog" InitialValue="UINT#27904"/>
+		<VarDeclaration Name="Container_Dlg_Icon_Info" Type="UINT" Comment="Vorlage Workspace_Dialog" InitialValue="UINT#3402"/>
+		<VarDeclaration Name="Container_Dlg_Icon_Question" Type="UINT" Comment="Vorlage Workspace_Dialog" InitialValue="UINT#3403"/>
+		<VarDeclaration Name="Container_Dlg_Icon_Warning" Type="UINT" Comment="Vorlage Workspace_Dialog" InitialValue="UINT#3404"/>
+		<VarDeclaration Name="Container_Dlg_Icon_Error" Type="UINT" Comment="Vorlage Workspace_Dialog" InitialValue="UINT#3405"/>
+		<VarDeclaration Name="OutputString_Dlg_Title_Info" Type="UINT" Comment="Vorlage Workspace_Dialog" InitialValue="UINT#11410"/>
+		<VarDeclaration Name="OutputString_Dlg_Title_Question" Type="UINT" Comment="Vorlage Workspace_Dialog" InitialValue="UINT#11411"/>
+		<VarDeclaration Name="OutputString_Dlg_Title_Warning" Type="UINT" Comment="Vorlage Workspace_Dialog" InitialValue="UINT#11412"/>
+		<VarDeclaration Name="OutputString_Dlg_Title_Error" Type="UINT" Comment="Vorlage Workspace_Dialog" InitialValue="UINT#11413"/>
+		<VarDeclaration Name="Container_Dlg_Buttons_OK" Type="UINT" Comment="Vorlage Workspace_Dialog" InitialValue="UINT#3410"/>
+		<VarDeclaration Name="Container_Dlg_Buttons_OKCancel" Type="UINT" Comment="Vorlage Workspace_Dialog" InitialValue="UINT#3411"/>
+		<VarDeclaration Name="Container_Dlg_Buttons_AbortRetryIgnore" Type="UINT" Comment="Vorlage Workspace_Dialog" InitialValue="UINT#3412"/>
+		<VarDeclaration Name="Container_Dlg_Buttons_YesNoCancel" Type="UINT" Comment="Vorlage Workspace_Dialog" InitialValue="UINT#3413"/>
+		<VarDeclaration Name="Container_Dlg_Buttons_YesNo" Type="UINT" Comment="Vorlage Workspace_Dialog" InitialValue="UINT#3414"/>
+		<VarDeclaration Name="Container_Dlg_Buttons_RetryCancel" Type="UINT" Comment="Vorlage Workspace_Dialog" InitialValue="UINT#3415"/>
+		<VarDeclaration Name="Button_Dlg_OK" Type="UINT" Comment="Vorlage Workspace_Dialog" InitialValue="UINT#6900"/>
+		<VarDeclaration Name="Button_Dlg_Cancel" Type="UINT" Comment="Vorlage Workspace_Dialog" InitialValue="UINT#6901"/>
+		<VarDeclaration Name="Button_Dlg_Abort" Type="UINT" Comment="Vorlage Workspace_Dialog" InitialValue="UINT#6902"/>
+		<VarDeclaration Name="Button_Dlg_Retry" Type="UINT" Comment="Vorlage Workspace_Dialog" InitialValue="UINT#6903"/>
+		<VarDeclaration Name="Button_Dlg_Ignore" Type="UINT" Comment="Vorlage Workspace_Dialog" InitialValue="UINT#6904"/>
+		<VarDeclaration Name="Button_Dlg_Yes" Type="UINT" Comment="Vorlage Workspace_Dialog" InitialValue="UINT#6905"/>
+		<VarDeclaration Name="Button_Dlg_No" Type="UINT" Comment="Vorlage Workspace_Dialog" InitialValue="UINT#6906"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[(* Feste IDs aus ISO-DesignerProjects/Workspace_Dialog. Projekte uebernehmen die Vorlage mit denselben IDs. *)
+PACKAGE isobus::UT::dialog;
+
+GLOBALCONSTANTS DialogIDs
+	VAR_GLOBAL CONSTANT
+		Container_Dialog : UINT := UINT#3400; // Vorlage Workspace_Dialog
+		Container_Dlg_Box : UINT := UINT#3401; // Vorlage Workspace_Dialog
+		Rectangle_Dlg_Cover : UINT := UINT#14400; // Vorlage Workspace_Dialog
+		FillAttributes_Dlg_Title : UINT := UINT#25402; // Vorlage Workspace_Dialog
+		ObjectPointer_Dlg_Cover : UINT := UINT#27900; // Vorlage Workspace_Dialog
+		ObjectPointer_Dlg_Icon : UINT := UINT#27901; // Vorlage Workspace_Dialog
+		ObjectPointer_Dlg_Title : UINT := UINT#27902; // Vorlage Workspace_Dialog
+		ObjectPointer_Dlg_Text : UINT := UINT#27903; // Vorlage Workspace_Dialog
+		ObjectPointer_Dlg_Buttons : UINT := UINT#27904; // Vorlage Workspace_Dialog
+		Container_Dlg_Icon_Info : UINT := UINT#3402; // Vorlage Workspace_Dialog
+		Container_Dlg_Icon_Question : UINT := UINT#3403; // Vorlage Workspace_Dialog
+		Container_Dlg_Icon_Warning : UINT := UINT#3404; // Vorlage Workspace_Dialog
+		Container_Dlg_Icon_Error : UINT := UINT#3405; // Vorlage Workspace_Dialog
+		OutputString_Dlg_Title_Info : UINT := UINT#11410; // Vorlage Workspace_Dialog
+		OutputString_Dlg_Title_Question : UINT := UINT#11411; // Vorlage Workspace_Dialog
+		OutputString_Dlg_Title_Warning : UINT := UINT#11412; // Vorlage Workspace_Dialog
+		OutputString_Dlg_Title_Error : UINT := UINT#11413; // Vorlage Workspace_Dialog
+		Container_Dlg_Buttons_OK : UINT := UINT#3410; // Vorlage Workspace_Dialog
+		Container_Dlg_Buttons_OKCancel : UINT := UINT#3411; // Vorlage Workspace_Dialog
+		Container_Dlg_Buttons_AbortRetryIgnore : UINT := UINT#3412; // Vorlage Workspace_Dialog
+		Container_Dlg_Buttons_YesNoCancel : UINT := UINT#3413; // Vorlage Workspace_Dialog
+		Container_Dlg_Buttons_YesNo : UINT := UINT#3414; // Vorlage Workspace_Dialog
+		Container_Dlg_Buttons_RetryCancel : UINT := UINT#3415; // Vorlage Workspace_Dialog
+		Button_Dlg_OK : UINT := UINT#6900; // Vorlage Workspace_Dialog
+		Button_Dlg_Cancel : UINT := UINT#6901; // Vorlage Workspace_Dialog
+		Button_Dlg_Abort : UINT := UINT#6902; // Vorlage Workspace_Dialog
+		Button_Dlg_Retry : UINT := UINT#6903; // Vorlage Workspace_Dialog
+		Button_Dlg_Ignore : UINT := UINT#6904; // Vorlage Workspace_Dialog
+		Button_Dlg_Yes : UINT := UINT#6905; // Vorlage Workspace_Dialog
+		Button_Dlg_No : UINT := UINT#6906; // Vorlage Workspace_Dialog
+	END_VAR
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</GlobalConstants>

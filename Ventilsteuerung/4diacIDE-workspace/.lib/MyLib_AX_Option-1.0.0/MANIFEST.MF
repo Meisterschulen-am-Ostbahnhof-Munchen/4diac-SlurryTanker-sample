@@ -2,7 +2,7 @@
 <Manifest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="platform:/resource/org.eclipse.fordiac.ide.library.model/model/library.xsd" Scope="Library">
   <Dependencies>
     <Required SymbolicName="core" Version="3.0.0"/>
-    <Required SymbolicName="logiBUS_io" Version="3.0.0"/>
+    <Required SymbolicName="logiBUS_io" Version="3.3.0"/>
     <Required SymbolicName="iec61131-3-bool" Version="3.0.1"/>
     <Required SymbolicName="Option" Version="1.0.0"/>
   </Dependencies>

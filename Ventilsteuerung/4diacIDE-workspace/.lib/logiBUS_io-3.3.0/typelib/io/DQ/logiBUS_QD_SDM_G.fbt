@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="logiBUS_QD_SDM_G" Comment="Output service interface function block for a sigma-delta output with gamma correction for LEDs (brightness 0..8191 in DWORD, 8 bit pulse density, 1 MHz). Logic level only: LEDs, LED drivers, not the power outputs">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-11-06" Remarks="initial version">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::io::DQ">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+				<With Var="QI"/>
+				<With Var="PARAMS"/>
+				<With Var="Output"/>
+				<With Var="GAMMA"/>
+			</Event>
+			<Event Name="REQ" Type="Event" Comment="Service Request">
+				<With Var="QI"/>
+				<With Var="OUT"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
+			<VarDeclaration Name="PARAMS" Type="STRING" Comment="Service Parameters"/>
+			<VarDeclaration Name="OUT" Type="DWORD" Comment="Brightness as the eye sees it (0..8191), converted with GAMMA, output as pulse density with 8 bit (256 steps). No ramp"/>
+			<VarDeclaration Name="Output" Type="logiBUS::io::DQ::logiBUS_DO_S" Comment="Identify the Output Output_Q1..Q8" InitialValue="logiBUS_DO::Invalid"/>
+			<VarDeclaration Name="GAMMA" Type="REAL" Comment="Gamma of the brightness curve, read at INIT: density from (OUT / 8191)^GAMMA. 1.0 = linear, 2.2 = sRGB (default). Invalid values (&lt;= 0, not finite) run linear like 1.0. With 8 bit the lowest steps become coarse" InitialValue="2.2"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
+		</OutputVars>
+	</InterfaceList>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

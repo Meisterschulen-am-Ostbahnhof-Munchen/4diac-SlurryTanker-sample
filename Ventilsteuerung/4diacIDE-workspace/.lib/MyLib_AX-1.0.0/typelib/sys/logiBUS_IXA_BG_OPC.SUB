@@ -40,18 +40,18 @@
 		</FB>
 		<FB Name="AX_SPLIT_2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="-3300" y="0">
 		</FB>
-		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_3">
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_3" x="1400" y="-400">
 		</FB>
 		<EventConnections>
 			<Connection Source="logiBUS_IXA.INITO" Destination="logiBUS_IXA.REQ" dx1="80" dx2="80" dy="53.33"/>
-			<Connection Source="INIT" Destination="logiBUS_IXA.INIT"/>
-			<Connection Source="logiBUS_IXA.INITO" Destination="AX_PUBLISH_1.INIT"/>
-			<Connection Source="AX_PUBLISH_1.INITO" Destination="GreenWhiteBackground1_AX.INIT"/>
-			<Connection Source="GreenWhiteBackground1_AX.INITO" Destination="INITO"/>
-			<Connection Source="GreenWhiteBackground1_AX.INITO" Destination="AND_QO.REQ"/>
+			<Connection Source="INIT" Destination="logiBUS_IXA.INIT" dx1="1526.67"/>
+			<Connection Source="logiBUS_IXA.INITO" Destination="AX_PUBLISH_1.INIT" dx1="1306.67"/>
+			<Connection Source="AX_PUBLISH_1.INITO" Destination="GreenWhiteBackground1_AX.INIT" dx1="80" dx2="80" dy="-206.67"/>
+			<Connection Source="GreenWhiteBackground1_AX.INITO" Destination="INITO" dx1="2953.33"/>
+			<Connection Source="GreenWhiteBackground1_AX.INITO" Destination="AND_QO.REQ" dx1="393.33"/>
 		</EventConnections>
 		<DataConnections>
-			<Connection Source="Input" Destination="logiBUS_IXA.Input" dx1="2926.67">
+			<Connection Source="Input" Destination="logiBUS_IXA.Input" dx1="2880">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
 			<Connection Source="u16ObjId" Destination="GreenWhiteBackground1_AX.u16ObjId" dx1="2680">
@@ -60,16 +60,28 @@
 			<Connection Source="ID_WRITE" Destination="AX_PUBLISH_1.ID" dx1="4280">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="QI" Destination="logiBUS_IXA.QI"/>
-			<Connection Source="QI" Destination="AX_PUBLISH_1.QI"/>
-			<Connection Source="logiBUS_IXA.QO" Destination="AND_QO.IN1"/>
-			<Connection Source="AX_PUBLISH_1.QO" Destination="AND_QO.IN2"/>
-			<Connection Source="AND_QO.OUT" Destination="QO"/>
-			<Connection Source="QI" Destination="GreenWhiteBackground1_AX.QI"/>
-			<Connection Source="GreenWhiteBackground1_AX.QO" Destination="AND_QO.IN3"/>
+			<Connection Source="QI" Destination="logiBUS_IXA.QI" dx1="1526.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="AX_PUBLISH_1.QI" dx1="80" dx2="80" dy="40">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="logiBUS_IXA.QO" Destination="AND_QO.IN1" dx1="1900">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AX_PUBLISH_1.QO" Destination="AND_QO.IN2" dx1="1126.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="1406.67"/>
+			<Connection Source="QI" Destination="GreenWhiteBackground1_AX.QI" dx1="2726.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="GreenWhiteBackground1_AX.QO" Destination="AND_QO.IN3" dx1="393.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
 		</DataConnections>
 		<AdapterConnections>
-			<Connection Source="logiBUS_IXA.IN" Destination="AX_SPLIT_2.IN" dx1="420"/>
+			<Connection Source="logiBUS_IXA.IN" Destination="AX_SPLIT_2.IN" dx1="320"/>
 			<Connection Source="AX_SPLIT_2.OUT1" Destination="GreenWhiteBackground1_AX.DI1" dx1="173.33"/>
 			<Connection Source="AX_SPLIT_2.OUT2" Destination="AX_PUBLISH_1.IN" dx1="153.33"/>
 		</AdapterConnections>

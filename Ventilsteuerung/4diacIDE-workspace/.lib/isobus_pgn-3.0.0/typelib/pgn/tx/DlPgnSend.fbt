@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="DlPgnSend" Comment="Send a PGN once without an installed Tx PGN">
+	<Identification Standard="61499-2" Description="Calls iso_DlPgnSend() of the CCI ISOBUS driver (data link layer). \n&#10;0..8 bytes are sent as single frame, 9..1785 bytes with TP (NMEA 2000 PGNs with Fast Packet). \n&#10;More than 1785 bytes (ETP) are refused with s16Status E_RANGE, because the driver does not copy them. \n&#10;Sender is NmDestin.s16OwnCfHnd, receiver is NmDestin.s16Handle (HANDLE::GLOBAL for broadcast). \n&#10;Missing bytes (u16DaSize larger than Data) are sent as 0xFF.">
+	</Identification>
+	<VersionInfo Version="1.0" Author="Franz Höpfinger" Date="2026-11-17" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::pgn::tx">
+		<Import declaration="isobus::pgn::ISONETEVENT_T"/>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+			</Event>
+			<Event Name="REQ" Type="Event" Comment="Send the PGN once">
+				<With Var="u32Pgn"/>
+				<With Var="u8Priority"/>
+				<With Var="NmDestin"/>
+				<With Var="u16DaSize"/>
+				<With Var="Data"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Send started (see s16Status)">
+				<With Var="s16Status"/>
+				<With Var="Data"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="u32Pgn" Type="UDINT" Comment="PGN - Range: 0 - 0x3FFFF"/>
+			<VarDeclaration Name="u8Priority" Type="USINT" Comment="Priority (0..7) 0=highest" InitialValue="6"/>
+			<VarDeclaration Name="NmDestin" Type="isobus::pgn::ISONETEVENT_T" Comment="Sender (s16OwnCfHnd) and receiver (s16Handle)"/>
+			<VarDeclaration Name="u16DaSize" Type="UINT" Comment="Number of data bytes to send (0..1785)"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="s16Status" Type="INT" Comment="Return value of iso_DlPgnSend(): 0 = OK"/>
+		</OutputVars>
+		<InOutVars>
+			<VarDeclaration Name="Data" Type="BYTE" Comment="data buffer" ArraySize="*"/>
+		</InOutVars>
+	</InterfaceList>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

@@ -47,6 +47,16 @@
 			<locationURI>WORKSPACE_LOC/.lib/DataPanel-3.0.0/typelib</locationURI>
 		</link>
 		<link>
+			<name>External Libraries/FIFO</name>
+			<type>2</type>
+			<locationURI>WORKSPACE_LOC/.lib/FIFO-1.0.0/typelib</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/FIFO_adapter</name>
+			<type>2</type>
+			<locationURI>WORKSPACE_LOC/.lib/FIFO_adapter-1.0.0/typelib</locationURI>
+		</link>
+		<link>
 			<name>External Libraries/Funk</name>
 			<type>2</type>
 			<locationURI>WORKSPACE_LOC/.lib/Funk-3.0.0/typelib</locationURI>
@@ -72,6 +82,11 @@
 			<locationURI>WORKSPACE_LOC/.lib/MyLib_B-1.0.0/typelib</locationURI>
 		</link>
 		<link>
+			<name>External Libraries/MyLib_B_CAN2</name>
+			<type>2</type>
+			<locationURI>WORKSPACE_LOC/.lib/MyLib_B_CAN2-1.0.0/typelib</locationURI>
+		</link>
+		<link>
 			<name>External Libraries/MyLib_OPC</name>
 			<type>2</type>
 			<locationURI>WORKSPACE_LOC/.lib/MyLib_OPC-1.0.0/typelib</locationURI>
@@ -80,6 +95,16 @@
 			<name>External Libraries/OSCAT_Basic</name>
 			<type>2</type>
 			<locationURI>WORKSPACE_LOC/.lib/OSCAT_Basic-0.1.0/typelib</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/OSCAT_Building</name>
+			<type>2</type>
+			<locationURI>WORKSPACE_LOC/.lib/OSCAT_Building-0.1.0/typelib</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/OSCAT_Network</name>
+			<type>2</type>
+			<locationURI>WORKSPACE_LOC/.lib/OSCAT_Network-0.1.0/typelib</locationURI>
 		</link>
 		<link>
 			<name>External Libraries/OSCAT_adapter</name>
@@ -152,6 +177,11 @@
 			<locationURI>WORKSPACE_LOC/.lib/iec61131-3-bool-3.0.0/typelib</locationURI>
 		</link>
 		<link>
+			<name>External Libraries/init_stages</name>
+			<type>2</type>
+			<locationURI>WORKSPACE_LOC/.lib/init_stages-1.0.0/typelib</locationURI>
+		</link>
+		<link>
 			<name>External Libraries/isobus_TC</name>
 			<type>2</type>
 			<locationURI>WORKSPACE_LOC/.lib/isobus_TC-3.0.0/typelib</locationURI>
@@ -167,6 +197,11 @@
 			<locationURI>WORKSPACE_LOC/.lib/isobus_UT_adapter-3.0.0/typelib</locationURI>
 		</link>
 		<link>
+			<name>External Libraries/isobus_UT_dialog</name>
+			<type>2</type>
+			<locationURI>WORKSPACE_LOC/.lib/isobus_UT_dialog-3.0.0/typelib</locationURI>
+		</link>
+		<link>
 			<name>External Libraries/isobus_UT_io</name>
 			<type>2</type>
 			<locationURI>WORKSPACE_LOC/.lib/isobus_UT_io-3.0.0/typelib</locationURI>
@@ -175,6 +210,11 @@
 			<name>External Libraries/isobus_UT_io_adapter</name>
 			<type>2</type>
 			<locationURI>WORKSPACE_LOC/.lib/isobus_UT_io_adapter-3.0.0/typelib</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/isobus_fs</name>
+			<type>2</type>
+			<locationURI>WORKSPACE_LOC/.lib/isobus_fs-1.0.0/typelib</locationURI>
 		</link>
 		<link>
 			<name>External Libraries/isobus_pgn</name>
@@ -219,7 +259,7 @@
 		<link>
 			<name>External Libraries/logiBUS_io</name>
 			<type>2</type>
-			<locationURI>WORKSPACE_LOC/.lib/logiBUS_io-3.0.0/typelib</locationURI>
+			<locationURI>WORKSPACE_LOC/.lib/logiBUS_io-3.3.0/typelib</locationURI>
 		</link>
 		<link>
 			<name>External Libraries/logiBUS_safety</name>
@@ -230,6 +270,16 @@
 			<name>External Libraries/logiBUS_schieber</name>
 			<type>2</type>
 			<locationURI>WORKSPACE_LOC/.lib/logiBUS_schieber-3.0.0/typelib</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/logiBUS_sections_bit</name>
+			<type>2</type>
+			<locationURI>WORKSPACE_LOC/.lib/logiBUS_sections_bit-1.0.0/typelib</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/logiBUS_sections_quarter</name>
+			<type>2</type>
+			<locationURI>WORKSPACE_LOC/.lib/logiBUS_sections_quarter-1.0.0/typelib</locationURI>
 		</link>
 		<link>
 			<name>External Libraries/logiBUS_signalprocessing</name>
@@ -267,6 +317,11 @@
 			<locationURI>WORKSPACE_LOC/.lib/logiBUS_utils_adapter-3.0.0/typelib</locationURI>
 		</link>
 		<link>
+			<name>External Libraries/logiBUS_version</name>
+			<type>2</type>
+			<locationURI>WORKSPACE_LOC/.lib/logiBUS_version-3.0.0/typelib</locationURI>
+		</link>
+		<link>
 			<name>External Libraries/net</name>
 			<type>2</type>
 			<locationURI>WORKSPACE_LOC/.lib/net-3.0.0/typelib</locationURI>
@@ -275,6 +330,11 @@
 			<name>External Libraries/net_adapter</name>
 			<type>2</type>
 			<locationURI>WORKSPACE_LOC/.lib/net_adapter-3.0.0/typelib</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/opcua</name>
+			<type>2</type>
+			<locationURI>WORKSPACE_LOC/.lib/opcua-3.0.0/typelib</locationURI>
 		</link>
 		<link>
 			<name>External Libraries/quarter</name>
@@ -322,6 +382,16 @@
 			<locationURI>WORKSPACE_LOC/.lib/DataPanel-3.0.0/MANIFEST.MF</locationURI>
 		</link>
 		<link>
+			<name>External Libraries/FIFO/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/FIFO-1.0.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/FIFO_adapter/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/FIFO_adapter-1.0.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
 			<name>External Libraries/Funk/MANIFEST.MF</name>
 			<type>1</type>
 			<locationURI>WORKSPACE_LOC/.lib/Funk-3.0.0/MANIFEST.MF</locationURI>
@@ -347,6 +417,11 @@
 			<locationURI>WORKSPACE_LOC/.lib/MyLib_B-1.0.0/MANIFEST.MF</locationURI>
 		</link>
 		<link>
+			<name>External Libraries/MyLib_B_CAN2/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/MyLib_B_CAN2-1.0.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
 			<name>External Libraries/MyLib_OPC/MANIFEST.MF</name>
 			<type>1</type>
 			<locationURI>WORKSPACE_LOC/.lib/MyLib_OPC-1.0.0/MANIFEST.MF</locationURI>
@@ -355,6 +430,16 @@
 			<name>External Libraries/OSCAT_Basic/MANIFEST.MF</name>
 			<type>1</type>
 			<locationURI>WORKSPACE_LOC/.lib/OSCAT_Basic-0.1.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/OSCAT_Building/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/OSCAT_Building-0.1.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/OSCAT_Network/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/OSCAT_Network-0.1.0/MANIFEST.MF</locationURI>
 		</link>
 		<link>
 			<name>External Libraries/OSCAT_adapter/MANIFEST.MF</name>
@@ -427,6 +512,11 @@
 			<locationURI>WORKSPACE_LOC/.lib/iec61131-3-bool-3.0.0/MANIFEST.MF</locationURI>
 		</link>
 		<link>
+			<name>External Libraries/init_stages/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/init_stages-1.0.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
 			<name>External Libraries/isobus_TC/MANIFEST.MF</name>
 			<type>1</type>
 			<locationURI>WORKSPACE_LOC/.lib/isobus_TC-3.0.0/MANIFEST.MF</locationURI>
@@ -442,6 +532,11 @@
 			<locationURI>WORKSPACE_LOC/.lib/isobus_UT_adapter-3.0.0/MANIFEST.MF</locationURI>
 		</link>
 		<link>
+			<name>External Libraries/isobus_UT_dialog/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/isobus_UT_dialog-3.0.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
 			<name>External Libraries/isobus_UT_io/MANIFEST.MF</name>
 			<type>1</type>
 			<locationURI>WORKSPACE_LOC/.lib/isobus_UT_io-3.0.0/MANIFEST.MF</locationURI>
@@ -450,6 +545,11 @@
 			<name>External Libraries/isobus_UT_io_adapter/MANIFEST.MF</name>
 			<type>1</type>
 			<locationURI>WORKSPACE_LOC/.lib/isobus_UT_io_adapter-3.0.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/isobus_fs/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/isobus_fs-1.0.0/MANIFEST.MF</locationURI>
 		</link>
 		<link>
 			<name>External Libraries/isobus_pgn/MANIFEST.MF</name>
@@ -494,7 +594,7 @@
 		<link>
 			<name>External Libraries/logiBUS_io/MANIFEST.MF</name>
 			<type>1</type>
-			<locationURI>WORKSPACE_LOC/.lib/logiBUS_io-3.0.0/MANIFEST.MF</locationURI>
+			<locationURI>WORKSPACE_LOC/.lib/logiBUS_io-3.3.0/MANIFEST.MF</locationURI>
 		</link>
 		<link>
 			<name>External Libraries/logiBUS_safety/MANIFEST.MF</name>
@@ -505,6 +605,16 @@
 			<name>External Libraries/logiBUS_schieber/MANIFEST.MF</name>
 			<type>1</type>
 			<locationURI>WORKSPACE_LOC/.lib/logiBUS_schieber-3.0.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/logiBUS_sections_bit/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/logiBUS_sections_bit-1.0.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/logiBUS_sections_quarter/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/logiBUS_sections_quarter-1.0.0/MANIFEST.MF</locationURI>
 		</link>
 		<link>
 			<name>External Libraries/logiBUS_signalprocessing/MANIFEST.MF</name>
@@ -542,6 +652,11 @@
 			<locationURI>WORKSPACE_LOC/.lib/logiBUS_utils_adapter-3.0.0/MANIFEST.MF</locationURI>
 		</link>
 		<link>
+			<name>External Libraries/logiBUS_version/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/logiBUS_version-3.0.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
 			<name>External Libraries/net/MANIFEST.MF</name>
 			<type>1</type>
 			<locationURI>WORKSPACE_LOC/.lib/net-3.0.0/MANIFEST.MF</locationURI>
@@ -550,6 +665,11 @@
 			<name>External Libraries/net_adapter/MANIFEST.MF</name>
 			<type>1</type>
 			<locationURI>WORKSPACE_LOC/.lib/net_adapter-3.0.0/MANIFEST.MF</locationURI>
+		</link>
+		<link>
+			<name>External Libraries/opcua/MANIFEST.MF</name>
+			<type>1</type>
+			<locationURI>WORKSPACE_LOC/.lib/opcua-3.0.0/MANIFEST.MF</locationURI>
 		</link>
 		<link>
 			<name>External Libraries/quarter/MANIFEST.MF</name>

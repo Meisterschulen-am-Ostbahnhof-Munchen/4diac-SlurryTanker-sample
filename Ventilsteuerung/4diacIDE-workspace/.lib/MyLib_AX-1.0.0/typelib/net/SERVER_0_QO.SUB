@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="SERVER_0_QO" Comment="OPC-UA-Methode ohne Argumente (CREATE_METHOD): IND nur bei echtem Aufruf (QO=TRUE), RSP intern">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-11-25" Remarks="Neu: SERVER_0 + E_PERMIT(PERMIT=QO). Ein gescheitertes RSP meldet IND mit QO=FALSE, direkt IND-&gt;RSP ergab eine Endlosschleife.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::net">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+			<SubAppEvent Name="IND" Type="Event" Comment="Methode wurde aufgerufen">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="ID" Type="WSTRING" Comment="opc_ua[CREATE_METHOD;...]"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output"/>
+			<VarDeclaration Name="STATUS" Type="WSTRING" Comment="Service Status"/>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="SERVER" Type="iec61499::net::SERVER_0" x="-1100" y="0">
+		</FB>
+		<FB Name="Nur_bei_QO" Type="iec61499::events::E_PERMIT" Comment="nur echter Call (QO=TRUE)" x="600" y="-200">
+		</FB>
+		<EventConnections>
+			<Connection Source="SERVER.INITO" Destination="INITO" dx1="80"/>
+			<Connection Source="SERVER.IND" Destination="Nur_bei_QO.EI" dx1="440"/>
+			<Connection Source="Nur_bei_QO.EO" Destination="SERVER.RSP" dx1="286.67" dx2="80" dy="-306.67"/>
+			<Connection Source="Nur_bei_QO.EO" Destination="IND" dx1="3220"/>
+			<Connection Source="INIT" Destination="SERVER.INIT" dx1="2126.67"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="QI" Destination="SERVER.QI" dx1="1986.67"/>
+			<Connection Source="ID" Destination="SERVER.ID" dx1="1773.33"/>
+			<Connection Source="SERVER.QO" Destination="Nur_bei_QO.PERMIT" dx1="526.67"/>
+			<Connection Source="SERVER.QO" Destination="QO" dx1="5013.33"/>
+			<Connection Source="SERVER.STATUS" Destination="STATUS" dx1="5106.67"/>
+		</DataConnections>
+	</SubAppNetwork>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>OPC-UA-Methode ohne Argumente, sicher beantwortet</h1>
+<p><code>SERVER_0</code> mit <code>CREATE_METHOD</code>. <code>IND</code> geht nur bei <code>QO = TRUE</code> an
+<code>RSP</code> und nach außen (<code>E_PERMIT</code>).</p>
+<p>Warum: Findet FORTE zu einem <code>RSP</code> keinen offenen Aufruf (z. B. Antwort nach dem 4-s-Timeout),
+meldet der <code>SERVER</code> sofort wieder <code>IND</code> mit <code>QO = FALSE</code>. Direkt
+<code>IND→RSP</code> verdrahtet wird das eine Endlosschleife, die jede Runde die Aktion erneut auslöst
+(gesehen 2026-11-25, Boot-Zähler STG1).</p>
+<p><code>INIT</code> darf unverbunden bleiben: <code>SERVER.INIT</code> ist selbst EInit, E_TRIG löst ihn im fboot aus.</p>
+]]></Attribute>
+</SubAppType>

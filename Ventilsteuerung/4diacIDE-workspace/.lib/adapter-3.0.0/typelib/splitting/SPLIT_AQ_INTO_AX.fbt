@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="SPLIT_AQ_INTO_AX" Comment="this Function splits the 2 AX (BOOL) adapters from a AQ (QUARTER)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-11-13" Remarks="Initial Version - Luecke in der Adapter-Familie geschlossen">
+	</VersionInfo>
+	<CompilerInfo packageName="adapter::splitting">
+	</CompilerInfo>
+	<InterfaceList>
+		<Plugs>
+			<AdapterDeclaration Name="BIT_00" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 0" x="700" y="0"/>
+			<AdapterDeclaration Name="BIT_01" Type="adapter::types::unidirectional::AX" Comment="Bool Bit 1" x="700" y="500"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AQ" Comment="QUARTER Input" x="-1200" y="200"/>
+		</Sockets>
+	</InterfaceList>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

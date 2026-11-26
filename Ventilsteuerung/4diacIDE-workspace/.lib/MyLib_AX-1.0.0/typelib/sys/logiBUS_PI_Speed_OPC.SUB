@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="logiBUS_PI_Speed_OPC" Comment="logiBUS_PI Frequenz -&gt; PT1-Filter -&gt; SCALE/RASTER, Filterzeit/DerivK INI-persistiert, alles per OPC-UA (ohne VT)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-28" Remarks="Kopie von MyLib::sys::logiBUS_PI_Speed_Publish_OPC ohne VT, fuer Stationen ohne VT (keine isobus_UT-Libs). FilterTimeS/DerivK -&gt; MyLib::sys::OPC_TO_AR2_OUT, stObjFilterTimeS/stObjDerivK entfallen. Logik, INI-Keys und Defaults unveraendert.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="logiBUS::io::PI::logiBUS_PI"/>
+		<Import declaration="logiBUS::io::PI::logiBUS_PI_S"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="Input" Type="logiBUS::io::PI::logiBUS_PI_S" Comment="Identify the Input PulseInput_I1..I9" InitialValue="logiBUS_PI::Invalid"/>
+			<VarDeclaration Name="ID_HZ_WRITE" Type="WSTRING" Comment="Frequenz-Publish-Adresse (REAL Hz, ACTION=PUBLISH), lokal auf dieser Station - nur Dashboard/Diagnose, keine andere Station soll dies remote abonnieren (LOC-Scope)"/>
+			<VarDeclaration Name="ID_FILTER_TIME_READ" Type="WSTRING" Comment="Remote-Subscribe-Adresse (REAL Sekunden, ACTION=SUBSCRIBE) fuer Web-Override der Filterzeit"/>
+			<VarDeclaration Name="ID_FILTER_TIME_WRITE" Type="WSTRING" Comment="Lokale Echo/Re-Publish-Adresse (REAL Sekunden, ACTION=PUBLISH) der aktuellen Filterzeit"/>
+			<VarDeclaration Name="sSection" Type="STRING" Comment="INI settings.ini Section fuer die persistierte Filterzeit (eindeutig pro Sensor-Instanz)"/>
+			<VarDeclaration Name="SCALE" Type="REAL" Comment="Skalierungsfaktor Hz -&gt; physikalische Einheit (z.B. 3.6/53 fuer km/h, 60.0 fuer U/min bei 1 Impuls/Umdrehung)"/>
+			<VarDeclaration Name="RASTER" Type="REAL" Comment="Rundungsraster des FERTIGEN physikalischen Werts (nach SCALE), in der Anzeigeeinheit (z.B. 0.125 fuer U/min, 0.1 fuer km/h) - Platzhalter-Default 0.001 (praktisch kein Runden)" InitialValue="0.001"/>
+			<VarDeclaration Name="ID_WRITE" Type="WSTRING" Comment="Publish-Adresse des umgerechneten physikalischen Endwerts (REAL, ACTION=PUBLISH) - das ist die Adresse, die andere Stationen remote abonnieren (M2M-Scope)"/>
+			<VarDeclaration Name="ID_DERIV_K_READ" Type="WSTRING" Comment="Remote-Subscribe-Adresse (REAL, ACTION=SUBSCRIBE) fuer Web-Override von FT_DERIV_10_AR.K"/>
+			<VarDeclaration Name="ID_DERIV_K_WRITE" Type="WSTRING" Comment="Lokale Echo/Re-Publish-Adresse (REAL, ACTION=PUBLISH) des aktuellen FT_DERIV_10_AR.K"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="logiBUS_PI_IDA" Type="logiBUS::io::PI::logiBUS_PI_IDA" x="-9700" y="-2100">
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="ImpulseDelta" Value="DWORD#50"/>
+			<Parameter Name="TimeDelta" Value="DWORD#250"/>
+			<Parameter Name="TimeRateLimit" Value="DWORD#50"/>
+		</FB>
+		<FB Name="AD_TO_AR_NUM" Type="adapter::conversion::unidirectional::AD_TO_AR_NUM" x="-7400" y="-1500">
+		</FB>
+		<FB Name="FT_DERIV_10_AR" Type="OSCAT_adapter::Control::FT_DERIV_10_AR" x="-5600" y="-1900">
+			<Parameter Name="Faktor" Value="1.0"/>
+			<Parameter Name="run" Value="TRUE"/>
+		</FB>
+		<FB Name="FT_PT1_AR" Type="OSCAT_adapter::Control::FT_PT1_AR" x="-2600" y="-1600">
+			<Parameter Name="K" Value="1.0"/>
+		</FB>
+		<FB Name="AR_SPLIT_2" Type="adapter::events::unidirectional::AR_SPLIT_2" x="-1200" y="-1400">
+		</FB>
+		<FB Name="AR_PUBLISH_HZ" Type="adapter::net::AR_PUBLISH_1" x="0" y="-1800">
+		</FB>
+		<FB Name="LIT_Scale" Type="adapter::types::unidirectional::AR::initval::initval_AR" x="-800" y="-400">
+		</FB>
+		<FB Name="AR_MUL" Type="adapter::iec61131::arithmetic::AR_MUL_2" x="600" y="-900">
+		</FB>
+		<SubApp Name="Round_Final" Type="OSCAT_adapter::Mathematical::ROUND_STEP_AR" x="1800" y="-900">
+		</SubApp>
+		<FB Name="AR_PUBLISH_Speed" Type="adapter::net::AR_PUBLISH_1" x="3200" y="-900">
+		</FB>
+		<SubApp Name="FilterTimeS" Type="MyLib::sys::OPC_TO_AR2_OUT" x="-6800" y="-100">
+		</SubApp>
+		<FB Name="INI_FilterTimeS" Type="eclipse4diac::storage::INI_AR2" x="-4500" y="-500">
+			<Parameter Name="SETM" Value="TRUE"/>
+			<Parameter Name="KEY" Value="'FilterTimeS'"/>
+			<Parameter Name="DEFAULT_VALUE" Value="REAL#2.0"/>
+		</FB>
+		<SubApp Name="ToATM" Type="MyLib::sys::AR_S_TO_ATM" x="-4100" y="600">
+		</SubApp>
+		<SubApp Name="DerivK" Type="MyLib::sys::OPC_TO_AR2_OUT" x="-11500" y="300">
+		</SubApp>
+		<FB Name="INI_DerivK" Type="eclipse4diac::storage::INI_AR2" x="-9100" y="-400">
+			<Parameter Name="SETM" Value="TRUE"/>
+			<Parameter Name="KEY" Value="'DerivK'"/>
+			<Parameter Name="DEFAULT_VALUE" Value="REAL#9.0"/>
+		</FB>
+		<FB Name="ToAUI" Type="adapter::conversion::unidirectional::AR_TO_AUI" x="-9000" y="1000">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_7">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="logiBUS_PI_IDA.INIT"/>
+			<Connection Source="logiBUS_PI_IDA.INITO" Destination="AR_PUBLISH_HZ.INIT"/>
+			<Connection Source="AR_PUBLISH_HZ.INITO" Destination="AR_PUBLISH_Speed.INIT"/>
+			<Connection Source="AR_PUBLISH_Speed.INITO" Destination="INI_FilterTimeS.INIT"/>
+			<Connection Source="INI_FilterTimeS.INITO" Destination="INI_DerivK.INIT"/>
+			<Connection Source="INI_DerivK.INITO" Destination="FilterTimeS.INIT"/>
+			<Connection Source="FilterTimeS.INITO" Destination="DerivK.INIT"/>
+			<Connection Source="DerivK.INITO" Destination="INITO"/>
+			<Connection Source="DerivK.INITO" Destination="AND_QO.REQ"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="Input" Destination="logiBUS_PI_IDA.Input" dx1="1460">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_HZ_WRITE" Destination="AR_PUBLISH_HZ.ID" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_FILTER_TIME_READ" Destination="FilterTimeS.ID_READ" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_FILTER_TIME_WRITE" Destination="FilterTimeS.ID_WRITE" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="sSection" Destination="INI_FilterTimeS.SECTION" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="SCALE" Destination="LIT_Scale.INIT_VAL" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="RASTER" Destination="Round_Final.RASTER" dx1="300">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_WRITE" Destination="AR_PUBLISH_Speed.ID" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_DERIV_K_READ" Destination="DerivK.ID_READ" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_DERIV_K_WRITE" Destination="DerivK.ID_WRITE" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="sSection" Destination="INI_DerivK.SECTION" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="logiBUS_PI_IDA.QI"/>
+			<Connection Source="QI" Destination="AR_PUBLISH_HZ.QI"/>
+			<Connection Source="QI" Destination="AR_PUBLISH_Speed.QI"/>
+			<Connection Source="QI" Destination="INI_FilterTimeS.QI"/>
+			<Connection Source="QI" Destination="INI_DerivK.QI"/>
+			<Connection Source="logiBUS_PI_IDA.QO" Destination="AND_QO.IN1"/>
+			<Connection Source="AR_PUBLISH_HZ.QO" Destination="AND_QO.IN2"/>
+			<Connection Source="AR_PUBLISH_Speed.QO" Destination="AND_QO.IN3"/>
+			<Connection Source="INI_FilterTimeS.QO" Destination="AND_QO.IN4"/>
+			<Connection Source="INI_DerivK.QO" Destination="AND_QO.IN5"/>
+			<Connection Source="AND_QO.OUT" Destination="QO"/>
+			<Connection Source="QI" Destination="FilterTimeS.QI"/>
+			<Connection Source="QI" Destination="DerivK.QI"/>
+			<Connection Source="FilterTimeS.QO" Destination="AND_QO.IN6"/>
+			<Connection Source="DerivK.QO" Destination="AND_QO.IN7"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="logiBUS_PI_IDA.IN" Destination="AD_TO_AR_NUM.AD_IN" dx1="420"/>
+			<Connection Source="AD_TO_AR_NUM.AR_OUT" Destination="FT_DERIV_10_AR.AR_IN" dx1="420"/>
+			<Connection Source="FT_DERIV_10_AR.AR_OUT" Destination="FT_PT1_AR.AR_IN" dx1="420"/>
+			<Connection Source="FilterTimeS.VALUEO" Destination="INI_FilterTimeS.VAL" dx1="400"/>
+			<Connection Source="FilterTimeS.VALUE_OUT" Destination="ToATM.IN1" dx1="400"/>
+			<Connection Source="ToATM.OUT" Destination="FT_PT1_AR.TM" dx1="400"/>
+			<Connection Source="FT_PT1_AR.AR_OUT" Destination="AR_SPLIT_2.IN" dx1="133.33"/>
+			<Connection Source="AR_SPLIT_2.OUT1" Destination="AR_PUBLISH_HZ.IN" dx1="300"/>
+			<Connection Source="AR_SPLIT_2.OUT2" Destination="AR_MUL.IN1" dx1="300"/>
+			<Connection Source="LIT_Scale.OUT" Destination="AR_MUL.IN2" dx1="300"/>
+			<Connection Source="AR_MUL.OUT" Destination="Round_Final.AR_IN" dx1="300"/>
+			<Connection Source="Round_Final.AR_OUT" Destination="AR_PUBLISH_Speed.IN" dx1="300"/>
+			<Connection Source="DerivK.VALUEO" Destination="INI_DerivK.VAL" dx1="400"/>
+			<Connection Source="DerivK.VALUE_OUT" Destination="ToAUI.AR_IN" dx1="400"/>
+			<Connection Source="ToAUI.AUI_OUT" Destination="FT_DERIV_10_AR.K" dx1="400"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

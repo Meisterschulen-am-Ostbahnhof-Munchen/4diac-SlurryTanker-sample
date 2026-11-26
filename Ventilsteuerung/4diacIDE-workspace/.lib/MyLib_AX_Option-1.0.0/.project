@@ -64,7 +64,7 @@
 		<link>
 			<name>External Libraries/logiBUS_io</name>
 			<type>2</type>
-			<locationURI>WORKSPACE_LOC/.lib/logiBUS_io-3.0.0/typelib</locationURI>
+			<locationURI>WORKSPACE_LOC/.lib/logiBUS_io-3.3.0/typelib</locationURI>
 		</link>
 		<link>
 			<name>External Libraries/Option/MANIFEST.MF</name>
@@ -94,7 +94,7 @@
 		<link>
 			<name>External Libraries/logiBUS_io/MANIFEST.MF</name>
 			<type>1</type>
-			<locationURI>WORKSPACE_LOC/.lib/logiBUS_io-3.0.0/MANIFEST.MF</locationURI>
+			<locationURI>WORKSPACE_LOC/.lib/logiBUS_io-3.3.0/MANIFEST.MF</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>

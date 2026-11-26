@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Manifest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="platform:/resource/org.eclipse.fordiac.ide.library.model/model/library.xsd" Scope="Library">
+  <Dependencies>
+    <Required SymbolicName="core" Version="3.0.0"/>
+  </Dependencies>
+  <Product Comment="FIFO-Warteschlangen mit frei waehlbarer Kapazitaet (offenes ArraySize=&quot;*&quot;, Groesse ueber eine vorgeschaltete convert::providers::PROVIDE_ARR_x_UINT-Instanz) und Request/Confirm-Verarbeitungs-Handshake (DATA/PROCESSED) auf der Konsumentenseite." Name="FIFO" SymbolicName="FIFO">
+    <VersionInfo Author="Franz Höpfinger" Date="2026-10-13" Version="1.0.0"/>
+  </Product>
+</Manifest>

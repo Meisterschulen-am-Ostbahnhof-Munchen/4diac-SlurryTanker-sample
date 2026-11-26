@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="AlPgnRxNew_TP" Comment="Receive a PGN of any length (also via transport protocol) into a byte array">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0&#10;&#10;Counterpart of AlPgnTxNew_TP. Data is an in/out byte array, e.g. from PROVIDE_ARR; its size limits the data that is kept. u16DaSize is the received length (up to 1785 bytes with TP, up to 65535 bytes with ETP). If it is larger than Data, the data is cut and OVERFLOW is TRUE.">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-11-13" Remarks="Initial Version">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::pgn::rx">
+		<Import declaration="isobus::pgn::ISONETEVENT_T"/>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+			</Event>
+			<Event Name="install" Type="Event" Comment="installs a Receive PGN (RX)">
+				<With Var="u32Pgn"/>
+				<With Var="NmSource"/>
+				<With Var="u8Priority"/>
+				<With Var="Data"/>
+			</Event>
+			<Event Name="CHG" Type="Event" Comment="Change source to NmSource.s16Handle">
+				<With Var="NmSource"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</Event>
+			<Event Name="installO" Type="Event" Comment="install Done">
+				<With Var="PGN_handle"/>
+			</Event>
+			<Event Name="IND" Type="Event" Comment="Data was received">
+				<With Var="s32TimeStamp"/>
+				<With Var="u16DaSize"/>
+				<With Var="u8RxPriority"/>
+				<With Var="OVERFLOW"/>
+				<With Var="Data"/>
+			</Event>
+			<Event Name="dataERR" Type="Event">
+				<With Var="dataERRC"/>
+			</Event>
+			<Event Name="pgnERR" Type="Event">
+				<With Var="pgnERRC"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="u32Pgn" Type="UDINT" Comment="PGN - Range: 0 - 0x3FFFF "/>
+			<VarDeclaration Name="NmSource" Type="isobus::pgn::ISONETEVENT_T" Comment="Define the Communication Partner"/>
+			<VarDeclaration Name="u8Priority" Type="USINT" Comment="Priority given to the stack (0..7), not used as receive filter; received priority see u8RxPriority" InitialValue="7"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="PGN_handle" Type="INT" Comment="PGN-handle on success, HANDLE_UNVALID in case of an error "/>
+			<VarDeclaration Name="dataERRC" Type="INT" Comment="dataERR error Code"/>
+			<VarDeclaration Name="pgnERRC" Type="INT" Comment="pgnERR error Code"/>
+			<VarDeclaration Name="s32TimeStamp" Type="DINT" Comment="Time stamp of the message in ms" InitialValue="-1"/>
+			<VarDeclaration Name="u16DaSize" Type="UINT" Comment="Received data length in bytes (0..65535)"/>
+			<VarDeclaration Name="u8RxPriority" Type="USINT" Comment="Priority of the received PGN"/>
+			<VarDeclaration Name="OVERFLOW" Type="BOOL" Comment="TRUE if more bytes were received than Data holds (Data is cut)"/>
+		</OutputVars>
+		<InOutVars>
+			<VarDeclaration Name="Data" Type="BYTE" Comment="receive buffer, e.g. from PROVIDE_ARR" ArraySize="*"/>
+		</InOutVars>
+	</InterfaceList>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

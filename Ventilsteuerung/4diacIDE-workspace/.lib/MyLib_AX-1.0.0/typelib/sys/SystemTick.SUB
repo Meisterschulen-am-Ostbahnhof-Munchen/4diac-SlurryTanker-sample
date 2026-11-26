@@ -21,7 +21,7 @@
 		<FB Name="E_CYCLE" Type="iec61499::events::E_CYCLE" x="900" y="100">
 			<Parameter Name="DT" Value="T#200ms"/>
 		</FB>
-		<FB Name="INIT" Type="iec61131::booleanOperators::INIT" x="0" y="0">
+		<FB Name="INIT" Type="events::init::INIT" x="0" y="0">
 		</FB>
 		<FB Name="F_MOVE" Type="iec61131::selection::F_MOVE" x="3000" y="100">
 			<Attribute Name="DataType" Value="DINT"/>

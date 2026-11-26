@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Station_Alive_VT_OPC" Comment="Verbindungsueberwachung einer Station ueber ihren Tick: Status-Button gruen/rot, Abbrueche und Boots auf dem VT">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-29" Remarks="Neu: Tick der Station (SystemTickSender_OPC, 200 ms) per Remote-Subscribe, E_RDELAY als Timeout. ALIVE geht beim ersten Tick auf TRUE, nach DT ohne Tick auf FALSE. Jede fallende Flanke zaehlt als Abbruch, BOOT-Ereignisse (von Boot_Zaehler_OPC) als Boots.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+			<SubAppEvent Name="BOOT" Type="Event" Comment="Station hat ihren Start gemeldet">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="ID_TICK" Type="WSTRING" Comment="Remote-Subscribe auf den Tick der Station"/>
+			<VarDeclaration Name="DT" Type="TIME" Comment="Timeout ohne Tick" InitialValue="T#2s"/>
+			<VarDeclaration Name="u16ObjIdStatus" Type="UINT" Comment="Status-Button (gruen/rot)" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObjIdAbbrueche" Type="UINT" Comment="NumberVariable Abbrueche" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObjIdBoots" Type="UINT" Comment="NumberVariable Boots" InitialValue="ID_NULL"/>
+		</InputVars>
+		<Plugs>
+			<AdapterDeclaration Name="ALIVE_OUT" Type="adapter::types::unidirectional::AX" Comment="TRUE solange Ticks kommen"/>
+		</Plugs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="Tick" Type="adapter::net::ADI_SUBSCRIBE_1" x="-6000" y="0">
+		</FB>
+		<FB Name="Timeout" Type="iec61499::events::E_RDELAY" x="-3800" y="800">
+		</FB>
+		<FB Name="Alive" Type="adapter::events::unidirectional::AX_SR" x="-1600" y="0">
+		</FB>
+		<FB Name="Alive_Split" Type="adapter::events::unidirectional::AX_SPLIT_3" x="400" y="0">
+		</FB>
+		<SubApp Name="Status_Farbe" Type="MyLib::sys::GreenRedBackground1_AX" x="2600" y="-1200">
+		</SubApp>
+		<FB Name="Abbruch" Type="adapter::events::unidirectional::AX_F_TRIG" x="2600" y="400">
+		</FB>
+		<FB Name="Abbrueche" Type="iec61499::events::E_CTU" x="4400" y="400">
+			<Parameter Name="PV" Value="65535"/>
+		</FB>
+		<FB Name="Abbrueche_UDINT" Type="iec61131::conversion::F_UINT_TO_UDINT" x="6200" y="400">
+		</FB>
+		<FB Name="Q_Abbrueche" Type="isobus::UT::Q::Q_NumericValue" x="8000" y="400">
+		</FB>
+		<FB Name="Boots" Type="iec61499::events::E_CTU" x="4400" y="1800">
+			<Parameter Name="PV" Value="65535"/>
+		</FB>
+		<FB Name="Boots_UDINT" Type="iec61131::conversion::F_UINT_TO_UDINT" x="6200" y="1800">
+		</FB>
+		<FB Name="Q_Boots" Type="isobus::UT::Q::Q_NumericValue" x="8000" y="1800">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="Tick.INIT"/>
+			<Connection Source="Tick.INITO" Destination="Status_Farbe.INIT"/>
+			<Connection Source="Status_Farbe.INITO" Destination="Q_Abbrueche.INIT"/>
+			<Connection Source="Q_Abbrueche.INITO" Destination="Q_Boots.INIT"/>
+			<Connection Source="Q_Boots.INITO" Destination="INITO"/>
+			<Connection Source="Tick.IND" Destination="Timeout.START"/>
+			<Connection Source="Tick.IND" Destination="Alive.S"/>
+			<Connection Source="Timeout.EO" Destination="Alive.R"/>
+			<Connection Source="Abbruch.EO" Destination="Abbrueche.CU"/>
+			<Connection Source="Abbrueche.CUO" Destination="Abbrueche_UDINT.REQ"/>
+			<Connection Source="Abbrueche_UDINT.CNF" Destination="Q_Abbrueche.REQ"/>
+			<Connection Source="BOOT" Destination="Boots.CU"/>
+			<Connection Source="Boots.CUO" Destination="Boots_UDINT.REQ"/>
+			<Connection Source="Boots_UDINT.CNF" Destination="Q_Boots.REQ"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="QI" Destination="Tick.QI"/>
+			<Connection Source="ID_TICK" Destination="Tick.ID"/>
+			<Connection Source="DT" Destination="Timeout.DT"/>
+			<Connection Source="QI" Destination="Status_Farbe.QI"/>
+			<Connection Source="u16ObjIdStatus" Destination="Status_Farbe.u16ObjId"/>
+			<Connection Source="Abbrueche.CV" Destination="Abbrueche_UDINT.IN"/>
+			<Connection Source="Abbrueche_UDINT.OUT" Destination="Q_Abbrueche.u32NewValue"/>
+			<Connection Source="QI" Destination="Q_Abbrueche.QI"/>
+			<Connection Source="u16ObjIdAbbrueche" Destination="Q_Abbrueche.u16ObjId"/>
+			<Connection Source="Boots.CV" Destination="Boots_UDINT.IN"/>
+			<Connection Source="Boots_UDINT.OUT" Destination="Q_Boots.u32NewValue"/>
+			<Connection Source="QI" Destination="Q_Boots.QI"/>
+			<Connection Source="u16ObjIdBoots" Destination="Q_Boots.u16ObjId"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="Alive.Q" Destination="Alive_Split.IN"/>
+			<Connection Source="Alive_Split.OUT1" Destination="Status_Farbe.DI1"/>
+			<Connection Source="Alive_Split.OUT2" Destination="Abbruch.QI"/>
+			<Connection Source="Alive_Split.OUT3" Destination="ALIVE_OUT"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>Verbindungsüberwachung einer Station</h1>
+<p>Jede Station veröffentlicht alle 200 ms ihren Tick (<code>SystemTickSender_OPC</code>). Dieser Baustein
+abonniert ihn auf STG1. Jeder Tick setzt <code>ALIVE</code> und startet den Timeout <code>DT</code> neu.
+Kommt <code>DT</code> lang kein Tick, fällt <code>ALIVE</code> auf FALSE.</p>
+<ul>
+<li>Status-Button: grün bei ALIVE, rot sonst (Pool-Startwert rot, bis der erste Tick kommt).</li>
+<li>Abbrüche: jede fallende Flanke von ALIVE.</li>
+<li>Boots: jedes Ereignis an <code>BOOT</code> (von <code>Boot_Zaehler_OPC</code>).</li>
+</ul>
+<p>Beide Zähler laufen im RAM und beginnen beim Start von STG1 bei 0.</p>
+]]></Attribute>
+</SubAppType>

@@ -17,6 +17,14 @@
 				<With Var="u16DaSize"/>
 				<With Var="u8Priority"/>
 				<With Var="u16DefRepRate"/>
+				<With Var="u16RepRateMin"/>
+				<With Var="u16RepRateMax"/>
+			</Event>
+			<Event Name="CHG" Type="Event" Comment="Change destination to NmDestin.s16Handle">
+				<With Var="NmDestin"/>
+			</Event>
+			<Event Name="RATE" Type="Event" Comment="Set repetition rate (needs limits at install)">
+				<With Var="u16RepRateMs"/>
 			</Event>
 		</EventInputs>
 		<EventOutputs>
@@ -40,6 +48,9 @@
 			<VarDeclaration Name="u16DaSize" Type="UINT" Comment="Data length of this PGN (0..8)"/>
 			<VarDeclaration Name="u8Priority" Type="USINT" Comment="Default priority of this PGN (0..7) 0=highest" InitialValue="7"/>
 			<VarDeclaration Name="u16DefRepRate" Type="UINT" Comment="0 ... 0xFDFF ms for time interval of cyclic transmission" InitialValue="0"/>
+			<VarDeclaration Name="u16RepRateMin" Type="UINT" Comment="Min. repetition rate ms for requests, 0 = off"/>
+			<VarDeclaration Name="u16RepRateMax" Type="UINT" Comment="Max. repetition rate ms for requests, 0 = off"/>
+			<VarDeclaration Name="u16RepRateMs" Type="UINT" Comment="New repetition rate in ms (RATE)"/>
 		</InputVars>
 		<OutputVars>
 			<VarDeclaration Name="PGN_handle" Type="INT" Comment="PGN-handle on success, HANDLE_UNVALID in case of an error "/>

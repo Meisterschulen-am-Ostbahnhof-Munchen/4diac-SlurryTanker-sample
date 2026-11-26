@@ -2,9 +2,9 @@
 <SubAppType Name="AR_HZ_TO_Q_Publish_OPC" Comment="Remote-Hz-Subscribe -&gt; feste Skalierung -&gt; VT-Anzeige (Q_NumericValue_PHYSA) UND&#10;per OPC-UA publiziert (AR_PUBLISH_1). Buendelt&#10;AR_SUBSCRIBE_1+initval_AR+AR_MUL_2+AR_TO_Q_Publish_OPC - ein Baustein je&#10;Puls-Geschwindigkeits-/Drehzahlsensor (Aufnahme B03, Igelband1/2 B10/B11,&#10;Saegeblatt B08), nur Parameter unterscheiden sich.">
 	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
-	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-13" Remarks="initial implementation - herausgeloest aus Inputs_STG1.SUB (Aufnahme/Igelband1/Igelband2/Saegeblatt waren 4x nahezu identische AR_SUBSCRIBE_1+initval_AR+AR_MUL_2+AR_TO_Q_Publish_OPC-Ketten, nur Parameter unterschiedlich).">
-	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-22" Remarks="Neuer optionaler Plug HZ_RAW_OUT (AR_SPLIT_2 vor AR_MUL eingefuegt) - Spiegel des noch unskalierten Rohwerts (Hz), fuer eine Diagnose-Anzeige (z.B. IO-Diagnose-Zeile), ohne einen zweiten eigenstaendigen Remote-Subscribe desselben Knotens zu brauchen (FORTE: 'Cannot add another one' bei doppeltem Self-Subscribe). Unverdrahtet lassen, wenn nicht gebraucht.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-13" Remarks="initial implementation - herausgeloest aus Inputs_STG1.SUB (Aufnahme/Igelband1/Igelband2/Saegeblatt waren 4x nahezu identische AR_SUBSCRIBE_1+initval_AR+AR_MUL_2+AR_TO_Q_Publish_OPC-Ketten, nur Parameter unterschiedlich).">
 	</VersionInfo>
 	<CompilerInfo packageName="MyLib::sys">
 	</CompilerInfo>

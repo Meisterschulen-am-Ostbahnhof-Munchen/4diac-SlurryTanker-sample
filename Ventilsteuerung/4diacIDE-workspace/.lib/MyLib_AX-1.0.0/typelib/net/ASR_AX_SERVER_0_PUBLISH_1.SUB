@@ -2,7 +2,9 @@
 <SubAppType Name="ASR_AX_SERVER_0_PUBLISH_1" Comment="Wie adapter::net::ASR_AX_SERVER_0_CLIENT_1_0, aber lokales PUBLISH_1 statt Remote-CLIENT_1_0 (ein Geraet)">
 	<Identification Standard="61499-2" Description="Copyright (c) 2026 HR Agrartechnik GmbH &#10; &#10;This program and the accompanying materials are made &#10;available under the terms of the Eclipse Public License 2.0 &#10;which is available at https://www.eclipse.org/legal/epl-2.0/ &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
-	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-18" Remarks="Kopie von ASR_AX_SERVER_0_CLIENT_1_0, CLIENT_1_0 durch PUBLISH_1 ersetzt - als SubAppType, damit FORTE den Typ nicht kennen muss (kein ELF fuer MyLib_AX). SERVER_0: IND direkt auf RSP (sonst bis 4 s Server-Lock fuer alle Publishes)">
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.2" Author="Franz Höpfinger" Date="2026-11-25" Remarks="SERVER_0 -&gt; MyLib::net::SERVER_0_QO (IND nur bei QO=TRUE, RSP intern). Ein gescheitertes RSP meldet IND mit QO=FALSE, direkt IND-&gt;RSP ergab eine Endlosschleife.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-10-18" Remarks="Kopie von ASR_AX_SERVER_0_CLIENT_1_0, CLIENT_1_0 durch PUBLISH_1 ersetzt - als SubAppType, damit FORTE den Typ nicht kennen muss (kein ELF fuer MyLib_AX). SERVER_0: IND direkt auf RSP (sonst bis 4 s Server-Lock fuer alle Publishes)">
 	</VersionInfo>
 	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-09-03" Remarks="initial API and implementation and/or initial documentation">
 	</VersionInfo>
@@ -36,10 +38,10 @@
 		</Plugs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="SET_SERVER" Type="iec61499::net::SERVER_0" x="-6000" y="0">
-		</FB>
-		<FB Name="RESET_SERVER" Type="iec61499::net::SERVER_0" x="-6000" y="700">
-		</FB>
+		<SubApp Name="SET_SERVER" Type="MyLib::net::SERVER_0_QO" x="-6000" y="0">
+		</SubApp>
+		<SubApp Name="RESET_SERVER" Type="MyLib::net::SERVER_0_QO" x="-6000" y="700">
+		</SubApp>
 		<FB Name="EVENTS" Type="adapter::conversion::unidirectional::ASR_2EVENTS_TO_SR" x="-3600" y="0">
 		</FB>
 		<FB Name="SPLIT" Type="adapter::events::bidirectional::ASR_TO_ASR_AX_SPLIT" x="-1600" y="200">
@@ -49,8 +51,6 @@
 		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_3" x="2600" y="0">
 		</FB>
 		<EventConnections>
-			<Connection Source="SET_SERVER.IND" Destination="SET_SERVER.RSP"/>
-			<Connection Source="RESET_SERVER.IND" Destination="RESET_SERVER.RSP"/>
 			<Connection Source="INIT" Destination="SET_SERVER.INIT"/>
 			<Connection Source="SET_SERVER.INITO" Destination="RESET_SERVER.INIT"/>
 			<Connection Source="RESET_SERVER.INITO" Destination="STATE_PUBLISH.INIT"/>

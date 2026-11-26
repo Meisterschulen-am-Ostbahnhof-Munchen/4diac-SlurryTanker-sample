@@ -2,9 +2,9 @@
 <FBType Name="CTRL_OUT" Comment="Control Output with Limit and Manual Override">
 	<Identification Standard="61499-1" Description="CTRL_OUT adds to the CI input the value of OFFSET and returns the result&#10;to Y if MANUAL = FALSE. If MANUAL is TRUE at output Y the input value of&#10;MAN_IN + OFFSET is issued. Y is always limited to the boundaries defined&#10;by LIM_L and LIM_H. If Y reaches one of the limits, then the output LIM is&#10;TRUE. CTRL_OUT can be used to build own rule modules.&#10;">
 	</Identification>
-	<VersionInfo Version="1.1" Author="oscat/hugo" Date="2008-11-05">
-	</VersionInfo>
 	<VersionInfo Version="1.0" Author="Franz Höpfinger" Date="2025-12-19" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<VersionInfo Version="1.1" Author="oscat/hugo" Date="2008-11-05">
 	</VersionInfo>
 	<CompilerInfo packageName="OSCAT::Basic::POUs::Engineering::Control">
 	</CompilerInfo>

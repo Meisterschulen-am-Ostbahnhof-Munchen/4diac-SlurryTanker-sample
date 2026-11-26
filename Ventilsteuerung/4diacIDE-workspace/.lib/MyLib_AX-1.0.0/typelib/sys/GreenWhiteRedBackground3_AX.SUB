@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="GreenWhiteRedBackground3_AX" Comment="Hintergrundfarbe fuer SoftKey + Aux (3 Objekte), 3 Zustaende: DI1 FALSE -&gt; Weiss, TRUE -&gt; Gruen, DI2 TRUE -&gt; Rot (Vorrang)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-29" Remarks="Neu, Muster WhiteGreenPurpleBackground1_AX (AUS-Adapter-Kette), Objekte wie GreenWhiteBackground3_AX. Franz: GreenWhiteRed mit 2x AX, ROT hat Vorrang vor GRUEN. Gedacht fuer DI2 = Station nicht erreichbar.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+		<Import declaration="isobus::UT::Q::const::colours::COLOR_GREEN"/>
+		<Import declaration="isobus::UT::Q::const::colours::COLOR_WHITE"/>
+		<Import declaration="isobus::UT::Q::const::colours::COLOR_RED"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID Softkey" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObjIdA" Type="UINT" Comment="Object ID AUX" InitialValue="ID_NULL"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully (AND aller Instanzen)"/>
+		</OutputVars>
+		<Sockets>
+			<AdapterDeclaration Name="DI1" Type="adapter::types::unidirectional::AX" Comment="Zustand (FALSE=Weiss, TRUE=Gruen)"/>
+			<AdapterDeclaration Name="DI2" Type="adapter::types::unidirectional::AX" Comment="TRUE=Rot, Vorrang vor DI1"/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<SubApp Name="F_SEL_Zustand" Type="MyLib::sys::AUS_AX_SEL_AUS_2_VAL" x="-6300" y="1400">
+			<Parameter Name="val0" Value="COLOR_WHITE"/>
+			<Parameter Name="val1" Value="COLOR_GREEN"/>
+		</SubApp>
+		<FB Name="F_SEL_Rot" Type="adapter::iec61131::selection::AUS_AX_SEL_AUS" x="-4600" y="2200">
+		</FB>
+		<FB Name="initval_AUS" Type="adapter::types::unidirectional::AUS::initval::initval_AUS" x="-6000" y="2400">
+			<Parameter Name="INIT_VAL" Value="COLOR_RED"/>
+		</FB>
+		<FB Name="AUS_SPLIT_3" Type="adapter::events::unidirectional::AUS_SPLIT_3" x="-2900" y="2200">
+		</FB>
+		<FB Name="Q_BackgroundColour_1" Type="isobus::UT::Q::Q_BackgroundColour_AUS" x="-1000" y="400">
+		</FB>
+		<FB Name="Q_BackgroundColour_2" Type="isobus::UT::Q::Q_BackgroundColour_AUS" x="-1000" y="1400">
+		</FB>
+		<FB Name="Q_BackgroundColour_3" Type="isobus::UT::Q::Q_BackgroundColourAux_AUS" x="-1000" y="2400">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_3" x="1500" y="700">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="Q_BackgroundColour_1.INIT"/>
+			<Connection Source="Q_BackgroundColour_1.INITO" Destination="Q_BackgroundColour_2.INIT"/>
+			<Connection Source="Q_BackgroundColour_2.INITO" Destination="Q_BackgroundColour_3.INIT"/>
+			<Connection Source="Q_BackgroundColour_3.INITO" Destination="AND_QO.REQ"/>
+			<Connection Source="Q_BackgroundColour_3.INITO" Destination="INITO"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="QI" Destination="Q_BackgroundColour_1.QI"/>
+			<Connection Source="QI" Destination="Q_BackgroundColour_2.QI"/>
+			<Connection Source="QI" Destination="Q_BackgroundColour_3.QI"/>
+			<Connection Source="u16ObjId" Destination="Q_BackgroundColour_1.u16ObjId"/>
+			<Connection Source="u16ObjIdA" Destination="Q_BackgroundColour_2.u16ObjId"/>
+			<Connection Source="u16ObjIdA" Destination="Q_BackgroundColour_3.u16ObjId"/>
+			<Connection Source="Q_BackgroundColour_1.QO" Destination="AND_QO.IN1"/>
+			<Connection Source="Q_BackgroundColour_2.QO" Destination="AND_QO.IN2"/>
+			<Connection Source="Q_BackgroundColour_3.QO" Destination="AND_QO.IN3"/>
+			<Connection Source="AND_QO.OUT" Destination="QO"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="DI1" Destination="F_SEL_Zustand.G"/>
+			<Connection Source="DI2" Destination="F_SEL_Rot.G"/>
+			<Connection Source="F_SEL_Zustand.OUT" Destination="F_SEL_Rot.IN0"/>
+			<Connection Source="initval_AUS.OUT" Destination="F_SEL_Rot.IN1"/>
+			<Connection Source="F_SEL_Rot.OUT" Destination="AUS_SPLIT_3.IN"/>
+			<Connection Source="AUS_SPLIT_3.OUT1" Destination="Q_BackgroundColour_1.u8Colour"/>
+			<Connection Source="AUS_SPLIT_3.OUT2" Destination="Q_BackgroundColour_2.u8Colour"/>
+			<Connection Source="AUS_SPLIT_3.OUT3" Destination="Q_BackgroundColour_3.u8Colour"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>Hintergrundfarbe Grün/Weiß/Rot für SoftKey + Aux</h1>
+<p>Wie <code>GreenWhiteBackground3_AX</code> (DI1: TRUE → Grün, FALSE → Weiß, für SoftKey, Aux-Vorschau und Aux-Handle),
+zusätzlich <code>DI2</code>: TRUE → Rot, mit Vorrang vor DI1. Aufbau wie <code>WhiteGreenPurpleBackground1_AX</code>
+(AUS-Adapter-Kette, jede Änderung von DI1 oder DI2 liefert die vollständige Farbe).</p>
+<p>Einsatz: DI2 = Station nicht erreichbar (invertiertes ALIVE aus <code>Station_Alive_VT_OPC</code>), damit die Taste
+keinen veralteten Zustand zeigt.</p>
+]]></Attribute>
+</SubAppType>

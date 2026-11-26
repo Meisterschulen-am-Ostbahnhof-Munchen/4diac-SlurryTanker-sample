@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="Global_Source_Addresses" Comment="Global source addresses (all industry groups)">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-11-14" Remarks="erzeugt mit scripts_central/update_isobus_const_gcf.py">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::pgn::const">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="SA_ENGINE_1" Type="BYTE" Comment="Source Address: Engine #1 - The #1 on the Engine CA is to identify that this is the first PA" InitialValue="0"/>
+		<VarDeclaration Name="SA_ENGINE_2" Type="BYTE" Comment="Source Address: Engine #2 - The #2 on the Engine CA is to identify that this is the second PA" InitialValue="1"/>
+		<VarDeclaration Name="SA_TURBOCHARGER" Type="BYTE" Comment="Source Address: Turbocharger - Turbocharger used on the engine. May only be used for the NAME" InitialValue="2"/>
+		<VarDeclaration Name="SA_TRANSMISSION_1" Type="BYTE" Comment="Source Address: Transmission #1 - The first transmission - may only be used for the NAME" InitialValue="3"/>
+		<VarDeclaration Name="SA_TRANSMISSION_2" Type="BYTE" Comment="Source Address: Transmission #2 - The second PA available for use for the function" InitialValue="4"/>
+		<VarDeclaration Name="SA_SHIFT_CONSOLE_PRIMARY" Type="BYTE" Comment="Source Address: Shift Console - Primary - The shift console mounted in the normal drivers" InitialValue="5"/>
+		<VarDeclaration Name="SA_SHIFT_CONSOLE_SECONDARY" Type="BYTE" Comment="Source Address: Shift Console - Secondary - A shift console mounted remotely from the normal" InitialValue="6"/>
+		<VarDeclaration Name="SA_POWER_TAKEOFF_MAIN_OR_REAR" Type="BYTE" Comment="Source Address: Power TakeOff - (Main or Rear)" InitialValue="7"/>
+		<VarDeclaration Name="SA_AXLE_STEERING" Type="BYTE" Comment="Source Address: Axle - Steering" InitialValue="8"/>
+		<VarDeclaration Name="SA_AXLE_DRIVE_1" Type="BYTE" Comment="Source Address: Axle - Drive #1 - The first drive axle - may only be used for the NAME" InitialValue="9"/>
+		<VarDeclaration Name="SA_AXLE_DRIVE_2" Type="BYTE" Comment="Source Address: Axle - Drive #2 - The second PA available for use for the function, Axle" InitialValue="10"/>
+		<VarDeclaration Name="SA_BRAKES_SYSTEM_CONTROLLER" Type="BYTE" Comment="Source Address: Brakes - System Controller" InitialValue="11"/>
+		<VarDeclaration Name="SA_BRAKES_STEER_AXLE" Type="BYTE" Comment="Source Address: Brakes - Steer Axle" InitialValue="12"/>
+		<VarDeclaration Name="SA_BRAKES_DRIVE_AXLE_1" Type="BYTE" Comment="Source Address: Brakes - Drive axle #1 - The brakes on the first drive axle - may only be used" InitialValue="13"/>
+		<VarDeclaration Name="SA_BRAKES_DRIVE_AXLE_2" Type="BYTE" Comment="Source Address: Brakes - Drive Axle #2 - The second PA available for use for the function" InitialValue="14"/>
+		<VarDeclaration Name="SA_RETARDER_ENGINE" Type="BYTE" Comment="Source Address: Retarder - Engine - Engine Compression Braking" InitialValue="15"/>
+		<VarDeclaration Name="SA_RETARDER_DRIVELINE" Type="BYTE" Comment="Source Address: Retarder - Driveline" InitialValue="16"/>
+		<VarDeclaration Name="SA_CRUISE_CONTROL" Type="BYTE" Comment="Source Address: Cruise Control - Speed-based control" InitialValue="17"/>
+		<VarDeclaration Name="SA_FUEL_SYSTEM" Type="BYTE" Comment="Source Address: Fuel System" InitialValue="18"/>
+		<VarDeclaration Name="SA_STEERING_CONTROLLER" Type="BYTE" Comment="Source Address: Steering Controller" InitialValue="19"/>
+		<VarDeclaration Name="SA_SUSPENSION_STEER_AXLE" Type="BYTE" Comment="Source Address: Suspension - Steer Axle" InitialValue="20"/>
+		<VarDeclaration Name="SA_SUSPENSION_DRIVE_AXLE_1" Type="BYTE" Comment="Source Address: Suspension - Drive Axle #1 - The suspension on the first drive axle - may only" InitialValue="21"/>
+		<VarDeclaration Name="SA_SUSPENSION_DRIVE_AXLE_2" Type="BYTE" Comment="Source Address: Suspension - Drive Axle #2 - The second PA available for use for the function" InitialValue="22"/>
+		<VarDeclaration Name="SA_INSTRUMENT_CLUSTER_1" Type="BYTE" Comment="Source Address: Instrument Cluster #1 - The first instrument cluster - may only be used for" InitialValue="23"/>
+		<VarDeclaration Name="SA_TRIP_RECORDER" Type="BYTE" Comment="Source Address: Trip Recorder" InitialValue="24"/>
+		<VarDeclaration Name="SA_PASSENGER_OPERATOR_CLIMATE_CONTROL_1" Type="BYTE" Comment="Source Address: Passenger-Operator Climate Control #1 - The first climate control - may only" InitialValue="25"/>
+		<VarDeclaration Name="SA_ALTERNATOR_ELECTRICAL_CHARGING_SYSTEM" Type="BYTE" Comment="Source Address: Alternator/Electrical Charging System - Vehicle's primary charging controller" InitialValue="26"/>
+		<VarDeclaration Name="SA_AERODYNAMIC_CONTROL" Type="BYTE" Comment="Source Address: Aerodynamic Control" InitialValue="27"/>
+		<VarDeclaration Name="SA_VEHICLE_NAVIGATION" Type="BYTE" Comment="Source Address: Vehicle Navigation" InitialValue="28"/>
+		<VarDeclaration Name="SA_VEHICLE_SECURITY" Type="BYTE" Comment="Source Address: Vehicle Security" InitialValue="29"/>
+		<VarDeclaration Name="SA_ELECTRICAL_SYSTEM" Type="BYTE" Comment="Source Address: Electrical System - This may include Load Centers, Fuseboxes, &amp; Power" InitialValue="30"/>
+		<VarDeclaration Name="SA_STARTER_SYSTEM" Type="BYTE" Comment="Source Address: Starter System" InitialValue="31"/>
+		<VarDeclaration Name="SA_TRACTOR_TRAILER_BRIDGE_1" Type="BYTE" Comment="Source Address: Tractor-Trailer Bridge #1 - The first Tractor mounted bridge leading to" InitialValue="32"/>
+		<VarDeclaration Name="SA_BODY_CONTROLLER" Type="BYTE" Comment="Source Address: Body Controller" InitialValue="33"/>
+		<VarDeclaration Name="SA_AUXILIARY_VALVE_CONTROL_OR_ENGINE_AIR_SYSTEM_VALVE_CONTROL" Type="BYTE" Comment="Source Address: Auxiliary Valve Control or Engine Air System Valve Control - This should be" InitialValue="34"/>
+		<VarDeclaration Name="SA_HITCH_CONTROL" Type="BYTE" Comment="Source Address: Hitch Control - Straight truck hitch (NOT Ag hitch – it is in IG 2)" InitialValue="35"/>
+		<VarDeclaration Name="SA_POWER_TAKEOFF_FRONT_OR_SECONDARY" Type="BYTE" Comment="Source Address: Power TakeOff (Front or Secondary)" InitialValue="36"/>
+		<VarDeclaration Name="SA_OFF_VEHICLE_GATEWAY" Type="BYTE" Comment="Source Address: Off Vehicle Gateway - General gateway controller (off board to on board) that" InitialValue="37"/>
+		<VarDeclaration Name="SA_VIRTUAL_TERMINAL_IN_CAB" Type="BYTE" Comment="Source Address: Virtual Terminal (in cab)" InitialValue="38"/>
+		<VarDeclaration Name="SA_MANAGEMENT_COMPUTER_1" Type="BYTE" Comment="Source Address: Management Computer #1 - The first Management Computer - may only be used for" InitialValue="39"/>
+		<VarDeclaration Name="SA_CAB_DISPLAY_1" Type="BYTE" Comment="Source Address: Cab Display #1 - The first Cab Display - may only be used for the NAME" InitialValue="40"/>
+		<VarDeclaration Name="SA_RETARDER_EXHAUST_ENGINE_1" Type="BYTE" Comment="Source Address: Retarder, Exhaust, Engine #1 - The first engine exhaust retarder - may only be" InitialValue="41"/>
+		<VarDeclaration Name="SA_HEADWAY_CONTROLLER" Type="BYTE" Comment="Source Address: Headway Controller - Forward-looking collision warning, collision avoidance" InitialValue="42"/>
+		<VarDeclaration Name="SA_ON_BOARD_DIAGNOSTIC_UNIT" Type="BYTE" Comment="Source Address: On-Board Diagnostic Unit" InitialValue="43"/>
+		<VarDeclaration Name="SA_RETARDER_EXHAUST_ENGINE_2" Type="BYTE" Comment="Source Address: Retarder, Exhaust, Engine #2 - The second PA available for use for the" InitialValue="44"/>
+		<VarDeclaration Name="SA_ENDURANCE_BRAKING_SYSTEM" Type="BYTE" Comment="Source Address: Endurance Braking System" InitialValue="45"/>
+		<VarDeclaration Name="SA_HYDRAULIC_PUMP_CONTROLLER" Type="BYTE" Comment="Source Address: Hydraulic Pump Controller" InitialValue="46"/>
+		<VarDeclaration Name="SA_SUSPENSION_SYSTEM_CONTROLLER_1" Type="BYTE" Comment="Source Address: Suspension - System Controller #1 - The first Suspension - System Controller" InitialValue="47"/>
+		<VarDeclaration Name="SA_PNEUMATIC_SYSTEM_CONTROLLER" Type="BYTE" Comment="Source Address: Pneumatic - System Controller" InitialValue="48"/>
+		<VarDeclaration Name="SA_CAB_CONTROLLER_PRIMARY" Type="BYTE" Comment="Source Address: Cab Controller - Primary" InitialValue="49"/>
+		<VarDeclaration Name="SA_CAB_CONTROLLER_SECONDARY" Type="BYTE" Comment="Source Address: Cab Controller - Secondary" InitialValue="50"/>
+		<VarDeclaration Name="SA_TIRE_PRESSURE_CONTROLLER" Type="BYTE" Comment="Source Address: Tire Pressure Controller" InitialValue="51"/>
+		<VarDeclaration Name="SA_IGNITION_CONTROL_MODULE_1" Type="BYTE" Comment="Source Address: Ignition Control Module #1 - The first Ignition Control Module - may only be" InitialValue="52"/>
+		<VarDeclaration Name="SA_IGNITION_CONTROL_MODULE_2" Type="BYTE" Comment="Source Address: Ignition Control Module #2 - The second SA available for use with the Global" InitialValue="53"/>
+		<VarDeclaration Name="SA_SEAT_CONTROL_1" Type="BYTE" Comment="Source Address: Seat Control #1 - The first seat control module - may only be used for the" InitialValue="54"/>
+		<VarDeclaration Name="SA_LIGHTING_OPERATOR_CONTROLS" Type="BYTE" Comment="Source Address: Lighting - Operator Controls" InitialValue="55"/>
+		<VarDeclaration Name="SA_REAR_AXLE_STEERING_CONTROLLER_1" Type="BYTE" Comment="Source Address: Rear Axle Steering Controller #1" InitialValue="56"/>
+		<VarDeclaration Name="SA_WATER_PUMP_CONTROLLER" Type="BYTE" Comment="Source Address: Water Pump Controller" InitialValue="57"/>
+		<VarDeclaration Name="SA_PASSENGER_OPERATOR_CLIMATE_CONTROL_2" Type="BYTE" Comment="Source Address: Passenger-Operator Climate Control #2 - The second SA available for climate" InitialValue="58"/>
+		<VarDeclaration Name="SA_TRANSMISSION_DISPLAY_PRIMARY" Type="BYTE" Comment="Source Address: Transmission Display - Primary - Display to operate specifically in" InitialValue="59"/>
+		<VarDeclaration Name="SA_TRANSMISSION_DISPLAY_SECONDARY" Type="BYTE" Comment="Source Address: Transmission Display - Secondary - Secondary display to operate specifically" InitialValue="60"/>
+		<VarDeclaration Name="SA_EXHAUST_EMISSION_CONTROLLER" Type="BYTE" Comment="Source Address: Exhaust Emission Controller" InitialValue="61"/>
+		<VarDeclaration Name="SA_VEHICLE_DYNAMIC_STABILITY_CONTROLLER" Type="BYTE" Comment="Source Address: Vehicle Dynamic Stability Controller" InitialValue="62"/>
+		<VarDeclaration Name="SA_OIL_SENSOR" Type="BYTE" Comment="Source Address: Oil Sensor" InitialValue="63"/>
+		<VarDeclaration Name="SA_SUSPENSION_SYSTEM_CONTROLLER_2" Type="BYTE" Comment="Source Address: Suspension - System Controller #2" InitialValue="64"/>
+		<VarDeclaration Name="SA_INFORMATION_SYSTEM_CONTROLLER_1" Type="BYTE" Comment="Source Address: Information System Controller #1 - The first Information System Controller" InitialValue="65"/>
+		<VarDeclaration Name="SA_RAMP_CONTROL" Type="BYTE" Comment="Source Address: Ramp Control - Control of ramps, lifts, or tailgates" InitialValue="66"/>
+		<VarDeclaration Name="SA_CLUTCH_CONVERTER_UNIT" Type="BYTE" Comment="Source Address: Clutch/Converter Unit - Control of either the clutch and/or converter" InitialValue="67"/>
+		<VarDeclaration Name="SA_AUXILIARY_HEATER_1" Type="BYTE" Comment="Source Address: Auxiliary Heater #1 - The first Auxiliary Heater - may only be used for the" InitialValue="68"/>
+		<VarDeclaration Name="SA_AUXILIARY_HEATER_2" Type="BYTE" Comment="Source Address: Auxiliary Heater #2 - The second PA available for auxiliary heater - must be" InitialValue="69"/>
+		<VarDeclaration Name="SA_ENGINE_VALVE_CONTROLLER" Type="BYTE" Comment="Source Address: Engine Valve Controller - Electronic control used to control actuation of" InitialValue="70"/>
+		<VarDeclaration Name="SA_CHASSIS_CONTROLLER_1" Type="BYTE" Comment="Source Address: Chassis Controller #1 - The first Chassis Controller - may only be used for" InitialValue="71"/>
+		<VarDeclaration Name="SA_CHASSIS_CONTROLLER_2" Type="BYTE" Comment="Source Address: Chassis Controller #2 - The second PA available for chassis control - must be" InitialValue="72"/>
+		<VarDeclaration Name="SA_PROPULSION_BATTERY_CHARGER" Type="BYTE" Comment="Source Address: Propulsion Battery Charger - A device used to charge propulsion batteries in" InitialValue="73"/>
+		<VarDeclaration Name="SA_COMMUNICATIONS_UNIT_CELLULAR" Type="BYTE" Comment="Source Address: Communications Unit, Cellular - Cellular communications device" InitialValue="74"/>
+		<VarDeclaration Name="SA_COMMUNICATIONS_UNIT_SATELLITE" Type="BYTE" Comment="Source Address: Communications Unit, Satellite - Satellite communications device" InitialValue="75"/>
+		<VarDeclaration Name="SA_COMMUNICATIONS_UNIT_RADIO" Type="BYTE" Comment="Source Address: Communications Unit, Radio - Radio communications device, either receiver" InitialValue="76"/>
+		<VarDeclaration Name="SA_STEERING_COLUMN_UNIT" Type="BYTE" Comment="Source Address: Steering Column Unit - Device that gathers the operator inputs from" InitialValue="77"/>
+		<VarDeclaration Name="SA_FAN_DRIVE_CONTROLLER" Type="BYTE" Comment="Source Address: Fan Drive Controller - Controls the main cooling fan operation" InitialValue="78"/>
+		<VarDeclaration Name="SA_SEAT_CONTROL_2" Type="BYTE" Comment="Source Address: Seat Control #2 - The second PA available for seat controls - must be" InitialValue="79"/>
+		<VarDeclaration Name="SA_PARKING_BRAKE_CONTROLLER" Type="BYTE" Comment="Source Address: Parking brake controller - Module controlling the parking brake" InitialValue="80"/>
+		<VarDeclaration Name="SA_AFTERTREATMENT_1_SYSTEM_GAS_INTAKE" Type="BYTE" Comment="Source Address: Aftertreatment #1 system gas intake - Used for exhaust gas measurement such" InitialValue="81"/>
+		<VarDeclaration Name="SA_AFTERTREATMENT_1_SYSTEM_GAS_OUTLET" Type="BYTE" Comment="Source Address: Aftertreatment #1 system gas outlet - Used for exhaust gas measurement such" InitialValue="82"/>
+		<VarDeclaration Name="SA_SAFETY_RESTRAINT_SYSTEM" Type="BYTE" Comment="Source Address: Safety Restraint System - The safety restraint system can be for controlling" InitialValue="83"/>
+		<VarDeclaration Name="SA_CAB_DISPLAY_2" Type="BYTE" Comment="Source Address: Cab Display #2 - The second Cab Display, this can used for supplemental" InitialValue="84"/>
+		<VarDeclaration Name="SA_DIESEL_PARTICULATE_FILTER_CONTROLLER" Type="BYTE" Comment="Source Address: Diesel Particulate Filter Controller - Used for Diesel Particulate Filter" InitialValue="85"/>
+		<VarDeclaration Name="SA_AFTERTREATMENT_2_SYSTEM_GAS_INTAKE" Type="BYTE" Comment="Source Address: Aftertreatment #2 system gas intake - Used for exhaust gas measurement such as" InitialValue="86"/>
+		<VarDeclaration Name="SA_AFTERTREATMENT_2_SYSTEM_GAS_OUTLET" Type="BYTE" Comment="Source Address: Aftertreatment #2 system gas outlet - Used for exhaust gas measurement such" InitialValue="87"/>
+		<VarDeclaration Name="SA_SAFETY_RESTRAINT_SYSTEM_2" Type="BYTE" Comment="Source Address: Safety Restraint System #2 - The second safety restraint system that can be" InitialValue="88"/>
+		<VarDeclaration Name="SA_ATMOSPHERIC_SENSOR" Type="BYTE" Comment="Source Address: Atmospheric Sensor - Used for sensors which measure conditions such as air" InitialValue="89"/>
+		<VarDeclaration Name="SA_POWERTRAIN_CONTROL_MODULE" Type="BYTE" Comment="Source Address: Powertrain Control Module - Electronic control module in charge of controlling" InitialValue="90"/>
+		<VarDeclaration Name="SA_POWER_SYSTEMS_MANAGER" Type="BYTE" Comment="Source Address: Power Systems Manager - This controller application will be used to manage one" InitialValue="91"/>
+		<VarDeclaration Name="SA_ENGINE_INJECTION_CONTROL_MODULE" Type="BYTE" Comment="Source Address: Engine Injection Control Module - For use with an Injection Control Module" InitialValue="92"/>
+		<VarDeclaration Name="SA_FIRE_PROTECTION_SYSTEM" Type="BYTE" Comment="Source Address: Fire Protection System - Controller for Fire Detection and Fire Extinguishing" InitialValue="93"/>
+		<VarDeclaration Name="SA_DRIVER_IMPAIRMENT_DEVICE" Type="BYTE" Comment="Source Address: Driver Impairment Device - Device which prevents the starting of a vehicle" InitialValue="94"/>
+		<VarDeclaration Name="SA_SUPPLY_EQUIPMENT_COMMUNICATION_CONTROLLER_SECC" Type="BYTE" Comment="Source Address: Supply Equipment Communication Controller (SECC) - Typically part of an" InitialValue="95"/>
+		<VarDeclaration Name="SA_VEHICLE_ADAPTER_COMMUNICATION_CONTROLLER_VACC" Type="BYTE" Comment="Source Address: Vehicle Adapter Communication Controller (VACC) - A controller inside of the" InitialValue="96"/>
+		<VarDeclaration Name="SA_FUEL_CELL_SYSTEM_1" Type="BYTE" Comment="Source Address: Fuel Cell System 1 - The controller application that controls the first fuel" InitialValue="97"/>
+		<VarDeclaration Name="SA_FUEL_CELL_SYSTEM_2" Type="BYTE" Comment="Source Address: Fuel Cell System 2 - The controller application that controls the second fuel" InitialValue="98"/>
+		<VarDeclaration Name="SA_RESERVED_99" Type="BYTE" Comment="Source Address: thru 127 are reserved for future assignment by SAE" InitialValue="99"/>
+		<VarDeclaration Name="SA_DYNAMIC_128" Type="BYTE" Comment="Source Address: thru 247 - Used for dynamic address assignment" InitialValue="128"/>
+		<VarDeclaration Name="SA_FILE_SERVER_PRINTER" Type="BYTE" Comment="Source Address: File Server / Printer - On-board file and/or print server" InitialValue="248"/>
+		<VarDeclaration Name="SA_OFF_BOARD_DIAGNOSTIC_SERVICE_TOOL_1" Type="BYTE" Comment="Source Address: Off Board Diagnostic-Service Tool #1 - The address for the first off board" InitialValue="249"/>
+		<VarDeclaration Name="SA_OFF_BOARD_DIAGNOSTIC_SERVICE_TOOL_2" Type="BYTE" Comment="Source Address: Off Board Diagnostic-Service Tool #2 - The second preferred address available" InitialValue="250"/>
+		<VarDeclaration Name="SA_ON_BOARD_DATA_LOGGER" Type="BYTE" Comment="Source Address: On-Board Data Logger" InitialValue="251"/>
+		<VarDeclaration Name="SA_RESERVED_FOR_EXPERIMENTAL_USE" Type="BYTE" Comment="Source Address: Reserved for Experimental Use" InitialValue="252"/>
+		<VarDeclaration Name="SA_RESERVED_FOR_OEM" Type="BYTE" Comment="Source Address: Reserved for OEM" InitialValue="253"/>
+		<VarDeclaration Name="SA_NULL_ADDRESS" Type="BYTE" Comment="Source Address: Null Address - The NULL address is only for use within J1939-81 Network" InitialValue="254"/>
+		<VarDeclaration Name="SA_GLOBAL_ALL_ANY_NODE" Type="BYTE" Comment="Source Address: GLOBAL (All-Any Node) - The Global address is only is permitted in the" InitialValue="255"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE isobus::pgn::const;
+
+// Global source addresses (all industry groups)
+GLOBALCONSTANTS Global_Source_Addresses
+	VAR_GLOBAL CONSTANT
+		SA_ENGINE_1 : BYTE := 0; // Source Address: Engine #1 - The #1 on the Engine CA is to identify that this is the first PA
+		SA_ENGINE_2 : BYTE := 1; // Source Address: Engine #2 - The #2 on the Engine CA is to identify that this is the second PA
+		SA_TURBOCHARGER : BYTE := 2; // Source Address: Turbocharger - Turbocharger used on the engine. May only be used for the NAME
+		SA_TRANSMISSION_1 : BYTE := 3; // Source Address: Transmission #1 - The first transmission - may only be used for the NAME
+		SA_TRANSMISSION_2 : BYTE := 4; // Source Address: Transmission #2 - The second PA available for use for the function
+		SA_SHIFT_CONSOLE_PRIMARY : BYTE := 5; // Source Address: Shift Console - Primary - The shift console mounted in the normal drivers
+		SA_SHIFT_CONSOLE_SECONDARY : BYTE := 6; // Source Address: Shift Console - Secondary - A shift console mounted remotely from the normal
+		SA_POWER_TAKEOFF_MAIN_OR_REAR : BYTE := 7; // Source Address: Power TakeOff - (Main or Rear)
+		SA_AXLE_STEERING : BYTE := 8; // Source Address: Axle - Steering
+		SA_AXLE_DRIVE_1 : BYTE := 9; // Source Address: Axle - Drive #1 - The first drive axle - may only be used for the NAME
+		SA_AXLE_DRIVE_2 : BYTE := 10; // Source Address: Axle - Drive #2 - The second PA available for use for the function, Axle
+		SA_BRAKES_SYSTEM_CONTROLLER : BYTE := 11; // Source Address: Brakes - System Controller
+		SA_BRAKES_STEER_AXLE : BYTE := 12; // Source Address: Brakes - Steer Axle
+		SA_BRAKES_DRIVE_AXLE_1 : BYTE := 13; // Source Address: Brakes - Drive axle #1 - The brakes on the first drive axle - may only be used
+		SA_BRAKES_DRIVE_AXLE_2 : BYTE := 14; // Source Address: Brakes - Drive Axle #2 - The second PA available for use for the function
+		SA_RETARDER_ENGINE : BYTE := 15; // Source Address: Retarder - Engine - Engine Compression Braking
+		SA_RETARDER_DRIVELINE : BYTE := 16; // Source Address: Retarder - Driveline
+		SA_CRUISE_CONTROL : BYTE := 17; // Source Address: Cruise Control - Speed-based control
+		SA_FUEL_SYSTEM : BYTE := 18; // Source Address: Fuel System
+		SA_STEERING_CONTROLLER : BYTE := 19; // Source Address: Steering Controller
+		SA_SUSPENSION_STEER_AXLE : BYTE := 20; // Source Address: Suspension - Steer Axle
+		SA_SUSPENSION_DRIVE_AXLE_1 : BYTE := 21; // Source Address: Suspension - Drive Axle #1 - The suspension on the first drive axle - may only
+		SA_SUSPENSION_DRIVE_AXLE_2 : BYTE := 22; // Source Address: Suspension - Drive Axle #2 - The second PA available for use for the function
+		SA_INSTRUMENT_CLUSTER_1 : BYTE := 23; // Source Address: Instrument Cluster #1 - The first instrument cluster - may only be used for
+		SA_TRIP_RECORDER : BYTE := 24; // Source Address: Trip Recorder
+		SA_PASSENGER_OPERATOR_CLIMATE_CONTROL_1 : BYTE := 25; // Source Address: Passenger-Operator Climate Control #1 - The first climate control - may only
+		SA_ALTERNATOR_ELECTRICAL_CHARGING_SYSTEM : BYTE := 26; // Source Address: Alternator/Electrical Charging System - Vehicle's primary charging controller
+		SA_AERODYNAMIC_CONTROL : BYTE := 27; // Source Address: Aerodynamic Control
+		SA_VEHICLE_NAVIGATION : BYTE := 28; // Source Address: Vehicle Navigation
+		SA_VEHICLE_SECURITY : BYTE := 29; // Source Address: Vehicle Security
+		SA_ELECTRICAL_SYSTEM : BYTE := 30; // Source Address: Electrical System - This may include Load Centers, Fuseboxes, & Power
+		SA_STARTER_SYSTEM : BYTE := 31; // Source Address: Starter System
+		SA_TRACTOR_TRAILER_BRIDGE_1 : BYTE := 32; // Source Address: Tractor-Trailer Bridge #1 - The first Tractor mounted bridge leading to
+		SA_BODY_CONTROLLER : BYTE := 33; // Source Address: Body Controller
+		SA_AUXILIARY_VALVE_CONTROL_OR_ENGINE_AIR_SYSTEM_VALVE_CONTROL : BYTE := 34; // Source Address: Auxiliary Valve Control or Engine Air System Valve Control - This should be
+		SA_HITCH_CONTROL : BYTE := 35; // Source Address: Hitch Control - Straight truck hitch (NOT Ag hitch – it is in IG 2)
+		SA_POWER_TAKEOFF_FRONT_OR_SECONDARY : BYTE := 36; // Source Address: Power TakeOff (Front or Secondary)
+		SA_OFF_VEHICLE_GATEWAY : BYTE := 37; // Source Address: Off Vehicle Gateway - General gateway controller (off board to on board) that
+		SA_VIRTUAL_TERMINAL_IN_CAB : BYTE := 38; // Source Address: Virtual Terminal (in cab)
+		SA_MANAGEMENT_COMPUTER_1 : BYTE := 39; // Source Address: Management Computer #1 - The first Management Computer - may only be used for
+		SA_CAB_DISPLAY_1 : BYTE := 40; // Source Address: Cab Display #1 - The first Cab Display - may only be used for the NAME
+		SA_RETARDER_EXHAUST_ENGINE_1 : BYTE := 41; // Source Address: Retarder, Exhaust, Engine #1 - The first engine exhaust retarder - may only be
+		SA_HEADWAY_CONTROLLER : BYTE := 42; // Source Address: Headway Controller - Forward-looking collision warning, collision avoidance
+		SA_ON_BOARD_DIAGNOSTIC_UNIT : BYTE := 43; // Source Address: On-Board Diagnostic Unit
+		SA_RETARDER_EXHAUST_ENGINE_2 : BYTE := 44; // Source Address: Retarder, Exhaust, Engine #2 - The second PA available for use for the
+		SA_ENDURANCE_BRAKING_SYSTEM : BYTE := 45; // Source Address: Endurance Braking System
+		SA_HYDRAULIC_PUMP_CONTROLLER : BYTE := 46; // Source Address: Hydraulic Pump Controller
+		SA_SUSPENSION_SYSTEM_CONTROLLER_1 : BYTE := 47; // Source Address: Suspension - System Controller #1 - The first Suspension - System Controller
+		SA_PNEUMATIC_SYSTEM_CONTROLLER : BYTE := 48; // Source Address: Pneumatic - System Controller
+		SA_CAB_CONTROLLER_PRIMARY : BYTE := 49; // Source Address: Cab Controller - Primary
+		SA_CAB_CONTROLLER_SECONDARY : BYTE := 50; // Source Address: Cab Controller - Secondary
+		SA_TIRE_PRESSURE_CONTROLLER : BYTE := 51; // Source Address: Tire Pressure Controller
+		SA_IGNITION_CONTROL_MODULE_1 : BYTE := 52; // Source Address: Ignition Control Module #1 - The first Ignition Control Module - may only be
+		SA_IGNITION_CONTROL_MODULE_2 : BYTE := 53; // Source Address: Ignition Control Module #2 - The second SA available for use with the Global
+		SA_SEAT_CONTROL_1 : BYTE := 54; // Source Address: Seat Control #1 - The first seat control module - may only be used for the
+		SA_LIGHTING_OPERATOR_CONTROLS : BYTE := 55; // Source Address: Lighting - Operator Controls
+		SA_REAR_AXLE_STEERING_CONTROLLER_1 : BYTE := 56; // Source Address: Rear Axle Steering Controller #1
+		SA_WATER_PUMP_CONTROLLER : BYTE := 57; // Source Address: Water Pump Controller
+		SA_PASSENGER_OPERATOR_CLIMATE_CONTROL_2 : BYTE := 58; // Source Address: Passenger-Operator Climate Control #2 - The second SA available for climate
+		SA_TRANSMISSION_DISPLAY_PRIMARY : BYTE := 59; // Source Address: Transmission Display - Primary - Display to operate specifically in
+		SA_TRANSMISSION_DISPLAY_SECONDARY : BYTE := 60; // Source Address: Transmission Display - Secondary - Secondary display to operate specifically
+		SA_EXHAUST_EMISSION_CONTROLLER : BYTE := 61; // Source Address: Exhaust Emission Controller
+		SA_VEHICLE_DYNAMIC_STABILITY_CONTROLLER : BYTE := 62; // Source Address: Vehicle Dynamic Stability Controller
+		SA_OIL_SENSOR : BYTE := 63; // Source Address: Oil Sensor
+		SA_SUSPENSION_SYSTEM_CONTROLLER_2 : BYTE := 64; // Source Address: Suspension - System Controller #2
+		SA_INFORMATION_SYSTEM_CONTROLLER_1 : BYTE := 65; // Source Address: Information System Controller #1 - The first Information System Controller
+		SA_RAMP_CONTROL : BYTE := 66; // Source Address: Ramp Control - Control of ramps, lifts, or tailgates
+		SA_CLUTCH_CONVERTER_UNIT : BYTE := 67; // Source Address: Clutch/Converter Unit - Control of either the clutch and/or converter
+		SA_AUXILIARY_HEATER_1 : BYTE := 68; // Source Address: Auxiliary Heater #1 - The first Auxiliary Heater - may only be used for the
+		SA_AUXILIARY_HEATER_2 : BYTE := 69; // Source Address: Auxiliary Heater #2 - The second PA available for auxiliary heater - must be
+		SA_ENGINE_VALVE_CONTROLLER : BYTE := 70; // Source Address: Engine Valve Controller - Electronic control used to control actuation of
+		SA_CHASSIS_CONTROLLER_1 : BYTE := 71; // Source Address: Chassis Controller #1 - The first Chassis Controller - may only be used for
+		SA_CHASSIS_CONTROLLER_2 : BYTE := 72; // Source Address: Chassis Controller #2 - The second PA available for chassis control - must be
+		SA_PROPULSION_BATTERY_CHARGER : BYTE := 73; // Source Address: Propulsion Battery Charger - A device used to charge propulsion batteries in
+		SA_COMMUNICATIONS_UNIT_CELLULAR : BYTE := 74; // Source Address: Communications Unit, Cellular - Cellular communications device
+		SA_COMMUNICATIONS_UNIT_SATELLITE : BYTE := 75; // Source Address: Communications Unit, Satellite - Satellite communications device
+		SA_COMMUNICATIONS_UNIT_RADIO : BYTE := 76; // Source Address: Communications Unit, Radio - Radio communications device, either receiver
+		SA_STEERING_COLUMN_UNIT : BYTE := 77; // Source Address: Steering Column Unit - Device that gathers the operator inputs from
+		SA_FAN_DRIVE_CONTROLLER : BYTE := 78; // Source Address: Fan Drive Controller - Controls the main cooling fan operation
+		SA_SEAT_CONTROL_2 : BYTE := 79; // Source Address: Seat Control #2 - The second PA available for seat controls - must be
+		SA_PARKING_BRAKE_CONTROLLER : BYTE := 80; // Source Address: Parking brake controller - Module controlling the parking brake
+		SA_AFTERTREATMENT_1_SYSTEM_GAS_INTAKE : BYTE := 81; // Source Address: Aftertreatment #1 system gas intake - Used for exhaust gas measurement such
+		SA_AFTERTREATMENT_1_SYSTEM_GAS_OUTLET : BYTE := 82; // Source Address: Aftertreatment #1 system gas outlet - Used for exhaust gas measurement such
+		SA_SAFETY_RESTRAINT_SYSTEM : BYTE := 83; // Source Address: Safety Restraint System - The safety restraint system can be for controlling
+		SA_CAB_DISPLAY_2 : BYTE := 84; // Source Address: Cab Display #2 - The second Cab Display, this can used for supplemental
+		SA_DIESEL_PARTICULATE_FILTER_CONTROLLER : BYTE := 85; // Source Address: Diesel Particulate Filter Controller - Used for Diesel Particulate Filter
+		SA_AFTERTREATMENT_2_SYSTEM_GAS_INTAKE : BYTE := 86; // Source Address: Aftertreatment #2 system gas intake - Used for exhaust gas measurement such as
+		SA_AFTERTREATMENT_2_SYSTEM_GAS_OUTLET : BYTE := 87; // Source Address: Aftertreatment #2 system gas outlet - Used for exhaust gas measurement such
+		SA_SAFETY_RESTRAINT_SYSTEM_2 : BYTE := 88; // Source Address: Safety Restraint System #2 - The second safety restraint system that can be
+		SA_ATMOSPHERIC_SENSOR : BYTE := 89; // Source Address: Atmospheric Sensor - Used for sensors which measure conditions such as air
+		SA_POWERTRAIN_CONTROL_MODULE : BYTE := 90; // Source Address: Powertrain Control Module - Electronic control module in charge of controlling
+		SA_POWER_SYSTEMS_MANAGER : BYTE := 91; // Source Address: Power Systems Manager - This controller application will be used to manage one
+		SA_ENGINE_INJECTION_CONTROL_MODULE : BYTE := 92; // Source Address: Engine Injection Control Module - For use with an Injection Control Module
+		SA_FIRE_PROTECTION_SYSTEM : BYTE := 93; // Source Address: Fire Protection System - Controller for Fire Detection and Fire Extinguishing
+		SA_DRIVER_IMPAIRMENT_DEVICE : BYTE := 94; // Source Address: Driver Impairment Device - Device which prevents the starting of a vehicle
+		SA_SUPPLY_EQUIPMENT_COMMUNICATION_CONTROLLER_SECC : BYTE := 95; // Source Address: Supply Equipment Communication Controller (SECC) - Typically part of an
+		SA_VEHICLE_ADAPTER_COMMUNICATION_CONTROLLER_VACC : BYTE := 96; // Source Address: Vehicle Adapter Communication Controller (VACC) - A controller inside of the
+		SA_FUEL_CELL_SYSTEM_1 : BYTE := 97; // Source Address: Fuel Cell System 1 - The controller application that controls the first fuel
+		SA_FUEL_CELL_SYSTEM_2 : BYTE := 98; // Source Address: Fuel Cell System 2 - The controller application that controls the second fuel
+		SA_RESERVED_99 : BYTE := 99; // Source Address: thru 127 are reserved for future assignment by SAE
+		SA_DYNAMIC_128 : BYTE := 128; // Source Address: thru 247 - Used for dynamic address assignment
+		SA_FILE_SERVER_PRINTER : BYTE := 248; // Source Address: File Server / Printer - On-board file and/or print server
+		SA_OFF_BOARD_DIAGNOSTIC_SERVICE_TOOL_1 : BYTE := 249; // Source Address: Off Board Diagnostic-Service Tool #1 - The address for the first off board
+		SA_OFF_BOARD_DIAGNOSTIC_SERVICE_TOOL_2 : BYTE := 250; // Source Address: Off Board Diagnostic-Service Tool #2 - The second preferred address available
+		SA_ON_BOARD_DATA_LOGGER : BYTE := 251; // Source Address: On-Board Data Logger
+		SA_RESERVED_FOR_EXPERIMENTAL_USE : BYTE := 252; // Source Address: Reserved for Experimental Use
+		SA_RESERVED_FOR_OEM : BYTE := 253; // Source Address: Reserved for OEM
+		SA_NULL_ADDRESS : BYTE := 254; // Source Address: Null Address - The NULL address is only for use within J1939-81 Network
+		SA_GLOBAL_ALL_ANY_NODE : BYTE := 255; // Source Address: GLOBAL (All-Any Node) - The Global address is only is permitted in the
+	END_VAR
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</GlobalConstants>

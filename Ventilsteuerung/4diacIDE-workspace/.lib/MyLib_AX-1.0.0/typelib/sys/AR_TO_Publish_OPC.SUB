@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="AR_TO_Publish_OPC" Comment="Physikalischer AR-Wert per OPC-UA publiziert, gedrosselt (ohne VT)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-28" Remarks="Kopie von MyLib::sys::AR_TO_Q_Publish_OPC ohne Q_NumericValue/AR_SPLIT_2, fuer Stationen ohne VT (keine isobus_UT-Libs). RateLimit_Anzeige (500ms) bleibt.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="ID_WRITE" Type="WSTRING" Comment="Publish-Adresse (REAL, ACTION=PUBLISH)"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+		<Sockets>
+			<AdapterDeclaration Name="AR_IN" Type="adapter::types::unidirectional::AR" Comment="Physikalischer Wert (bereits skaliert)"/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="RateLimit_Anzeige" Type="adapter::events::unidirectional::AR_D_FF_TMIN" Comment="Drosselt den Publish auf max. 1 Update/500ms" x="300" y="-200">
+			<Parameter Name="Tmin" Value="T#500ms"/>
+		</FB>
+		<FB Name="AR_PUBLISH" Type="adapter::net::AR_PUBLISH_1" x="2400" y="-200">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="AR_PUBLISH.INIT" dx1="1826.67"/>
+			<Connection Source="AR_PUBLISH.INITO" Destination="INITO" dx1="1200"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="ID_WRITE" Destination="AR_PUBLISH.ID" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="AR_PUBLISH.QI" dx1="1880"/>
+			<Connection Source="AR_PUBLISH.QO" Destination="QO" dx1="1200"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="AR_IN" Destination="RateLimit_Anzeige.I" dx1="600"/>
+			<Connection Source="RateLimit_Anzeige.Q" Destination="AR_PUBLISH.IN" dx1="600"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SubAppType Name="AR_SERVER_0_1_TO_Publish_OPC" Comment="Empfaengt einen REAL-Wert als Argument eines entfernten OPC-UA-Methodenaufrufs&#10;(CALL_METHOD, AR_SERVER_0_1) und publiziert ihn sofort lokal weiter&#10;(AR_PUBLISH_1) - kein VT-Anschluss, reine Weiterleitungsbruecke fuer Stationen&#10;ohne VT. Fuer &apos;VT-Eingabefeld auf einer anderen Station ODER Web-Dashboard rufen&#10;dieselbe Methode auf, nur bei echter Eingabe&apos; (Franz), z.B. Druck-Referenzwerte&#10;(B20).">
+<SubAppType Name="AR_SERVER_0_1_TO_Publish_OPC" Comment="Empfaengt einen REAL-Wert als Argument eines entfernten OPC-UA-Methodenaufrufs&#10;(CALL_METHOD, SERVER_0_1) und publiziert ihn sofort lokal weiter&#10;(PUBLISH_1) - kein VT-Anschluss, reine Weiterleitungsbruecke fuer Stationen&#10;ohne VT. Fuer &apos;VT-Eingabefeld auf einer anderen Station ODER Web-Dashboard rufen&#10;dieselbe Methode auf, nur bei echter Eingabe&apos; (Franz), z.B. Druck-Referenzwerte&#10;(B20).">
 	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-11-25" Remarks="SERVER_0_1 + E_PERMIT(PERMIT=QO) + F_MOVE(REAL) + PUBLISH_1 statt AR_SERVER_0_1/AR_PUBLISH_1: IND nur bei QO=TRUE an RSP. Ein gescheitertes RSP meldet IND mit QO=FALSE, direkt IND-&gt;RSP (in AR_SERVER_0_1) ergab eine Endlosschleife.">
+	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-09-23" Remarks="initial implementation - Franz: 'man macht auf STG4 2 METHODEN, die werden aufgerufen: vom Web-Dashboard oder von VT1, und zwar nur wenn jemand was eingibt'. Buendelt AR_SERVER_0_1 (Empfang) + AR_PUBLISH_1 (lokale Weiterleitung), fuer Sensor-Stationen ohne eigene VT (z.B. STG4), die trotzdem echte, editierbare Referenzwerte von einer anderen Station (VT) oder dem Dashboard entgegennehmen sollen.">
 	</VersionInfo>
 	<CompilerInfo packageName="MyLib::sys">
@@ -25,9 +27,14 @@
 		</OutputVars>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="RECEIVE" Type="adapter::net::AR_SERVER_0_1" x="-100" y="0">
+		<FB Name="RECEIVE" Type="iec61499::net::SERVER_0_1" x="-100" y="0">
 		</FB>
-		<FB Name="PUBLISH" Type="adapter::net::AR_PUBLISH_1" x="1700" y="0">
+		<FB Name="RECEIVE_QO" Type="iec61499::events::E_PERMIT" Comment="nur echter Call (QO=TRUE)" x="-100" y="-700">
+		</FB>
+		<FB Name="WERT" Type="iec61131::selection::F_MOVE" x="1700" y="-700">
+			<Attribute Name="DataType" Value="REAL"/>
+		</FB>
+		<FB Name="PUBLISH" Type="iec61499::net::PUBLISH_1" x="3400" y="0">
 		</FB>
 		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_2" x="5400" y="500">
 		</FB>
@@ -38,6 +45,10 @@
 			<Connection Source="PUBLISH.INITO" Destination="AND_QO.REQ" dx1="926.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
+			<Connection Source="RECEIVE.IND" Destination="RECEIVE_QO.EI"/>
+			<Connection Source="RECEIVE_QO.EO" Destination="RECEIVE.RSP"/>
+			<Connection Source="RECEIVE_QO.EO" Destination="WERT.REQ"/>
+			<Connection Source="WERT.CNF" Destination="PUBLISH.REQ"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="ID_METHOD" Destination="RECEIVE.ID" dx1="1400">
@@ -52,6 +63,9 @@
 			<Connection Source="QI" Destination="PUBLISH.QI" dx1="553.33">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
+			<Connection Source="RECEIVE.QO" Destination="RECEIVE_QO.PERMIT"/>
+			<Connection Source="RECEIVE.RD_1" Destination="WERT.IN"/>
+			<Connection Source="WERT.OUT" Destination="PUBLISH.SD_1"/>
 			<Connection Source="RECEIVE.QO" Destination="AND_QO.IN1" dx1="1700">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
@@ -60,8 +74,5 @@
 			</Connection>
 			<Connection Source="AND_QO.OUT" Destination="QO" dx1="1440"/>
 		</DataConnections>
-		<AdapterConnections>
-			<Connection Source="RECEIVE.OUT" Destination="PUBLISH.IN" dx1="300"/>
-		</AdapterConnections>
 	</SubAppNetwork>
 </SubAppType>

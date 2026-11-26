@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="logiBUS_QD_DIMMER_G" Comment="Dimmer like in the living room for lamps and LEDs, with gamma correction, on a 13-bit PWM output">
+	<Identification Description="Copyright (c) 2026 HR Agrartechnik GmbH&#10; &#10;This program and the accompanying materials are made &#10;available under the terms of the Eclipse Public License 2.0 &#10;which is available at https://www.eclipse.org/legal/epl-2.0/ &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-11-07" Remarks="initial version, gamma variant of logiBUS_QD_DIMMER">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::io::DQ">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+				<With Var="QI"/>
+				<With Var="PARAMS"/>
+				<With Var="Output"/>
+				<With Var="FREQ"/>
+				<With Var="DIM_TIME"/>
+				<With Var="LEVEL_MIN"/>
+				<With Var="LEVEL_MAX"/>
+				<With Var="START"/>
+				<With Var="SOFT"/>
+				<With Var="GAMMA"/>
+			</Event>
+			<Event Name="TOGGLE" Type="Event" Comment="Short press (BUTTON_SINGLE_CLICK of logiBUS_IE): off -&gt; on with the stored brightness (first time START), on -&gt; off; ramp time SOFT">
+				<With Var="QI"/>
+				<With Var="DIM_TIME"/>
+				<With Var="LEVEL_MIN"/>
+				<With Var="LEVEL_MAX"/>
+				<With Var="START"/>
+				<With Var="SOFT"/>
+			</Event>
+			<Event Name="DIM_START" Type="Event" Comment="Long press begins (BUTTON_LONG_PRESS_START): dim stepless towards LEVEL_MAX or LEVEL_MIN. Every long press changes the direction, the first one after switching on dims down; at the end it dims the other way. From off: on and dim up">
+				<With Var="QI"/>
+				<With Var="DIM_TIME"/>
+				<With Var="LEVEL_MIN"/>
+				<With Var="LEVEL_MAX"/>
+				<With Var="START"/>
+				<With Var="SOFT"/>
+			</Event>
+			<Event Name="DIM_STOP" Type="Event" Comment="Long press ends (BUTTON_LONG_PRESS_UP): stop dimming, the brightness stays and is stored">
+				<With Var="QI"/>
+				<With Var="DIM_TIME"/>
+				<With Var="LEVEL_MIN"/>
+				<With Var="LEVEL_MAX"/>
+				<With Var="START"/>
+				<With Var="SOFT"/>
+			</Event>
+			<Event Name="SWITCH_ON" Type="Event" Comment="Switch on directly with the stored brightness (nothing happens if already on)">
+				<With Var="QI"/>
+				<With Var="DIM_TIME"/>
+				<With Var="LEVEL_MIN"/>
+				<With Var="LEVEL_MAX"/>
+				<With Var="START"/>
+				<With Var="SOFT"/>
+			</Event>
+			<Event Name="SWITCH_OFF" Type="Event" Comment="Switch off directly, e.g. central off (nothing happens if already off)">
+				<With Var="QI"/>
+				<With Var="DIM_TIME"/>
+				<With Var="LEVEL_MIN"/>
+				<With Var="LEVEL_MAX"/>
+				<With Var="START"/>
+				<With Var="SOFT"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+				<With Var="ON_STATE"/>
+				<With Var="LEVEL"/>
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Confirmation of TOGGLE, DIM_START, DIM_STOP, SWITCH_ON, SWITCH_OFF">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+				<With Var="ON_STATE"/>
+				<With Var="LEVEL"/>
+			</Event>
+			<Event Name="RAMPO" Type="Event" Comment="Ramp finished: LEVEL_MIN or LEVEL_MAX reached while dimming, or switching on/off finished. Not after DIM_STOP">
+				<With Var="QO"/>
+				<With Var="ON_STATE"/>
+				<With Var="LEVEL"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
+			<VarDeclaration Name="PARAMS" Type="STRING" Comment="Service Parameters"/>
+			<VarDeclaration Name="Output" Type="logiBUS::io::DQ::logiBUS_DO_S" Comment="Identify the Output Output_Q1..Q8" InitialValue="logiBUS_DO::Invalid"/>
+			<VarDeclaration Name="FREQ" Type="UDINT" Comment="PWM frequency in Hz, read at INIT. Outputs with the same frequency share an LEDC timer (4 timers, LED blinking uses one). Power stage limits, not checked: APIXON 15 PWR Q1 (BTH50030) max. 100 Hz; BTS7030/BTT6030/BTH6070 for valves 100..200 Hz; Trainer20 without power stage" InitialValue="400"/>
+			<VarDeclaration Name="DIM_TIME" Type="TIME" Comment="Time for the whole range LEVEL_MIN..LEVEL_MAX while dimming; a shorter rest takes proportionally less time, so the speed is always the same" InitialValue="T#4s"/>
+			<VarDeclaration Name="LEVEL_MIN" Type="REAL" Comment="Lowest brightness for dimming in % (0..100)" InitialValue="10.0"/>
+			<VarDeclaration Name="LEVEL_MAX" Type="REAL" Comment="Highest brightness for dimming in % (0..100)" InitialValue="100.0"/>
+			<VarDeclaration Name="START" Type="REAL" Comment="Brightness in % for the first switching on, before anything is stored" InitialValue="100.0"/>
+			<VarDeclaration Name="SOFT" Type="TIME" Comment="Ramp time for switching on and off (TOGGLE, SWITCH_ON, SWITCH_OFF). T#0ms = jump" InitialValue="T#300ms"/>
+			<VarDeclaration Name="GAMMA" Type="REAL" Comment="Gamma of the brightness curve, read at INIT: duty = 8191 * (brightness / 8191)^GAMMA. 1.0 = linear (like logiBUS_QD_DIMMER), 2.2 = sRGB (default), 2.6 / 2.8 = Espressif examples, often more even on LEDs. Invalid values (&lt;= 0, not finite) run linear like 1.0" InitialValue="2.2"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
+			<VarDeclaration Name="ON_STATE" Type="BOOL" Comment="TRUE = on, FALSE as soon as switching off begins"/>
+			<VarDeclaration Name="LEVEL" Type="REAL" Comment="Brightness in %: on CNF the target of switching on/off or the stopped brightness, on RAMPO the brightness reached"/>
+		</OutputVars>
+	</InterfaceList>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="CAN_MSG_TO_STRING" Comment="CAN_MSG von AlPgnRxNew8B (bis 8 Byte) als STRING auslesen">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.1" Author="Franz Höpfinger" Date="2026-11-14" Remarks="unnoetige Konvertierungen UINT_TO_DINT/CHAR_TO_STRING entfernt (IDE-Warnungen)">
+	</VersionInfo>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-11-13" Remarks="Initial Version - STRING ueber CAN (0-8 Byte)">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::pgn">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event" Comment="Text auslesen">
+				<With Var="MSG"/>
+				<With Var="STOP_AT_NUL"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event" Comment="OUT ist gefuellt">
+				<With Var="OUT"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="MSG" Type="isobus::pgn::CAN_MSG" Comment="empfangene Nachricht, gelesen werden u16DaSize Bytes (hoechstens 8)"/>
+			<VarDeclaration Name="STOP_AT_NUL" Type="BOOL" Comment="TRUE: Text endet vor dem ersten 16#00" InitialValue="TRUE"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="OUT" Type="STRING" Comment="Text, je Byte 1 Zeichen"/>
+		</OutputVars>
+	</InterfaceList>
+	<SimpleFB>
+		<ECState Name="REQ" Comment="">
+			<ECAction Algorithm="REQ" Output="CNF"/>
+		</ECState>
+		<Algorithm Name="REQ" Comment="data[0..u16DaSize-1] als Zeichen anhaengen">
+			<ST><![CDATA[ALGORITHM REQ
+VAR_TEMP
+	n : DINT; // Anzahl zu lesender Bytes
+	i : DINT; // Laufindex
+	b : BYTE; // aktuelles Byte
+END_VAR
+OUT := '';
+n := MSG.u16DaSize;
+IF n > 8 THEN
+	n := 8;
+END_IF;
+FOR i := 1 TO n DO
+	b := MSG.data[i - 1];
+	IF STOP_AT_NUL AND (b = BYTE#0) THEN
+		EXIT;
+	END_IF;
+	OUT := CONCAT(OUT, BYTE_TO_CHAR(b));
+END_FOR;
+END_ALGORITHM]]></ST>
+		</Algorithm>
+	</SimpleFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Function Name="F_STRING_TO_BYTES" Comment="STRING in ein BYTE-Array kopieren (z. B. fuer AlPgnTxNew_TP), dann 16#00, Rest 16#FF">
+	<Identification Standard="61499-1" Description="Copyright (c) 2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.1" Author="Franz Höpfinger" Date="2026-11-14" Remarks="Fuellung Text + 16#00 + 16#FF">
+	</VersionInfo>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-11-13" Remarks="Initial Version - STRING ueber CAN (mehr als 8 Byte)">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::utils::dyn_arr">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event">
+				<With Var="IN"/>
+				<With Var="DATA"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event">
+				<With Var=""/>
+				<With Var="DATA"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="IN" Type="STRING" Comment="Text, je Zeichen 1 Byte"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="" Type="UINT" Comment="Zeichen + 16#00, hoechstens die Groesse von DATA"/>
+		</OutputVars>
+		<InOutVars>
+			<VarDeclaration Name="DATA" Type="BYTE" Comment="Zielpuffer, z. B. von PROVIDE_ARR_xxxx_BYTE, wird ganz beschrieben" ArraySize="*"/>
+		</InOutVars>
+	</InterfaceList>
+	<FunctionBody>
+		<ST><![CDATA[PACKAGE logiBUS::utils::dyn_arr;
+
+(* STRING in ein BYTE-Array kopieren: Zeichen, dann 16#00 (falls Platz), Rest 16#FF *)
+FUNCTION F_STRING_TO_BYTES : UINT
+
+VAR_INPUT
+	IN : STRING; // Text, je Zeichen 1 Byte
+END_VAR
+
+VAR_IN_OUT
+	DATA : ARRAY[*] OF BYTE; // Zielpuffer
+END_VAR
+
+VAR_TEMP
+	lo : DINT; // erster Index von DATA
+	cap : DINT; // Groesse von DATA
+	n : DINT; // Anzahl zu kopierender Zeichen
+	i : DINT; // Laufindex
+END_VAR
+
+lo := LOWER_BOUND(DATA, 1);
+cap := UPPER_BOUND(DATA, 1) - lo + 1;
+n := LEN(IN);
+IF n < 0 THEN
+	n := 0;
+END_IF;
+IF n > cap THEN
+	n := cap;
+END_IF;
+FOR i := 1 TO cap DO
+	DATA[lo + i - 1] := BYTE#16#FF; // nicht genutzte Bytes wie bei J1939/ISOBUS ueblich
+END_FOR;
+FOR i := 1 TO n DO
+	DATA[lo + i - 1] := CHAR_TO_BYTE(IN[i]);
+END_FOR;
+IF n < cap THEN
+	DATA[lo + n] := BYTE#16#00; // Textende
+	n := n + 1;
+END_IF;
+F_STRING_TO_BYTES := DINT_TO_UINT(n);
+
+END_FUNCTION
+
+]]></ST>
+	</FunctionBody>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</Function>

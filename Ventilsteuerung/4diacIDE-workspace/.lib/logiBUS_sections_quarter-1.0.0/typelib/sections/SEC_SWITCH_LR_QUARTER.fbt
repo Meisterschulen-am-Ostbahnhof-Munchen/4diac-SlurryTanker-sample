@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="SEC_SWITCH_LR_QUARTER" Comment="Section-Switcher: Teilbreiten von links und von rechts abschalten, bis 256 Sections, Maske als QUARTER (2 Bit je Section)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0"/>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-11-01" Remarks="Alle aus und eigener Zaehler 0: LEFT/RIGHT_OFF_DEC uebernimmt zuerst alle abgeschalteten Sections (nach ALL_OFF schaltet Links_Ein von rechts, Rechts_Ein von links zu)"/>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-31" Remarks="initial implementation"/>
+	<CompilerInfo packageName="logiBUS::sections">
+		<Import declaration="logiBUS::sections::SEC_QUARTER::QUARTER_OFF"/>
+		<Import declaration="logiBUS::sections::SEC_QUARTER::QUARTER_ON"/>
+		<Import declaration="logiBUS::sections::SEC_QUARTER::QUARTER_NA"/>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Initialisierung, Zaehler auf 0">
+				<With Var="QI"/>
+				<With Var="N"/>
+			</Event>
+			<Event Name="REQ" Type="Event" Comment="Maske und Zaehler erneut ausgeben">
+				<With Var="QI"/>
+			</Event>
+			<Event Name="LEFT_OFF_INC" Type="Event" Comment="Von links eine Section mehr abschalten">
+			</Event>
+			<Event Name="LEFT_OFF_DEC" Type="Event" Comment="Von links eine Section wieder zuschalten">
+			</Event>
+			<Event Name="RIGHT_OFF_INC" Type="Event" Comment="Von rechts eine Section mehr abschalten">
+			</Event>
+			<Event Name="RIGHT_OFF_DEC" Type="Event" Comment="Von rechts eine Section wieder zuschalten">
+			</Event>
+			<Event Name="ALL_ON" Type="Event" Comment="Alle Sections zuschalten (beide Zaehler 0)">
+			</Event>
+			<Event Name="ALL_OFF" Type="Event" Comment="Alle Sections abschalten (LEFT_OFF = N, RIGHT_OFF = 0)">
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialisierung bestaetigt">
+				<With Var="QO"/>
+				<With Var="LEFT_OFF"/>
+				<With Var="RIGHT_OFF"/>
+				<With Var="ACTIVE"/>
+				<With Var="MASK"/>
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Zaehler oder Maske neu berechnet">
+				<With Var="QO"/>
+				<With Var="LEFT_OFF"/>
+				<With Var="RIGHT_OFF"/>
+				<With Var="ACTIVE"/>
+				<With Var="MASK"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Nur an INIT und REQ: INIT+ aktiv, INIT- deaktiviert (Maske alle frei), REQ- ohne Wirkung" InitialValue="TRUE"/>
+			<VarDeclaration Name="N" Type="UINT" Comment="Anzahl Sections (1..256, groesser wird auf 256 begrenzt)"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="TRUE = aktiv und Ereignis ausgefuehrt"/>
+			<VarDeclaration Name="LEFT_OFF" Type="UINT" Comment="Anzahl von links abgeschalteter Sections"/>
+			<VarDeclaration Name="RIGHT_OFF" Type="UINT" Comment="Anzahl von rechts abgeschalteter Sections"/>
+			<VarDeclaration Name="ACTIVE" Type="UINT" Comment="Anzahl freier Sections"/>
+			<VarDeclaration Name="MASK" Type="DWORD" ArraySize="16" Comment="Maske als Condensed Work State, 2 Bit je Section (01 frei, 00 gesperrt, 11 nicht vorhanden), Wort k = Sections 16k+1..16k+16"/>
+		</OutputVars>
+	</InterfaceList>
+	<BasicFB>
+		<ECC>
+			<ECState Name="START" Comment="Nicht initialisiert bzw. deaktiviert" x="0" y="0">
+			</ECState>
+			<ECState Name="ST_INIT" Comment="INIT+: N uebernehmen, Zaehler 0" x="1000" y="-1200">
+				<ECAction Algorithm="RESET_ALL"/>
+				<ECAction Algorithm="QO_ON"/>
+				<ECAction Algorithm="CALC" Output="INITO"/>
+			</ECState>
+			<ECState Name="ST_READY" Comment="Aktiv" x="2500" y="0">
+			</ECState>
+			<ECState Name="ST_DEINIT" Comment="INIT-: deaktiviert, Maske alle frei" x="1000" y="1200">
+				<ECAction Algorithm="RESET_ALL"/>
+				<ECAction Algorithm="QO_OFF"/>
+				<ECAction Algorithm="CALC" Output="INITO"/>
+			</ECState>
+			<ECState Name="ST_REQ" Comment="REQ+: Maske und Zaehler ausgeben" x="4500" y="-2000">
+				<ECAction Algorithm="QO_ON"/>
+				<ECAction Algorithm="CALC" Output="CNF"/>
+			</ECState>
+			<ECState Name="ST_REQ_INHIBITED" Comment="REQ-: nichts aendern, nur melden" x="4500" y="-1500">
+				<ECAction Algorithm="QO_OFF" Output="CNF"/>
+			</ECState>
+			<ECState Name="ST_LEFT_INC" x="4500" y="-1000">
+				<ECAction Algorithm="LEFT_INC"/>
+				<ECAction Algorithm="QO_ON"/>
+				<ECAction Algorithm="CALC" Output="CNF"/>
+			</ECState>
+			<ECState Name="ST_LEFT_DEC" x="4500" y="-500">
+				<ECAction Algorithm="LEFT_DEC"/>
+				<ECAction Algorithm="QO_ON"/>
+				<ECAction Algorithm="CALC" Output="CNF"/>
+			</ECState>
+			<ECState Name="ST_RIGHT_INC" x="4500" y="0">
+				<ECAction Algorithm="RIGHT_INC"/>
+				<ECAction Algorithm="QO_ON"/>
+				<ECAction Algorithm="CALC" Output="CNF"/>
+			</ECState>
+			<ECState Name="ST_RIGHT_DEC" x="4500" y="500">
+				<ECAction Algorithm="RIGHT_DEC"/>
+				<ECAction Algorithm="QO_ON"/>
+				<ECAction Algorithm="CALC" Output="CNF"/>
+			</ECState>
+			<ECState Name="ST_ALL_ON" x="4500" y="1000">
+				<ECAction Algorithm="RESET_ALL"/>
+				<ECAction Algorithm="QO_ON"/>
+				<ECAction Algorithm="CALC" Output="CNF"/>
+			</ECState>
+			<ECState Name="ST_ALL_OFF" x="4500" y="1500">
+				<ECAction Algorithm="SET_ALL_OFF"/>
+				<ECAction Algorithm="QO_ON"/>
+				<ECAction Algorithm="CALC" Output="CNF"/>
+			</ECState>
+			<ECTransition Source="START" Destination="ST_INIT" Condition="INIT[TRUE = QI]" x="500" y="-700"/>
+			<ECTransition Source="START" Destination="ST_DEINIT" Condition="INIT[FALSE = QI]" x="500" y="700"/>
+			<ECTransition Source="ST_INIT" Destination="ST_READY" Condition="1" x="1800" y="-700"/>
+			<ECTransition Source="ST_DEINIT" Destination="START" Condition="1" x="400" y="1000"/>
+			<ECTransition Source="ST_READY" Destination="ST_INIT" Condition="INIT[TRUE = QI]" x="1800" y="-400"/>
+			<ECTransition Source="ST_READY" Destination="ST_DEINIT" Condition="INIT[FALSE = QI]" x="1800" y="700"/>
+			<ECTransition Source="ST_READY" Destination="ST_REQ" Condition="REQ[TRUE = QI]" x="3500" y="-2000"/>
+			<ECTransition Source="ST_REQ" Destination="ST_READY" Condition="1" x="3500" y="-1800"/>
+			<ECTransition Source="ST_READY" Destination="ST_REQ_INHIBITED" Condition="REQ[FALSE = QI]" x="3500" y="-1500"/>
+			<ECTransition Source="ST_REQ_INHIBITED" Destination="ST_READY" Condition="1" x="3500" y="-1300"/>
+			<ECTransition Source="ST_READY" Destination="ST_LEFT_INC" Condition="LEFT_OFF_INC[LEFT_OFF + RIGHT_OFF &lt; MIN(N, UINT#256)]" x="3500" y="-1000"/>
+			<ECTransition Source="ST_LEFT_INC" Destination="ST_READY" Condition="1" x="3500" y="-800"/>
+			<ECTransition Source="ST_READY" Destination="ST_LEFT_DEC" Condition="LEFT_OFF_DEC[(LEFT_OFF &gt; 0) OR ((RIGHT_OFF &gt; 0) AND (LEFT_OFF + RIGHT_OFF &gt;= MIN(N, UINT#256)))]" x="3500" y="-500"/>
+			<ECTransition Source="ST_LEFT_DEC" Destination="ST_READY" Condition="1" x="3500" y="-300"/>
+			<ECTransition Source="ST_READY" Destination="ST_RIGHT_INC" Condition="RIGHT_OFF_INC[LEFT_OFF + RIGHT_OFF &lt; MIN(N, UINT#256)]" x="3500" y="0"/>
+			<ECTransition Source="ST_RIGHT_INC" Destination="ST_READY" Condition="1" x="3500" y="200"/>
+			<ECTransition Source="ST_READY" Destination="ST_RIGHT_DEC" Condition="RIGHT_OFF_DEC[(RIGHT_OFF &gt; 0) OR ((LEFT_OFF &gt; 0) AND (RIGHT_OFF + LEFT_OFF &gt;= MIN(N, UINT#256)))]" x="3500" y="500"/>
+			<ECTransition Source="ST_RIGHT_DEC" Destination="ST_READY" Condition="1" x="3500" y="700"/>
+			<ECTransition Source="ST_READY" Destination="ST_ALL_ON" Condition="ALL_ON" x="3500" y="1000"/>
+			<ECTransition Source="ST_ALL_ON" Destination="ST_READY" Condition="1" x="3500" y="1200"/>
+			<ECTransition Source="ST_READY" Destination="ST_ALL_OFF" Condition="ALL_OFF" x="3500" y="1500"/>
+			<ECTransition Source="ST_ALL_OFF" Destination="ST_READY" Condition="1" x="3500" y="1700"/>
+		</ECC>
+		<Algorithm Name="RESET_ALL">
+			<ST><![CDATA[ALGORITHM RESET_ALL
+LEFT_OFF := 0;
+RIGHT_OFF := 0;
+END_ALGORITHM]]></ST>
+		</Algorithm>
+		<Algorithm Name="LEFT_INC">
+			<ST><![CDATA[ALGORITHM LEFT_INC
+LEFT_OFF := LEFT_OFF + 1;
+END_ALGORITHM]]></ST>
+		</Algorithm>
+		<Algorithm Name="LEFT_DEC">
+			<ST><![CDATA[ALGORITHM LEFT_DEC
+(* Alle aus und eigener Zaehler 0: diese Seite uebernimmt zuerst alle
+   abgeschalteten Sections, damit beide Seiten nach ALL_OFF zuschalten *)
+IF (LEFT_OFF = 0) AND (RIGHT_OFF > 0) AND (LEFT_OFF + RIGHT_OFF >= MIN(N, UINT#256)) THEN
+	LEFT_OFF := RIGHT_OFF;
+	RIGHT_OFF := 0;
+END_IF;
+(* Schutz gegen UINT-Unterlauf, zusaetzlich zur ECC-Bedingung *)
+IF LEFT_OFF > 0 THEN
+	LEFT_OFF := LEFT_OFF - 1;
+END_IF;
+END_ALGORITHM]]></ST>
+		</Algorithm>
+		<Algorithm Name="RIGHT_INC">
+			<ST><![CDATA[ALGORITHM RIGHT_INC
+RIGHT_OFF := RIGHT_OFF + 1;
+END_ALGORITHM]]></ST>
+		</Algorithm>
+		<Algorithm Name="RIGHT_DEC">
+			<ST><![CDATA[ALGORITHM RIGHT_DEC
+(* Alle aus und eigener Zaehler 0: diese Seite uebernimmt zuerst alle
+   abgeschalteten Sections, damit beide Seiten nach ALL_OFF zuschalten *)
+IF (RIGHT_OFF = 0) AND (LEFT_OFF > 0) AND (RIGHT_OFF + LEFT_OFF >= MIN(N, UINT#256)) THEN
+	RIGHT_OFF := LEFT_OFF;
+	LEFT_OFF := 0;
+END_IF;
+(* Schutz gegen UINT-Unterlauf, zusaetzlich zur ECC-Bedingung *)
+IF RIGHT_OFF > 0 THEN
+	RIGHT_OFF := RIGHT_OFF - 1;
+END_IF;
+END_ALGORITHM]]></ST>
+		</Algorithm>
+		<Algorithm Name="SET_ALL_OFF">
+			<ST><![CDATA[ALGORITHM SET_ALL_OFF
+LEFT_OFF := MIN(N, UINT#256);
+RIGHT_OFF := 0;
+END_ALGORITHM]]></ST>
+		</Algorithm>
+		<Algorithm Name="QO_ON">
+			<ST><![CDATA[ALGORITHM QO_ON
+QO := TRUE;
+END_ALGORITHM]]></ST>
+		</Algorithm>
+		<Algorithm Name="QO_OFF">
+			<ST><![CDATA[ALGORITHM QO_OFF
+QO := FALSE;
+END_ALGORITHM]]></ST>
+		</Algorithm>
+		<Algorithm Name="CALC">
+			<ST><![CDATA[ALGORITHM CALC
+VAR_TEMP
+	nEff : UINT; // N begrenzt auf 256
+	lastOn : UINT; // letzte freie Section
+	w : UINT; // Wortindex
+	j : UINT; // Position im Wort
+	s : UINT; // Section-Nummer 1..256
+	acc : DWORD; // Wort in Arbeit (Akkumulator)
+	q : BYTE; // Quarter-Wert der Section
+END_VAR
+(* Zaehler auf die gueltige Anzahl Sections begrenzen *)
+nEff := MIN(N, UINT#256);
+IF LEFT_OFF > nEff THEN
+	LEFT_OFF := nEff;
+END_IF;
+IF LEFT_OFF + RIGHT_OFF > nEff THEN
+	RIGHT_OFF := nEff - LEFT_OFF;
+END_IF;
+lastOn := nEff - RIGHT_OFF;
+ACTIVE := lastOn - LEFT_OFF;
+(* Section s (1..256) liegt in Bits 2*((s-1) MOD 16)+1..0 von Wort (s-1) DIV 16 *)
+FOR w := 0 TO 15 DO
+	acc := DWORD#0;
+	FOR j := 0 TO 15 DO
+		s := w * 16 + j + 1;
+		IF s > nEff THEN
+			q := QUARTER_NA;
+		ELSIF (s > LEFT_OFF) AND (s <= lastOn) THEN
+			q := QUARTER_ON;
+		ELSE
+			q := QUARTER_OFF;
+		END_IF;
+		acc := acc OR SHL(BYTE_TO_DWORD(q), 2 * j);
+	END_FOR;
+	MASK[w] := acc;
+END_FOR;
+END_ALGORITHM]]></ST>
+		</Algorithm>
+	</BasicFB>
+	<Service RightInterface="SWITCHER" LeftInterface="APPLICATION" Comment="QI wirkt nur an INIT und REQ (INIT+/INIT-, REQ+/REQ-). Tasten, ALL_ON und ALL_OFF wirken im aktiven Zustand ohne QI.">
+		<ServiceSequence Name="normal_initialization" Comment="INIT mit QI = TRUE: N uebernehmen, alle Sections frei">
+			<ServiceTransaction>
+				<InputPrimitive Interface="APPLICATION" Event="INIT+" Parameters="N"/>
+				<OutputPrimitive Interface="APPLICATION" Event="INITO+" Parameters="LEFT_OFF,RIGHT_OFF,ACTIVE,MASK"/>
+			</ServiceTransaction>
+		</ServiceSequence>
+		<ServiceSequence Name="re_initialization" Comment="INIT+ im aktiven Zustand: neu initialisieren, Zaehler 0">
+			<ServiceTransaction>
+				<InputPrimitive Interface="APPLICATION" Event="INIT+" Parameters="N"/>
+				<OutputPrimitive Interface="APPLICATION" Event="INITO+" Parameters="LEFT_OFF,RIGHT_OFF,ACTIVE,MASK"/>
+			</ServiceTransaction>
+		</ServiceSequence>
+		<ServiceSequence Name="termination" Comment="INIT mit QI = FALSE: deaktiviert, Maske alle frei">
+			<ServiceTransaction>
+				<InputPrimitive Interface="APPLICATION" Event="INIT-"/>
+				<OutputPrimitive Interface="APPLICATION" Event="INITO-" Parameters="LEFT_OFF,RIGHT_OFF,ACTIVE,MASK"/>
+			</ServiceTransaction>
+		</ServiceSequence>
+		<ServiceSequence Name="termination_without_initialization" Comment="INIT- auch vor INIT+ wird mit INITO- beantwortet (INIT-Kette haengt nicht)">
+			<ServiceTransaction>
+				<InputPrimitive Interface="APPLICATION" Event="INIT-"/>
+				<OutputPrimitive Interface="APPLICATION" Event="INITO-" Parameters="LEFT_OFF,RIGHT_OFF,ACTIVE,MASK"/>
+			</ServiceTransaction>
+		</ServiceSequence>
+		<ServiceSequence Name="request" Comment="Maske und Zaehler erneut ausgeben">
+			<ServiceTransaction>
+				<InputPrimitive Interface="APPLICATION" Event="REQ+"/>
+				<OutputPrimitive Interface="APPLICATION" Event="CNF+" Parameters="LEFT_OFF,RIGHT_OFF,ACTIVE,MASK"/>
+			</ServiceTransaction>
+		</ServiceSequence>
+		<ServiceSequence Name="request_inhibited" Comment="REQ mit QI = FALSE: nichts aendern">
+			<ServiceTransaction>
+				<InputPrimitive Interface="APPLICATION" Event="REQ-"/>
+				<OutputPrimitive Interface="APPLICATION" Event="CNF-"/>
+			</ServiceTransaction>
+		</ServiceSequence>
+		<ServiceSequence Name="left_off_increment" Comment="Von links eine Section mehr abschalten">
+			<ServiceTransaction>
+				<InputPrimitive Interface="APPLICATION" Event="LEFT_OFF_INC"/>
+				<OutputPrimitive Interface="APPLICATION" Event="CNF+" Parameters="LEFT_OFF,RIGHT_OFF,ACTIVE,MASK"/>
+			</ServiceTransaction>
+		</ServiceSequence>
+		<ServiceSequence Name="left_off_increment_at_limit" Comment="Alle Sections schon aus: keine Reaktion">
+			<ServiceTransaction>
+				<InputPrimitive Interface="APPLICATION" Event="LEFT_OFF_INC"/>
+			</ServiceTransaction>
+		</ServiceSequence>
+		<ServiceSequence Name="left_off_decrement" Comment="Von links eine Section wieder zuschalten">
+			<ServiceTransaction>
+				<InputPrimitive Interface="APPLICATION" Event="LEFT_OFF_DEC"/>
+				<OutputPrimitive Interface="APPLICATION" Event="CNF+" Parameters="LEFT_OFF,RIGHT_OFF,ACTIVE,MASK"/>
+			</ServiceTransaction>
+		</ServiceSequence>
+		<ServiceSequence Name="left_off_decrement_at_zero" Comment="LEFT_OFF = 0: keine Reaktion">
+			<ServiceTransaction>
+				<InputPrimitive Interface="APPLICATION" Event="LEFT_OFF_DEC"/>
+			</ServiceTransaction>
+		</ServiceSequence>
+		<ServiceSequence Name="right_off_increment" Comment="Von rechts eine Section mehr abschalten">
+			<ServiceTransaction>
+				<InputPrimitive Interface="APPLICATION" Event="RIGHT_OFF_INC"/>
+				<OutputPrimitive Interface="APPLICATION" Event="CNF+" Parameters="LEFT_OFF,RIGHT_OFF,ACTIVE,MASK"/>
+			</ServiceTransaction>
+		</ServiceSequence>
+		<ServiceSequence Name="right_off_decrement" Comment="Von rechts eine Section wieder zuschalten">
+			<ServiceTransaction>
+				<InputPrimitive Interface="APPLICATION" Event="RIGHT_OFF_DEC"/>
+				<OutputPrimitive Interface="APPLICATION" Event="CNF+" Parameters="LEFT_OFF,RIGHT_OFF,ACTIVE,MASK"/>
+			</ServiceTransaction>
+		</ServiceSequence>
+		<ServiceSequence Name="all_on" Comment="Alle Sections zuschalten">
+			<ServiceTransaction>
+				<InputPrimitive Interface="APPLICATION" Event="ALL_ON"/>
+				<OutputPrimitive Interface="APPLICATION" Event="CNF+" Parameters="LEFT_OFF,RIGHT_OFF,ACTIVE,MASK"/>
+			</ServiceTransaction>
+		</ServiceSequence>
+		<ServiceSequence Name="all_off" Comment="Alle Sections abschalten (LEFT_OFF = N)">
+			<ServiceTransaction>
+				<InputPrimitive Interface="APPLICATION" Event="ALL_OFF"/>
+				<OutputPrimitive Interface="APPLICATION" Event="CNF+" Parameters="LEFT_OFF,RIGHT_OFF,ACTIVE,MASK"/>
+			</ServiceTransaction>
+		</ServiceSequence>
+		<ServiceSequence Name="event_before_initialization" Comment="REQ, Tasten, ALL_ON/ALL_OFF vor INIT+ bzw. nach INIT-: keine Reaktion">
+			<ServiceTransaction>
+				<InputPrimitive Interface="APPLICATION" Event="REQ"/>
+			</ServiceTransaction>
+		</ServiceSequence>
+		<ServiceSequence Name="left_on_after_all_off" Comment="Nach ALL_OFF: LEFT_OFF_DEC schaltet die rechte Section N zu, dann N-1 ...">
+			<ServiceTransaction>
+				<InputPrimitive Interface="APPLICATION" Event="LEFT_OFF_DEC"/>
+				<OutputPrimitive Interface="APPLICATION" Event="CNF+" Parameters="LEFT_OFF,RIGHT_OFF,ACTIVE,MASK"/>
+			</ServiceTransaction>
+		</ServiceSequence>
+		<ServiceSequence Name="right_on_after_all_off" Comment="Nach ALL_OFF: RIGHT_OFF_DEC schaltet die linke Section 1 zu, dann 2 ...">
+			<ServiceTransaction>
+				<InputPrimitive Interface="APPLICATION" Event="RIGHT_OFF_DEC"/>
+				<OutputPrimitive Interface="APPLICATION" Event="CNF+" Parameters="LEFT_OFF,RIGHT_OFF,ACTIVE,MASK"/>
+			</ServiceTransaction>
+		</ServiceSequence>
+	</Service>
+</FBType>

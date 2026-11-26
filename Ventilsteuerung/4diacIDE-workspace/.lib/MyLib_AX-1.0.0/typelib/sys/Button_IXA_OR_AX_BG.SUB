@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Button_IXA_OR_AX_BG" Comment="Button (IXA) ODER AX-Eingang, Ergebnis als Hintergrundfarbe (Gruen/Weiss) und AX-Ausgang">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-31" Remarks="Aus Getreidehacke func/Manual/ManFuncTast0 in MyLib::sys verschoben und umbenannt, INIT/INITO/QI/QO ergaenzt.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID Button" InitialValue="ID_NULL"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="OUT" Type="adapter::types::unidirectional::AX" Comment="Button ODER IN"/>
+		</Plugs>
+		<Sockets>
+			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AX" Comment="zusaetzlicher Eingang, ODER mit Button"/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="IX" Type="isobus::UT::io::Button::Button_IXA" x="-3000" y="0">
+		</FB>
+		<FB Name="OR_2" Type="adapter::booleanOperators::AX_OR_2" x="-1200" y="200">
+		</FB>
+		<FB Name="AX_SPLIT_2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="600" y="200">
+		</FB>
+		<SubApp Name="GreenWhiteBackground" Type="MyLib::sys::GreenWhiteBackground1_AX" x="2400" y="-400">
+		</SubApp>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_2" x="6000" y="-1600">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="IX.INIT"/>
+			<Connection Source="IX.INITO" Destination="GreenWhiteBackground.INIT"/>
+			<Connection Source="GreenWhiteBackground.INITO" Destination="INITO"/>
+			<Connection Source="GreenWhiteBackground.INITO" Destination="AND_QO.REQ"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="QI" Destination="IX.QI"/>
+			<Connection Source="QI" Destination="GreenWhiteBackground.QI"/>
+			<Connection Source="u16ObjId" Destination="IX.u16ObjId"/>
+			<Connection Source="u16ObjId" Destination="GreenWhiteBackground.u16ObjId"/>
+			<Connection Source="IX.QO" Destination="AND_QO.IN1"/>
+			<Connection Source="GreenWhiteBackground.QO" Destination="AND_QO.IN2"/>
+			<Connection Source="AND_QO.OUT" Destination="QO"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="IX.IN" Destination="OR_2.IN1"/>
+			<Connection Source="IN" Destination="OR_2.IN2"/>
+			<Connection Source="OR_2.OUT" Destination="AX_SPLIT_2.IN"/>
+			<Connection Source="AX_SPLIT_2.OUT1" Destination="GreenWhiteBackground.DI1"/>
+			<Connection Source="AX_SPLIT_2.OUT2" Destination="OUT"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

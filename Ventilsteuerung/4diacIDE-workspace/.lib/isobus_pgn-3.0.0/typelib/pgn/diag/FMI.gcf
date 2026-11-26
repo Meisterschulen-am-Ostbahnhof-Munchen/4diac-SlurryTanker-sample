@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="FMI" Comment="Failure Mode Identifiers (FMI) for DTCs, ISO 11783-12 / SAE J1939-73">
+	<Identification Standard="61499-1">
+	</Identification>
+	<VersionInfo Version="1.0" Author="Franz Höpfinger" Date="2026-11-17">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::pgn::diag">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="ABOVE_NORMAL_MOST_SEVERE" Type="USINT" Comment="Above normal range - most severe" InitialValue="0"/>
+		<VarDeclaration Name="BELOW_NORMAL_MOST_SEVERE" Type="USINT" Comment="Below normal range - most severe" InitialValue="1"/>
+		<VarDeclaration Name="DATA_ERRATIC" Type="USINT" Comment="Data erratic, intermittent or incorrect" InitialValue="2"/>
+		<VarDeclaration Name="VOLTAGE_HIGH" Type="USINT" Comment="Voltage above normal, or shorted to high source" InitialValue="3"/>
+		<VarDeclaration Name="VOLTAGE_LOW" Type="USINT" Comment="Voltage below normal, or shorted to low source" InitialValue="4"/>
+		<VarDeclaration Name="CURRENT_LOW_OPEN_CIRCUIT" Type="USINT" Comment="Current below normal or open circuit" InitialValue="5"/>
+		<VarDeclaration Name="CURRENT_HIGH_GROUNDED" Type="USINT" Comment="Current above normal or grounded circuit" InitialValue="6"/>
+		<VarDeclaration Name="MECHANICAL_NOT_RESPONDING" Type="USINT" Comment="Mechanical system not responding" InitialValue="7"/>
+		<VarDeclaration Name="ABNORMAL_FREQUENCY" Type="USINT" Comment="Abnormal frequency or pulse width" InitialValue="8"/>
+		<VarDeclaration Name="ABNORMAL_UPDATE_RATE" Type="USINT" Comment="Abnormal update rate" InitialValue="9"/>
+		<VarDeclaration Name="ABNORMAL_RATE_OF_CHANGE" Type="USINT" Comment="Abnormal rate of change" InitialValue="10"/>
+		<VarDeclaration Name="ROOT_CAUSE_UNKNOWN" Type="USINT" Comment="Root cause not known" InitialValue="11"/>
+		<VarDeclaration Name="BAD_DEVICE" Type="USINT" Comment="Bad intelligent device or component" InitialValue="12"/>
+		<VarDeclaration Name="OUT_OF_CALIBRATION" Type="USINT" Comment="Out of calibration" InitialValue="13"/>
+		<VarDeclaration Name="SPECIAL_INSTRUCTIONS" Type="USINT" Comment="Special instructions" InitialValue="14"/>
+		<VarDeclaration Name="ABOVE_NORMAL_LEAST_SEVERE" Type="USINT" Comment="Above normal range - least severe" InitialValue="15"/>
+		<VarDeclaration Name="ABOVE_NORMAL_MODERATELY_SEVERE" Type="USINT" Comment="Above normal range - moderately severe" InitialValue="16"/>
+		<VarDeclaration Name="BELOW_NORMAL_LEAST_SEVERE" Type="USINT" Comment="Below normal range - least severe" InitialValue="17"/>
+		<VarDeclaration Name="BELOW_NORMAL_MODERATELY_SEVERE" Type="USINT" Comment="Below normal range - moderately severe" InitialValue="18"/>
+		<VarDeclaration Name="RECEIVED_NETWORK_DATA_ERROR" Type="USINT" Comment="Received network data in error" InitialValue="19"/>
+		<VarDeclaration Name="CONDITION_EXISTS" Type="USINT" Comment="Condition exists" InitialValue="31"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE isobus::pgn::diag;
+
+GLOBALCONSTANTS FMI // Failure Mode Identifiers (FMI) for DTCs, ISO 11783-12 / SAE J1939-73
+	VAR_GLOBAL CONSTANT
+		ABOVE_NORMAL_MOST_SEVERE : USINT := 0; // Above normal range - most severe
+		BELOW_NORMAL_MOST_SEVERE : USINT := 1; // Below normal range - most severe
+		DATA_ERRATIC : USINT := 2; // Data erratic, intermittent or incorrect
+		VOLTAGE_HIGH : USINT := 3; // Voltage above normal, or shorted to high source
+		VOLTAGE_LOW : USINT := 4; // Voltage below normal, or shorted to low source
+		CURRENT_LOW_OPEN_CIRCUIT : USINT := 5; // Current below normal or open circuit
+		CURRENT_HIGH_GROUNDED : USINT := 6; // Current above normal or grounded circuit
+		MECHANICAL_NOT_RESPONDING : USINT := 7; // Mechanical system not responding
+		ABNORMAL_FREQUENCY : USINT := 8; // Abnormal frequency or pulse width
+		ABNORMAL_UPDATE_RATE : USINT := 9; // Abnormal update rate
+		ABNORMAL_RATE_OF_CHANGE : USINT := 10; // Abnormal rate of change
+		ROOT_CAUSE_UNKNOWN : USINT := 11; // Root cause not known
+		BAD_DEVICE : USINT := 12; // Bad intelligent device or component
+		OUT_OF_CALIBRATION : USINT := 13; // Out of calibration
+		SPECIAL_INSTRUCTIONS : USINT := 14; // Special instructions
+		ABOVE_NORMAL_LEAST_SEVERE : USINT := 15; // Above normal range - least severe
+		ABOVE_NORMAL_MODERATELY_SEVERE : USINT := 16; // Above normal range - moderately severe
+		BELOW_NORMAL_LEAST_SEVERE : USINT := 17; // Below normal range - least severe
+		BELOW_NORMAL_MODERATELY_SEVERE : USINT := 18; // Below normal range - moderately severe
+		RECEIVED_NETWORK_DATA_ERROR : USINT := 19; // Received network data in error
+		(* 20..30 reserved (ISO 11783-12:2019) *)
+		CONDITION_EXISTS : USINT := 31; // Condition exists
+	END_VAR
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</GlobalConstants>

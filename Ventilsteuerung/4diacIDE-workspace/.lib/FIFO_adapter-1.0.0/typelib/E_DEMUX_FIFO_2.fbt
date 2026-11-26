@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="E_DEMUX_FIFO_2" Comment="Gegenstueck zu E_MUX_FIFO_2_Adapter: verteilt DATA vom Socket IN_DATA nach dem&#10;Kanal (OUT = 0/1) auf EO1/EO2. PROCESSED vom Konsumenten geht ueber den Rueckkanal&#10;des Adapters zurueck, erst dann folgt das naechste Ereignis.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-11-11" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="FIFO_adapter">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="PROCESSED" Type="Event" Comment="Konsument bestaetigt: das zuletzt ausgegebene Ereignis ist verarbeitet">
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="EO1" Type="Event" Comment="Ereignis von Kanal 1 (K = 0)">
+				<With Var="K"/>
+				<With Var="N"/>
+			</Event>
+			<Event Name="EO2" Type="Event" Comment="Ereignis von Kanal 2 (K = 1)">
+				<With Var="K"/>
+				<With Var="N"/>
+			</Event>
+		</EventOutputs>
+		<OutputVars>
+			<VarDeclaration Name="K" Type="UINT" Comment="Kanal des ausgegebenen Ereignisses"/>
+			<VarDeclaration Name="N" Type="UINT" Comment="Anzahl der danach noch wartenden Ereignisse in der Queue"/>
+		</OutputVars>
+		<Sockets>
+			<AdapterDeclaration Name="IN_DATA" Type="FIFO_adapter::AFIFO_UINT" Comment="Hier haengt der Plug OUT_DATA von E_MUX_FIFO_2_Adapter an"/>
+		</Sockets>
+	</InterfaceList>
+	<BasicFB>
+		<ECC>
+			<ECState Name="START" Comment="Initial State" x="800" y="80">
+			</ECState>
+			<ECState Name="S_DATA" x="2200" y="-300">
+				<ECAction Algorithm="COPY"/>
+			</ECState>
+			<ECState Name="S_EO1" x="3600" y="-600">
+				<ECAction Output="EO1"/>
+			</ECState>
+			<ECState Name="S_EO2" x="3600" y="-300">
+				<ECAction Output="EO2"/>
+			</ECState>
+			<ECState Name="S_SKIP" x="3600" y="0" Comment="Unbekannter Kanal: sofort quittieren, sonst haengt die Queue">
+				<ECAction Output="IN_DATA.PROCESSED"/>
+			</ECState>
+			<ECState Name="S_PROCESSED" x="2200" y="500">
+				<ECAction Output="IN_DATA.PROCESSED"/>
+			</ECState>
+			<ECTransition Source="START" Destination="S_DATA" Condition="IN_DATA.DATA" x="1500" y="-300"/>
+			<ECTransition Source="S_DATA" Destination="S_EO1" Condition="K = 0" x="2900" y="-600"/>
+			<ECTransition Source="S_DATA" Destination="S_EO2" Condition="K = 1" x="2900" y="-300"/>
+			<ECTransition Source="S_DATA" Destination="S_SKIP" Condition="1" x="2900" y="0"/>
+			<ECTransition Source="S_EO1" Destination="START" Condition="1" x="2200" y="-800"/>
+			<ECTransition Source="S_EO2" Destination="START" Condition="1" x="2200" y="-700"/>
+			<ECTransition Source="S_SKIP" Destination="START" Condition="1" x="2200" y="100"/>
+			<ECTransition Source="START" Destination="S_PROCESSED" Condition="PROCESSED" x="1500" y="500"/>
+			<ECTransition Source="S_PROCESSED" Destination="START" Condition="1" x="1500" y="750"/>
+		</ECC>
+		<Algorithm Name="COPY" Comment="Kanal und Fuellstand vom Adapter uebernehmen">
+			<ST><![CDATA[K := IN_DATA.OUT;
+N := IN_DATA.N;
+]]></ST>
+		</Algorithm>
+	</BasicFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

@@ -18,6 +18,9 @@
 				<With Var="u16DaSize"/>
 				<With Var="u8Priority"/>
 			</Event>
+			<Event Name="CHG" Type="Event" Comment="Change source to NmSource.s16Handle">
+				<With Var="NmSource"/>
+			</Event>
 		</EventInputs>
 		<EventOutputs>
 			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">

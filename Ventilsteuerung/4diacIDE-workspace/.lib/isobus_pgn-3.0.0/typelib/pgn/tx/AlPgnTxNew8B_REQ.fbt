@@ -17,6 +17,9 @@
 				<With Var="u16DaSize"/>
 				<With Var="u8Priority"/>
 			</Event>
+			<Event Name="CHG" Type="Event" Comment="Change destination to NmDestin.s16Handle">
+				<With Var="NmDestin"/>
+			</Event>
 		</EventInputs>
 		<EventOutputs>
 			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">

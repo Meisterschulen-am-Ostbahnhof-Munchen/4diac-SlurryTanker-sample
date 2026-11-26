@@ -2,7 +2,7 @@
 <SubAppType Name="A2X2_PUBLISH_2_SUBSCRIBE_2" Comment="Wie adapter::net::A2X2_CLIENT_2_0_SUBSCRIBE_2, aber lokales PUBLISH_2 statt Remote-CLIENT_2_0 (ein Geraet)">
 	<Identification Standard="61499-2" Description="Copyright (c) 2026 HR Agrartechnik GmbH &#10; &#10;This program and the accompanying materials are made &#10;available under the terms of the Eclipse Public License 2.0 &#10;which is available at https://www.eclipse.org/legal/epl-2.0/ &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
-	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-18" Remarks="Kopie von A2X2_CLIENT_2_0_SUBSCRIBE_2, CLIENT_2_0 durch PUBLISH_2 ersetzt - als SubAppType, damit FORTE den Typ nicht kennen muss (kein ELF fuer MyLib_AX)">
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-10-18" Remarks="Kopie von A2X2_CLIENT_2_0_SUBSCRIBE_2, CLIENT_2_0 durch PUBLISH_2 ersetzt - als SubAppType, damit FORTE den Typ nicht kennen muss (kein ELF fuer MyLib_AX)">
 	</VersionInfo>
 	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-09-05" Remarks="initial API and implementation and/or initial documentation">
 	</VersionInfo>

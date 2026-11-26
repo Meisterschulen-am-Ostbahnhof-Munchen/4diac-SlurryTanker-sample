@@ -20,6 +20,9 @@
 			</Event>
 			<Event Name="REQ" Type="Event" Comment="This function releases a single request for a RX PGN">
 			</Event>
+			<Event Name="CHG" Type="Event" Comment="Change source to NmSource.s16Handle">
+				<With Var="NmSource"/>
+			</Event>
 		</EventInputs>
 		<EventOutputs>
 			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">

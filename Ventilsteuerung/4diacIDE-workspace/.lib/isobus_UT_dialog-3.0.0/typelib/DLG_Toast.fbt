@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="DLG_Toast" Comment="Hinweis ohne Tasten, verschwindet nach TIMEOUT">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-11-25" Remarks="SubApp -&gt; Composite FB (Lib wird wegen DLG_CTRL ohnehin gebaut, im fboot nur eine Instanz).">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-11-17" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::UT::dialog">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Initialisierung">
+				<With Var="QI"/>
+			</Event>
+			<Event Name="SHOW" Type="Event" Comment="Hinweis zeigen">
+				<With Var="QI"/>
+				<With Var="TEXT_ID"/>
+				<With Var="TITLE_ID"/>
+				<With Var="ICON"/>
+				<With Var="TIMEOUT"/>
+			</Event>
+			<Event Name="CLOSE" Type="Event" Comment="Hinweis schliessen">
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialisierung fertig">
+				<With Var="QO"/>
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Hinweis beendet">
+				<With Var="QO"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Freigabe" InitialValue="TRUE"/>
+			<VarDeclaration Name="TEXT_ID" Type="UINT" Comment="OutputString Meldungstext" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="TITLE_ID" Type="UINT" Comment="OutputString Titel, NULL = Standard" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="ICON" Type="USINT" Comment="DLG_ICON_*" InitialValue="USINT#1"/>
+			<VarDeclaration Name="TIMEOUT" Type="TIME" Comment="Anzeigedauer" InitialValue="T#3s"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Qualitaet"/>
+		</OutputVars>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="MSG" Type="isobus::UT::dialog::DLG_MessageBox" x="500" y="0">
+			<Parameter Name="BUTTONS" Value="USINT#0"/>
+			<Parameter Name="DEFAULT_BUTTON" Value="USINT#1"/>
+			<Parameter Name="MODAL" Value="FALSE"/>
+			<Parameter Name="AUDIO" Value="FALSE"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="MSG.INIT" dx1="2580"/>
+			<Connection Source="MSG.INITO" Destination="INITO" dx1="1720"/>
+			<Connection Source="SHOW" Destination="MSG.SHOW" dx1="2546.67"/>
+			<Connection Source="CLOSE" Destination="MSG.CLOSE" dx1="2513.33"/>
+			<Connection Source="MSG.CNF" Destination="CNF" dx1="1753.33"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="QI" Destination="MSG.QI" dx1="2480"/>
+			<Connection Source="TEXT_ID" Destination="MSG.TEXT_ID" dx1="2446.67"/>
+			<Connection Source="TITLE_ID" Destination="MSG.TITLE_ID" dx1="2413.33"/>
+			<Connection Source="ICON" Destination="MSG.ICON" dx1="2380"/>
+			<Connection Source="TIMEOUT" Destination="MSG.TIMEOUT" dx1="2346.67"/>
+			<Connection Source="MSG.QO" Destination="QO" dx1="1786.67"/>
+		</DataConnections>
+	</FBNetwork>
+</FBType>

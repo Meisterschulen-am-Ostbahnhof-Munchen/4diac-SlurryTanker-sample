@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Sperrblock_Button_OR8_TO_logiBUS_QXA_BG" Comment="Sperrblock: Button ODER 8 Anforderungen auf logiBUS-Ausgang, Hintergrundfarbe Gruen/Weiss">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-31" Remarks="Aus Getreidehacke func/Manual/SB in MyLib::sys verschoben und umbenannt, INIT/INITO/QI/QO ergaenzt, Output als Parameter (vorher fest Output_Q2).">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO_S"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID Button Sperrblock" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="Output" Type="logiBUS::io::DQ::logiBUS_DO_S" Comment="logiBUS-Ausgang Sperrblock" InitialValue="logiBUS_DO::Invalid"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+		<Sockets>
+			<AdapterDeclaration Name="SB_1" Type="adapter::types::unidirectional::AX" Comment="Anforderung Sperrblock 1"/>
+			<AdapterDeclaration Name="SB_2" Type="adapter::types::unidirectional::AX" Comment="Anforderung Sperrblock 2"/>
+			<AdapterDeclaration Name="SB_3" Type="adapter::types::unidirectional::AX" Comment="Anforderung Sperrblock 3"/>
+			<AdapterDeclaration Name="SB_4" Type="adapter::types::unidirectional::AX" Comment="Anforderung Sperrblock 4"/>
+			<AdapterDeclaration Name="SB_5" Type="adapter::types::unidirectional::AX" Comment="Anforderung Sperrblock 5"/>
+			<AdapterDeclaration Name="SB_6" Type="adapter::types::unidirectional::AX" Comment="Anforderung Sperrblock 6"/>
+			<AdapterDeclaration Name="SB_7" Type="adapter::types::unidirectional::AX" Comment="Anforderung Sperrblock 7"/>
+			<AdapterDeclaration Name="SB_8" Type="adapter::types::unidirectional::AX" Comment="Anforderung Sperrblock 8"/>
+		</Sockets>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="IX" Type="isobus::UT::io::Button::Button_IXA" x="-3000" y="1600">
+		</FB>
+		<FB Name="OR_9" Type="adapter::booleanOperators::AX_OR_9" x="-1200" y="0">
+		</FB>
+		<FB Name="AX_SPLIT_2" Type="adapter::events::unidirectional::AX_SPLIT_2" x="600" y="0">
+		</FB>
+		<FB Name="QX" Type="logiBUS::io::DQ::logiBUS_QXA" x="2400" y="-800">
+		</FB>
+		<SubApp Name="GreenWhiteBackground" Type="MyLib::sys::GreenWhiteBackground1_AX" x="2400" y="600">
+		</SubApp>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_3" x="6000" y="-1600">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="QX.INIT"/>
+			<Connection Source="QX.INITO" Destination="IX.INIT"/>
+			<Connection Source="IX.INITO" Destination="GreenWhiteBackground.INIT"/>
+			<Connection Source="GreenWhiteBackground.INITO" Destination="INITO"/>
+			<Connection Source="GreenWhiteBackground.INITO" Destination="AND_QO.REQ"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="QI" Destination="QX.QI"/>
+			<Connection Source="QI" Destination="IX.QI"/>
+			<Connection Source="QI" Destination="GreenWhiteBackground.QI"/>
+			<Connection Source="u16ObjId" Destination="IX.u16ObjId"/>
+			<Connection Source="u16ObjId" Destination="GreenWhiteBackground.u16ObjId"/>
+			<Connection Source="Output" Destination="QX.Output"/>
+			<Connection Source="QX.QO" Destination="AND_QO.IN1"/>
+			<Connection Source="IX.QO" Destination="AND_QO.IN2"/>
+			<Connection Source="GreenWhiteBackground.QO" Destination="AND_QO.IN3"/>
+			<Connection Source="AND_QO.OUT" Destination="QO"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="SB_1" Destination="OR_9.IN1"/>
+			<Connection Source="SB_2" Destination="OR_9.IN2"/>
+			<Connection Source="SB_3" Destination="OR_9.IN3"/>
+			<Connection Source="SB_4" Destination="OR_9.IN4"/>
+			<Connection Source="SB_5" Destination="OR_9.IN5"/>
+			<Connection Source="SB_6" Destination="OR_9.IN6"/>
+			<Connection Source="SB_7" Destination="OR_9.IN7"/>
+			<Connection Source="SB_8" Destination="OR_9.IN8"/>
+			<Connection Source="IX.IN" Destination="OR_9.IN9"/>
+			<Connection Source="OR_9.OUT" Destination="AX_SPLIT_2.IN"/>
+			<Connection Source="AX_SPLIT_2.OUT1" Destination="QX.OUT"/>
+			<Connection Source="AX_SPLIT_2.OUT2" Destination="GreenWhiteBackground.DI1"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="NetEv_Install_Filter" Comment="NmGetCfInfo: install nur bei Active/NewAddress und nur einmal, sonst RSP">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-11-17" Remarks="initial implementation">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="REQ" Type="Event" Comment="neues Netzwerkereignis">
+			</SubAppEvent>
+			<SubAppEvent Name="SET" Type="Event" Comment="install erledigt (installO)">
+			</SubAppEvent>
+			<SubAppEvent Name="RESET" Type="Event" Comment="wieder installieren erlauben">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INSTALL" Type="Event" Comment="jetzt installieren">
+			</SubAppEvent>
+			<SubAppEvent Name="CHG" Type="Event" Comment="schon installiert, Partner neu gemeldet (für CHG)">
+			</SubAppEvent>
+			<SubAppEvent Name="RSP" Type="Event" Comment="nur quittieren (an NmGetCfInfo.RSP)">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="eNetEvent" Type="USINT" Comment="aus ISONETEVENT_T"/>
+		</InputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="NetEv_Art" Type="iec61131::conversion::F_USINT_TO_UINT" x="-5300" y="-1000">
+		</FB>
+		<FB Name="NetEv_Begrenzen" Type="iec61131::selection::F_MIN" Comment="ab 7 alles auf EO8, sonst kein RSP" x="-3300" y="-1000">
+			<Parameter Name="IN2" Value="UINT#7"/>
+		</FB>
+		<FB Name="NetEv_Verteiler" Type="iec61499::events::E_DEMUX_8" x="-1100" y="-1100">
+			<Parameter Name="EO1" Value="" Comment="Active "/>
+			<Parameter Name="EO2" Value="" Comment="AddressConflict"/>
+			<Parameter Name="EO3" Value="" Comment="Inactive"/>
+			<Parameter Name="EO4" Value="" Comment="NewAddress"/>
+			<Parameter Name="EO5" Value="" Comment="AddressViolation"/>
+			<Parameter Name="EO6" Value="" Comment="MemberAdd"/>
+			<Parameter Name="EO7" Value="" Comment="MemberRemove"/>
+			<Parameter Name="EO8" Value="" Comment="7 und mehr (Isonet_Last, HSI)"/>
+		</FB>
+		<SubApp Name="Nur_einmal" Type="MyLib::sys::NetEv_Einmal" x="1700" y="100">
+			<Parameter Name="EO0" Value="" Comment="erstes Mal "/>
+			<Parameter Name="EO1" Value="" Comment="schon erledigt "/>
+		</SubApp>
+		<EventConnections>
+			<Connection Source="REQ" Destination="NetEv_Art.REQ"/>
+			<Connection Source="NetEv_Art.CNF" Destination="NetEv_Begrenzen.REQ"/>
+			<Connection Source="NetEv_Begrenzen.CNF" Destination="NetEv_Verteiler.EI"/>
+			<Connection Source="NetEv_Verteiler.EO1" Destination="Nur_einmal.EI" dx1="1926.67"/>
+			<Connection Source="NetEv_Verteiler.EO4" Destination="Nur_einmal.EI" dx1="1926.67"/>
+			<Connection Source="SET" Destination="Nur_einmal.S" dx1="346.67"/>
+			<Connection Source="RESET" Destination="Nur_einmal.R" dx1="186.67"/>
+			<Connection Source="Nur_einmal.EO0" Destination="INSTALL" dx1="1640"/>
+			<Connection Source="Nur_einmal.EO1" Destination="CHG"/>
+			<Connection Source="Nur_einmal.EO1" Destination="RSP" dx1="1886.67"/>
+			<Connection Source="NetEv_Verteiler.EO2" Destination="RSP">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="NetEv_Verteiler.EO3" Destination="RSP" dx1="4626.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="NetEv_Verteiler.EO5" Destination="RSP" dx1="4626.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="NetEv_Verteiler.EO6" Destination="RSP" dx1="4626.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="NetEv_Verteiler.EO7" Destination="RSP" dx1="4626.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="NetEv_Verteiler.EO8" Destination="RSP" dx1="4626.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="eNetEvent" Destination="NetEv_Art.IN"/>
+			<Connection Source="NetEv_Art.OUT" Destination="NetEv_Begrenzen.IN1"/>
+			<Connection Source="NetEv_Begrenzen.OUT" Destination="NetEv_Verteiler.K"/>
+		</DataConnections>
+	</SubAppNetwork>
+</SubAppType>

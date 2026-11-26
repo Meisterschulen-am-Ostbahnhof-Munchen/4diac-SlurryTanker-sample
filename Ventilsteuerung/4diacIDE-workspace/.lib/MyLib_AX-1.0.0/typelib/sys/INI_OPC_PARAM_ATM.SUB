@@ -2,7 +2,7 @@
 <SubAppType Name="INI_OPC_PARAM_ATM" Comment="OPC_UA Parameter lesen/Schreiben, remanent per INI, mit ATM-Ausgang (TIME = T#1s&#10;* gespeicherte REAL-Sekunden) fuer Zeitparameter.">
 	<Identification Standard="61499-2" Description="Copyright (c) 2023 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
-	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-08-14" Remarks="INI_OPC_PARAM mit zusaetzlichem ATM-Ausgang ueber AR_MULTIME (T#1s * Sekunden)">
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.2" Author="Franz Höpfinger" Date="2026-08-14" Remarks="INI_OPC_PARAM mit zusaetzlichem ATM-Ausgang ueber AR_MULTIME (T#1s * Sekunden)">
 	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-07-20" Remarks="Background">
 	</VersionInfo>

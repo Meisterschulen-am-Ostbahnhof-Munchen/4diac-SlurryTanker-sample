@@ -2,7 +2,7 @@
 <FBType Name="F_MOVE" Comment="moves input to output">
 	<Identification Standard="61131-3" Classification="standard selection function" Description="Copyright (c) 2013 TU Wien ACIN&#10; &#10;This program and the accompanying materials are made&#10;available under the terms of the Eclipse Public License 2.0&#10;which is available at https://www.eclipse.org/legal/epl-2.0/&#10;&#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
-	<VersionInfo Version="3.0" Author="Martin Erich Jobst" Date="2025-10-24" Remarks="changed package">
+	<VersionInfo Version="3.1" Author="Martin Erich Jobst" Date="2025-10-24" Remarks="changed package">
 	</VersionInfo>
 	<VersionInfo Version="3.0" Author="Patrick Aigner" Date="2025-04-14" Remarks="changed package">
 	</VersionInfo>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="logiBUS_AI_MVA_Scaled_OPC" Comment="Analog-Eingang in mV (Pin), feste Umrechnung OUT = mV * SCALE + OFFSET, Publish mV und Wert (ohne VT)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-11-15" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="logiBUS::io::AI::logiBUS_AI"/>
+		<Import declaration="logiBUS::io::AI::logiBUS_AI_S"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="Input" Type="logiBUS::io::AI::logiBUS_AI_S" Comment="Identify the Input AnalogInput_I1..I8" InitialValue="logiBUS_AI::Invalid"/>
+			<VarDeclaration Name="SCALE" Type="LREAL" Comment="Faktor je mV am Pin" InitialValue="LREAL#1.0"/>
+			<VarDeclaration Name="OFFSET" Type="DINT" Comment="Offset nach dem Faktor" InitialValue="DINT#0"/>
+			<VarDeclaration Name="ID_RAW_WRITE" Type="WSTRING" Comment="Pin-mV (REAL, ACTION=PUBLISH)"/>
+			<VarDeclaration Name="ID_CAL_WRITE" Type="WSTRING" Comment="Umgerechneter Wert (REAL, ACTION=PUBLISH)"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="AR_OUT" Type="adapter::types::unidirectional::AR" Comment="Umgerechneter Wert"/>
+		</Plugs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="logiBUS_AI_MVA" Type="logiBUS::io::AI::logiBUS_AI_MVA" x="-9200" y="-1700">
+			<Parameter Name="PARAMS" Value="">
+				<Attribute Name="Visible" Value="false"/>
+			</Parameter>
+			<Parameter Name="AnalogInput_hysteresis" Value="DWORD#10"/>
+			<Parameter Name="TimeDelta" Value="DWORD#250"/>
+			<Parameter Name="TimeRateLimit" Value="DWORD#100"/>
+		</FB>
+		<FB Name="AD_SPLIT_2" Type="adapter::events::unidirectional::AD_SPLIT_2" x="-6800" y="-400">
+		</FB>
+		<FB Name="AD_TO_AUDI" Type="adapter::conversion::unidirectional::AD_TO_AUDI" x="-5000" y="-1300">
+		</FB>
+		<FB Name="AUDI_TO_AR" Type="adapter::conversion::unidirectional::AUDI_TO_AR" x="-3400" y="-1300">
+		</FB>
+		<FB Name="AR_PUBLISH_RAW" Type="adapter::net::AR_PUBLISH_1" x="-1400" y="-1900">
+		</FB>
+		<FB Name="SCALED" Type="logiBUS::signalprocessing::fieldbus::AD_FIELDBUS_DWORD_TO_SIGNAL_SCALED" x="-5000" y="300">
+		</FB>
+		<FB Name="ALR_TO_AR" Type="adapter::conversion::unidirectional::ALR_TO_AR" x="-2900" y="300">
+		</FB>
+		<FB Name="AR_SPLIT_2_Cal" Type="adapter::events::unidirectional::AR_SPLIT_2" x="-1300" y="300">
+		</FB>
+		<FB Name="AR_PUBLISH_CAL" Type="adapter::net::AR_PUBLISH_1" x="600" y="-300">
+		</FB>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_3" x="3200" y="-400">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="logiBUS_AI_MVA.INIT" dx1="1800"/>
+			<Connection Source="logiBUS_AI_MVA.INITO" Destination="SCALED.INIT" dx1="600"/>
+			<Connection Source="SCALED.INITO" Destination="AR_PUBLISH_RAW.INIT" dx1="600"/>
+			<Connection Source="AR_PUBLISH_RAW.INITO" Destination="AR_PUBLISH_CAL.INIT" dx1="600"/>
+			<Connection Source="AR_PUBLISH_CAL.INITO" Destination="INITO" dx1="2000"/>
+			<Connection Source="AR_PUBLISH_CAL.INITO" Destination="AND_QO.REQ" dx1="533.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="Input" Destination="logiBUS_AI_MVA.Input" dx1="1460">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="logiBUS_AI_MVA.QI" dx1="1800">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="SCALE" Destination="SCALED.SCALE" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="OFFSET" Destination="SCALED.OFFSET" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_RAW_WRITE" Destination="AR_PUBLISH_RAW.ID" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="AR_PUBLISH_RAW.QI" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="ID_CAL_WRITE" Destination="AR_PUBLISH_CAL.ID" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="AR_PUBLISH_CAL.QI" dx1="1400">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="logiBUS_AI_MVA.QO" Destination="AND_QO.IN1" dx1="4106.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AR_PUBLISH_RAW.QO" Destination="AND_QO.IN2" dx1="726.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AR_PUBLISH_CAL.QO" Destination="AND_QO.IN3" dx1="726.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AND_QO.OUT" Destination="QO" dx1="1193.33"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="logiBUS_AI_MVA.IN" Destination="AD_SPLIT_2.IN" dx1="420"/>
+			<Connection Source="AD_SPLIT_2.OUT1" Destination="AD_TO_AUDI.AD_IN" dx1="300"/>
+			<Connection Source="AD_TO_AUDI.AUDI_OUT" Destination="AUDI_TO_AR.AUDI_IN" dx1="300"/>
+			<Connection Source="AUDI_TO_AR.AR_OUT" Destination="AR_PUBLISH_RAW.IN" dx1="300"/>
+			<Connection Source="AD_SPLIT_2.OUT2" Destination="SCALED.IN" dx1="300"/>
+			<Connection Source="SCALED.OUT" Destination="ALR_TO_AR.ALR_IN" dx1="300"/>
+			<Connection Source="ALR_TO_AR.AR_OUT" Destination="AR_SPLIT_2_Cal.IN" dx1="300"/>
+			<Connection Source="AR_SPLIT_2_Cal.OUT1" Destination="AR_OUT" dx1="173.33"/>
+			<Connection Source="AR_SPLIT_2_Cal.OUT2" Destination="AR_PUBLISH_CAL.IN" dx1="300"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

@@ -2,6 +2,8 @@
 <SubAppType Name="AX_SUBSCRIBE_BG3_WEB_Option_OPC" Comment="OPC-UA Remote-Subscribe + VT-Hintergrundfarbe auf SoftKey UND AuxFunction2 +&#10;lokaler Web-Republish - Option-Lib-Variante von AX_SUBSCRIBE_BG3_WEB_OPC:&#10;AX_SUBSCRIBE_1, STATUS_WEB_PUBLISH UND GreenWhiteBackground3_AX (hat seit dem&#10;QI/QO-Rollout echtes QI/QO) werden vom Option::AOption-Socket initialisiert&#10;und gated - Subscribe/Publish sequenziell, GreenWhiteBackground3_AX parallel&#10;dazu (E_REND_2_INITO wartet auf beide Zweige, sonst verliert der erste&#10;Remote-Wert das Rennen gegen die eigene Q_BackgroundColour-Initialisierung).&#10;AOption_OUT reicht die Aktivierung an eine nachgeschaltete Gruppe weiter (Daisy-Chain).">
 	<Identification Standard="61499-2" Description="Copyright (c) 2026 Büngener Schuder GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
+	<VersionInfo Organization="Büngener Schuder GmbH" Version="1.2" Author="Franz Höpfinger" Date="2026-10-30" Remarks="Remote-Clients mit Remote_Init_Retry: Kette (und Option-INIT_CNF) wartet nicht mehr auf die Gegenstation, nach INITO- neuer Versuch nach 2 s (forte #1092, sonst 60 s pro fehlendem Node und danach tot).">
+	</VersionInfo>
 	<VersionInfo Organization="Büngener Schuder GmbH" Version="1.1" Author="Franz Höpfinger" Date="2026-10-15" Remarks="GreenWhiteBackground3_AX jetzt mitgegated (hat seit QI/QO-Rollout echtes QI/QO, v1.0-Annahme war veraltet) - behebt 'Softkey da, aber Hintergrund reagiert nicht'. E_REND_2_INITO ergaenzt: GreenWhiteBackground3_AX.INIT parallel statt sequenziell nach STATUS_WEB_PUBLISH, sonst verliert der erste eintreffende Remote-Wert das Rennen gegen die eigene Q_BackgroundColour-Init (behebt Folgeregression 'Umschaltung passt, Farbe nicht').">
 	</VersionInfo>
 	<VersionInfo Organization="Büngener Schuder GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-10-13" Remarks="initial implementation - Option-Lib-Variante von AX_SUBSCRIBE_BG3_WEB_OPC, nur fuer Softkey_Aux_IXA_TO_Remote_WRITE_BG_Option_OPC gebaut (Status-Haelfte). Bewusst NICHT alle Bausteine gegated - nur die mit echtem QI (AX_SUBSCRIBE_1, STATUS_WEB_PUBLISH), GreenWhiteBackground3_AX bleibt wie im Original unangetastet.">
@@ -36,14 +38,20 @@
 		</FB>
 		<FB Name="AOption_EVENT_TO_X" Type="Option::conversion::AOption_EVENT_TO_X" x="3400" y="2200">
 		</FB>
+		<SubApp Name="Retry_AX_SUBSCRIBE_1" Type="MyLib::sys::Remote_Init_Retry" x="-1000" y="1600">
+		</SubApp>
 		<EventConnections>
-			<Connection Source="AOption_X_TO_EVENT.INIT_REQ" Destination="AX_SUBSCRIBE_1.INIT" dx1="633.33"/>
-			<Connection Source="AX_SUBSCRIBE_1.INITO" Destination="GreenWhiteBackground3_AX.INIT" dx1="826.67"/>
+			<Connection Source="AOption_X_TO_EVENT.INIT_REQ" Destination="Retry_AX_SUBSCRIBE_1.INIT" dx1="220"/>
+			<Connection Source="Retry_AX_SUBSCRIBE_1.CLIENT_INIT" Destination="AX_SUBSCRIBE_1.INIT" dx1="80" dx2="80" dy="-853.33"/>
+			<Connection Source="AX_SUBSCRIBE_1.INITO" Destination="Retry_AX_SUBSCRIBE_1.CLIENT_INITO" dx1="186.67" dx2="80" dy="1260"/>
+			<Connection Source="Retry_AX_SUBSCRIBE_1.INITO" Destination="GreenWhiteBackground3_AX.INIT" dx1="1506.67"/>
 			<Connection Source="GreenWhiteBackground3_AX.INITO" Destination="STATUS_WEB_PUBLISH.INIT" dx1="80" dx2="80" dy="2053.33"/>
 			<Connection Source="STATUS_WEB_PUBLISH.INITO" Destination="AOption_EVENT_TO_X.INIT_REQ" dx1="326.67"/>
 			<Connection Source="AOption_EVENT_TO_X.INIT_CNF" Destination="AOption_X_TO_EVENT.INIT_CNF" dx1="80" dx2="80" dy="660"/>
 		</EventConnections>
 		<DataConnections>
+			<Connection Source="AOption_X_TO_EVENT.QI_OUT" Destination="Retry_AX_SUBSCRIBE_1.QI" dx1="486.67"/>
+			<Connection Source="AX_SUBSCRIBE_1.QO" Destination="Retry_AX_SUBSCRIBE_1.CLIENT_QO" dx1="80" dx2="246.67" dy="706.67"/>
 			<Connection Source="u16ObjId" Destination="GreenWhiteBackground3_AX.u16ObjId" dx1="366.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="E_MUX_FIFO_2_Adapter" Comment="Adapter-Variante von FIFO::E_MUX_FIFO_2: merkt sich bei EI1/EI2 den Kanal&#10;(0/1) in einer FIFO und liefert ihn ueber den Plug OUT_DATA (AFIFO_UINT, Kanal in&#10;OUT) einzeln aus. PROCESSED kommt ueber den Rueckkanal. Gegenstueck: E_DEMUX_FIFO_2.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-11-11" Remarks="Neu auf Basis von FIFO_UINT_Adapter 1.1: PUSH/IN durch EI1/EI2 ersetzt, der Kanal wird beim Eintreffen des Ereignisses im FB gespeichert und als OUT ueber AFIFO_UINT geliefert.">
+	</VersionInfo>
+	<CompilerInfo packageName="FIFO_adapter">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+				<With Var="QI"/>
+				<With Var="CAPACITY"/>
+				<With Var="BUF"/>
+			</Event>
+			<Event Name="RST" Type="Event" Comment="Queue leeren und Liefer-Sperre aufheben - Reset der ganzen Kette, der Konsument muss mit zurueckgesetzt werden">
+			</Event>
+			<Event Name="EI1" Type="Event" Comment="Kanal 1 (0) ans Ende der Queue anhaengen, falls Platz vorhanden">
+			</Event>
+			<Event Name="EI2" Type="Event" Comment="Kanal 2 (1) ans Ende der Queue anhaengen, falls Platz vorhanden">
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialisierung bestaetigt">
+				<With Var="QO"/>
+				<With Var="BUF"/>
+			</Event>
+			<Event Name="RSTO" Type="Event" Comment="Reset bestaetigt">
+				<With Var="N"/>
+			</Event>
+			<Event Name="PUSHO" Type="Event" Comment="EI1/EI2 bestaetigt (OK=FALSE wenn Queue voll war oder QO=FALSE)">
+				<With Var="N"/>
+				<With Var="OK"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
+			<VarDeclaration Name="CAPACITY" Type="UINT" Comment="Kapazitaet - MUSS der Anzahl Elemente von BUF entsprechen, daher immer ueber F_LEN_ARRAY hinter der PROVIDE_ARR_x_UINT-Instanz ermitteln. Ein groesserer Wert schreibt ueber BUF hinaus. 0 ergibt QO=FALSE."/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
+			<VarDeclaration Name="N" Type="UINT" Comment="Anzahl aktuell wartender (noch nicht ausgelieferter) Elemente"/>
+			<VarDeclaration Name="OK" Type="BOOL" Comment="TRUE wenn das letzte EI1/EI2 erfolgreich war (Queue war nicht voll und QO=TRUE)"/>
+		</OutputVars>
+		<InOutVars>
+			<VarDeclaration Name="BUF" Type="UINT" ArraySize="*" Comment="Ringpuffer fuer die Kanalnummern --Speicher - Groesse wird extern ueber eine angeschlossene PROVIDE_ARR_x_UINT-Instanz vorgegeben"/>
+		</InOutVars>
+		<Plugs>
+			<AdapterDeclaration Name="OUT_DATA" Type="FIFO_adapter::AFIFO_UINT" Comment="Konsument haengt per Socket hier an - DATA liefert den naechsten Wert, PROCESSED (Rueckkanal) quittiert"/>
+		</Plugs>
+	</InterfaceList>
+	<BasicFB>
+		<InternalVars>
+			<VarDeclaration Name="PTR" Type="UINT" Comment="Schreibposition fuer das naechste EI1/EI2"/>
+			<VarDeclaration Name="KIN" Type="UINT" Comment="Kanal des gerade eingetroffenen Ereignisses"/>
+			<VarDeclaration Name="OUTPTR" Type="UINT" Comment="Leseposition fuer den naechsten auszuliefernden Wert"/>
+			<VarDeclaration Name="DELIVERING" Type="BOOL" Comment="TRUE = ein Wert wurde per OUT_DATA.DATA geliefert, auf OUT_DATA.PROCESSED wird gewartet"/>
+		</InternalVars>
+		<ECC>
+			<ECState Name="START" Comment="Initial State" x="800" y="80">
+			</ECState>
+			<ECState Name="S_INIT" x="2200" y="-700">
+				<ECAction Algorithm="INIT_ALG" Output="INITO"/>
+			</ECState>
+			<ECState Name="S_RST" x="2200" y="-200">
+				<ECAction Algorithm="RST" Output="RSTO"/>
+			</ECState>
+			<ECState Name="S_EI1" x="2200" y="150">
+				<ECAction Algorithm="SEL_K0"/>
+				<ECAction Algorithm="PUSH" Output="PUSHO"/>
+			</ECState>
+			<ECState Name="S_EI2" x="2200" y="450">
+				<ECAction Algorithm="SEL_K1"/>
+				<ECAction Algorithm="PUSH" Output="PUSHO"/>
+			</ECState>
+			<ECState Name="S_PROCESSED" x="2200" y="800">
+				<ECAction Algorithm="PROCESSED_ALG"/>
+			</ECState>
+			<ECState Name="S_DELIVER" x="3600" y="550" Comment="Naechsten Wert aus der Queue entnehmen und ueber den Plug ausliefern">
+				<ECAction Algorithm="DELIVER" Output="OUT_DATA.DATA"/>
+			</ECState>
+			<ECTransition Source="START" Destination="S_INIT" Condition="INIT" x="1500" y="-700"/>
+			<ECTransition Source="START" Destination="S_RST" Condition="RST" x="1500" y="-200"/>
+			<ECTransition Source="START" Destination="S_EI1" Condition="EI1" x="1500" y="150"/>
+			<ECTransition Source="START" Destination="S_EI2" Condition="EI2" x="1500" y="450"/>
+			<ECTransition Source="START" Destination="S_PROCESSED" Condition="OUT_DATA.PROCESSED[DELIVERING]" x="1500" y="800"/>
+			<ECTransition Source="S_INIT" Destination="START" Condition="1" x="1500" y="-950"/>
+			<ECTransition Source="S_RST" Destination="START" Condition="1" x="1500" y="-450"/>
+			<ECTransition Source="S_EI1" Destination="S_DELIVER" Condition="OK AND NOT DELIVERING AND N&gt;0" x="2900" y="300"/>
+			<ECTransition Source="S_EI1" Destination="START" Condition="1" x="1500" y="0"/>
+			<ECTransition Source="S_EI2" Destination="S_DELIVER" Condition="OK AND NOT DELIVERING AND N&gt;0" x="2900" y="500"/>
+			<ECTransition Source="S_EI2" Destination="START" Condition="1" x="1500" y="600"/>
+			<ECTransition Source="S_PROCESSED" Destination="S_DELIVER" Condition="N&gt;0" x="2900" y="680"/>
+			<ECTransition Source="S_PROCESSED" Destination="START" Condition="1" x="1500" y="1050"/>
+			<ECTransition Source="S_DELIVER" Destination="START" Condition="1" x="2900" y="80"/>
+		</ECC>
+		<Algorithm Name="INIT_ALG" Comment="Queue leeren und QI/QO durchreichen">
+			<ST><![CDATA[PTR := 0;
+OUTPTR := 0;
+N := 0;
+DELIVERING := FALSE;
+OK := FALSE;
+QO := QI AND CAPACITY > 0;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="RST" Comment="Queue und Liefer-Sperre leeren - RST setzt die ganze Kette zurueck, der Konsument muss mit zurueckgesetzt werden">
+			<ST><![CDATA[PTR := 0;
+OUTPTR := 0;
+N := 0;
+DELIVERING := FALSE;
+OK := FALSE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="SEL_K0" Comment="Kanal 1">
+			<ST><![CDATA[KIN := 0;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="SEL_K1" Comment="Kanal 2">
+			<ST><![CDATA[KIN := 1;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="PUSH" Comment="Kanal anhaengen, falls Platz vorhanden">
+			<ST><![CDATA[IF NOT QO OR N >= CAPACITY THEN
+    OK := FALSE;
+ELSE
+    OK := TRUE;
+    BUF[PTR] := KIN;
+    PTR := (PTR + 1) MOD CAPACITY;
+    N := N + 1;
+END_IF;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="PROCESSED_ALG" Comment="Liefer-Sperre aufheben - das naechste DATA folgt ueber die Transition nach S_DELIVER, falls die Queue noch Elemente enthaelt">
+			<ST><![CDATA[DELIVERING := FALSE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="DELIVER" Comment="Vordersten Wert entnehmen und ueber den Plug liefern">
+			<ST><![CDATA[OUT_DATA.OUT := BUF[OUTPTR];
+OUTPTR := (OUTPTR + 1) MOD CAPACITY;
+N := N - 1;
+OUT_DATA.N := N;
+DELIVERING := TRUE;
+]]></ST>
+		</Algorithm>
+	</BasicFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

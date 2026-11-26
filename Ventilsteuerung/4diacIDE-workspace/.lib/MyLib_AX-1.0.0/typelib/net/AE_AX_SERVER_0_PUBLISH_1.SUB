@@ -2,7 +2,9 @@
 <SubAppType Name="AE_AX_SERVER_0_PUBLISH_1" Comment="Wie adapter::net::AE_AX_SERVER_0_CLIENT_1_0, aber lokales PUBLISH_1 statt Remote-CLIENT_1_0 (ein Geraet)">
 	<Identification Standard="61499-2" Description="Copyright (c) 2026 HR Agrartechnik GmbH &#10; &#10;This program and the accompanying materials are made &#10;available under the terms of the Eclipse Public License 2.0 &#10;which is available at https://www.eclipse.org/legal/epl-2.0/ &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
-	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-18" Remarks="Kopie von AE_AX_SERVER_0_CLIENT_1_0, CLIENT_1_0 durch PUBLISH_1 ersetzt - als SubAppType, damit FORTE den Typ nicht kennen muss (kein ELF fuer MyLib_AX). SERVER_0: IND direkt auf RSP (sonst bis 4 s Server-Lock fuer alle Publishes)">
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.2" Author="Franz Höpfinger" Date="2026-11-25" Remarks="SERVER_0 -&gt; MyLib::net::SERVER_0_QO (IND nur bei QO=TRUE, RSP intern). Ein gescheitertes RSP meldet IND mit QO=FALSE, direkt IND-&gt;RSP ergab eine Endlosschleife.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-10-18" Remarks="Kopie von AE_AX_SERVER_0_CLIENT_1_0, CLIENT_1_0 durch PUBLISH_1 ersetzt - als SubAppType, damit FORTE den Typ nicht kennen muss (kein ELF fuer MyLib_AX). SERVER_0: IND direkt auf RSP (sonst bis 4 s Server-Lock fuer alle Publishes)">
 	</VersionInfo>
 	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-09-03" Remarks="initial API and implementation and/or initial documentation">
 	</VersionInfo>
@@ -34,8 +36,8 @@
 		</Plugs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="SERVER_0_1" Type="iec61499::net::SERVER_0" x="-6000" y="0">
-		</FB>
+		<SubApp Name="SERVER_0_1" Type="MyLib::net::SERVER_0_QO" x="-6000" y="0">
+		</SubApp>
 		<FB Name="EVENTS" Type="adapter::conversion::unidirectional::AE_EVENT_TO_E" x="-3600" y="0">
 		</FB>
 		<FB Name="SPLIT" Type="adapter::events::bidirectional::AE_TO_AE_AX_SPLIT" x="-1600" y="200">
@@ -45,7 +47,6 @@
 		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_2" x="2600" y="0">
 		</FB>
 		<EventConnections>
-			<Connection Source="SERVER_0_1.IND" Destination="SERVER_0_1.RSP"/>
 			<Connection Source="INIT" Destination="SERVER_0_1.INIT"/>
 			<Connection Source="SERVER_0_1.INITO" Destination="STATE_PUBLISH.INIT"/>
 			<Connection Source="STATE_PUBLISH.INITO" Destination="INITO"/>

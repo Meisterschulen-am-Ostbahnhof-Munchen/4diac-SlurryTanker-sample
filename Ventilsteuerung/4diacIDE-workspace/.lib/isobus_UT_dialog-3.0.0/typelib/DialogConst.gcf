@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="DialogConst" Comment="Konstanten fuer BUTTONS, ICON, RESULT">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-11-17" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::UT::dialog">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="DLG_BTN_NONE" Type="USINT" Comment="keine Tasten (Toast)" InitialValue="USINT#0"/>
+		<VarDeclaration Name="DLG_BTN_OK" Type="USINT" Comment="OK" InitialValue="USINT#1"/>
+		<VarDeclaration Name="DLG_BTN_OKCANCEL" Type="USINT" Comment="OK, Abbrechen" InitialValue="USINT#2"/>
+		<VarDeclaration Name="DLG_BTN_ABORTRETRYIGNORE" Type="USINT" Comment="Abbrechen, Wiederholen, Ignorieren" InitialValue="USINT#3"/>
+		<VarDeclaration Name="DLG_BTN_YESNOCANCEL" Type="USINT" Comment="Ja, Nein, Abbrechen" InitialValue="USINT#4"/>
+		<VarDeclaration Name="DLG_BTN_YESNO" Type="USINT" Comment="Ja, Nein" InitialValue="USINT#5"/>
+		<VarDeclaration Name="DLG_BTN_RETRYCANCEL" Type="USINT" Comment="Wiederholen, Abbrechen" InitialValue="USINT#6"/>
+		<VarDeclaration Name="DLG_ICON_NONE" Type="USINT" Comment="kein Icon" InitialValue="USINT#0"/>
+		<VarDeclaration Name="DLG_ICON_INFO" Type="USINT" Comment="Information" InitialValue="USINT#1"/>
+		<VarDeclaration Name="DLG_ICON_QUESTION" Type="USINT" Comment="Frage" InitialValue="USINT#2"/>
+		<VarDeclaration Name="DLG_ICON_WARNING" Type="USINT" Comment="Warnung" InitialValue="USINT#3"/>
+		<VarDeclaration Name="DLG_ICON_ERROR" Type="USINT" Comment="Fehler" InitialValue="USINT#4"/>
+		<VarDeclaration Name="DLG_RES_NONE" Type="USINT" Comment="geschlossen/ersetzt" InitialValue="USINT#0"/>
+		<VarDeclaration Name="DLG_RES_OK" Type="USINT" Comment="OK" InitialValue="USINT#1"/>
+		<VarDeclaration Name="DLG_RES_CANCEL" Type="USINT" Comment="Abbrechen" InitialValue="USINT#2"/>
+		<VarDeclaration Name="DLG_RES_ABORT" Type="USINT" Comment="Abbruch" InitialValue="USINT#3"/>
+		<VarDeclaration Name="DLG_RES_RETRY" Type="USINT" Comment="Wiederholen" InitialValue="USINT#4"/>
+		<VarDeclaration Name="DLG_RES_IGNORE" Type="USINT" Comment="Ignorieren" InitialValue="USINT#5"/>
+		<VarDeclaration Name="DLG_RES_YES" Type="USINT" Comment="Ja" InitialValue="USINT#6"/>
+		<VarDeclaration Name="DLG_RES_NO" Type="USINT" Comment="Nein" InitialValue="USINT#7"/>
+		<VarDeclaration Name="DLG_RES_TIMEOUT" Type="USINT" Comment="Zeit abgelaufen" InitialValue="USINT#8"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[(* Werte wie Windows MessageBox (Tasten, Icon, Ergebnis). RESULT = KeyCode des Dialog-Buttons. *)
+PACKAGE isobus::UT::dialog;
+
+GLOBALCONSTANTS DialogConst
+	VAR_GLOBAL CONSTANT
+		DLG_BTN_NONE : USINT := USINT#0; // keine Tasten (Toast)
+		DLG_BTN_OK : USINT := USINT#1; // OK
+		DLG_BTN_OKCANCEL : USINT := USINT#2; // OK, Abbrechen
+		DLG_BTN_ABORTRETRYIGNORE : USINT := USINT#3; // Abbrechen, Wiederholen, Ignorieren
+		DLG_BTN_YESNOCANCEL : USINT := USINT#4; // Ja, Nein, Abbrechen
+		DLG_BTN_YESNO : USINT := USINT#5; // Ja, Nein
+		DLG_BTN_RETRYCANCEL : USINT := USINT#6; // Wiederholen, Abbrechen
+		DLG_ICON_NONE : USINT := USINT#0; // kein Icon
+		DLG_ICON_INFO : USINT := USINT#1; // Information
+		DLG_ICON_QUESTION : USINT := USINT#2; // Frage
+		DLG_ICON_WARNING : USINT := USINT#3; // Warnung
+		DLG_ICON_ERROR : USINT := USINT#4; // Fehler
+		DLG_RES_NONE : USINT := USINT#0; // geschlossen/ersetzt
+		DLG_RES_OK : USINT := USINT#1; // OK
+		DLG_RES_CANCEL : USINT := USINT#2; // Abbrechen
+		DLG_RES_ABORT : USINT := USINT#3; // Abbruch
+		DLG_RES_RETRY : USINT := USINT#4; // Wiederholen
+		DLG_RES_IGNORE : USINT := USINT#5; // Ignorieren
+		DLG_RES_YES : USINT := USINT#6; // Ja
+		DLG_RES_NO : USINT := USINT#7; // Nein
+		DLG_RES_TIMEOUT : USINT := USINT#8; // Zeit abgelaufen
+	END_VAR
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</GlobalConstants>

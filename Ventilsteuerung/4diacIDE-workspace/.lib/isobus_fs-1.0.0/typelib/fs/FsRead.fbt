@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="FsRead" Comment="Read a small file from the file server into a byte array">
+	<Identification Standard="61499-2" Description="Uses iso_FscReadFileFromServer() of the CCI ISOBUS driver (ISO 11783-13). \n&#10;Client is NmDestin.s16OwnCfHnd, file server is NmDestin.s16Handle (e.g. found with NmGetCfInfo, NAME function 61). \n&#10;The connection is opened and closed by the driver. One job at a time: REQ during a job gives ERR with s16Status E_BUSY. \n&#10;Every REQ ends with exactly one CNF or ERR. \n&#10;The size of Data is the limit. A larger file gives ERR with s16Status E_OVERFLOW; Data then holds the start of the file.">
+	</Identification>
+	<VersionInfo Version="1.0" Author="Franz Höpfinger" Date="2026-11-25" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::fs">
+		<Import declaration="isobus::pgn::ISONETEVENT_T"/>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+			</Event>
+			<Event Name="REQ" Type="Event" Comment="Read the file">
+				<With Var="NmDestin"/>
+				<With Var="sRemotePath"/>
+				<With Var="Data"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="File read">
+				<With Var="u32Length"/>
+				<With Var="Data"/>
+			</Event>
+			<Event Name="ERR" Type="Event" Comment="Job failed">
+				<With Var="s16Status"/>
+				<With Var="u16FsError"/>
+				<With Var="u32Length"/>
+				<With Var="Data"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="NmDestin" Type="isobus::pgn::ISONETEVENT_T" Comment="Client (s16OwnCfHnd) and file server (s16Handle)"/>
+			<VarDeclaration Name="sRemotePath" Type="STRING" Comment="Path on the file server, e.g. \\USB\data\a.csv"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="s16Status" Type="INT" Comment="With ERR: driver return value or own error (E_BUSY, E_RANGE, E_OVERFLOW)"/>
+			<VarDeclaration Name="u16FsError" Type="UINT" Comment="With ERR: file server or client error (ISO 11783-13 B.9, 6400 ff. client)"/>
+			<VarDeclaration Name="u32Length" Type="UDINT" Comment="Number of bytes read into Data"/>
+		</OutputVars>
+		<InOutVars>
+			<VarDeclaration Name="Data" Type="BYTE" Comment="File content" ArraySize="*"/>
+		</InOutVars>
+	</InterfaceList>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

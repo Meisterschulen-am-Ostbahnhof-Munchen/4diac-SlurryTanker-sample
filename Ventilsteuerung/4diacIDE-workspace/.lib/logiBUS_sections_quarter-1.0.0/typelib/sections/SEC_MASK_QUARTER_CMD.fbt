@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="SEC_MASK_QUARTER_CMD" Comment="Sollwert (Setpoint CWS) mit BIT-Maske sperren: gesperrte Section immer 00 (aus), freie unveraendert">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0"/>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-31" Remarks="initial implementation"/>
+	<CompilerInfo packageName="logiBUS::sections"/>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="REQ" Type="Event" Comment="Maske anwenden">
+				<With Var="IN"/>
+				<With Var="MASK"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="CNF" Type="Event" Comment="Ergebnis berechnet">
+				<With Var="OUT"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="IN" Type="DWORD" ArraySize="16" Comment="Condensed Work State, 2 Bit je Section, Wort k = Sections 16k+1..16k+16"/>
+			<VarDeclaration Name="MASK" Type="DWORD" ArraySize="8" Comment="BIT-Maske, 1 = Section frei, Wort k = Sections 32k+1..32k+32"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="OUT" Type="DWORD" ArraySize="16" Comment="Gesperrt: 00 (auch bei 10/11, damit 11 = keine Aenderung eine Abschaltung nicht aufhebt). Frei: unveraendert"/>
+		</OutputVars>
+	</InterfaceList>
+	<SimpleFB>
+		<ECState Name="REQ" Comment="">
+			<ECAction Algorithm="REQ" Output="CNF"/>
+		</ECState>
+		<Algorithm Name="REQ" Comment="Maske anwenden">
+			<ST><![CDATA[ALGORITHM REQ
+VAR_TEMP
+	w : UINT; // Wortindex Quarter-Array
+	j : UINT; // Section im Wort
+	maskWord : DWORD; // Maskenwort
+	q : DWORD; // Quarter-Wert der Section
+	free : BOOL; // Section laut Maske frei
+	acc : DWORD; // Ergebniswort in Arbeit
+END_VAR
+(* Section s = 16*w + j + 1 liegt im Quarter-Array in Wort w, Bits 2j+1..2j,
+   in der BIT-Maske in Wort w DIV 2, Bit 16*(w MOD 2) + j *)
+FOR w := 0 TO 15 DO
+	maskWord := MASK[w / 2];
+	acc := DWORD#0;
+	FOR j := 0 TO 15 DO
+		free := (SHR(maskWord, 16 * (w MOD 2) + j) AND DWORD#1) = DWORD#1;
+		q := SHR(IN[w], 2 * j) AND DWORD#2#11;
+		IF free THEN
+			acc := acc OR SHL(q, 2 * j);
+		END_IF;
+	END_FOR;
+	OUT[w] := acc;
+END_FOR;
+END_ALGORITHM]]></ST>
+		</Algorithm>
+	</SimpleFB>
+</FBType>

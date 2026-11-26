@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Manifest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="platform:/resource/org.eclipse.fordiac.ide.library.model/model/library.xsd" Scope="Library">
+  <Dependencies>
+    <Required SymbolicName="core" Version="3.0.0"/>
+  </Dependencies>
+  <Product Comment="Adapter-Variante von FIFO (kein Wrapper): die Konsumentenseite von FIFO_UINT ist ein Adapter-Plug (AFIFO_UINT) statt eigener DATA/PROCESSED-Events - die Verarbeitungs-Quittung laeuft ueber den Rueckkanal des Adapters selbst." Name="FIFO_adapter" SymbolicName="FIFO_adapter">
+    <VersionInfo Author="Franz Höpfinger" Date="2026-10-13" Version="1.0.0"/>
+  </Product>
+</Manifest>

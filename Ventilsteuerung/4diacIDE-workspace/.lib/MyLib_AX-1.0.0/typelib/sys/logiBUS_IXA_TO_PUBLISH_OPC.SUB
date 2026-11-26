@@ -2,7 +2,7 @@
 <SubAppType Name="logiBUS_IXA_TO_PUBLISH_OPC" Comment="Digitaler Eingang, lokaler OPC-UA-Write (ACTION=WRITE ohne Endpunkt) per AX_PUBLISH_1">
 	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
-	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-18" Remarks="Lokale Variante von logiBUS_IXA_TO_CLIENT_OPC: AX_PUBLISH_1 statt AX_CLIENT_1_0">
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.2" Author="Franz Höpfinger" Date="2026-10-18" Remarks="Lokale Variante von logiBUS_IXA_TO_CLIENT_OPC: AX_PUBLISH_1 statt AX_CLIENT_1_0">
 	</VersionInfo>
 	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-09-18" Remarks="logiBUS_IXA.INITO auf logiBUS_IXA.REQ zurueckverdrahtet (Selfloop) - loest nach der Initialisierung sofort einen Service-Request aus, statt auf die erste echte Wertaenderung am Bus zu warten (Fix fuer 'Waiting for handle'-Status direkt nach Boot).">
 	</VersionInfo>

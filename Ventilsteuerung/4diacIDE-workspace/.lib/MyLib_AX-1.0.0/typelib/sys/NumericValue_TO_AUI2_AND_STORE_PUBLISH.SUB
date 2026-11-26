@@ -2,6 +2,8 @@
 <SubAppType Name="NumericValue_TO_AUI2_AND_STORE_PUBLISH" Comment="Kopie von NumericValue_TO_AUI2_AND_STORE, zusaetzlich mit M2M-Publish des&#10;bestaetigten Werts (AUI_SPLIT_2 -&gt; AUI_SPLIT_3: 3. Zweig fuer AUI_PUBLISH_1).&#10;Der M2M-Publish haengt damit am selben, bereits bewaehrten internen&#10;Confirm-Rueckpfad wie VT-Anzeige (AUI_TO_AUDI) und INI-Persistenz (INI_AUI) -&#10;kein fragiler externer Selfloop auf einem zusaetzlichen AUI2_TO_AUI-Bruecken-&#10;Baustein mehr noetig, der bei einem externen Umbau vergessen werden kann&#10;(Franz, nach Live-Debug einer genau solchen Regression: &apos;eine Kopie machen,&#10;und der PUBLISH kommt da innen rein&apos;).">
 	<Identification Standard="61499-2" Description="Copyright (c) 2026 Büngener Schuder GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
 	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-11-13" Remarks="Neuer Eingang DEFAULT_VALUE (bisher fest 0) an INI_AUI.DEFAULT_VALUE - je Instanz einstellbar, Default unveraendert 0.">
+	</VersionInfo>
 	<VersionInfo Organization="Büngener Schuder GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-10-14" Remarks="initial implementation - Kopie von NumericValue_TO_AUI2_AND_STORE v3.0, AUI_SPLIT_2 zu AUI_SPLIT_3 erweitert, neuer InputVar ID_WRITE + AUI_PUBLISH_1 (M2M) am 3. Split-Ausgang. Erster Aufrufer: BunkerKlappen_Fanghaken_Option.SUB (ersetzt den externen AUI2_TO_AUI+Selfloop+AUI_SPLIT_2 fuer den M2M-Pfad, der heute per Regression gebrochen war - der verbleibende externe AUI2_TO_AUI dort wird nur noch fuer den rein lokalen DEMUX-Tap gebraucht).">
 	</VersionInfo>
 	<CompilerInfo packageName="MyLib::sys">
@@ -20,6 +22,7 @@
 			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
 			<VarDeclaration Name="KEY" Type="STRING" Comment="Key name."/>
 			<VarDeclaration Name="SECTION" Type="STRING" Comment="Section name."/>
+			<VarDeclaration Name="DEFAULT_VALUE" Type="UINT" Comment="Wert, wenn der KEY noch nicht in der INI steht" InitialValue="UINT#0"/>
 			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID" InitialValue="ID_NULL"/>
 			<VarDeclaration Name="ID_WRITE" Type="WSTRING" Comment="Lokale Publish-Adresse (ACTION=WRITE) fuer den bestaetigten Wert - M2M, wird remote abonniert"/>
 		</InputVars>
@@ -48,7 +51,6 @@
 		</FB>
 		<FB Name="INI_AUI" Type="eclipse4diac::storage::INI_AUI" x="0" y="1600">
 			<Parameter Name="SETM" Value="FALSE"/>
-			<Parameter Name="DEFAULT_VALUE" Value="UINT#0"/>
 		</FB>
 		<FB Name="AUI_PUBLISH_1" Type="adapter::net::AUI_PUBLISH_1" x="300" y="600">
 		</FB>
@@ -66,6 +68,7 @@
 			<Connection Source="KEY" Destination="INI_AUI.KEY" dx1="846.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
+			<Connection Source="DEFAULT_VALUE" Destination="INI_AUI.DEFAULT_VALUE"/>
 			<Connection Source="SECTION" Destination="INI_AUI.SECTION" dx1="846.67">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>

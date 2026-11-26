@@ -8,27 +8,31 @@
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<SubAppEventInputs>
-			<SubAppEvent Name="EI1" Type="Event" Comment="Event input channel 1"/>
-			<SubAppEvent Name="EI2" Type="Event" Comment="Event input channel 2"/>
+			<SubAppEvent Name="EI1" Type="Event" Comment="Event input channel 1">
+			</SubAppEvent>
+			<SubAppEvent Name="EI2" Type="Event" Comment="Event input channel 2">
+			</SubAppEvent>
 		</SubAppEventInputs>
 		<SubAppEventOutputs>
-			<SubAppEvent Name="EO1" Type="Event" Comment="Event output channel 1"/>
-			<SubAppEvent Name="EO2" Type="Event" Comment="Event output channel 2"/>
+			<SubAppEvent Name="EO1" Type="Event" Comment="Event output channel 1">
+			</SubAppEvent>
+			<SubAppEvent Name="EO2" Type="Event" Comment="Event output channel 2">
+			</SubAppEvent>
 		</SubAppEventOutputs>
 		<Sockets>
 			<AdapterDeclaration Name="PERMIT" Type="adapter::types::unidirectional::AX" Comment="Invertiertes Freigabesignal"/>
 		</Sockets>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="AX_NOT_INIT" Type="adapter::booleanOperators::AX_NOT_INIT" x="-3000" y="0">
+		<FB Name="AX_NOT_INIT" Type="adapter::booleanOperators::AX_NOT_INIT" x="-3000" y="400">
 		</FB>
-		<FB Name="AX_E_PERMIT_2" Type="adapter::events::unidirectional::AX_E_PERMIT_2" x="-1400" y="0">
+		<FB Name="AX_E_PERMIT_2" Type="adapter::events::unidirectional::AX_E_PERMIT_2" x="-1300" y="0">
 		</FB>
 		<EventConnections>
-			<Connection Source="EI1" Destination="AX_E_PERMIT_2.EI1" dx1="500"/>
+			<Connection Source="EI1" Destination="AX_E_PERMIT_2.EI1" dx1="1020"/>
 			<Connection Source="AX_E_PERMIT_2.EO1" Destination="EO1" dx1="500"/>
-			<Connection Source="EI2" Destination="AX_E_PERMIT_2.EI2" dx1="500"/>
-			<Connection Source="AX_E_PERMIT_2.EO2" Destination="EO2" dx1="500"/>
+			<Connection Source="EI2" Destination="AX_E_PERMIT_2.EI2" dx1="820"/>
+			<Connection Source="AX_E_PERMIT_2.EO2" Destination="EO2" dx1="1020"/>
 		</EventConnections>
 		<AdapterConnections>
 			<Connection Source="PERMIT" Destination="AX_NOT_INIT.IN" dx1="500"/>

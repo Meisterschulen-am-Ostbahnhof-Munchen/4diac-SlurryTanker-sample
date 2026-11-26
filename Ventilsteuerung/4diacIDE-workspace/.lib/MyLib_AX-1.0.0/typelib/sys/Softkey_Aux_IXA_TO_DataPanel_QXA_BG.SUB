@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Softkey_Aux_IXA_TO_DataPanel_QXA_BG" Comment="SoftKey ODER AUX auf DataPanel-MI-Ausgang, Hintergrundfarbe SoftKey+AUX Gruen/Weiss, 2 AX-Ausgaenge">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-31" Remarks="Aus Getreidehacke func/Manual/ManFuncTast2 in MyLib::sys verschoben und umbenannt, INIT/INITO/QI/QO ergaenzt, Output und u8SAMember als Parameter.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+		<Import declaration="DataPanel::io::MI::DQ::DataPanel_MI_DO_S"/>
+		<Import declaration="DataPanel::io::MI::DQ::DataPanel_MI_DO"/>
+		<Import declaration="DataPanel::io::MI::const::MI"/>
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="u16ObjId" Type="UINT" Comment="Object ID SoftKey" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u16ObjIdA" Type="UINT" Comment="Object ID AuxFunction2" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="u8SAMember" Type="USINT" Comment="DataPanel-MI-Modul (Source Address)" InitialValue="MI::MI_00"/>
+			<VarDeclaration Name="Output" Type="DataPanel::io::MI::DQ::DataPanel_MI_DO_S" Comment="DataPanel-MI-Ausgang" InitialValue="DataPanel_MI_DO::Invalid"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Quality Output - TRUE if service executed successfully"/>
+		</OutputVars>
+		<Plugs>
+			<AdapterDeclaration Name="OUT" Type="adapter::types::unidirectional::AX" Comment="SoftKey ODER AUX"/>
+			<AdapterDeclaration Name="OUT1" Type="adapter::types::unidirectional::AX" Comment="SoftKey ODER AUX (2. Abgriff)"/>
+		</Plugs>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="QX" Type="DataPanel::io::MI::DQ::DataPanel_MI_QXA" x="2400" y="-1400">
+		</FB>
+		<FB Name="Softkey" Type="isobus::UT::io::Softkey::Softkey_IXA" x="-3000" y="-600">
+		</FB>
+		<FB Name="Aux" Type="isobus::UT::io::Auxiliary::IN::Aux_IXA" x="-3000" y="600">
+		</FB>
+		<FB Name="OR_2" Type="adapter::booleanOperators::AX_OR_2" x="-1200" y="200">
+		</FB>
+		<FB Name="AX_SPLIT_4" Type="adapter::events::unidirectional::AX_SPLIT_4" x="600" y="200">
+		</FB>
+		<SubApp Name="GreenWhiteBackground" Type="MyLib::sys::GreenWhiteBackground3_AX" x="2400" y="600">
+		</SubApp>
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_4" x="6000" y="-1600">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="QX.INIT"/>
+			<Connection Source="QX.INITO" Destination="Softkey.INIT"/>
+			<Connection Source="Softkey.INITO" Destination="Aux.INIT"/>
+			<Connection Source="Aux.INITO" Destination="GreenWhiteBackground.INIT"/>
+			<Connection Source="GreenWhiteBackground.INITO" Destination="INITO"/>
+			<Connection Source="GreenWhiteBackground.INITO" Destination="AND_QO.REQ"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="QI" Destination="QX.QI"/>
+			<Connection Source="QI" Destination="Softkey.QI"/>
+			<Connection Source="QI" Destination="Aux.QI"/>
+			<Connection Source="QI" Destination="GreenWhiteBackground.QI"/>
+			<Connection Source="u16ObjId" Destination="Softkey.u16ObjId"/>
+			<Connection Source="u16ObjIdA" Destination="Aux.u16ObjId"/>
+			<Connection Source="u16ObjId" Destination="GreenWhiteBackground.u16ObjId"/>
+			<Connection Source="u16ObjIdA" Destination="GreenWhiteBackground.u16ObjIdA"/>
+			<Connection Source="u8SAMember" Destination="QX.u8SAMember"/>
+			<Connection Source="Output" Destination="QX.Output"/>
+			<Connection Source="QX.QO" Destination="AND_QO.IN1"/>
+			<Connection Source="Softkey.QO" Destination="AND_QO.IN2"/>
+			<Connection Source="Aux.QO" Destination="AND_QO.IN3"/>
+			<Connection Source="GreenWhiteBackground.QO" Destination="AND_QO.IN4"/>
+			<Connection Source="AND_QO.OUT" Destination="QO"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="Softkey.IN" Destination="OR_2.IN1"/>
+			<Connection Source="Aux.IN" Destination="OR_2.IN2"/>
+			<Connection Source="OR_2.OUT" Destination="AX_SPLIT_4.IN"/>
+			<Connection Source="AX_SPLIT_4.OUT1" Destination="QX.OUT"/>
+			<Connection Source="AX_SPLIT_4.OUT2" Destination="OUT"/>
+			<Connection Source="AX_SPLIT_4.OUT3" Destination="OUT1"/>
+			<Connection Source="AX_SPLIT_4.OUT4" Destination="GreenWhiteBackground.DI1"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+</SubAppType>

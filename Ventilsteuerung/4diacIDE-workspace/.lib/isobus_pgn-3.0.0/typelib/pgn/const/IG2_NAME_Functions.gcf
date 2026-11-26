@@ -116,6 +116,7 @@
 		<VarDeclaration Name="F_SENSOR_SYSTEMS_VIBRATION_KNOCK" Type="BYTE" Comment="Sys: Sensor Systems, Func: Vibration/Knock - Measuring function to determine the vibration or" InitialValue="136"/>
 		<VarDeclaration Name="F_SENSOR_SYSTEMS_WEATHER_INSTRUMENTS" Type="BYTE" Comment="Sys: Sensor Systems, Func: Weather Instruments - The &quot;Weather Instruments&quot; function code shall be" InitialValue="137"/>
 		<VarDeclaration Name="F_SENSOR_SYSTEMS_SOIL_SCOUTING" Type="BYTE" Comment="Sys: Sensor Systems, Func: Soil Scouting - Soil Sensor to measure different soil physical" InitialValue="138"/>
+		<VarDeclaration Name="F_SENSOR_SYSTEMS_TRANSMISSION_SHAFT" Type="BYTE" Comment="Sys: Sensor Systems, Func: Transmission Shaft - Measuring function to monitor data such as" InitialValue="139"/>
 		<VarDeclaration Name="F_TIMBER_HARVESTERS_TIMBER_HARVESTORS_MACHINE_CONTROL" Type="BYTE" Comment="Sys: Timber Harvesters, Func: Timber Harvestors Machine Control - Control of outputs including" InitialValue="132"/>
 		<VarDeclaration Name="F_FORWARDERS_FORWARDERS_MACHINE_CONTROL" Type="BYTE" Comment="Sys: Forwarders, Func: Forwarders Machine Control - Control of outputs including adjustment of" InitialValue="132"/>
 		<VarDeclaration Name="F_TIMBER_LOADERS_TIMBER_LOADERS_MACHINE_CONTROL" Type="BYTE" Comment="Sys: Timber Loaders, Func: Timber Loaders Machine Control - Control of outputs including" InitialValue="132"/>
@@ -136,7 +137,7 @@
 		<VarDeclaration Name="F_FEEDERS_MIXERS_PRODUCT_FLOW" Type="BYTE" Comment="Sys: Feeders/Mixers, Func: Product Flow - Measuring function to monitor the current product flow." InitialValue="133"/>
 		<VarDeclaration Name="F_FEEDERS_MIXERS_PRODUCT_LEVEL" Type="BYTE" Comment="Sys: Feeders/Mixers, Func: Product Level - Measuring function to monitor the current product" InitialValue="134"/>
 		<VarDeclaration Name="F_FEEDERS_MIXERS_BOOM_HEIGHT_CONTROL" Type="BYTE" Comment="Sys: Feeders/Mixers, Func: Boom Height Control - Control of the height of delivery boom above the" InitialValue="135"/>
-		<VarDeclaration Name="F_WEEDERS_WEEDER_MACHINE_CONTROL" Type="BYTE" Comment="Sys: Weeders - Non-chemical weed control. The device class Weeders is used by devices that" InitialValue="132"/>
+		<VarDeclaration Name="F_WEEDERS_WEEDER_MACHINE_CONTROL" Type="BYTE" Comment="Sys: Weeders, Func: Weeder Machine Control - Control of outputs including adjustment of any" InitialValue="132"/>
 		<VarDeclaration Name="F_TURF_AND_LAWN_CARE_MOWERS_TURF_AND_LAWN_CARE_MOWERS_MACHINE_CONTROL" Type="BYTE" Comment="Sys: Turf and Lawn Care Mowers, Func: Turf and Lawn Care Mowers Machine Control - The machine" InitialValue="132"/>
 		<VarDeclaration Name="F_PRODUCT_MATERIAL_HANDLING_PRODUCT_MATERIAL_HANDLING_MACHINE_CONTROL" Type="BYTE" Comment="Sys: Product/Material Handling, Func: Product/Material Handling Machine Control - Control of" InitialValue="132"/>
 		<VarDeclaration Name="F_PRODUCT_MATERIAL_HANDLING_PRODUCT_MATERIAL_HANDLING_PRODUCT_FLOW" Type="BYTE" Comment="Sys: Product/Material Handling, Func: Product/Material Handling Product Flow - Measuring function" InitialValue="133"/>
@@ -446,6 +447,7 @@ GLOBALCONSTANTS IG2_NAME_Functions
 		F_SENSOR_SYSTEMS_SOIL_SCOUTING : BYTE := 138; // Sys: Sensor Systems, Func: Soil Scouting - Soil Sensor to measure different soil physical
 		                                              // parameters. One example of a soil sensor is a system that measures the apparent conductivity
 		                                              // (in-Phase and ...
+		F_SENSOR_SYSTEMS_TRANSMISSION_SHAFT : BYTE := 139; // Sys: Sensor Systems, Func: Transmission Shaft - Measuring function to monitor data such as
 	END_VAR
 
 	// Timber Harvesters (DC_TIMBER_HARVESTERS = 19)
@@ -533,9 +535,7 @@ GLOBALCONSTANTS IG2_NAME_Functions
 	// the transfer of energy from electrical and irradiation sources or a combination of those.
 	// (DC_WEEDERS = 27)
 	VAR_GLOBAL CONSTANT
-		F_WEEDERS_WEEDER_MACHINE_CONTROL : BYTE := 132; // Sys: Weeders - Non-chemical weed control. The device class Weeders is used by devices that
-		                                                // control and eliminate weeds through the use of operation techniques other than spraying. Examples
-		                                                // of non-s...
+		F_WEEDERS_WEEDER_MACHINE_CONTROL : BYTE := 132; // Sys: Weeders, Func: Weeder Machine Control - Control of outputs including adjustment of any
 	END_VAR
 
 	// Turf and Lawn Care Mowers (DC_TURF_AND_LAWN_CARE_MOWERS = 28)

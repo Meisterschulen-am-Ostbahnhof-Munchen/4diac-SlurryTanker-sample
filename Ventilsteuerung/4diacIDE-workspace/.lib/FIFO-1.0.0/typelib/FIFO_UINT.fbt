@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="FIFO_UINT" Comment="FIFO-Warteschlange fuer UINT-Werte mit frei waehlbarer Kapazitaet und&#10;Verarbeitungs-Handshake: nimmt schnelle Folgen von PUSH entgegen, liefert&#10;aber immer nur EINEN Wert per DATA aus und wartet auf PROCESSED, bevor der&#10;naechste Wert geliefert wird.">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-11-08" Remarks="RST setzt die ganze Kette zurueck (auch DELIVERING), PROCESSED wird nur bei DELIVERING angenommen, PUSH nur bei QO, QO nur bei CAPACITY &gt; 0, CAPACITY muss aus F_LEN_ARRAY kommen.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-13" Remarks="Neuentwicklung auf Basis eines alten Holobloc-FIFO_UINT-Beispiels (fixer BUF[128], DTD-Format, .serviceEvent()-Aufrufe statt echter ECC) - hier mit offenem BUF (ArraySize=&quot;*&quot;, Groesse per vorgeschalteter PROVIDE_ARR_x_UINT-Instanz + eclipse4diac::utils::arrays::F_LEN_ARRAY frei waehlbar) und echtem Request/Confirm-Verarbeitungs-Handshake auf der Konsumentenseite (DATA/PROCESSED) statt reinem Pull-on-demand.">
+	</VersionInfo>
+	<CompilerInfo packageName="FIFO">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+				<With Var="QI"/>
+				<With Var="CAPACITY"/>
+				<With Var="BUF"/>
+			</Event>
+			<Event Name="RST" Type="Event" Comment="Queue leeren und Liefer-Sperre aufheben - Reset der ganzen Kette, der Konsument muss mit zurueckgesetzt werden">
+			</Event>
+			<Event Name="PUSH" Type="Event" Comment="IN ans Ende der Queue anhaengen, falls Platz vorhanden">
+				<With Var="IN"/>
+			</Event>
+			<Event Name="PROCESSED" Type="Event" Comment="Konsument bestaetigt: der zuletzt per DATA gelieferte Wert ist verarbeitet. Erst danach wird (falls vorhanden) der naechste Wert per DATA geliefert.">
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialisierung bestaetigt">
+				<With Var="QO"/>
+				<With Var="BUF"/>
+			</Event>
+			<Event Name="RSTO" Type="Event" Comment="Reset bestaetigt">
+				<With Var="N"/>
+			</Event>
+			<Event Name="PUSHO" Type="Event" Comment="PUSH bestaetigt (OK=FALSE wenn Queue voll war oder QO=FALSE)">
+				<With Var="N"/>
+				<With Var="OK"/>
+			</Event>
+			<Event Name="DATA" Type="Event" Comment="Ein neuer Wert ist verfuegbar. Es folgt kein weiteres DATA, bevor nicht PROCESSED eingetroffen ist.">
+				<With Var="OUT"/>
+				<With Var="N"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
+			<VarDeclaration Name="CAPACITY" Type="UINT" Comment="Kapazitaet - MUSS der Anzahl Elemente von BUF entsprechen, daher immer ueber F_LEN_ARRAY hinter der PROVIDE_ARR_x_UINT-Instanz ermitteln. Ein groesserer Wert schreibt ueber BUF hinaus. 0 ergibt QO=FALSE."/>
+			<VarDeclaration Name="IN" Type="UINT" Comment="Zu pushender Wert"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
+			<VarDeclaration Name="N" Type="UINT" Comment="Anzahl aktuell wartender (noch nicht per DATA ausgelieferter) Elemente"/>
+			<VarDeclaration Name="OK" Type="BOOL" Comment="TRUE wenn der letzte PUSH erfolgreich war (Queue war nicht voll und QO=TRUE)"/>
+			<VarDeclaration Name="OUT" Type="UINT" Comment="Zuletzt per DATA gelieferter Wert, gueltig bis zur naechsten PROCESSED-Bestaetigung"/>
+		</OutputVars>
+		<InOutVars>
+			<VarDeclaration Name="BUF" Type="UINT" ArraySize="*" Comment="Ringpuffer-Speicher - Groesse wird extern ueber eine angeschlossene PROVIDE_ARR_x_UINT-Instanz vorgegeben"/>
+		</InOutVars>
+	</InterfaceList>
+	<BasicFB>
+		<InternalVars>
+			<VarDeclaration Name="PTR" Type="UINT" Comment="Schreibposition fuer den naechsten PUSH"/>
+			<VarDeclaration Name="OUTPTR" Type="UINT" Comment="Leseposition fuer den naechsten auszuliefernden Wert"/>
+			<VarDeclaration Name="DELIVERING" Type="BOOL" Comment="TRUE = ein Wert wurde per DATA geliefert, auf PROCESSED wird gewartet"/>
+		</InternalVars>
+		<ECC>
+			<ECState Name="START" Comment="Initial State" x="800" y="80">
+			</ECState>
+			<ECState Name="S_INIT" x="2200" y="-700">
+				<ECAction Algorithm="INIT_ALG" Output="INITO"/>
+			</ECState>
+			<ECState Name="S_RST" x="2200" y="-200">
+				<ECAction Algorithm="RST" Output="RSTO"/>
+			</ECState>
+			<ECState Name="S_PUSH" x="2200" y="300">
+				<ECAction Algorithm="PUSH" Output="PUSHO"/>
+			</ECState>
+			<ECState Name="S_PROCESSED" x="2200" y="800">
+				<ECAction Algorithm="PROCESSED_ALG"/>
+			</ECState>
+			<ECState Name="S_DELIVER" x="3600" y="550" Comment="Naechsten Wert aus der Queue entnehmen und per DATA ausliefern">
+				<ECAction Algorithm="DELIVER" Output="DATA"/>
+			</ECState>
+			<ECTransition Source="START" Destination="S_INIT" Condition="INIT" x="1500" y="-700"/>
+			<ECTransition Source="START" Destination="S_RST" Condition="RST" x="1500" y="-200"/>
+			<ECTransition Source="START" Destination="S_PUSH" Condition="PUSH" x="1500" y="300"/>
+			<ECTransition Source="START" Destination="S_PROCESSED" Condition="PROCESSED[DELIVERING]" x="1500" y="800"/>
+			<ECTransition Source="S_INIT" Destination="START" Condition="1" x="1500" y="-950"/>
+			<ECTransition Source="S_RST" Destination="START" Condition="1" x="1500" y="-450"/>
+			<ECTransition Source="S_PUSH" Destination="S_DELIVER" Condition="OK AND NOT DELIVERING AND N&gt;0" x="2900" y="420"/>
+			<ECTransition Source="S_PUSH" Destination="START" Condition="1" x="1500" y="50"/>
+			<ECTransition Source="S_PROCESSED" Destination="S_DELIVER" Condition="N&gt;0" x="2900" y="680"/>
+			<ECTransition Source="S_PROCESSED" Destination="START" Condition="1" x="1500" y="1050"/>
+			<ECTransition Source="S_DELIVER" Destination="START" Condition="1" x="2900" y="80"/>
+		</ECC>
+		<Algorithm Name="INIT_ALG" Comment="Queue leeren und QI/QO durchreichen">
+			<ST><![CDATA[PTR := 0;
+OUTPTR := 0;
+N := 0;
+DELIVERING := FALSE;
+OUT := 0;
+OK := FALSE;
+QO := QI AND CAPACITY > 0;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="RST" Comment="Queue und Liefer-Sperre leeren - RST setzt die ganze Kette zurueck, der Konsument muss mit zurueckgesetzt werden">
+			<ST><![CDATA[PTR := 0;
+OUTPTR := 0;
+N := 0;
+DELIVERING := FALSE;
+OUT := 0;
+OK := FALSE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="PUSH" Comment="Wert anhaengen, falls Platz vorhanden">
+			<ST><![CDATA[IF NOT QO OR N >= CAPACITY THEN
+    OK := FALSE;
+ELSE
+    OK := TRUE;
+    BUF[PTR] := IN;
+    PTR := (PTR + 1) MOD CAPACITY;
+    N := N + 1;
+END_IF;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="PROCESSED_ALG" Comment="Liefer-Sperre aufheben - DATA fuer den naechsten Wert folgt ueber die Transition nach S_DELIVER, falls die Queue noch Elemente enthaelt">
+			<ST><![CDATA[DELIVERING := FALSE;
+]]></ST>
+		</Algorithm>
+		<Algorithm Name="DELIVER" Comment="Vordersten Wert entnehmen und liefern">
+			<ST><![CDATA[OUT := BUF[OUTPTR];
+OUTPTR := (OUTPTR + 1) MOD CAPACITY;
+N := N - 1;
+DELIVERING := TRUE;
+]]></ST>
+		</Algorithm>
+	</BasicFB>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

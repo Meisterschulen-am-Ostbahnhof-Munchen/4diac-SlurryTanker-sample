@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="logiBUS_QW_SERVO" Comment="Output service interface function block for word output data">
+	<Identification Description="Copyright (c) 2015, 2016 fortiss GmbH, HR Agrartechnik GmbH&#10; &#10;This program and the accompanying materials are made &#10;available under the terms of the Eclipse Public License 2.0 &#10;which is available at https://www.eclipse.org/legal/epl-2.0/ &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.2" Author="Franz Höpfinger" Date="2026-11-06" Remarks="Servo on MCPWM with FREQ, PULSE_MIN, PULSE_MAX (before: LEDC, fixed 250 Hz, 800..2180 us)">
+	</VersionInfo>
+	<VersionInfo Organization="fortiss GmbH" Version="1.1" Author="Alois Zoitl" Date="2016-07-18">
+	</VersionInfo>
+	<VersionInfo Organization="fortiss GmbH" Version="1.0" Author="Gerd Kainz" Date="2015-09-22" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::io::DO_SERVO">
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO::Invalid"/>
+		<Import declaration="logiBUS::io::DQ::logiBUS_DO_S"/>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+				<With Var="QI"/>
+				<With Var="PARAMS"/>
+				<With Var="Output"/>
+				<With Var="FREQ"/>
+				<With Var="PULSE_MIN"/>
+				<With Var="PULSE_MAX"/>
+			</Event>
+			<Event Name="REQ" Type="Event" Comment="Service Request">
+				<With Var="QI"/>
+				<With Var="OUT"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
+			<VarDeclaration Name="PARAMS" Type="STRING" Comment="Service Parameters"/>
+			<VarDeclaration Name="OUT" Type="WORD" Comment="Servo position 0..0xFAFF (0..100 %) between PULSE_MIN and PULSE_MAX; values above 0xFAFF keep the last pulse. Needs a logic level signal: on boards with a power stage take the signal before it"/>
+			<VarDeclaration Name="Output" Type="logiBUS::io::DQ::logiBUS_DO_S" Comment="Identify the Output Output_Q1..Q8" InitialValue="Invalid"/>
+			<VarDeclaration Name="FREQ" Type="UDINT" Comment="Repetition rate of the servo pulse in Hz, read at INIT (50 Hz = one pulse every 20 ms). Servos with the same FREQ share an MCPWM timer. Standard servos 50 Hz; many car servos 250 Hz (e.g. Blue Bird BMS-L530MG: FREQ = 250, PULSE_MIN = T#1100us, PULSE_MAX = T#1900us)" InitialValue="50"/>
+			<VarDeclaration Name="PULSE_MIN" Type="TIME" Comment="Pulse width for OUT = 0, read at INIT (resolution 1 us). PULSE_MAX below PULSE_MIN turns the direction" InitialValue="T#1000us"/>
+			<VarDeclaration Name="PULSE_MAX" Type="TIME" Comment="Pulse width for OUT = 0xFAFF (100 %), read at INIT (resolution 1 us)" InitialValue="T#2000us"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
+		</OutputVars>
+	</InterfaceList>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

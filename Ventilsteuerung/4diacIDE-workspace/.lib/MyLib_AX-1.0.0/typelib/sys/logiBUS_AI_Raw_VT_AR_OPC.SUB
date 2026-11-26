@@ -33,7 +33,7 @@
 		</Plugs>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="logiBUS_AI_IDA" Type="logiBUS::io::AI::logiBUS_AI_IDA" x="-9200" y="-1700">
+		<FB Name="logiBUS_AI_IDA" Type="logiBUS::io::AI::logiBUS_AI_IDA" x="-9100" y="-1700">
 			<Parameter Name="PARAMS" Value="">
 				<Attribute Name="Visible" Value="false"/>
 			</Parameter>
@@ -45,22 +45,24 @@
 		</FB>
 		<FB Name="AUDI_SPLIT_2" Type="adapter::events::unidirectional::AUDI_SPLIT_2" x="-4000" y="-400">
 		</FB>
-		<FB Name="Q_NumericValue_RAW" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="-2300" y="-1000">
+		<FB Name="Q_NumericValue_RAW" Type="isobus::UT::Q::Q_NumericValue_AUDI" x="-2200" y="-1000">
 		</FB>
 		<FB Name="AUDI_TO_AR" Type="adapter::conversion::unidirectional::AUDI_TO_AR" x="-2300" y="200">
 		</FB>
 		<FB Name="AR_SPLIT_2_Raw" Type="adapter::events::unidirectional::AR_SPLIT_2" x="-900" y="200">
 		</FB>
-		<FB Name="AR_PUBLISH_RAW" Type="adapter::net::AR_PUBLISH_1" x="600" y="-600">
+		<FB Name="AR_PUBLISH_RAW" Type="adapter::net::AR_PUBLISH_1" x="700" y="-600">
 		</FB>
-		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_3" x="2900" y="0">
+		<FB Name="AND_QO" Type="iec61131::booleanOperators::AND_BOOL_3" x="3800" y="-200">
 		</FB>
 		<EventConnections>
-			<Connection Source="INIT" Destination="logiBUS_AI_IDA.INIT" dx1="80" dx2="80" dy="-1266.67"/>
-			<Connection Source="logiBUS_AI_IDA.INITO" Destination="AR_PUBLISH_RAW.INIT" dx1="4406.67"/>
-			<Connection Source="AR_PUBLISH_RAW.INITO" Destination="Q_NumericValue_RAW.INIT" dx1="80" dx2="80" dy="-200"/>
-			<Connection Source="Q_NumericValue_RAW.INITO" Destination="INITO" dx1="8326.67"/>
-			<Connection Source="Q_NumericValue_RAW.INITO" Destination="AND_QO.REQ" dx1="533.33"/>
+			<Connection Source="INIT" Destination="logiBUS_AI_IDA.INIT" dx1="3066.67"/>
+			<Connection Source="logiBUS_AI_IDA.INITO" Destination="Q_NumericValue_RAW.INIT" dx1="4406.67"/>
+			<Connection Source="AR_PUBLISH_RAW.INITO" Destination="INITO" dx1="8326.67"/>
+			<Connection Source="AR_PUBLISH_RAW.INITO" Destination="AND_QO.REQ" dx1="533.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Q_NumericValue_RAW.INITO" Destination="AR_PUBLISH_RAW.INIT" dx1="833.33"/>
 		</EventConnections>
 		<DataConnections>
 			<Connection Source="Input" Destination="logiBUS_AI_IDA.Input" dx1="1460">
@@ -72,12 +74,24 @@
 			<Connection Source="ID_RAW_WRITE" Destination="AR_PUBLISH_RAW.ID" dx1="1400">
 				<Attribute Name="Visible" Value="false"/>
 			</Connection>
-			<Connection Source="QI" Destination="Q_NumericValue_RAW.QI" dx1="80" dx2="80" dy="-806.67"/>
-			<Connection Source="QI" Destination="logiBUS_AI_IDA.QI" dx1="80" dx2="80" dy="-1160"/>
-			<Connection Source="QI" Destination="AR_PUBLISH_RAW.QI" dx1="80" dx2="80" dy="-606.67"/>
-			<Connection Source="Q_NumericValue_RAW.QO" Destination="AND_QO.IN1" dx1="533.33"/>
-			<Connection Source="logiBUS_AI_IDA.QO" Destination="AND_QO.IN2" dx1="4106.67"/>
-			<Connection Source="AR_PUBLISH_RAW.QO" Destination="AND_QO.IN3" dx1="726.67"/>
+			<Connection Source="QI" Destination="Q_NumericValue_RAW.QI" dx1="6513.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="logiBUS_AI_IDA.QI" dx1="3066.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="AR_PUBLISH_RAW.QI" dx1="7966.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Q_NumericValue_RAW.QO" Destination="AND_QO.IN1" dx1="533.33">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="logiBUS_AI_IDA.QO" Destination="AND_QO.IN2" dx1="4106.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="AR_PUBLISH_RAW.QO" Destination="AND_QO.IN3" dx1="726.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
 			<Connection Source="AND_QO.OUT" Destination="QO" dx1="1193.33"/>
 		</DataConnections>
 		<AdapterConnections>

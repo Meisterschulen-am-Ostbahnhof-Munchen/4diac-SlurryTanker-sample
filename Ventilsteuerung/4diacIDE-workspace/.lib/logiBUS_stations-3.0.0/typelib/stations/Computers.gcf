@@ -10,18 +10,23 @@
 		<VarDeclaration Name="C_LO" Type="WSTRING" InitialValue="&quot;localhost:61499&quot;"/>
 		<VarDeclaration Name="C_ET" Type="WSTRING" InitialValue="&quot;192.168.5.1:61499&quot;"/>
 		<VarDeclaration Name="C_ST" Type="WSTRING" InitialValue="&quot;192.168.4.1:61499&quot;"/>
-		<VarDeclaration Name="C_01" Type="WSTRING" InitialValue="&quot;192.168.4.1:61499&quot;"/>
-		<VarDeclaration Name="C_02" Type="WSTRING" Comment="Station 01 (61499/MGR_ID)" InitialValue="&quot;192.168.4.2:61499&quot;"/>
-		<VarDeclaration Name="C_03" Type="WSTRING" Comment="Station 02 (61499/MGR_ID)" InitialValue="&quot;192.168.4.3:61499&quot;"/>
-		<VarDeclaration Name="C_04" Type="WSTRING" Comment="Station 03 (61499/MGR_ID)" InitialValue="&quot;192.168.4.4:61499&quot;"/>
-		<VarDeclaration Name="C_TR" Type="WSTRING" Comment="Station 04 (61499/MGR_ID)" InitialValue="&quot;192.168.6.1:61499&quot;"/>
-		<VarDeclaration Name="C_SI" Type="WSTRING" Comment="Trainings-PC (61499/MGR_ID)" InitialValue="&quot;192.168.6.2:61499&quot;"/>
-		<VarDeclaration Name="C_11" Type="WSTRING" Comment="Simulator-PC (61499/MGR_ID)" InitialValue="&quot;192.168.1.11:61499&quot;"/>
+		<VarDeclaration Name="C_01" Type="WSTRING" Comment="Station 01 (61499/MGR_ID)" InitialValue="&quot;192.168.4.1:61499&quot;"/>
+		<VarDeclaration Name="C_02" Type="WSTRING" Comment="Station 02 (61499/MGR_ID)" InitialValue="&quot;192.168.4.2:61499&quot;"/>
+		<VarDeclaration Name="C_03" Type="WSTRING" Comment="Station 03 (61499/MGR_ID)" InitialValue="&quot;192.168.4.3:61499&quot;"/>
+		<VarDeclaration Name="C_04" Type="WSTRING" Comment="Station 04 (61499/MGR_ID)" InitialValue="&quot;192.168.4.4:61499&quot;"/>
+		<VarDeclaration Name="C_TR" Type="WSTRING" Comment="Trainings-PC (61499/MGR_ID)" InitialValue="&quot;192.168.6.1:61499&quot;"/>
+		<VarDeclaration Name="C_SI" Type="WSTRING" Comment="Simulator-PC (61499/MGR_ID)" InitialValue="&quot;192.168.6.2:61499&quot;"/>
+		<VarDeclaration Name="C_11" Type="WSTRING" Comment="Station 11 (61499/MGR_ID)" InitialValue="&quot;192.168.1.11:61499&quot;"/>
 		<VarDeclaration Name="C_12" Type="WSTRING" Comment="Station 12 (61499/MGR_ID)" InitialValue="&quot;192.168.1.12:61499&quot;"/>
 		<VarDeclaration Name="C_13" Type="WSTRING" Comment="Station 13 (61499/MGR_ID)" InitialValue="&quot;192.168.1.13:61499&quot;"/>
 		<VarDeclaration Name="C_14" Type="WSTRING" Comment="Station 14 (61499/MGR_ID)" InitialValue="&quot;192.168.1.14:61499&quot;"/>
 		<VarDeclaration Name="C_15" Type="WSTRING" Comment="Station 15 (61499/MGR_ID)" InitialValue="&quot;192.168.1.15:61499&quot;"/>
+		<VarDeclaration Name="C_45" Type="WSTRING" Comment="Station 45 (61499/MGR_ID)" InitialValue="&quot;192.168.178.45:61499&quot;"/>
+		<VarDeclaration Name="C_54" Type="WSTRING" Comment="Station 54 (61499/MGR_ID)" InitialValue="&quot;192.168.178.54:61499&quot;"/>
 		<VarDeclaration Name="C_55" Type="WSTRING" Comment="Station 55 (61499/MGR_ID)" InitialValue="&quot;192.168.178.55:61499&quot;"/>
+		<VarDeclaration Name="C_118" Type="WSTRING" Comment="Station 118 (61499/MGR_ID)" InitialValue="&quot;169.254.30.118:61499&quot;"/>
+		<VarDeclaration Name="C_85" Type="WSTRING" Comment="Station 85 (61499/MGR_ID)" InitialValue="&quot;169.254.50.85:61499&quot;"/>
+		<VarDeclaration Name="C_LOGIBUS" Type="WSTRING" Comment="Station logibus (61499/MGR_ID)" InitialValue="&quot;logibus.local:61499&quot;"/>
 		<VarDeclaration Name="C_11_OPC" Type="WSTRING" Comment="Station 11 (OPC-UA-Endpunkt)" InitialValue="&quot;opc.tcp://192.168.1.11:4840&quot;"/>
 		<VarDeclaration Name="C_12_OPC" Type="WSTRING" Comment="Station 12 (OPC-UA-Endpunkt)" InitialValue="&quot;opc.tcp://192.168.1.12:4840&quot;"/>
 		<VarDeclaration Name="C_13_OPC" Type="WSTRING" Comment="Station 13 (OPC-UA-Endpunkt)" InitialValue="&quot;opc.tcp://192.168.1.13:4840&quot;"/>
@@ -43,23 +48,28 @@ GLOBALCONSTANTS Computers
 		C_LO : WSTRING := "localhost:61499";
 		C_ET : WSTRING := "192.168.5.1:61499";
 		C_ST : WSTRING := "192.168.4.1:61499";
-		C_01 : WSTRING := "192.168.4.1:61499"; (* Station 01 (61499/MGR_ID) *)
-		C_02 : WSTRING := "192.168.4.2:61499"; (* Station 02 (61499/MGR_ID) *)
-		C_03 : WSTRING := "192.168.4.3:61499"; (* Station 03 (61499/MGR_ID) *)
-		C_04 : WSTRING := "192.168.4.4:61499"; (* Station 04 (61499/MGR_ID) *)
-		C_TR : WSTRING := "192.168.6.1:61499"; (* Trainings-PC (61499/MGR_ID) *)
-		C_SI : WSTRING := "192.168.6.2:61499"; (* Simulator-PC (61499/MGR_ID) *)
-		C_11 : WSTRING := "192.168.1.11:61499"; (* Station 11 (61499/MGR_ID) *)
-		C_12 : WSTRING := "192.168.1.12:61499"; (* Station 12 (61499/MGR_ID) *)
-		C_13 : WSTRING := "192.168.1.13:61499"; (* Station 13 (61499/MGR_ID) *)
-		C_14 : WSTRING := "192.168.1.14:61499"; (* Station 14 (61499/MGR_ID) *)
-		C_15 : WSTRING := "192.168.1.15:61499"; (* Station 15 (61499/MGR_ID) *)
-		C_55 : WSTRING := "192.168.178.55:61499"; (* Station 55 (61499/MGR_ID) *)
-		C_11_OPC : WSTRING := "opc.tcp://192.168.1.11:4840"; (* Station 11 (OPC-UA-Endpunkt) *)
-		C_12_OPC : WSTRING := "opc.tcp://192.168.1.12:4840"; (* Station 12 (OPC-UA-Endpunkt) *)
-		C_13_OPC : WSTRING := "opc.tcp://192.168.1.13:4840"; (* Station 13 (OPC-UA-Endpunkt) *)
-		C_14_OPC : WSTRING := "opc.tcp://192.168.1.14:4840"; (* Station 14 (OPC-UA-Endpunkt) *)
-		C_15_OPC : WSTRING := "opc.tcp://192.168.1.15:4840"; (* Station 15 (OPC-UA-Endpunkt) *)
+		C_01 : WSTRING := "192.168.4.1:61499"; // Station 01 (61499/MGR_ID)
+		C_02 : WSTRING := "192.168.4.2:61499"; // Station 02 (61499/MGR_ID)
+		C_03 : WSTRING := "192.168.4.3:61499"; // Station 03 (61499/MGR_ID)
+		C_04 : WSTRING := "192.168.4.4:61499"; // Station 04 (61499/MGR_ID)
+		C_TR : WSTRING := "192.168.6.1:61499"; // Trainings-PC (61499/MGR_ID)
+		C_SI : WSTRING := "192.168.6.2:61499"; // Simulator-PC (61499/MGR_ID)
+		C_11 : WSTRING := "192.168.1.11:61499"; // Station 11 (61499/MGR_ID)
+		C_12 : WSTRING := "192.168.1.12:61499"; // Station 12 (61499/MGR_ID)
+		C_13 : WSTRING := "192.168.1.13:61499"; // Station 13 (61499/MGR_ID)
+		C_14 : WSTRING := "192.168.1.14:61499"; // Station 14 (61499/MGR_ID)
+		C_15 : WSTRING := "192.168.1.15:61499"; // Station 15 (61499/MGR_ID)
+		C_45 : WSTRING := "192.168.178.45:61499"; // Station 45 (61499/MGR_ID)
+		C_54 : WSTRING := "192.168.178.54:61499"; // Station 54 (61499/MGR_ID)
+		C_55 : WSTRING := "192.168.178.55:61499"; // Station 55 (61499/MGR_ID)
+		C_118 : WSTRING := "169.254.30.118:61499"; // Station 118 (61499/MGR_ID)
+		C_85 : WSTRING := "169.254.50.85:61499"; // Station 85 (61499/MGR_ID)
+		C_LOGIBUS : WSTRING := "logibus.local:61499"; // Station logibus (61499/MGR_ID)
+		C_11_OPC : WSTRING := "opc.tcp://192.168.1.11:4840"; // Station 11 (OPC-UA-Endpunkt)
+		C_12_OPC : WSTRING := "opc.tcp://192.168.1.12:4840"; // Station 12 (OPC-UA-Endpunkt)
+		C_13_OPC : WSTRING := "opc.tcp://192.168.1.13:4840"; // Station 13 (OPC-UA-Endpunkt)
+		C_14_OPC : WSTRING := "opc.tcp://192.168.1.14:4840"; // Station 14 (OPC-UA-Endpunkt)
+		C_15_OPC : WSTRING := "opc.tcp://192.168.1.15:4840"; // Station 15 (OPC-UA-Endpunkt)
 	END_VAR
 END_GLOBALCONSTANTS
 ]]></OriginalSource>

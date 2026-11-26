@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Remote_Init_Retry" Comment="INIT fuer einen Remote-OPC-UA-Client: INITO sofort an die Kette, bei INITO- neuer Versuch nach DT">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-10-30" Remarks="INIT-FB (events::init::INIT) direkt hinter dem Eingang INIT: SubApp wird im fboot aufgeloest, ohne ihn bliebe bei unverbundenem INIT nur E_MERGE_2.EI1 (Event, kein EInit) und E_TRIG loeste nie aus. Jetzt bleibt ein EInit-Eingang, unverbunden wird er automatisch ausgeloest.">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-30" Remarks="Neu. forte (#1092): Remote-Client meldet INITO+ erst wenn der Node existiert, sonst nach Timeout INITO- und Stopp, neuer Versuch nur durch neues INIT+. Abgestimmt mit ELFMASTER: E_DELAY vor erneutem INIT+, bei INIT mit QI=FALSE E_DELAY.STOP, reagiert auf jedes INITO-.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="INIT aus der Kette (QI wie am Client)">
+			</SubAppEvent>
+			<SubAppEvent Name="CLIENT_INITO" Type="EInit" Comment="INITO des Remote-Clients">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Sofort nach INIT, wartet nicht auf den Client">
+			</SubAppEvent>
+			<SubAppEvent Name="CLIENT_INIT" Type="EInit" Comment="An INIT des Remote-Clients">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Gleiches QI wie am Client" InitialValue="TRUE"/>
+			<VarDeclaration Name="CLIENT_QO" Type="BOOL" Comment="QO des Remote-Clients"/>
+			<VarDeclaration Name="DT" Type="TIME" Comment="Pause vor neuem Versuch" InitialValue="T#2s"/>
+		</InputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="Init_Stufe" Type="events::init::INIT" Comment="Haelt den EInit-Eingang im fboot (E_TRIG)" x="-3300" y="0">
+		</FB>
+		<FB Name="QI_Pruefen" Type="iec61499::events::E_SWITCH" Comment="INIT mit QI=FALSE stoppt eine laufende Pause" x="-1600" y="1300">
+		</FB>
+		<FB Name="Ergebnis" Type="iec61499::events::E_SWITCH" Comment="EO0: INITO- (QO=FALSE)" x="-1600" y="700">
+		</FB>
+		<FB Name="Nur_bei_QI" Type="iec61499::events::E_PERMIT" x="400" y="700">
+		</FB>
+		<FB Name="Pause" Type="iec61499::events::E_DELAY" x="2400" y="700">
+		</FB>
+		<FB Name="Zum_Client" Type="iec61499::events::E_MERGE_2" Comment="erster Versuch + Neuversuche" x="4300" y="0">
+		</FB>
+		<EventConnections>
+			<Connection Source="INIT" Destination="Init_Stufe.INIT" dx1="700"/>
+			<Connection Source="Init_Stufe.INITO" Destination="Init_Stufe.REQ" dx1="80" dx2="80" dy="53.33"/>
+			<Connection Source="Init_Stufe.CNF" Destination="Zum_Client.EI1" dx1="1886.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Init_Stufe.CNF" Destination="INITO" dx1="7880">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Init_Stufe.CNF" Destination="QI_Pruefen.EI" dx1="1060">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI_Pruefen.EO0" Destination="Pause.STOP" dx1="2920"/>
+			<Connection Source="CLIENT_INITO" Destination="Ergebnis.EI" dx1="2886.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="Ergebnis.EO0" Destination="Nur_bei_QI.EI"/>
+			<Connection Source="Nur_bei_QI.EO" Destination="Pause.START"/>
+			<Connection Source="Pause.EO" Destination="Zum_Client.EI2" dx1="693.33"/>
+			<Connection Source="Zum_Client.EO" Destination="CLIENT_INIT" dx1="4973.33"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="QI" Destination="QI_Pruefen.G" dx1="2886.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="CLIENT_QO" Destination="Ergebnis.G" dx1="2886.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="QI" Destination="Nur_bei_QI.PERMIT" dx1="3886.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+			<Connection Source="DT" Destination="Pause.DT" dx1="886.67">
+				<Attribute Name="Visible" Value="false"/>
+			</Connection>
+		</DataConnections>
+	</SubAppNetwork>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>Neuer Versuch fuer einen Remote-OPC-UA-Client</h1>
+<p>Seit forte #1092 meldet ein Remote-Client (SUBSCRIBE/WRITE/CALL_METHOD auf eine andere Station) INITO+
+erst, wenn der Node auf der Gegenstation existiert. Sonst kommt nach dem Timeout (Standard 60 s) INITO- und der
+Client versucht es nicht mehr von selbst.</p>
+<ul>
+<li><code>INIT</code> geht sofort an den Client (<code>CLIENT_INIT</code>) und gleich als <code>INITO</code> weiter:
+die Kette wartet nicht auf die Gegenstation.</li>
+<li>Kommt vom Client INITO mit QO=FALSE und ist QI=TRUE, wird nach <code>DT</code> (Standard 2 s) erneut
+INIT gesendet - bei jedem INITO-, nicht nur beim ersten.</li>
+<li>INIT mit QI=FALSE stoppt eine laufende Pause.</li>
+<li>INIT darf unverbunden bleiben: der innere <code>events::init::INIT</code> haelt im fboot einen EInit-Eingang, E_TRIG loest ihn aus.</li>
+</ul>
+<p>Verdrahtung: <code>CLIENT_INIT</code> an <code>Client.INIT</code>, <code>Client.INITO</code> an
+<code>CLIENT_INITO</code>, <code>Client.QO</code> an <code>CLIENT_QO</code>, QI gemeinsam.
+Nur fuer Remote-Clients einsetzen, nicht in den Adapter-Huellen selbst.</p>
+]]></Attribute>
+</SubAppType>

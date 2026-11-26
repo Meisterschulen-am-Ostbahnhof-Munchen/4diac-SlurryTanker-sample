@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SubAppType Name="Boot_Melden_OPC" Comment="Station meldet ihren Start an STG1: steigende Flanke von READY ruft die Boot-Methode mit der STG-Nummer auf (ohne VT)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-10-30" Remarks="CLIENT_1_0 (Methode) und AX_SUBSCRIBE_1 (READY) je mit Remote_Init_Retry: INITO sofort, nach INITO- (STG1 noch nicht da) neuer Versuch nach 2 s. Vorher hielt die Kette bis 60 s und der Client war danach tot (forte #1092).">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-10-29" Remarks="Neu, Gegenstueck zu Boot_Zaehler_OPC (STG1). AX_SUBSCRIBE_1 startet mit FALSE, daher gibt es nach jedem eigenen Start genau eine steigende Flanke, sobald READY von STG1 ankommt. Reconnect ohne Neustart erzeugt keine Flanke.">
+	</VersionInfo>
+	<CompilerInfo packageName="MyLib::sys">
+	</CompilerInfo>
+	<SubAppInterfaceList>
+		<SubAppEventInputs>
+			<SubAppEvent Name="INIT" Type="EInit" Comment="Initialization Request">
+			</SubAppEvent>
+		</SubAppEventInputs>
+		<SubAppEventOutputs>
+			<SubAppEvent Name="INITO" Type="EInit" Comment="Initialization Confirm">
+			</SubAppEvent>
+		</SubAppEventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Quality Input - TRUE to enable service" InitialValue="TRUE"/>
+			<VarDeclaration Name="ID_READY" Type="WSTRING" Comment="Remote-Subscribe READY von STG1"/>
+			<VarDeclaration Name="ID_CALL" Type="WSTRING" Comment="Remote-Methode BOOT_MELDUNG auf STG1"/>
+			<VarDeclaration Name="NR" Type="UINT" Comment="Eigene STG-Nummer (2..5)"/>
+		</InputVars>
+	</SubAppInterfaceList>
+	<SubAppNetwork>
+		<FB Name="Melden" Type="iec61499::net::CLIENT_1_0" x="2000" y="0">
+		</FB>
+		<FB Name="Ready" Type="adapter::net::AX_SUBSCRIBE_1" x="-2000" y="800">
+		</FB>
+		<FB Name="Ready_Flanke" Type="adapter::events::unidirectional::AX_R_TRIG" x="0" y="800">
+		</FB>
+		<SubApp Name="Retry_Melden" Type="MyLib::sys::Remote_Init_Retry" x="0" y="-1200">
+		</SubApp>
+		<SubApp Name="Retry_Ready" Type="MyLib::sys::Remote_Init_Retry" x="-4000" y="800">
+		</SubApp>
+		<EventConnections>
+			<Connection Source="INIT" Destination="Retry_Melden.INIT"/>
+			<Connection Source="Retry_Melden.CLIENT_INIT" Destination="Melden.INIT"/>
+			<Connection Source="Melden.INITO" Destination="Retry_Melden.CLIENT_INITO"/>
+			<Connection Source="Retry_Melden.INITO" Destination="Retry_Ready.INIT"/>
+			<Connection Source="Retry_Ready.CLIENT_INIT" Destination="Ready.INIT"/>
+			<Connection Source="Ready.INITO" Destination="Retry_Ready.CLIENT_INITO"/>
+			<Connection Source="Retry_Ready.INITO" Destination="INITO"/>
+			<Connection Source="Ready_Flanke.EO" Destination="Melden.REQ"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="QI" Destination="Retry_Melden.QI"/>
+			<Connection Source="Melden.QO" Destination="Retry_Melden.CLIENT_QO"/>
+			<Connection Source="QI" Destination="Retry_Ready.QI"/>
+			<Connection Source="Ready.QO" Destination="Retry_Ready.CLIENT_QO"/>
+			<Connection Source="QI" Destination="Melden.QI"/>
+			<Connection Source="ID_CALL" Destination="Melden.ID"/>
+			<Connection Source="NR" Destination="Melden.SD_1"/>
+			<Connection Source="QI" Destination="Ready.QI"/>
+			<Connection Source="ID_READY" Destination="Ready.ID"/>
+		</DataConnections>
+		<AdapterConnections>
+			<Connection Source="Ready.OUT" Destination="Ready_Flanke.QI"/>
+		</AdapterConnections>
+	</SubAppNetwork>
+	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>Start an STG1 melden</h1>
+<p>Die Station abonniert <code>READY</code> von STG1. Nach dem eigenen Start steht der Wert zunächst auf
+FALSE; sobald TRUE von STG1 ankommt, ruft die Station einmal die Methode <code>BOOT_MELDUNG</code> mit
+ihrer Nummer <code>NR</code> auf. STG1 zählt die Starts (<code>Boot_Zaehler_OPC</code>).</p>
+]]></Attribute>
+</SubAppType>

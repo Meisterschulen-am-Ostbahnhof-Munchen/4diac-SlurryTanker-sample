@@ -10,36 +10,36 @@
 	</CompilerInfo>
 	<SubAppInterfaceList>
 		<SubAppEventOutputs>
-			<SubAppEvent Name="KURZ" Type="Event" Comment="Kurzer Druck bestaetigt (Loslassen vor Ablauf PT)"/>
-			<SubAppEvent Name="LANG" Type="Event" Comment="Langer Druck bestaetigt (PT erreicht, feuert sofort - nicht erst beim Loslassen)"/>
+			<SubAppEvent Name="KURZ" Type="Event" Comment="Kurzer Druck bestaetigt (Loslassen vor Ablauf PT)">
+			</SubAppEvent>
+			<SubAppEvent Name="LANG" Type="Event" Comment="Langer Druck bestaetigt (PT erreicht, feuert sofort - nicht erst beim Loslassen)">
+			</SubAppEvent>
 		</SubAppEventOutputs>
 		<InputVars>
-			<VarDeclaration Name="PT" Type="TIME" Comment="Haltezeit fuer 'lang'" InitialValue="T#5s"/>
+			<VarDeclaration Name="PT" Type="TIME" Comment="Haltezeit fuer &apos;lang&apos;" InitialValue="T#5s"/>
 		</InputVars>
 		<Sockets>
 			<AdapterDeclaration Name="IN" Type="adapter::types::unidirectional::AX" Comment="Rohzustand der Taste (z.B. Softkey_IXA.IN)"/>
 		</Sockets>
 	</SubAppInterfaceList>
 	<SubAppNetwork>
-		<FB Name="SPLIT_IN" Type="adapter::events::unidirectional::AX_SPLIT_3" x="-8400" y="-1400">
+		<FB Name="SPLIT_IN" Type="adapter::events::unidirectional::AX_SPLIT_2" x="-8400" y="-1400">
 		</FB>
-		<FB Name="E_TON" Type="adapter::events::unidirectional::timers::AX_TON" x="-6600" y="-1400">
+		<FB Name="E_TON" Type="adapter::events::unidirectional::timers::AX_TON" x="-6500" y="-1900">
 		</FB>
-		<FB Name="R_TRIG_LONG" Type="adapter::events::unidirectional::AX_R_TRIG" x="-4600" y="-1400">
+		<FB Name="R_TRIG_LONG" Type="adapter::events::unidirectional::AX_R_TRIG" x="-4600" y="-1700">
 		</FB>
-		<FB Name="R_TRIG_PRESS" Type="adapter::events::unidirectional::AX_R_TRIG" x="-4600" y="-2200">
+		<FB Name="RF_TRIG_PRESS" Type="adapter::events::unidirectional::AX_RF_TRIG" x="-4500" y="-3100">
 		</FB>
-		<FB Name="LANG_LATCH" Type="adapter::events::unidirectional::AX_SR" x="-2600" y="-1800">
+		<FB Name="LANG_LATCH" Type="adapter::events::unidirectional::AX_RS" x="-2500" y="-2300">
 		</FB>
-		<FB Name="F_TRIG_RELEASE" Type="adapter::events::unidirectional::AX_F_TRIG" x="-4600" y="-400">
-		</FB>
-		<SubApp Name="PERMIT_KURZ" Type="MyLib::sys::AX_E_PERMIT_INVERT_1" x="-1200" y="-400">
+		<SubApp Name="PERMIT_KURZ" Type="MyLib::sys::AX_E_PERMIT_INVERT_1" x="-1300" y="-3000">
 		</SubApp>
 		<EventConnections>
-			<Connection Source="R_TRIG_LONG.EO" Destination="LANG" dx1="1200"/>
-			<Connection Source="R_TRIG_LONG.EO" Destination="LANG_LATCH.S" dx1="600" dx2="0" dy="400"/>
-			<Connection Source="R_TRIG_PRESS.EO" Destination="LANG_LATCH.R" dx1="600"/>
-			<Connection Source="F_TRIG_RELEASE.EO" Destination="PERMIT_KURZ.EI" dx1="600"/>
+			<Connection Source="R_TRIG_LONG.EO" Destination="LANG" dx1="5466.67"/>
+			<Connection Source="R_TRIG_LONG.EO" Destination="LANG_LATCH.S" dx1="693.33"/>
+			<Connection Source="RF_TRIG_PRESS.ER" Destination="LANG_LATCH.R" dx1="600"/>
+			<Connection Source="RF_TRIG_PRESS.EF" Destination="PERMIT_KURZ.EI" dx1="273.33"/>
 			<Connection Source="PERMIT_KURZ.EO" Destination="KURZ" dx1="1200"/>
 		</EventConnections>
 		<DataConnections>
@@ -49,11 +49,10 @@
 		</DataConnections>
 		<AdapterConnections>
 			<Connection Source="IN" Destination="SPLIT_IN.IN" dx1="600"/>
-			<Connection Source="SPLIT_IN.OUT1" Destination="E_TON.IN" dx1="600"/>
-			<Connection Source="SPLIT_IN.OUT2" Destination="R_TRIG_PRESS.QI" dx1="600" dy="-400"/>
-			<Connection Source="SPLIT_IN.OUT3" Destination="F_TRIG_RELEASE.QI" dx1="600" dy="400"/>
+			<Connection Source="SPLIT_IN.OUT1" Destination="RF_TRIG_PRESS.QI" dx1="273.33"/>
 			<Connection Source="E_TON.Q" Destination="R_TRIG_LONG.QI" dx1="600"/>
-			<Connection Source="LANG_LATCH.Q" Destination="PERMIT_KURZ.PERMIT" dx1="600" dy="800"/>
+			<Connection Source="LANG_LATCH.Q" Destination="PERMIT_KURZ.PERMIT" dx1="386.67"/>
+			<Connection Source="SPLIT_IN.OUT2" Destination="E_TON.IN" dx1="793.33"/>
 		</AdapterConnections>
 	</SubAppNetwork>
 	<Attribute Name="Documentation" Type="CDATA"><![CDATA[<h1>Kurz/Lang-Druck-Unterscheidung (konfigurierbare Haltezeit)</h1>

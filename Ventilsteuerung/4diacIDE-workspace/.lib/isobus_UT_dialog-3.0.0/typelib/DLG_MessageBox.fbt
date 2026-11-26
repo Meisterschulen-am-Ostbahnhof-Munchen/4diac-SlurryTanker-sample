@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="DLG_MessageBox" Comment="VT-Dialog wie Windows-MessageBox (eine Instanz je Anwendung)">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 Meisterschulen am Ostbahnhof  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.1" Author="Franz Höpfinger" Date="2026-11-25" Remarks="SubApp -&gt; Composite FB (Lib wird wegen DLG_CTRL ohnehin gebaut, im fboot nur eine Instanz).">
+	</VersionInfo>
+	<VersionInfo Organization="Meisterschulen am Ostbahnhof" Version="1.0" Author="Franz Höpfinger" Date="2026-11-17" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="isobus::UT::dialog">
+		<Import declaration="isobus::UT::Q::const::IDs::ID_NULL"/>
+		<Import declaration="isobus::UT::dialog::DialogIDs::Button_Dlg_Abort"/>
+		<Import declaration="isobus::UT::dialog::DialogIDs::Button_Dlg_Cancel"/>
+		<Import declaration="isobus::UT::dialog::DialogIDs::Button_Dlg_Ignore"/>
+		<Import declaration="isobus::UT::dialog::DialogIDs::Button_Dlg_No"/>
+		<Import declaration="isobus::UT::dialog::DialogIDs::Button_Dlg_OK"/>
+		<Import declaration="isobus::UT::dialog::DialogIDs::Button_Dlg_Retry"/>
+		<Import declaration="isobus::UT::dialog::DialogIDs::Button_Dlg_Yes"/>
+		<Import declaration="isobus::UT::dialog::DialogIDs::Container_Dialog"/>
+		<Import declaration="isobus::UT::dialog::DialogIDs::FillAttributes_Dlg_Title"/>
+		<Import declaration="isobus::UT::dialog::DialogIDs::ObjectPointer_Dlg_Buttons"/>
+		<Import declaration="isobus::UT::dialog::DialogIDs::ObjectPointer_Dlg_Cover"/>
+		<Import declaration="isobus::UT::dialog::DialogIDs::ObjectPointer_Dlg_Icon"/>
+		<Import declaration="isobus::UT::dialog::DialogIDs::ObjectPointer_Dlg_Text"/>
+		<Import declaration="isobus::UT::dialog::DialogIDs::ObjectPointer_Dlg_Title"/>
+		<Import declaration="isobus::UT::io::Button::ButtonActivationCode::BT_RELEASED_UNLATCHED"/>
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Initialisierung">
+				<With Var="QI"/>
+			</Event>
+			<Event Name="SHOW" Type="Event" Comment="Dialog zeigen">
+				<With Var="QI"/>
+				<With Var="TEXT_ID"/>
+				<With Var="TITLE_ID"/>
+				<With Var="ICON"/>
+				<With Var="BUTTONS"/>
+				<With Var="DEFAULT_BUTTON"/>
+				<With Var="MODAL"/>
+				<With Var="TIMEOUT"/>
+				<With Var="AUDIO"/>
+			</Event>
+			<Event Name="CLOSE" Type="Event" Comment="Dialog schliessen">
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialisierung fertig">
+				<With Var="QO"/>
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Dialog beendet, RESULT gueltig">
+				<With Var="QO"/>
+				<With Var="RESULT"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Freigabe" InitialValue="TRUE"/>
+			<VarDeclaration Name="TEXT_ID" Type="UINT" Comment="OutputString Meldungstext" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="TITLE_ID" Type="UINT" Comment="OutputString Titel, NULL = Standard je Icon" InitialValue="ID_NULL"/>
+			<VarDeclaration Name="ICON" Type="USINT" Comment="DLG_ICON_*" InitialValue="USINT#1"/>
+			<VarDeclaration Name="BUTTONS" Type="USINT" Comment="DLG_BTN_*" InitialValue="USINT#1"/>
+			<VarDeclaration Name="DEFAULT_BUTTON" Type="USINT" Comment="Fokus auf Taste 1..3" InitialValue="USINT#1"/>
+			<VarDeclaration Name="MODAL" Type="BOOL" Comment="Maske abdecken" InitialValue="FALSE"/>
+			<VarDeclaration Name="TIMEOUT" Type="TIME" Comment="T#0s = kein Timeout" InitialValue="T#0s"/>
+			<VarDeclaration Name="AUDIO" Type="BOOL" Comment="Ton beim Oeffnen" InitialValue="FALSE"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Qualitaet"/>
+			<VarDeclaration Name="RESULT" Type="USINT" Comment="DLG_RES_*"/>
+		</OutputVars>
+	</InterfaceList>
+	<FBNetwork>
+		<FB Name="CTRL" Type="isobus::UT::dialog::DLG_CTRL" x="0" y="0">
+		</FB>
+		<FB Name="QN_COVER" Type="isobus::UT::Q::Q_NumericValue" x="3000" y="-4000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="ObjectPointer_Dlg_Cover"/>
+		</FB>
+		<FB Name="QN_ICON" Type="isobus::UT::Q::Q_NumericValue" x="3000" y="-2400">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="ObjectPointer_Dlg_Icon"/>
+		</FB>
+		<FB Name="QN_TITLE" Type="isobus::UT::Q::Q_NumericValue" x="3000" y="-800">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="ObjectPointer_Dlg_Title"/>
+		</FB>
+		<FB Name="QN_TEXT" Type="isobus::UT::Q::Q_NumericValue" x="3000" y="800">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="ObjectPointer_Dlg_Text"/>
+		</FB>
+		<FB Name="QN_BUTTONS" Type="isobus::UT::Q::Q_NumericValue" x="3000" y="2400">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="ObjectPointer_Dlg_Buttons"/>
+		</FB>
+		<FB Name="QF_TITLE" Type="isobus::UT::Q::Q_FillAttributes" x="3000" y="4200">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="FillAttributes_Dlg_Title"/>
+			<Parameter Name="u8FillType" Value="USINT#2"/>
+			<Parameter Name="u16FillPatternId" Value="ID_NULL"/>
+		</FB>
+		<FB Name="QH_SHOW" Type="isobus::UT::Q::Q_ObjHideShow" x="6000" y="-4000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="Container_Dialog"/>
+			<Parameter Name="qVisible" Value="BYTE#1"/>
+		</FB>
+		<FB Name="QH_HIDE" Type="isobus::UT::Q::Q_ObjHideShow" x="6000" y="6000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="Container_Dialog"/>
+			<Parameter Name="qVisible" Value="BYTE#0"/>
+		</FB>
+		<FB Name="FOCUS" Type="iec61499::events::E_DEMUX_8" x="6000" y="-2000">
+		</FB>
+		<FB Name="QS_OK" Type="isobus::UT::Q::Q_ObjSelectInput" x="9000" y="-4000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="Button_Dlg_OK"/>
+			<Parameter Name="u8Option" Value="USINT#255"/>
+		</FB>
+		<FB Name="QS_CANCEL" Type="isobus::UT::Q::Q_ObjSelectInput" x="9000" y="-2600">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="Button_Dlg_Cancel"/>
+			<Parameter Name="u8Option" Value="USINT#255"/>
+		</FB>
+		<FB Name="QS_ABORT" Type="isobus::UT::Q::Q_ObjSelectInput" x="9000" y="-1200">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="Button_Dlg_Abort"/>
+			<Parameter Name="u8Option" Value="USINT#255"/>
+		</FB>
+		<FB Name="QS_RETRY" Type="isobus::UT::Q::Q_ObjSelectInput" x="9000" y="200">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="Button_Dlg_Retry"/>
+			<Parameter Name="u8Option" Value="USINT#255"/>
+		</FB>
+		<FB Name="QS_IGNORE" Type="isobus::UT::Q::Q_ObjSelectInput" x="9000" y="1600">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="Button_Dlg_Ignore"/>
+			<Parameter Name="u8Option" Value="USINT#255"/>
+		</FB>
+		<FB Name="QS_YES" Type="isobus::UT::Q::Q_ObjSelectInput" x="9000" y="3000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="Button_Dlg_Yes"/>
+			<Parameter Name="u8Option" Value="USINT#255"/>
+		</FB>
+		<FB Name="QS_NO" Type="isobus::UT::Q::Q_ObjSelectInput" x="9000" y="4400">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="Button_Dlg_No"/>
+			<Parameter Name="u8Option" Value="USINT#255"/>
+		</FB>
+		<FB Name="FOCUS_DONE" Type="iec61499::events::E_MUX_8" x="12000" y="-2000">
+		</FB>
+		<FB Name="AUDIO_SW" Type="iec61499::events::E_SWITCH" x="14500" y="-2000">
+		</FB>
+		<FB Name="Q_AUDIO" Type="isobus::UT::Q::Q_CtrlAudioSignal" x="17000" y="-1000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u8NumOfRepit" Value="USINT#1"/>
+			<Parameter Name="u16Frequency" Value="UINT#2000"/>
+			<Parameter Name="u16OnTimeMs" Value="UINT#100"/>
+			<Parameter Name="u16OffTimeMs" Value="UINT#0"/>
+		</FB>
+		<FB Name="AUDIO_DONE" Type="iec61499::events::E_MERGE" x="20000" y="-2000">
+		</FB>
+		<FB Name="TIMER" Type="iec61499::events::E_DELAY" x="3000" y="7000">
+		</FB>
+		<FB Name="BTN_OK" Type="isobus::UT::io::Button::Button_IE" x="-4000" y="-4000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="Button_Dlg_OK"/>
+			<Parameter Name="InputEvent" Value="BT_RELEASED_UNLATCHED"/>
+		</FB>
+		<FB Name="BTN_CANCEL" Type="isobus::UT::io::Button::Button_IE" x="-4000" y="-2400">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="Button_Dlg_Cancel"/>
+			<Parameter Name="InputEvent" Value="BT_RELEASED_UNLATCHED"/>
+		</FB>
+		<FB Name="BTN_ABORT" Type="isobus::UT::io::Button::Button_IE" x="-4000" y="-800">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="Button_Dlg_Abort"/>
+			<Parameter Name="InputEvent" Value="BT_RELEASED_UNLATCHED"/>
+		</FB>
+		<FB Name="BTN_RETRY" Type="isobus::UT::io::Button::Button_IE" x="-4000" y="800">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="Button_Dlg_Retry"/>
+			<Parameter Name="InputEvent" Value="BT_RELEASED_UNLATCHED"/>
+		</FB>
+		<FB Name="BTN_IGNORE" Type="isobus::UT::io::Button::Button_IE" x="-4000" y="2400">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="Button_Dlg_Ignore"/>
+			<Parameter Name="InputEvent" Value="BT_RELEASED_UNLATCHED"/>
+		</FB>
+		<FB Name="BTN_YES" Type="isobus::UT::io::Button::Button_IE" x="-4000" y="4000">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="Button_Dlg_Yes"/>
+			<Parameter Name="InputEvent" Value="BT_RELEASED_UNLATCHED"/>
+		</FB>
+		<FB Name="BTN_NO" Type="isobus::UT::io::Button::Button_IE" x="-4000" y="5600">
+			<Parameter Name="QI" Value="TRUE"/>
+			<Parameter Name="u16ObjId" Value="Button_Dlg_No"/>
+			<Parameter Name="InputEvent" Value="BT_RELEASED_UNLATCHED"/>
+		</FB>
+		<EventConnections>
+			<Connection Source="BTN_OK.IND" Destination="CTRL.B_OK" dx1="1640"/>
+			<Connection Source="BTN_CANCEL.IND" Destination="CTRL.B_CANCEL" dx1="1606.67"/>
+			<Connection Source="BTN_ABORT.IND" Destination="CTRL.B_ABORT" dx1="1573.33"/>
+			<Connection Source="BTN_RETRY.IND" Destination="CTRL.B_RETRY" dx1="1573.33"/>
+			<Connection Source="BTN_IGNORE.IND" Destination="CTRL.B_IGNORE" dx1="1573.33"/>
+			<Connection Source="BTN_YES.IND" Destination="CTRL.B_YES" dx1="1606.67"/>
+			<Connection Source="BTN_NO.IND" Destination="CTRL.B_NO" dx1="1640"/>
+			<Connection Source="CTRL.SHOWO" Destination="QN_COVER.REQ" dx1="840"/>
+			<Connection Source="QN_COVER.CNF" Destination="QN_ICON.REQ" dx1="66.67" dx2="100" dy="960"/>
+			<Connection Source="QN_ICON.CNF" Destination="QN_TITLE.REQ" dx1="66.67" dx2="100" dy="960"/>
+			<Connection Source="QN_TITLE.CNF" Destination="QN_TEXT.REQ" dx1="66.67" dx2="100" dy="1246.67"/>
+			<Connection Source="QN_TEXT.CNF" Destination="QN_BUTTONS.REQ" dx1="66.67" dx2="100" dy="973.33"/>
+			<Connection Source="QN_BUTTONS.CNF" Destination="QF_TITLE.REQ" dx1="66.67" dx2="100" dy="1073.33"/>
+			<Connection Source="QF_TITLE.CNF" Destination="QH_SHOW.REQ" dx1="1486.67"/>
+			<Connection Source="QH_SHOW.CNF" Destination="FOCUS.EI" dx1="66.67" dx2="66.67" dy="1180"/>
+			<Connection Source="FOCUS.EO1" Destination="QS_OK.REQ" dx1="1340"/>
+			<Connection Source="QS_OK.CNF" Destination="FOCUS_DONE.EI1" dx1="980"/>
+			<Connection Source="FOCUS.EO2" Destination="QS_CANCEL.REQ" dx1="406.67"/>
+			<Connection Source="QS_CANCEL.CNF" Destination="FOCUS_DONE.EI2" dx1="946.67"/>
+			<Connection Source="FOCUS.EO3" Destination="QS_ABORT.REQ" dx1="373.33"/>
+			<Connection Source="QS_ABORT.CNF" Destination="FOCUS_DONE.EI3" dx1="913.33"/>
+			<Connection Source="FOCUS.EO4" Destination="QS_RETRY.REQ" dx1="340"/>
+			<Connection Source="QS_RETRY.CNF" Destination="FOCUS_DONE.EI4" dx1="946.67"/>
+			<Connection Source="FOCUS.EO5" Destination="QS_IGNORE.REQ" dx1="306.67"/>
+			<Connection Source="QS_IGNORE.CNF" Destination="FOCUS_DONE.EI5" dx1="980"/>
+			<Connection Source="FOCUS.EO6" Destination="QS_YES.REQ" dx1="273.33"/>
+			<Connection Source="QS_YES.CNF" Destination="FOCUS_DONE.EI6" dx1="1013.33"/>
+			<Connection Source="FOCUS.EO7" Destination="QS_NO.REQ" dx1="240"/>
+			<Connection Source="QS_NO.CNF" Destination="FOCUS_DONE.EI7" dx1="1046.67"/>
+			<Connection Source="FOCUS.EO8" Destination="FOCUS_DONE.EI8" dx1="406.67" dx2="1053.33" dy="-173.33"/>
+			<Connection Source="FOCUS_DONE.EO" Destination="AUDIO_SW.EI"/>
+			<Connection Source="AUDIO_SW.EO0" Destination="AUDIO_DONE.EI1"/>
+			<Connection Source="AUDIO_SW.EO1" Destination="Q_AUDIO.REQ" dx1="920"/>
+			<Connection Source="Q_AUDIO.CNF" Destination="AUDIO_DONE.EI2" dx1="853.33"/>
+			<Connection Source="AUDIO_DONE.EO" Destination="CTRL.SHOWN" dx1="66.67" dx2="66.67" dy="573.33"/>
+			<Connection Source="CTRL.HIDEO" Destination="QH_HIDE.REQ" dx1="4420"/>
+			<Connection Source="QH_HIDE.CNF" Destination="CTRL.HIDDEN" dx1="66.67" dx2="100" dy="-2560"/>
+			<Connection Source="CTRL.START_T" Destination="TIMER.START" dx1="740"/>
+			<Connection Source="CTRL.STOP_T" Destination="TIMER.STOP" dx1="706.67"/>
+			<Connection Source="TIMER.EO" Destination="CTRL.TMO" dx1="66.67" dx2="66.67" dy="-1433.33"/>
+			<Connection Source="INIT" Destination="BTN_OK.INIT" dx1="2400"/>
+			<Connection Source="CTRL.INITO" Destination="QN_COVER.INIT" dx1="806.67"/>
+			<Connection Source="QN_COVER.INITO" Destination="QN_ICON.INIT" dx1="100" dx2="66.67" dy="1100"/>
+			<Connection Source="QN_ICON.INITO" Destination="QN_TITLE.INIT" dx1="100" dx2="66.67" dy="1100"/>
+			<Connection Source="QN_TITLE.INITO" Destination="QN_TEXT.INIT" dx1="100" dx2="66.67" dy="1373.33"/>
+			<Connection Source="QN_TEXT.INITO" Destination="QN_BUTTONS.INIT" dx1="100" dx2="66.67" dy="1113.33"/>
+			<Connection Source="QN_BUTTONS.INITO" Destination="QF_TITLE.INIT" dx1="100" dx2="66.67" dy="1213.33"/>
+			<Connection Source="QF_TITLE.INITO" Destination="QH_SHOW.INIT" dx1="1453.33"/>
+			<Connection Source="QH_SHOW.INITO" Destination="QH_HIDE.INIT" dx1="120" dx2="66.67" dy="6440"/>
+			<Connection Source="QH_HIDE.INITO" Destination="QS_OK.INIT" dx1="986.67"/>
+			<Connection Source="QS_OK.INITO" Destination="QS_CANCEL.INIT" dx1="66.67" dx2="66.67" dy="1026.67"/>
+			<Connection Source="QS_CANCEL.INITO" Destination="QS_ABORT.INIT" dx1="66.67" dx2="66.67" dy="986.67"/>
+			<Connection Source="QS_ABORT.INITO" Destination="QS_RETRY.INIT" dx1="66.67" dx2="66.67" dy="1000"/>
+			<Connection Source="QS_RETRY.INITO" Destination="QS_IGNORE.INIT" dx1="66.67" dx2="66.67" dy="1000"/>
+			<Connection Source="QS_IGNORE.INITO" Destination="QS_YES.INIT" dx1="66.67" dx2="66.67" dy="980"/>
+			<Connection Source="QS_YES.INITO" Destination="QS_NO.INIT" dx1="66.67" dx2="66.67" dy="980"/>
+			<Connection Source="QS_NO.INITO" Destination="Q_AUDIO.INIT" dx1="4753.33"/>
+			<Connection Source="BTN_OK.INITO" Destination="BTN_CANCEL.INIT" dx1="66.67" dx2="66.67" dy="1140"/>
+			<Connection Source="BTN_CANCEL.INITO" Destination="BTN_ABORT.INIT" dx1="66.67" dx2="66.67" dy="1140"/>
+			<Connection Source="BTN_ABORT.INITO" Destination="BTN_RETRY.INIT" dx1="66.67" dx2="66.67" dy="1133.33"/>
+			<Connection Source="BTN_RETRY.INITO" Destination="BTN_IGNORE.INIT" dx1="66.67" dx2="66.67" dy="1166.67"/>
+			<Connection Source="BTN_IGNORE.INITO" Destination="BTN_YES.INIT" dx1="66.67" dx2="66.67" dy="1133.33"/>
+			<Connection Source="BTN_YES.INITO" Destination="BTN_NO.INIT" dx1="66.67" dx2="66.67" dy="1133.33"/>
+			<Connection Source="SHOW" Destination="CTRL.SHOW" dx1="5893.33"/>
+			<Connection Source="CLOSE" Destination="CTRL.CLOSE" dx1="5860"/>
+			<Connection Source="CTRL.CNF" Destination="CNF" dx1="6686.67"/>
+			<Connection Source="BTN_NO.INITO" Destination="CTRL.INIT" dx1="1553.33"/>
+			<Connection Source="Q_AUDIO.INITO" Destination="INITO" dx1="2680"/>
+		</EventConnections>
+		<DataConnections>
+			<Connection Source="CTRL.COVER_ID" Destination="QN_COVER.u32NewValue" dx1="873.33"/>
+			<Connection Source="CTRL.ICON_ID" Destination="QN_ICON.u32NewValue" dx1="906.67"/>
+			<Connection Source="CTRL.TITLE_ID_O" Destination="QN_TITLE.u32NewValue" dx1="973.33"/>
+			<Connection Source="CTRL.TEXT_ID_O" Destination="QN_TEXT.u32NewValue" dx1="1006.67"/>
+			<Connection Source="CTRL.BUTTONS_ID" Destination="QN_BUTTONS.u32NewValue" dx1="866.67"/>
+			<Connection Source="CTRL.TITLE_COLOUR" Destination="QF_TITLE.u8FillColour" dx1="833.33"/>
+			<Connection Source="CTRL.FOCUS_K" Destination="FOCUS.K" dx1="940"/>
+			<Connection Source="CTRL.AUDIO_O" Destination="AUDIO_SW.G" dx1="1040" dx2="926.67" dy="-606.67"/>
+			<Connection Source="CTRL.TIMEOUT_O" Destination="TIMER.DT" dx1="673.33"/>
+			<Connection Source="QI" Destination="CTRL.QI" dx1="5726.67"/>
+			<Connection Source="TEXT_ID" Destination="CTRL.TEXT_ID" dx1="5693.33"/>
+			<Connection Source="TITLE_ID" Destination="CTRL.TITLE_ID" dx1="5660"/>
+			<Connection Source="ICON" Destination="CTRL.ICON" dx1="5626.67"/>
+			<Connection Source="BUTTONS" Destination="CTRL.BUTTONS" dx1="5593.33"/>
+			<Connection Source="DEFAULT_BUTTON" Destination="CTRL.DEFAULT_BUTTON" dx1="5560"/>
+			<Connection Source="MODAL" Destination="CTRL.MODAL" dx1="1600"/>
+			<Connection Source="TIMEOUT" Destination="CTRL.TIMEOUT" dx1="1666.67" dx2="1740" dy="5933.33"/>
+			<Connection Source="AUDIO" Destination="CTRL.AUDIO" dx1="1633.33" dx2="1773.33" dy="5860"/>
+			<Connection Source="CTRL.QO" Destination="QO" dx1="773.33"/>
+			<Connection Source="CTRL.RESULT" Destination="RESULT" dx1="6720"/>
+		</DataConnections>
+	</FBNetwork>
+</FBType>
