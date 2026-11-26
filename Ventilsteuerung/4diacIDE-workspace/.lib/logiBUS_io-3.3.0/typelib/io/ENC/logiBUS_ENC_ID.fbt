@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="logiBUS_ENC_ID" Comment="Incremental encoder (quadrature A/B) as signed position">
+	<Identification Description="Copyright (c) 2026 HR Agrartechnik GmbH&#10; &#10;This program and the accompanying materials are made &#10;available under the terms of the Eclipse Public License 2.0 &#10;which is available at https://www.eclipse.org/legal/epl-2.0/ &#10;&#10;SPDX-License-Identifier: EPL-2.0&#10;&#10;IN is the position as DINT in a DWORD (two's complement): convert it with DWORD_TO_DINT.&#10;Clockwise or counter-clockwise counts up depends on the wiring of A and B.&#10;Resolution: counts per quadrature cycle (4 edges). 1 = one count per detent for common rotary knobs, 4 = every edge. Other values are treated as 1.&#10;IND when the position changed, at most once per TimeRateLimit ms. TimeDelta &gt; 0: additional IND every TimeDelta ms without change.&#10;RST sets the position to 0 and answers with CNF.&#10;The push button of a rotary knob is a normal digital input (Trainer20: Input_I9).">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-11-26" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::io::ENC">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+				<With Var="QI"/>
+				<With Var="PARAMS"/>
+				<With Var="Encoder"/>
+				<With Var="Resolution"/>
+				<With Var="TimeDelta"/>
+				<With Var="TimeRateLimit"/>
+			</Event>
+			<Event Name="REQ" Type="Event" Comment="Service Request">
+				<With Var="QI"/>
+			</Event>
+			<Event Name="RST" Type="Event" Comment="Set the position to 0">
+				<With Var="QI"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+				<With Var="IN"/>
+			</Event>
+			<Event Name="IND" Type="Event" Comment="Indication from Resource">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+				<With Var="IN"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
+			<VarDeclaration Name="PARAMS" Type="STRING" Comment="Service Parameters"/>
+			<VarDeclaration Name="Encoder" Type="logiBUS::io::ENC::logiBUS_ENC_S" Comment="Identify the encoder Encoder_E1" InitialValue="logiBUS_ENC::Invalid"/>
+			<VarDeclaration Name="Resolution" Type="USINT" Comment="Counts per quadrature cycle: 1, 2 or 4" InitialValue="1"/>
+			<VarDeclaration Name="TimeDelta" Type="DWORD" Comment="Additional IND every ms, 0 = only on change"/>
+			<VarDeclaration Name="TimeRateLimit" Type="DWORD" Comment="Maximum 1 IND in how many ms (min. 10)" InitialValue="50"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="Event Output Qualifier"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
+			<VarDeclaration Name="IN" Type="DWORD" Comment="Position (DINT, convert with DWORD_TO_DINT)"/>
+		</OutputVars>
+	</InterfaceList>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

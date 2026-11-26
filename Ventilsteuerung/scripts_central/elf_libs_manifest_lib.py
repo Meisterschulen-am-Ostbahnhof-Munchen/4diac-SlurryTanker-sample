@@ -270,6 +270,7 @@ PREFIX_TO_LIB = {
     "logiBUS::safety": "logiBUS_safety",
     "logiBUS::signalprocessing": "logiBUS_signalprocessing_adapter",
     "logiBUS::storage": "logiBUS_storage_esp32",
+    "logiBUS::onewire": "logiBUS_onewire",
     "logiBUS::utils": "logiBUS_utils",
     "logiBUS::version": "logiBUS_version",
 }
@@ -521,6 +522,7 @@ LIB_VERSIONS = {
     "logiBUS_signalprocessing_adapter": "3.0.0",
     "logiBUS_storage": "3.0.0",
     "logiBUS_storage_esp32": "3.0.0",
+    "logiBUS_onewire": "1.0.0",
     "logiBUS_utils": "3.0.0",
     "logiBUS_utils_adapter": "3.0.0",
     "logiBUS_version": "3.0.0",
@@ -582,6 +584,7 @@ LIB_DIR_NAME = {
     "logiBUS_signalprocessing_adapter": "logiBUS_signalprocessing_adapter-3.0.0",
     "logiBUS_storage": "logiBUS_storage-3.0.0",
     "logiBUS_storage_esp32": "logiBUS_storage_esp32-3.0.0",
+    "logiBUS_onewire": "logiBUS_onewire-1.0.0",
     "logiBUS_utils": "logiBUS_utils-3.0.0",
     "logiBUS_utils_adapter": "logiBUS_utils_adapter-3.0.0",
     "logiBUS_version": "logiBUS_version-3.0.0",

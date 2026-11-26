@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FBType Name="DS18B20" Comment="Temperature of a DS18B20 on the 1-Wire bus of logiBUS">
+	<Identification Standard="61499-2" Description="Copyright (c) 2026 HR Agrartechnik GmbH&#10;&#10;This program and the accompanying materials are made available under the terms of the Eclipse Public License 2.0 which is available at https://www.eclipse.org/legal/epl-2.0/&#10;&#10;SPDX-License-Identifier: EPL-2.0&#10;&#10;The firmware measures all DS18B20 of the bus about once per second (12 bit, 0.0625 °C). Bus GPIO per board (Trainer20: GPIO3); an external 4.7 kOhm pull-up to 3.3 V is recommended.&#10;Selection: ROM &lt;&gt; 0 selects the sensor with this ROM code, ROM = 0 the sensor Index in search order (0 = first). ROMO shows the ROM code actually used: write it to ROM to keep the sensor when others are added.&#10;IND after each measurement of the sensor and when the state changes. QO = TRUE: Temp is valid.&#10;STATUS: OK, no 1-Wire bus, sensor not found, read error, power-on value 85 °C, no value yet.&#10;Several DS18B20 FBs may use the same bus (up to 8).">
+	</Identification>
+	<VersionInfo Version="1.0" Author="Franz Höpfinger" Date="2026-11-26" Remarks="initial API and implementation and/or initial documentation">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::onewire">
+	</CompilerInfo>
+	<InterfaceList>
+		<EventInputs>
+			<Event Name="INIT" Type="EInit" Comment="Service Initialization">
+				<With Var="QI"/>
+				<With Var="ROM"/>
+				<With Var="Index"/>
+			</Event>
+			<Event Name="REQ" Type="Event" Comment="Read the last value">
+				<With Var="QI"/>
+			</Event>
+		</EventInputs>
+		<EventOutputs>
+			<Event Name="INITO" Type="EInit" Comment="Initialization Confirm">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+				<With Var="ROMO"/>
+			</Event>
+			<Event Name="CNF" Type="Event" Comment="Confirmation of Requested Service">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+				<With Var="Temp"/>
+				<With Var="ROMO"/>
+			</Event>
+			<Event Name="IND" Type="Event" Comment="New measurement or changed state">
+				<With Var="QO"/>
+				<With Var="STATUS"/>
+				<With Var="Temp"/>
+				<With Var="ROMO"/>
+			</Event>
+		</EventOutputs>
+		<InputVars>
+			<VarDeclaration Name="QI" Type="BOOL" Comment="Event Input Qualifier"/>
+			<VarDeclaration Name="ROM" Type="LWORD" Comment="ROM code of the sensor, 0 = use Index"/>
+			<VarDeclaration Name="Index" Type="USINT" Comment="Sensor in search order (0 = first), if ROM = 0"/>
+		</InputVars>
+		<OutputVars>
+			<VarDeclaration Name="QO" Type="BOOL" Comment="TRUE: Temp is valid"/>
+			<VarDeclaration Name="STATUS" Type="STRING" Comment="Service Status"/>
+			<VarDeclaration Name="Temp" Type="REAL" Comment="Temperature in °C"/>
+			<VarDeclaration Name="ROMO" Type="LWORD" Comment="ROM code of the sensor used (0 = none)"/>
+		</OutputVars>
+	</InterfaceList>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</FBType>

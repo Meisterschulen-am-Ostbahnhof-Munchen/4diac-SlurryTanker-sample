@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalConstants Name="logiBUS_ENC" Comment="logiBUS_ENC constants">
+	<Identification Standard="61499-1" Description="Copyright (c) 2026 HR Agrartechnik GmbH  &#10; &#10;This program and the accompanying materials are made  &#10;available under the terms of the Eclipse Public License 2.0  &#10;which is available at https://www.eclipse.org/legal/epl-2.0/  &#10; &#10;SPDX-License-Identifier: EPL-2.0">
+	</Identification>
+	<VersionInfo Organization="HR Agrartechnik GmbH" Version="1.0" Author="Franz Höpfinger" Date="2026-11-26">
+	</VersionInfo>
+	<CompilerInfo packageName="logiBUS::io::ENC">
+	</CompilerInfo>
+	<GlobalConstants>
+		<VarDeclaration Name="Encoder_E1" Type="logiBUS::io::ENC::logiBUS_ENC_S" InitialValue="(Pin := 1)"/>
+		<VarDeclaration Name="Invalid" Type="logiBUS::io::ENC::logiBUS_ENC_S" InitialValue="(Pin := 255)"/>
+	</GlobalConstants>
+	<OriginalSource><![CDATA[PACKAGE logiBUS::io::ENC;
+
+GLOBALCONSTANTS logiBUS_ENC
+	VAR_GLOBAL CONSTANT
+		Encoder_E1 : logiBUS_ENC_S := (Pin := 1);
+		Invalid : logiBUS_ENC_S := (Pin := 255);
+	END_VAR
+END_GLOBALCONSTANTS
+]]></OriginalSource>
+	<Attribute Name="eclipse4diac::core::TypeHash" Value="''"/>
+</GlobalConstants>
